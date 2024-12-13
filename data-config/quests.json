@@ -1,0 +1,881 @@
+{
+  "dailyQuestConfig": {
+    "moveNum": 5,
+    "farmNum": 3,
+    "pvpNum": 2,
+    "pveNum": 3,
+    "rewardExp": 100,
+    "rewardGold": 20
+  },
+  "quests": {
+    "1": {
+      "id": 1,
+      "questType": 0,
+      "name": "Berries and Blobs",
+      "description": "Sylvanreach is running low on health potion supply! Liliana needs me to gather Wild Berries from the Outer World and Sticky Mucus from defeating Slimes, also known as Puru. The berries and mucus are needed for ensuring the swift recovery of our wounded soldiers.",
+      "fromNpcId": 1,
+      "exp": 50,
+      "gold": 10,
+      "requiredDoneQuestIds": [],
+      "contributeDetails": [
+        {
+          "itemId": 14,
+          "amount": 10
+        },
+        {
+          "itemId": 18,
+          "amount": 3
+        }
+      ]
+    },
+    "2": {
+      "id": 2,
+      "questType": 0,
+      "name": "Arming the Defenses",
+      "description": "I'm tasked with gathering Iron Ore and Rough Stones from the lands surrounding the capital. These materials will be used to forge armors and weapons to fortify the kingdom's militia. Time is of the essence.",
+      "fromNpcId": 1,
+      "exp": 100,
+      "gold": 20,
+      "requiredDoneQuestIds": [
+        1
+      ],
+      "contributeDetails": [
+        {
+          "itemId": 10,
+          "amount": 30
+        },
+        {
+          "itemId": 6,
+          "amount": 10
+        }
+      ]
+    },
+    "3": {
+      "id": 3,
+      "questType": 0,
+      "name": "Feasting Fields",
+      "description": "Sylvanreach's storehouses are running critically low on essential supplies. I'll need to gather some Common Wheat, Stream Fish and Sylvan Wood to restock our dwindling storage. These vital food and building supplies are essential.",
+      "fromNpcId": 1,
+      "exp": 150,
+      "gold": 30,
+      "requiredDoneQuestIds": [
+        2
+      ],
+      "contributeDetails": [
+        {
+          "itemId": 8,
+          "amount": 10
+        },
+        {
+          "itemId": 12,
+          "amount": 20
+        },
+        {
+          "itemId": 1,
+          "amount": 30
+        }
+      ]
+    },
+    "4": {
+      "id": 4,
+      "questType": 0,
+      "name": "Hardwood",
+      "description": "The craftsmen's guild asked me to gather some Birch Wood, an uncommon type of wood in the forests of Sylvanreach. This birchwood is needed to craft noble regalia for allied kingdoms. However, I'll first need to craft a better Wood Axe to chop down these hard woods.",
+      "fromNpcId": 1,
+      "exp": 200,
+      "gold": 40,
+      "requiredDoneQuestIds": [
+        3
+      ],
+      "contributeDetails": [
+        {
+          "itemId": 2,
+          "amount": 20
+        }
+      ]
+    },
+    "5": {
+      "id": 5,
+      "questType": 0,
+      "name": "Culling the Gobblekin Menace",
+      "description": "I must hunt down and eliminate the vicious Gobblekins threatening Sylvanreach's villagers and crop fields. I must slay the savage raiders at all costs, or risk the village's ruin.",
+      "fromNpcId": 1,
+      "exp": 250,
+      "gold": 50,
+      "requiredDoneQuestIds": [
+        3
+      ],
+      "contributeDetails": [
+        {
+          "itemId": 20,
+          "amount": 10
+        }
+      ]
+    },
+    "6": {
+      "id": 6,
+      "questType": 0,
+      "name": "Supplies in the Mist",
+      "description": "Maeve is concerned about Misthaven's food stores running low. I'm tasked with gathering Common Wheat and Stream Fishes, else the kingdom will be at dire food shortage!",
+      "fromNpcId": 2,
+      "exp": 50,
+      "gold": 10,
+      "requiredDoneQuestIds": [],
+      "contributeDetails": [
+        {
+          "itemId": 12,
+          "amount": 10
+        },
+        {
+          "itemId": 8,
+          "amount": 20
+        }
+      ]
+    },
+    "7": {
+      "id": 7,
+      "questType": 0,
+      "name": "Put your Muscles to good use",
+      "description": "With sustenance secured, Maeve now needs materials to repair damaged structures. My mission this time is to fight and chase away some Slimes, then rebuild the outer structures of Aetheria - Misthaven's capital.",
+      "fromNpcId": 2,
+      "exp": 100,
+      "gold": 20,
+      "requiredDoneQuestIds": [
+        6
+      ],
+      "contributeDetails": [
+        {
+          "itemId": 1,
+          "amount": 20
+        },
+        {
+          "itemId": 6,
+          "amount": 10
+        },
+        {
+          "itemId": 14,
+          "amount": 10
+        },
+        {
+          "itemId": 18,
+          "amount": 3
+        }
+      ]
+    },
+    "8": {
+      "id": 8,
+      "questType": 0,
+      "name": "The Armoury",
+      "description": "Misthaven's armoury found itself lacking the resources needed to produce more weapons and other equipment. My job is to contribute more Iron Ores and Woods to ensure the safety of our soldiers.",
+      "fromNpcId": 2,
+      "exp": 150,
+      "gold": 30,
+      "requiredDoneQuestIds": [
+        7
+      ],
+      "contributeDetails": [
+        {
+          "itemId": 10,
+          "amount": 30
+        },
+        {
+          "itemId": 1,
+          "amount": 10
+        }
+      ]
+    },
+    "9": {
+      "id": 9,
+      "questType": 0,
+      "name": "Copper Mining",
+      "description": "I need to craft a better Pickaxe to mine some copper ore in the Outer World. This amount of copper is crucial for securing Misthaven's valuable trade relations through decorative metalwork.",
+      "fromNpcId": 2,
+      "exp": 200,
+      "gold": 40,
+      "requiredDoneQuestIds": [
+        8
+      ],
+      "contributeDetails": [
+        {
+          "itemId": 11,
+          "amount": 20
+        }
+      ]
+    },
+    "10": {
+      "id": 10,
+      "questType": 0,
+      "name": "Purging the Screechit Infestation",
+      "description": "I must eradicate the infestation of the dangerous Screechits, a type of bat creature overrunning some regions in Mistheaven. These creatures are more dangerous than your average slimes. so I must be fully prepared.",
+      "fromNpcId": 2,
+      "exp": 250,
+      "gold": 50,
+      "requiredDoneQuestIds": [
+        8
+      ],
+      "contributeDetails": [
+        {
+          "itemId": 19,
+          "amount": 10
+        }
+      ]
+    },
+    "11": {
+      "id": 11,
+      "questType": 0,
+      "name": "Winter Warmth",
+      "description": "The ever snowing land of Everfrost is in constant need of more fire fuel and emergency food. I'm tasked with bringing Sylvan Woods and Wild Berries to Marina to help heat up the cold corners of Frostgard.",
+      "fromNpcId": 3,
+      "exp": 50,
+      "gold": 10,
+      "requiredDoneQuestIds": [],
+      "contributeDetails": [
+        {
+          "itemId": 1,
+          "amount": 30
+        },
+        {
+          "itemId": 14,
+          "amount": 20
+        }
+      ]
+    },
+    "12": {
+      "id": 12,
+      "questType": 0,
+      "name": "Culling the Frozen Slimes",
+      "description": "Slimes are present even in the harsh weather of Everfrost. I need to fend them off while bringing extra iron ores and stones to support the local military.",
+      "fromNpcId": 3,
+      "exp": 100,
+      "gold": 20,
+      "requiredDoneQuestIds": [
+        11
+      ],
+      "contributeDetails": [
+        {
+          "itemId": 10,
+          "amount": 30
+        },
+        {
+          "itemId": 6,
+          "amount": 10
+        },
+        {
+          "itemId": 18,
+          "amount": 3
+        }
+      ]
+    },
+    "13": {
+      "id": 13,
+      "questType": 0,
+      "name": "Northern Expedition",
+      "description": "The monthly expedition crew needs as much reserve food as they can possibly carry, and I'm tasked with bringing some Stream Fish and Common Wheat to Marina for her to begin preparing well preserved food.",
+      "fromNpcId": 3,
+      "exp": 150,
+      "gold": 30,
+      "requiredDoneQuestIds": [
+        12
+      ],
+      "contributeDetails": [
+        {
+          "itemId": 8,
+          "amount": 10
+        },
+        {
+          "itemId": 12,
+          "amount": 10
+        }
+      ]
+    },
+    "14": {
+      "id": 14,
+      "questType": 0,
+      "name": "Cold, Sturdy Wood",
+      "description": "I must journey to the forests surrounding the capital and harvest logs of rare, sturdy birch wood using a new wood axe. This prized timber is crucial for constructing a commissioned longboat fleet to secure Everfrost's naval power.",
+      "fromNpcId": 3,
+      "exp": 200,
+      "gold": 40,
+      "requiredDoneQuestIds": [
+        13
+      ],
+      "contributeDetails": [
+        {
+          "itemId": 2,
+          "amount": 20
+        }
+      ]
+    },
+    "15": {
+      "id": 15,
+      "questType": 0,
+      "name": "Invaded by... Snow Rabbits?",
+      "description": "I must eradicate the magically enhanced, ravenous hordes of oversized snow rabbits that have been devouring Everfrost's critical winter food reserves. I can't stop until we cull every last one of these surprisingly fierce, swarming hares to prevent starvation in the kingdom.",
+      "fromNpcId": 3,
+      "exp": 250,
+      "gold": 50,
+      "requiredDoneQuestIds": [
+        13
+      ],
+      "contributeDetails": [
+        {
+          "itemId": 16,
+          "amount": 10
+        }
+      ]
+    },
+    "16": {
+      "id": 16,
+      "questType": 0,
+      "name": "Water in the Desert",
+      "description": "I need to replenish the vital supplies of the desert oasis by gathering fresh Stream Fishes from the surrounding area and slaying some lava-spewing fire Slimes that have infested the waters. Completing this quest will help feed the people and secure Dunewatch's water source.",
+      "fromNpcId": 4,
+      "exp": 50,
+      "gold": 10,
+      "requiredDoneQuestIds": [],
+      "contributeDetails": [
+        {
+          "itemId": 8,
+          "amount": 10
+        },
+        {
+          "itemId": 18,
+          "amount": 3
+        }
+      ]
+    },
+    "17": {
+      "id": 17,
+      "questType": 0,
+      "name": "Sand Fortifications",
+      "description": "The next crucial mission is to fortify the capital's oasis against the relentless sandstorms by mining iron ores to reinforce the shelters, and gathering rough stones to repair the eroded outer walls. Securing these hardy materials will allow the oasis to withstand the fury of the dune sea's storms.",
+      "fromNpcId": 4,
+      "exp": 100,
+      "gold": 20,
+      "requiredDoneQuestIds": [
+        16
+      ],
+      "contributeDetails": [
+        {
+          "itemId": 10,
+          "amount": 30
+        },
+        {
+          "itemId": 6,
+          "amount": 20
+        }
+      ]
+    },
+    "18": {
+      "id": 18,
+      "questType": 0,
+      "name": "Harsh Irrigation",
+      "description": "I need to nurture the recovering oasis by gathering wild berries for fertile soil, common wheat to replant the crops, and a large number of sylvan wood logs for new construction. Restoring the plant life and replenishing building materials will allow the desert refuge to truly thrive once more.",
+      "fromNpcId": 4,
+      "exp": 150,
+      "gold": 30,
+      "requiredDoneQuestIds": [
+        17
+      ],
+      "contributeDetails": [
+        {
+          "itemId": 14,
+          "amount": 10
+        },
+        {
+          "itemId": 12,
+          "amount": 20
+        },
+        {
+          "itemId": 1,
+          "amount": 30
+        }
+      ]
+    },
+    "19": {
+      "id": 19,
+      "questType": 0,
+      "name": "Scorched Copper",
+      "description": "I'll need to explore the surrounding landscape for some copper ore. These ores are rarer than iron, so I'll need to explore the scorching desert for a long while. But first, to gather these ores, I'll need to craft a better Pick Axe with the local blacksmith.",
+      "fromNpcId": 4,
+      "exp": 200,
+      "gold": 40,
+      "requiredDoneQuestIds": [
+        18
+      ],
+      "contributeDetails": [
+        {
+          "itemId": 11,
+          "amount": 20
+        }
+      ]
+    },
+    "20": {
+      "id": 20,
+      "questType": 0,
+      "name": "Flaming Fight",
+      "description": "I must eradicate the menacing packs of Flaming Foxes that have made nighttime travel nearly impassable. Purging this unnatural infestation prowling the dunes is crucial to ensuring the desert trails are safe for the thriving oasis's trade and travels once more.",
+      "fromNpcId": 4,
+      "exp": 250,
+      "gold": 50,
+      "requiredDoneQuestIds": [
+        18
+      ],
+      "contributeDetails": [
+        {
+          "itemId": 17,
+          "amount": 10
+        }
+      ]
+    },
+    "21": {
+      "id": 21,
+      "questType": 0,
+      "name": "Gone Girl",
+      "description": "Liliana's sister, Lara, has gone missing in the forest. To seek help from the forest spirits, I need to gather 30 stalks of Hearty Wheat from the nearby fields and 20 pieces of Ironbark Wood from the grove. These offerings may persuade the spirits to aid in the search for Lara.",
+      "fromNpcId": 1,
+      "exp": 300,
+      "gold": 60,
+      "requiredDoneQuestIds": [
+        5
+      ],
+      "contributeDetails": [
+        {
+          "itemId": 13,
+          "amount": 30
+        },
+        {
+          "itemId": 3,
+          "amount": 20
+        }
+      ]
+    },
+    "22": {
+      "id": 22,
+      "questType": 0,
+      "name": "Floral Essence",
+      "description": "Despite the offering to the forest spirits, Lara remains missing. The spirits seem unable to help, possibly due to a magical disturbance. I need to join Haines, the veteran warrior, to collect 10 Blue Leaves from the dangerous Petalflares. These leaves are crucial for brewing a potion that may pierce the veil obscuring Lara's location.",
+      "fromNpcId": 1,
+      "toNpcId": 5,
+      "exp": 500,
+      "gold": 100,
+      "requiredDoneQuestIds": [
+        21
+      ],
+      "contributeDetails": [
+        {
+          "itemId": 121,
+          "amount": 10
+        }
+      ]
+    },
+    "23": {
+      "id": 23,
+      "questType": 0,
+      "name": "Breaking the Seal",
+      "description": "The tracking potion has led us to the sacred grove, but its weakened magical barriers prevent entry. To safely access the grove and continue the search for Lara, I must reinforce these ancient defenses with the relevant materials.",
+      "fromNpcId": 5,
+      "exp": 550,
+      "gold": 110,
+      "requiredDoneQuestIds": [
+        22
+      ],
+      "contributeDetails": [
+        {
+          "itemId": 3,
+          "amount": 20
+        },
+        {
+          "itemId": 7,
+          "amount": 10
+        },
+        {
+          "itemId": 9,
+          "amount": 10
+        }
+      ]
+    },
+    "24": {
+      "id": 24,
+      "questType": 0,
+      "name": "The Leafdrake Charm",
+      "description": "With the sacred grove's barriers reinforced, I've discovered Leafdrake tracks indicating they may have followed Lara inside. To safely guard Lara from these creatures, we must create a magical charm.",
+      "fromNpcId": 5,
+      "exp": 800,
+      "gold": 160,
+      "requiredDoneQuestIds": [
+        23
+      ],
+      "contributeDetails": [
+        {
+          "itemId": 120,
+          "amount": 20
+        },
+        {
+          "itemId": 11,
+          "amount": 10
+        },
+        {
+          "itemId": 15,
+          "amount": 10
+        }
+      ]
+    },
+    "25": {
+      "id": 25,
+      "questType": 0,
+      "name": "Lara and the Forest",
+      "description": "Deep in the sacred grove, I've discovered Lara's doll and tracks leading to a Crabark lair. These massive, tree-like crabs have likely taken Lara. To rescue her, I must defeat the Crabarks!",
+      "fromNpcId": 5,
+      "exp": 1200,
+      "gold": 240,
+      "requiredDoneQuestIds": [
+        24
+      ],
+      "contributeDetails": [
+        {
+          "itemId": 119,
+          "amount": 10
+        }
+      ],
+      "achievementId": 5
+    },
+    "26": {
+      "id": 26,
+      "questType": 0,
+      "name": "The Changing Mist",
+      "description": "The mist in Misthaven is changing, corroding the town's tools at an alarming rate. Maeve has urgently requested my help. The local blacksmith needs materials to forge mist-resistant tools. Venture into the misty wilderness to gather Nickel Ores and Marsh Fishes.",
+      "fromNpcId": 2,
+      "exp": 300,
+      "gold": 60,
+      "requiredDoneQuestIds": [
+        10
+      ],
+      "contributeDetails": [
+        {
+          "itemId": 9,
+          "amount": 30
+        },
+        {
+          "itemId": 94,
+          "amount": 20
+        }
+      ]
+    },
+    "27": {
+      "id": 27,
+      "questType": 0,
+      "name": "Fungal Infestation",
+      "description": "A new threat has emerged in Misthaven: Mycofiends, giant aggressive mushroom monsters spawned by the thickening mist. These creatures are threatening the town's food stores and safety. Maeve and the newly-met knight Duval have requested my aid in combating this fungal menace.",
+      "fromNpcId": 2,
+      "toNpcId": 7,
+      "exp": 500,
+      "gold": 100,
+      "requiredDoneQuestIds": [
+        26
+      ],
+      "contributeDetails": [
+        {
+          "itemId": 123,
+          "amount": 10
+        }
+      ]
+    },
+    "28": {
+      "id": 28,
+      "questType": 0,
+      "name": "What's a... Moo Dung?",
+      "description": "Maeve and Duval have tasked me with gathering crucial materials for a magical seal that can ward off the bad mist. My mission is to collect enough materials to create the seal. As we embark on this quest, I'll need to keep an eye out for Moo Deng, Duval's lost pygmy hippo.",
+      "fromNpcId": 7,
+      "exp": 550,
+      "gold": 110,
+      "requiredDoneQuestIds": [
+        27
+      ],
+      "contributeDetails": [
+        {
+          "itemId": 94,
+          "amount": 20
+        },
+        {
+          "itemId": 7,
+          "amount": 10
+        },
+        {
+          "itemId": 15,
+          "amount": 10
+        }
+      ]
+    },
+    "29": {
+      "id": 29,
+      "questType": 0,
+      "name": "The Serpent Problem",
+      "description": "Duval's pet pygmy hippo, Moo Deng, has wandered into Basilisk-infested territory in the southern fields of Misthaven. These aggressive, venomous serpents now threaten both Moo Deng and the town's farmlands. My mission is twofold: search for Moo Deng while gathering crucial materials to combat the Basilisk threat.",
+      "fromNpcId": 7,
+      "exp": 800,
+      "gold": 160,
+      "requiredDoneQuestIds": [
+        28
+      ],
+      "contributeDetails": [
+        {
+          "itemId": 122,
+          "amount": 20
+        },
+        {
+          "itemId": 2,
+          "amount": 10
+        },
+        {
+          "itemId": 13,
+          "amount": 10
+        }
+      ]
+    },
+    "30": {
+      "id": 30,
+      "questType": 0,
+      "name": "Hippo in Distress",
+      "description": "The magical seal has pushed back the mist, revealing a new threat: Mist Wyverns nesting in the mountains. These powerful creatures pose a grave danger to Misthaven, and amidst the chaos, Moo Deng has been spotted in their territory. My final quest is to ascend the treacherous peaks, confront the Mist Wyverns, and rescue Duval's beloved pet.",
+      "fromNpcId": 7,
+      "exp": 1200,
+      "gold": 240,
+      "requiredDoneQuestIds": [
+        29
+      ],
+      "contributeDetails": [
+        {
+          "itemId": 124,
+          "amount": 10
+        }
+      ],
+      "achievementId": 6
+    },
+    "31": {
+      "id": 31,
+      "questType": 0,
+      "name": "Echoes in the Snow",
+      "description": "Frostgard is in crisis as some of its population has mysteriously vanished. Chione, the court sorcerer, needs my help to enhance the scouts' tracking abilities. Time is of the essence – every day more people disappear, and the fate of Frostgard hangs in the balance.",
+      "fromNpcId": 3,
+      "exp": 300,
+      "gold": 60,
+      "requiredDoneQuestIds": [
+        15
+      ],
+      "contributeDetails": [
+        {
+          "itemId": 15,
+          "amount": 30
+        },
+        {
+          "itemId": 3,
+          "amount": 20
+        }
+      ]
+    },
+    "32": {
+      "id": 32,
+      "questType": 0,
+      "name": "Scales of Truth",
+      "description": "Marina's enhanced tracking abilities have revealed a faint trail leading to Snowzard territories. To uncover the connection between the missing townspeople and these lizard warriors, I must venture into their domain.",
+      "fromNpcId": 3,
+      "toNpcId": 9,
+      "exp": 500,
+      "gold": 100,
+      "requiredDoneQuestIds": [
+        31
+      ],
+      "contributeDetails": [
+        {
+          "itemId": 125,
+          "amount": 10
+        }
+      ]
+    },
+    "33": {
+      "id": 33,
+      "questType": 0,
+      "name": "The Frozen Melody",
+      "description": "Chione's examination of the Snowzard Lizard Tails has revealed traces of an unknown magic, possibly linked to a network of mysterious ice veins spreading through Everfrost. To trace these veins to their source and potentially uncover the fate of the missing townspeople, Chione needs to perform a powerful tracking spell. My task is to gather the necessary components.",
+      "fromNpcId": 9,
+      "exp": 550,
+      "gold": 110,
+      "requiredDoneQuestIds": [
+        32
+      ],
+      "contributeDetails": [
+        {
+          "itemId": 3,
+          "amount": 20
+        },
+        {
+          "itemId": 7,
+          "amount": 10
+        },
+        {
+          "itemId": 9,
+          "amount": 10
+        }
+      ]
+    },
+    "34": {
+      "id": 34,
+      "questType": 0,
+      "name": "Winged Abductors",
+      "description": "Chione's powerful tracking spell has revealed a shocking truth: the legendary Glaciewyrms are responsible for the disappearances in Frostgard. To locate their lair and the missing townspeople, I must gather materials for Marina to track the beasts down once and for all. ",
+      "fromNpcId": 9,
+      "exp": 800,
+      "gold": 160,
+      "requiredDoneQuestIds": [
+        33
+      ],
+      "contributeDetails": [
+        {
+          "itemId": 126,
+          "amount": 20
+        },
+        {
+          "itemId": 11,
+          "amount": 10
+        },
+        {
+          "itemId": 13,
+          "amount": 10
+        }
+      ]
+    },
+    "35": {
+      "id": 35,
+      "questType": 0,
+      "name": "The Frozen Prison",
+      "description": "The missing people of Frostgard are being held in the treacherous Frozen Caverns, guarded by the legendary Frost Gralochs. These ancient winter beasts are my final and most formidable obstacle. My mission is to battle these colossal creatures and collect their furs, which are crucial for Chione's powerful thawing spell to free the imprisoned townspeople.",
+      "fromNpcId": 9,
+      "exp": 1200,
+      "gold": 240,
+      "requiredDoneQuestIds": [
+        34
+      ],
+      "contributeDetails": [
+        {
+          "itemId": 127,
+          "amount": 10
+        }
+      ],
+      "achievementId": 7
+    },
+    "36": {
+      "id": 36,
+      "questType": 0,
+      "name": "Whispers in the Sand",
+      "description": "The troubles in Sunscar have escalated, with wells drying up faster than ever and mysterious mirages plaguing the desert. Ayesha, my trusted ally in Dunewatch, believes an ancient artifact could provide answers. To locate it, she needs me to gather materials to create a special divining rod to track down the whereabouts of the ancient artifact.",
+      "fromNpcId": 4,
+      "exp": 300,
+      "gold": 60,
+      "requiredDoneQuestIds": [
+        20
+      ],
+      "contributeDetails": [
+        {
+          "itemId": 7,
+          "amount": 30
+        },
+        {
+          "itemId": 94,
+          "amount": 20
+        }
+      ]
+    },
+    "37": {
+      "id": 37,
+      "questType": 0,
+      "name": "The Cinderwings",
+      "description": "With the divining rod pointing towards the treacherous Cinderwing nesting grounds, I must prepare for the dangers ahead.My task is to fight the Cinderwings and collect their Stingers. Joined by Hilathe, a daring treasure hunter seeking the legendary Sunstone, I'll venture into the scorching desert to face these fearsome beasts.",
+      "fromNpcId": 4,
+      "toNpcId": 10,
+      "exp": 500,
+      "gold": 100,
+      "requiredDoneQuestIds": [
+        36
+      ],
+      "contributeDetails": [
+        {
+          "itemId": 128,
+          "amount": 10
+        }
+      ]
+    },
+    "38": {
+      "id": 38,
+      "questType": 0,
+      "name": "Echoes of a Buried Past",
+      "description": "Ayesha's research has led to a startling discovery: an entire city lies buried beneath the sands of Sunscar. To unearth this ancient metropolis and potentially uncover the source of Sunscar's troubles, I must gather materials for a powerful spell.",
+      "fromNpcId": 4,
+      "toNpcId": 10,
+      "exp": 550,
+      "gold": 110,
+      "requiredDoneQuestIds": [
+        37
+      ],
+      "contributeDetails": [
+        {
+          "itemId": 94,
+          "amount": 20
+        },
+        {
+          "itemId": 13,
+          "amount": 10
+        },
+        {
+          "itemId": 9,
+          "amount": 10
+        }
+      ]
+    },
+    "39": {
+      "id": 39,
+      "questType": 0,
+      "name": "Stone and Fire",
+      "description": "The buried city has been revealed, guarded by the fearsome Calderatops - ancient bull-like creatures with flaming horns. To access the city and uncover the truth behind Sunscar's troubles, I must create a pacifying charm.",
+      "fromNpcId": 10,
+      "exp": 800,
+      "gold": 160,
+      "requiredDoneQuestIds": [
+        38
+      ],
+      "contributeDetails": [
+        {
+          "itemId": 129,
+          "amount": 20
+        },
+        {
+          "itemId": 2,
+          "amount": 10
+        },
+        {
+          "itemId": 15,
+          "amount": 10
+        }
+      ]
+    },
+    "40": {
+      "id": 40,
+      "questType": 0,
+      "name": "Guardians of the Heart",
+      "description": "The final piece of Sunscar's mystery lies with the Dymryn, a tribe of beastmen now revealed to be descendants of the ancient buried city. To save Sunscar and uncover the truth about the Heart of the Desert, I must earn the Dymryn's trust through their sacred rite of passage.",
+      "fromNpcId": 10,
+      "exp": 1200,
+      "gold": 240,
+      "requiredDoneQuestIds": [
+        39
+      ],
+      "contributeDetails": [
+        {
+          "itemId": 130,
+          "amount": 10
+        }
+      ],
+      "achievementId": 8
+    }
+  }
+}

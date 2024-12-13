@@ -1,0 +1,95 @@
+{
+  "achievements": {
+    "1": {
+      "id": 1,
+      "name": "Citizen",
+      "content": "You've pledged your loyalty to one of the 4 kingdoms. Your fates are now forever bound.",
+      "instruction": "Create your character.",
+      "stats": {
+        "atk": 0,
+        "def": 0,
+        "agi": 0
+      }
+    },
+    "2": {
+      "id": 2,
+      "name": "Dev Slayer",
+      "content": "You've committed the unspeakable. You've slain the one above all, the creator of worlds.",
+      "instruction": "Defeat artwoooood in the first ever public playtest.",
+      "stats": {
+        "atk": 1,
+        "def": 0,
+        "agi": 0
+      },
+      "color": "#c493ff"
+    },
+    "3": {
+      "id": 3,
+      "name": "Knight of Valor",
+      "content": "You've proven yourself as one of the renowned knights of the realm. People will love, or fear you until the day you die.",
+      "instruction": "Slay your very first boss in FTK.",
+      "stats": {
+        "atk": 1,
+        "def": 1,
+        "agi": 0
+      },
+      "color": "#E67E22"
+    },
+    "4": {
+      "id": 4,
+      "name": "Firedrake Slayer",
+      "content": "You've slain the ancient Fire Dragon that terrorized the Outer World for so long. This is a feat worthy of lifetime glory.",
+      "instruction": "Defeat Ignis, the Fire Dragon.",
+      "stats": {
+        "atk": 1,
+        "def": 0,
+        "agi": 1
+      },
+      "color": "#ef574c"
+    },
+    "5": {
+      "id": 5,
+      "name": "Forest Sentinel",
+      "content": "Forgotten by most, respected by the know, the Sentinels are the unsung heroes of Sylvanreach. You're now one of them.",
+      "instruction": "Complete a major Sylvanreach questline.",
+      "stats": {
+        "atk": 0,
+        "def": 0,
+        "agi": 1
+      }
+    },
+    "6": {
+      "id": 6,
+      "name": "Champion of the Mist",
+      "content": "The heroes of Misthaven are like spectres in the fog. You're now one of them.",
+      "instruction": "Complete a major Misthaven questline.",
+      "stats": {
+        "atk": 0,
+        "def": 1,
+        "agi": 0
+      }
+    },
+    "7": {
+      "id": 7,
+      "name": "Winter's Guardian",
+      "content": "Everfrost's winter is as deadly as its guardians. You're now one of them.",
+      "instruction": "Complete a major Everfrost questline.",
+      "stats": {
+        "atk": 0,
+        "def": 0,
+        "agi": 1
+      }
+    },
+    "8": {
+      "id": 8,
+      "name": "Desert Moon’s Keeper",
+      "content": "The Moon is guarded with fanatical vigor in Sunscar by its relentless champions. You're now one of them.",
+      "instruction": "Complete a major Sunscar questline.",
+      "stats": {
+        "atk": 0,
+        "def": 1,
+        "agi": 0
+      }
+    }
+  }
+}

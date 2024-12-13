@@ -1,0 +1,16 @@
+{
+  "tileInfos": [
+    {
+      "kingdomId": 1,
+      "x": -5,
+      "y": 1,
+      "farmSlot": 0,
+      "zoneType": 0,
+      "terrainType": 0,
+      "itemIds": [
+        75,
+        83
+      ]
+    }
+  ]
+}

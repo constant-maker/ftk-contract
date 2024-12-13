@@ -1,0 +1,180 @@
+{
+  "monsterLocationsOverride": [
+    {
+      "locations": [
+        {
+          "x": -55,
+          "y": -17
+        }
+      ],
+      "monsterId": 1,
+      "level": 1,
+      "advantageType": 0
+    },
+    {
+      "locations": [
+        {
+          "x": -57,
+          "y": -17
+        }
+      ],
+      "monsterId": 1,
+      "level": 1,
+      "advantageType": 1
+    },
+    {
+      "locations": [
+        {
+          "x": -56,
+          "y": -18
+        }
+      ],
+      "monsterId": 1,
+      "level": 1,
+      "advantageType": 2
+    },
+    {
+      "locations": [
+        {
+          "x": -56,
+          "y": -16
+        }
+      ],
+      "monsterId": 1,
+      "level": 1,
+      "advantageType": 3
+    },
+    {
+      "locations": [
+        {
+          "x": 54,
+          "y": 29
+        }
+      ],
+      "monsterId": 2,
+      "level": 1,
+      "advantageType": 0
+    },
+    {
+      "locations": [
+        {
+          "x": 52,
+          "y": 29
+        }
+      ],
+      "monsterId": 2,
+      "level": 1,
+      "advantageType": 1
+    },
+    {
+      "locations": [
+        {
+          "x": 53,
+          "y": 30
+        }
+      ],
+      "monsterId": 2,
+      "level": 1,
+      "advantageType": 2
+    },
+    {
+      "locations": [
+        {
+          "x": 53,
+          "y": 28
+        }
+      ],
+      "monsterId": 2,
+      "level": 1,
+      "advantageType": 3
+    },
+    {
+      "locations": [
+        {
+          "x": -14,
+          "y": 47
+        }
+      ],
+      "monsterId": 3,
+      "level": 1,
+      "advantageType": 0
+    },
+    {
+      "locations": [
+        {
+          "x": -16,
+          "y": 47
+        }
+      ],
+      "monsterId": 3,
+      "level": 1,
+      "advantageType": 1
+    },
+    {
+      "locations": [
+        {
+          "x": -15,
+          "y": 46
+        }
+      ],
+      "monsterId": 3,
+      "level": 1,
+      "advantageType": 2
+    },
+    {
+      "locations": [
+        {
+          "x": -15,
+          "y": 48
+        }
+      ],
+      "monsterId": 3,
+      "level": 1,
+      "advantageType": 3
+    },
+    {
+      "locations": [
+        {
+          "x": 36,
+          "y": -33
+        }
+      ],
+      "monsterId": 4,
+      "level": 1,
+      "advantageType": 0
+    },
+    {
+      "locations": [
+        {
+          "x": 38,
+          "y": -33
+        }
+      ],
+      "monsterId": 4,
+      "level": 1,
+      "advantageType": 1
+    },
+    {
+      "locations": [
+        {
+          "x": 37,
+          "y": -34
+        }
+      ],
+      "monsterId": 4,
+      "level": 1,
+      "advantageType": 2
+    },
+    {
+      "locations": [
+        {
+          "x": 37,
+          "y": -32
+        }
+      ],
+      "monsterId": 4,
+      "level": 1,
+      "advantageType": 3
+    }
+  ]
+}

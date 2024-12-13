@@ -1,0 +1,191 @@
+{
+  "dailyQuestConfig": {
+    "moveNum": 2,
+    "farmNum": 3,
+    "pvpNum": 1,
+    "pveNum": 3,
+    "rewardExp": 5,
+    "rewardGold": 10
+  },
+  "quests": {
+    "1": {
+      "id": 1,
+      "questType": 0,
+      "name": "A farmer's request",
+      "description": "Young farmer Liliana finds a lost herd of warm wool-providing sheep. Liliana needs you to gather some Sylvan Wood from the old forest trees. With this, she can build shelters to keep the sheep safe during winter. Once spring comes, the village can shear the sheep's thick wool coats for clothing and blankets. Helping Liliana get the necessary resources will benefit both the people, and your Kingdom. Gather the necessary amout of Sylvan Wood to complete this quest.",
+      "fromNpcId": 1,
+      "exp": 14,
+      "gold": 5,
+      "requiredDoneQuestIds": [],
+      "contributeDetails": [
+        {
+          "itemId": 1,
+          "amount": 20
+        }
+      ],
+      "achievementId": 5
+    },
+    "2": {
+      "id": 2,
+      "questType": 0,
+      "name": "Bread and Butter",
+      "description": "Liliana's cousin is a renowned baker in the capital, known for his delicious breads. With a big festival approaching, he needs a large wheat supply to bake his specialties. Liliana tasks you with gathering some Common Wheat from the local fields. Providing this bountiful wheat allows her cousin to grind it into flour and prepare his celebrated breads for festival goers traveling from all over. By completing this quest, you help Liliana aid her family and share their exceptional baking with the capital.",
+      "fromNpcId": 1,
+      "exp": 14,
+      "gold": 5,
+      "requiredDoneQuestIds": [],
+      "contributeDetails": [
+        {
+          "itemId": 12,
+          "amount": 20
+        }
+      ]
+    },
+    "3": {
+      "id": 3,
+      "questType": 0,
+      "name": "Her safety first",
+      "description": "Fearing for Liliana's safety on her ambitious journeys beyond the village, you aim to have a simple iron blade forged - not a weapon, but a reliable utility knife to protect her from threats in the wilds. To craft it, Liliana will need to send some Iron Ores to a local blacksmith she knows. Your quest is to mine the necessary Iron Ores and give them to Liliana. Success lets her commission the sturdy little blade, allowing Liliana to travel safer as she pursues her community-serving projects.",
+      "fromNpcId": 1,
+      "exp": 14,
+      "gold": 10,
+      "requiredDoneQuestIds": [],
+      "contributeDetails": [
+        {
+          "itemId": 10,
+          "amount": 20
+        }
+      ]
+    },
+    "4": {
+      "id": 4,
+      "questType": 0,
+      "name": "Contribute resources to your Kingdom",
+      "description": "Your Kingdom can only prosper with your help. Contribute 500 Sylvan Woods, 500 Common Wheats and 500 Iron Ores to complete this quest.",
+      "fromNpcId": 1,
+      "exp": 56,
+      "gold": 20,
+      "requiredDoneQuestIds": [
+        1,
+        2,
+        3
+      ],
+      "contributeDetails": [
+        {
+          "itemId": 1,
+          "amount": 50
+        },
+        {
+          "itemId": 10,
+          "amount": 50
+        },
+        {
+          "itemId": 12,
+          "amount": 50
+        }
+      ]
+    },
+    "5": {
+      "id": 5,
+      "questType": 0,
+      "name": "Gather Birch Wood",
+      "description": "Birch Woods are less common than Sylvan, which means you might need to travel further to get them. Gather 100 Birch Woods to complete this quest.",
+      "fromNpcId": 1,
+      "exp": 35,
+      "gold": 10,
+      "requiredDoneQuestIds": [
+        1
+      ],
+      "contributeDetails": [
+        {
+          "itemId": 2,
+          "amount": 20
+        }
+      ]
+    },
+    "6": {
+      "id": 6,
+      "questType": 0,
+      "name": "Gather Golden Wheat",
+      "description": "Golden Wheat are the rarer kind of wheat, put richer in taste and higher in value. You might need to travel further to get them. Gather 100 Golden Wheats to complete this quest.",
+      "fromNpcId": 1,
+      "exp": 35,
+      "gold": 10,
+      "requiredDoneQuestIds": [
+        2
+      ],
+      "contributeDetails": [
+        {
+          "itemId": 13,
+          "amount": 20
+        }
+      ]
+    },
+    "7": {
+      "id": 7,
+      "questType": 0,
+      "name": "Gather Copper Ore",
+      "description": "Copper, more valuable than Iron, but also less common. You might need to travel further to get them. Gather 100 Copper Ores to complete this quest.",
+      "fromNpcId": 1,
+      "exp": 35,
+      "gold": 10,
+      "requiredDoneQuestIds": [
+        3
+      ],
+      "contributeDetails": [
+        {
+          "itemId": 11,
+          "amount": 20
+        }
+      ]
+    },
+    "8": {
+      "id": 8,
+      "questType": 0,
+      "name": "Contribute Tier 2 resources to your Kingdom",
+      "description": "Your Kingdom grows stronger with your contributions. Rarer resources means more effective trading and stronger equipments. Contribute 500 Birch Woods, 500 Golden Wheats and 500 Copper Ores to complete this quest.",
+      "fromNpcId": 1,
+      "exp": 105,
+      "gold": 30,
+      "requiredDoneQuestIds": [
+        5,
+        6,
+        7
+      ],
+      "contributeDetails": [
+        {
+          "itemId": 2,
+          "amount": 50
+        },
+        {
+          "itemId": 13,
+          "amount": 50
+        },
+        {
+          "itemId": 11,
+          "amount": 50
+        }
+      ]
+    },
+    "9": {
+      "id": 9,
+      "questType": 1,
+      "name": "New Gears",
+      "description": "Go to the blackshmith to craft your new sword from the resources and rewards you've collected earlier.",
+      "fromNpcId": 1,
+      "exp": 14,
+      "gold": 5,
+      "requiredDoneQuestIds": [],
+      "locateDetails": [
+        {
+          "x": 30,
+          "y": -37
+        },
+        {
+          "x": 31,
+          "y": -37
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "achievements": {
+    "1": {
+      "id": 1,
+      "name": "Citizen",
+      "content": "You have pledged loyalty in one of the Four Kingdoms.",
+      "stats": {
+        "atk": 0,
+        "agi": 0,
+        "def": 0
+      }
+    },
+    "2": {
+      "id": 2,
+      "name": "Dev Slayer",
+      "content": "By defeating artwoooood in the first playtest, you’ve proven yourself a true master of the game.",
+      "stats": {
+        "atk": 1,
+        "agi": 1,
+        "def": 0
+      },
+      "color": "#c493ff"
+    },
+    "3": {
+      "id": 3,
+      "name": "Knight of Valor",
+      "content": "Your bravery and heroism have set you apart as a true champion of the realm.",
+      "stats": {
+        "atk": 0,
+        "agi": 1,
+        "def": 1
+      },
+      "color": "#E67E22"
+    },
+    "5": {
+      "id": 5,
+      "name": "Sylvanreach Hero",
+      "content": "You've slain the ancient Fire Dragon that terrorized the Outer World for so long. This is a feat worthy of lifetime glory.",
+      "instruction": "Defeat Ignis, the Fire Dragon.",
+      "stats": {
+        "atk": 0,
+        "def": 0,
+        "agi": 0
+      },
+      "color": "#ef574c"
+    }
+  }
+}

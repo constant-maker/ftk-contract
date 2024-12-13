@@ -1,0 +1,35 @@
+{
+  "name": "contracts",
+  "version": "0.0.0",
+  "private": true,
+  "license": "MIT",
+  "scripts": {
+    "build": "mud build",
+    "mud:up": "pnpm mud set-version --tag latest && pnpm install",
+    "deploy:local": "pnpm run build && mud deploy",
+    "deploy:testnet": "pnpm run build && mud deploy --profile=garnet-testnet",
+    "dev": "mud dev-contracts",
+    "lint": "pnpm run prettier && pnpm run solhint",
+    "prettier": "prettier --write 'src/**/*.sol' 'script/**/*.sol' 'test/**/*.sol' 'tables/**/*.ts'",
+    "solhint": "solhint --config ./.solhint.json 'src/**/*.sol' --fix",
+    "test": "mud test"
+  },
+  "dependencies": {
+    "@latticexyz/cli": "2.2.11",
+    "@latticexyz/schema-type": "2.2.11",
+    "@latticexyz/store": "2.2.11",
+    "@latticexyz/world": "2.2.11",
+    "@latticexyz/world-modules": "2.2.11"
+  },
+  "devDependencies": {
+    "@types/node": "^18.15.11",
+    "ds-test": "https://github.com/dapphub/ds-test.git#e282159d5170298eb2455a6c05280ab5a73a4ef0",
+    "forge-std": "https://github.com/foundry-rs/forge-std.git#74cfb77e308dd188d2f58864aaf44963ae6b88b1",
+    "prettier": "^2.8.8",
+    "prettier-plugin-solidity": "^1.0.0-beta.19",
+    "rimraf": "^5.0.5",
+    "solhint": "^3.3.7",
+    "solhint-config-mud": "2.2.11",
+    "solhint-plugin-mud": "2.2.11"
+  }
+}

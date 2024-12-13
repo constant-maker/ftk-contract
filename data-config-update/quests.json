@@ -1,0 +1,11 @@
+{
+  "dailyQuestConfig": {
+    "moveNum": 5,
+    "farmNum": 3,
+    "pvpNum": 2,
+    "pveNum": 3,
+    "rewardExp": 100,
+    "rewardGold": 20
+  },
+  "quests": {}
+}

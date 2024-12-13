@@ -1,0 +1,17 @@
+ds-test/=node_modules/ds-test/src/
+forge-std/=node_modules/forge-std/src/
+@latticexyz/=node_modules/@latticexyz/
+@prb/math/=lib/prb-math/
+@src=src/
+@utils=src/utils/
+@systems=src/systems/
+@common=src/common/
+@codegen=src/codegen/
+@mocks=src/mocks/
+@abstracts=src/abstracts/
+@interfaces=src/interfaces/
+@hooks=src/hooks/
+@fixtures=test/fixtures/
+@config=src/config/
+@solady=lib/solady/src/
+@wrappers=src/wrappers/

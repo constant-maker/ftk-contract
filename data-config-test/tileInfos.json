@@ -1,0 +1,51 @@
+{
+  "tileInfos": [
+    {
+      "kingdomId": 1,
+      "x": 20,
+      "y": -32,
+      "zoneType": 0,
+      "itemIds": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "kingdomId": 1,
+      "x": 21,
+      "y": -32,
+      "zoneType": 2,
+      "itemIds": [
+        12
+      ]
+    },
+    {
+      "kingdomId": 2,
+      "x": 22,
+      "y": -32,
+      "zoneType": 0,
+      "itemIds": [
+        11
+      ]
+    },
+    {
+      "kingdomId": 1,
+      "x": 30,
+      "y": -35,
+      "zoneType": 0,
+      "itemIds": [
+        1, 10
+      ]
+    }
+  ]
+}

@@ -1,0 +1,308 @@
+{
+  "itemRecipes": {
+    "18": {
+      "itemId": 18,
+      "ingredients": [
+        {
+          "itemId": 1,
+          "amount": 10
+        },
+        {
+          "itemId": 10,
+          "amount": 10
+        }
+      ],
+      "goldCost": 5
+    },
+    "19": {
+      "itemId": 19,
+      "ingredients": [
+        {
+          "itemId": 1,
+          "amount": 30
+        },
+        {
+          "itemId": 10,
+          "amount": 30
+        }
+      ],
+      "goldCost": 5
+    },
+    "20": {
+      "itemId": 20,
+      "ingredients": [
+        {
+          "itemId": 1,
+          "amount": 10
+        },
+        {
+          "itemId": 10,
+          "amount": 10
+        }
+      ],
+      "goldCost": 5
+    },
+    "21": {
+      "itemId": 21,
+      "ingredients": [
+        {
+          "itemId": 1,
+          "amount": 30
+        },
+        {
+          "itemId": 10,
+          "amount": 30
+        }
+      ],
+      "goldCost": 5
+    },
+    "22": {
+      "itemId": 22,
+      "ingredients": [
+        {
+          "itemId": 1,
+          "amount": 10
+        },
+        {
+          "itemId": 10,
+          "amount": 10
+        }
+      ],
+      "goldCost": 5
+    },
+    "23": {
+      "itemId": 23,
+      "ingredients": [
+        {
+          "itemId": 1,
+          "amount": 30
+        },
+        {
+          "itemId": 10,
+          "amount": 30
+        }
+      ],
+      "goldCost": 10
+    },
+    "24": {
+      "itemId": 24,
+      "ingredients": [
+        {
+          "itemId": 1,
+          "amount": 10
+        },
+        {
+          "itemId": 10,
+          "amount": 10
+        }
+      ],
+      "goldCost": 10
+    },
+    "25": {
+      "itemId": 25,
+      "ingredients": [
+        {
+          "itemId": 1,
+          "amount": 30
+        },
+        {
+          "itemId": 10,
+          "amount": 30
+        }
+      ],
+      "goldCost": 10
+    },
+    "26": {
+      "itemId": 26,
+      "ingredients": [
+        {
+          "itemId": 1,
+          "amount": 10
+        },
+        {
+          "itemId": 10,
+          "amount": 10
+        }
+      ],
+      "goldCost": 10
+    },
+    "27": {
+      "itemId": 27,
+      "ingredients": [
+        {
+          "itemId": 1,
+          "amount": 30
+        },
+        {
+          "itemId": 10,
+          "amount": 30
+        }
+      ],
+      "goldCost": 10
+    },
+    "28": {
+      "itemId": 28,
+      "ingredients": [
+        {
+          "itemId": 1,
+          "amount": 10
+        },
+        {
+          "itemId": 10,
+          "amount": 10
+        }
+      ],
+      "goldCost": 10
+    },
+    "29": {
+      "itemId": 29,
+      "ingredients": [
+        {
+          "itemId": 1,
+          "amount": 30
+        },
+        {
+          "itemId": 10,
+          "amount": 30
+        }
+      ],
+      "goldCost": 10
+    },
+    "30": {
+      "itemId": 30,
+      "ingredients": [
+        {
+          "itemId": 1,
+          "amount": 10
+        },
+        {
+          "itemId": 10,
+          "amount": 10
+        }
+      ],
+      "goldCost": 10
+    },
+    "31": {
+      "itemId": 31,
+      "ingredients": [
+        {
+          "itemId": 1,
+          "amount": 20
+        },
+        {
+          "itemId": 10,
+          "amount": 30
+        }
+      ],
+      "goldCost": 10
+    },
+    "32": {
+      "itemId": 32,
+      "ingredients": [
+        {
+          "itemId": 1,
+          "amount": 10
+        },
+        {
+          "itemId": 10,
+          "amount": 10
+        }
+      ],
+      "goldCost": 10
+    },
+    "33": {
+      "itemId": 33,
+      "ingredients": [
+        {
+          "itemId": 1,
+          "amount": 20
+        },
+        {
+          "itemId": 2,
+          "amount": 10
+        },
+        {
+          "itemId": 17,
+          "amount": 5
+        }
+      ],
+      "goldCost": 10
+    },
+    "35": {
+      "itemId": 35,
+      "ingredients": [
+        {
+          "itemId": 14,
+          "amount": 10
+        },
+        {
+          "itemId": 12,
+          "amount": 5
+        }
+      ],
+      "goldCost": 1
+    },
+    "39": {
+      "itemId": 39,
+      "ingredients": [
+        {
+          "itemId": 38,
+          "amount": 1
+        },
+        {
+          "itemId": 11,
+          "amount": 50
+        },
+        {
+          "itemId": 2,
+          "amount": 50
+        }
+      ],
+      "goldCost": 50
+    },
+    "40": {
+      "itemId": 40,
+      "ingredients": [
+        {
+          "itemId": 36,
+          "amount": 1
+        },
+        {
+          "itemId": 17,
+          "amount": 30
+        },
+        {
+          "itemId": 2,
+          "amount": 30
+        },
+        {
+          "itemId": 11,
+          "amount": 30
+        }
+      ],
+      "goldCost": 50
+    },
+    "41": {
+      "itemId": 41,
+      "ingredients": [
+        {
+          "itemId": 37,
+          "amount": 1
+        },
+        {
+          "itemId": 3,
+          "amount": 15
+        },
+        {
+          "itemId": 11,
+          "amount": 30
+        },
+        {
+          "itemId": 17,
+          "amount": 30
+        }
+      ],
+      "goldCost": 50
+    }
+  }
+}

@@ -1,0 +1,542 @@
+{
+  "items": {
+    "1": {
+      "id": 1,
+      "type": 23,
+      "category": 2,
+      "name": "Sylvan Wood",
+      "desc": "The most basic type of wood which can be found everywhere across all kingdoms. Used for crafting simple and makeshift tools.",
+      "tier": 1,
+      "weight": 1,
+      "resourceInfo": {
+        "type": 0
+      }
+    },
+    "2": {
+      "id": 2,
+      "type": 23,
+      "category": 2,
+      "name": "Birch Wood",
+      "desc": "Known for its durability and natural resistance to decay. Used for crafting items that require a bit more resilience.",
+      "tier": 2,
+      "weight": 2,
+      "resourceInfo": {
+        "type": 0
+      }
+    },
+    "3": {
+      "id": 3,
+      "type": 23,
+      "category": 2,
+      "name": "Ironbark Wood",
+      "desc": "Among the toughest hardwoods, it is extremely dense and impervious, with a nearly unbreakable outer bark.",
+      "tier": 3,
+      "weight": 3,
+      "resourceInfo": {
+        "type": 0
+      }
+    },
+    "4": {
+      "id": 4,
+      "type": 23,
+      "category": 2,
+      "name": "Heartcore Wood",
+      "desc": "The mystical essence derived from the most ancient of treants.",
+      "tier": 4,
+      "weight": 4,
+      "resourceInfo": {
+        "type": 0
+      }
+    },
+    "5": {
+      "id": 5,
+      "type": 23,
+      "category": 2,
+      "name": "Enchanted Wood",
+      "desc": "Almost forgotten mythical wood from the Elder Tree that predate civilization.",
+      "tier": 5,
+      "weight": 5,
+      "resourceInfo": {
+        "type": 0
+      }
+    },
+    "6": {
+      "id": 6,
+      "type": 23,
+      "category": 2,
+      "name": "Rough Stone",
+      "desc": "Small stone pieces commonly found along riverbanks and paths.",
+      "tier": 1,
+      "weight": 1,
+      "resourceInfo": {
+        "type": 1
+      }
+    },
+    "7": {
+      "id": 7,
+      "type": 23,
+      "category": 2,
+      "name": "Marker Stone",
+      "desc": "Upright stones marking paths and boundaries since ancient times.",
+      "tier": 2,
+      "weight": 2,
+      "resourceInfo": {
+        "type": 1
+      }
+    },
+    "8": {
+      "id": 8,
+      "type": 23,
+      "category": 2,
+      "name": "Stream Fish",
+      "desc": "Small, bountiful fish teeming in babbling streams and rivers.",
+      "tier": 1,
+      "weight": 1,
+      "resourceInfo": {
+        "type": 2
+      }
+    },
+    "9": {
+      "id": 9,
+      "type": 23,
+      "category": 2,
+      "name": "Marsh Fish",
+      "desc": "Robust, hardy fish scavenged from stagnant marsh waters.",
+      "tier": 2,
+      "weight": 2,
+      "resourceInfo": {
+        "type": 2
+      }
+    },
+    "10": {
+      "id": 10,
+      "type": 23,
+      "category": 2,
+      "name": "Iron Ore",
+      "desc": "A common ferrous ore that can be smelted into useful iron metals.",
+      "tier": 1,
+      "weight": 1,
+      "resourceInfo": {
+        "type": 3
+      }
+    },
+    "11": {
+      "id": 11,
+      "type": 23,
+      "category": 2,
+      "name": "Copper Ore",
+      "desc": "Reddish-brown ore that yields a soft, conductive copper metal.",
+      "tier": 2,
+      "weight": 2,
+      "resourceInfo": {
+        "type": 3
+      }
+    },
+    "12": {
+      "id": 12,
+      "type": 23,
+      "category": 2,
+      "name": "Common Wheat",
+      "desc": "Common wheat varieties grown on farms and in fields.",
+      "tier": 1,
+      "weight": 1,
+      "resourceInfo": {
+        "type": 4
+      }
+    },
+    "13": {
+      "id": 13,
+      "type": 23,
+      "category": 2,
+      "name": "Golden Wheat",
+      "desc": "Hardy wheat thriving on sloped ridges and knolls.",
+      "tier": 2,
+      "weight": 2,
+      "resourceInfo": {
+        "type": 4
+      }
+    },
+    "14": {
+      "id": 14,
+      "type": 23,
+      "category": 2,
+      "name": "Wild Berries",
+      "desc": "Basic, tangled handfuls of assorted common berries from the wild.",
+      "tier": 1,
+      "weight": 1,
+      "resourceInfo": {
+        "type": 5
+      }
+    },
+    "15": {
+      "id": 15,
+      "type": 23,
+      "category": 2,
+      "name": "Bramble Berries",
+      "desc": "Larger hauls of berries plucked from thick brambles.",
+      "tier": 2,
+      "weight": 2,
+      "resourceInfo": {
+        "type": 5
+      }
+    },
+    "16": {
+      "id": 16,
+      "name": "Wildfur",
+      "type": 23,
+      "category": 2,
+      "desc": "Prized for its natural warmth and durability.",
+      "tier": 1,
+      "weight": 1,
+      "resourceInfo": {
+        "type": 6
+      }
+    },
+    "17": {
+      "id": 17,
+      "type": 23,
+      "category": 2,
+      "name": "Sharp Claw",
+      "desc": "The natural weapon of natural predators.",
+      "tier": 1,
+      "weight": 1,
+      "resourceInfo": {
+        "type": 6
+      }
+    },
+    "18": {
+      "id": 18,
+      "type": 0,
+      "category": 0,
+      "tier": 1,
+      "durability": 100,
+      "weight": 2,
+      "name": "Beginner Wood Axe",
+      "desc": "A small and old wood axe used for chopping some common logs."
+    },
+    "19": {
+      "id": 19,
+      "type": 0,
+      "category": 0,
+      "tier": 2,
+      "durability": 100,
+      "weight": 5,
+      "name": "Novice Wood Axe",
+      "desc": "A heavy wood axe, but prone to break."
+    },
+    "20": {
+      "id": 20,
+      "type": 1,
+      "category": 0,
+      "tier": 1,
+      "durability": 100,
+      "weight": 2,
+      "name": "Beginner Hammer",
+      "desc": "Starter stone hammer with a balanced, light head for easy handling."
+    },
+    "21": {
+      "id": 21,
+      "type": 1,
+      "category": 0,
+      "tier": 2,
+      "durability": 100,
+      "weight": 5,
+      "name": "Novice Hammer",
+      "desc": "Enhanced stone hammer which is designed for longer use with less fatigue."
+    },
+    "22": {
+      "id": 22,
+      "type": 2,
+      "category": 0,
+      "tier": 1,
+      "durability": 100,
+      "weight": 2,
+      "name": "Beginner Fishing Rod",
+      "desc": "Simple design, perfect for catching small fish."
+    },
+    "23": {
+      "id": 23,
+      "type": 2,
+      "category": 0,
+      "tier": 2,
+      "durability": 100,
+      "weight": 5,
+      "name": "Novice Fishing Rod",
+      "desc": "A balanced blend of durability and flexibility, made for catching small-to-medium fish."
+    },
+    "24": {
+      "id": 24,
+      "type": 3,
+      "category": 0,
+      "tier": 1,
+      "durability": 100,
+      "weight": 2,
+      "name": "Beginner Pickaxe",
+      "desc": "A dull and old pickaxe for common ores and minerals."
+    },
+    "25": {
+      "id": 25,
+      "type": 3,
+      "category": 0,
+      "tier": 2,
+      "durability": 100,
+      "weight": 5,
+      "name": "Novice Pickaxe",
+      "desc": "A standard pickaxe used by miners throughout the four Kingdoms."
+    },
+    "26": {
+      "id": 26,
+      "type": 4,
+      "category": 0,
+      "tier": 1,
+      "durability": 100,
+      "weight": 2,
+      "name": "Beginner Sickle",
+      "desc": "A rusty sickle, only capable of harvesting the most basic wheat."
+    },
+    "27": {
+      "id": 27,
+      "type": 4,
+      "category": 0,
+      "tier": 2,
+      "durability": 100,
+      "weight": 5,
+      "name": "Novice Sickle",
+      "desc": "Balanced and lightweight with better grip for efficient wheat cutting."
+    },
+    "28": {
+      "id": 28,
+      "type": 5,
+      "category": 0,
+      "tier": 1,
+      "durability": 100,
+      "weight": 2,
+      "name": "Beginner Berry Shears",
+      "desc": "Gentle on berries, ideal for beginners learning to forage."
+    },
+    "29": {
+      "id": 29,
+      "type": 5,
+      "category": 0,
+      "tier": 2,
+      "durability": 100,
+      "weight": 5,
+      "name": "Novice Berry Shears",
+      "desc": "Improved design for quick and easy collection of medium-sized berries."
+    },
+    "30": {
+      "id": 30,
+      "type": 6,
+      "category": 1,
+      "tier": 1,
+      "durability": 100,
+      "weight": 3,
+      "name": "Rusty Sword",
+      "desc": "An old sword that was left to rust. It's visibly deteriorating, but it's still better than your fists.",
+      "equipmentInfo": {
+        "slotType": 0,
+        "advantageType": 0,
+        "twoHanded": false,
+        "atk": 2,
+        "def": 1,
+        "agi": 0,
+        "hp": 0,
+        "ms": 0
+      }
+    },
+    "31": {
+      "id": 31,
+      "type": 6,
+      "category": 1,
+      "tier": 2,
+      "durability": 100,
+      "weight": 6,
+      "name": "Iron Sword",
+      "desc": "Balanced for quick strikes, with an iron composition for durability.",
+      "equipmentInfo": {
+        "slotType": 0,
+        "advantageType": 0,
+        "twoHanded": false,
+        "atk": 4,
+        "def": 1,
+        "agi": 0,
+        "hp": 0,
+        "ms": 0
+      }
+    },
+    "32": {
+      "id": 32,
+      "type": 9,
+      "category": 1,
+      "tier": 1,
+      "durability": 100,
+      "weight": 3,
+      "name": "Composite Bow",
+      "desc": "An old and dusty bow that's only good at hitting small creatures.",
+      "equipmentInfo": {
+        "slotType": 0,
+        "advantageType": 3,
+        "twoHanded": true,
+        "atk": 4,
+        "def": 0,
+        "agi": 0,
+        "hp": 0,
+        "ms": 0
+      }
+    },
+    "33": {
+      "id": 33,
+      "type": 9,
+      "category": 1,
+      "tier": 2,
+      "durability": 100,
+      "weight": 6,
+      "name": "Hunting Bow",
+      "desc": "A basic hunting bow - plain, yet versatile.",
+      "equipmentInfo": {
+        "slotType": 0,
+        "advantageType": 1,
+        "twoHanded": true,
+        "atk": 6,
+        "def": 0,
+        "agi": 0,
+        "hp": 0,
+        "ms": 0
+      }
+    },
+    "34": {
+      "id": 34,
+      "type": 12,
+      "category": 1,
+      "tier": 1,
+      "durability": 100,
+      "weight": 3,
+      "name": "Big Shield",
+      "desc": "A Big Shield.",
+      "equipmentInfo": {
+        "slotType": 1,
+        "advantageType": 0,
+        "twoHanded": false,
+        "atk": 0,
+        "def": 3,
+        "agi": 0,
+        "hp": 0,
+        "ms": 0
+      }
+    },
+    "35": {
+      "id": 35,
+      "type": 25,
+      "category": 2,
+      "tier": 1,
+      "weight": 2,
+      "name": "Small Healing Potion",
+      "desc": "A small potion that restores a small amount of health. Ideal for quick recovery during early adventures.",
+      "healingInfo": {
+        "hpRestore": 20
+      }
+    },
+    "36": {
+      "id": 36,
+      "type": 23,
+      "category": 2,
+      "tier": 3,
+      "weight": 3,
+      "name": "Draconic Heart",
+      "desc": "It is said that a dragon's soul persists in its heart after death. The heart is still pulsing, albeit faintly.",
+      "resourceInfo": {
+        "type": 6
+      }
+    },
+    "37": {
+      "id": 37,
+      "type": 23,
+      "category": 2,
+      "tier": 3,
+      "weight": 3,
+      "name": "Red Scales",
+      "desc": "Crimson dragon scales, said to be nigh-indestructible, and of course, incredibly valuable.",
+      "resourceInfo": {
+        "type": 6
+      }
+    },
+    "38": {
+      "id": 38,
+      "type": 23,
+      "category": 2,
+      "tier": 3,
+      "weight": 3,
+      "name": "Dragon Fang",
+      "desc": "A massive and sharp fang, imbued with the dragon's ferocity.",
+      "resourceInfo": {
+        "type": 6
+      }
+    },
+    "39": {
+      "id": 39,
+      "type": 8,
+      "category": 1,
+      "tier": 3,
+      "weight": 18,
+      "name": "Beast Piercer",
+      "desc": "A vicious piercing spear edged with a dragon's lethal fang.",
+      "equipmentInfo": {
+        "slotType": 0,
+        "advantageType": 1,
+        "twoHanded": false,
+        "atk": 15,
+        "def": 1,
+        "agi": 4,
+        "hp": 0,
+        "ms": 0
+      }
+    },
+    "40": {
+      "id": 40,
+      "type": 19,
+      "category": 1,
+      "tier": 3,
+      "weight": 18,
+      "name": "Blood Armor",
+      "desc": "A vicious piercing spear edged with a dragon's lethal fang.",
+      "equipmentInfo": {
+        "slotType": 2,
+        "advantageType": 0,
+        "twoHanded": false,
+        "atk": 2,
+        "def": 10,
+        "agi": 0,
+        "hp": 80,
+        "ms": 0
+      }
+    },
+    "41": {
+      "id": 41,
+      "type": 21,
+      "category": 1,
+      "tier": 3,
+      "weight": 15,
+      "name": "Scaled Greatshield",
+      "desc": "A towering shield adorned with dragon scales, providing effective defense.",
+      "equipmentInfo": {
+        "slotType": 1,
+        "advantageType": 0,
+        "twoHanded": false,
+        "atk": 0,
+        "def": 12,
+        "agi": 0,
+        "hp": 50,
+        "ms": 0
+      }
+    },
+    "42": {
+      "id": 42,
+      "type": 0,
+      "category": 0,
+      "tier": 3,
+      "weight": 6,
+      "name": "Standard Wood Axe",
+      "desc": "The well-balanced woodcutter's axe for harvesting various types of timber."
+    }
+  }
+}

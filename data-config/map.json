@@ -1,0 +1,180 @@
+{
+  "cities": {
+    "1": {
+      "id": 1,
+      "x": -56,
+      "y": -17,
+      "kingdomId": 1,
+      "name": "Lumindale",
+      "isCapital": true,
+      "level": 0
+    },
+    "2": {
+      "id": 2,
+      "x": 53,
+      "y": 29,
+      "kingdomId": 2,
+      "name": "Aetheria",
+      "isCapital": true,
+      "level": 0
+    },
+    "3": {
+      "id": 3,
+      "x": -15,
+      "y": 47,
+      "kingdomId": 3,
+      "name": "Frostgard",
+      "isCapital": true,
+      "level": 0
+    },
+    "4": {
+      "id": 4,
+      "x": 37,
+      "y": -33,
+      "kingdomId": 4,
+      "name": "Dunewatch",
+      "isCapital": true,
+      "level": 0
+    }
+  },
+  "kingdoms": {
+    "1": {
+      "id": 1,
+      "name": "Sylvanreach",
+      "subTitle": "A realm enriched by the legacy of ancient woods",
+      "desc": "Nestled within an expanse of towering forests and seemingly endless plains, Lumindale thrives in nature\"s gentle embrace. Blessed with abundant woodlands, the air here is thick with the scent of cedar and pine, supplying an endless supply of timber. The fertile soil yields fields of golden wheat. The people of Lumindale, deeply attuned to the land, celebrate each harvest season with lively festivals. The mild yet rainy climate nurture not only Lumindale\"s lush flora but also the agricultural abundance that fuels the Lumindarian society.",
+      "mainResources": [
+        "Wood",
+        "Wheat"
+      ],
+      "color": "#cdeb53",
+      "capitalId": 1
+    },
+    "2": {
+      "id": 2,
+      "name": "Misthaven",
+      "subTitle": "A realm enshrouded in mystical mist",
+      "desc": "A land shrouded in mist and mystery, Aetheria enchants visitors with its ethereal beauty and bounties hidden beneath the surface. Veils of iridescent fog cloak the rugged cliffs and crystalline waters, concealing vast quarries of stone and hidden cave systems. The Aetherians, known for their resilience, possess an inherent connection to the land and excel in extracting stones. Along the shores, plentiful fisheries sustain Aetherian\"s populace with an abundance of fish. Known for their resilience and resourcefulness, the people here revere the elements and the sea, their culture deeply intertwined with these natural bounties. The temperate climate and constant coolness in the air not only sustain their economy but also shape their way of life.",
+      "mainResources": [
+        "Ore",
+        "Fish"
+      ],
+      "color": "#ad59e0",
+      "capitalId": 2
+    },
+    "3": {
+      "id": 3,
+      "name": "Everfrost",
+      "subTitle": "A realm where snowflakes eternally dance",
+      "desc": "Amidst snow-kissed landscapes and ancient forests, Faerwyn stands as a land of natural beauty and resilience. Embraced by the chill of perpetual snowfall, the people of Faerwyn derive their primary resources from the plentiful woodlands and the fine quality hides of their creatures. The land\"s rich, snow-laden forests yield a steady supply of timber, vital for crafting and sustenance. The people there can skillfully utilize hides from the creatures that inhabit their land, their culture is rich in craftsmanship and legends of the hunt. The cold and snowy climate, while challenging, fosters an intricate relationship between the people and their environment, relying on the abundance of wood and hides to thrive amidst the serene, wintry landscapes.",
+      "mainResources": [
+        "Wood",
+        "Berries"
+      ],
+      "color": "#5D93B0",
+      "capitalId": 3
+    },
+    "4": {
+      "id": 4,
+      "name": "Sunscar",
+      "subTitle": "A realm scorched by relentless sun",
+      "desc": "Within the scorching embrace of vast deserts, Thalendor rises as a land shaped by relentless heat and unyielding terrain. Known for its abundance of stone and ore, Thalendor boasts rich mineral deposits scattered amidst the arid expanses. Hardened by the harsh environment, Thalendor\"s people have mastered the art of extracting valuable resources from the rugged landscape. Majestic quarries yield a wealth of stone, crucial for their impressive stonework and structures, while the land\"s hidden mines offer a steady supply of valuable ores, shaping Thalendor\"s trade and craftsmanship. The Thalendarians\" culture reveres industry and resilience, forged by the blistering climate and sporadic desert storms that sculpt the land. The hot and arid conditions, though challenging, sustain both the sturdy mineral wealth and the resource advantages in stone and ore crafting, defining Thalendor\"s legacy of endurance and resourcefulness.",
+      "mainResources": [
+        "Ore",
+        "Stone"
+      ],
+      "color": "#F9C152",
+      "capitalId": 4
+    }
+  },
+  "npcs": {
+    "1": {
+      "id": 1,
+      "cityId": 1,
+      "x": -56,
+      "y": -17,
+      "name": "Liliana",
+      "dialog": "Greetings, hero! Don't be a stranger. Come by and have a sweet Sylvan roll."
+    },
+    "2": {
+      "id": 2,
+      "cityId": 2,
+      "x": 53,
+      "y": 29,
+      "name": "Maeve",
+      "dialog": "Be careful on your travels, okay? Don't get lost in the misty woods."
+    },
+    "3": {
+      "id": 3,
+      "cityId": 3,
+      "x": -15,
+      "y": 47,
+      "name": "Marina",
+      "dialog": "It's freezing outside! Do you fancy a hot cup of tea? I'll make you one."
+    },
+    "4": {
+      "id": 4,
+      "cityId": 4,
+      "x": 37,
+      "y": -33,
+      "name": "Ayesha",
+      "dialog": "How's it going, dustdiver? A sand storm is coming, don't stay for too long."
+    },
+    "5": {
+      "id": 5,
+      "cityId": 1,
+      "x": -36,
+      "y": 7,
+      "name": "Haines",
+      "dialog": "How you doing kid? Care for some hunting?"
+    },
+    "6": {
+      "id": 6,
+      "cityId": 1,
+      "x": -56,
+      "y": -17,
+      "name": "Lara",
+      "dialog": "Hii! Will you come over for lunch with me and Lili?"
+    },
+    "7": {
+      "id": 7,
+      "cityId": 2,
+      "x": 23,
+      "y": 3,
+      "name": "Duval",
+      "dialog": "Don't venture too deep into the misty forest okay? At least not without me."
+    },
+    "8": {
+      "id": 8,
+      "cityId": 2,
+      "x": 53,
+      "y": 29,
+      "name": "Moo Deng",
+      "dialog": "*She squeaks excitedly once she saw you*"
+    },
+    "9": {
+      "id": 9,
+      "cityId": 3,
+      "x": -53,
+      "y": 35,
+      "name": "Chione",
+      "dialog": "Thanks for your help adventurer. Let's see where the snowstorm leads us."
+    },
+    "10": {
+      "id": 10,
+      "cityId": 4,
+      "x": 0,
+      "y": -44,
+      "name": "Hilathe",
+      "dialog": "How's it going dustdiver? How about you join me for some treasure hunting?"
+    },
+    "11": {
+      "id": 11,
+      "cityId": 4,
+      "x": 37,
+      "y": -33,
+      "name": "Dymryn Leader",
+      "dialog": "*He's just sitting there in silence, staring at you*"
+    }
+  }
+}

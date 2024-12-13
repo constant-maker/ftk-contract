@@ -1,0 +1,2904 @@
+{
+  "items": {
+    "1": {
+      "id": 1,
+      "type": 23,
+      "category": 2,
+      "tier": 1,
+      "weight": 1,
+      "name": "Sylvan Wood",
+      "desc": "The most basic type of wood which can be found everywhere across all kingdoms. Used for crafting simple and makeshift tools.",
+      "resourceInfo": {
+        "type": 0
+      }
+    },
+    "10": {
+      "id": 10,
+      "type": 23,
+      "category": 2,
+      "tier": 1,
+      "weight": 1,
+      "name": "Iron Ore",
+      "desc": "A common ferrous ore that can be smelted into useful iron metals.",
+      "resourceInfo": {
+        "type": 3
+      }
+    },
+    "100": {
+      "id": 100,
+      "type": 23,
+      "category": 2,
+      "tier": 9,
+      "weight": 2,
+      "name": "Infinity Ore",
+      "desc": "A mysterious mineral with an otherworldly radiance, derived from ancient stellar phenomena. Provides limitless potential for crafting powerful and unique magical items.",
+      "resourceInfo": {
+        "type": 3
+      }
+    },
+    "101": {
+      "id": 101,
+      "type": 23,
+      "category": 2,
+      "tier": 10,
+      "weight": 3,
+      "name": "Celestial Ore",
+      "desc": "A mythical ore with an exquisite lotus-shaped glow. Imbued with ancient cosmic energy.",
+      "resourceInfo": {
+        "type": 3
+      }
+    },
+    "102": {
+      "id": 102,
+      "type": 23,
+      "category": 2,
+      "tier": 3,
+      "weight": 1,
+      "name": "Strawberry",
+      "desc": "A juicy, sweet fruit with vibrant red skin and tiny seeds.",
+      "resourceInfo": {
+        "type": 5
+      }
+    },
+    "103": {
+      "id": 103,
+      "type": 23,
+      "category": 2,
+      "tier": 4,
+      "weight": 1,
+      "name": "Mulberry",
+      "desc": "A sweet, dark purple fruit with a delicate, juicy texture.",
+      "resourceInfo": {
+        "type": 5
+      }
+    },
+    "104": {
+      "id": 104,
+      "type": 23,
+      "category": 2,
+      "tier": 5,
+      "weight": 1,
+      "name": "Verdant Grape",
+      "desc": "A fresh green grape with a crisp texture, thriving in lush, sunlit vineyards.",
+      "resourceInfo": {
+        "type": 5
+      }
+    },
+    "105": {
+      "id": 105,
+      "type": 23,
+      "category": 2,
+      "tier": 6,
+      "weight": 2,
+      "name": "Fireberry",
+      "desc": "A bright, fiery red fruit with a flame-like appearance, thriving in warm, sunlit environments.",
+      "resourceInfo": {
+        "type": 5
+      }
+    },
+    "106": {
+      "id": 106,
+      "type": 23,
+      "category": 2,
+      "tier": 7,
+      "weight": 2,
+      "name": "Radiant Goldberry",
+      "desc": "Known for its dazzling golden color and glowing appearance, this berry flourishes in warm, sunny locales.",
+      "resourceInfo": {
+        "type": 5
+      }
+    },
+    "107": {
+      "id": 107,
+      "type": 23,
+      "category": 2,
+      "tier": 8,
+      "weight": 2,
+      "name": "Stormberry",
+      "desc": "A vibrant, stormy-colored fruit with a rugged texture, growing in tempestuous, storm-prone areas.",
+      "resourceInfo": {
+        "type": 5
+      }
+    },
+    "108": {
+      "id": 108,
+      "type": 23,
+      "category": 2,
+      "tier": 9,
+      "weight": 2,
+      "name": "Permafrost Berry",
+      "desc": "A striking, icy blue fruit with a chilled surface, growing in extreme cold climates.",
+      "resourceInfo": {
+        "type": 5
+      }
+    },
+    "109": {
+      "id": 109,
+      "type": 23,
+      "category": 2,
+      "tier": 10,
+      "weight": 3,
+      "name": "Solar Berry",
+      "desc": "A fiery red fruit with a smooth, radiant surface that thrives in extreme environments.",
+      "resourceInfo": {
+        "type": 5
+      }
+    },
+    "11": {
+      "id": 11,
+      "type": 23,
+      "category": 2,
+      "tier": 2,
+      "weight": 1,
+      "name": "Copper Ore",
+      "desc": "Reddish-brown ore that yields a soft, conductive copper metal.",
+      "resourceInfo": {
+        "type": 3
+      }
+    },
+    "110": {
+      "id": 110,
+      "type": 23,
+      "category": 2,
+      "tier": 3,
+      "weight": 1,
+      "name": "Robust Wheat",
+      "desc": "Able to thrive in poor soil conditions, this hardy wheat produces plump, protein-rich kernels.",
+      "resourceInfo": {
+        "type": 4
+      }
+    },
+    "111": {
+      "id": 111,
+      "type": 23,
+      "category": 2,
+      "tier": 4,
+      "weight": 1,
+      "name": "Golden Wheat",
+      "desc": "Prized for its vibrant golden hue and sweet, buttery taste when milled into flour.",
+      "resourceInfo": {
+        "type": 4
+      }
+    },
+    "112": {
+      "id": 112,
+      "type": 23,
+      "category": 2,
+      "tier": 5,
+      "weight": 1,
+      "name": "Rubyfield Wheat",
+      "desc": "Deep ruby-red kernels give this rare wheat an earthy, almost wine-like essence when baked or brewed.",
+      "resourceInfo": {
+        "type": 4
+      }
+    },
+    "113": {
+      "id": 113,
+      "type": 23,
+      "category": 2,
+      "tier": 6,
+      "weight": 2,
+      "name": "Amberwave Wheat",
+      "desc": "Golden amber kernels imbue baked goods with a rich, honeyed aroma and flavor.",
+      "resourceInfo": {
+        "type": 4
+      }
+    },
+    "114": {
+      "id": 114,
+      "type": 23,
+      "category": 2,
+      "tier": 7,
+      "weight": 2,
+      "name": "Wildbloom Wheat",
+      "desc": "This delicately floral wheat variety adds subtle sweet notes of meadow blossoms.",
+      "resourceInfo": {
+        "type": 4
+      }
+    },
+    "115": {
+      "id": 115,
+      "type": 23,
+      "category": 2,
+      "tier": 8,
+      "weight": 2,
+      "name": "Dewkissed Wheat",
+      "desc": "Grown only in misty groves, the morning dew gives this wheat a crisp, rejuvenating freshness.",
+      "resourceInfo": {
+        "type": 4
+      }
+    },
+    "116": {
+      "id": 116,
+      "type": 23,
+      "category": 2,
+      "tier": 9,
+      "weight": 2,
+      "name": "Seabathed Wheat",
+      "desc": "Kernels that are ocean-cured to perfection impart a warm, refreshing sweet and salty flavour.",
+      "resourceInfo": {
+        "type": 4
+      }
+    },
+    "117": {
+      "id": 117,
+      "type": 23,
+      "category": 2,
+      "tier": 10,
+      "weight": 3,
+      "name": "Starblossom Wheat",
+      "desc": "The ultra-rare cosmic wheat reveals hints of far-off galaxies in its delicate, ethereal essence.",
+      "resourceInfo": {
+        "type": 4
+      }
+    },
+    "118": {
+      "id": 118,
+      "type": 25,
+      "category": 2,
+      "tier": 2,
+      "weight": 2,
+      "name": "Common Healing Potion",
+      "desc": "A reliable remedy that restores moderate health, found in most village apothecaries.",
+      "healingInfo": {
+        "hpRestore": 100
+      }
+    },
+    "119": {
+      "id": 119,
+      "type": 23,
+      "category": 2,
+      "tier": 4,
+      "weight": 1,
+      "name": "Hardwood Shell",
+      "desc": "A piece of the Crabark's exoskeleton, made from a mixture of woods found in Sylvanreach.",
+      "resourceInfo": {
+        "type": 6
+      }
+    },
+    "12": {
+      "id": 12,
+      "type": 23,
+      "category": 2,
+      "tier": 1,
+      "weight": 1,
+      "name": "Common Wheat",
+      "desc": "Common wheat varieties grown on farms and in fields.",
+      "resourceInfo": {
+        "type": 4
+      }
+    },
+    "120": {
+      "id": 120,
+      "type": 23,
+      "category": 2,
+      "tier": 3,
+      "weight": 1,
+      "name": "Budding Horn",
+      "desc": "This horn began to sprout from inside of a leafdrake, which typically bears no horn. Some kind of evolution?",
+      "resourceInfo": {
+        "type": 6
+      }
+    },
+    "121": {
+      "id": 121,
+      "type": 23,
+      "category": 2,
+      "tier": 3,
+      "weight": 1,
+      "name": "Blue Leaf",
+      "desc": "Petalflare's green leaves sometime turn blue in rare and unknown occasions.",
+      "resourceInfo": {
+        "type": 6
+      }
+    },
+    "122": {
+      "id": 122,
+      "type": 23,
+      "category": 2,
+      "tier": 4,
+      "weight": 1,
+      "name": "Poisonous Fang",
+      "desc": "The Basilisk has two types of fangs, this is the smaller, yet sharper and more dangerous one.",
+      "resourceInfo": {
+        "type": 6
+      }
+    },
+    "123": {
+      "id": 123,
+      "type": 23,
+      "category": 2,
+      "tier": 3,
+      "weight": 1,
+      "name": "Overgrown Mushroom Cap",
+      "desc": "This huge mushroom cap is strangely hot to the touch.",
+      "resourceInfo": {
+        "type": 6
+      }
+    },
+    "124": {
+      "id": 124,
+      "type": 23,
+      "category": 2,
+      "tier": 3,
+      "weight": 1,
+      "name": "Frozen Claw",
+      "desc": "The cold, icy claw of a predator in the mist. It's heavier than it looks.",
+      "resourceInfo": {
+        "type": 6
+      }
+    },
+    "125": {
+      "id": 125,
+      "type": 23,
+      "category": 2,
+      "tier": 3,
+      "weight": 1,
+      "name": "Lizard Tail",
+      "desc": "The blue tail of Snowzards can move independently from its main body after it's been chopped off.",
+      "resourceInfo": {
+        "type": 6
+      }
+    },
+    "126": {
+      "id": 126,
+      "type": 23,
+      "category": 2,
+      "tier": 3,
+      "weight": 1,
+      "name": "Ghost Wings",
+      "desc": "The transparent and ghost-like wings of a Glaciewyrm. They're cold to the touch, and melt into misty water if not properly kept.",
+      "resourceInfo": {
+        "type": 6
+      }
+    },
+    "127": {
+      "id": 127,
+      "type": 23,
+      "category": 2,
+      "tier": 4,
+      "weight": 1,
+      "name": "Warm Fur",
+      "desc": "The white fur of magnificent snow creatures roaming in the wilds of Everfrost.",
+      "resourceInfo": {
+        "type": 6
+      }
+    },
+    "128": {
+      "id": 128,
+      "type": 23,
+      "category": 2,
+      "tier": 3,
+      "weight": 1,
+      "name": "Stinger",
+      "desc": "The sharp and long sting of a huge insect. It can pierce cleanly through armor and shield with enough force.",
+      "resourceInfo": {
+        "type": 6
+      }
+    },
+    "129": {
+      "id": 129,
+      "type": 23,
+      "category": 2,
+      "tier": 3,
+      "weight": 1,
+      "name": "Brimstone Horn",
+      "desc": "A large horn burning with inner heat. Highly prized among blacksmiths across the Outer World.",
+      "resourceInfo": {
+        "type": 6
+      }
+    },
+    "13": {
+      "id": 13,
+      "type": 23,
+      "category": 2,
+      "tier": 2,
+      "weight": 1,
+      "name": "Hearty Wheat",
+      "desc": "Extra healthy, disease-resistant wheat with a slightly nutty flavor.",
+      "resourceInfo": {
+        "type": 4
+      }
+    },
+    "130": {
+      "id": 130,
+      "type": 23,
+      "category": 2,
+      "tier": 4,
+      "weight": 1,
+      "name": "Beastmen's Metal Piece",
+      "desc": "The unusual metal of beastmen origin, blended from iron, copper, and other unknown types of ores.",
+      "resourceInfo": {
+        "type": 6
+      }
+    },
+    "131": {
+      "id": 131,
+      "type": 11,
+      "category": 1,
+      "tier": 3,
+      "weight": 16,
+      "name": "Ritual Dagger",
+      "desc": "Elegant dagger made of ancient ingredients, used primarily in sacrifices.",
+      "equipmentInfo": {
+        "slotType": 0,
+        "advantageType": 3,
+        "twoHanded": true,
+        "atk": 32,
+        "def": 3,
+        "agi": 12,
+        "hp": 0,
+        "ms": 0
+      }
+    },
+    "132": {
+      "id": 132,
+      "type": 11,
+      "category": 1,
+      "tier": 4,
+      "weight": 22,
+      "name": "Assassin Dagger",
+      "desc": "Lightweight yet lethal. The size of the sword does not matter when death is certain.",
+      "equipmentInfo": {
+        "slotType": 0,
+        "advantageType": 3,
+        "twoHanded": true,
+        "atk": 65,
+        "def": 3,
+        "agi": 17,
+        "hp": 0,
+        "ms": 0
+      }
+    },
+    "133": {
+      "id": 133,
+      "type": 12,
+      "category": 1,
+      "tier": 3,
+      "weight": 15,
+      "name": "Steel Shield",
+      "desc": "A well-made round shield on the smaller side, but very effective at deflecting attacks.",
+      "equipmentInfo": {
+        "slotType": 1,
+        "advantageType": 0,
+        "twoHanded": false,
+        "atk": 1,
+        "def": 15,
+        "agi": 3,
+        "hp": 0,
+        "ms": 0
+      }
+    },
+    "134": {
+      "id": 134,
+      "type": 12,
+      "category": 1,
+      "tier": 4,
+      "weight": 20,
+      "name": "Knight's Greatshield",
+      "desc": "Huge metal shield that's two times heavier than most standard weapons.",
+      "equipmentInfo": {
+        "slotType": 1,
+        "advantageType": 0,
+        "twoHanded": false,
+        "atk": 3,
+        "def": 32,
+        "agi": 0,
+        "hp": 0,
+        "ms": 0
+      }
+    },
+    "135": {
+      "id": 135,
+      "type": 14,
+      "category": 1,
+      "tier": 3,
+      "weight": 5,
+      "name": "Ranger's Hood",
+      "desc": "Typical adventurer's hood, unremarkable but very versatile.",
+      "equipmentInfo": {
+        "slotType": 3,
+        "advantageType": 0,
+        "twoHanded": false,
+        "atk": 1,
+        "def": 3,
+        "agi": 10,
+        "hp": 20,
+        "ms": 0
+      }
+    },
+    "136": {
+      "id": 136,
+      "type": 14,
+      "category": 1,
+      "tier": 4,
+      "weight": 7,
+      "name": "Hood of the Astrologer",
+      "desc": "Hood tailored from high quality fabrics. Worn by those who look to the great above.",
+      "equipmentInfo": {
+        "slotType": 3,
+        "advantageType": 0,
+        "twoHanded": false,
+        "atk": 5,
+        "def": 3,
+        "agi": 18,
+        "hp": 40,
+        "ms": 0
+      }
+    },
+    "137": {
+      "id": 137,
+      "type": 15,
+      "category": 1,
+      "tier": 3,
+      "weight": 5,
+      "name": "Flower Sandals",
+      "desc": "Light sandal made of natural leaves and vines that seem to elevate your every step.",
+      "equipmentInfo": {
+        "slotType": 4,
+        "advantageType": 0,
+        "twoHanded": false,
+        "atk": 2,
+        "def": 0,
+        "agi": 12,
+        "hp": 0,
+        "ms": 1
+      }
+    },
+    "138": {
+      "id": 138,
+      "type": 15,
+      "category": 1,
+      "tier": 4,
+      "weight": 7,
+      "name": "Boots of the Pilgrim",
+      "desc": "Very well made shoes without any exceptional features, crafted for travelling long distances. It's very good at what it does.",
+      "equipmentInfo": {
+        "slotType": 4,
+        "advantageType": 0,
+        "twoHanded": false,
+        "atk": 8,
+        "def": 2,
+        "agi": 16,
+        "hp": 0,
+        "ms": 1
+      }
+    },
+    "139": {
+      "id": 139,
+      "type": 13,
+      "category": 1,
+      "tier": 3,
+      "weight": 11,
+      "name": "Noble's Robe",
+      "desc": "Lightweight robe made from natural blue leaves that seems to elevate your every move.",
+      "equipmentInfo": {
+        "slotType": 2,
+        "advantageType": 0,
+        "twoHanded": false,
+        "atk": 2,
+        "def": 8,
+        "agi": 14,
+        "hp": 35,
+        "ms": 0
+      }
+    },
+    "14": {
+      "id": 14,
+      "type": 23,
+      "category": 2,
+      "tier": 1,
+      "weight": 1,
+      "name": "Wild Berries",
+      "desc": "Basic, tangled handfuls of assorted common berries from the wild.",
+      "resourceInfo": {
+        "type": 5
+      }
+    },
+    "140": {
+      "id": 140,
+      "type": 13,
+      "category": 1,
+      "tier": 4,
+      "weight": 16,
+      "name": "Mist Monk's Robe",
+      "desc": "Robe worn by a secret sect hidden deep in Misthaven, but has since spread across kingdoms.",
+      "equipmentInfo": {
+        "slotType": 2,
+        "advantageType": 0,
+        "twoHanded": false,
+        "atk": 9,
+        "def": 5,
+        "agi": 30,
+        "hp": 60,
+        "ms": 0
+      }
+    },
+    "141": {
+      "id": 141,
+      "type": 6,
+      "category": 1,
+      "tier": 3,
+      "weight": 33,
+      "name": "Claymore",
+      "desc": "A large sword with a long, straight blade. Surprisingly balanced and versatile for its size, this weapon is the golden standard in weapon smithing.",
+      "equipmentInfo": {
+        "slotType": 0,
+        "advantageType": 0,
+        "twoHanded": true,
+        "atk": 32,
+        "def": 8,
+        "agi": 7,
+        "hp": 0,
+        "ms": 0
+      }
+    },
+    "142": {
+      "id": 142,
+      "type": 6,
+      "category": 1,
+      "tier": 4,
+      "weight": 26,
+      "name": "Sunforged Blade",
+      "desc": "The Sun has many faces, and this sword was used in prayers long ago to see one.",
+      "equipmentInfo": {
+        "slotType": 0,
+        "advantageType": 0,
+        "twoHanded": false,
+        "atk": 35,
+        "def": 10,
+        "agi": 5,
+        "hp": 0,
+        "ms": 0
+      }
+    },
+    "143": {
+      "id": 143,
+      "type": 7,
+      "category": 1,
+      "tier": 3,
+      "weight": 18,
+      "name": "Warchief's Axe",
+      "desc": "Large axe commissioned for only the best of warriors. Misthaven's blacksmiths are very peculiar about the axes they make.",
+      "equipmentInfo": {
+        "slotType": 0,
+        "advantageType": 2,
+        "twoHanded": false,
+        "atk": 18,
+        "def": 3,
+        "agi": 7,
+        "hp": 0,
+        "ms": 0
+      }
+    },
+    "144": {
+      "id": 144,
+      "type": 7,
+      "category": 1,
+      "tier": 4,
+      "weight": 26,
+      "name": "Mist Cleaver",
+      "desc": "A sharp axe with long blades that're as sharp as a razor. It is said that this axe can cut through the mist of Misthaven itself.",
+      "equipmentInfo": {
+        "slotType": 0,
+        "advantageType": 2,
+        "twoHanded": false,
+        "atk": 34,
+        "def": 6,
+        "agi": 10,
+        "hp": 0,
+        "ms": 0
+      }
+    },
+    "145": {
+      "id": 145,
+      "type": 8,
+      "category": 1,
+      "tier": 3,
+      "weight": 18,
+      "name": "The Needle",
+      "desc": "A very light and thin spear, with a sharp black spearhead that can penetrate standard armor pieces.",
+      "equipmentInfo": {
+        "slotType": 0,
+        "advantageType": 1,
+        "twoHanded": false,
+        "atk": 20,
+        "def": 2,
+        "agi": 6,
+        "hp": 0,
+        "ms": 0
+      }
+    },
+    "146": {
+      "id": 146,
+      "type": 8,
+      "category": 1,
+      "tier": 4,
+      "weight": 46,
+      "name": "Rocksplitter Lance",
+      "desc": "This ultra long spear does not bend at all even under hard pressure, and thus very effective in combating huge beasts.",
+      "equipmentInfo": {
+        "slotType": 0,
+        "advantageType": 1,
+        "twoHanded": true,
+        "atk": 64,
+        "def": 6,
+        "agi": 15,
+        "hp": 0,
+        "ms": 0
+      }
+    },
+    "147": {
+      "id": 147,
+      "type": 9,
+      "category": 1,
+      "tier": 3,
+      "weight": 33,
+      "name": "The Violet",
+      "desc": "This elegant bow is unusually light and easy to handle, mainly because of the ethereal materials used in its creation. Used regularly by noblewomen.",
+      "equipmentInfo": {
+        "slotType": 0,
+        "advantageType": 3,
+        "twoHanded": true,
+        "atk": 30,
+        "def": 5,
+        "agi": 12,
+        "hp": 0,
+        "ms": 0
+      }
+    },
+    "148": {
+      "id": 148,
+      "type": 9,
+      "category": 1,
+      "tier": 4,
+      "weight": 46,
+      "name": "Brimstone Bow",
+      "desc": "A bow that's always warm to the touch. In the right situation it can even enflame the arrows.",
+      "equipmentInfo": {
+        "slotType": 0,
+        "advantageType": 3,
+        "twoHanded": true,
+        "atk": 61,
+        "def": 10,
+        "agi": 14,
+        "hp": 0,
+        "ms": 0
+      }
+    },
+    "149": {
+      "id": 149,
+      "type": 10,
+      "category": 1,
+      "tier": 3,
+      "weight": 18,
+      "name": "Staff of Ice",
+      "desc": "Covered in lizard scales on both ends, this cold staff can act both as a medium for sorceries and as an effective blunt weapon.",
+      "equipmentInfo": {
+        "slotType": 0,
+        "advantageType": 3,
+        "twoHanded": false,
+        "atk": 20,
+        "def": 5,
+        "agi": 3,
+        "hp": 0,
+        "ms": 0
+      }
+    },
+    "15": {
+      "id": 15,
+      "type": 23,
+      "category": 2,
+      "tier": 2,
+      "weight": 1,
+      "name": "Bramble Berries",
+      "desc": "Larger hauls of berries plucked from thick brambles.",
+      "resourceInfo": {
+        "type": 5
+      }
+    },
+    "150": {
+      "id": 150,
+      "type": 10,
+      "category": 1,
+      "tier": 4,
+      "weight": 26,
+      "name": "Scepter of the Frost Giants",
+      "desc": "A very long staff with magical properties. Legends say the frost giants are the master of winter, and it is their primordial magic that keep Everfrost in an everlasting winter.",
+      "equipmentInfo": {
+        "slotType": 0,
+        "advantageType": 3,
+        "twoHanded": false,
+        "atk": 32,
+        "def": 12,
+        "agi": 6,
+        "hp": 0,
+        "ms": 0
+      }
+    },
+    "151": {
+      "id": 151,
+      "type": 16,
+      "category": 1,
+      "tier": 3,
+      "weight": 12,
+      "name": "Foot Soldier's Tabard",
+      "desc": "Leather padded cloth armor, worn by a kingdom's foot soldiers.",
+      "equipmentInfo": {
+        "slotType": 2,
+        "advantageType": 0,
+        "twoHanded": false,
+        "atk": 3,
+        "def": 14,
+        "agi": 7,
+        "hp": 35,
+        "ms": 0
+      }
+    },
+    "152": {
+      "id": 152,
+      "type": 16,
+      "category": 1,
+      "tier": 4,
+      "weight": 18,
+      "name": "Coat of the White",
+      "desc": "Huge coat of white fur that both insulate the wearer from Everfrost's cold nights, and thick enough to protect against slash strikes.",
+      "equipmentInfo": {
+        "slotType": 2,
+        "advantageType": 0,
+        "twoHanded": false,
+        "atk": 4,
+        "def": 32,
+        "agi": 8,
+        "hp": 60,
+        "ms": 0
+      }
+    },
+    "153": {
+      "id": 153,
+      "type": 17,
+      "category": 1,
+      "tier": 3,
+      "weight": 6,
+      "name": "Fur Hood",
+      "desc": "Hood of fur that covers the ears. Can be worn inside a plate helmet, if you need to fight in the dead of winter.",
+      "equipmentInfo": {
+        "slotType": 3,
+        "advantageType": 0,
+        "twoHanded": false,
+        "atk": 2,
+        "def": 8,
+        "agi": 4,
+        "hp": 15,
+        "ms": 0
+      }
+    },
+    "154": {
+      "id": 154,
+      "type": 17,
+      "category": 1,
+      "tier": 4,
+      "weight": 8,
+      "name": "Howler Hood",
+      "desc": "The hood helps hunters blend into the environment, ideal for tracking prey in the wild.",
+      "equipmentInfo": {
+        "slotType": 3,
+        "advantageType": 0,
+        "twoHanded": false,
+        "atk": 5,
+        "def": 18,
+        "agi": 3,
+        "hp": 30,
+        "ms": 0
+      }
+    },
+    "155": {
+      "id": 155,
+      "type": 18,
+      "category": 1,
+      "tier": 3,
+      "weight": 6,
+      "name": "Warrior's Battle Boots",
+      "desc": "High-quality leather boots, preferred by soldiers in a lord's army. Surprisingly durable and can withstand harsh weather with ease.",
+      "equipmentInfo": {
+        "slotType": 4,
+        "advantageType": 0,
+        "twoHanded": false,
+        "atk": 2,
+        "def": 9,
+        "agi": 3,
+        "hp": 0,
+        "ms": 1
+      }
+    },
+    "156": {
+      "id": 156,
+      "type": 18,
+      "category": 1,
+      "tier": 4,
+      "weight": 8,
+      "name": "Boots of Strife",
+      "desc": "Good quality shoes typically worn by elite warriors in long marches. A bit on the heavier side, but very very durable.",
+      "equipmentInfo": {
+        "slotType": 4,
+        "advantageType": 0,
+        "twoHanded": false,
+        "atk": 0,
+        "def": 18,
+        "agi": 8,
+        "hp": 0,
+        "ms": 1
+      }
+    },
+    "157": {
+      "id": 157,
+      "type": 19,
+      "category": 1,
+      "tier": 3,
+      "weight": 15,
+      "name": "Heavy Plate Armor",
+      "desc": "A huge piece of plate armor that usually signifies the wearer's knighthood.",
+      "equipmentInfo": {
+        "slotType": 2,
+        "advantageType": 0,
+        "twoHanded": false,
+        "atk": 2,
+        "def": 18,
+        "agi": 0,
+        "hp": 100,
+        "ms": 0
+      }
+    },
+    "158": {
+      "id": 158,
+      "type": 19,
+      "category": 1,
+      "tier": 4,
+      "weight": 22,
+      "name": "Gladiator's Heavy Armor",
+      "desc": "Heavy plate armor with engravings, adorned only to the best of gladiators.",
+      "equipmentInfo": {
+        "slotType": 2,
+        "advantageType": 0,
+        "twoHanded": false,
+        "atk": 7,
+        "def": 30,
+        "agi": 1,
+        "hp": 180,
+        "ms": 0
+      }
+    },
+    "159": {
+      "id": 159,
+      "type": 20,
+      "category": 1,
+      "tier": 3,
+      "weight": 7,
+      "name": "Squire's Metal Helmet",
+      "desc": "Helmet made for young aspiring knights in the making. The road ahead is hard, but scars are always the best teacher.",
+      "equipmentInfo": {
+        "slotType": 3,
+        "advantageType": 0,
+        "twoHanded": false,
+        "atk": 2,
+        "def": 10,
+        "agi": 0,
+        "hp": 40,
+        "ms": 0
+      }
+    },
+    "16": {
+      "id": 16,
+      "type": 23,
+      "category": 2,
+      "tier": 1,
+      "weight": 1,
+      "name": "Snow Fur",
+      "desc": "Prized for its natural warmth and durability.",
+      "resourceInfo": {
+        "type": 6
+      }
+    },
+    "160": {
+      "id": 160,
+      "type": 20,
+      "category": 1,
+      "tier": 4,
+      "weight": 10,
+      "name": "Field Knight Helm",
+      "desc": "Metal battle helm made for mounted knights of an ambitious kingdom. This helm has accompanied knights to countless battles.",
+      "equipmentInfo": {
+        "slotType": 3,
+        "advantageType": 0,
+        "twoHanded": false,
+        "atk": 4,
+        "def": 18,
+        "agi": 1,
+        "hp": 65,
+        "ms": 0
+      }
+    },
+    "161": {
+      "id": 161,
+      "type": 21,
+      "category": 1,
+      "tier": 3,
+      "weight": 7,
+      "name": "Greaves of the Exiled",
+      "desc": "Plated foot armor of the ancient knights, who've been exiled far before the four kingdoms come into being.",
+      "equipmentInfo": {
+        "slotType": 4,
+        "advantageType": 0,
+        "twoHanded": false,
+        "atk": 4,
+        "def": 12,
+        "agi": 0,
+        "hp": 0,
+        "ms": 0
+      }
+    },
+    "162": {
+      "id": 162,
+      "type": 21,
+      "category": 1,
+      "tier": 4,
+      "weight": 10,
+      "name": "Gladiator's Greaves",
+      "desc": "Brass greaves adorned to renowned gladiators in times old.",
+      "equipmentInfo": {
+        "slotType": 4,
+        "advantageType": 0,
+        "twoHanded": false,
+        "atk": 4,
+        "def": 25,
+        "agi": 2,
+        "hp": 0,
+        "ms": 0
+      }
+    },
+    "163": {
+      "id": 163,
+      "type": 0,
+      "category": 0,
+      "tier": 3,
+      "weight": 6,
+      "name": "Standard Wood Axe",
+      "desc": "The well-balanced woodcutter's axe for harvesting various types of timber."
+    },
+    "164": {
+      "id": 164,
+      "type": 1,
+      "category": 0,
+      "tier": 3,
+      "weight": 6,
+      "name": "Standard Hammer",
+      "desc": "The quintessential tool for quarriers and stoneworkers."
+    },
+    "165": {
+      "id": 165,
+      "type": 2,
+      "category": 0,
+      "tier": 3,
+      "weight": 6,
+      "name": "Standard Fishing Rod",
+      "desc": "The well-crafted standard tool of seasoned fishermen."
+    },
+    "166": {
+      "id": 166,
+      "type": 3,
+      "category": 0,
+      "tier": 3,
+      "weight": 6,
+      "name": "Standard Pickaxe",
+      "desc": "This standard mining pick excavates typical underground resources."
+    },
+    "167": {
+      "id": 167,
+      "type": 4,
+      "category": 0,
+      "tier": 3,
+      "weight": 6,
+      "name": "Standard Sickle",
+      "desc": "The well-crafted standard tool for reaping any cultivated crops."
+    },
+    "168": {
+      "id": 168,
+      "type": 5,
+      "category": 0,
+      "tier": 3,
+      "weight": 6,
+      "name": "Standard Berry Shears",
+      "desc": "The standard bramble shears used by seasoned berry gatherers."
+    },
+    "169": {
+      "id": 169,
+      "type": 0,
+      "category": 0,
+      "tier": 4,
+      "weight": 8,
+      "name": "Veteran Wood Axe",
+      "desc": "Good quality veteran axe built for prolonged woodcutting."
+    },
+    "17": {
+      "id": 17,
+      "type": 23,
+      "category": 2,
+      "tier": 1,
+      "weight": 1,
+      "name": "Sharp Claw",
+      "desc": "The natural weapon of natural predators.",
+      "resourceInfo": {
+        "type": 6
+      }
+    },
+    "170": {
+      "id": 170,
+      "type": 1,
+      "category": 0,
+      "tier": 4,
+      "weight": 8,
+      "name": "Veteran Hammer",
+      "desc": "This heavy and all-rounded hammer shatters boulders with ease."
+    },
+    "171": {
+      "id": 171,
+      "type": 2,
+      "category": 0,
+      "tier": 4,
+      "weight": 8,
+      "name": "Veteran Fishing Rod",
+      "desc": "A hardy fishing rod for battling bigger freshwater prizes."
+    },
+    "172": {
+      "id": 172,
+      "type": 3,
+      "category": 0,
+      "tier": 4,
+      "weight": 8,
+      "name": "Veteran Pickaxe",
+      "desc": "A sturdy pickaxe tempered for prolonged mineral extraction."
+    },
+    "173": {
+      "id": 173,
+      "type": 4,
+      "category": 0,
+      "tier": 4,
+      "weight": 8,
+      "name": "Veteran Sickle",
+      "desc": "This sturdy veteran sickle deftly slices through dense mature wheat stalks."
+    },
+    "174": {
+      "id": 174,
+      "type": 5,
+      "category": 0,
+      "tier": 4,
+      "weight": 8,
+      "name": "Veteran Berry Shears",
+      "desc": "Elegantly-patterned shears that's preferred by experience gatherers."
+    },
+    "175": {
+      "id": 175,
+      "type": 23,
+      "category": 2,
+      "tier": 4,
+      "weight": 1,
+      "name": "Fungus Growth",
+      "desc": "Beneath the hard exoskeleton of Crabark hides a number of parasitic fungus.",
+      "resourceInfo": {
+        "type": 6
+      }
+    },
+    "176": {
+      "id": 176,
+      "type": 23,
+      "category": 2,
+      "tier": 4,
+      "weight": 1,
+      "name": "Serpent Eye",
+      "desc": "The golden eye of a great ancient predator.",
+      "resourceInfo": {
+        "type": 6
+      }
+    },
+    "177": {
+      "id": 177,
+      "type": 23,
+      "category": 2,
+      "tier": 4,
+      "weight": 1,
+      "name": "Crystal Horn",
+      "desc": "The large horn of giants and their ascendants. Originally made of ice, through ages it became so dense under pressure it crystallized.",
+      "resourceInfo": {
+        "type": 6
+      }
+    },
+    "178": {
+      "id": 178,
+      "type": 23,
+      "category": 2,
+      "tier": 4,
+      "weight": 1,
+      "name": "Beastmen's Banner",
+      "desc": "Honored war banner of beastmen origin. Crude, but a great symbol of power.",
+      "resourceInfo": {
+        "type": 6
+      }
+    },
+    "179": {
+      "id": 179,
+      "type": 25,
+      "category": 2,
+      "tier": 3,
+      "weight": 2,
+      "name": "Greater Healing Potion",
+      "desc": "An enhanced mixture that provides substantial healing power, favored by experienced adventurers.",
+      "healingInfo": {
+        "hpRestore": 250
+      }
+    },
+    "18": {
+      "id": 18,
+      "type": 23,
+      "category": 2,
+      "tier": 1,
+      "weight": 1,
+      "name": "Sticky Mucus",
+      "desc": "A valuable crafting material. Use it to create various items and enhance your abilities in the game.",
+      "resourceInfo": {
+        "type": 6
+      }
+    },
+    "180": {
+      "id": 180,
+      "type": 25,
+      "category": 2,
+      "tier": 4,
+      "weight": 2,
+      "name": "Grand Healing Potion",
+      "desc": "A potent blend that rapidly restores significant health, crafted by skilled alchemists.",
+      "healingInfo": {
+        "hpRestore": 500
+      }
+    },
+    "181": {
+      "id": 181,
+      "type": 25,
+      "category": 2,
+      "tier": 5,
+      "weight": 2,
+      "name": "Master Healing Potion",
+      "desc": "An expertly crafted elixir that provides powerful healing.",
+      "healingInfo": {
+        "hpRestore": 800
+      }
+    },
+    "182": {
+      "id": 182,
+      "type": 0,
+      "category": 0,
+      "tier": 5,
+      "weight": 10,
+      "name": "Expert Wood Axe",
+      "desc": "A precision-crafted axe that makes quick work of timber, reflecting years of woodcutting expertise."
+    },
+    "183": {
+      "id": 183,
+      "type": 0,
+      "category": 0,
+      "tier": 6,
+      "weight": 12,
+      "name": "Adept Wood Axe",
+      "desc": "An advanced axe incorporating superior techniques that dramatically improves woodcutting efficiency."
+    },
+    "184": {
+      "id": 184,
+      "type": 0,
+      "category": 0,
+      "tier": 7,
+      "weight": 14,
+      "name": "Elite Wood Axe",
+      "desc": "An exceptional axe that channels raw power into every swing, making short work of any timber."
+    },
+    "185": {
+      "id": 185,
+      "type": 0,
+      "category": 0,
+      "tier": 8,
+      "weight": 16,
+      "name": "Master Wood Axe",
+      "desc": "A masterpiece of craftsmanship that turns felling trees into an art form."
+    },
+    "186": {
+      "id": 186,
+      "type": 0,
+      "category": 0,
+      "tier": 9,
+      "weight": 18,
+      "name": "Legendary Wood Axe",
+      "desc": "A mythical axe whose origins are shrouded in mystery, capable of felling ancient trees with a single stroke."
+    },
+    "187": {
+      "id": 187,
+      "type": 0,
+      "category": 0,
+      "tier": 10,
+      "weight": 20,
+      "name": "Divine Wood Axe",
+      "desc": "A sacred axe blessed by the forest gods, capable of harvesting wood with supernatural precision and power."
+    },
+    "188": {
+      "id": 188,
+      "type": 1,
+      "category": 0,
+      "tier": 5,
+      "weight": 10,
+      "name": "Expert Hammer",
+      "desc": "A perfectly balanced hammer that efficiently breaks down stone with minimal effort."
+    },
+    "189": {
+      "id": 189,
+      "type": 1,
+      "category": 0,
+      "tier": 6,
+      "weight": 12,
+      "name": "Adept Hammer",
+      "desc": "A sophisticated hammer design that breaks stone with remarkable precision and power."
+    },
+    "19": {
+      "id": 19,
+      "type": 23,
+      "category": 2,
+      "tier": 1,
+      "weight": 1,
+      "name": "Bat Wings",
+      "desc": "The black wings of night creatures, but this is the small variant from a small creature.",
+      "resourceInfo": {
+        "type": 6
+      }
+    },
+    "190": {
+      "id": 190,
+      "type": 1,
+      "category": 0,
+      "tier": 7,
+      "weight": 14,
+      "name": "Elite Hammer",
+      "desc": "A premium hammer that pulverizes stone with astonishing efficiency and control."
+    },
+    "191": {
+      "id": 191,
+      "type": 1,
+      "category": 0,
+      "tier": 8,
+      "weight": 16,
+      "name": "Master Hammer",
+      "desc": "A hammer of unparalleled quality that makes stone quarrying feel effortless."
+    },
+    "192": {
+      "id": 192,
+      "type": 1,
+      "category": 0,
+      "tier": 9,
+      "weight": 18,
+      "name": "Legendary Hammer",
+      "desc": "A hammer of legend that can reshape entire quarries with thunderous power."
+    },
+    "193": {
+      "id": 193,
+      "type": 1,
+      "category": 0,
+      "tier": 10,
+      "weight": 20,
+      "name": "Divine Hammer",
+      "desc": "A holy hammer that shapes stone with godlike authority and grace."
+    },
+    "194": {
+      "id": 194,
+      "type": 2,
+      "category": 0,
+      "tier": 5,
+      "weight": 10,
+      "name": "Expert Fishing Rod",
+      "desc": "A professional-grade rod with enhanced sensitivity to detect even the subtlest nibbles."
+    },
+    "195": {
+      "id": 195,
+      "type": 2,
+      "category": 0,
+      "tier": 6,
+      "weight": 12,
+      "name": "Adept Fishing Rod",
+      "desc": "A superior rod with specialized mechanics that increases successful catch rates significantly."
+    },
+    "196": {
+      "id": 196,
+      "type": 2,
+      "category": 0,
+      "tier": 7,
+      "weight": 14,
+      "name": "Elite Fishing Rod",
+      "desc": "A top-tier rod that seems to attract fish with an almost magical efficiency."
+    },
+    "197": {
+      "id": 197,
+      "type": 2,
+      "category": 0,
+      "tier": 8,
+      "weight": 16,
+      "name": "Master Fishing Rod",
+      "desc": "An extraordinary rod that seems to be lighter than water itself."
+    },
+    "198": {
+      "id": 198,
+      "type": 2,
+      "category": 0,
+      "tier": 9,
+      "weight": 18,
+      "name": "Legendary Fishing Rod",
+      "desc": "A fabled rod that attracts the most elusive catches with mysterious power."
+    },
+    "199": {
+      "id": 199,
+      "type": 2,
+      "category": 0,
+      "tier": 10,
+      "weight": 20,
+      "name": "Divine Fishing Rod",
+      "desc": "A blessed rod that commands the respect of the ocean's mightiest inhabitants."
+    },
+    "2": {
+      "id": 2,
+      "type": 23,
+      "category": 2,
+      "tier": 2,
+      "weight": 1,
+      "name": "Birch Wood",
+      "desc": "Known for its durability and natural resistance to decay. Used for crafting items that require a bit more resilience.",
+      "resourceInfo": {
+        "type": 0
+      }
+    },
+    "20": {
+      "id": 20,
+      "type": 23,
+      "category": 2,
+      "tier": 1,
+      "weight": 1,
+      "name": "Tattered Cloth",
+      "desc": "Scraps of fabric that can be used for crafting or repairs.",
+      "resourceInfo": {
+        "type": 6
+      }
+    },
+    "200": {
+      "id": 200,
+      "type": 3,
+      "category": 0,
+      "tier": 5,
+      "weight": 10,
+      "name": "Expert Pickaxe",
+      "desc": "A refined mining tool that extracts ore with increased precision and yield."
+    },
+    "201": {
+      "id": 201,
+      "type": 3,
+      "category": 0,
+      "tier": 6,
+      "weight": 12,
+      "name": "Adept Pickaxe",
+      "desc": "A highly efficient mining tool that extracts ore with minimal waste and maximum yield."
+    },
+    "202": {
+      "id": 202,
+      "type": 3,
+      "category": 0,
+      "tier": 7,
+      "weight": 14,
+      "name": "Elite Pickaxe",
+      "desc": "A superior mining tool that extracts precious ores with unprecedented precision."
+    },
+    "203": {
+      "id": 203,
+      "type": 3,
+      "category": 0,
+      "tier": 8,
+      "weight": 16,
+      "name": "Master Pickaxe",
+      "desc": "A pinnacle of mining technology that extracts ore with supernatural efficiency."
+    },
+    "204": {
+      "id": 204,
+      "type": 3,
+      "category": 0,
+      "tier": 9,
+      "weight": 18,
+      "name": "Legendary Pickaxe",
+      "desc": "A storied mining tool said to have unearthed the realm's greatest treasures."
+    },
+    "205": {
+      "id": 205,
+      "type": 3,
+      "category": 0,
+      "tier": 10,
+      "weight": 20,
+      "name": "Divine Pickaxe",
+      "desc": "A sacred mining tool that extracts ore with divine precision and boundless power."
+    },
+    "206": {
+      "id": 206,
+      "type": 4,
+      "category": 0,
+      "tier": 5,
+      "weight": 10,
+      "name": "Expert Sickle",
+      "desc": "A masterfully crafted blade that swiftly harvests crops with exceptional accuracy."
+    },
+    "207": {
+      "id": 207,
+      "type": 4,
+      "category": 0,
+      "tier": 6,
+      "weight": 12,
+      "name": "Adept Sickle",
+      "desc": "A refined harvesting blade that significantly reduces the time needed to gather crops."
+    },
+    "208": {
+      "id": 208,
+      "type": 4,
+      "category": 0,
+      "tier": 7,
+      "weight": 14,
+      "name": "Elite Sickle",
+      "desc": "An outstanding harvesting tool that sweeps through fields with remarkable speed and grace."
+    },
+    "209": {
+      "id": 209,
+      "type": 4,
+      "category": 0,
+      "tier": 8,
+      "weight": 16,
+      "name": "Master Sickle",
+      "desc": "A harvesting tool of such quality that entire fields bow before its blade."
+    },
+    "21": {
+      "id": 21,
+      "type": 0,
+      "category": 0,
+      "tier": 1,
+      "weight": 2,
+      "name": "Beginner Wood Axe",
+      "desc": "A small and old wood axe used for chopping some common logs."
+    },
+    "210": {
+      "id": 210,
+      "type": 4,
+      "category": 0,
+      "tier": 9,
+      "weight": 18,
+      "name": "Legendary Sickle",
+      "desc": "A legendary blade that harvests with such speed it appears to bend time itself."
+    },
+    "211": {
+      "id": 211,
+      "type": 4,
+      "category": 0,
+      "tier": 10,
+      "weight": 20,
+      "name": "Divine Sickle",
+      "desc": "A blessed harvesting blade that turns fields of crops into bountiful offerings."
+    },
+    "212": {
+      "id": 212,
+      "type": 5,
+      "category": 0,
+      "tier": 5,
+      "weight": 10,
+      "name": "Expert Berry Shears",
+      "desc": "Finely-tuned shears that carefully select and harvest only the ripest berries."
+    },
+    "213": {
+      "id": 213,
+      "type": 5,
+      "category": 0,
+      "tier": 6,
+      "weight": 12,
+      "name": "Adept Berry Shears",
+      "desc": "Precision-engineered shears that expertly harvest berries while preserving the bush's vitality."
+    },
+    "214": {
+      "id": 214,
+      "type": 5,
+      "category": 0,
+      "tier": 7,
+      "weight": 14,
+      "name": "Elite Berry Shears",
+      "desc": "Superior shears that harvest berries with perfect precision and exceptional speed."
+    },
+    "215": {
+      "id": 215,
+      "type": 5,
+      "category": 0,
+      "tier": 8,
+      "weight": 16,
+      "name": "Master Berry Shears",
+      "desc": "Shears of such precision they can harvest the most delicate berries without disturbing a single leaf."
+    },
+    "216": {
+      "id": 216,
+      "type": 5,
+      "category": 0,
+      "tier": 9,
+      "weight": 18,
+      "name": "Legendary Berry Shears",
+      "desc": "Mythical shears whose harvests are said to yield berries of extraordinary quality."
+    },
+    "217": {
+      "id": 217,
+      "type": 5,
+      "category": 0,
+      "tier": 10,
+      "weight": 20,
+      "name": "Divine Berry Shears",
+      "desc": "Sacred shears that harvest with divine grace, blessing each berry with otherworldly perfection."
+    },
+    "22": {
+      "id": 22,
+      "type": 0,
+      "category": 0,
+      "tier": 2,
+      "weight": 4,
+      "name": "Novice Wood Axe",
+      "desc": "A heavy wood axe, but prone to break."
+    },
+    "23": {
+      "id": 23,
+      "type": 1,
+      "category": 0,
+      "tier": 1,
+      "weight": 2,
+      "name": "Beginner Hammer",
+      "desc": "Starter stone hammer with a balanced, light head for easy handling."
+    },
+    "24": {
+      "id": 24,
+      "type": 1,
+      "category": 0,
+      "tier": 2,
+      "weight": 4,
+      "name": "Novice Hammer",
+      "desc": "Enhanced stone hammer which is designed for longer use with less fatigue."
+    },
+    "25": {
+      "id": 25,
+      "type": 2,
+      "category": 0,
+      "tier": 1,
+      "weight": 2,
+      "name": "Beginner Fishing Rod",
+      "desc": "Simple design, perfect for catching small fish."
+    },
+    "26": {
+      "id": 26,
+      "type": 2,
+      "category": 0,
+      "tier": 2,
+      "weight": 4,
+      "name": "Novice Fishing Rod",
+      "desc": "A balanced blend of durability and flexibility, made for catching small-to-medium fish."
+    },
+    "27": {
+      "id": 27,
+      "type": 3,
+      "category": 0,
+      "tier": 1,
+      "weight": 2,
+      "name": "Beginner Pickaxe",
+      "desc": "A dull and old pickaxe for common ores and minerals."
+    },
+    "28": {
+      "id": 28,
+      "type": 3,
+      "category": 0,
+      "tier": 2,
+      "weight": 4,
+      "name": "Novice Pickaxe",
+      "desc": "A standard pickaxe used by miners throughout the four Kingdoms."
+    },
+    "29": {
+      "id": 29,
+      "type": 4,
+      "category": 0,
+      "tier": 1,
+      "weight": 2,
+      "name": "Beginner Sickle",
+      "desc": "A rusty sickle, only capable of harvesting the most basic wheat."
+    },
+    "3": {
+      "id": 3,
+      "type": 23,
+      "category": 2,
+      "tier": 3,
+      "weight": 1,
+      "name": "Ironbark Wood",
+      "desc": "Among the toughest hardwoods, it is extremely dense and impervious, with a nearly unbreakable outer bark.",
+      "resourceInfo": {
+        "type": 0
+      }
+    },
+    "30": {
+      "id": 30,
+      "type": 4,
+      "category": 0,
+      "tier": 2,
+      "weight": 4,
+      "name": "Novice Sickle",
+      "desc": "Balanced and lightweight with better grip for efficient wheat cutting."
+    },
+    "31": {
+      "id": 31,
+      "type": 5,
+      "category": 0,
+      "tier": 1,
+      "weight": 2,
+      "name": "Beginner Berry Shears",
+      "desc": "Gentle on berries, ideal for beginners learning to forage."
+    },
+    "32": {
+      "id": 32,
+      "type": 5,
+      "category": 0,
+      "tier": 2,
+      "weight": 4,
+      "name": "Novice Berry Shears",
+      "desc": "Improved design for quick and easy collection of medium-sized berries."
+    },
+    "33": {
+      "id": 33,
+      "type": 6,
+      "category": 1,
+      "tier": 1,
+      "weight": 5,
+      "name": "Rusty Sword",
+      "desc": "An old sword that was left to rust. It's visibly deteriorating, but it's still better than your fists.",
+      "equipmentInfo": {
+        "slotType": 0,
+        "advantageType": 0,
+        "twoHanded": false,
+        "atk": 2,
+        "def": 1,
+        "agi": 0,
+        "hp": 0,
+        "ms": 0
+      }
+    },
+    "34": {
+      "id": 34,
+      "type": 6,
+      "category": 1,
+      "tier": 1,
+      "weight": 8,
+      "name": "Iron Sword",
+      "desc": "Balanced for quick strikes, with an iron composition for durability.",
+      "equipmentInfo": {
+        "slotType": 0,
+        "advantageType": 0,
+        "twoHanded": false,
+        "atk": 4,
+        "def": 1,
+        "agi": 0,
+        "hp": 0,
+        "ms": 0
+      }
+    },
+    "35": {
+      "id": 35,
+      "type": 9,
+      "category": 1,
+      "tier": 1,
+      "weight": 8,
+      "name": "Composite Bow",
+      "desc": "An old and dusty bow that's only good at hitting small creatures.",
+      "equipmentInfo": {
+        "slotType": 0,
+        "advantageType": 3,
+        "twoHanded": false,
+        "atk": 5,
+        "def": 0,
+        "agi": 0,
+        "hp": 0,
+        "ms": 0
+      }
+    },
+    "36": {
+      "id": 36,
+      "type": 9,
+      "category": 1,
+      "tier": 2,
+      "weight": 12,
+      "name": "Hunting Bow",
+      "desc": "A basic hunting bow - plain, yet versatile.",
+      "equipmentInfo": {
+        "slotType": 0,
+        "advantageType": 3,
+        "twoHanded": false,
+        "atk": 12,
+        "def": 0,
+        "agi": 2,
+        "hp": 0,
+        "ms": 0
+      }
+    },
+    "37": {
+      "id": 37,
+      "type": 6,
+      "category": 1,
+      "tier": 2,
+      "weight": 12,
+      "name": "Warrior's Longsword",
+      "desc": "A finely-crafted longsword wielded by warriors. Its razor-sharp edge and balanced weight make it a reliable weapon against moderately powerful foes.",
+      "equipmentInfo": {
+        "slotType": 0,
+        "advantageType": 0,
+        "twoHanded": false,
+        "atk": 11,
+        "def": 3,
+        "agi": 0,
+        "hp": 0,
+        "ms": 0
+      }
+    },
+    "38": {
+      "id": 38,
+      "type": 7,
+      "category": 1,
+      "tier": 1,
+      "weight": 8,
+      "name": "Hand Axe",
+      "desc": "A simple one-handed axe, favored by woodcutters, but can be used as a weapon in dire need.",
+      "equipmentInfo": {
+        "slotType": 0,
+        "advantageType": 2,
+        "twoHanded": false,
+        "atk": 3,
+        "def": 2,
+        "agi": 0,
+        "hp": 0,
+        "ms": 0
+      }
+    },
+    "39": {
+      "id": 39,
+      "type": 7,
+      "category": 1,
+      "tier": 2,
+      "weight": 12,
+      "name": "War Axe",
+      "desc": "A brutal axe designed for combat.",
+      "equipmentInfo": {
+        "slotType": 0,
+        "advantageType": 2,
+        "twoHanded": false,
+        "atk": 10,
+        "def": 3,
+        "agi": 1,
+        "hp": 0,
+        "ms": 0
+      }
+    },
+    "4": {
+      "id": 4,
+      "type": 23,
+      "category": 2,
+      "tier": 4,
+      "weight": 1,
+      "name": "Heartcore Wood",
+      "desc": "The mystical essence derived from the most ancient of treants.",
+      "resourceInfo": {
+        "type": 0
+      }
+    },
+    "40": {
+      "id": 40,
+      "type": 8,
+      "category": 1,
+      "tier": 1,
+      "weight": 8,
+      "name": "Footman's Spear\n",
+      "desc": "A basic spear issued to foot soldiers. Its sturdy sylvan wood shaft and leaf-shaped spearhead are surprisingly reliable.",
+      "equipmentInfo": {
+        "slotType": 0,
+        "advantageType": 1,
+        "twoHanded": false,
+        "atk": 4,
+        "def": 0,
+        "agi": 1,
+        "hp": 0,
+        "ms": 0
+      }
+    },
+    "41": {
+      "id": 41,
+      "type": 8,
+      "category": 1,
+      "tier": 2,
+      "weight": 12,
+      "name": "Honed Longspear",
+      "desc": "A well-crafted longspear with a sharp steel head. Its extended reach make it formidable against any type of enemies.",
+      "equipmentInfo": {
+        "slotType": 0,
+        "advantageType": 1,
+        "twoHanded": false,
+        "atk": 11,
+        "def": 1,
+        "agi": 2,
+        "hp": 0,
+        "ms": 0
+      }
+    },
+    "42": {
+      "id": 42,
+      "type": 10,
+      "category": 1,
+      "tier": 1,
+      "weight": 8,
+      "name": "Sylvan Branch",
+      "desc": "A very simple staff carved from Sylvanwood, hence the namesake.",
+      "equipmentInfo": {
+        "slotType": 0,
+        "advantageType": 3,
+        "twoHanded": false,
+        "atk": 3,
+        "def": 1,
+        "agi": 1,
+        "hp": 0,
+        "ms": 0
+      }
+    },
+    "43": {
+      "id": 43,
+      "type": 10,
+      "category": 1,
+      "tier": 2,
+      "weight": 12,
+      "name": "Greatstaff",
+      "desc": "An imposing staff no shorter than the height of an elephant.",
+      "equipmentInfo": {
+        "slotType": 0,
+        "advantageType": 3,
+        "twoHanded": false,
+        "atk": 9,
+        "def": 4,
+        "agi": 1,
+        "hp": 0,
+        "ms": 0
+      }
+    },
+    "44": {
+      "id": 44,
+      "type": 11,
+      "category": 1,
+      "tier": 1,
+      "weight": 5,
+      "name": "Bandit's Shank",
+      "desc": "A crudely-fashioned dagger, favored by highway bandits and cutpurses.",
+      "equipmentInfo": {
+        "slotType": 0,
+        "advantageType": 3,
+        "twoHanded": true,
+        "atk": 4,
+        "def": 0,
+        "agi": 4,
+        "hp": 0,
+        "ms": 0
+      }
+    },
+    "45": {
+      "id": 45,
+      "type": 11,
+      "category": 1,
+      "tier": 2,
+      "weight": 10,
+      "name": "Sharp Dagger",
+      "desc": "A fine dagger with a slender, razor blade. Lightweight and easily concealed.",
+      "equipmentInfo": {
+        "slotType": 0,
+        "advantageType": 3,
+        "twoHanded": true,
+        "atk": 16,
+        "def": 0,
+        "agi": 7,
+        "hp": 0,
+        "ms": 0
+      }
+    },
+    "46": {
+      "id": 46,
+      "type": 12,
+      "category": 1,
+      "tier": 1,
+      "weight": 5,
+      "name": "Poor Man's Shield",
+      "desc": "A busted old shield that seems to come from a far away place, beyond the Outer World.",
+      "equipmentInfo": {
+        "slotType": 1,
+        "advantageType": 0,
+        "twoHanded": false,
+        "atk": 0,
+        "def": 3,
+        "agi": 0,
+        "hp": 0,
+        "ms": 0
+      }
+    },
+    "47": {
+      "id": 47,
+      "type": 12,
+      "category": 1,
+      "tier": 2,
+      "weight": 10,
+      "name": "Buckler",
+      "desc": "A sturdy steel shield, reinforced with additional metal braces along the edges.",
+      "equipmentInfo": {
+        "slotType": 1,
+        "advantageType": 0,
+        "twoHanded": false,
+        "atk": 0,
+        "def": 9,
+        "agi": 0,
+        "hp": 0,
+        "ms": 0
+      }
+    },
+    "48": {
+      "id": 48,
+      "type": 13,
+      "category": 1,
+      "tier": 1,
+      "weight": 4,
+      "name": "Wool Robes",
+      "desc": "A simple robe fashioned from thick wool.",
+      "equipmentInfo": {
+        "slotType": 2,
+        "advantageType": 0,
+        "twoHanded": false,
+        "atk": 1,
+        "def": 0,
+        "agi": 3,
+        "hp": 10,
+        "ms": 0
+      }
+    },
+    "49": {
+      "id": 49,
+      "type": 13,
+      "category": 1,
+      "tier": 2,
+      "weight": 7,
+      "name": "Padded Coat",
+      "desc": "A long, quilted coat with internal padding. Deceptively lightweight.",
+      "equipmentInfo": {
+        "slotType": 2,
+        "advantageType": 0,
+        "twoHanded": false,
+        "atk": 3,
+        "def": 0,
+        "agi": 8,
+        "hp": 20,
+        "ms": 0
+      }
+    },
+    "5": {
+      "id": 5,
+      "type": 23,
+      "category": 2,
+      "tier": 5,
+      "weight": 1,
+      "name": "Enchanted Wood",
+      "desc": "Almost forgotten mythical wood from the Elder Tree that predate civilization.",
+      "resourceInfo": {
+        "type": 0
+      }
+    },
+    "50": {
+      "id": 50,
+      "type": 14,
+      "category": 1,
+      "tier": 1,
+      "weight": 2,
+      "name": "Peasant's Cap",
+      "desc": "A simple, shapeless cap made of rough fabric.",
+      "equipmentInfo": {
+        "slotType": 3,
+        "advantageType": 0,
+        "twoHanded": false,
+        "atk": 0,
+        "def": 1,
+        "agi": 1,
+        "hp": 5,
+        "ms": 0
+      }
+    },
+    "51": {
+      "id": 51,
+      "type": 14,
+      "category": 1,
+      "tier": 2,
+      "weight": 3,
+      "name": "Knitted Cowl",
+      "desc": "A close-fitting cowl knitted from sturdy wool yarn.",
+      "equipmentInfo": {
+        "slotType": 3,
+        "advantageType": 0,
+        "twoHanded": false,
+        "atk": 1,
+        "def": 0,
+        "agi": 5,
+        "hp": 10,
+        "ms": 0
+      }
+    },
+    "52": {
+      "id": 52,
+      "type": 15,
+      "category": 1,
+      "tier": 1,
+      "weight": 2,
+      "name": "Worn Sandals",
+      "desc": "Crude everyday sandals, the straps frayed from much use.",
+      "equipmentInfo": {
+        "slotType": 4,
+        "advantageType": 0,
+        "twoHanded": false,
+        "atk": 0,
+        "def": 0,
+        "agi": 2,
+        "hp": 0,
+        "ms": 1
+      }
+    },
+    "53": {
+      "id": 53,
+      "type": 15,
+      "category": 1,
+      "tier": 2,
+      "weight": 3,
+      "name": "Common Travelling Boots",
+      "desc": "Sturdy boots with thick soles, designed for long journeys on foot.",
+      "equipmentInfo": {
+        "slotType": 4,
+        "advantageType": 0,
+        "twoHanded": false,
+        "atk": 0,
+        "def": 0,
+        "agi": 6,
+        "hp": 0,
+        "ms": 1
+      }
+    },
+    "54": {
+      "id": 54,
+      "type": 16,
+      "category": 1,
+      "tier": 1,
+      "weight": 6,
+      "name": "Leather Cloak",
+      "desc": "A cloak fashioned from layers of toughened leather and fabrics.",
+      "equipmentInfo": {
+        "slotType": 2,
+        "advantageType": 0,
+        "twoHanded": false,
+        "atk": 0,
+        "def": 2,
+        "agi": 2,
+        "hp": 10,
+        "ms": 0
+      }
+    },
+    "55": {
+      "id": 55,
+      "type": 16,
+      "category": 1,
+      "tier": 2,
+      "weight": 10,
+      "name": "Hardened Cloak",
+      "desc": "A full cloak of boiled and hardened leather.",
+      "equipmentInfo": {
+        "slotType": 2,
+        "advantageType": 0,
+        "twoHanded": false,
+        "atk": 2,
+        "def": 4,
+        "agi": 5,
+        "hp": 20,
+        "ms": 0
+      }
+    },
+    "56": {
+      "id": 56,
+      "type": 17,
+      "category": 1,
+      "tier": 1,
+      "weight": 2,
+      "name": "Basic Hide Hat",
+      "desc": "A simple hat crafted from a single piece of cured leather.",
+      "equipmentInfo": {
+        "slotType": 3,
+        "advantageType": 0,
+        "twoHanded": false,
+        "atk": 0,
+        "def": 1,
+        "agi": 1,
+        "hp": 5,
+        "ms": 0
+      }
+    },
+    "57": {
+      "id": 57,
+      "type": 17,
+      "category": 1,
+      "tier": 2,
+      "weight": 4,
+      "name": "Leather Helmet",
+      "desc": "A sturdy helmet covered in overlapping rows of leather.",
+      "equipmentInfo": {
+        "slotType": 3,
+        "advantageType": 0,
+        "twoHanded": false,
+        "atk": 0,
+        "def": 2,
+        "agi": 4,
+        "hp": 10,
+        "ms": 0
+      }
+    },
+    "58": {
+      "id": 58,
+      "type": 18,
+      "category": 1,
+      "tier": 1,
+      "weight": 2,
+      "name": "Old Boots",
+      "desc": "Well-worn leather boots, the material cracked and scuffed from years of use.",
+      "equipmentInfo": {
+        "slotType": 4,
+        "advantageType": 0,
+        "twoHanded": false,
+        "atk": 0,
+        "def": 1,
+        "agi": 1,
+        "hp": 0,
+        "ms": 1
+      }
+    },
+    "59": {
+      "id": 59,
+      "type": 18,
+      "category": 1,
+      "tier": 2,
+      "weight": 4,
+      "name": "Leather Shoes",
+      "desc": "Ankle-high shoes crafted from boiled and hardened leather.",
+      "equipmentInfo": {
+        "slotType": 4,
+        "advantageType": 0,
+        "twoHanded": false,
+        "atk": 0,
+        "def": 2,
+        "agi": 4,
+        "hp": 0,
+        "ms": 1
+      }
+    },
+    "6": {
+      "id": 6,
+      "type": 23,
+      "category": 2,
+      "tier": 1,
+      "weight": 1,
+      "name": "Rough Stone",
+      "desc": "Small stone pieces commonly found along riverbanks and paths.",
+      "resourceInfo": {
+        "type": 1
+      }
+    },
+    "60": {
+      "id": 60,
+      "type": 19,
+      "category": 1,
+      "tier": 1,
+      "weight": 8,
+      "name": "Crude Chest Armor",
+      "desc": "A simple sleeveless plate vest crafted from iron. This crude armor offers decent protection against blows.",
+      "equipmentInfo": {
+        "slotType": 2,
+        "advantageType": 0,
+        "twoHanded": false,
+        "atk": 0,
+        "def": 3,
+        "agi": 0,
+        "hp": 30,
+        "ms": 0
+      }
+    },
+    "61": {
+      "id": 61,
+      "type": 19,
+      "category": 1,
+      "tier": 2,
+      "weight": 12,
+      "name": "Basic Plate Armor",
+      "desc": "A full suit of sturdy iron plates, solidly riveted together.",
+      "equipmentInfo": {
+        "slotType": 2,
+        "advantageType": 0,
+        "twoHanded": false,
+        "atk": 0,
+        "def": 9,
+        "agi": 0,
+        "hp": 50,
+        "ms": 0
+      }
+    },
+    "62": {
+      "id": 62,
+      "type": 20,
+      "category": 1,
+      "tier": 1,
+      "weight": 4,
+      "name": "Iron Helm",
+      "desc": "A simple iron helmet with a face guard for extra protection.",
+      "equipmentInfo": {
+        "slotType": 3,
+        "advantageType": 0,
+        "twoHanded": false,
+        "atk": 0,
+        "def": 1,
+        "agi": 0,
+        "hp": 15,
+        "ms": 0
+      }
+    },
+    "63": {
+      "id": 63,
+      "type": 20,
+      "category": 1,
+      "tier": 2,
+      "weight": 6,
+      "name": "Great Helm",
+      "desc": "A heavy iron helmet with a cylindrical visor and hinged ventail. The fully enclosed design offers good protection.",
+      "equipmentInfo": {
+        "slotType": 3,
+        "advantageType": 0,
+        "twoHanded": false,
+        "atk": 0,
+        "def": 5,
+        "agi": 0,
+        "hp": 25,
+        "ms": 0
+      }
+    },
+    "64": {
+      "id": 64,
+      "type": 21,
+      "category": 1,
+      "tier": 1,
+      "weight": 4,
+      "name": "Crude Iron Boots",
+      "desc": "Basic iron plate coverings for the feet.",
+      "equipmentInfo": {
+        "slotType": 4,
+        "advantageType": 0,
+        "twoHanded": false,
+        "atk": 1,
+        "def": 2,
+        "agi": 0,
+        "hp": 0,
+        "ms": 0
+      }
+    },
+    "65": {
+      "id": 65,
+      "type": 21,
+      "category": 1,
+      "tier": 2,
+      "weight": 6,
+      "name": "Fluted Greaves",
+      "desc": "Ornately fluted and articulated iron plates that cover the entire lower leg.",
+      "equipmentInfo": {
+        "slotType": 4,
+        "advantageType": 0,
+        "twoHanded": false,
+        "atk": 1,
+        "def": 6,
+        "agi": 0,
+        "hp": 0,
+        "ms": 0
+      }
+    },
+    "66": {
+      "id": 66,
+      "type": 25,
+      "category": 2,
+      "tier": 1,
+      "weight": 2,
+      "name": "Small Healing Potion",
+      "desc": "A small potion that restores a small amount of health. Ideal for quick recovery during early adventures.",
+      "healingInfo": {
+        "hpRestore": 40
+      }
+    },
+    "67": {
+      "id": 67,
+      "type": 23,
+      "category": 2,
+      "tier": 4,
+      "weight": 1,
+      "name": "Draconic Heart",
+      "desc": "It is said that a dragon's soul persists in its heart after death. The heart is still pulsing, albeit faintly.",
+      "resourceInfo": {
+        "type": 6
+      }
+    },
+    "68": {
+      "id": 68,
+      "type": 23,
+      "category": 2,
+      "tier": 4,
+      "weight": 1,
+      "name": "Red Scales",
+      "desc": "Crimson dragon scales, said to be nigh-indestructible, and of course, incredibly valuable.",
+      "resourceInfo": {
+        "type": 6
+      }
+    },
+    "69": {
+      "id": 69,
+      "type": 23,
+      "category": 2,
+      "tier": 4,
+      "weight": 1,
+      "name": "Dragon Fang",
+      "desc": "A massive and sharp fang, imbued with the dragon's ferocity.",
+      "resourceInfo": {
+        "type": 6
+      }
+    },
+    "7": {
+      "id": 7,
+      "type": 23,
+      "category": 2,
+      "tier": 2,
+      "weight": 1,
+      "name": "Marker Stone",
+      "desc": "Upright stones marking paths and boundaries since ancient times.",
+      "resourceInfo": {
+        "type": 1
+      }
+    },
+    "70": {
+      "id": 70,
+      "type": 8,
+      "category": 1,
+      "tier": 4,
+      "weight": 26,
+      "name": "Beast Piercer",
+      "desc": "A vicious piercing spear edged with a dragon's lethal fang.",
+      "equipmentInfo": {
+        "slotType": 0,
+        "advantageType": 1,
+        "twoHanded": false,
+        "atk": 45,
+        "def": 8,
+        "agi": 17,
+        "hp": 0,
+        "ms": 0
+      }
+    },
+    "71": {
+      "id": 71,
+      "type": 19,
+      "category": 1,
+      "tier": 4,
+      "weight": 22,
+      "name": "Blood Armor",
+      "desc": "An imposing armor, made with the essence of a dragon's ethereal heart. The heart's power turns the iron plate blood red, hence the namesake.",
+      "equipmentInfo": {
+        "slotType": 2,
+        "advantageType": 0,
+        "twoHanded": false,
+        "atk": 12,
+        "def": 40,
+        "agi": 6,
+        "hp": 200,
+        "ms": 0
+      }
+    },
+    "72": {
+      "id": 72,
+      "type": 12,
+      "category": 1,
+      "tier": 4,
+      "weight": 20,
+      "name": "Scaled Greatshield",
+      "desc": "A towering shield adorned with dragon scales, providing effective defense.",
+      "equipmentInfo": {
+        "slotType": 1,
+        "advantageType": 0,
+        "twoHanded": false,
+        "atk": 7,
+        "def": 48,
+        "agi": 0,
+        "hp": 0,
+        "ms": 0
+      }
+    },
+    "73": {
+      "id": 73,
+      "type": 23,
+      "category": 2,
+      "tier": 6,
+      "weight": 2,
+      "name": "Stormwood",
+      "desc": "A sturdy, tempest-touched wood that grows in regions of constant lightning and thunder.",
+      "resourceInfo": {
+        "type": 0
+      }
+    },
+    "74": {
+      "id": 74,
+      "type": 23,
+      "category": 2,
+      "tier": 7,
+      "weight": 2,
+      "name": "Bloodoak",
+      "desc": "Named for its dark red sap, which flows like blood when the tree is cut.",
+      "resourceInfo": {
+        "type": 0
+      }
+    },
+    "75": {
+      "id": 75,
+      "type": 23,
+      "category": 2,
+      "tier": 8,
+      "weight": 2,
+      "name": "Starwood",
+      "desc": "A pale and luminous wood that glows softly in the dark, as if imbued with the light of distant stars.",
+      "resourceInfo": {
+        "type": 0
+      }
+    },
+    "76": {
+      "id": 76,
+      "type": 23,
+      "category": 2,
+      "tier": 9,
+      "weight": 2,
+      "name": "Phoenix Wood",
+      "desc": "Extremely lightweight yet almost unbreakable. Even after being severely damaged, Phoenix Wood will gradually restore itself, much like the mythical phoenix rising from its ashes.",
+      "resourceInfo": {
+        "type": 0
+      }
+    },
+    "77": {
+      "id": 77,
+      "type": 23,
+      "category": 2,
+      "tier": 10,
+      "weight": 3,
+      "name": "Yggdrasil Wood",
+      "desc": "This wood is said to be connected to the life force of all living things, making it extremely rare and powerful.",
+      "resourceInfo": {
+        "type": 0
+      }
+    },
+    "78": {
+      "id": 78,
+      "type": 23,
+      "category": 2,
+      "tier": 3,
+      "weight": 1,
+      "name": "Flintrock",
+      "desc": "A sharp-edged stone favored for crafting primitive tools and weapons with a rugged appearance.",
+      "resourceInfo": {
+        "type": 1
+      }
+    },
+    "79": {
+      "id": 79,
+      "type": 23,
+      "category": 2,
+      "tier": 4,
+      "weight": 1,
+      "name": "Ironstone",
+      "desc": "A dense, metallic stone often used for basic armor and weapon crafting. Its durability makes it ideal for medium-level smiths.",
+      "resourceInfo": {
+        "type": 1
+      }
+    },
+    "8": {
+      "id": 8,
+      "type": 23,
+      "category": 2,
+      "tier": 1,
+      "weight": 1,
+      "name": "Stream Fish",
+      "desc": "Small, bountiful fish teeming in babbling streams and rivers.",
+      "resourceInfo": {
+        "type": 2
+      }
+    },
+    "80": {
+      "id": 80,
+      "type": 23,
+      "category": 2,
+      "tier": 5,
+      "weight": 1,
+      "name": "Graniteheart",
+      "desc": "A tough stone known for its resilience, used in fortifying structures and crafting sturdy equipment.",
+      "resourceInfo": {
+        "type": 1
+      }
+    },
+    "81": {
+      "id": 81,
+      "type": 23,
+      "category": 2,
+      "tier": 6,
+      "weight": 2,
+      "name": "Basaltcore",
+      "desc": "Formed in volcanic regions, this stone has excellent heat-resistant properties.",
+      "resourceInfo": {
+        "type": 1
+      }
+    },
+    "82": {
+      "id": 82,
+      "type": 23,
+      "category": 2,
+      "tier": 7,
+      "weight": 2,
+      "name": "Thunderstone",
+      "desc": "A vibrating stone that holds traces of thunderous energy.",
+      "resourceInfo": {
+        "type": 1
+      }
+    },
+    "83": {
+      "id": 83,
+      "type": 23,
+      "category": 2,
+      "tier": 8,
+      "weight": 2,
+      "name": "Mythrilstone",
+      "desc": "A lightweight, shimmering stone with extraordinary strength, ideal for crafting high-tier, agile armor and weapons.",
+      "resourceInfo": {
+        "type": 1
+      }
+    },
+    "84": {
+      "id": 84,
+      "type": 23,
+      "category": 2,
+      "tier": 9,
+      "weight": 2,
+      "name": "Lavaheart",
+      "desc": "This stone emanates the intense energy of volcanic eruptions, and its core can unleash a burst of flame to ignite nearby beings.",
+      "resourceInfo": {
+        "type": 1
+      }
+    },
+    "85": {
+      "id": 85,
+      "type": 23,
+      "category": 2,
+      "tier": 10,
+      "weight": 3,
+      "name": "Celestialite",
+      "desc": "An ultra-rare stone found only in the deepest parts of the universe, its energy is said to warp time and space.",
+      "resourceInfo": {
+        "type": 1
+      }
+    },
+    "86": {
+      "id": 86,
+      "type": 23,
+      "category": 2,
+      "tier": 3,
+      "weight": 1,
+      "name": "Bluegill",
+      "desc": "A modest-sized fish with a blue tint. It is known for its mild flavor and is often used in simple cooking recipes.",
+      "resourceInfo": {
+        "type": 2
+      }
+    },
+    "87": {
+      "id": 87,
+      "type": 23,
+      "category": 2,
+      "tier": 4,
+      "weight": 1,
+      "name": "Golden Fish",
+      "desc": "A rare variant of the trout with golden scales. It’s sought after for its unique flavor and is often used in special dishes and potions.",
+      "resourceInfo": {
+        "type": 2
+      }
+    },
+    "88": {
+      "id": 88,
+      "type": 23,
+      "category": 2,
+      "tier": 5,
+      "weight": 1,
+      "name": "Piranha",
+      "desc": "Fearsome predator known for its razor-sharp teeth and aggressive feeding behavior.",
+      "resourceInfo": {
+        "type": 2
+      }
+    },
+    "89": {
+      "id": 89,
+      "type": 23,
+      "category": 2,
+      "tier": 6,
+      "weight": 2,
+      "name": "Demon Catfish",
+      "desc": "Known for its eerie silence and stealthy movements, making it a formidable predator.",
+      "resourceInfo": {
+        "type": 2
+      }
+    },
+    "9": {
+      "id": 9,
+      "type": 23,
+      "category": 2,
+      "tier": 2,
+      "weight": 1,
+      "name": "Marsh Fish",
+      "desc": "Robust, hardy fish scavenged from stagnant marsh waters.",
+      "resourceInfo": {
+        "type": 2
+      }
+    },
+    "90": {
+      "id": 90,
+      "type": 23,
+      "category": 2,
+      "tier": 7,
+      "weight": 2,
+      "name": "Moonlit Fish",
+      "desc": "Has a shimmering, silver-blue body that reflects moonlight with an otherworldly glow.",
+      "resourceInfo": {
+        "type": 2
+      }
+    },
+    "91": {
+      "id": 91,
+      "type": 23,
+      "category": 2,
+      "tier": 8,
+      "weight": 2,
+      "name": "Dragonfish",
+      "desc": "Known for its formidable strength and fiery temperament, the Dragonfish can harness elemental fire and magical energies.",
+      "resourceInfo": {
+        "type": 2
+      }
+    },
+    "92": {
+      "id": 92,
+      "type": 23,
+      "category": 2,
+      "tier": 9,
+      "weight": 2,
+      "name": "Void Octofish",
+      "desc": "Possesses remarkable control over void and darkness. Its tentacles can manipulate shadows and create areas of darkness, making it difficult to approach.",
+      "resourceInfo": {
+        "type": 2
+      }
+    },
+    "93": {
+      "id": 93,
+      "type": 23,
+      "category": 2,
+      "tier": 10,
+      "weight": 3,
+      "name": "Starlight Serpent",
+      "desc": "A mythical fish that glows with starlight. It’s used in crafting legendary items that have the power to turn the tide of battle.",
+      "resourceInfo": {
+        "type": 2
+      }
+    },
+    "94": {
+      "id": 94,
+      "type": 23,
+      "category": 2,
+      "tier": 3,
+      "weight": 1,
+      "name": "Nickel Ore",
+      "desc": "A lustrous, silvery metal with a hint of gold. It is used in crafting stronger weapons and tools.",
+      "resourceInfo": {
+        "type": 3
+      }
+    },
+    "95": {
+      "id": 95,
+      "type": 23,
+      "category": 2,
+      "tier": 4,
+      "weight": 1,
+      "name": "Emerald Ore",
+      "desc": "A rare and valuable green gem that is used in crafting items with enhanced magical properties and higher durability.",
+      "resourceInfo": {
+        "type": 3
+      }
+    },
+    "96": {
+      "id": 96,
+      "type": 23,
+      "category": 2,
+      "tier": 5,
+      "weight": 1,
+      "name": "Adamantite Ore",
+      "desc": "An incredibly tough and rare metal, known for its durability and sharpness. Ideal for creating high-tier weapons and armor with exceptional qualities.",
+      "resourceInfo": {
+        "type": 3
+      }
+    },
+    "97": {
+      "id": 97,
+      "type": 23,
+      "category": 2,
+      "tier": 6,
+      "weight": 2,
+      "name": "Mithril Ore",
+      "desc": "A rare, lightweight metal highly sought after for its strength and magical conductivity.",
+      "resourceInfo": {
+        "type": 3
+      }
+    },
+    "98": {
+      "id": 98,
+      "type": 23,
+      "category": 2,
+      "tier": 7,
+      "weight": 2,
+      "name": "Dark Ore",
+      "desc": "A deep, glossy black mineral with subtle metallic flecks. Valued for its durability and strength.",
+      "resourceInfo": {
+        "type": 3
+      }
+    },
+    "99": {
+      "id": 99,
+      "type": 23,
+      "category": 2,
+      "tier": 8,
+      "weight": 2,
+      "name": "Meteorite Ore",
+      "desc": "Forged from the remnants of meteors, this dark, metallic ore boasts a rough texture and scattered celestial flecks.",
+      "resourceInfo": {
+        "type": 3
+      }
+    }
+  }
+}

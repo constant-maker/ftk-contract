@@ -1,0 +1,40 @@
+{
+  "items": {
+    "142": {
+      "id": 142,
+      "type": 19,
+      "category": 1,
+      "tier": 3,
+      "weight": 18,
+      "name": "Heavy Plate Armor",
+      "desc": "A huge piece of plate armor that usually signifies the wearer's knighthood.",
+      "equipmentInfo": {
+        "slotType": 2,
+        "atk": 2,
+        "def": 10,
+        "agi": 0,
+        "hp": 80,
+        "ms": 0
+      }
+    },
+    "40": {
+      "id": 40,
+      "type": 8,
+      "category": 1,
+      "tier": 1,
+      "weight": 8,
+      "name": "Footman's Spear",
+      "desc": "A basic spear issued to footsoldiers. Its sturdy sylvan wood shaft and leaf-shaped spearhead are surprisingly reliable.",
+      "equipmentInfo": {
+        "slotType": 0,
+        "advantageType": 1,
+        "twoHanded": false,
+        "atk": 4,
+        "def": 0,
+        "agi": 1,
+        "hp": 0,
+        "ms": 0
+      }
+    }
+  }
+}

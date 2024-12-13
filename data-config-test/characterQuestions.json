@@ -1,0 +1,414 @@
+{
+  "characterQuestions": [
+    {
+      "question": "You were born",
+      "answers": [
+        {
+          "label": "From a rich family",
+          "value": 0,
+          "bonus": {
+            "ATK": 0,
+            "DEF": 1,
+            "AGI": 0
+          }
+        },
+        {
+          "label": "An orphan",
+          "value": 1,
+          "bonus": {
+            "ATK": 1,
+            "DEF": 0,
+            "AGI": 0
+          }
+        },
+        {
+          "label": "From a family of traders",
+          "value": 2,
+          "bonus": {
+            "ATK": 0,
+            "DEF": 0,
+            "AGI": 1
+          }
+        },
+        {
+          "label": "A bastard from a nobleman",
+          "value": 3,
+          "bonus": {
+            "ATK": 1,
+            "DEF": 0,
+            "AGI": 0
+          }
+        }
+      ]
+    },
+    {
+      "question": "As a child, your hobby was",
+      "answers": [
+        {
+          "label": "Reading and collecting books",
+          "value": 4,
+          "bonus": {
+            "ATK": 0,
+            "DEF": 1,
+            "AGI": 0
+          }
+        },
+        {
+          "label": "Sparring with the local militia",
+          "value": 5,
+          "bonus": {
+            "ATK": 1,
+            "DEF": 0,
+            "AGI": 0
+          }
+        },
+        {
+          "label": "Playing hide and seek with your friends",
+          "value": 6,
+          "bonus": {
+            "ATK": 0,
+            "DEF": 0,
+            "AGI": 1
+          }
+        },
+        {
+          "label": "Climbing into restricted places",
+          "value": 7,
+          "bonus": {
+            "ATK": 0,
+            "DEF": 0,
+            "AGI": 1
+          }
+        }
+      ]
+    },
+    {
+      "question": "When confronted with a serious problem, you tend to",
+      "answers": [
+        {
+          "label": "Work and solve it alone",
+          "value": 8,
+          "bonus": {
+            "ATK": 0,
+            "DEF": 1,
+            "AGI": 0
+          }
+        },
+        {
+          "label": "Avoid problems in the first place",
+          "value": 9,
+          "bonus": {
+            "ATK": 1,
+            "DEF": 0,
+            "AGI": 0
+          }
+        },
+        {
+          "label": "Deal with it straight on",
+          "value": 10,
+          "bonus": {
+            "ATK": 0,
+            "DEF": 0,
+            "AGI": 1
+          }
+        },
+        {
+          "label": "Use your connections to solve it",
+          "value": 11,
+          "bonus": {
+            "ATK": 0,
+            "DEF": 1,
+            "AGI": 0
+          }
+        }
+      ]
+    },
+    {
+      "question": "At 10 years old, you",
+      "answers": [
+        {
+          "label": "Stole a trinket from a noblewoman",
+          "value": 12,
+          "bonus": {
+            "ATK": 0,
+            "DEF": 0,
+            "AGI": 1
+          }
+        },
+        {
+          "label": "Were as strong as a 15-year-old",
+          "value": 13,
+          "bonus": {
+            "ATK": 0,
+            "DEF": 1,
+            "AGI": 0
+          }
+        },
+        {
+          "label": "Led a gang of misfit friends",
+          "value": 14,
+          "bonus": {
+            "ATK": 1,
+            "DEF": 0,
+            "AGI": 0
+          }
+        },
+        {
+          "label": "Ran faster than anyone at your age",
+          "value": 15,
+          "bonus": {
+            "ATK": 0,
+            "DEF": 0,
+            "AGI": 1
+          }
+        }
+      ]
+    },
+    {
+      "question": "Your greatest achievement to date was",
+      "answers": [
+        {
+          "label": "Saving a lot of people from a burning building",
+          "value": 16,
+          "bonus": {
+            "ATK": 0,
+            "DEF": 1,
+            "AGI": 0
+          }
+        },
+        {
+          "label": "Winning a dueling contest in town",
+          "value": 17,
+          "bonus": {
+            "ATK": 1,
+            "DEF": 0,
+            "AGI": 0
+          }
+        },
+        {
+          "label": "Organizing a profitable market fair for the town",
+          "value": 18,
+          "bonus": {
+            "ATK": 0,
+            "DEF": 1,
+            "AGI": 0
+          }
+        },
+        {
+          "label": "Finding an ancient necklace at a hidden cave",
+          "value": 19,
+          "bonus": {
+            "ATK": 0,
+            "DEF": 0,
+            "AGI": 1
+          }
+        }
+      ]
+    },
+    {
+      "question": "The first job you took was as a",
+      "answers": [
+        {
+          "label": "A docker",
+          "value": 20,
+          "bonus": {
+            "ATK": 0,
+            "DEF": 1,
+            "AGI": 0
+          }
+        },
+        {
+          "label": "An apprentice blacksmith",
+          "value": 21,
+          "bonus": {
+            "ATK": 1,
+            "DEF": 0,
+            "AGI": 0
+          }
+        },
+        {
+          "label": "A bartender at a local inn",
+          "value": 22,
+          "bonus": {
+            "ATK": 0,
+            "DEF": 0,
+            "AGI": 1
+          }
+        },
+        {
+          "label": "A squire to a local knight",
+          "value": 23,
+          "bonus": {
+            "ATK": 1,
+            "DEF": 0,
+            "AGI": 0
+          }
+        }
+      ]
+    },
+    {
+      "question": "You think that others perceive you as",
+      "answers": [
+        {
+          "label": "Aggressive and dangerous",
+          "value": 24,
+          "bonus": {
+            "ATK": 1,
+            "DEF": 0,
+            "AGI": 0
+          }
+        },
+        {
+          "label": "Cool and collected",
+          "value": 25,
+          "bonus": {
+            "ATK": 0,
+            "DEF": 1,
+            "AGI": 0
+          }
+        },
+        {
+          "label": "Intelligent and caring",
+          "value": 26,
+          "bonus": {
+            "ATK": 0,
+            "DEF": 1,
+            "AGI": 0
+          }
+        },
+        {
+          "label": "Street smart and charming",
+          "value": 27,
+          "bonus": {
+            "ATK": 0,
+            "DEF": 0,
+            "AGI": 1
+          }
+        }
+      ]
+    },
+    {
+      "question": "You live by the following principle",
+      "answers": [
+        {
+          "label": "Knowledge is power",
+          "value": 28,
+          "bonus": {
+            "ATK": 0,
+            "DEF": 1,
+            "AGI": 0
+          }
+        },
+        {
+          "label": "Glory in battle is virtue",
+          "value": 29,
+          "bonus": {
+            "ATK": 1,
+            "DEF": 0,
+            "AGI": 0
+          }
+        },
+        {
+          "label": "Money is what matters",
+          "value": 30,
+          "bonus": {
+            "ATK": 0,
+            "DEF": 0,
+            "AGI": 1
+          }
+        },
+        {
+          "label": "In God we trust",
+          "value": 31,
+          "bonus": {
+            "ATK": 1,
+            "DEF": 0,
+            "AGI": 0
+          }
+        }
+      ]
+    },
+    {
+      "question": "The first pet you ever owned was",
+      "answers": [
+        {
+          "label": "A tortoise",
+          "value": 32,
+          "bonus": {
+            "ATK": 0,
+            "DEF": 1,
+            "AGI": 0
+          }
+        },
+        {
+          "label": "A shepherd dog",
+          "value": 33,
+          "bonus": {
+            "ATK": 1,
+            "DEF": 0,
+            "AGI": 0
+          }
+        },
+        {
+          "label": "A black cat",
+          "value": 34,
+          "bonus": {
+            "ATK": 0,
+            "DEF": 0,
+            "AGI": 1
+          }
+        },
+        {
+          "label": "A parrot",
+          "value": 35,
+          "bonus": {
+            "ATK": 0,
+            "DEF": 0,
+            "AGI": 1
+          }
+        }
+      ]
+    },
+    {
+      "question": "When you were a child, you aspire to become",
+      "answers": [
+        {
+          "label": "A politician",
+          "value": 36,
+          "bonus": {
+            "ATK": 0,
+            "DEF": 1,
+            "AGI": 0
+          }
+        },
+        {
+          "label": "A soldier",
+          "value": 37,
+          "bonus": {
+            "ATK": 1,
+            "DEF": 0,
+            "AGI": 0
+          }
+        },
+        {
+          "label": "An adventurer",
+          "value": 38,
+          "bonus": {
+            "ATK": 0,
+            "DEF": 0,
+            "AGI": 1
+          }
+        },
+        {
+          "label": "A blacksmith",
+          "value": 39,
+          "bonus": {
+            "ATK": 1,
+            "DEF": 0,
+            "AGI": 0
+          }
+        }
+      ]
+    }
+  ]
+}

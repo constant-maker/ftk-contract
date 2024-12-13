@@ -1,0 +1,15 @@
+{
+  "monsterLocationsOverride": [
+    {
+      "locations": [
+        {
+          "x": -5,
+          "y": 1
+        }
+      ],
+      "monsterId": 9,
+      "level": 70,
+      "advantageType": 0
+    }
+  ]
+}

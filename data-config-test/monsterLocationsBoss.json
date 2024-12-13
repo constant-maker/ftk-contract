@@ -1,0 +1,27 @@
+{
+  "monsterLocationsBoss": [
+    {
+      "locations": [
+        {
+          "x": -50,
+          "y": -17
+        },
+        {
+          "x": 36,
+          "y": 18
+        },
+        {
+          "x": -12,
+          "y": 46
+        },
+        {
+          "x": 21,
+          "y": -43
+        }
+      ],
+      "monsterId": 5,
+      "level": 100,
+      "advantageType": 3
+    }
+  ]
+}

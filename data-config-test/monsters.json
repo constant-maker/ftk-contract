@@ -1,0 +1,123 @@
+{
+  "monsters": {
+    "1": {
+      "id": 1,
+      "name": "Moonhowler",
+      "desc": "With fur as white as moonlight and haunting howls echoing through the trees, they prowl the forest under the glow of the night, attacking any travelers that dare to trespass in their territory.",
+      "kingdom": 1,
+      "tier": 1,
+      "isBoss": false,
+      "levels": [1, 10],
+      "grow": 15,
+      "skillIds": [0, 0, 0, 4],
+      "itemIds": [16],
+      "itemAmounts": [1],
+      "exp": 10,
+      "perkExp": 5,
+      "stats": {
+        "hp": 70,
+        "atk": 5,
+        "def": 1,
+        "agi": 1,
+        "sp": 3
+      }
+    },
+    "2": {
+      "id": 2,
+      "name": "Grizzlor",
+      "desc": "The Grizzlor withstands attacks with remarkable resilience, retaliating with powerful and devastating strikes. Playing dead is a safe bet if you encounter them, as any sudden movement might provoke a fatal response.",
+      "kingdom": 1,
+      "tier": 1,
+      "isBoss": false,
+      "levels": [1, 10],
+      "grow": 16,
+      "skillIds": [0, 4, 0, 0],
+      "itemIds": [16, 17],
+      "itemAmounts": [1, 1],
+      "exp": 12,
+      "perkExp": 6,
+      "stats": {
+        "hp": 80,
+        "atk": 7,
+        "def": 2,
+        "agi": 2,
+        "sp": 3
+      }
+    },
+    "3": {
+      "id": 3,
+      "name": "Elaphus",
+      "desc": "Known to roam enchanted forests, this ethereal being is both guardian and guide, its presence believed to bring luck and protection to those fortunate enough to encounter it.",
+      "kingdom": 1,
+      "tier": 1,
+      "isBoss": false,
+      "levels": [1, 10],
+      "grow": 30,
+      "skillIds": [0, 0, 0, 9],
+      "itemIds": [],
+      "itemAmounts": [],
+      "exp": 32,
+      "perkExp": 19,
+      "stats": {
+        "hp": 180,
+        "atk": 17,
+        "def": 12,
+        "agi": 12,
+        "sp": 3
+      }
+    },
+    "4": {
+      "id": 4,
+      "name": "Azyrion",
+      "desc": "Venomous species lurking in the deepest reaches of a swamp. Its emerald scales drip with poison, a lethal defense honed over centuries to deter intruders and vanquish prey. In the darkness and murky waters, its mere presence instills fear, halting even the boldest adventurers in their tracks.",
+      "kingdom": 1,
+      "tier": 1,
+      "isBoss": false,
+      "levels": [1, 10],
+      "grow": 50,
+      "skillIds": [8, 7, 6, 5],
+      "itemIds": [],
+      "itemAmounts": [],
+      "exp": 100,
+      "perkExp": 50,
+      "stats": {
+        "hp": 780,
+        "atk": 70,
+        "def": 20,
+        "agi": 20,
+        "sp": 5
+      }
+    },
+    "5": {
+      "id": 5,
+      "name": "Ignis",
+      "desc": "Dwelling in volcanic regions, this dragon commands the power of fire, breathing intense flames that can melt even the toughest armor.",
+      "kingdom": 4,
+      "tier": 5,
+      "isBoss": true,
+      "level": [100, 100],
+      "grow": 50,
+      "skillIds": [0, 6, 10, 9],
+      "itemIds": [36, 37, 38],
+      "itemAmounts": [1, 1, 1],
+      "exp": 300,
+      "perkExp": 150,
+      "stats": {
+        "hp": 1500,
+        "atk": 10,
+        "def": 2,
+        "agi": 1,
+        "sp": 5
+      },
+      "bossInfo": {
+        "barrier": 50,
+        "hp": 1500,
+        "crystal": 300,
+        "respawnDuration": 4320,
+        "berserkHpThreshold": 20,
+        "boostPercent": 20,
+        "lastDefeatedTime": 0
+      }
+    }
+  }
+}

@@ -1,0 +1,2509 @@
+[
+  {
+    "kingdomId": 0,
+    "x": 0,
+    "y": 2,
+    "farmSlot": 0,
+    "zoneType": 0,
+    "itemIds": [
+      10
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": -1,
+    "y": 2,
+    "farmSlot": 0,
+    "zoneType": 0,
+    "itemIds": [
+      10
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 1,
+    "y": 2,
+    "farmSlot": 0,
+    "zoneType": 0,
+    "itemIds": [
+      6,
+      1
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": -2,
+    "y": 2,
+    "farmSlot": 0,
+    "zoneType": 0,
+    "itemIds": [
+      1,
+      8
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 2,
+    "y": 2,
+    "farmSlot": 0,
+    "zoneType": 0,
+    "itemIds": [
+      10
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 0,
+    "y": 3,
+    "farmSlot": 0,
+    "zoneType": 0,
+    "itemIds": [
+      11,
+      1,
+      7
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": -1,
+    "y": 3,
+    "farmSlot": 0,
+    "zoneType": 0,
+    "itemIds": [
+      11
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 1,
+    "y": 3,
+    "farmSlot": 0,
+    "zoneType": 0,
+    "itemIds": [
+      1,
+      7
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 2,
+    "y": 3,
+    "farmSlot": 0,
+    "zoneType": 0,
+    "itemIds": [
+      1
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": -2,
+    "y": 3,
+    "farmSlot": 0,
+    "zoneType": 0,
+    "itemIds": [
+      6
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": -3,
+    "y": 2,
+    "farmSlot": 0,
+    "zoneType": 0,
+    "itemIds": [
+      8,
+      10,
+      14
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 3,
+    "y": 2,
+    "farmSlot": 0,
+    "zoneType": 0,
+    "itemIds": [
+      10
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 0,
+    "y": 4,
+    "farmSlot": 0,
+    "zoneType": 0,
+    "itemIds": [
+      11,
+      6
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 1,
+    "y": 4,
+    "farmSlot": 0,
+    "zoneType": 0,
+    "itemIds": [
+      10
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": -1,
+    "y": 4,
+    "farmSlot": 0,
+    "zoneType": 0,
+    "itemIds": [
+      10
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 3,
+    "y": 3,
+    "farmSlot": 0,
+    "zoneType": 0,
+    "itemIds": [
+      6,
+      1,
+      10
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": -3,
+    "y": 3,
+    "farmSlot": 0,
+    "zoneType": 0,
+    "itemIds": [
+      10
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 4,
+    "y": 2,
+    "farmSlot": 0,
+    "zoneType": 0,
+    "itemIds": [
+      10
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": -2,
+    "y": 4,
+    "farmSlot": 0,
+    "zoneType": 0,
+    "itemIds": [
+      10,
+      9
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 2,
+    "y": 4,
+    "farmSlot": 0,
+    "zoneType": 0,
+    "itemIds": [
+      1,
+      12,
+      10
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": -4,
+    "y": 2,
+    "farmSlot": 0,
+    "zoneType": 0,
+    "itemIds": [
+      6,
+      15
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 0,
+    "y": 5,
+    "farmSlot": 0,
+    "zoneType": 0,
+    "itemIds": [
+      6,
+      12,
+      14
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 4,
+    "y": 3,
+    "farmSlot": 0,
+    "zoneType": 0,
+    "itemIds": [
+      6,
+      14
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 3,
+    "y": 4,
+    "farmSlot": 0,
+    "zoneType": 0,
+    "itemIds": [
+      11,
+      6
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": -3,
+    "y": 4,
+    "farmSlot": 0,
+    "zoneType": 0,
+    "itemIds": [
+      6,
+      12,
+      10
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": -4,
+    "y": 3,
+    "farmSlot": 0,
+    "zoneType": 0,
+    "itemIds": [
+      2,
+      10
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 1,
+    "y": 5,
+    "farmSlot": 0,
+    "zoneType": 0,
+    "itemIds": [
+      1,
+      10,
+      14
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": -1,
+    "y": 5,
+    "farmSlot": 0,
+    "zoneType": 0,
+    "itemIds": [
+      6
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": -2,
+    "y": 5,
+    "farmSlot": 0,
+    "zoneType": 0,
+    "itemIds": [
+      13
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 2,
+    "y": 5,
+    "farmSlot": 0,
+    "zoneType": 0,
+    "itemIds": [
+      6,
+      1
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 5,
+    "y": 2,
+    "farmSlot": 0,
+    "zoneType": 0,
+    "itemIds": [
+      10,
+      7
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 4,
+    "y": 4,
+    "farmSlot": 0,
+    "zoneType": 0,
+    "itemIds": [
+      6,
+      2,
+      10
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": -4,
+    "y": 4,
+    "farmSlot": 0,
+    "zoneType": 0,
+    "itemIds": [
+      8,
+      10
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 5,
+    "y": 3,
+    "farmSlot": 0,
+    "zoneType": 0,
+    "itemIds": [
+      6,
+      10
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": -3,
+    "y": 5,
+    "farmSlot": 0,
+    "zoneType": 0,
+    "itemIds": [
+      6,
+      1
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 3,
+    "y": 5,
+    "farmSlot": 0,
+    "zoneType": 0,
+    "itemIds": [
+      6,
+      7
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 0,
+    "y": 6,
+    "farmSlot": 0,
+    "zoneType": 0,
+    "itemIds": [
+      12,
+      10
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": -1,
+    "y": 6,
+    "farmSlot": 0,
+    "zoneType": 0,
+    "itemIds": [
+      10
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 1,
+    "y": 6,
+    "farmSlot": 0,
+    "zoneType": 0,
+    "itemIds": [
+      11,
+      1,
+      8
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 2,
+    "y": 6,
+    "farmSlot": 0,
+    "zoneType": 0,
+    "itemIds": [
+      8,
+      10
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 6,
+    "y": 2,
+    "farmSlot": 0,
+    "zoneType": 0,
+    "itemIds": [
+      12
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": -2,
+    "y": 6,
+    "farmSlot": 0,
+    "zoneType": 0,
+    "itemIds": [
+      6,
+      14
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 5,
+    "y": 4,
+    "farmSlot": 0,
+    "zoneType": 0,
+    "itemIds": [
+      11,
+      7
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 4,
+    "y": 5,
+    "farmSlot": 0,
+    "zoneType": 0,
+    "itemIds": [
+      11,
+      94
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": -4,
+    "y": 5,
+    "farmSlot": 0,
+    "zoneType": 0,
+    "itemIds": [
+      11,
+      7,
+      2
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 3,
+    "y": 6,
+    "farmSlot": 0,
+    "zoneType": 0,
+    "itemIds": [
+      11
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": -3,
+    "y": 6,
+    "farmSlot": 0,
+    "zoneType": 0,
+    "itemIds": [
+      78,
+      2
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 6,
+    "y": 3,
+    "farmSlot": 0,
+    "zoneType": 0,
+    "itemIds": [
+      11,
+      15,
+      3
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 0,
+    "y": 7,
+    "farmSlot": 0,
+    "zoneType": 0,
+    "itemIds": [
+      13,
+      7,
+      9
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": -1,
+    "y": 7,
+    "farmSlot": 0,
+    "zoneType": 0,
+    "itemIds": [
+      11,
+      7
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 1,
+    "y": 7,
+    "farmSlot": 0,
+    "zoneType": 0,
+    "itemIds": [
+      78
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 5,
+    "y": 5,
+    "farmSlot": 0,
+    "zoneType": 0,
+    "itemIds": [
+      11,
+      94
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": -4,
+    "y": 6,
+    "farmSlot": 0,
+    "zoneType": 0,
+    "itemIds": [
+      11,
+      94
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 4,
+    "y": 6,
+    "farmSlot": 0,
+    "zoneType": 0,
+    "itemIds": [
+      11,
+      7
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 6,
+    "y": 4,
+    "farmSlot": 0,
+    "zoneType": 0,
+    "itemIds": [
+      13,
+      15
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": -2,
+    "y": 7,
+    "farmSlot": 0,
+    "zoneType": 0,
+    "itemIds": [
+      11
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 2,
+    "y": 7,
+    "farmSlot": 0,
+    "zoneType": 0,
+    "itemIds": [
+      15,
+      2
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 3,
+    "y": 7,
+    "farmSlot": 0,
+    "zoneType": 0,
+    "itemIds": [
+      7
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": -3,
+    "y": 7,
+    "farmSlot": 0,
+    "zoneType": 0,
+    "itemIds": [
+      94,
+      2,
+      9
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 5,
+    "y": 6,
+    "farmSlot": 0,
+    "zoneType": 0,
+    "itemIds": [
+      7
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 6,
+    "y": 5,
+    "farmSlot": 0,
+    "zoneType": 0,
+    "itemIds": [
+      2
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 0,
+    "y": 8,
+    "farmSlot": 0,
+    "zoneType": 0,
+    "itemIds": [
+      11,
+      7
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": -1,
+    "y": 8,
+    "farmSlot": 0,
+    "zoneType": 0,
+    "itemIds": [
+      7
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": -4,
+    "y": 7,
+    "farmSlot": 0,
+    "zoneType": 0,
+    "itemIds": [
+      15,
+      7
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 1,
+    "y": 8,
+    "farmSlot": 0,
+    "zoneType": 0,
+    "itemIds": [
+      11,
+      102,
+      2
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 4,
+    "y": 7,
+    "farmSlot": 0,
+    "zoneType": 0,
+    "itemIds": [
+      7
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": -2,
+    "y": 8,
+    "farmSlot": 0,
+    "zoneType": 0,
+    "itemIds": [
+      9
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 2,
+    "y": 8,
+    "farmSlot": 0,
+    "zoneType": 0,
+    "itemIds": [
+      11,
+      13,
+      2
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 6,
+    "y": 6,
+    "farmSlot": 0,
+    "zoneType": 0,
+    "itemIds": [
+      94,
+      13
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 3,
+    "y": 8,
+    "farmSlot": 0,
+    "zoneType": 0,
+    "itemIds": [
+      86,
+      15,
+      3
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": -3,
+    "y": 8,
+    "farmSlot": 0,
+    "zoneType": 1,
+    "itemIds": [
+      7
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 5,
+    "y": 7,
+    "farmSlot": 0,
+    "zoneType": 1,
+    "itemIds": [
+      78
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 4,
+    "y": 8,
+    "farmSlot": 0,
+    "zoneType": 1,
+    "itemIds": [
+      11,
+      9
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": -4,
+    "y": 8,
+    "farmSlot": 0,
+    "zoneType": 1,
+    "itemIds": [
+      11,
+      78
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 0,
+    "y": 9,
+    "farmSlot": 0,
+    "zoneType": 1,
+    "itemIds": [
+      11,
+      7
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 1,
+    "y": 9,
+    "farmSlot": 0,
+    "zoneType": 1,
+    "itemIds": [
+      11
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": -1,
+    "y": 9,
+    "farmSlot": 0,
+    "zoneType": 1,
+    "itemIds": [
+      11,
+      7,
+      9
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 2,
+    "y": 9,
+    "farmSlot": 0,
+    "zoneType": 1,
+    "itemIds": [
+      11,
+      78,
+      110
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": -2,
+    "y": 9,
+    "farmSlot": 0,
+    "zoneType": 1,
+    "itemIds": [
+      11,
+      7
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 6,
+    "y": 7,
+    "farmSlot": 0,
+    "zoneType": 1,
+    "itemIds": [
+      2
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 5,
+    "y": 8,
+    "farmSlot": 0,
+    "zoneType": 1,
+    "itemIds": [
+      11,
+      13
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": -3,
+    "y": 9,
+    "farmSlot": 0,
+    "zoneType": 1,
+    "itemIds": [
+      2
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 3,
+    "y": 9,
+    "farmSlot": 0,
+    "zoneType": 1,
+    "itemIds": [
+      7,
+      2
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 4,
+    "y": 9,
+    "farmSlot": 0,
+    "zoneType": 1,
+    "itemIds": [
+      79,
+      110
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": -4,
+    "y": 9,
+    "farmSlot": 0,
+    "zoneType": 1,
+    "itemIds": [
+      111,
+      3
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 6,
+    "y": 8,
+    "farmSlot": 0,
+    "zoneType": 1,
+    "itemIds": [
+      78,
+      3
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 0,
+    "y": 10,
+    "farmSlot": 0,
+    "zoneType": 1,
+    "itemIds": [
+      94,
+      3
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": -1,
+    "y": 10,
+    "farmSlot": 0,
+    "zoneType": 1,
+    "itemIds": [
+      94,
+      78
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 1,
+    "y": 10,
+    "farmSlot": 0,
+    "zoneType": 1,
+    "itemIds": [
+      78,
+      3
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": -2,
+    "y": 10,
+    "farmSlot": 0,
+    "zoneType": 1,
+    "itemIds": [
+      94,
+      110
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 2,
+    "y": 10,
+    "farmSlot": 0,
+    "zoneType": 1,
+    "itemIds": [
+      94,
+      79
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 5,
+    "y": 9,
+    "farmSlot": 0,
+    "zoneType": 1,
+    "itemIds": [
+      94,
+      78
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": -3,
+    "y": 10,
+    "farmSlot": 0,
+    "zoneType": 1,
+    "itemIds": [
+      94,
+      102,
+      95
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 3,
+    "y": 10,
+    "farmSlot": 0,
+    "zoneType": 1,
+    "itemIds": [
+      78
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 4,
+    "y": 10,
+    "farmSlot": 0,
+    "zoneType": 1,
+    "itemIds": [
+      95,
+      3
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": -4,
+    "y": 10,
+    "farmSlot": 0,
+    "zoneType": 1,
+    "itemIds": [
+      94,
+      110
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 6,
+    "y": 9,
+    "farmSlot": 0,
+    "zoneType": 1,
+    "itemIds": [
+      94
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 0,
+    "y": 11,
+    "farmSlot": 0,
+    "zoneType": 1,
+    "itemIds": [
+      94
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 1,
+    "y": 11,
+    "farmSlot": 0,
+    "zoneType": 1,
+    "itemIds": [
+      94,
+      110
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": -1,
+    "y": 11,
+    "farmSlot": 0,
+    "zoneType": 1,
+    "itemIds": [
+      94,
+      79
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 5,
+    "y": 10,
+    "farmSlot": 0,
+    "zoneType": 1,
+    "itemIds": [
+      4,
+      3
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": -2,
+    "y": 11,
+    "farmSlot": 0,
+    "zoneType": 1,
+    "itemIds": [
+      94,
+      3
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 2,
+    "y": 11,
+    "farmSlot": 0,
+    "zoneType": 1,
+    "itemIds": [
+      94
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": -3,
+    "y": 11,
+    "farmSlot": 0,
+    "zoneType": 1,
+    "itemIds": [
+      78
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 3,
+    "y": 11,
+    "farmSlot": 0,
+    "zoneType": 1,
+    "itemIds": [
+      86,
+      94
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 6,
+    "y": 10,
+    "farmSlot": 0,
+    "zoneType": 1,
+    "itemIds": [
+      102
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": -4,
+    "y": 11,
+    "farmSlot": 0,
+    "zoneType": 1,
+    "itemIds": [
+      86,
+      3
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 4,
+    "y": 11,
+    "farmSlot": 0,
+    "zoneType": 1,
+    "itemIds": [
+      94,
+      78
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 0,
+    "y": 12,
+    "farmSlot": 0,
+    "zoneType": 1,
+    "itemIds": [
+      78
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 1,
+    "y": 12,
+    "farmSlot": 0,
+    "zoneType": 1,
+    "itemIds": [
+      78
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": -1,
+    "y": 12,
+    "farmSlot": 0,
+    "zoneType": 1,
+    "itemIds": [
+      86,
+      78
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 5,
+    "y": 11,
+    "farmSlot": 0,
+    "zoneType": 1,
+    "itemIds": [
+      94,
+      78
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": -2,
+    "y": 12,
+    "farmSlot": 0,
+    "zoneType": 1,
+    "itemIds": [
+      4,
+      95
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 2,
+    "y": 12,
+    "farmSlot": 0,
+    "zoneType": 1,
+    "itemIds": [
+      94,
+      110,
+      78
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": -3,
+    "y": 12,
+    "farmSlot": 0,
+    "zoneType": 1,
+    "itemIds": [
+      103,
+      78
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 3,
+    "y": 12,
+    "farmSlot": 0,
+    "zoneType": 1,
+    "itemIds": [
+      86,
+      3
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 6,
+    "y": 11,
+    "farmSlot": 0,
+    "zoneType": 1,
+    "itemIds": [
+      87,
+      102
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 4,
+    "y": 12,
+    "farmSlot": 0,
+    "zoneType": 1,
+    "itemIds": [
+      102,
+      78
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": -4,
+    "y": 12,
+    "farmSlot": 0,
+    "zoneType": 1,
+    "itemIds": [
+      95,
+      78,
+      3
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 0,
+    "y": 13,
+    "farmSlot": 0,
+    "zoneType": 1,
+    "itemIds": [
+      94
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 5,
+    "y": 12,
+    "farmSlot": 0,
+    "zoneType": 1,
+    "itemIds": [
+      86,
+      94
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 1,
+    "y": 13,
+    "farmSlot": 0,
+    "zoneType": 1,
+    "itemIds": [
+      94,
+      102,
+      95
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": -1,
+    "y": 13,
+    "farmSlot": 0,
+    "zoneType": 1,
+    "itemIds": [
+      96,
+      95
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": -2,
+    "y": 13,
+    "farmSlot": 0,
+    "zoneType": 1,
+    "itemIds": [
+      87
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 2,
+    "y": 13,
+    "farmSlot": 0,
+    "zoneType": 1,
+    "itemIds": [
+      4
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 3,
+    "y": 13,
+    "farmSlot": 0,
+    "zoneType": 1,
+    "itemIds": [
+      112,
+      87
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": -3,
+    "y": 13,
+    "farmSlot": 0,
+    "zoneType": 1,
+    "itemIds": [
+      95
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 6,
+    "y": 12,
+    "farmSlot": 0,
+    "zoneType": 1,
+    "itemIds": [
+      4,
+      79
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": -4,
+    "y": 13,
+    "farmSlot": 0,
+    "zoneType": 1,
+    "itemIds": [
+      95
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 4,
+    "y": 13,
+    "farmSlot": 0,
+    "zoneType": 1,
+    "itemIds": [
+      4
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 5,
+    "y": 13,
+    "farmSlot": 0,
+    "zoneType": 1,
+    "itemIds": [
+      103,
+      111,
+      95
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 0,
+    "y": 14,
+    "farmSlot": 0,
+    "zoneType": 1,
+    "itemIds": [
+      103,
+      87,
+      95
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": -1,
+    "y": 14,
+    "farmSlot": 0,
+    "zoneType": 1,
+    "itemIds": [
+      4,
+      79
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 1,
+    "y": 14,
+    "farmSlot": 0,
+    "zoneType": 1,
+    "itemIds": [
+      4,
+      79
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": -2,
+    "y": 14,
+    "farmSlot": 0,
+    "zoneType": 1,
+    "itemIds": [
+      87,
+      80
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 2,
+    "y": 14,
+    "farmSlot": 0,
+    "zoneType": 1,
+    "itemIds": [
+      111,
+      79
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": -3,
+    "y": 14,
+    "farmSlot": 0,
+    "zoneType": 1,
+    "itemIds": [
+      96,
+      79
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 3,
+    "y": 14,
+    "farmSlot": 0,
+    "zoneType": 1,
+    "itemIds": [
+      96,
+      95
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 6,
+    "y": 13,
+    "farmSlot": 0,
+    "zoneType": 1,
+    "itemIds": [
+      5
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": -4,
+    "y": 14,
+    "farmSlot": 0,
+    "zoneType": 1,
+    "itemIds": [
+      87,
+      95
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 4,
+    "y": 14,
+    "farmSlot": 0,
+    "zoneType": 1,
+    "itemIds": [
+      4,
+      80
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 5,
+    "y": 14,
+    "farmSlot": 0,
+    "zoneType": 1,
+    "itemIds": [
+      79
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 0,
+    "y": 15,
+    "farmSlot": 0,
+    "zoneType": 1,
+    "itemIds": [
+      95,
+      79
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 1,
+    "y": 15,
+    "farmSlot": 0,
+    "zoneType": 1,
+    "itemIds": [
+      111,
+      95,
+      79
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": -1,
+    "y": 15,
+    "farmSlot": 0,
+    "zoneType": 1,
+    "itemIds": [
+      95
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 2,
+    "y": 15,
+    "farmSlot": 0,
+    "zoneType": 1,
+    "itemIds": [
+      103,
+      79,
+      80
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": -2,
+    "y": 15,
+    "farmSlot": 0,
+    "zoneType": 1,
+    "itemIds": [
+      95,
+      5
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 6,
+    "y": 14,
+    "farmSlot": 0,
+    "zoneType": 1,
+    "itemIds": [
+      104,
+      95
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": -3,
+    "y": 15,
+    "farmSlot": 0,
+    "zoneType": 1,
+    "itemIds": [
+      95,
+      79
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 3,
+    "y": 15,
+    "farmSlot": 0,
+    "zoneType": 1,
+    "itemIds": [
+      95,
+      79
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": -4,
+    "y": 15,
+    "farmSlot": 0,
+    "zoneType": 1,
+    "itemIds": [
+      4
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 4,
+    "y": 15,
+    "farmSlot": 0,
+    "zoneType": 1,
+    "itemIds": [
+      95
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 5,
+    "y": 15,
+    "farmSlot": 0,
+    "zoneType": 1,
+    "itemIds": [
+      95,
+      79,
+      88
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 0,
+    "y": 16,
+    "farmSlot": 0,
+    "zoneType": 1,
+    "itemIds": [
+      103
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 1,
+    "y": 16,
+    "farmSlot": 0,
+    "zoneType": 1,
+    "itemIds": [
+      95,
+      79
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": -1,
+    "y": 16,
+    "farmSlot": 0,
+    "zoneType": 1,
+    "itemIds": [
+      4,
+      111
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 2,
+    "y": 16,
+    "farmSlot": 0,
+    "zoneType": 1,
+    "itemIds": [
+      95
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": -2,
+    "y": 16,
+    "farmSlot": 0,
+    "zoneType": 1,
+    "itemIds": [
+      96,
+      4
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 6,
+    "y": 15,
+    "farmSlot": 0,
+    "zoneType": 1,
+    "itemIds": [
+      95,
+      79
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 3,
+    "y": 16,
+    "farmSlot": 0,
+    "zoneType": 1,
+    "itemIds": [
+      97,
+      5,
+      113
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": -3,
+    "y": 16,
+    "farmSlot": 0,
+    "zoneType": 1,
+    "itemIds": [
+      88,
+      96
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": -4,
+    "y": 16,
+    "farmSlot": 0,
+    "zoneType": 1,
+    "itemIds": [
+      96,
+      80
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 4,
+    "y": 16,
+    "farmSlot": 0,
+    "zoneType": 2,
+    "itemIds": [
+      80
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 5,
+    "y": 16,
+    "farmSlot": 0,
+    "zoneType": 2,
+    "itemIds": [
+      96,
+      80,
+      5
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 0,
+    "y": 17,
+    "farmSlot": 0,
+    "zoneType": 2,
+    "itemIds": [
+      96,
+      104,
+      112
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": -1,
+    "y": 17,
+    "farmSlot": 0,
+    "zoneType": 2,
+    "itemIds": [
+      80,
+      112
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 1,
+    "y": 17,
+    "farmSlot": 0,
+    "zoneType": 2,
+    "itemIds": [
+      104
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 6,
+    "y": 16,
+    "farmSlot": 0,
+    "zoneType": 2,
+    "itemIds": [
+      96,
+      104
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 2,
+    "y": 17,
+    "farmSlot": 0,
+    "zoneType": 2,
+    "itemIds": [
+      96,
+      112
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": -2,
+    "y": 17,
+    "farmSlot": 0,
+    "zoneType": 2,
+    "itemIds": [
+      96,
+      89
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 3,
+    "y": 17,
+    "farmSlot": 0,
+    "zoneType": 2,
+    "itemIds": [
+      88,
+      105
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": -3,
+    "y": 17,
+    "farmSlot": 0,
+    "zoneType": 2,
+    "itemIds": [
+      96,
+      73
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": -4,
+    "y": 17,
+    "farmSlot": 0,
+    "zoneType": 2,
+    "itemIds": [
+      80,
+      5
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 4,
+    "y": 17,
+    "farmSlot": 0,
+    "zoneType": 2,
+    "itemIds": [
+      96
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 5,
+    "y": 17,
+    "farmSlot": 0,
+    "zoneType": 2,
+    "itemIds": [
+      96
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 0,
+    "y": 18,
+    "farmSlot": 0,
+    "zoneType": 2,
+    "itemIds": [
+      97,
+      104
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": -1,
+    "y": 18,
+    "farmSlot": 0,
+    "zoneType": 2,
+    "itemIds": [
+      88,
+      80
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 1,
+    "y": 18,
+    "farmSlot": 0,
+    "zoneType": 2,
+    "itemIds": [
+      5
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 6,
+    "y": 17,
+    "farmSlot": 0,
+    "zoneType": 2,
+    "itemIds": [
+      96,
+      80
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 2,
+    "y": 18,
+    "farmSlot": 0,
+    "zoneType": 2,
+    "itemIds": [
+      96,
+      97,
+      5
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": -2,
+    "y": 18,
+    "farmSlot": 0,
+    "zoneType": 2,
+    "itemIds": [
+      96,
+      80,
+      5
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 3,
+    "y": 18,
+    "farmSlot": 0,
+    "zoneType": 2,
+    "itemIds": [
+      96
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": -3,
+    "y": 18,
+    "farmSlot": 0,
+    "zoneType": 2,
+    "itemIds": [
+      96,
+      80
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": -4,
+    "y": 18,
+    "farmSlot": 0,
+    "zoneType": 2,
+    "itemIds": [
+      88,
+      81
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 4,
+    "y": 18,
+    "farmSlot": 0,
+    "zoneType": 2,
+    "itemIds": [
+      96,
+      81,
+      5
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 5,
+    "y": 18,
+    "farmSlot": 0,
+    "zoneType": 2,
+    "itemIds": [
+      80,
+      112
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 6,
+    "y": 18,
+    "farmSlot": 0,
+    "zoneType": 2,
+    "itemIds": [
+      80
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 0,
+    "y": 19,
+    "farmSlot": 0,
+    "zoneType": 2,
+    "itemIds": [
+      97
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": -1,
+    "y": 19,
+    "farmSlot": 0,
+    "zoneType": 2,
+    "itemIds": [
+      81
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 1,
+    "y": 19,
+    "farmSlot": 0,
+    "zoneType": 2,
+    "itemIds": [
+      96,
+      5
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": -2,
+    "y": 19,
+    "farmSlot": 0,
+    "zoneType": 2,
+    "itemIds": [
+      80
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 2,
+    "y": 19,
+    "farmSlot": 0,
+    "zoneType": 2,
+    "itemIds": [
+      80
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 3,
+    "y": 19,
+    "farmSlot": 0,
+    "zoneType": 2,
+    "itemIds": [
+      96,
+      80
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": -3,
+    "y": 19,
+    "farmSlot": 0,
+    "zoneType": 2,
+    "itemIds": [
+      5,
+      73
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 4,
+    "y": 19,
+    "farmSlot": 0,
+    "zoneType": 2,
+    "itemIds": [
+      81,
+      97,
+      73
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": -4,
+    "y": 19,
+    "farmSlot": 0,
+    "zoneType": 2,
+    "itemIds": [
+      97,
+      105
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 5,
+    "y": 19,
+    "farmSlot": 0,
+    "zoneType": 2,
+    "itemIds": [
+      81
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 6,
+    "y": 19,
+    "farmSlot": 0,
+    "zoneType": 2,
+    "itemIds": [
+      97,
+      73,
+      113
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 0,
+    "y": 20,
+    "farmSlot": 0,
+    "zoneType": 2,
+    "itemIds": [
+      97,
+      74
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 1,
+    "y": 20,
+    "farmSlot": 0,
+    "zoneType": 2,
+    "itemIds": [
+      81,
+      73
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": -1,
+    "y": 20,
+    "farmSlot": 0,
+    "zoneType": 2,
+    "itemIds": [
+      81,
+      73
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 2,
+    "y": 20,
+    "farmSlot": 0,
+    "zoneType": 2,
+    "itemIds": [
+      106,
+      97
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": -2,
+    "y": 20,
+    "farmSlot": 0,
+    "zoneType": 2,
+    "itemIds": [
+      81,
+      97
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": -3,
+    "y": 20,
+    "farmSlot": 0,
+    "zoneType": 2,
+    "itemIds": [
+      81
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 3,
+    "y": 20,
+    "farmSlot": 0,
+    "zoneType": 2,
+    "itemIds": [
+      97,
+      98
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 4,
+    "y": 20,
+    "farmSlot": 0,
+    "zoneType": 2,
+    "itemIds": [
+      73,
+      113
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": -4,
+    "y": 20,
+    "farmSlot": 0,
+    "zoneType": 2,
+    "itemIds": [
+      81,
+      97
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 5,
+    "y": 20,
+    "farmSlot": 0,
+    "zoneType": 2,
+    "itemIds": [
+      98
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 6,
+    "y": 20,
+    "farmSlot": 0,
+    "zoneType": 2,
+    "itemIds": [
+      97,
+      82
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 0,
+    "y": 21,
+    "farmSlot": 0,
+    "zoneType": 2,
+    "itemIds": [
+      81,
+      89
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": -1,
+    "y": 21,
+    "farmSlot": 0,
+    "zoneType": 2,
+    "itemIds": [
+      81,
+      73,
+      98
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 1,
+    "y": 21,
+    "farmSlot": 0,
+    "zoneType": 2,
+    "itemIds": [
+      97
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 2,
+    "y": 21,
+    "farmSlot": 0,
+    "zoneType": 2,
+    "itemIds": [
+      81,
+      113,
+      90
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": -2,
+    "y": 21,
+    "farmSlot": 0,
+    "zoneType": 2,
+    "itemIds": [
+      97,
+      74,
+      89
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": -3,
+    "y": 21,
+    "farmSlot": 0,
+    "zoneType": 2,
+    "itemIds": [
+      73
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 3,
+    "y": 21,
+    "farmSlot": 0,
+    "zoneType": 2,
+    "itemIds": [
+      97
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": -4,
+    "y": 21,
+    "farmSlot": 0,
+    "zoneType": 2,
+    "itemIds": [
+      81
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 4,
+    "y": 21,
+    "farmSlot": 0,
+    "zoneType": 2,
+    "itemIds": [
+      114,
+      73
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 5,
+    "y": 21,
+    "farmSlot": 0,
+    "zoneType": 2,
+    "itemIds": [
+      81,
+      97
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 6,
+    "y": 21,
+    "farmSlot": 0,
+    "zoneType": 2,
+    "itemIds": [
+      97,
+      105
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 0,
+    "y": 22,
+    "farmSlot": 0,
+    "zoneType": 2,
+    "itemIds": [
+      81
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 1,
+    "y": 22,
+    "farmSlot": 0,
+    "zoneType": 2,
+    "itemIds": [
+      97,
+      105
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": -1,
+    "y": 22,
+    "farmSlot": 0,
+    "zoneType": 2,
+    "itemIds": [
+      82,
+      105
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 2,
+    "y": 22,
+    "farmSlot": 0,
+    "zoneType": 2,
+    "itemIds": [
+      113
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": -2,
+    "y": 22,
+    "farmSlot": 0,
+    "zoneType": 2,
+    "itemIds": [
+      89
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": -3,
+    "y": 22,
+    "farmSlot": 0,
+    "zoneType": 2,
+    "itemIds": [
+      97,
+      73,
+      89
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 3,
+    "y": 22,
+    "farmSlot": 0,
+    "zoneType": 2,
+    "itemIds": [
+      81,
+      97,
+      82
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 4,
+    "y": 22,
+    "farmSlot": 0,
+    "zoneType": 2,
+    "itemIds": [
+      97
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": -4,
+    "y": 22,
+    "farmSlot": 0,
+    "zoneType": 2,
+    "itemIds": [
+      97
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 5,
+    "y": 22,
+    "farmSlot": 0,
+    "zoneType": 2,
+    "itemIds": [
+      97,
+      98
+    ]
+  },
+  {
+    "kingdomId": 0,
+    "x": 6,
+    "y": 22,
+    "farmSlot": 0,
+    "zoneType": 2,
+    "itemIds": [
+      73
+    ]
+  }
+]

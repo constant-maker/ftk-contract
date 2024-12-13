@@ -1,0 +1,212 @@
+{
+  "skills": {
+    "0": {
+      "id": 0,
+      "name": "Normal Attack",
+      "desc": "The most basic type of attack.",
+      "tier": 1,
+      "damage": 100,
+      "sp": 0
+    },
+    "1": {
+      "id": 1,
+      "name": "Thrust",
+      "desc": "Execute a swift and piercing thrust, aiming to swiftly neutralize the target.",
+      "tier": 1,
+      "damage": 115,
+      "sp": 1
+    },
+    "2": {
+      "id": 2,
+      "name": "Sword Dance",
+      "desc": "Perform a mesmerizing display of swordsmanship, striking with grace and precision in a dazzling dance of blades.",
+      "tier": 2,
+      "damage": 150,
+      "sp": 2
+    },
+    "3": {
+      "id": 3,
+      "name": "Blade Storm",
+      "desc": "Engage in a whirlwind of blades, striking multiple hits with deadly precision.",
+      "tier": 3,
+      "damage": 200,
+      "sp": 3
+    },
+    "4": {
+      "id": 4,
+      "name": "Fire Ball",
+      "desc": "Casts a blazing orb of fire that deals significant damage upon impact.",
+      "tier": 1,
+      "damage": 130,
+      "sp": 2
+    },
+    "5": {
+      "id": 5,
+      "name": "Amethyst Bolt",
+      "desc": "A radiant purple crystal projectile, dealing heavy magic damage to its target.",
+      "tier": 1,
+      "damage": 130,
+      "sp": 1
+    },
+    "6": {
+      "id": 6,
+      "name": "Lightning Strike",
+      "desc": "Summon a devastating bolt of electricity from the sky.",
+      "tier": 1,
+      "damage": 125,
+      "sp": 1
+    },
+    "7": {
+      "id": 7,
+      "name": "Roar of Ferocity",
+      "desc": "Unleash a thunderous roar, imbuing allies with increased strength and ferocity.",
+      "tier": 1,
+      "damage": 0,
+      "sp": 1
+    },
+    "8": {
+      "id": 8,
+      "name": "Poisonous Snake",
+      "desc": "Spit a venomous serpent that bites the target with one of the most deadly poisons ever to exist.",
+      "tier": 1,
+      "damage": 110,
+      "sp": 1
+    },
+    "9": {
+      "id": 9,
+      "name": "Maelstrom Blast",
+      "desc": "A fierce tempest that engulfs the battlefield with devastating power.",
+      "tier": 3,
+      "damage": 250,
+      "sp": 3
+    },
+    "10": {
+      "id": 10,
+      "name": "Dagger Strike",
+      "desc": "A swift and precise attack with a dagger, dealing immediate damage and potentially causing a bleeding effect on the target.",
+      "tier": 1,
+      "damage": 120,
+      "sp": 2
+    },
+    "11": {
+      "id": 11,
+      "name": "Bloody Bite",
+      "desc": "Inflicts severe bleeding, causing immediate damage and inducing a lingering blood loss effect over time.",
+      "tier": 1,
+      "damage": 120,
+      "sp": 2
+    },
+    "12": {
+      "id": 12,
+      "name": "Frostflare Spin",
+      "desc": "The snow rabbit curls up and begins spinning, unleashing a storm of ice shards that pierce its enemies.",
+      "tier": 2,
+      "damage": 140,
+      "sp": 3
+    },
+    "13": {
+      "id": 13,
+      "name": "Ember",
+      "desc": "Release a small flame that inflicts minor harm.",
+      "tier": 1,
+      "damage": 125,
+      "sp": 2
+    },
+    "14": {
+      "id": 14,
+      "name": "Inferno Rage",
+      "desc": "The Ignis Dragon unleashes a devastating wave of fire, incinerating everything in its path with relentless fury.",
+      "tier": 5,
+      "damage": 350,
+      "sp": 5
+    },
+    "15": {
+      "id": 15,
+      "name": "Frost Spikes",
+      "desc": "Shards of ice shoot from the attacker, flying swiftly towards the enemy to impale with freezing precision.",
+      "tier": 1,
+      "damage": 125,
+      "sp": 2
+    },
+    "16": {
+      "id": 16,
+      "name": "Toxic Strike",
+      "desc": "The monster delivers a swift attack laced with poison, inflicting damage over time.",
+      "tier": 1,
+      "damage": 125,
+      "sp": 2
+    },
+    "17": {
+      "id": 17,
+      "name": "Pure Force",
+      "desc": "A straightforward, solid attack that uses raw physical power to hit the enemy.",
+      "tier": 1,
+      "damage": 125,
+      "sp": 2
+    },
+    "18": {
+      "id": 18,
+      "name": "Pollen Burst",
+      "desc": "Releases a cloud of pollen that engulfs enemies, causing irritation and confusion.",
+      "tier": 2,
+      "damage": 150,
+      "sp": 2
+    },
+    "19": {
+      "id": 19,
+      "name": "Heavy Punch",
+      "desc": "A powerful, concentrated blow delivered with full force, capable of staggering or knocking back opponents.",
+      "tier": 2,
+      "damage": 150,
+      "sp": 2
+    },
+    "20": {
+      "id": 20,
+      "name": "Poison Attack",
+      "desc": "Delivers a venomous strike that injects toxins into the enemy, dealing damage over time and weakening their defenses.",
+      "tier": 2,
+      "damage": 150,
+      "sp": 2
+    },
+    "21": {
+      "id": 21,
+      "name": "Fury Swipe",
+      "desc": "A rapid series of claw attacks, slashing at the enemy with relentless speed and ferocity.",
+      "tier": 2,
+      "damage": 150,
+      "sp": 2
+    },
+    "22": {
+      "id": 22,
+      "name": "Ice Blast",
+      "desc": "Unleashes a burst of frigid energy, freezing enemies on impact and dealing ice damage.",
+      "tier": 2,
+      "damage": 150,
+      "sp": 2
+    },
+    "23": {
+      "id": 23,
+      "name": "Gale Slash",
+      "desc": "Summons fierce winds that slice through enemies, delivering cutting damage with razor-sharp gusts.",
+      "tier": 2,
+      "damage": 150,
+      "sp": 2
+    },
+    "24": {
+      "id": 24,
+      "name": "Bloody Rush",
+      "desc": "The monster launches into a brutal charge, its horn piercing and tearing through the enemy, leaving a trail of blood in its wake.",
+      "tier": 2,
+      "damage": 150,
+      "sp": 2
+    },
+    "25": {
+      "id": 25,
+      "name": "Flame Pulse",
+      "desc": "The dragon unleashes a quick wave of fire, dealing damage to nearby enemies.",
+      "tier": 2,
+      "damage": 150,
+      "sp": 2
+    }
+  }
+}

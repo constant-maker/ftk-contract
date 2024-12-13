@@ -1,0 +1,89 @@
+{
+  "characterStates": {
+    "Standby": 0,
+    "Moving": 1,
+    "GatheringWoods": 2,
+    "Fishing": 3,
+    "MiningStones": 4,
+    "MiningOres": 5,
+    "HarvestingWheat": 6,
+    "CollectingBerries": 7
+  },
+  "resourceTypes": {
+    "Wood": 0,
+    "Stone": 1,
+    "Fish": 2,
+    "Ore": 3,
+    "Wheat": 4,
+    "Berry": 5,
+    "MonsterLoot": 6
+  },
+  "itemTypes": {
+    "WoodAxe": 0,
+    "StoneHammer": 1,
+    "FishingRod": 2,
+    "Pickaxe": 3,
+    "Sickle": 4,
+    "BerryShears": 5,
+    "Sword": 6,
+    "Axe": 7,
+    "Spear": 8,
+    "Bow": 9,
+    "Staff": 10,
+    "Dagger": 11,
+    "Shield": 12,
+    "ClothArmor": 13,
+    "ClothHeadgear": 14,
+    "ClothFootwear": 15,
+    "LeatherArmor": 16,
+    "LeatherHeadgear": 17,
+    "LeatherFootwear": 18,
+    "PlateArmor": 19,
+    "PlateHeadgear": 20,
+    "PlateFootwear": 21,
+    "Mount": 22,
+    "Resource": 23,
+    "MapSkillItem": 24,
+    "HealingItem": 25,
+    "StatModifierItem": 26
+  },
+  "itemCategoryTypes": {
+    "Tool": 0,
+    "Equipment": 1,
+    "Other": 2
+  },
+  "equipmentSlotTypes": {
+    "Weapon": 0,
+    "SubWeapon": 1,
+    "Armor": 2,
+    "Headgear": 3,
+    "Footwear": 4,
+    "Mount": 5
+  },
+  "questTypes": {
+    "Contribute": 0,
+    "Locate": 1
+  },
+  "statTypes": {
+    "ATK": 0,
+    "DEF": 1,
+    "AGI": 2
+  },
+  "zoneTypes": {
+    "Green": 0,
+    "Orange": 1,
+    "Red": 2,
+    "Black": 3
+  },
+  "terrainTypes": {
+    "GrassLand": 0,
+    "Forest": 1,
+    "Mountain": 2
+  },
+  "advantageType": {
+    "Red": 0,
+    "Green": 1,
+    "Blue": 2,
+    "Grey": 3
+  }
+}

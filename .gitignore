@@ -1,0 +1,22 @@
+out/
+cache/
+node_modules/
+artifacts/
+broadcast/
+
+src/codegen/
+
+# Ignore MUD deploy artifacts
+deploys/**/*.json
+
+.env
+.idea
+
+post-deploy/cmd/cmd*
+post-deploy/cmd/resource-distribution/resource-distribution
+post-deploy/cmd/updater/*.json
+post-deploy/cmd/updater
+pnpm-lock.yaml
+
+.mud
+script-playground
