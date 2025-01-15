@@ -11,8 +11,8 @@ import SKILL_TABLES from "./tables/skillTables";
 import BATTLE_TABLES from "./tables/battleTables";
 import MONSTER_TABLES from "./tables/monsterTables";
 import CONSUMABLE_INFO_TABLES from "./tables/consumableInfoTables";
-import ACHIEVEMENT_TABLES from "./tables/achievementTables.ts";
-import SOCIAL_TABLES from "./tables/socialTables.ts";
+import ACHIEVEMENT_TABLES from "./tables/achievementTables";
+import SOCIAL_TABLES from "./tables/socialTables";
 
 export default defineWorld({
   deploy: {
