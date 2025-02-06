@@ -121,9 +121,9 @@ contract LevelSystem is System, CharacterAccessControl {
   {
     uint16 currentBaseStat = CharacterStatsUtils.getBaseStatByStatType(characterId, data.statType);
     uint16 toBaseStat = currentBaseStat + data.amount;
-    if (toBaseStat > Config.MAX_BASE_STAT) {
-      revert Errors.Stats_ExceedMaxBaseStat(data.statType, Config.MAX_BASE_STAT, toBaseStat);
-    }
+    // if (toBaseStat > Config.MAX_BASE_STAT) {
+    //   revert Errors.Stats_ExceedMaxBaseStat(data.statType, Config.MAX_BASE_STAT, toBaseStat);
+    // }
     uint16 totalPointToUse;
     uint16 pointPerStat = 1;
     if (currentBaseStat > 0) {

@@ -11,7 +11,6 @@ library Config {
 
   uint16 public constant DEFAULT_MOVEMENT_DURATION = 10;
   uint16 public constant DEFAULT_PLAYER_ACTION_DURATION = 10;
-  uint16 public constant DEFAULT_HP = 100;
   uint16 public constant MAX_LEVEL = 99;
   uint16 public constant MAX_BASE_STAT = 130;
   uint16 public constant ADVANTAGE_TYPE_DAMAGE_MODIFIER = 15; // 15%
@@ -19,6 +18,7 @@ library Config {
   uint16 public constant CHALLENGE_COOLDOWN = 10;
   uint16 public constant PROTECTION_DURATION = 0;
   uint16 public constant BASE_DMG = 20;
+  uint32 public constant DEFAULT_HP = 100;
   uint32 public constant DEFAULT_WEIGHT = 200;
   uint32 public constant BONUS_ATTACK_AGI_DIFF = 10;
   uint256 public constant NORMAL_ATTACK_SKILL_ID = 0;

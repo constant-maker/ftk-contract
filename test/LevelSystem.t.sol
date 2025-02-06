@@ -208,16 +208,16 @@ contract LevelSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixtu
     vm.stopPrank();
   }
 
-  function test_ShouldRevertExceedMaxBaseStat() external {
-    bytes memory encodedError =
-      abi.encodeWithSelector(Errors.Stats_ExceedMaxBaseStat.selector, StatType.ATK, Config.MAX_BASE_STAT, 133);
-    IncreaseStatData[] memory datas = new IncreaseStatData[](1);
-    datas[0] = IncreaseStatData({ statType: StatType.ATK, amount: 131 });
-    vm.expectRevert(encodedError);
-    vm.startPrank(player);
-    world.app__increaseStats(characterId, datas);
-    vm.stopPrank();
-  }
+  // function test_ShouldRevertExceedMaxBaseStat() external {
+  //   bytes memory encodedError =
+  //     abi.encodeWithSelector(Errors.Stats_ExceedMaxBaseStat.selector, StatType.ATK, Config.MAX_BASE_STAT, 133);
+  //   IncreaseStatData[] memory datas = new IncreaseStatData[](1);
+  //   datas[0] = IncreaseStatData({ statType: StatType.ATK, amount: 131 });
+  //   vm.expectRevert(encodedError);
+  //   vm.startPrank(player);
+  //   world.app__increaseStats(characterId, datas);
+  //   vm.stopPrank();
+  // }
 
   function test_ShouldRevertNotEnoughExp() external {
     vm.expectRevert();

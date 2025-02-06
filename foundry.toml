@@ -34,3 +34,6 @@ wrap_comments = true
 
 [profile.garnet-testnet]
 eth_rpc_url = "https://rpc.garnetchain.com"
+
+[profile.rise-testnet]
+eth_rpc_url = "https://testnet.riselabs.xyz/"
