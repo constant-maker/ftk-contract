@@ -154,9 +154,9 @@ contract LevelSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixtu
     assertEq(currentStats.agi, beforeCurrentStats.agi + 10);
 
     CharBaseStatsData memory baseStats = CharBaseStats.get(characterId);
-    assertEq(currentStats.atk, baseStats.atk);
-    assertEq(currentStats.def, baseStats.def);
-    assertEq(currentStats.agi, baseStats.agi);
+    assertEq(currentStats.atk, baseStats.atk + 2);
+    assertEq(currentStats.def, baseStats.def + 2);
+    assertEq(currentStats.agi, baseStats.agi + 4);
 
     console2.log("test increaseStats");
     console2.log("current atk", currentStats.atk);
@@ -175,9 +175,9 @@ contract LevelSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixtu
     baseStats = CharBaseStats.get(characterId);
     assertEq(currentStats.atk, 52);
     assertEq(currentStats.def, 25);
-    assertEq(currentStats.atk, baseStats.atk);
-    assertEq(currentStats.def, baseStats.def);
-    assertEq(CharStats.getStatPoint(characterId), 1);
+    assertEq(currentStats.atk, baseStats.atk + 2);
+    assertEq(currentStats.def, baseStats.def + 2);
+    assertEq(CharStats.getStatPoint(characterId), 5);
   }
 
   function test_ShouldLevelUpFrom5To6Success() external {

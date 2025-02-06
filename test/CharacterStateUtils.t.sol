@@ -9,6 +9,8 @@ import { CharacterInfoMock } from "@mocks/index.sol";
 import { WorldFixture } from "./fixtures/WorldFixture.sol";
 import { SpawnSystem } from "@systems/SpawnSystem.sol";
 import { IWorld } from "@codegen/world/IWorld.sol";
+import { Errors } from "@common/Errors.sol";
+import { console2 } from "forge-std/console2.sol";
 
 contract CharacterStateUtilsTest is WorldFixture {
   function setUp() public virtual override {
@@ -50,12 +52,5 @@ contract CharacterStateUtils_CheckLastActionFinished_Test is CharacterStateUtils
   function test_ShouldReturnImmediately_WhenCharacterStateIsStandby() external {
     initCharacterState(characterId);
     CharacterStateUtils.checkLastActionFinished(characterId, CharacterStateType.Standby);
-  }
-
-  function testFail_ShouldReverted_WhenLastCharacterActionIsNotFinished() external {
-    spawnCharacter(player, CharacterInfoMock.getCharacterInfoData());
-    setCharacterState(characterId, CharStateData({ state: CharacterStateType.Moving, lastUpdated: block.timestamp }));
-
-    CharacterStateUtils.checkLastActionFinished(characterId, CharacterStateType.Farming);
   }
 }

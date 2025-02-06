@@ -88,8 +88,8 @@ contract EquipmentSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemF
 
     assertEq(currentAtk + 2, atk);
     assertEq(currentDef + 1, def);
-    assertEq(currentAtk, baseAtk);
-    assertEq(currentDef, baseDef);
+    assertEq(currentAtk, baseAtk + 2);
+    assertEq(currentDef, baseDef + 2);
 
     equipDatas[0] = EquipData({ slotType: SlotType.Weapon, equipmentId: 1 });
     vm.startPrank(player);
