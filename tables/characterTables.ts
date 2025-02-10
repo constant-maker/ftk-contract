@@ -194,6 +194,13 @@ const CHARACTER_TABLES: any = {
     },
     key: ['characterId', 'slotType'],
   },
+  CharReborn: {
+    schema: {
+      characterId: "uint256",
+      num: "uint16",
+    },
+    key: ['characterId'],
+  },
 };
 
 export default CHARACTER_TABLES;

@@ -5,7 +5,6 @@ import { CharStats, CharStatsData, CharCurrentStats, CharCurrentStatsData, CharB
 import { CharEquipStats, CharEquipStatsData } from "@codegen/tables/CharEquipStats.sol";
 import { StatType, SlotType } from "@codegen/common.sol";
 import { Errors } from "@common/index.sol";
-import { console2 } from "forge-std/console2.sol";
 
 library CharacterStatsUtils {
   function validateCurrentWeight(uint256 characterId) internal view {
@@ -155,6 +154,7 @@ library CharacterStatsUtils {
     bool isRemoved
   )
     private
+    view
     returns (EquipmentInfoData memory equipmentInfo)
   {
     if (!isRemoved) return EquipmentInfo.get(itemId);

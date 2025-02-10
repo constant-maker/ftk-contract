@@ -57,8 +57,8 @@ library CharacterUtils {
     uint16 agi = 1 + traits[2];
 
     // set base stats
-    CharBaseStatsData memory baseStats = CharBaseStatsData({ atk: atk, def: def, agi: agi });
-    CharBaseStats.set(characterId, baseStats);
+    // CharBaseStatsData memory baseStats = CharBaseStatsData({ atk: atk, def: def, agi: agi });
+    // CharBaseStats.set(characterId, baseStats);
 
     // set stats
     CharStatsData memory stats = CharStatsData({

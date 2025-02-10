@@ -207,4 +207,9 @@ library Errors {
   /* -------------------------------------------------------------------------- */
   error TileSystem_TileIsLocked(int32 x, int32 y, uint256 occupiedTime);
   error TileSystem_NoValidTileNearBy(int32 x, int32 y);
+
+  /* -------------------------------------------------------------------------- */
+  /*                               RebornSystem                                 */
+  /* -------------------------------------------------------------------------- */
+  error RebornSystem_MustBeMaxLevel(uint256 characterId);
 }

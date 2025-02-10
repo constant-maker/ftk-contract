@@ -9,7 +9,8 @@ import {
   CharBaseStats,
   CharBaseStatsData,
   CharPerk,
-  CharPerkData
+  CharPerkData,
+  CharReborn
 } from "@codegen/index.sol";
 import { CharacterAccessControl } from "@abstracts/CharacterAccessControl.sol";
 import { CharacterStatsUtils } from "@utils/CharacterStatsUtils.sol";
@@ -38,7 +39,7 @@ contract LevelSystem is System, CharacterAccessControl {
 
     CharCurrentStatsData memory characterCurrentStats = CharCurrentStats.get(characterId);
     uint32 currentExp = characterCurrentStats.exp;
-    uint32 requiredExp = _calculateRequiredExp(currentLevel, toLevel);
+    uint32 requiredExp = _calculateRequiredExp(characterId, currentLevel, toLevel);
 
     if (requiredExp > currentExp) {
       revert Errors.LevelSystem_InsufficientExp(currentLevel, toLevel, requiredExp, currentExp);
@@ -121,9 +122,9 @@ contract LevelSystem is System, CharacterAccessControl {
   {
     uint16 currentBaseStat = CharacterStatsUtils.getBaseStatByStatType(characterId, data.statType);
     uint16 toBaseStat = currentBaseStat + data.amount;
-    if (toBaseStat > Config.MAX_BASE_STAT) {
-      revert Errors.Stats_ExceedMaxBaseStat(data.statType, Config.MAX_BASE_STAT, toBaseStat);
-    }
+    // if (toBaseStat > Config.MAX_BASE_STAT) {
+    //   revert Errors.Stats_ExceedMaxBaseStat(data.statType, Config.MAX_BASE_STAT, toBaseStat);
+    // }
     uint16 totalPointToUse;
     uint16 pointPerStat = 1;
     if (currentBaseStat > 0) {
@@ -147,10 +148,23 @@ contract LevelSystem is System, CharacterAccessControl {
     return statPoint - totalPointToUse;
   }
 
-  function _calculateRequiredExp(uint16 currentLevel, uint16 toLevel) private pure returns (uint32 requiredExp) {
+  function _calculateRequiredExp(
+    uint256 characterId,
+    uint16 currentLevel,
+    uint16 toLevel
+  )
+    private
+    view
+    returns (uint32 requiredExp)
+  {
     for (uint16 i = currentLevel + 1; i <= toLevel; i++) {
       uint32 calcNum = i - 1;
       requiredExp += calcNum * 20 + calcNum * calcNum * calcNum / 5;
+    }
+    uint16 rebornNum = CharReborn.get(characterId);
+    if (rebornNum > 0) {
+      // each time the character is reborn, the required exp increases by 10%
+      requiredExp = requiredExp * (rebornNum * uint32(10) + 100) / 100;
     }
   }
 

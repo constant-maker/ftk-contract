@@ -20,7 +20,7 @@ contract ChatSystem is System, CharacterAccessControl {
   }
 
   /// @dev validate chat message
-  function _validateChat(string memory content) private {
+  function _validateChat(string memory content) private pure {
     bytes memory b = bytes(content);
     if (b.length == 0 || b.length > MAX_MESSAGE_LEN) {
       revert Errors.ChatSystem_InvalidMessage();
