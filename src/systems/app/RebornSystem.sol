@@ -11,7 +11,8 @@ import {
   CharCurrentStats,
   CharCurrentStatsData,
   CharBaseStats,
-  CharBaseStatsData
+  CharBaseStatsData,
+  CharReborn
 } from "@codegen/index.sol";
 import { SlotType } from "@codegen/common.sol";
 import { Errors } from "@common/Errors.sol";
@@ -41,6 +42,9 @@ contract RebornSystem is System, CharacterAccessControl {
 
     // reset base stats
     CharBaseStats.deleteRecord(characterId);
+
+    // update reborn counter
+    CharReborn.set(characterId, CharReborn.get(characterId) + 1);
   }
 
   function _getRebornCurrentStats(
@@ -96,7 +100,7 @@ contract RebornSystem is System, CharacterAccessControl {
     return (hp, atk, def, agi);
   }
 
-  function _getAllSlotType() private view returns (SlotType[] memory slotTypes) {
+  function _getAllSlotType() private pure returns (SlotType[] memory slotTypes) {
     SlotType[] memory slotTypes = new SlotType[](6);
     slotTypes[0] = SlotType.Weapon;
     slotTypes[1] = SlotType.SubWeapon;

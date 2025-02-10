@@ -18,7 +18,8 @@ import {
   CharBaseStats,
   CharBaseStatsData,
   CharPerk,
-  CharPerkData
+  CharPerkData,
+  CharReborn
 } from "@codegen/index.sol";
 import { CharQuestStatus } from "@codegen/index.sol";
 import { QuestType, QuestStatusType, StatType, ItemType } from "@codegen/common.sol";
@@ -363,5 +364,19 @@ contract LevelSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixtu
     vm.stopPrank();
 
     assertEq(true, CharQuestStatus.get(characterId, 4) == QuestStatusType.Done);
+  }
+
+  function test_LevelUpAfterReborn() external {
+    vm.startPrank(worldDeployer);
+    CharCurrentStats.setExp(characterId, 25);
+    CharReborn.set(characterId, 1); // reborn one time
+    vm.stopPrank();
+
+    vm.startPrank(player);
+    // level up 1 level
+    world.app__levelUp(characterId, 1); // need 22 exp
+    vm.stopPrank();
+
+    assertEq(CharCurrentStats.getExp(characterId), 3);
   }
 }

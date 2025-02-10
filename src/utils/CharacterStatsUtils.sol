@@ -154,6 +154,7 @@ library CharacterStatsUtils {
     bool isRemoved
   )
     private
+    view
     returns (EquipmentInfoData memory equipmentInfo)
   {
     if (!isRemoved) return EquipmentInfo.get(itemId);
