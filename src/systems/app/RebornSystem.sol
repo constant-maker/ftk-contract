@@ -22,7 +22,7 @@ contract RebornSystem is System, CharacterAccessControl {
   function reborn(uint256 characterId) public onlyAuthorizedWallet(characterId) {
     // require character level 99
     CharStatsData memory charStats = CharStats.get(characterId);
-    if (charStats.level != Config.MAX_LEVEL) {
+    if (charStats.level < Config.MAX_LEVEL) {
       revert Errors.RebornSystem_MustBeMaxLevel(characterId);
     }
     // reset stat and gain extra points
@@ -35,8 +35,7 @@ contract RebornSystem is System, CharacterAccessControl {
 
     // update stats
     charStats.level = 1;
-    uint16 gainedHp = (Config.MAX_LEVEL - 1) * Config.HP_GAIN_PER_LEVEL;
-    charStats.hp = charStats.hp > gainedHp ? charStats.hp - gainedHp : 0;
+    charStats.hp = charCurrentStats.hp;
     charStats.statPoint += 20;
     CharStats.set(characterId, charStats);
 

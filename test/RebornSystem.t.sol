@@ -8,6 +8,7 @@ import { console2 } from "forge-std/console2.sol";
 import { CharStats, CharStatsData } from "@codegen/tables/CharStats.sol";
 import { CharCurrentStats, CharCurrentStatsData } from "@codegen/tables/CharCurrentStats.sol";
 import { CharBaseStats, CharBaseStatsData } from "@codegen/tables/CharBaseStats.sol";
+import { CharReborn } from "@codegen/index.sol";
 import { EquipData } from "@systems/app/EquipmentSystem.sol";
 import { SlotType } from "@codegen/common.sol";
 import { Config } from "@common/Config.sol";
@@ -106,5 +107,6 @@ contract RebornSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixt
     assertEq(charCurrentStats.def, prevCharCurrentStats.def);
     assertEq(charCurrentStats.agi + 1, prevCharCurrentStats.agi);
     assertEq(charCurrentStats.hp, Config.DEFAULT_HP);
+    assertEq(1, CharReborn.get(characterId));
   }
 }
