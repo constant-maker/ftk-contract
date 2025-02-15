@@ -34,16 +34,17 @@ contract RebornSystem is System, CharacterAccessControl {
     CharCurrentStats.set(characterId, charCurrentStats);
 
     // update stats
+    uint16 rebornNum = CharReborn.get(characterId) + 1;
     charStats.level = 1;
     charStats.hp = charCurrentStats.hp;
-    charStats.statPoint += 20;
+    charStats.statPoint = 20 * rebornNum;
     CharStats.set(characterId, charStats);
 
     // reset base stats
-    CharBaseStats.deleteRecord(characterId);
+    CharBaseStats.set(characterId, 0, 0, 0);
 
     // update reborn counter
-    CharReborn.set(characterId, CharReborn.get(characterId) + 1);
+    CharReborn.set(characterId, rebornNum);
 
     // add achievement
     CharAchievementUtils.addAchievement(characterId, 9); // Ascended Soul

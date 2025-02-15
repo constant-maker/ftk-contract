@@ -29,6 +29,7 @@ contract RebornSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixt
     vm.startPrank(worldDeployer);
     CharCurrentStats.setExp(characterId, 132);
     CharStats.setLevel(characterId, 98);
+    CharStats.setStatPoint(characterId, 10);
     vm.stopPrank();
 
     vm.expectRevert();
