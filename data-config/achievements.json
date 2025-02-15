@@ -90,6 +90,17 @@
         "def": 1,
         "agi": 0
       }
+    },
+    "9": {
+      "id": 9,
+      "name": "Ascended Soul",
+      "content": "Through countless battles and rebirths, you have transcended mortal limits. Your soul now carries the strength of past lifetimes.",
+      "instruction": "Reborn at level 99 to unlock your true potential.",
+      "stats": {
+        "atk": 3,
+        "def": 3,
+        "agi": 3
+      }
     }
   }
 }

@@ -70,7 +70,7 @@ contract FarmingSystem is CharacterAccessControl, System {
 
     // update tool durability
     if (tool.durability == requireDurability) {
-      InventoryToolUtils.removeTool(characterId, toolId);
+      Tool2.deleteRecord(toolId); // hook will auto remove the tool from player inventory
     } else {
       Tool2.setDurability(toolId, tool.durability - requireDurability);
     }
