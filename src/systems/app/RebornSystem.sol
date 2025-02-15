@@ -14,9 +14,9 @@ import {
   CharBaseStatsData,
   CharReborn
 } from "@codegen/index.sol";
+import { CharAchievementUtils } from "@utils/CharAchievementUtils.sol";
 import { SlotType } from "@codegen/common.sol";
-import { Errors } from "@common/Errors.sol";
-import { Config } from "@common/Config.sol";
+import { Errors, Config } from "@common/index.sol";
 
 contract RebornSystem is System, CharacterAccessControl {
   function reborn(uint256 characterId) public onlyAuthorizedWallet(characterId) {
@@ -44,6 +44,9 @@ contract RebornSystem is System, CharacterAccessControl {
 
     // update reborn counter
     CharReborn.set(characterId, CharReborn.get(characterId) + 1);
+
+    // add achievement
+    CharAchievementUtils.addAchievement(characterId, 9); // Ascended Soul
   }
 
   function _getRebornCurrentStats(
@@ -62,7 +65,7 @@ contract RebornSystem is System, CharacterAccessControl {
     if (charCurrentStats.atk > characterBaseStats.atk + eAtk) {
       charCurrentStats.atk = charCurrentStats.atk - characterBaseStats.atk;
     } else {
-      charCurrentStats.atk = 3 + eAtk;
+      charCurrentStats.atk = 4 + eAtk;
     }
     // def
     if (charCurrentStats.def > characterBaseStats.def + eDef) {

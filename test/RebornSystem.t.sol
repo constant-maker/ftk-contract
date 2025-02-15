@@ -12,6 +12,7 @@ import { CharReborn } from "@codegen/index.sol";
 import { EquipData } from "@systems/app/EquipmentSystem.sol";
 import { SlotType } from "@codegen/common.sol";
 import { Config } from "@common/Config.sol";
+import { CharAchievementUtils } from "@utils/CharAchievementUtils.sol";
 
 contract RebornSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture {
   address player = makeAddr("player");
@@ -57,9 +58,9 @@ contract RebornSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixt
     assertEq(charStats.level, 1);
     assertEq(charStats.statPoint, 20);
     console2.log("current atk", charCurrentStats.atk);
-    assertEq(charCurrentStats.atk, prevCharCurrentStats.atk);
-    assertEq(charCurrentStats.def, prevCharCurrentStats.def);
-    assertEq(charCurrentStats.agi + 1, prevCharCurrentStats.agi);
+    assertEq(charCurrentStats.atk, prevCharCurrentStats.atk + 3); // achievement
+    assertEq(charCurrentStats.def, prevCharCurrentStats.def + 3);
+    assertEq(charCurrentStats.agi + 1, prevCharCurrentStats.agi + 3);
   }
 
   function test_RebornWithEquipment() external {
@@ -102,11 +103,12 @@ contract RebornSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixt
     assertEq(charStats.level, 1);
     assertEq(charStats.statPoint, 20);
     assertEq(charCurrentStats.exp, 132);
-    console2.log(" atk", charCurrentStats.atk); // should be 5
-    assertEq(charCurrentStats.atk, 5);
-    assertEq(charCurrentStats.def, prevCharCurrentStats.def);
-    assertEq(charCurrentStats.agi + 1, prevCharCurrentStats.agi);
+    console2.log(" atk", charCurrentStats.atk); // should be 9 (6 + 3 (achievement bonus))
+    assertEq(charCurrentStats.atk, 9);
+    assertEq(charCurrentStats.def, prevCharCurrentStats.def + 3);
+    assertEq(charCurrentStats.agi + 1, prevCharCurrentStats.agi + 3);
     assertEq(charCurrentStats.hp, Config.DEFAULT_HP);
     assertEq(1, CharReborn.get(characterId));
+    assertTrue(CharAchievementUtils.hasAchievement(characterId, 9));
   }
 }
