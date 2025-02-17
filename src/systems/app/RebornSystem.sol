@@ -80,6 +80,9 @@ contract RebornSystem is System, CharacterAccessControl {
     } else {
       charCurrentStats.agi = block.number % 2 == 0 ? 2 : 3 + eAgi;
     }
+    // exp
+    charCurrentStats.exp = 0;
+    
     return charCurrentStats;
   }
 

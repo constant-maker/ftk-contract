@@ -6,11 +6,11 @@ import { Systems } from "@latticexyz/world/src/codegen/tables/Systems.sol";
 import { RESOURCE_SYSTEM } from "@latticexyz/world/src/worldResourceTypes.sol";
 
 library SystemUtils {
-  function getRootSystemId(bytes16 systemName) internal returns (ResourceId systemId) {
+  function getRootSystemId(bytes16 systemName) internal pure returns (ResourceId systemId) {
     return WorldResourceIdLib.encode(RESOURCE_SYSTEM, "", systemName);
   }
 
-  function getSystemId(bytes16 systemName) internal returns (ResourceId systemId) {
+  function getSystemId(bytes16 systemName) internal pure returns (ResourceId systemId) {
     return WorldResourceIdLib.encode(RESOURCE_SYSTEM, "app", systemName);
   }
 

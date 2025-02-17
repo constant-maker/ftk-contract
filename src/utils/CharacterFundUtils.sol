@@ -17,7 +17,7 @@ library CharacterFundUtils {
     CharFund.setGold(characterId, _balance - amount);
   }
 
-  function mustEnoughGold(uint256 characterId, uint32 requireAmount) internal {
+  function mustEnoughGold(uint256 characterId, uint32 requireAmount) internal view {
     uint32 _balance = CharFund.getGold(characterId);
     if (_balance < requireAmount) {
       revert Errors.CharacterFund_NotEnoughGold(_balance, requireAmount);
