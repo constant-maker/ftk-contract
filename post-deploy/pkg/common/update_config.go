@@ -411,7 +411,7 @@ func getListEquipmentUpdate(dataConfig DataConfig) ([]Item, []ItemRecipe, error)
 		})
 		recipes = append(recipes, ItemRecipe{
 			ItemId:      id,
-			Ingredients: getMaterialList(record[recipeIndex], dataConfig),
+			Ingredients: getMaterialList(record, record[recipeIndex], dataConfig),
 			GoldCost:    mustStringToInt(record[goldCostIndex]),
 		})
 	}
@@ -478,7 +478,7 @@ func getListHealingItemUpdate(dataConfig DataConfig) ([]Item, []ItemRecipe, erro
 		})
 		recipes = append(recipes, ItemRecipe{
 			ItemId:      id,
-			Ingredients: getMaterialList(record[recipeIndex], dataConfig),
+			Ingredients: getMaterialList(record, record[recipeIndex], dataConfig),
 			GoldCost:    mustStringToInt(record[goldCostIndex]),
 		})
 	}
@@ -539,15 +539,15 @@ func getListToolUpdate(dataConfig DataConfig) ([]Item, []ItemRecipe, error) {
 		})
 		recipes = append(recipes, ItemRecipe{
 			ItemId:      id,
-			Ingredients: getMaterialList(record[recipeIndex], dataConfig),
+			Ingredients: getMaterialList(record, record[recipeIndex], dataConfig),
 			GoldCost:    mustStringToInt(record[goldCostIndex]),
 		})
 	}
 	return tool, recipes, nil
 }
 
-func getMaterialList(rawS string, dataConfig DataConfig) []Ingredient {
-	l := zap.S().With("func", "getMaterialList")
+func getMaterialList(rawRecord []string, rawS string, dataConfig DataConfig) []Ingredient {
+	l := zap.S().With("func", "getMaterialList", "raw record", rawRecord)
 	arr := strings.Split(rawS, "\n")
 	if len(arr) < 2 {
 		panic("invalid recipe data enter")
