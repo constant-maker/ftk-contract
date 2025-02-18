@@ -876,6 +876,318 @@
         }
       ],
       "achievementId": 8
+    },
+    "41": {
+      "id": 41,
+      "questType": 0,
+      "name": "Nature's Warning",
+      "description": "Strange crystal formations have begun appearing throughout Sylvanreach's ancient forests. Upon investigation with your fairy companion FayLinn, you seek the expertise of Sylvia Moonsage. The crystals appear to be drawing power from the forest itself, reacting strongly to the presence of Verdant Drakes.",
+      "fromNpcId": 12,
+      "exp": 3500,
+      "gold": 750,
+      "requiredDoneQuestIds": [
+        5
+      ],
+      "contributeDetails": [
+        {
+          "itemId": 112,
+          "amount": 30
+        },
+        {
+          "itemId": 73,
+          "amount": 40
+        },
+        {
+          "itemId": 250,
+          "amount": 10
+        }
+      ]
+    },
+    "42": {
+      "id": 42,
+      "questType": 0,
+      "name": "Cross-Kingdom Currents",
+      "description": "After analyzing the initial materials, Sylvia Moonsage has discovered that the crystal formations are responding to elemental energies from beyond Sylvanreach's borders. To create a focusing agent that will help understand these mysterious energies, I must gather materials from various biomes.",
+      "fromNpcId": 12,
+      "exp": 3800,
+      "gold": 800,
+      "requiredDoneQuestIds": [
+        41
+      ],
+      "contributeDetails": [
+        {
+          "itemId": 95,
+          "amount": 20
+        },
+        {
+          "itemId": 78,
+          "amount": 20
+        },
+        {
+          "itemId": 86,
+          "amount": 20
+        },
+        {
+          "itemId": 102,
+          "amount": 20
+        },
+        {
+          "itemId": 256,
+          "amount": 10
+        }
+      ]
+    },
+    "43": {
+      "id": 43,
+      "questType": 0,
+      "name": "The Corrupted Core",
+      "description": "The situation in Sylvanreach has reached a critical point. The mysterious crystal formations have begun corrupting the forest's ancient ley lines. Even worse, the majestic Prismdeers, normally peaceful guardians of the forest, have become aggressive under the crystal's influence. To perform a purification ritual, Sylvia needs the pure energy contained within Prismdeer Auroral Gems.",
+      "fromNpcId": 12,
+      "exp": 4000,
+      "gold": 900,
+      "requiredDoneQuestIds": [
+        42
+      ],
+      "contributeDetails": [
+        {
+          "itemId": 251,
+          "amount": 20
+        }
+      ]
+    },
+    "44": {
+      "id": 44,
+      "questType": 0,
+      "name": "The Witch's Equilibrium",
+      "description": "A strange phenomenon is affecting Misthaven Kingdom as objects begin floating randomly throughout the realm. Hazel Thornweaver, a witch skilled in magical harmonics, requires your help in gathering materials for an Equilibrium Anchor.",
+      "fromNpcId": 13,
+      "exp": 3500,
+      "gold": 750,
+      "requiredDoneQuestIds": [
+        10
+      ],
+      "contributeDetails": [
+        {
+          "itemId": 88,
+          "amount": 30
+        },
+        {
+          "itemId": 97,
+          "amount": 40
+        },
+        {
+          "itemId": 252,
+          "amount": 10
+        }
+      ]
+    },
+    "45": {
+      "id": 45,
+      "questType": 0,
+      "name": "Matter and Magic",
+      "description": "With the base components secured, Hazel Thornweaver needs additional materials to stabilize the Equilibrium Anchor. Gather natural resources from around Misthaven. Additionally, venture into the frozen realm of Everfrost to challenge Lizard Champions of the Snowzard clans for their ancestral Cold Bones - a crucial magical catalyst.",
+      "fromNpcId": 13,
+      "exp": 3800,
+      "gold": 800,
+      "requiredDoneQuestIds": [
+        44
+      ],
+      "contributeDetails": [
+        {
+          "itemId": 3,
+          "amount": 20
+        },
+        {
+          "itemId": 78,
+          "amount": 20
+        },
+        {
+          "itemId": 110,
+          "amount": 20
+        },
+        {
+          "itemId": 102,
+          "amount": 20
+        },
+        {
+          "itemId": 254,
+          "amount": 10
+        }
+      ]
+    },
+    "46": {
+      "id": 46,
+      "questType": 0,
+      "name": "The Ancient Guardians",
+      "description": "The final stage of stabilizing Misthaven's magic requires the most dangerous task yet. The Ancient Golems, age-old mechanical guardians powered by primordial energy, hold the key to completing the Equilibrium Anchor. Venture into the northern ruins to face these formidable constructs and extract Ancient Cores from their mechanical bodies.",
+      "fromNpcId": 13,
+      "exp": 4000,
+      "gold": 900,
+      "requiredDoneQuestIds": [
+        45
+      ],
+      "contributeDetails": [
+        {
+          "itemId": 253,
+          "amount": 20
+        }
+      ]
+    },
+    "47": {
+      "id": 47,
+      "questType": 0,
+      "name": "A Concerning Discovery",
+      "description": "Something stirs within Everfrost's eternal winter. Chione, the youngest court sorcerer of Frostgard, has detected alarming fluctuations in the kingdom's ancient frost barriers. The usually distant Snowzard clans grow bolder by the day, perhaps sensing the weakening magic. Aid Chione and her friend Raena in gathering components for a detection ritual.",
+      "fromNpcId": 14,
+      "exp": 3500,
+      "gold": 750,
+      "requiredDoneQuestIds": [
+        15
+      ],
+      "contributeDetails": [
+        {
+          "itemId": 104,
+          "amount": 30
+        },
+        {
+          "itemId": 73,
+          "amount": 40
+        },
+        {
+          "itemId": 254,
+          "amount": 10
+        }
+      ]
+    },
+    "48": {
+      "id": 48,
+      "questType": 0,
+      "name": "The Verdant Connection",
+      "description": "The detection ritual has revealed impossible magical connections between Everfrost and its rival kingdom, Sylvanreach - realms of eternal winter and endless summer that should never intersect. Chione and Raena need your help crafting a special focusing crystal to study these dangerous anomalies. But gathering the required materials means venturing into both kingdoms.",
+      "fromNpcId": 14,
+      "exp": 3800,
+      "gold": 800,
+      "requiredDoneQuestIds": [
+        47
+      ],
+      "contributeDetails": [
+        {
+          "itemId": 95,
+          "amount": 20
+        },
+        {
+          "itemId": 78,
+          "amount": 20
+        },
+        {
+          "itemId": 86,
+          "amount": 20
+        },
+        {
+          "itemId": 110,
+          "amount": 20
+        },
+        {
+          "itemId": 250,
+          "amount": 10
+        }
+      ]
+    },
+    "49": {
+      "id": 49,
+      "questType": 0,
+      "name": "Ancient Echoes",
+      "description": "The focusing crystal has led to an ancient prophecy concerning both kingdoms. To understand the growing threat, you must challenge the mysterious Crystal Oracles - enigmatic beings of pure frost magic that guard Everfrost's deepest mysteries.",
+      "fromNpcId": 14,
+      "exp": 4000,
+      "gold": 900,
+      "requiredDoneQuestIds": [
+        48
+      ],
+      "contributeDetails": [
+        {
+          "itemId": 255,
+          "amount": 20
+        }
+      ]
+    },
+    "50": {
+      "id": 50,
+      "questType": 0,
+      "name": "Desert's Whisper",
+      "description": "Ancient texts discovered by Kestrel reveal plans for a powerful artifact - the Sundancer's Aegis. With the seasonal boundaries growing unstable, recreating this protective relic could be crucial for Sunscar's survival. Join forces with Hilathe and your fairy companion FayLinn to gather the base materials for the Aegis.",
+      "fromNpcId": 15,
+      "exp": 3500,
+      "gold": 750,
+      "requiredDoneQuestIds": [
+        20
+      ],
+      "contributeDetails": [
+        {
+          "itemId": 80,
+          "amount": 30
+        },
+        {
+          "itemId": 97,
+          "amount": 40
+        },
+        {
+          "itemId": 256,
+          "amount": 10
+        }
+      ]
+    },
+    "51": {
+      "id": 51,
+      "questType": 0,
+      "name": "Kingdom's Cross",
+      "description": "With the base components of the Sundancer's Aegis secured, Kestrel reveals that binding elements from multiple kingdoms are needed to stabilize its power. The most challenging ingredient - the rare Darkblooms that grow only on Murklurkers in toxic Misthaven - will test your survival skills.",
+      "fromNpcId": 15,
+      "exp": 3800,
+      "gold": 800,
+      "requiredDoneQuestIds": [
+        50
+      ],
+      "contributeDetails": [
+        {
+          "itemId": 110,
+          "amount": 20
+        },
+        {
+          "itemId": 4,
+          "amount": 20
+        },
+        {
+          "itemId": 86,
+          "amount": 20
+        },
+        {
+          "itemId": 102,
+          "amount": 20
+        },
+        {
+          "itemId": 252,
+          "amount": 10
+        }
+      ]
+    },
+    "52": {
+      "id": 52,
+      "questType": 0,
+      "name": "Golden Terror",
+      "description": "The Sundancer's Aegis requires one final component before the ritual can begin - the primal energy contained within Ravager Claws. These fearsome predators, with their golden-plated exoskeletons, are among the deadliest creatures stalking the Sunscar wastes. Work with Hilathe and FayLinn to hunt these territorial beasts.",
+      "fromNpcId": 15,
+      "exp": 4000,
+      "gold": 900,
+      "requiredDoneQuestIds": [
+        51
+      ],
+      "contributeDetails": [
+        {
+          "itemId": 257,
+          "amount": 20
+        }
+      ]
     }
   }
 }
