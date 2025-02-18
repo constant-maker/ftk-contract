@@ -131,7 +131,7 @@ contract LevelSystem is System, CharacterAccessControl {
       pointPerStat = (currentBaseStat - 1) / 25 + 1;
     }
     for (uint16 i = currentBaseStat + 1; i <= toBaseStat; i++) {
-      if (i % 25 == 1) {
+      if (i > 25 && i % 25 == 1) {
         pointPerStat++;
       }
       totalPointToUse += pointPerStat;

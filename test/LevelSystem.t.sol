@@ -379,4 +379,21 @@ contract LevelSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixtu
 
     assertEq(CharCurrentStats.getExp(characterId), 3);
   }
+
+  function test_UpStatsLevel2() external {
+    vm.startPrank(worldDeployer);
+    CharCurrentStats.setExp(characterId, 132);
+    vm.stopPrank();
+
+    vm.startPrank(player);
+    // up to level 2
+    world.app__levelUp(characterId, 1);
+    vm.stopPrank();
+
+    IncreaseStatData[] memory datas = new IncreaseStatData[](1);
+    datas[0] = IncreaseStatData({ statType: StatType.ATK, amount: 1 });
+    vm.startPrank(player);
+    world.app__increaseStats(characterId, datas);
+    vm.stopPrank();
+  }
 }
