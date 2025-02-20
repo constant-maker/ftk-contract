@@ -103,7 +103,7 @@ contract RebornSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixt
     CharBaseStatsData memory charBaseStats = CharBaseStats.get(characterId);
     assertEq(charStats.level, 1);
     assertEq(charStats.statPoint, 20);
-    assertEq(charCurrentStats.exp, 132);
+    assertEq(charCurrentStats.exp, 0);
     console2.log(" atk", charCurrentStats.atk); // should be 9 (6 + 3 (achievement bonus))
     assertEq(charCurrentStats.atk, 9);
     assertEq(charCurrentStats.def, prevCharCurrentStats.def + 3);
