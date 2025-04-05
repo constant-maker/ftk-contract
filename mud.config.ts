@@ -43,6 +43,7 @@ export default defineWorld({
     TerrainType: ["GrassLand", "Forest", "Mountain"],
     AdvantageType: ["Red", "Green", "Blue", "Grey"],
     EntityType: ["Character", "Monster"],
+    EffectType: ["None", "Burn", "Poison", "Frostbite"],
   },
   tables: {
     Unmovable: {

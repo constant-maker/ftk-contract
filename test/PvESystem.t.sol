@@ -58,7 +58,7 @@ contract PvESystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
     vm.stopPrank();
 
     uint32 characterHp = CharCurrentStats.getHp(characterId);
-    uint256[4] memory skills = CharSkill.get(characterId);
+    uint256[5] memory skills = CharSkill.get(characterId);
 
     vm.warp(block.timestamp + 300);
     vm.startPrank(player);
@@ -89,7 +89,7 @@ contract PvESystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
     assertEq(pve.damages[8], 30); // monster use skill 125% dmg ~
 
     uint32 characterCurrentHp = CharCurrentStats.getHp(characterId);
-    assertEq(characterCurrentHp, 98);
+    assertEq(characterCurrentHp, 74);
     assertEq(CharCurrentStats.getExp(characterId), 0);
   }
 
@@ -100,7 +100,7 @@ contract PvESystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
     // set position to hunting place
     _moveToMonsterLocation(characterId);
 
-    uint256[4] memory customSkillIds = [uint256(3), uint256(0), uint256(2), uint256(1)];
+    uint256[5] memory customSkillIds = [uint256(3), uint256(0), uint256(2), uint256(1), uint256(0)];
     vm.startPrank(worldDeployer);
     MonsterStats.setHp(monsterId, 200);
     CharCurrentStats.setHp(monsterId, 200);
@@ -138,7 +138,7 @@ contract PvESystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
     assertEq(pve.damages[8], 30); // monster use skill 125% dmg ~
 
     uint32 characterCurrentHp = CharCurrentStats.getHp(characterId);
-    assertEq(characterCurrentHp, 98);
+    assertEq(characterCurrentHp, 74);
     assertEq(CharCurrentStats.getExp(characterId), 0);
   }
 
@@ -154,7 +154,7 @@ contract PvESystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
     vm.stopPrank();
 
     uint32 characterHp = CharCurrentStats.getHp(characterId);
-    uint256[4] memory skills = CharSkill.get(characterId);
+    uint256[5] memory skills = CharSkill.get(characterId);
 
     vm.warp(block.timestamp + 300);
     vm.startPrank(player);
@@ -191,7 +191,7 @@ contract PvESystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
     vm.stopPrank();
 
     uint32 characterHp = CharCurrentStats.getHp(characterId);
-    uint256[4] memory skills = CharSkill.get(characterId);
+    uint256[5] memory skills = CharSkill.get(characterId);
     uint32 currentWeight = CharCurrentStats.getWeight(characterId);
 
     vm.warp(block.timestamp + 300);
@@ -252,7 +252,7 @@ contract PvESystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
     vm.stopPrank();
 
     uint32 characterHp = CharCurrentStats.getHp(characterId);
-    uint256[4] memory skills = CharSkill.get(characterId);
+    uint256[5] memory skills = CharSkill.get(characterId);
     uint32 currentWeight = CharCurrentStats.getWeight(characterId);
 
     vm.warp(block.timestamp + 300);
@@ -317,7 +317,7 @@ contract PvESystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
     vm.stopPrank();
 
     uint32 characterHp = CharCurrentStats.getHp(characterId);
-    uint256[4] memory skills = CharSkill.get(characterId);
+    uint256[5] memory skills = CharSkill.get(characterId);
     uint32 currentWeight = CharCurrentStats.getWeight(characterId);
 
     vm.warp(block.timestamp + 300);
@@ -372,7 +372,7 @@ contract PvESystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
     vm.stopPrank();
 
     uint32 characterHp = CharCurrentStats.getHp(characterId);
-    uint256[4] memory skills = CharSkill.get(characterId);
+    uint256[5] memory skills = CharSkill.get(characterId);
     uint32 currentWeight = CharCurrentStats.getWeight(characterId);
 
     vm.warp(block.timestamp + 300);
@@ -434,7 +434,7 @@ contract PvESystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
     vm.stopPrank();
 
     uint32 characterHp = CharCurrentStats.getHp(characterId);
-    uint256[4] memory skills = CharSkill.get(characterId);
+    uint256[5] memory skills = CharSkill.get(characterId);
     uint32 currentWeight = CharCurrentStats.getWeight(characterId);
 
     vm.warp(block.timestamp + 300);
@@ -483,7 +483,7 @@ contract PvESystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
     vm.stopPrank();
 
     uint32 characterHp = CharCurrentStats.getHp(characterId);
-    uint256[4] memory skills = CharSkill.get(characterId);
+    uint256[5] memory skills = CharSkill.get(characterId);
 
     vm.warp(block.timestamp + 300);
     vm.startPrank(player);

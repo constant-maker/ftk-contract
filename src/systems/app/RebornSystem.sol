@@ -82,7 +82,7 @@ contract RebornSystem is System, CharacterAccessControl {
     }
     // exp
     charCurrentStats.exp = 0;
-    
+
     return charCurrentStats;
   }
 

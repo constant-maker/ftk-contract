@@ -7,14 +7,14 @@ import { Errors } from "@common/Errors.sol";
 
 contract SkillSystem is System, CharacterAccessControl {
   /// @dev update skill order
-  function updateSkillOrder(uint256 characterId, uint256[4] calldata skillIds) public onlyAuthorizedWallet(characterId) {
+  function updateSkillOrder(uint256 characterId, uint256[5] calldata skillIds) public onlyAuthorizedWallet(characterId) {
     _validateSkillIds(skillIds);
     CharSkill.set(characterId, skillIds);
   }
 
   /// @dev Validates that the skillIds array does not contain duplicates of non-zero values.
   /// @param skillIds Array of skill IDs to validate.
-  function _validateSkillIds(uint256[4] memory skillIds) private view {
+  function _validateSkillIds(uint256[5] memory skillIds) private view {
     for (uint256 i = 0; i < skillIds.length; i++) {
       uint256 skillId = skillIds[i];
       // Skip zero since it's allowed to be duplicated

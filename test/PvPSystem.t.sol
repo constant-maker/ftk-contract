@@ -34,8 +34,8 @@ contract PvPSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
   uint256 characterId_2;
   uint256 characterId_3;
 
-  uint256[4] customSkillIds_1 = [uint256(3), uint256(0), uint256(2), uint256(1)];
-  uint256[4] customSkillIds_2 = [uint256(1), uint256(0), uint256(0), uint256(0)];
+  uint256[5] customSkillIds_1 = [uint256(3), uint256(0), uint256(2), uint256(1), uint256(0)];
+  uint256[5] customSkillIds_2 = [uint256(1), uint256(0), uint256(0), uint256(0), uint256(0)];
 
   int32 locationX = 30;
   int32 locationY = -35;
@@ -115,6 +115,11 @@ contract PvPSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
     // vm.startPrank(worldDeployer);
     // vm.stopPrank();
 
+    vm.startPrank(worldDeployer);
+    CharCurrentStats.setHp(characterId_1, 200);
+    CharCurrentStats.setHp(characterId_2, 200);
+    vm.stopPrank();
+
     uint32 characterHp_1 = CharCurrentStats.getHp(characterId_1);
     uint32 characterHp_2 = CharCurrentStats.getHp(characterId_2);
 
@@ -146,12 +151,14 @@ contract PvPSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
     assertEq(pvp.damages[6], 21);
     assertEq(pvp.damages[7], 21);
     assertEq(pvp.damages[8], 21);
+    assertEq(pvp.damages[9], 21);
+    assertEq(pvp.damages[10], 21);
 
     uint32 currentCharacterHp_1 = CharCurrentStats.getHp(characterId_1);
     uint32 currentCharacterHp_2 = CharCurrentStats.getHp(characterId_2);
 
-    assertEq(currentCharacterHp_1, 13);
-    assertEq(currentCharacterHp_2, 16);
+    assertEq(currentCharacterHp_1, 92);
+    assertEq(currentCharacterHp_2, 95);
   }
 
   function test_BattleHasWinner() external {
@@ -376,7 +383,7 @@ contract PvPSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
     vm.stopPrank();
   }
 
-  function _setSkill(uint256 characterId, uint256[4] memory customSkillIds) private {
+  function _setSkill(uint256 characterId, uint256[5] memory customSkillIds) private {
     vm.startPrank(worldDeployer);
     CharSkill.setSkillIds(characterId, customSkillIds);
     vm.stopPrank();

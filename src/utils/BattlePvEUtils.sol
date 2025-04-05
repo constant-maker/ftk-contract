@@ -25,13 +25,13 @@ library BattlePvEUtils {
     uint256 characterId,
     uint256 monsterId,
     uint32 characterOriginHp,
-    uint256[4] memory characterSkills,
+    uint256[5] memory characterSkills,
     CharPositionData memory characterPosition,
     MonsterLocationData memory monsterLocation
   )
     public
     view
-    returns (EntityType firstAttackerType, uint32[2] memory hps, uint32[9] memory damages)
+    returns (EntityType firstAttackerType, uint32[2] memory hps, uint32[11] memory damages)
   {
     // Build battle information for character and monster
     BattleInfo memory characterBattleInfo =
@@ -60,8 +60,8 @@ library BattlePvEUtils {
     uint32 characterOriginHp,
     EntityType firstAttacker,
     CharPositionData memory characterPosition,
-    uint256[4] memory characterSkills,
-    uint32[9] memory damages
+    uint256[5] memory characterSkills,
+    uint32[11] memory damages
   )
     public
   {

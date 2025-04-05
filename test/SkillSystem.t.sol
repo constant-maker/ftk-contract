@@ -19,12 +19,12 @@ contract SkillTest is WorldFixture, SpawnSystemFixture {
   }
 
   function test_UpdateSkill() external {
-    uint256[4] memory currentSkillIds = CharSkill.get(characterId);
+    uint256[5] memory currentSkillIds = CharSkill.get(characterId);
     assertEq(currentSkillIds[0], 0);
     assertEq(currentSkillIds[1], 0);
     assertEq(currentSkillIds[2], 0);
     assertEq(currentSkillIds[3], 0);
-    uint256[4] memory skillIds = [uint256(0), 1, 2, 3];
+    uint256[5] memory skillIds = [uint256(0), 1, 2, 3, 0];
     vm.prank(player);
     world.app__updateSkillOrder(characterId, skillIds);
 
@@ -36,13 +36,13 @@ contract SkillTest is WorldFixture, SpawnSystemFixture {
   }
 
   function test_RevertUpdateSkill() external {
-    uint256[4] memory skillIds = [uint256(0), 1, 1000, 3]; // skill id 1000 is not exist
+    uint256[5] memory skillIds = [uint256(0), 1, 1000, 3, 0]; // skill id 1000 is not exist
     vm.expectRevert();
     vm.prank(player);
 
     world.app__updateSkillOrder(characterId, skillIds);
 
-    skillIds = [uint256(0), 0, 3, 3]; // duplicate skill id 3
+    skillIds = [uint256(0), 0, 3, 3, 0]; // duplicate skill id 3
     vm.expectRevert();
     vm.prank(player);
     world.app__updateSkillOrder(characterId, skillIds);

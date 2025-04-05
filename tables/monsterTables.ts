@@ -7,7 +7,7 @@ const MONSTER_TABLES: any = {
       perkExp: "uint32",
       isBoss: "bool",
       name: "string",
-      skillIds: "uint256[4]",
+      skillIds: "uint256[5]",
       itemIds: "uint256[]",
       itemAmounts: "uint32[]",
     },

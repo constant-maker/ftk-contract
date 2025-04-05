@@ -149,7 +149,7 @@ const CHARACTER_TABLES: any = {
   CharSkill: {
     schema: {
       characterId: "uint256",
-      skillIds: "uint256[4]",
+      skillIds: "uint256[5]",
     },
     key: ['characterId'],
   },
