@@ -27,6 +27,7 @@ func UpdateDataConfig(dataConfig *DataConfig, basePath string) {
 	l := zap.S().With("func", "updateData")
 	shouldRewriteFile := false
 	// update list monsterResource
+	l.Infow("GET LIST MONSTER RESOURCE")
 	listMonsterResourceUpdate, err := getListMonsterResourceUpdate()
 	if err != nil {
 		l.Errorw("cannot get list monsterResource update", "err", err)
@@ -48,6 +49,7 @@ func UpdateDataConfig(dataConfig *DataConfig, basePath string) {
 	}
 
 	// update list farm resource
+	l.Infow("GET LIST FARM RESOURCE")
 	listFarmResourceUpdate, err := getListFarmResourceUpdate()
 	if err != nil {
 		l.Errorw("cannot get list monsterResource update", "err", err)
@@ -69,6 +71,7 @@ func UpdateDataConfig(dataConfig *DataConfig, basePath string) {
 	}
 
 	// update list equipment
+	l.Infow("GET LIST EQUIPMENT")
 	listEquipmentUpdate, listEquipmentRecipeUpdate, err := getListEquipmentUpdate(*dataConfig)
 	if err != nil {
 		l.Errorw("cannot get list equipment update", "err", err)
@@ -90,6 +93,7 @@ func UpdateDataConfig(dataConfig *DataConfig, basePath string) {
 	}
 
 	// update list healing item
+	l.Infow("GET LIST HEALING ITEM")
 	listHealingItemUpdate, listHealingItemRecipeUpdate, err := getListHealingItemUpdate(*dataConfig)
 	if err != nil {
 		l.Errorw("cannot get list healing item update", "err", err)
@@ -111,6 +115,7 @@ func UpdateDataConfig(dataConfig *DataConfig, basePath string) {
 	}
 
 	// update list tool
+	l.Infow("GET LIST TOOL")
 	listToolUpdate, listToolRecipeUpdate, err := getListToolUpdate(*dataConfig)
 	if err != nil {
 		l.Errorw("cannot get list tool update", "err", err)
@@ -244,9 +249,9 @@ func getListMonsterResourceUpdate() ([]Item, error) {
 		// 	l.Warnw("invalid resource data format", "len(record)", len(record))
 		// 	return nil, fmt.Errorf("invalid data format len record = %d", len(record))
 		// }
-		id := mustStringToInt(record[idIndex])
-		tier := mustStringToInt(record[tierIndex])
-		weight := mustStringToInt(record[weightIndex])
+		id := mustStringToInt(record[idIndex], idIndex)
+		tier := mustStringToInt(record[tierIndex], tierIndex)
+		weight := mustStringToInt(record[weightIndex], weightIndex)
 		result = append(result, Item{
 			Id:       int(id),
 			Type:     23,
@@ -303,9 +308,9 @@ func getListFarmResourceUpdate() ([]Item, error) {
 		// 	l.Warnw("invalid resource data format", "len(record)", len(record))
 		// 	return nil, fmt.Errorf("invalid data format len record = %d", len(record))
 		// }
-		id := mustStringToInt(record[idIndex])
-		tier := mustStringToInt(record[tierIndex])
-		weight := mustStringToInt(record[weightIndex])
+		id := mustStringToInt(record[idIndex], idIndex)
+		tier := mustStringToInt(record[tierIndex], tierIndex)
+		weight := mustStringToInt(record[weightIndex], weightIndex)
 		result = append(result, Item{
 			Id:       int(id),
 			Type:     23,
@@ -343,11 +348,11 @@ func getListEquipmentUpdate(dataConfig DataConfig) ([]Item, []ItemRecipe, error)
 			l.Errorw("cannot read data", "err", err)
 			return nil, nil, err
 		}
-		if record[0] == "" { // empty row
+		if record[0] == "" || record[1] == "" || record[2] == "" { // empty row
 			l.Warnw("invalid equipment data format", "data", record)
 			continue
 		}
-
+		// l.Infow("record", "value", record)
 		if strings.EqualFold(record[0], "id") { // header
 			if tierIndex != 0 && nameIndex != 0 {
 				l.Panicw("detect header more than one time", "value", record)
@@ -368,17 +373,35 @@ func getListEquipmentUpdate(dataConfig DataConfig) ([]Item, []ItemRecipe, error)
 			goldCostIndex = findIndex(record, "goldCost")
 			recipeIndex = findIndex(record, "recipe")
 			descIndex = findIndex(record, "desc")
+			l.Infow(
+				"list index",
+				"idIndex", idIndex,
+				"nameIndex", nameIndex,
+				"typeIndex", typeIndex,
+				"slotTypeIndex", slotTypeIndex,
+				"advantageTypeIndex", advantageTypeIndex,
+				"twoHandedIndex", twoHandedIndex,
+				"tierIndex", tierIndex,
+				"weightIndex", weightIndex,
+				"atkIndex", atkIndex,
+				"defIndex", defIndex,
+				"agiIndex", agiIndex,
+				"hpIndex", hpIndex,
+				"msIndex", msIndex,
+				"goldCostIndex", goldCostIndex,
+				"recipeIndex", recipeIndex,
+				"descIndex", descIndex)
 			continue
 		}
 
-		id := mustStringToInt(record[idIndex])
-		tier := mustStringToInt(record[tierIndex])
-		weight := mustStringToInt(record[weightIndex])
-		atk := mustStringToInt(record[atkIndex])
-		def := mustStringToInt(record[defIndex])
-		agi := mustStringToInt(record[agiIndex])
-		hp := mustStringToInt(record[hpIndex])
-		ms := mustStringToInt(record[msIndex])
+		id := mustStringToInt(record[idIndex], idIndex)
+		tier := mustStringToInt(record[tierIndex], tierIndex)
+		weight := mustStringToInt(record[weightIndex], weightIndex)
+		atk := mustStringToInt(record[atkIndex], atkIndex)
+		def := mustStringToInt(record[defIndex], defIndex)
+		agi := mustStringToInt(record[agiIndex], agiIndex)
+		hp := mustStringToInt(record[hpIndex], hpIndex)
+		ms := mustStringToInt(record[msIndex], msIndex)
 
 		twoHanded := false
 		if strings.EqualFold(record[twoHandedIndex], "TRUE") {
@@ -412,7 +435,7 @@ func getListEquipmentUpdate(dataConfig DataConfig) ([]Item, []ItemRecipe, error)
 		recipes = append(recipes, ItemRecipe{
 			ItemId:      id,
 			Ingredients: getMaterialList(record, record[recipeIndex], dataConfig),
-			GoldCost:    mustStringToInt(record[goldCostIndex]),
+			GoldCost:    mustStringToInt(record[goldCostIndex], goldCostIndex),
 		})
 	}
 	return equipments, recipes, nil
@@ -459,10 +482,10 @@ func getListHealingItemUpdate(dataConfig DataConfig) ([]Item, []ItemRecipe, erro
 			continue
 		}
 
-		id := mustStringToInt(record[idIndex])
-		tier := mustStringToInt(record[tierIndex])
-		weight := mustStringToInt(record[weightIndex])
-		hpRestore := mustStringToInt(record[hpRestoreIndex])
+		id := mustStringToInt(record[idIndex], idIndex)
+		tier := mustStringToInt(record[tierIndex], tierIndex)
+		weight := mustStringToInt(record[weightIndex], weightIndex)
+		hpRestore := mustStringToInt(record[hpRestoreIndex], hpRestoreIndex)
 
 		healingItems = append(healingItems, Item{
 			Id:       id,
@@ -479,7 +502,7 @@ func getListHealingItemUpdate(dataConfig DataConfig) ([]Item, []ItemRecipe, erro
 		recipes = append(recipes, ItemRecipe{
 			ItemId:      id,
 			Ingredients: getMaterialList(record, record[recipeIndex], dataConfig),
-			GoldCost:    mustStringToInt(record[goldCostIndex]),
+			GoldCost:    mustStringToInt(record[goldCostIndex], goldCostIndex),
 		})
 	}
 	return healingItems, recipes, nil
@@ -524,9 +547,9 @@ func getListToolUpdate(dataConfig DataConfig) ([]Item, []ItemRecipe, error) {
 			descIndex = findIndex(record, "desc")
 			continue
 		}
-		id := mustStringToInt(record[idIndex])
-		tier := mustStringToInt(record[tierIndex])
-		weight := mustStringToInt(record[weightIndex])
+		id := mustStringToInt(record[idIndex], idIndex)
+		tier := mustStringToInt(record[tierIndex], tierIndex)
+		weight := mustStringToInt(record[weightIndex], weightIndex)
 		toolType := getToolType(record[typeIndex])
 		tool = append(tool, Item{
 			Id:       id,
@@ -540,7 +563,7 @@ func getListToolUpdate(dataConfig DataConfig) ([]Item, []ItemRecipe, error) {
 		recipes = append(recipes, ItemRecipe{
 			ItemId:      id,
 			Ingredients: getMaterialList(record, record[recipeIndex], dataConfig),
-			GoldCost:    mustStringToInt(record[goldCostIndex]),
+			GoldCost:    mustStringToInt(record[goldCostIndex], goldCostIndex),
 		})
 	}
 	return tool, recipes, nil
@@ -571,7 +594,7 @@ func getMaterialList(rawRecord []string, rawS string, dataConfig DataConfig) []I
 		if itemId == 0 {
 			l.Panicw("invalid resource", "name", itemName)
 		}
-		amount := mustStringToInt(removeRedundantText(rawAmount))
+		amount := mustStringToInt(removeRedundantText(rawAmount), 0)
 		result = append(result, Ingredient{
 			ItemId: itemId,
 			Amount: amount,
@@ -591,9 +614,10 @@ func removeRedundantText(s string) string {
 	return s
 }
 
-func mustStringToInt(s string) int {
+func mustStringToInt(s string, index int) int {
 	num, err := strconv.ParseInt(s, 10, 64)
 	if err != nil {
+		fmt.Println("PARSE ERROR", s, index)
 		panic(s + err.Error())
 	}
 	return int(num)

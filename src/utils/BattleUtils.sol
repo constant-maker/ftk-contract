@@ -13,10 +13,12 @@ import {
   CharSkill,
   CharEquipment,
   BossInfo,
-  BossInfoData
+  BossInfoData,
+  SkillEffect,
+  SkillEffectData
 } from "@codegen/index.sol";
 import { PvE } from "@codegen/tables/PvE.sol";
-import { AdvantageType, SlotType } from "@codegen/common.sol";
+import { AdvantageType, SlotType, EffectType } from "@codegen/common.sol";
 import { Config } from "@common/Config.sol";
 import { Errors } from "@common/Errors.sol";
 import { CharacterEquipmentUtils } from "./CharacterEquipmentUtils.sol";
@@ -29,33 +31,33 @@ struct BattleInfo {
   uint16 agi;
   uint16 level;
   AdvantageType advantageType;
-  uint256[4] skillIds;
+  uint256[5] skillIds;
 }
 
 library BattleUtils {
   uint8 public constant BERSERK_SP_BONUS = 5;
 
   /// @dev Return list of valid skills based on character SP.
-  function getCharacterSkillIds(uint256 characterId) public view returns (uint256[4] memory skillIds) {
+  function getCharacterSkillIds(uint256 characterId) public view returns (uint256[5] memory skillIds) {
     uint8 characterSp = CharStats.getSp(characterId);
-    uint256[4] memory characterSkillIds = CharSkill.getSkillIds(characterId);
+    uint256[5] memory characterSkillIds = CharSkill.getSkillIds(characterId);
 
     return reBuildSkills(characterSkillIds, characterSp);
   }
 
-  function getMonsterSkillIds(uint256 monsterId, uint8 monsterSp) public view returns (uint256[4] memory skillIds) {
-    uint256[4] memory monsterSkillIds = Monster.getSkillIds(monsterId);
+  function getMonsterSkillIds(uint256 monsterId, uint8 monsterSp) public view returns (uint256[5] memory skillIds) {
+    uint256[5] memory monsterSkillIds = Monster.getSkillIds(monsterId);
 
     return reBuildSkills(monsterSkillIds, monsterSp);
   }
 
   function reBuildSkills(
-    uint256[4] memory originSkillIds,
+    uint256[5] memory originSkillIds,
     uint8 totalSp
   )
     public
     view
-    returns (uint256[4] memory skillIds)
+    returns (uint256[5] memory skillIds)
   {
     for (uint256 i = 0; i < originSkillIds.length; i++) {
       uint256 skillId = originSkillIds[i];
@@ -113,7 +115,7 @@ library BattleUtils {
   /// @dev build character BattleInfo
   function buildCharacterBattleInfo(
     uint256 characterId,
-    uint256[4] memory characterSkills,
+    uint256[5] memory characterSkills,
     uint32 characterHp
   )
     public
@@ -135,64 +137,98 @@ library BattleUtils {
 
   /// @dev return dmg and hp result after a battle
   function fight(
-    BattleInfo memory firstAttacker,
-    BattleInfo memory secondAttacker
+    BattleInfo memory attacker,
+    BattleInfo memory defender
   )
     public
     view
-    returns (uint32[2] memory hps, uint32[9] memory dmgResult)
+    returns (uint32[2] memory hps, uint32[11] memory dmgResult)
   {
-    (uint16 firstAttackerDmgMultiplier, uint16 secondAttackerDmgMultiplier) =
-      getDamageMultiplier(firstAttacker.advantageType, secondAttacker.advantageType);
+    (uint16 attackerDmgMultiplier, uint16 defenderDmgMultiplier) =
+      getDamageMultiplier(attacker.advantageType, defender.advantageType);
     // normal attack
     SkillData memory normalAtk = Skill.get(Config.NORMAL_ATTACK_SKILL_ID);
     // bonus attack based on agility
-    if (firstAttacker.agi >= secondAttacker.agi + Config.BONUS_ATTACK_AGI_DIFF) {
-      uint32 bonusDamage = calculateDamage(
-        firstAttacker.level, firstAttacker.atk, secondAttacker.def, normalAtk.damage, firstAttackerDmgMultiplier
-      );
-      applyDamageToDefender(secondAttacker, bonusDamage);
-      dmgResult[0] = bonusDamage;
-      if (secondAttacker.hp == 0) {
-        hps[0] = firstAttacker.hp;
+    if (attacker.agi >= defender.agi + Config.BONUS_ATTACK_AGI_DIFF) {
+      handleFirstAttack(attacker, defender, normalAtk, dmgResult, attackerDmgMultiplier);
+      if (defender.hp == 0) {
+        hps[0] = attacker.hp;
         hps[1] = 0;
         return (hps, dmgResult);
       }
     }
-
     // main battle loop
     uint8 index = 1;
-    uint32 damage;
-    uint256 skillIndex;
-    SkillData memory skill;
+    SkillEffectData memory attackerDebuff;
+    SkillEffectData memory defenderDebuff;
 
-    while (index < 9) {
+    while (index < 11) {
       // first attacker's turn to attack
-      if (firstAttacker.hp == 0) break;
-      skill = getSkillData(firstAttacker.skillIds[skillIndex], normalAtk);
-
-      damage = calculateDamage(
-        firstAttacker.level, firstAttacker.atk, secondAttacker.def, skill.damage, firstAttackerDmgMultiplier
+      if (attacker.hp == 0) break;
+      doTurnFight(
+        attacker, defender, normalAtk, dmgResult, attackerDmgMultiplier, index++, attackerDebuff, defenderDebuff
       );
-      applyDamageToDefender(secondAttacker, damage);
-      dmgResult[index++] = damage;
 
       // second attacker's turn to attack
-      if (secondAttacker.hp == 0) break;
-      skill = getSkillData(secondAttacker.skillIds[skillIndex], normalAtk);
-
-      damage = calculateDamage(
-        secondAttacker.level, secondAttacker.atk, firstAttacker.def, skill.damage, secondAttackerDmgMultiplier
+      if (defender.hp == 0) break;
+      doTurnFight(
+        defender, attacker, normalAtk, dmgResult, defenderDmgMultiplier, index++, defenderDebuff, attackerDebuff
       );
-      applyDamageToDefender(firstAttacker, damage);
-      dmgResult[index++] = damage;
-
-      // increase skill index
-      skillIndex++;
     }
-    hps[0] = firstAttacker.hp;
-    hps[1] = secondAttacker.hp;
+    hps[0] = attacker.hp;
+    hps[1] = defender.hp;
     return (hps, dmgResult);
+  }
+
+  function doTurnFight(
+    BattleInfo memory attacker,
+    BattleInfo memory defender,
+    SkillData memory normalAtk,
+    uint32[11] memory dmgResult,
+    uint16 attackerDmgMultiplier,
+    uint256 dmgIndex,
+    SkillEffectData memory attackerDebuff,
+    SkillEffectData memory defenderDebuff
+  )
+    public
+    view
+  {
+    if (attackerDebuff.turns > 0 && attackerDebuff.effect == EffectType.Stun) {
+      dmgResult[dmgIndex] = 0;
+      attackerDebuff.turns--;
+      return;
+    }
+    uint16 skillBonus;
+    uint256 skillId = dmgIndex == 0 ? 0 : attacker.skillIds[(dmgIndex - 1) / 2];
+    SkillData memory skill = getSkillData(skillId, normalAtk);
+    if (skill.hasEffect) {
+      SkillEffectData memory skillEffect = SkillEffect.get(skillId);
+      defenderDebuff.damage = skillEffect.damage;
+      defenderDebuff.effect = skillEffect.effect;
+      defenderDebuff.turns = skillEffect.turns;
+    }
+    if (defenderDebuff.turns > 0 && defenderDebuff.damage > 0) {
+      skillBonus = defenderDebuff.damage;
+      defenderDebuff.turns--;
+    }
+    uint32 damage =
+      calculateDamage(attacker.level, attacker.atk, defender.def, skill.damage + skillBonus, attackerDmgMultiplier);
+    applyDamageToDefender(defender, damage);
+    dmgResult[dmgIndex] = damage;
+  }
+
+  function handleFirstAttack(
+    BattleInfo memory attacker,
+    BattleInfo memory defender,
+    SkillData memory normalAtk,
+    uint32[11] memory dmgResult,
+    uint16 attackerDmgMultiplier
+  )
+    public
+    view
+  {
+    SkillEffectData memory debuff;
+    doTurnFight(attacker, defender, normalAtk, dmgResult, attackerDmgMultiplier, 0, debuff, debuff);
   }
 
   /// @dev calculate damage multiplier (%) based on advantage type

@@ -101,11 +101,11 @@ contract PvPSystem is System, CharacterAccessControl {
 
   /// @dev _battle returns attacker and defender final hp
   function _battle(uint256 attackerId, uint256 defenderId, bool isChallenge) private returns (uint32, uint32) {
-    uint256[4] memory attackerSkills = BattleUtils.getCharacterSkillIds(attackerId);
-    uint256[4] memory defenderSkills = BattleUtils.getCharacterSkillIds(defenderId);
+    uint256[5] memory attackerSkills = BattleUtils.getCharacterSkillIds(attackerId);
+    uint256[5] memory defenderSkills = BattleUtils.getCharacterSkillIds(defenderId);
     // perform the fight and get results
     uint32[2] memory originHps = _getOriginHps(attackerId, defenderId, isChallenge);
-    (uint256 firstAttackerId, uint32[2] memory hps, uint32[9] memory damages, uint256[9] memory skillIds) =
+    (uint256 firstAttackerId, uint32[2] memory hps, uint32[11] memory damages, uint256[11] memory skillIds) =
       _performFight(attackerId, defenderId, attackerSkills, defenderSkills, originHps);
 
     // store PvEData
@@ -122,8 +122,8 @@ contract PvPSystem is System, CharacterAccessControl {
     uint256 attackerId,
     uint256 defenderId,
     uint256 firstAttackerId,
-    uint256[9] memory skillIds,
-    uint32[9] memory damages,
+    uint256[11] memory skillIds,
+    uint32[11] memory damages,
     uint32[2] memory hps
   )
     private
@@ -153,8 +153,8 @@ contract PvPSystem is System, CharacterAccessControl {
     uint256 attackerId,
     uint256 defenderId,
     uint256 firstAttackerId,
-    uint256[9] memory skillIds,
-    uint32[9] memory damages,
+    uint256[11] memory skillIds,
+    uint32[11] memory damages,
     uint32[2] memory hps
   )
     private
@@ -202,13 +202,13 @@ contract PvPSystem is System, CharacterAccessControl {
   function _performFight(
     uint256 attackerId,
     uint256 defenderId,
-    uint256[4] memory attackerSkills,
-    uint256[4] memory defenderSkills,
+    uint256[5] memory attackerSkills,
+    uint256[5] memory defenderSkills,
     uint32[2] memory originHps
   )
     private
     view
-    returns (uint256 firstAttackerId, uint32[2] memory hps, uint32[9] memory damages, uint256[9] memory skills)
+    returns (uint256 firstAttackerId, uint32[2] memory hps, uint32[11] memory damages, uint256[11] memory skills)
   {
     // Build battle information for attacker and defender
     BattleInfo memory attackerBattleInfo =
@@ -233,17 +233,17 @@ contract PvPSystem is System, CharacterAccessControl {
   }
 
   function _usedSkillsOrder(
-    uint256[4] memory firstAttackerSkills,
-    uint256[4] memory secondAttackerSkills
+    uint256[5] memory firstAttackerSkills,
+    uint256[5] memory secondAttackerSkills
   )
     private
     pure
-    returns (uint256[9] memory skills)
+    returns (uint256[11] memory skills)
   {
     uint256 index = 0;
     skills[index++] = Config.NORMAL_ATTACK_SKILL_ID;
 
-    for (uint256 i = 0; i < 4; i++) {
+    for (uint256 i = 0; i < 5; i++) {
       skills[index++] = firstAttackerSkills[i];
       skills[index++] = secondAttackerSkills[i];
     }

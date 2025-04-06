@@ -15,6 +15,9 @@ func SkillCallData(skill common.Skill) ([]byte, error) {
 		uint8(skill.Sp),
 		uint8(skill.Tier),
 		uint16(skill.Damage),
+		uint8(skill.PerkItemType),
+		skill.RequiredPerkLevel,
+		skill.HasEffect,
 	)
 	if err != nil {
 		return nil, err
@@ -22,5 +25,23 @@ func SkillCallData(skill common.Skill) ([]byte, error) {
 	encodedLength := mud.EncodeLengths([]int{len(stringToBytes(skill.Name))})
 	dynamicData := simpleEncodePacked(stringToBytes(skill.Name))
 	mt := mud.NewMudTable("Skill", "app")
+	return mt.SetRecordRawCalldata(keyTuple, staticData, encodedLength, dynamicData)
+}
+
+func SkillEffectCallData(skillID int, skillEffect common.SkillEffect) ([]byte, error) {
+	keyTuple := [][32]byte{
+		[32]byte(encodeUint256(big.NewInt(int64(skillID)))),
+	}
+	staticData, err := encodePacked(
+		uint8(skillEffect.EffectType),
+		uint16(skillEffect.Damage),
+		uint8(skillEffect.Turns),
+	)
+	if err != nil {
+		return nil, err
+	}
+	encodedLength := mud.PackedCounter{}
+	dynamicData := []byte{}
+	mt := mud.NewMudTable("SkillEffect", "app")
 	return mt.SetRecordRawCalldata(keyTuple, staticData, encodedLength, dynamicData)
 }

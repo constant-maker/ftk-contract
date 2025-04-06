@@ -136,6 +136,37 @@
       "tier": 5,
       "damage": 350,
       "sp": 5
+    },
+    "11": {
+      "id": 11,
+      "name": "Effect Skill",
+      "desc": "Skill has effect",
+      "tier": 1,
+      "damage": 150,
+      "sp": 1,
+      "perkItemType": 1,
+      "requiredPerkLevel": 1,
+      "hasEffect": true,
+      "effect": {
+        "damage": 25,
+        "effectType": 1,
+        "turns": 2
+      }
+    },
+    "12": {
+      "id": 12,
+      "name": "Effect Skill Stun",
+      "desc": "Skill has stun effect",
+      "tier": 1,
+      "damage": 150,
+      "sp": 1,
+      "perkItemType": 1,
+      "requiredPerkLevel": 1,
+      "hasEffect": true,
+      "effect": {
+        "effectType": 4,
+        "turns": 1
+      }
     }
   }
 }

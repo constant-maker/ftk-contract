@@ -302,6 +302,14 @@ func BuildSkillData(l *zap.SugaredLogger, dataConfig common.DataConfig) ([][]byt
 			return nil, err
 		}
 		callData = append(callData, skillCallData)
+		if skill.Effect != nil {
+			skillEffectCallData, err := table.SkillEffectCallData(skill.Id, *skill.Effect)
+			if err != nil {
+				l.Errorw("cannot build SkillEffect call data", "err", err)
+				return nil, err
+			}
+			callData = append(callData, skillEffectCallData)
+		}
 	}
 	return callData, nil
 }

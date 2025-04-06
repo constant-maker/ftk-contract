@@ -1,7 +1,8 @@
 pragma solidity >=0.8.24;
 
 import { Vm } from "forge-std/Vm.sol";
-import { CharSkill, Skill, SkillData } from "@codegen/index.sol";
+import { CharSkill, Skill, SkillData, CharPerk } from "@codegen/index.sol";
+import { ItemType } from "@codegen/common.sol";
 import { WorldFixture } from "@fixtures/WorldFixture.sol";
 import { SpawnSystemFixture } from "@fixtures/SpawnSystemFixture.sol";
 import { TestHelper } from "./TestHelper.sol";
@@ -19,12 +20,12 @@ contract SkillTest is WorldFixture, SpawnSystemFixture {
   }
 
   function test_UpdateSkill() external {
-    uint256[4] memory currentSkillIds = CharSkill.get(characterId);
+    uint256[5] memory currentSkillIds = CharSkill.get(characterId);
     assertEq(currentSkillIds[0], 0);
     assertEq(currentSkillIds[1], 0);
     assertEq(currentSkillIds[2], 0);
     assertEq(currentSkillIds[3], 0);
-    uint256[4] memory skillIds = [uint256(0), 1, 2, 3];
+    uint256[5] memory skillIds = [uint256(0), 1, 2, 3, 0];
     vm.prank(player);
     world.app__updateSkillOrder(characterId, skillIds);
 
@@ -36,14 +37,28 @@ contract SkillTest is WorldFixture, SpawnSystemFixture {
   }
 
   function test_RevertUpdateSkill() external {
-    uint256[4] memory skillIds = [uint256(0), 1, 1000, 3]; // skill id 1000 is not exist
+    uint256[5] memory skillIds = [uint256(0), 1, 1000, 3, 0]; // skill id 1000 is not exist
     vm.expectRevert();
     vm.prank(player);
 
     world.app__updateSkillOrder(characterId, skillIds);
 
-    skillIds = [uint256(0), 0, 3, 3]; // duplicate skill id 3
+    skillIds = [uint256(0), 0, 3, 3, 0]; // duplicate skill id 3
     vm.expectRevert();
+    vm.prank(player);
+    world.app__updateSkillOrder(characterId, skillIds);
+  }
+
+  function test_RevertNotEnoughPerkLevelForSkill() external {
+    uint256[5] memory skillIds = [uint256(0), 11, 0, 3, 0]; // skill id 11 requires perk level 2
+    vm.expectRevert();
+    vm.prank(player);
+    world.app__updateSkillOrder(characterId, skillIds);
+
+    vm.startPrank(worldDeployer);
+    CharPerk.setLevel(characterId, ItemType.StoneHammer, 1);
+    vm.stopPrank();
+
     vm.prank(player);
     world.app__updateSkillOrder(characterId, skillIds);
   }

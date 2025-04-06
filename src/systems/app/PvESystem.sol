@@ -141,10 +141,10 @@ contract PvESystem is System, CharacterAccessControl {
     private
     returns (uint32 characterFinalHp, uint32 monsterFinalHp)
   {
-    uint256[4] memory characterSkills = BattleUtils.getCharacterSkillIds(characterId);
+    uint256[5] memory characterSkills = BattleUtils.getCharacterSkillIds(characterId);
     // perform the fight and get results
     uint32 characterOriginHp = CharCurrentStats.getHp(characterId);
-    (EntityType firstAttacker, uint32[2] memory hps, uint32[9] memory damages) = BattlePvEUtils.performFight(
+    (EntityType firstAttacker, uint32[2] memory hps, uint32[11] memory damages) = BattlePvEUtils.performFight(
       characterId, monsterId, characterOriginHp, characterSkills, characterPosition, monsterLocation
     );
 

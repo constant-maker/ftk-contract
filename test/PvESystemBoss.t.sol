@@ -79,7 +79,7 @@ contract PvESystemBossTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFix
     _moveToBossLocation(characterId);
 
     uint32 characterHp = CharCurrentStats.getHp(characterId);
-    uint256[4] memory skills = CharSkill.get(characterId);
+    uint256[5] memory skills = CharSkill.get(characterId);
 
     vm.warp(block.timestamp + 4320 * 24 * 60 * 60);
     vm.startPrank(player);
@@ -124,7 +124,7 @@ contract PvESystemBossTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFix
     vm.stopPrank();
 
     uint32 characterHp = CharCurrentStats.getHp(characterId);
-    uint256[4] memory skills = CharSkill.get(characterId);
+    uint256[5] memory skills = CharSkill.get(characterId);
 
     uint16 prevAgi = CharCurrentStats.getAgi(characterId);
 
@@ -221,7 +221,7 @@ contract PvESystemBossTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFix
     vm.stopPrank();
 
     uint32 characterHp = CharCurrentStats.getHp(characterId);
-    uint256[4] memory skills = CharSkill.get(characterId);
+    uint256[5] memory skills = CharSkill.get(characterId);
 
     vm.warp(block.timestamp + 4320 * 24 * 60 * 60);
     vm.startPrank(player);
@@ -251,8 +251,8 @@ contract PvESystemBossTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFix
     assertEq(pve.damages[7], 119);
     assertEq(pve.damages[8], 320); // skill 250% dmg
 
-    assertEq(CharCurrentStats.getHp(characterId), 1271);
-    assertEq(BossInfo.getHp(bossId, locationX, locationY), 1074); // 1500 - (119 * 4 - 50) barrier block 50 dmg
+    assertEq(CharCurrentStats.getHp(characterId), 1143);
+    assertEq(BossInfo.getHp(bossId, locationX, locationY), 955); // 1500 - (119 * 5 - 50) barrier block 50 dmg
     assertEq(CharCurrentStats.getExp(characterId), 0);
     assertEq(CharPerk.getExp(characterId, ItemType.Sword), 0);
   }
@@ -270,7 +270,7 @@ contract PvESystemBossTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFix
     vm.stopPrank();
 
     uint32 characterHp = CharCurrentStats.getHp(characterId);
-    uint256[4] memory skills = CharSkill.get(characterId);
+    uint256[5] memory skills = CharSkill.get(characterId);
 
     vm.warp(block.timestamp + 4320 * 24 * 60 * 60);
     vm.startPrank(player);
