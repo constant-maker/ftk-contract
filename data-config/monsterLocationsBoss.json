@@ -10,6 +10,50 @@
       "monsterId": 9,
       "level": 70,
       "advantageType": 0
+    },
+    {
+      "locations": [
+        {
+          "x": -31,
+          "y": 5
+        }
+      ],
+      "monsterId": 34,
+      "level": 50,
+      "advantageType": 0
+    },
+    {
+      "locations": [
+        {
+          "x": 27,
+          "y": 19
+        }
+      ],
+      "monsterId": 35,
+      "level": 50,
+      "advantageType": 1
+    },
+    {
+      "locations": [
+        {
+          "x": 13,
+          "y": 51
+        }
+      ],
+      "monsterId": 36,
+      "level": 50,
+      "advantageType": 2
+    },
+    {
+      "locations": [
+        {
+          "x": 16,
+          "y": -40
+        }
+      ],
+      "monsterId": 37,
+      "level": 50,
+      "advantageType": 3
     }
   ]
 }

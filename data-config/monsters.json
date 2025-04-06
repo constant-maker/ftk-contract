@@ -718,7 +718,7 @@
       "name": "Ravager",
       "desc": "A fearsome predator whose golden-plated armor gleams under Sunscar's merciless sun. The Ravager combines brutal strength with deadly precision, making it a terror to all who dare cross its territory.",
       "kingdom": 4,
-      "tier": 5,
+      "tier": 4,
       "isBoss": false,
       "levels": [76, 90],
       "grow": 19,
@@ -733,6 +733,94 @@
         "def": 3,
         "agi": 6,
         "sp": 3
+      }
+    },
+    "34": {
+      "id": 34,
+      "name": "Sylvan Oozefiend",
+      "desc": "Rarely found in Sylvanreach, this virulent mass of acidic sludge is the result of Togepurus consuming one another. Corrodes anything in its path.",
+      "kingdom": 1,
+      "tier": 5,
+      "isBoss": true,
+      "levels": [50, 50],
+      "grow": 0,
+      "skillIds": [25, 14, 0, 9, 0],
+      "itemIds": [258],
+      "itemAmounts": [1],
+      "exp": 500,
+      "perkExp": 300,
+      "stats": {
+        "hp": 10000,
+        "atk": 150,
+        "def": 30,
+        "agi": 40,
+        "sp": 5
+      }
+    },
+    "35": {
+      "id": 35,
+      "name": "Noxious Miasma",
+      "desc": "Emanating noxious fumes, this rare species of toxic blob leaves a trail of blight, tainting the already poisonous swamps of Misthaven.",
+      "kingdom": 2,
+      "tier": 5,
+      "isBoss": true,
+      "levels": [50, 50],
+      "grow": 0,
+      "skillIds": [25, 14, 0, 9, 0],
+      "itemIds": [259],
+      "itemAmounts": [1],
+      "exp": 500,
+      "perkExp": 300,
+      "stats": {
+        "hp": 10000,
+        "atk": 150,
+        "def": 30,
+        "agi": 40,
+        "sp": 5
+      }
+    },
+    "36": {
+      "id": 36,
+      "name": "Frostbitten Geysir",
+      "desc": "A semi-frozen slime that managed to live for a hundred years. It periodically erupts, spraying shards of ice across the frozen tundra of Everfrost.",
+      "kingdom": 3,
+      "tier": 5,
+      "isBoss": true,
+      "levels": [50, 50],
+      "grow": 0,
+      "skillIds": [25, 14, 0, 9, 0],
+      "itemIds": [260],
+      "itemAmounts": [1],
+      "exp": 500,
+      "perkExp": 300,
+      "stats": {
+        "hp": 10000,
+        "atk": 150,
+        "def": 30,
+        "agi": 40,
+        "sp": 5
+      }
+    },
+    "37": {
+      "id": 37,
+      "name": "The Lava King",
+      "desc": "Nothing dares to touch this molten menace, even the mighty ascendants of dragons. Dissolves anything unlucky enough to cross its path, even its lesser puru slime monsters.",
+      "kingdom": 4,
+      "tier": 5,
+      "isBoss": true,
+      "levels": [50, 50],
+      "grow": 0,
+      "skillIds": [25, 14, 0, 9, 0],
+      "itemIds": [261],
+      "itemAmounts": [1],
+      "exp": 500,
+      "perkExp": 300,
+      "stats": {
+        "hp": 10000,
+        "atk": 150,
+        "def": 30,
+        "agi": 40,
+        "sp": 5
       }
     }
   }
