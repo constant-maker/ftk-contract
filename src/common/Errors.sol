@@ -115,6 +115,7 @@ library Errors {
   /* -------------------------------------------------------------------------- */
   error Skill_DuplicateSkillId(uint256 skillId);
   error Skill_NotExist(uint256 skillId);
+  error Skill_PerkLevelIsNotEnough(uint256 characterId, uint8 currentPerkLevel, uint8 skillPerkLevel);
 
   /* -------------------------------------------------------------------------- */
   /*                                    Monster                                 */

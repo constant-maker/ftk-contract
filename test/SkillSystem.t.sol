@@ -1,7 +1,8 @@
 pragma solidity >=0.8.24;
 
 import { Vm } from "forge-std/Vm.sol";
-import { CharSkill, Skill, SkillData } from "@codegen/index.sol";
+import { CharSkill, Skill, SkillData, CharPerk } from "@codegen/index.sol";
+import { ItemType } from "@codegen/common.sol";
 import { WorldFixture } from "@fixtures/WorldFixture.sol";
 import { SpawnSystemFixture } from "@fixtures/SpawnSystemFixture.sol";
 import { TestHelper } from "./TestHelper.sol";
@@ -44,6 +45,20 @@ contract SkillTest is WorldFixture, SpawnSystemFixture {
 
     skillIds = [uint256(0), 0, 3, 3, 0]; // duplicate skill id 3
     vm.expectRevert();
+    vm.prank(player);
+    world.app__updateSkillOrder(characterId, skillIds);
+  }
+
+  function test_RevertNotEnoughPerkLevelForSkill() external {
+    uint256[5] memory skillIds = [uint256(0), 11, 0, 3, 0]; // skill id 11 requires perk level 2
+    vm.expectRevert();
+    vm.prank(player);
+    world.app__updateSkillOrder(characterId, skillIds);
+
+    vm.startPrank(worldDeployer);
+    CharPerk.setLevel(characterId, ItemType.StoneHammer, 1);
+    vm.stopPrank();
+
     vm.prank(player);
     world.app__updateSkillOrder(characterId, skillIds);
   }

@@ -542,6 +542,112 @@ contract PvESystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
     vm.stopPrank();
   }
 
+  function test_BattleWithSkillEffect() external {
+    // character atk 2 def 2
+    // monster atk 5 def 1
+
+    // set position to hunting place
+    _moveToMonsterLocation(characterId);
+
+    vm.startPrank(worldDeployer);
+    MonsterStats.setHp(monsterId, 200);
+    CharCurrentStats.setHp(monsterId, 200);
+    CharPerk.setLevel(characterId, ItemType.StoneHammer, 1);
+    uint256[5] memory customSkillIds = [uint256(0), 11, 0, 0, 0];
+    CharSkill.setSkillIds(characterId, customSkillIds);
+    vm.stopPrank();
+
+    uint32 characterHp = CharCurrentStats.getHp(characterId);
+    console2.log("char atk", CharCurrentStats.getAtk(characterId));
+    // console2.log("char def", CharCurrentStats.getAtk(characterId));
+    uint256[5] memory skills = CharSkill.get(characterId);
+
+    vm.warp(block.timestamp + 300);
+    vm.startPrank(player);
+    world.app__battlePvE(characterId, monsterId);
+    vm.stopPrank();
+
+    PvEData memory pve = PvE.get(characterId);
+    assertEq(pve.monsterId, monsterId);
+    assertEq(pve.x, locationX);
+    assertEq(pve.y, locationY);
+    assertTrue(pve.firstAttacker == EntityType.Character);
+    assertEq(pve.hps[0], characterHp);
+    for (uint256 i = 0; i < skills.length; i++) {
+      assertEq(pve.characterSkillIds[i], skills[i]);
+    }
+    // for (uint256 i = 0; i < pve.damages.length; i++) {
+    //   console2.log("dmg index", i);
+    //   console2.log("dmg value", pve.damages[i]);
+    // }
+    assertEq(pve.damages[0], 0); // no bonus attack
+    assertEq(pve.damages[1], 22);
+    assertEq(pve.damages[2], 24);
+    assertEq(pve.damages[3], 38); // skill 150% dmg + 25% next turn
+    assertEq(pve.damages[4], 24);
+    assertEq(pve.damages[5], 27); // DOT dmg 25%
+    assertEq(pve.damages[6], 24);
+    assertEq(pve.damages[7], 22);
+    assertEq(pve.damages[8], 30); // monster use skill 125% dmg ~
+
+    uint32 characterCurrentHp = CharCurrentStats.getHp(characterId);
+    assertEq(characterCurrentHp, 74);
+    assertEq(CharCurrentStats.getExp(characterId), 0);
+  }
+
+  function test_BattleWithSkillStun() external {
+    // character atk 2 def 2
+    // monster atk 5 def 1
+
+    // set position to hunting place
+    _moveToMonsterLocation(characterId);
+
+    vm.startPrank(worldDeployer);
+    MonsterStats.setHp(monsterId, 200);
+    CharCurrentStats.setHp(monsterId, 200);
+    CharPerk.setLevel(characterId, ItemType.StoneHammer, 1);
+    uint256[5] memory customSkillIds = [uint256(0), 12, 0, 0, 0];
+    CharSkill.setSkillIds(characterId, customSkillIds);
+    vm.stopPrank();
+
+    uint32 characterHp = CharCurrentStats.getHp(characterId);
+    console2.log("char atk", CharCurrentStats.getAtk(characterId));
+    // console2.log("char def", CharCurrentStats.getAtk(characterId));
+    uint256[5] memory skills = CharSkill.get(characterId);
+
+    vm.warp(block.timestamp + 300);
+    vm.startPrank(player);
+    world.app__battlePvE(characterId, monsterId);
+    vm.stopPrank();
+
+    PvEData memory pve = PvE.get(characterId);
+    assertEq(pve.monsterId, monsterId);
+    assertEq(pve.x, locationX);
+    assertEq(pve.y, locationY);
+    assertTrue(pve.firstAttacker == EntityType.Character);
+    assertEq(pve.hps[0], characterHp);
+    for (uint256 i = 0; i < skills.length; i++) {
+      assertEq(pve.characterSkillIds[i], skills[i]);
+    }
+    // for (uint256 i = 0; i < pve.damages.length; i++) {
+    //   console2.log("dmg index", i);
+    //   console2.log("dmg value", pve.damages[i]);
+    // }
+    assertEq(pve.damages[0], 0); // no bonus attack
+    assertEq(pve.damages[1], 22);
+    assertEq(pve.damages[2], 24);
+    assertEq(pve.damages[3], 33); // skill 150% dmg
+    assertEq(pve.damages[4], 0);
+    assertEq(pve.damages[5], 22);
+    assertEq(pve.damages[6], 24);
+    assertEq(pve.damages[7], 22);
+    assertEq(pve.damages[8], 30); // monster use skill 125% dmg ~
+
+    uint32 characterCurrentHp = CharCurrentStats.getHp(characterId);
+    assertEq(characterCurrentHp, 98);
+    assertEq(CharCurrentStats.getExp(characterId), 0);
+  }
+
   function _gearUpEquipment() private {
     vm.startPrank(worldDeployer);
     CharEquipment.set(characterId, SlotType.Weapon, 1);

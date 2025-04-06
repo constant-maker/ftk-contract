@@ -34,8 +34,8 @@ func SkillEffectCallData(skillID int, skillEffect common.SkillEffect) ([]byte, e
 	}
 	staticData, err := encodePacked(
 		uint8(skillEffect.EffectType),
-		uint8(skillEffect.Damage),
-		uint16(skillEffect.Turns),
+		uint16(skillEffect.Damage),
+		uint8(skillEffect.Turns),
 	)
 	if err != nil {
 		return nil, err

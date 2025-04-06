@@ -161,7 +161,7 @@ type Skill struct {
 	Tier              int          `json:"tier"`
 	Damage            int          `json:"damage"` // percent
 	Sp                int          `json:"sp"`
-	PerkItemType      uint8        `json:"itemType"`
+	PerkItemType      uint8        `json:"perkItemType"`
 	RequiredPerkLevel uint8        `json:"requiredPerkLevel"`
 	HasEffect         bool         `json:"hasEffect"`
 	Effect            *SkillEffect `json:"effect"`
