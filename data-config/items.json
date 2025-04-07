@@ -2401,6 +2401,30 @@
         "type": 6
       }
     },
+    "258": {
+      "id": 258,
+      "type": 23,
+      "category": 2,
+      "tier": 4,
+      "weight": 1,
+      "name": "Orb of the True Sun",
+      "desc": "The Sun was once whole, until it was split into three. These are the golden fragments of that long-gone era.",
+      "resourceInfo": {
+        "type": 6
+      }
+    },
+    "259": {
+      "id": 259,
+      "type": 23,
+      "category": 2,
+      "tier": 4,
+      "weight": 1,
+      "name": "Orb of the Deep",
+      "desc": "The Formless One drowned deep below, yet never died. These are the dark fragments of the long-gone era.",
+      "resourceInfo": {
+        "type": 6
+      }
+    },
     "26": {
       "id": 26,
       "type": 2,
@@ -2409,6 +2433,30 @@
       "weight": 4,
       "name": "Novice Fishing Rod",
       "desc": "A balanced blend of durability and flexibility, made for catching small-to-medium fish."
+    },
+    "260": {
+      "id": 260,
+      "type": 23,
+      "category": 2,
+      "tier": 4,
+      "weight": 1,
+      "name": "Orb of Unending Frost",
+      "desc": "Each fracture is an opening. Ice in Everfrost rarely fractures, yet they melt. These are the cold fragments of that long-gone era.",
+      "resourceInfo": {
+        "type": 6
+      }
+    },
+    "261": {
+      "id": 261,
+      "type": 23,
+      "category": 2,
+      "tier": 4,
+      "weight": 1,
+      "name": "Orb of Cataclysm",
+      "desc": "Fire changes. Lands shift. Yet Sunscar remain. These are the formless fragments of that long-gone era.",
+      "resourceInfo": {
+        "type": 6
+      }
     },
     "27": {
       "id": 27,

@@ -41,7 +41,7 @@
     "3": {
       "id": 3,
       "name": "Heavy Smash",
-      "desc": "Unleash a crushing blow that hits harder than a basic attack. Deals 150% damage and leaves enemies reeling.",
+      "desc": "Unleash a crushing blow that hits harder than a basic attack.",
       "tier": 1,
       "damage": 150,
       "sp": 3,
