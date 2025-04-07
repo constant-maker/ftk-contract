@@ -80,5 +80,12 @@
     "Green": 1,
     "Blue": 2,
     "Grey": 3
+  },
+  "effectType": {
+    "None": 0,
+    "Burn": 1,
+    "Poison": 2,
+    "Frostbite": 3,
+    "Stun": 4
   }
 }
