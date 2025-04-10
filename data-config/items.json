@@ -2458,6 +2458,82 @@
         "type": 6
       }
     },
+    "262": {
+      "id": 262,
+      "type": 6,
+      "category": 1,
+      "tier": 4,
+      "weight": 26,
+      "name": "Dawnbringer",
+      "desc": "An ancient sword so old it is said to have witnessed the dawn of human history. Who could have forged this though, if it existed before the age of man?",
+      "equipmentInfo": {
+        "slotType": 0,
+        "advantageType": 0,
+        "twoHanded": false,
+        "atk": 52,
+        "def": 14,
+        "agi": 4,
+        "hp": 0,
+        "ms": 0
+      }
+    },
+    "263": {
+      "id": 263,
+      "type": 10,
+      "category": 1,
+      "tier": 4,
+      "weight": 26,
+      "name": "Wolf Song",
+      "desc": "A magical staff that does not resonate with normal incantations in the human tongue.",
+      "equipmentInfo": {
+        "slotType": 0,
+        "advantageType": 3,
+        "twoHanded": false,
+        "atk": 40,
+        "def": 20,
+        "agi": 10,
+        "hp": 0,
+        "ms": 0
+      }
+    },
+    "264": {
+      "id": 264,
+      "type": 7,
+      "category": 1,
+      "tier": 4,
+      "weight": 26,
+      "name": "The Key of Night",
+      "desc": "This ancient weapon was never intended to be used in combat, but nevertheless deadly. It's as dark as the night sky.",
+      "equipmentInfo": {
+        "slotType": 0,
+        "advantageType": 2,
+        "twoHanded": false,
+        "atk": 48,
+        "def": 7,
+        "agi": 15,
+        "hp": 0,
+        "ms": 0
+      }
+    },
+    "265": {
+      "id": 265,
+      "type": 8,
+      "category": 1,
+      "tier": 4,
+      "weight": 26,
+      "name": "Spear of Omen",
+      "desc": "A spear so dense in rare metals that it does not melt in human-made forges, no matter the heat. Said to be usable only in the direst of times.",
+      "equipmentInfo": {
+        "slotType": 0,
+        "advantageType": 1,
+        "twoHanded": false,
+        "atk": 55,
+        "def": 8,
+        "agi": 7,
+        "hp": 0,
+        "ms": 0
+      }
+    },
     "27": {
       "id": 27,
       "type": 3,
