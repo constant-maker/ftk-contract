@@ -1188,6 +1188,78 @@
           "amount": 20
         }
       ]
+    },
+    "53": {
+      "id": 53,
+      "questType": 0,
+      "name": "The Ancient Sun",
+      "description": "Deep within the sacred groves of Sylvanreach, an ancient monster has awakened. The Goopie Puru, a creature of pure corruption, threatens to destroy the Sylvan forests itself. I must venture into the depths of the Outer World to confront this menace.",
+      "fromNpcId": 1,
+      "exp": 3000,
+      "gold": 800,
+      "requiredDoneQuestIds": [
+        5
+      ],
+      "contributeDetails": [
+        {
+          "itemId": 258,
+          "amount": 1
+        }
+      ]
+    },
+    "54": {
+      "id": 54,
+      "questType": 0,
+      "name": "Mists of Power",
+      "description": "In the murky marshlands surrounding Aetheria, an ancient monster has emerged from the depths. The Jiggly Puru, a massive toxic slime that corrupts all it touches, has awakened and taken physical form. I must venture into the poisoned swamps to face this amorphous menace.",
+      "fromNpcId": 2,
+      "exp": 3000,
+      "gold": 800,
+      "requiredDoneQuestIds": [
+        10
+      ],
+      "contributeDetails": [
+        {
+          "itemId": 259,
+          "amount": 1
+        }
+      ]
+    },
+    "55": {
+      "id": 55,
+      "questType": 0,
+      "name": "A Forbidden Frost",
+      "description": "In the frozen wastes of Everfrost Kingdom, the Slushy Puru has broken its century-old patterns. This massive semi-frozen slime, which has terrorized the tundra for a hundred years with its ice shard eruptions, has fully awakened. I must brave the freezing plains to confront this crystalline horror and claim the Orb of Unending Frost from its frozen core.",
+      "fromNpcId": 3,
+      "exp": 3000,
+      "gold": 800,
+      "requiredDoneQuestIds": [
+        15
+      ],
+      "contributeDetails": [
+        {
+          "itemId": 260,
+          "amount": 1
+        }
+      ]
+    },
+    "56": {
+      "id": 56,
+      "questType": 0,
+      "name": "The Dancing Flame",
+      "description": "Deep in the Molten Valley of Sunscar Kingdom, an ancient menace playfully wreaks havoc. The Yippee Puru, a massive lava slime that has existed for a century, bounces through magma pools with deceptive cheer while leaving destruction in its wake. I must venture into the scorching valley to face this peculiar yet deadly creature. Despite its whimsical name and behavior, this ancient slime has survived a hundred years in the harshest volcanic conditions, growing stronger with each passing day.",
+      "fromNpcId": 4,
+      "exp": 3000,
+      "gold": 800,
+      "requiredDoneQuestIds": [
+        20
+      ],
+      "contributeDetails": [
+        {
+          "itemId": 261,
+          "amount": 1
+        }
+      ]
     }
   }
 }
