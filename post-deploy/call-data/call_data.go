@@ -392,6 +392,7 @@ func BuildMonsterData(l *zap.SugaredLogger, dataConfig common.DataConfig, fromMo
 			for _, ml := range dataConfig.MonsterLocationsBoss {
 				if ml.MonsterId == monster.Id {
 					for _, location := range ml.Locations {
+						l.Infow("data", "value", location, "monster", monster.BossInfo)
 						bossInfosCallData, err := table.BossInfosCallData(monster.Id, *monster.BossInfo, location.X, location.Y)
 						if err != nil {
 							l.Errorw("cannot build BossInfo call data", "err", err)

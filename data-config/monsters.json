@@ -737,7 +737,7 @@
     },
     "34": {
       "id": 34,
-      "name": "Sylvan Oozefiend",
+      "name": "Goopie Puru",
       "desc": "Rarely found in Sylvanreach, this virulent mass of acidic sludge is the result of Togepurus consuming one another. Corrodes anything in its path.",
       "kingdom": 1,
       "tier": 5,
@@ -755,11 +755,20 @@
         "def": 27,
         "agi": 35,
         "sp": 5
+      },
+      "bossInfo": {
+        "barrier": 100,
+        "hp": 7500,
+        "crystal": 500,
+        "respawnDuration": 86400,
+        "berserkHpThreshold": 30,
+        "boostPercent": 20,
+        "lastDefeatedTime": 0
       }
     },
     "35": {
       "id": 35,
-      "name": "Noxious Miasma",
+      "name": "Jiggly Puru",
       "desc": "Emanating noxious fumes, this rare species of toxic blob leaves a trail of blight, tainting the already poisonous swamps of Misthaven.",
       "kingdom": 2,
       "tier": 5,
@@ -777,11 +786,20 @@
         "def": 25,
         "agi": 35,
         "sp": 5
+      },
+      "bossInfo": {
+        "barrier": 100,
+        "hp": 7500,
+        "crystal": 500,
+        "respawnDuration": 86400,
+        "berserkHpThreshold": 30,
+        "boostPercent": 20,
+        "lastDefeatedTime": 0
       }
     },
     "36": {
       "id": 36,
-      "name": "Frostbitten Geysir",
+      "name": "Slushy Puru",
       "desc": "A semi-frozen slime that managed to live for a hundred years. It periodically erupts, spraying shards of ice across the frozen tundra of Everfrost.",
       "kingdom": 3,
       "tier": 5,
@@ -799,12 +817,21 @@
         "def": 30,
         "agi": 30,
         "sp": 5
+      },
+      "bossInfo": {
+        "barrier": 100,
+        "hp": 7500,
+        "crystal": 500,
+        "respawnDuration": 86400,
+        "berserkHpThreshold": 30,
+        "boostPercent": 20,
+        "lastDefeatedTime": 0
       }
     },
     "37": {
       "id": 37,
-      "name": "The Lava King",
-      "desc": "Nothing dares to touch this molten menace, even the mighty ascendants of dragons. Dissolves anything unlucky enough to cross its path, even its lesser puru slime monsters.",
+      "name": "Yippee Puru",
+      "desc": "Nothing dares to touch this molten menace, even the mighty descendants of dragons. Dissolves anything unlucky enough to cross its path, even its lesser puru slime monsters.",
       "kingdom": 4,
       "tier": 5,
       "isBoss": true,
@@ -821,6 +848,15 @@
         "def": 20,
         "agi": 40,
         "sp": 5
+      },
+      "bossInfo": {
+        "barrier": 100,
+        "hp": 7500,
+        "crystal": 500,
+        "respawnDuration": 86400,
+        "berserkHpThreshold": 30,
+        "boostPercent": 20,
+        "lastDefeatedTime": 0
       }
     }
   }
