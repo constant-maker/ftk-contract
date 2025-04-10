@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"sort"
 	"strconv"
+	"sync"
 
 	"github.com/ftk/post-deploy/pkg/common"
 	"github.com/ftk/post-deploy/pkg/table"
@@ -97,7 +98,7 @@ func BuildNpcShopData(l *zap.SugaredLogger, dataConfig common.DataConfig) ([][]b
 	return callData, nil
 }
 
-func BuildItemData(l *zap.SugaredLogger, dataConfig common.DataConfig) ([][]byte, error) {
+func BuildItemData(l *zap.SugaredLogger, dataConfig common.DataConfig, fromItemID int) ([][]byte, error) {
 	callData := make([][]byte, 0)
 	l.Infow("len Items", "value", len(dataConfig.Items))
 	// make array and sort by itemId so the call data in post-deploy will be ordered by itemId
@@ -112,7 +113,14 @@ func BuildItemData(l *zap.SugaredLogger, dataConfig common.DataConfig) ([][]byte
 	sort.Slice(items, func(i, j int) bool {
 		return items[i].Id < items[j].Id
 	})
+	once := sync.Once{}
 	for _, item := range items {
+		if item.Id < fromItemID {
+			continue
+		}
+		once.Do(func() {
+			l.Infow("Item Info starts from ID", "value", fromItemID)
+		})
 		itemCallData, err := table.ItemCallData(item)
 		if err != nil {
 			l.Errorw("cannot build Item Detail call data", "err", err)
@@ -123,7 +131,7 @@ func BuildItemData(l *zap.SugaredLogger, dataConfig common.DataConfig) ([][]byte
 	return callData, nil
 }
 
-func BuildExtraItemInfoData(l *zap.SugaredLogger, dataConfig common.DataConfig) ([][]byte, error) {
+func BuildExtraItemInfoData(l *zap.SugaredLogger, dataConfig common.DataConfig, fromItemID int) ([][]byte, error) {
 	callData := make([][]byte, 0)
 	// l.Infow("len Items", "value", len(dataConfig.Items))
 	// make array and sort by itemId so the call data in post-deploy will be ordered by itemId
@@ -138,7 +146,14 @@ func BuildExtraItemInfoData(l *zap.SugaredLogger, dataConfig common.DataConfig) 
 	sort.Slice(items, func(i, j int) bool {
 		return items[i].Id < items[j].Id
 	})
+	once := sync.Once{}
 	for _, item := range items {
+		if item.Id < fromItemID {
+			continue
+		}
+		once.Do(func() {
+			l.Infow("Extra Item Info starts from ID", "value", fromItemID)
+		})
 		switch {
 		case item.EquipmentInfo != nil:
 			// l.Infow("equipment info", "itemId", item.Id, "value", item.EquipmentInfo)
@@ -171,7 +186,7 @@ func BuildExtraItemInfoData(l *zap.SugaredLogger, dataConfig common.DataConfig) 
 	return callData, nil
 }
 
-func BuildItemRecipeData(l *zap.SugaredLogger, dataConfig common.DataConfig) ([][]byte, error) {
+func BuildItemRecipeData(l *zap.SugaredLogger, dataConfig common.DataConfig, fromItemID int) ([][]byte, error) {
 	callData := make([][]byte, 0)
 	l.Infow("len ItemRecipes", "value", len(dataConfig.ItemRecipes))
 	// make array and sort by itemId so the call data in post-deploy will be ordered by itemId
@@ -186,7 +201,14 @@ func BuildItemRecipeData(l *zap.SugaredLogger, dataConfig common.DataConfig) ([]
 	sort.Slice(itemRecipes, func(i, j int) bool {
 		return itemRecipes[i].ItemId < itemRecipes[j].ItemId
 	})
+	once := sync.Once{}
 	for _, recipe := range itemRecipes {
+		if recipe.ItemId < fromItemID {
+			continue
+		}
+		once.Do(func() {
+			l.Infow("ItemRecipe starts from ID", "value", fromItemID)
+		})
 		itemRecipeCallData, err := table.ItemRecipeCallData(recipe)
 		if err != nil {
 			l.Errorw("cannot build Item Recipe call data", "err", err)
@@ -222,7 +244,7 @@ func BuildNpcData(l *zap.SugaredLogger, dataConfig common.DataConfig) ([][]byte,
 	return callData, nil
 }
 
-func BuildQuestData(l *zap.SugaredLogger, dataConfig common.DataConfig) ([][]byte, error) {
+func BuildQuestData(l *zap.SugaredLogger, dataConfig common.DataConfig, fromQuestID int) ([][]byte, error) {
 	callData := make([][]byte, 0)
 	l.Infow("len Quests", "value", len(dataConfig.Quests))
 	var quests []common.Quest2
@@ -236,7 +258,14 @@ func BuildQuestData(l *zap.SugaredLogger, dataConfig common.DataConfig) ([][]byt
 	sort.Slice(quests, func(i, j int) bool {
 		return quests[i].Id < quests[j].Id
 	})
+	once := sync.Once{}
 	for _, quest := range quests {
+		if quest.Id < int64(fromQuestID) {
+			continue
+		}
+		once.Do(func() {
+			l.Infow("Quest starts from ID", "value", fromQuestID)
+		})
 		if quest.ToNpcId == 0 {
 			quest.ToNpcId = quest.FromNpcId // same npc
 		}
@@ -281,7 +310,7 @@ func BuildQuestData(l *zap.SugaredLogger, dataConfig common.DataConfig) ([][]byt
 	return callData, nil
 }
 
-func BuildSkillData(l *zap.SugaredLogger, dataConfig common.DataConfig) ([][]byte, error) {
+func BuildSkillData(l *zap.SugaredLogger, dataConfig common.DataConfig, fromSkillID int) ([][]byte, error) {
 	callData := make([][]byte, 0)
 	l.Infow("len Skills", "value", len(dataConfig.Skills))
 	var skills []common.Skill
@@ -295,7 +324,14 @@ func BuildSkillData(l *zap.SugaredLogger, dataConfig common.DataConfig) ([][]byt
 	sort.Slice(skills, func(i, j int) bool {
 		return skills[i].Id < skills[j].Id
 	})
+	once := sync.Once{}
 	for _, skill := range skills {
+		if skill.Id < fromSkillID {
+			continue
+		}
+		once.Do(func() {
+			l.Infow("Skill starts from ID", "value", fromSkillID)
+		})
 		skillCallData, err := table.SkillCallData(skill)
 		if err != nil {
 			l.Errorw("cannot build Skill call data", "err", err)
@@ -314,7 +350,7 @@ func BuildSkillData(l *zap.SugaredLogger, dataConfig common.DataConfig) ([][]byt
 	return callData, nil
 }
 
-func BuildMonsterData(l *zap.SugaredLogger, dataConfig common.DataConfig) ([][]byte, error) {
+func BuildMonsterData(l *zap.SugaredLogger, dataConfig common.DataConfig, fromMonsterID int) ([][]byte, error) {
 	callData := make([][]byte, 0)
 	l.Infow("len Monsters", "value", len(dataConfig.Monsters))
 	var monsters []common.Monster
@@ -328,7 +364,14 @@ func BuildMonsterData(l *zap.SugaredLogger, dataConfig common.DataConfig) ([][]b
 	sort.Slice(monsters, func(i, j int) bool {
 		return monsters[i].Id < monsters[j].Id
 	})
+	once := sync.Once{}
 	for _, monster := range monsters {
+		if monster.Id < fromMonsterID {
+			continue
+		}
+		once.Do(func() {
+			l.Infow("Monster starts from ID", "value", fromMonsterID)
+		})
 		// monster info
 		monsterCallData, err := table.MonsterCallData(monster)
 		if err != nil {
@@ -381,7 +424,7 @@ func BuildMonsterLocationData(l *zap.SugaredLogger, monsterLocations []common.Mo
 	return callData, nil
 }
 
-func BuildAchievementData(l *zap.SugaredLogger, dataConfig common.DataConfig) ([][]byte, error) {
+func BuildAchievementData(l *zap.SugaredLogger, dataConfig common.DataConfig, fromAchievementID int) ([][]byte, error) {
 	callData := make([][]byte, 0)
 	l.Infow("len Achievements", "value", len(dataConfig.Achievements))
 	var (
@@ -397,7 +440,14 @@ func BuildAchievementData(l *zap.SugaredLogger, dataConfig common.DataConfig) ([
 	sort.Slice(achievements, func(i, j int) bool {
 		return achievements[i].Id < achievements[j].Id
 	})
+	once := sync.Once{}
 	for _, achievement := range achievements {
+		if achievement.Id < fromAchievementID {
+			continue
+		}
+		once.Do(func() {
+			l.Infow("Achievement starts from ID", "value", fromAchievementID)
+		})
 		achievementCallData, err := table.AchievementCallData(achievement)
 		if err != nil {
 			l.Errorw("cannot build Achievement call data", "err", err)
