@@ -16,8 +16,12 @@
       "desc": "Deliver a fast, precise attack before the enemy can react. Deals 120% damage with lightning speed.",
       "damage": 120,
       "sp": 1,
-      "perkItemTypes": null,
-      "requiredPerkLevels": null,
+      "perkItemTypes": [
+        0
+      ],
+      "requiredPerkLevels": [
+        20
+      ],
       "hasEffect": false
     },
     "10": {
@@ -26,8 +30,12 @@
       "desc": "A swift and precise attack with a dagger, dealing immediate damage and potentially causing a bleeding effect on the target.",
       "damage": 120,
       "sp": 2,
-      "perkItemTypes": null,
-      "requiredPerkLevels": null,
+      "perkItemTypes": [
+        0
+      ],
+      "requiredPerkLevels": [
+        20
+      ],
       "hasEffect": false
     },
     "11": {
@@ -36,8 +44,12 @@
       "desc": "Inflicts severe bleeding, causing immediate damage and inducing a lingering blood loss effect over time.",
       "damage": 120,
       "sp": 2,
-      "perkItemTypes": null,
-      "requiredPerkLevels": null,
+      "perkItemTypes": [
+        0
+      ],
+      "requiredPerkLevels": [
+        20
+      ],
       "hasEffect": false
     },
     "12": {
@@ -46,8 +58,12 @@
       "desc": "The snow rabbit curls up and begins spinning, unleashing a storm of ice shards that pierce its enemies.",
       "damage": 140,
       "sp": 3,
-      "perkItemTypes": null,
-      "requiredPerkLevels": null,
+      "perkItemTypes": [
+        0
+      ],
+      "requiredPerkLevels": [
+        20
+      ],
       "hasEffect": false
     },
     "13": {
@@ -56,8 +72,12 @@
       "desc": "Release a small flame that inflicts minor harm.",
       "damage": 125,
       "sp": 2,
-      "perkItemTypes": null,
-      "requiredPerkLevels": null,
+      "perkItemTypes": [
+        0
+      ],
+      "requiredPerkLevels": [
+        20
+      ],
       "hasEffect": false
     },
     "14": {
@@ -66,8 +86,12 @@
       "desc": "The Ignis Dragon unleashes a devastating wave of fire, incinerating everything in its path with relentless fury.",
       "damage": 350,
       "sp": 5,
-      "perkItemTypes": null,
-      "requiredPerkLevels": null,
+      "perkItemTypes": [
+        0
+      ],
+      "requiredPerkLevels": [
+        20
+      ],
       "hasEffect": false
     },
     "15": {
@@ -76,8 +100,12 @@
       "desc": "Shards of ice shoot from the attacker, flying swiftly towards the enemy to impale with freezing precision.",
       "damage": 125,
       "sp": 2,
-      "perkItemTypes": null,
-      "requiredPerkLevels": null,
+      "perkItemTypes": [
+        0
+      ],
+      "requiredPerkLevels": [
+        20
+      ],
       "hasEffect": false
     },
     "16": {
@@ -86,8 +114,12 @@
       "desc": "The monster delivers a swift attack laced with poison, inflicting damage over time.",
       "damage": 125,
       "sp": 2,
-      "perkItemTypes": null,
-      "requiredPerkLevels": null,
+      "perkItemTypes": [
+        0
+      ],
+      "requiredPerkLevels": [
+        20
+      ],
       "hasEffect": false
     },
     "17": {
@@ -96,8 +128,12 @@
       "desc": "A straightforward, solid attack that uses raw physical power to hit the enemy.",
       "damage": 125,
       "sp": 2,
-      "perkItemTypes": null,
-      "requiredPerkLevels": null,
+      "perkItemTypes": [
+        0
+      ],
+      "requiredPerkLevels": [
+        20
+      ],
       "hasEffect": false
     },
     "18": {
@@ -106,8 +142,12 @@
       "desc": "Releases a cloud of pollen that engulfs enemies, causing irritation and confusion.",
       "damage": 150,
       "sp": 2,
-      "perkItemTypes": null,
-      "requiredPerkLevels": null,
+      "perkItemTypes": [
+        0
+      ],
+      "requiredPerkLevels": [
+        20
+      ],
       "hasEffect": false
     },
     "19": {
@@ -116,8 +156,12 @@
       "desc": "A powerful, concentrated blow delivered with full force, capable of staggering or knocking back opponents.",
       "damage": 150,
       "sp": 2,
-      "perkItemTypes": null,
-      "requiredPerkLevels": null,
+      "perkItemTypes": [
+        0
+      ],
+      "requiredPerkLevels": [
+        20
+      ],
       "hasEffect": false
     },
     "2": {
@@ -141,8 +185,12 @@
       "desc": "Delivers a venomous strike that injects toxins into the enemy, dealing damage over time and weakening their defenses.",
       "damage": 150,
       "sp": 2,
-      "perkItemTypes": null,
-      "requiredPerkLevels": null,
+      "perkItemTypes": [
+        0
+      ],
+      "requiredPerkLevels": [
+        20
+      ],
       "hasEffect": false
     },
     "21": {
@@ -151,8 +199,12 @@
       "desc": "A rapid series of claw attacks, slashing at the enemy with relentless speed and ferocity.",
       "damage": 150,
       "sp": 2,
-      "perkItemTypes": null,
-      "requiredPerkLevels": null,
+      "perkItemTypes": [
+        0
+      ],
+      "requiredPerkLevels": [
+        20
+      ],
       "hasEffect": false
     },
     "22": {
@@ -161,8 +213,12 @@
       "desc": "Unleashes a burst of frigid energy, freezing enemies on impact and dealing ice damage.",
       "damage": 150,
       "sp": 2,
-      "perkItemTypes": null,
-      "requiredPerkLevels": null,
+      "perkItemTypes": [
+        0
+      ],
+      "requiredPerkLevels": [
+        20
+      ],
       "hasEffect": false
     },
     "23": {
@@ -171,8 +227,12 @@
       "desc": "Summons fierce winds that slice through enemies, delivering cutting damage with razor-sharp gusts.",
       "damage": 150,
       "sp": 2,
-      "perkItemTypes": null,
-      "requiredPerkLevels": null,
+      "perkItemTypes": [
+        0
+      ],
+      "requiredPerkLevels": [
+        20
+      ],
       "hasEffect": false
     },
     "24": {
@@ -181,8 +241,12 @@
       "desc": "The monster launches into a brutal charge, its horn piercing and tearing through the enemy, leaving a trail of blood in its wake.",
       "damage": 150,
       "sp": 2,
-      "perkItemTypes": null,
-      "requiredPerkLevels": null,
+      "perkItemTypes": [
+        0
+      ],
+      "requiredPerkLevels": [
+        20
+      ],
       "hasEffect": false
     },
     "25": {
@@ -191,8 +255,12 @@
       "desc": "The dragon unleashes a quick wave of fire, dealing damage to nearby enemies.",
       "damage": 150,
       "sp": 2,
-      "perkItemTypes": null,
-      "requiredPerkLevels": null,
+      "perkItemTypes": [
+        0
+      ],
+      "requiredPerkLevels": [
+        20
+      ],
       "hasEffect": false
     },
     "26": {
@@ -437,8 +505,12 @@
       "desc": "Casts a blazing orb of fire that deals significant damage upon impact.",
       "damage": 130,
       "sp": 2,
-      "perkItemTypes": null,
-      "requiredPerkLevels": null,
+      "perkItemTypes": [
+        0
+      ],
+      "requiredPerkLevels": [
+        20
+      ],
       "hasEffect": false
     },
     "40": {
@@ -513,8 +585,12 @@
       "desc": "A radiant purple crystal projectile, dealing heavy magic damage to its target.",
       "damage": 130,
       "sp": 1,
-      "perkItemTypes": null,
-      "requiredPerkLevels": null,
+      "perkItemTypes": [
+        0
+      ],
+      "requiredPerkLevels": [
+        20
+      ],
       "hasEffect": false
     },
     "6": {
@@ -523,8 +599,12 @@
       "desc": "Summon a devastating bolt of electricity from the sky.",
       "damage": 125,
       "sp": 1,
-      "perkItemTypes": null,
-      "requiredPerkLevels": null,
+      "perkItemTypes": [
+        0
+      ],
+      "requiredPerkLevels": [
+        20
+      ],
       "hasEffect": false
     },
     "7": {
@@ -533,8 +613,12 @@
       "desc": "Unleash a thunderous roar, imbuing allies with increased strength and ferocity.",
       "damage": 0,
       "sp": 1,
-      "perkItemTypes": null,
-      "requiredPerkLevels": null,
+      "perkItemTypes": [
+        0
+      ],
+      "requiredPerkLevels": [
+        20
+      ],
       "hasEffect": false
     },
     "8": {
@@ -543,8 +627,12 @@
       "desc": "Spit a venomous serpent that bites the target with one of the most deadly poisons ever to exist.",
       "damage": 110,
       "sp": 1,
-      "perkItemTypes": null,
-      "requiredPerkLevels": null,
+      "perkItemTypes": [
+        0
+      ],
+      "requiredPerkLevels": [
+        20
+      ],
       "hasEffect": false
     },
     "9": {
@@ -553,8 +641,12 @@
       "desc": "A fierce tempest that engulfs the battlefield with devastating power.",
       "damage": 250,
       "sp": 3,
-      "perkItemTypes": null,
-      "requiredPerkLevels": null,
+      "perkItemTypes": [
+        0
+      ],
+      "requiredPerkLevels": [
+        20
+      ],
       "hasEffect": false
     }
   }
