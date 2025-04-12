@@ -19,6 +19,7 @@ const (
 	listEquipmentUpdate    = "https://docs.google.com/spreadsheets/d/1re4m7CvzE2UYzBCgIgM4mTCNzWE0Yf1g66IfzbSk-xY/export?format=csv&gid=2048021285#gid=2048021285"
 	listToolUpdate         = "https://docs.google.com/spreadsheets/d/1re4m7CvzE2UYzBCgIgM4mTCNzWE0Yf1g66IfzbSk-xY/export?format=csv&gid=1372566467#gid=1372566467"
 	listHealingItemUpdate  = "https://docs.google.com/spreadsheets/d/1re4m7CvzE2UYzBCgIgM4mTCNzWE0Yf1g66IfzbSk-xY/export?format=csv&gid=1307646345#gid=1307646345"
+	listSkillUpdate        = "https://docs.google.com/spreadsheets/d/1re4m7CvzE2UYzBCgIgM4mTCNzWE0Yf1g66IfzbSk-xY/export?format=csv&gid=1359260272#gid=1359260272"
 
 	healingItemType int = 25
 )
@@ -135,6 +136,42 @@ func UpdateDataConfig(dataConfig *DataConfig, basePath string) {
 		shouldRewriteFile = true
 		dataConfig.Items[intToString(tool.Id)] = tool // add
 	}
+
+	// update list skill
+	shouldRewriteSkillFile := false
+	l.Infow("GET LIST SKILL")
+	listSkillUpdate, err := getListSkillUpdate()
+	if err != nil {
+		l.Errorw("cannot get list skill update", "err", err)
+		panic(err)
+	}
+	for _, skill := range listSkillUpdate {
+		currentSkill, ok := dataConfig.Skills[intToString(skill.Id)]
+		if reflect.DeepEqual(skill, currentSkill) {
+			l.Infow("skill data unchanged")
+			continue
+		}
+		if !ok {
+			l.Infow("detect new skill", "data", skill)
+		} else {
+			l.Infow("detect skill update", "data", skill)
+		}
+		shouldRewriteSkillFile = true
+		dataConfig.Skills[intToString(skill.Id)] = skill // add
+	}
+	if shouldRewriteSkillFile {
+		newSkills := struct {
+			Skills map[string]Skill `json:"skills"`
+		}{
+			Skills: dataConfig.Skills,
+		}
+		if err := WriteJSONFile(newSkills, basePath+"/data-config/skills.json"); err != nil {
+			l.Errorw("cannot update skill.json file", "err", err)
+		} else {
+			l.Infow("update skill.json successfully")
+		}
+	}
+
 	// validate items id
 	validateItemConfig(*dataConfig)
 	if shouldRewriteFile {
@@ -569,6 +606,82 @@ func getListToolUpdate(dataConfig DataConfig) ([]Item, []ItemRecipe, error) {
 	return tool, recipes, nil
 }
 
+func getListSkillUpdate() ([]Skill, error) {
+	l := zap.S().With("func", "getListSkillUpdate")
+	reader, err := getRawCsvReader(listSkillUpdate)
+	if err != nil {
+		l.Errorw("cannot csv reader", "err", err)
+		return nil, err
+	}
+	skills := make([]Skill, 0)
+	var (
+		idIndex, perkIndex, perkLevelIndex, typeIndex,
+		nameIndex, mainDamageIndex, dmgPerTurnIndex, turnActiveIndex,
+		spIndex, descIndex int
+	)
+	for {
+		record, err := reader.Read()
+		if err == io.EOF {
+			break
+		} else if err != nil {
+			l.Errorw("cannot read data", "err", err)
+			return nil, err
+		}
+		if record[0] == "" && record[4] == "" { // empty row
+			// l.Warnw("invalid skill data format", "data", record)
+			continue
+		}
+
+		if strings.EqualFold(record[0], "Id") { // header
+			if typeIndex != 0 && nameIndex != 0 {
+				l.Panicw("detect header more than one time", "value", record)
+			}
+			idIndex = findIndex(record, "id")
+			perkIndex = findIndex(record, "perk")
+			perkLevelIndex = findIndex(record, "perk lvl")
+			typeIndex = findIndex(record, "type")
+			nameIndex = findIndex(record, "name")
+			mainDamageIndex = findIndex(record, "main damage")
+			dmgPerTurnIndex = findIndex(record, "damage per turn")
+			turnActiveIndex = findIndex(record, "turns active")
+			spIndex = findIndex(record, "sp")
+			descIndex = findIndex(record, "description")
+			continue
+		}
+		id := mustStringToInt(record[idIndex], idIndex)
+		perkItemTypes := getPerkItemTypes(record[perkIndex])
+		perkLevels := getPerkLevels(record[perkLevelIndex])
+		skillEffectType := getSkillEffectType(record[typeIndex])
+		mainDamage := mustStringToInt(record[mainDamageIndex], mainDamageIndex)
+		dmgPerTurn := mustStringToInt(record[dmgPerTurnIndex], dmgPerTurnIndex)
+		turnActive := mustStringToInt(record[turnActiveIndex], turnActiveIndex)
+		sp := mustStringToInt(record[spIndex], spIndex)
+		hasEffect := false
+		if turnActive > 0 {
+			hasEffect = true
+		}
+		skill := Skill{
+			Id:                 id,
+			Name:               removeRedundantText(record[nameIndex]),
+			Desc:               removeRedundantText(record[descIndex]),
+			Damage:             mainDamage,
+			Sp:                 sp,
+			PerkItemTypes:      perkItemTypes,
+			RequiredPerkLevels: perkLevels,
+			HasEffect:          hasEffect,
+		}
+		if hasEffect {
+			skill.Effect = &SkillEffect{
+				Damage:     dmgPerTurn,
+				EffectType: uint8(skillEffectType),
+				Turns:      turnActive,
+			}
+		}
+		skills = append(skills, skill)
+	}
+	return skills, nil
+}
+
 func getMaterialList(rawRecord []string, rawS string, dataConfig DataConfig) []Ingredient {
 	l := zap.S().With("func", "getMaterialList", "raw record", rawRecord)
 	arr := strings.Split(rawS, "\n")
@@ -682,22 +795,80 @@ func getToolType(rawS string) int {
 }
 
 func getResourceType(resourceType string) int {
-	switch strings.ToLower(resourceType) {
-	case "wood":
-		return 0
-	case "stone":
-		return 1
-	case "fish":
-		return 2
-	case "ore":
-		return 3
-	case "wheat":
-		return 4
-	case "berries":
-		return 5
-	default:
-		panic("invalid resource type")
+	resourceTypes := map[string]int{
+		"wood":    0,
+		"stone":   1,
+		"fish":    2,
+		"ore":     3,
+		"wheat":   4,
+		"berries": 5,
 	}
+
+	key := strings.ToLower(resourceType)
+	if val, ok := resourceTypes[key]; ok {
+		return val
+	}
+
+	zap.S().Panicw("invalid skill type", "resourceType", resourceType)
+	return -1
+}
+
+func getSkillEffectType(rawSkillType string) int {
+	skillType := strings.ToLower(removeRedundantText(rawSkillType))
+
+	skillTypes := map[string]int{
+		"none":      0,
+		"burn":      1,
+		"poison":    2,
+		"frostbite": 3,
+		"stun":      4,
+	}
+
+	if val, ok := skillTypes[skillType]; ok {
+		return val
+	}
+
+	zap.S().Panicw("invalid skill type", "rawSkillType", rawSkillType)
+	return 0
+}
+
+func getItemType(rawTypeString string) int {
+	itemTypes := map[string]int{
+		"woodaxe":          0,
+		"stonehammer":      1,
+		"fishingrod":       2,
+		"pickaxe":          3,
+		"sickle":           4,
+		"berryshears":      5,
+		"sword":            6,
+		"axe":              7,
+		"spear":            8,
+		"bow":              9,
+		"staff":            10,
+		"dagger":           11,
+		"shield":           12,
+		"clotharmor":       13,
+		"clothheadgear":    14,
+		"clothfootwear":    15,
+		"leatherarmor":     16,
+		"leatherheadgear":  17,
+		"leatherfootwear":  18,
+		"platearmor":       19,
+		"plateheadgear":    20,
+		"platefootwear":    21,
+		"mount":            22,
+		"resource":         23,
+		"mapskillitem":     24,
+		"healingitem":      25,
+		"statmodifieritem": 26,
+	}
+
+	key := strings.ToLower(rawTypeString)
+	if val, ok := itemTypes[key]; ok {
+		return val
+	}
+	zap.S().Panicw("invalid item type", "rawTypeString", rawTypeString)
+	return -1
 }
 
 func validateItemConfig(dataConfig DataConfig) {
@@ -728,4 +899,34 @@ func findIndex(arr []string, element string) int {
 		}
 	}
 	panic("cannot find index ~ header: " + element)
+}
+
+func getPerkItemTypes(rawText string) []int {
+	var result []int
+	splitText := strings.Split(rawText, ",")
+	if len(splitText) == 1 {
+		rawValue := removeRedundantText(splitText[0])
+		result = append(result, int(getItemType(rawValue)))
+		return result
+	}
+	for _, st := range splitText {
+		rawValue := removeRedundantText(st)
+		result = append(result, int(getItemType(rawValue)))
+	}
+	return result
+}
+
+func getPerkLevels(rawText string) []int {
+	var result []int
+	splitText := strings.Split(rawText, ",")
+	if len(splitText) == 1 {
+		rawValue := removeRedundantText(splitText[0])
+		result = append(result, int(mustStringToInt(rawValue, 0)))
+		return result
+	}
+	for _, st := range splitText {
+		rawValue := removeRedundantText(st)
+		result = append(result, int(mustStringToInt(rawValue, 0)))
+	}
+	return result
 }

@@ -29,7 +29,7 @@ library CharacterStateUtils {
 
     // need character at specific state
     if (characterState.state != requiredCharacterState) {
-      revert Errors.Character_MustInState(requiredCharacterState);
+      revert Errors.Character_MustInState(characterState.state, requiredCharacterState, block.timestamp);
     }
 
     if (characterState.state == CharacterStateType.Standby) {
@@ -58,8 +58,8 @@ library CharacterStateUtils {
   }
 
   /// @dev get current character state (custom)
-  function getCharacterState(uint256 characterId) internal view returns (CharacterStateType characterState) {
-    characterState = CharState.getState(characterId);
+  function getCharacterState(uint256 characterId) internal view returns (CharacterStateType) {
+    CharacterStateType characterState = CharState.getState(characterId);
     if (characterState == CharacterStateType.Standby) {
       uint256 arriveTimestamp = CharNextPosition.getArriveTimestamp(characterId);
       if (arriveTimestamp > 0 && arriveTimestamp > block.timestamp) {

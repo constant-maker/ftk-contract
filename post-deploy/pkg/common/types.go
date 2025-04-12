@@ -155,16 +155,15 @@ type TileInfo struct {
 }
 
 type Skill struct {
-	Id                int          `json:"id"`
-	Name              string       `json:"name"`
-	Desc              string       `json:"desc"`
-	Tier              int          `json:"tier"`
-	Damage            int          `json:"damage"` // percent
-	Sp                int          `json:"sp"`
-	PerkItemType      uint8        `json:"perkItemType"`
-	RequiredPerkLevel uint8        `json:"requiredPerkLevel"`
-	HasEffect         bool         `json:"hasEffect"`
-	Effect            *SkillEffect `json:"effect"`
+	Id                 int          `json:"id"`
+	Name               string       `json:"name"`
+	Desc               string       `json:"desc"`
+	Damage             int          `json:"damage"` // percent
+	Sp                 int          `json:"sp"`
+	PerkItemTypes      []int        `json:"perkItemTypes"`
+	RequiredPerkLevels []int        `json:"requiredPerkLevels"`
+	HasEffect          bool         `json:"hasEffect"`
+	Effect             *SkillEffect `json:"effect,omitempty"`
 }
 
 type SkillEffect struct {

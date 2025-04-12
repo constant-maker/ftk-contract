@@ -1,7 +1,7 @@
 pragma solidity >=0.8.24;
 
 import { Vm } from "forge-std/Vm.sol";
-import { CharSkill, Skill, SkillData, CharPerk } from "@codegen/index.sol";
+import { CharSkill, SkillV2, SkillV2Data, CharPerk } from "@codegen/index.sol";
 import { ItemType } from "@codegen/common.sol";
 import { WorldFixture } from "@fixtures/WorldFixture.sol";
 import { SpawnSystemFixture } from "@fixtures/SpawnSystemFixture.sol";

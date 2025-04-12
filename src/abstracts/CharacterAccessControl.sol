@@ -33,7 +33,7 @@ abstract contract CharacterAccessControl {
   modifier mustInState(uint256 characterId, CharacterStateType requiredCharacterState) {
     CharacterStateType characterState = CharacterStateUtils.getCharacterState(characterId);
     if (characterState != requiredCharacterState) {
-      revert Errors.Character_MustInState(requiredCharacterState);
+      revert Errors.Character_MustInState(characterState, requiredCharacterState, block.timestamp);
     }
     _;
   }

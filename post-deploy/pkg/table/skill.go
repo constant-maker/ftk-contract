@@ -13,18 +13,33 @@ func SkillCallData(skill common.Skill) ([]byte, error) {
 	}
 	staticData, err := encodePacked(
 		uint8(skill.Sp),
-		uint8(skill.Tier),
 		uint16(skill.Damage),
-		uint8(skill.PerkItemType),
-		skill.RequiredPerkLevel,
 		skill.HasEffect,
 	)
 	if err != nil {
 		return nil, err
 	}
-	encodedLength := mud.EncodeLengths([]int{len(stringToBytes(skill.Name))})
-	dynamicData := simpleEncodePacked(stringToBytes(skill.Name))
-	mt := mud.NewMudTable("Skill", "app")
+	encodedLength := mud.EncodeLengths([]int{
+		len(stringToBytes(skill.Name)),
+		len(skill.PerkItemTypes),
+		len(skill.RequiredPerkLevels)})
+	if len(skill.PerkItemTypes) != len(skill.RequiredPerkLevels) {
+		panic("Invalid perk and perk level len in skill")
+	}
+	scPerkItemTypes := make([]uint8, 0, len(skill.PerkItemTypes))
+	for _, pit := range skill.PerkItemTypes {
+		scPerkItemTypes = append(scPerkItemTypes, uint8(pit))
+	}
+	scRequiredPerkLevels := make([]uint8, 0, len(skill.RequiredPerkLevels))
+	for _, rpl := range skill.RequiredPerkLevels {
+		scRequiredPerkLevels = append(scRequiredPerkLevels, uint8(rpl))
+	}
+	rawDynamicData, err := encodePacked(scPerkItemTypes, scRequiredPerkLevels)
+	if err != nil {
+		return nil, err
+	}
+	dynamicData := simpleEncodePacked(stringToBytes(skill.Name), rawDynamicData)
+	mt := mud.NewMudTable("SkillV2", "app")
 	return mt.SetRecordRawCalldata(keyTuple, staticData, encodedLength, dynamicData)
 }
 

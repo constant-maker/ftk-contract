@@ -1,14 +1,26 @@
 const SKILL_TABLES: any = {
-  Skill: {
+  // Skill: {
+  //   schema: {
+  //     id: "uint256",
+  //     sp: "uint8",
+  //     tier: "uint8",
+  //     damage: "uint16",
+  //     perkItemType: "ItemType",
+  //     requiredPerkLevel: "uint8",
+  //     hasEffect: "bool",
+  //     name: "string",
+  //   },
+  //   key: ['id'],
+  // },
+  SkillV2: {
     schema: {
       id: "uint256",
       sp: "uint8",
-      tier: "uint8",
       damage: "uint16",
-      perkItemType: "ItemType",
-      requiredPerkLevel: "uint8",
       hasEffect: "bool",
       name: "string",
+      perkItemTypes: "uint8[]",
+      requiredPerkLevels: "uint8[]",
     },
     key: ['id'],
   },

@@ -1,8 +1,8 @@
 pragma solidity >=0.8.24;
 
 import {
-  Skill,
-  SkillData,
+  SkillV2,
+  SkillV2Data,
   Monster,
   MonsterStats,
   MonsterStatsData,
@@ -61,7 +61,7 @@ library BattleUtils {
   {
     for (uint256 i = 0; i < originSkillIds.length; i++) {
       uint256 skillId = originSkillIds[i];
-      uint8 skillSp = skillId == Config.NORMAL_ATTACK_SKILL_ID ? 0 : Skill.getSp(skillId);
+      uint8 skillSp = skillId == Config.NORMAL_ATTACK_SKILL_ID ? 0 : SkillV2.getSp(skillId);
 
       if (totalSp >= skillSp) {
         skillIds[i] = skillId;
@@ -147,7 +147,7 @@ library BattleUtils {
     (uint16 attackerDmgMultiplier, uint16 defenderDmgMultiplier) =
       getDamageMultiplier(attacker.advantageType, defender.advantageType);
     // normal attack
-    SkillData memory normalAtk = Skill.get(Config.NORMAL_ATTACK_SKILL_ID);
+    SkillV2Data memory normalAtk = SkillV2.get(Config.NORMAL_ATTACK_SKILL_ID);
     // bonus attack based on agility
     if (attacker.agi >= defender.agi + Config.BONUS_ATTACK_AGI_DIFF) {
       handleFirstAttack(attacker, defender, normalAtk, dmgResult, attackerDmgMultiplier);
@@ -183,7 +183,7 @@ library BattleUtils {
   function doTurnFight(
     BattleInfo memory attacker,
     BattleInfo memory defender,
-    SkillData memory normalAtk,
+    SkillV2Data memory normalAtk,
     uint32[11] memory dmgResult,
     uint16 attackerDmgMultiplier,
     uint256 dmgIndex,
@@ -200,7 +200,7 @@ library BattleUtils {
     }
     uint16 skillBonus;
     uint256 skillId = dmgIndex == 0 ? 0 : attacker.skillIds[(dmgIndex - 1) / 2];
-    SkillData memory skill = getSkillData(skillId, normalAtk);
+    SkillV2Data memory skill = getSkillData(skillId, normalAtk);
     if (skill.hasEffect) {
       SkillEffectData memory skillEffect = SkillEffect.get(skillId);
       defenderDebuff.damage = skillEffect.damage;
@@ -220,7 +220,7 @@ library BattleUtils {
   function handleFirstAttack(
     BattleInfo memory attacker,
     BattleInfo memory defender,
-    SkillData memory normalAtk,
+    SkillV2Data memory normalAtk,
     uint32[11] memory dmgResult,
     uint16 attackerDmgMultiplier
   )
@@ -284,8 +284,8 @@ library BattleUtils {
   }
 
   /// @dev return skill data based on skillId
-  function getSkillData(uint256 skillId, SkillData memory normalAtk) public view returns (SkillData memory skill) {
-    skill = skillId == Config.NORMAL_ATTACK_SKILL_ID ? normalAtk : Skill.get(skillId);
+  function getSkillData(uint256 skillId, SkillV2Data memory normalAtk) public view returns (SkillV2Data memory skill) {
+    skill = skillId == Config.NORMAL_ATTACK_SKILL_ID ? normalAtk : SkillV2.get(skillId);
     return skill;
   }
 

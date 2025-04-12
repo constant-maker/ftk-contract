@@ -22,7 +22,9 @@ library Errors {
   error Character_LastActionNotFinished(CharacterStateType characterState, uint256 endTimestamp);
   error Character_InvalidCharacterMovementSpeed(uint16 characterMovementSpeed, uint16 baseDuration);
   error Character_NoActiveCharacter(address wallet);
-  error Character_MustInState(CharacterStateType characterState);
+  error Character_MustInState(
+    CharacterStateType characterState, CharacterStateType requiredCharacterState, uint256 blockTime
+  );
   error Character_NotAtCapital(int32 characterX, int32 characterY, int32 capitalX, int32 capitalY);
   error Character_WelcomePackagesClaimed(uint256 characterId);
   error Character_WeightsExceed(uint32 newWeight, uint32 maxWeight);
@@ -116,6 +118,7 @@ library Errors {
   error Skill_DuplicateSkillId(uint256 skillId);
   error Skill_NotExist(uint256 skillId);
   error Skill_PerkLevelIsNotEnough(uint256 characterId, uint8 currentPerkLevel, uint8 skillPerkLevel);
+  error Skill_InvalidSkillData(uint256 skillId);
 
   /* -------------------------------------------------------------------------- */
   /*                                    Monster                                 */
