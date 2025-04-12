@@ -921,12 +921,20 @@ func getPerkLevels(rawText string) []int {
 	splitText := strings.Split(rawText, ",")
 	if len(splitText) == 1 {
 		rawValue := removeRedundantText(splitText[0])
-		result = append(result, int(mustStringToInt(rawValue, 0)))
+		val := int(mustStringToInt(rawValue, 0)) - 1
+		if val < 0 {
+			zap.S().Panicw("invalid perk level", "value", val)
+		}
+		result = append(result, val)
 		return result
 	}
 	for _, st := range splitText {
 		rawValue := removeRedundantText(st)
-		result = append(result, int(mustStringToInt(rawValue, 0)))
+		val := int(mustStringToInt(rawValue, 0)) - 1
+		if val < 0 {
+			zap.S().Panicw("invalid perk level", "value", val)
+		}
+		result = append(result, val)
 	}
 	return result
 }
