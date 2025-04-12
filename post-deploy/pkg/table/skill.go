@@ -5,6 +5,7 @@ import (
 
 	"github.com/ftk/post-deploy/pkg/common"
 	"github.com/ftk/post-deploy/pkg/mud"
+	"go.uber.org/zap"
 )
 
 func SkillCallData(skill common.Skill) ([]byte, error) {
@@ -24,7 +25,7 @@ func SkillCallData(skill common.Skill) ([]byte, error) {
 		len(skill.PerkItemTypes),
 		len(skill.RequiredPerkLevels)})
 	if len(skill.PerkItemTypes) != len(skill.RequiredPerkLevels) {
-		panic("Invalid perk and perk level len in skill")
+		panic("invalid perk and perk level len in skill")
 	}
 	scPerkItemTypes := make([]uint8, 0, len(skill.PerkItemTypes))
 	for _, pit := range skill.PerkItemTypes {
@@ -32,6 +33,10 @@ func SkillCallData(skill common.Skill) ([]byte, error) {
 	}
 	scRequiredPerkLevels := make([]uint8, 0, len(skill.RequiredPerkLevels))
 	for _, rpl := range skill.RequiredPerkLevels {
+		rpl -= 1
+		if rpl < 0 {
+			zap.S().Panicw("invalid required perk level", "data", skill)
+		}
 		scRequiredPerkLevels = append(scRequiredPerkLevels, uint8(rpl))
 	}
 	rawDynamicData, err := encodePacked(scPerkItemTypes, scRequiredPerkLevels)
