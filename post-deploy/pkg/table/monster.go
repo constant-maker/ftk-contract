@@ -6,6 +6,7 @@ import (
 
 	"github.com/ftk/post-deploy/pkg/common"
 	"github.com/ftk/post-deploy/pkg/mud"
+	"go.uber.org/zap"
 )
 
 func MonsterCallData(monster common.Monster) ([]byte, error) {
@@ -68,11 +69,15 @@ func MonsterStatsCallData(monsterId int, stats common.MonsterStats) ([]byte, err
 }
 
 func BossInfosCallData(monsterId int, bossInfo common.BossInfo, x int32, y int32) ([]byte, error) {
+	respawnTime := uint16(bossInfo.RespawnDuration / (60 * 60)) // in config it's second, so we convert to hour
+	if respawnTime == 0 {
+		zap.S().Panicw("invalid respawn duration data", "bossInfo", bossInfo)
+	}
 	staticData, err := encodePacked(
 		uint32(bossInfo.Barrier),
 		uint32(bossInfo.Hp),
 		uint32(bossInfo.Crystal),
-		uint16(bossInfo.RespawnDuration),
+		uint16(respawnTime),
 		uint8(bossInfo.BerserkHpThreshold),
 		uint8(bossInfo.BoostPercent),
 		big.NewInt(int64(bossInfo.LastDefeatedTime)),

@@ -134,8 +134,9 @@ library BattlePvEUtils {
   }
 
   function checkIsBossReady(uint256 monsterId, CharPositionData memory characterPosition) public view {
+    // respawnDuration is in hour
     uint256 respawnTime = BossInfo.getLastDefeatedTime(monsterId, characterPosition.x, characterPosition.y)
-      + uint32(BossInfo.getRespawnDuration(monsterId, characterPosition.x, characterPosition.y)) * 24 * 60 * 60;
+      + uint32(BossInfo.getRespawnDuration(monsterId, characterPosition.x, characterPosition.y)) * 60 * 60;
     if (block.timestamp < respawnTime) {
       revert Errors.PvE_BossIsNotRespawnedYet(monsterId, respawnTime);
     }
