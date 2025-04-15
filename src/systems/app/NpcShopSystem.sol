@@ -20,8 +20,8 @@ struct TradeData {
 }
 
 contract NpcShopSystem is CharacterAccessControl, System {
-  uint32 constant INIT_SHOP_BALANCE = 20_000; // 20000 golds
-  uint32 constant TOOL_PRICE = 25; // 25 golds
+  uint32 constant INIT_SHOP_BALANCE = 100_000; // golds
+  uint32 constant TOOL_PRICE = 25;
   uint32 constant BUY_BACK_MULTIPLY = 3;
 
   function tradeWithNpc(
