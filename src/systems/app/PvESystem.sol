@@ -105,8 +105,10 @@ contract PvESystem is System, CharacterAccessControl {
       // increase slot farm
       TileUtils.increaseFarmSlot(x, y);
       if (isBoss) {
-        CharAchievementUtils.addAchievement(characterId, 3); // defeated the boss
-        CharAchievementUtils.addAchievement(characterId, 4); // defeated the Ignis
+        CharAchievementUtils.addAchievement(characterId, 3); // defeated the first boss
+        if (monsterId == 9) {
+          CharAchievementUtils.addAchievement(characterId, 4); // defeated the Ignis
+        }
       }
       if (_tryToLevelUp(characterId)) return; // if level up success character hp will be recover to max hp
     }

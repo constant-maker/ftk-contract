@@ -133,7 +133,7 @@
       "damage": 150,
       "sp": 1,
       "perkItemTypes": [1],
-      "requiredPerkLevels": [1],
+      "requiredPerkLevels": [2],
       "hasEffect": true,
       "effect": {
         "damage": 25,
@@ -148,7 +148,7 @@
       "damage": 150,
       "sp": 1,
       "perkItemTypes": [1],
-      "requiredPerkLevels": [1],
+      "requiredPerkLevels": [2],
       "hasEffect": true,
       "effect": {
         "effectType": 4,

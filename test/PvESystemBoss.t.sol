@@ -37,7 +37,7 @@ contract PvESystemBossTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFix
   int32 locationX = -50;
   int32 locationY = -17;
 
-  uint256 bossId = 5;
+  uint256 bossId = 9;
 
   function setUp() public virtual override(WorldFixture, SpawnSystemFixture, WelcomeSystemFixture, MoveSystemFixture) {
     WorldFixture.setUp();
@@ -49,7 +49,7 @@ contract PvESystemBossTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFix
   function test_ShouldHaveData() external {
     uint256[] memory monsterIds = TileInfo3.getMonsterIds(locationX, locationY);
     assertEq(monsterIds.length, 1);
-    assertEq(monsterIds[0], 5);
+    assertEq(monsterIds[0], 9);
 
     MonsterStatsData memory monsterStats = MonsterStats.get(bossId);
     assertEq(monsterStats.hp, 1500);
@@ -62,7 +62,7 @@ contract PvESystemBossTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFix
     assertEq(bossInfo.barrier, 50);
     assertEq(bossInfo.hp, 1500);
     assertEq(bossInfo.crystal, 300);
-    assertEq(bossInfo.respawnDuration, 4320);
+    assertEq(bossInfo.respawnDuration, 1); // 1 hour
     assertEq(bossInfo.berserkHpThreshold, 20);
     assertEq(bossInfo.boostPercent, 20);
     assertEq(bossInfo.lastDefeatedTime, 0);
