@@ -642,6 +642,9 @@ func getListSkillUpdate() ([]Skill, error) {
 			l.Errorw("cannot read data", "err", err)
 			return nil, err
 		}
+		if record[0] == "END" {
+			break
+		}
 		if record[0] == "" && record[4] == "" { // empty row
 			// l.Warnw("invalid skill data format", "data", record)
 			continue
@@ -663,6 +666,12 @@ func getListSkillUpdate() ([]Skill, error) {
 			descIndex = findIndex(record, "description")
 			continue
 		}
+
+		if _, err := strconv.Atoi(record[0]); err != nil {
+			// this may be the note in docs
+			continue
+		}
+
 		id := mustStringToInt(record[idIndex], idIndex)
 		perkItemTypes := getPerkItemTypes(record[perkIndex])
 		perkLevels := getPerkLevels(record[perkLevelIndex])

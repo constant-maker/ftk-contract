@@ -193,7 +193,7 @@
       "id": 14,
       "name": "Inferno Rage",
       "desc": "The Ignis Dragon unleashes a devastating wave of fire, incinerating everything in its path with relentless fury.",
-      "damage": 350,
+      "damage": 300,
       "sp": 5,
       "perkItemTypes": [
         0
@@ -201,7 +201,12 @@
       "requiredPerkLevels": [
         20
       ],
-      "hasEffect": false
+      "hasEffect": true,
+      "effect": {
+        "damage": 0,
+        "effectType": 4,
+        "turns": 1
+      }
     },
     "15": {
       "id": 15,
@@ -347,7 +352,7 @@
       "id": 25,
       "name": "Flame Pulse",
       "desc": "The dragon unleashes a quick wave of fire, dealing damage to nearby enemies.",
-      "damage": 150,
+      "damage": 130,
       "sp": 2,
       "perkItemTypes": [
         0
@@ -355,14 +360,19 @@
       "requiredPerkLevels": [
         20
       ],
-      "hasEffect": false
+      "hasEffect": true,
+      "effect": {
+        "damage": 30,
+        "effectType": 1,
+        "turns": 1
+      }
     },
     "26": {
       "id": 26,
       "name": "Enflame",
       "desc": "A fiery attack that inflicts burning damage over time.",
-      "damage": 70,
-      "sp": 1,
+      "damage": 100,
+      "sp": 2,
       "perkItemTypes": [
         6
       ],
@@ -371,22 +381,22 @@
       ],
       "hasEffect": true,
       "effect": {
-        "damage": 70,
+        "damage": 35,
         "effectType": 1,
-        "turns": 1
+        "turns": 2
       }
     },
     "27": {
       "id": 27,
       "name": "Quick Slash",
       "desc": "A blinding flurry of slashes that finds and exploits vulnerabilities for massive damage.",
-      "damage": 200,
-      "sp": 2,
+      "damage": 270,
+      "sp": 3,
       "perkItemTypes": [
         6
       ],
       "requiredPerkLevels": [
-        2
+        3
       ],
       "hasEffect": false
     },
@@ -395,12 +405,12 @@
       "name": "Thunder Strike",
       "desc": "A lightning-quick strike that stuns the opponent, leaving them unable to act.",
       "damage": 170,
-      "sp": 3,
+      "sp": 2,
       "perkItemTypes": [
         6
       ],
       "requiredPerkLevels": [
-        6
+        5
       ],
       "hasEffect": true,
       "effect": {
@@ -413,8 +423,8 @@
       "id": 29,
       "name": "Poisoned Arrow",
       "desc": "Fires a venomous arrow that rapidly saps the target's health.",
-      "damage": 35,
-      "sp": 1,
+      "damage": 55,
+      "sp": 3,
       "perkItemTypes": [
         9
       ],
@@ -423,7 +433,7 @@
       ],
       "hasEffect": true,
       "effect": {
-        "damage": 35,
+        "damage": 55,
         "effectType": 2,
         "turns": 3
       }
@@ -432,7 +442,7 @@
       "id": 30,
       "name": "Bullseye",
       "desc": "A precisely aimed shot that pierces vital areas for massive damage.",
-      "damage": 200,
+      "damage": 300,
       "sp": 2,
       "perkItemTypes": [
         9
@@ -446,26 +456,26 @@
       "id": 31,
       "name": "Frost Volley",
       "desc": "Launches an ice-enchanted volley of arrows that deals frost damage over time.",
-      "damage": 85,
-      "sp": 3,
+      "damage": 80,
+      "sp": 2,
       "perkItemTypes": [
         9
       ],
       "requiredPerkLevels": [
-        6
+        5
       ],
       "hasEffect": true,
       "effect": {
-        "damage": 85,
+        "damage": 150,
         "effectType": 3,
-        "turns": 3
+        "turns": 2
       }
     },
     "32": {
       "id": 32,
       "name": "Rotten Swing",
       "desc": "A savage swing that leaves a festering wound, causing deteriorating damage.",
-      "damage": 50,
+      "damage": 40,
       "sp": 1,
       "perkItemTypes": [
         7
@@ -475,16 +485,16 @@
       ],
       "hasEffect": true,
       "effect": {
-        "damage": 50,
+        "damage": 40,
         "effectType": 2,
-        "turns": 2
+        "turns": 3
       }
     },
     "33": {
       "id": 33,
       "name": "Heavy Cleave",
       "desc": "A massive horizontal axe swing that stuns opponents.",
-      "damage": 80,
+      "damage": 150,
       "sp": 2,
       "perkItemTypes": [
         7
@@ -503,13 +513,13 @@
       "id": 34,
       "name": "Bludgeon",
       "desc": "An overwhelming overhead strike that crushes defenses for devastating damage.",
-      "damage": 300,
+      "damage": 410,
       "sp": 3,
       "perkItemTypes": [
         7
       ],
       "requiredPerkLevels": [
-        6
+        5
       ],
       "hasEffect": false
     },
@@ -517,8 +527,8 @@
       "id": 35,
       "name": "Precise Thrust",
       "desc": "A well-aimed spear thrust that penetrates weak points for massive damage.",
-      "damage": 130,
-      "sp": 1,
+      "damage": 160,
+      "sp": 2,
       "perkItemTypes": [
         8
       ],
@@ -531,8 +541,8 @@
       "id": 36,
       "name": "Foot Sweep",
       "desc": "A deft leg sweep that topples enemies, leaving them stunned and vulnerable.",
-      "damage": 80,
-      "sp": 2,
+      "damage": 190,
+      "sp": 3,
       "perkItemTypes": [
         8
       ],
@@ -550,17 +560,17 @@
       "id": 37,
       "name": "Thrust of Inferno",
       "desc": "A fiery spear thrust that scorches enemies with massive flame damage.",
-      "damage": 105,
-      "sp": 3,
+      "damage": 200,
+      "sp": 2,
       "perkItemTypes": [
         8
       ],
       "requiredPerkLevels": [
-        6
+        5
       ],
       "hasEffect": true,
       "effect": {
-        "damage": 105,
+        "damage": 90,
         "effectType": 1,
         "turns": 2
       }
@@ -569,8 +579,8 @@
       "id": 38,
       "name": "Shockwave",
       "desc": "Unleashes a cascading wave of arcane force that ruptures through foes' defenses.",
-      "damage": 130,
-      "sp": 1,
+      "damage": 160,
+      "sp": 2,
       "perkItemTypes": [
         10
       ],
@@ -583,8 +593,8 @@
       "id": 39,
       "name": "Fire Ball",
       "desc": "Conjures an explosive ball of flame that deals burning damage.",
-      "damage": 110,
-      "sp": 2,
+      "damage": 150,
+      "sp": 1,
       "perkItemTypes": [
         10
       ],
@@ -593,22 +603,22 @@
       ],
       "hasEffect": true,
       "effect": {
-        "damage": 110,
+        "damage": 65,
         "effectType": 1,
-        "turns": 1
+        "turns": 2
       }
     },
     "40": {
       "id": 40,
       "name": "Shatter Earth",
       "desc": "Ruptures the ground in a stunning shockwave that immobilizes enemies.",
-      "damage": 170,
+      "damage": 210,
       "sp": 3,
       "perkItemTypes": [
         10
       ],
       "requiredPerkLevels": [
-        6
+        5
       ],
       "hasEffect": true,
       "effect": {
@@ -621,7 +631,7 @@
       "id": 41,
       "name": "Venom Stab",
       "desc": "A lightning-quick strike infused with a potent toxin for rapid health degeneration.",
-      "damage": 35,
+      "damage": 40,
       "sp": 1,
       "perkItemTypes": [
         11
@@ -631,7 +641,7 @@
       ],
       "hasEffect": true,
       "effect": {
-        "damage": 35,
+        "damage": 40,
         "effectType": 2,
         "turns": 3
       }
@@ -640,7 +650,7 @@
       "id": 42,
       "name": "Serpent Strike",
       "desc": "A snaking series of venomous strikes that repeatedly pierce and poison vulnerable areas.",
-      "damage": 60,
+      "damage": 80,
       "sp": 2,
       "perkItemTypes": [
         11
@@ -650,7 +660,7 @@
       ],
       "hasEffect": true,
       "effect": {
-        "damage": 60,
+        "damage": 80,
         "effectType": 2,
         "turns": 3
       }
@@ -659,13 +669,13 @@
       "id": 43,
       "name": "Backstab",
       "desc": "A treacherous attack on an undefended foe, dealing absolutely devastating damage.",
-      "damage": 300,
-      "sp": 0,
+      "damage": 370,
+      "sp": 2,
       "perkItemTypes": [
         11
       ],
       "requiredPerkLevels": [
-        6
+        5
       ],
       "hasEffect": false
     },
@@ -673,8 +683,8 @@
       "id": 44,
       "name": "Stab of Agony",
       "desc": "A vicious stab laced with agonizing venom that lingers in the wound.",
-      "damage": 60,
-      "sp": 2,
+      "damage": 70,
+      "sp": 1,
       "perkItemTypes": [
         6
       ],
@@ -683,7 +693,7 @@
       ],
       "hasEffect": true,
       "effect": {
-        "damage": 60,
+        "damage": 70,
         "effectType": 2,
         "turns": 3
       }
@@ -692,32 +702,32 @@
       "id": 45,
       "name": "Ember Shot",
       "desc": "Launches a flaming arrow that scorches enemies with burn damage.",
-      "damage": 110,
-      "sp": 2,
+      "damage": 100,
+      "sp": 1,
       "perkItemTypes": [
         9
       ],
       "requiredPerkLevels": [
-        2
+        3
       ],
       "hasEffect": true,
       "effect": {
-        "damage": 110,
+        "damage": 55,
         "effectType": 1,
-        "turns": 1
+        "turns": 2
       }
     },
     "46": {
       "id": 46,
       "name": "Whirlwind Strike",
       "desc": "A cyclonic flurry of axe strikes that overwhelms defenses for devastating damage.",
-      "damage": 200,
-      "sp": 2,
+      "damage": 270,
+      "sp": 3,
       "perkItemTypes": [
         7
       ],
       "requiredPerkLevels": [
-        2
+        3
       ],
       "hasEffect": false
     },
@@ -726,18 +736,18 @@
       "name": "Sunlight Attack",
       "desc": "Channels the sun's searing rays through the spearhead for sustained burning.",
       "damage": 110,
-      "sp": 2,
+      "sp": 1,
       "perkItemTypes": [
         8
       ],
       "requiredPerkLevels": [
-        2
+        3
       ],
       "hasEffect": true,
       "effect": {
-        "damage": 110,
+        "damage": 50,
         "effectType": 1,
-        "turns": 1
+        "turns": 2
       }
     },
     "48": {
@@ -750,7 +760,7 @@
         10
       ],
       "requiredPerkLevels": [
-        2
+        3
       ],
       "hasEffect": true,
       "effect": {
@@ -763,15 +773,119 @@
       "id": 49,
       "name": "Knife Throw",
       "desc": "A precisely aimed thrown knife that finds and exploits any unguarded opening.",
-      "damage": 200,
-      "sp": 2,
+      "damage": 270,
+      "sp": 3,
       "perkItemTypes": [
         11
       ],
       "requiredPerkLevels": [
-        2
+        3
       ],
       "hasEffect": false
+    },
+    "50": {
+      "id": 50,
+      "name": "Goop Smash",
+      "desc": "The slime boss lunges forward in a squishy burst, slamming into enemies with explosive goop force.",
+      "damage": 150,
+      "sp": 1,
+      "perkItemTypes": [
+        6
+      ],
+      "requiredPerkLevels": [
+        20
+      ],
+      "hasEffect": false
+    },
+    "51": {
+      "id": 51,
+      "name": "Slimepocalypse",
+      "desc": "The slime boss erupts into a massive wave of goo, engulfing everything in its path. Enemies are drenched, slowed, and left in chaos as the battlefield turns into a sticky nightmare.",
+      "damage": 250,
+      "sp": 2,
+      "perkItemTypes": [
+        6
+      ],
+      "requiredPerkLevels": [
+        20
+      ],
+      "hasEffect": false
+    },
+    "52": {
+      "id": 52,
+      "name": "Goop Lock",
+      "desc": "In a wild berserk rage, the slime boss hurls sticky goop that hardens instantly, stunning its target in place.",
+      "damage": 200,
+      "sp": 5,
+      "perkItemTypes": [
+        6
+      ],
+      "requiredPerkLevels": [
+        20
+      ],
+      "hasEffect": true,
+      "effect": {
+        "damage": 0,
+        "effectType": 4,
+        "turns": 1
+      }
+    },
+    "53": {
+      "id": 53,
+      "name": "Blazing Ooze",
+      "desc": "In a berserk blaze, the slime boss spews scalding goop, igniting enemies on impact and leaving a trail of burning slime.",
+      "damage": 200,
+      "sp": 5,
+      "perkItemTypes": [
+        6
+      ],
+      "requiredPerkLevels": [
+        20
+      ],
+      "hasEffect": true,
+      "effect": {
+        "damage": 75,
+        "effectType": 1,
+        "turns": 2
+      }
+    },
+    "54": {
+      "id": 54,
+      "name": "Frozen Wrath",
+      "desc": "Consumed by berserk rage, the frost slime unleashes a wave of chilling energy, freezing everything nearby and coating enemies in deadly ice, slowing and damaging them over time.",
+      "damage": 250,
+      "sp": 5,
+      "perkItemTypes": [
+        6
+      ],
+      "requiredPerkLevels": [
+        20
+      ],
+      "hasEffect": true,
+      "effect": {
+        "damage": 100,
+        "effectType": 3,
+        "turns": 1
+      }
+    },
+    "55": {
+      "id": 55,
+      "name": "Toxic Eruption",
+      "desc": "The slime bursts in a cloud of venom, poisoning and weakening all nearby enemies.",
+      "damage": 200,
+      "sp": 5,
+      "perkItemTypes": [
+        6
+      ],
+      "requiredPerkLevels": [
+        20
+      ],
+      "hasEffect": true,
+      "effect": {
+        "damage": 50,
+        "effectType": 2,
+        "turns": 3
+      }
     }
   }
 }
