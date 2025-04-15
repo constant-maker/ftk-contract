@@ -100,7 +100,7 @@ contract PvESystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
     // set position to hunting place
     _moveToMonsterLocation(characterId);
 
-    uint256[5] memory customSkillIds = [uint256(3), uint256(0), uint256(2), uint256(1), uint256(0)];
+    uint256[5] memory customSkillIds = [uint256(12), uint256(0), uint256(2), uint256(1), uint256(0)];
     vm.startPrank(worldDeployer);
     MonsterStats.setHp(monsterId, 200);
     CharCurrentStats.setHp(monsterId, 200);

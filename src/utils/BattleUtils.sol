@@ -24,6 +24,7 @@ import { Errors } from "@common/Errors.sol";
 import { CharacterEquipmentUtils } from "./CharacterEquipmentUtils.sol";
 
 struct BattleInfo {
+  uint256 id;
   uint32 barrier;
   uint32 hp;
   uint16 atk;
@@ -85,6 +86,7 @@ library BattleUtils {
     view
     returns (BattleInfo memory monsterBattleInfo)
   {
+    monsterBattleInfo.id = monsterId;
     MonsterStatsData memory monsterStats = MonsterStats.get(monsterId);
     uint8 monsterSp = monsterStats.sp;
     if (!Monster.getIsBoss(monsterId)) {
@@ -124,6 +126,7 @@ library BattleUtils {
   {
     CharCurrentStatsData memory characterCurrentStats = CharCurrentStats.get(characterId);
     characterBattleInfo = BattleInfo({
+      id: characterId,
       barrier: 0,
       hp: characterHp,
       agi: characterCurrentStats.agi,
@@ -193,7 +196,7 @@ library BattleUtils {
     public
     view
   {
-    if (attackerDebuff.turns > 0 && attackerDebuff.effect == EffectType.Stun) {
+    if (attackerDebuff.turns > 0 && attackerDebuff.effect == EffectType.Stun && !Monster.getIsBoss(attacker.id)) {
       dmgResult[dmgIndex] = 0;
       attackerDebuff.turns--;
       return;

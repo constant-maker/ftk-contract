@@ -302,6 +302,46 @@ contract PvESystemBossTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFix
     assertEq(pve.damages[8], 325); // skill 250% dmg
   }
 
+  function test_BossStunImmunity() external {
+    // character atk 2 def 2 hp 100
+
+    // set position to hunting place
+    _moveToBossLocation(characterId);
+
+    vm.startPrank(worldDeployer);
+    BossInfo.setHp(bossId, locationX, locationY, 300);
+    CharCurrentStats.setAgi(characterId, 1000);
+    uint256[5] memory customSkillIds = [uint256(12), uint256(0), uint256(0), uint256(0), uint256(0)];
+    CharSkill.setSkillIds(characterId, customSkillIds);
+    vm.stopPrank();
+
+    uint32 characterHp = CharCurrentStats.getHp(characterId);
+    uint256[5] memory skills = CharSkill.get(characterId);
+
+    vm.warp(block.timestamp + 24 * 60 * 60);
+    vm.startPrank(player);
+    world.app__battlePvE(characterId, bossId);
+    vm.stopPrank();
+
+    PvEData memory pve = PvE.get(1);
+    assertEq(pve.monsterId, bossId);
+    assertEq(pve.x, locationX);
+    assertEq(pve.y, locationY);
+    assertTrue(pve.firstAttacker == EntityType.Character);
+    assertEq(pve.hps[0], characterHp);
+    assertEq(pve.hps[1], 300);
+    for (uint256 i = 0; i < skills.length; i++) {
+      assertEq(pve.characterSkillIds[i], skills[i]);
+    }
+    // for (uint256 i = 0; i < pve.damages.length; i++) {
+    //   console2.log("dmg index", i);
+    //   console2.log("dmg value", pve.damages[i]);
+    // }
+    assertEq(pve.damages[0], 21); // bonus attack
+    assertEq(pve.damages[1], 31);
+    assertEq(pve.damages[2], 130); // level 100 + 20 (min dmg) + atk 12 (boost) - def 2 ~ boss immune to stun
+  }
+
   function _gearUpEquipment() private {
     vm.startPrank(worldDeployer);
     CharEquipment.set(characterId, SlotType.Weapon, 1);
