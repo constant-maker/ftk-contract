@@ -160,12 +160,17 @@ func UpdateDataConfig(dataConfig *DataConfig, basePath string) {
 		dataConfig.Skills[intToString(skill.Id)] = skill // add
 	}
 	if shouldRewriteSkillFile {
-		newSkills := struct {
-			Skills map[string]Skill `json:"skills"`
-		}{
-			Skills: dataConfig.Skills,
-		}
-		if err := WriteJSONFile(newSkills, basePath+"/data-config/skills.json"); err != nil {
+		// newSkills := struct {
+		// 	Skills map[string]Skill `json:"skills"`
+		// }{
+		// 	Skills: dataConfig.Skills,
+		// }
+		// if err := WriteJSONFile(newSkills, basePath+"/data-config/skills.json"); err != nil {
+		// 	l.Errorw("cannot update skill.json file", "err", err)
+		// } else {
+		// 	l.Infow("update skill.json successfully")
+		// }
+		if err := WriteSortedJsonFile(basePath+"/data-config/skills.json", "skills", dataConfig.Skills); err != nil {
 			l.Errorw("cannot update skill.json file", "err", err)
 		} else {
 			l.Infow("update skill.json successfully")
@@ -175,12 +180,17 @@ func UpdateDataConfig(dataConfig *DataConfig, basePath string) {
 	// validate items id
 	validateItemConfig(*dataConfig)
 	if shouldRewriteFile {
-		newItems := struct {
-			Items map[string]Item `json:"items"`
-		}{
-			Items: dataConfig.Items,
-		}
-		if err := WriteJSONFile(newItems, basePath+"/data-config/items.json"); err != nil {
+		// newItems := struct {
+		// 	Items map[string]Item `json:"items"`
+		// }{
+		// 	Items: dataConfig.Items,
+		// }
+		// if err := WriteJSONFile(newItems, basePath+"/data-config/items.json"); err != nil {
+		// 	l.Errorw("cannot update items.json file", "err", err)
+		// } else {
+		// 	l.Infow("update items.json successfully")
+		// }
+		if err := WriteSortedJsonFile(basePath+"/data-config/items.json", "items", dataConfig.Items); err != nil {
 			l.Errorw("cannot update items.json file", "err", err)
 		} else {
 			l.Infow("update items.json successfully")
@@ -231,12 +241,17 @@ func UpdateDataConfig(dataConfig *DataConfig, basePath string) {
 		dataConfig.ItemRecipes[intToString(recipe.ItemId)] = recipe // add
 	}
 	if shouldRewriteFile {
-		newItemRecipes := struct {
-			ItemRecipes map[string]ItemRecipe `json:"itemRecipes"`
-		}{
-			ItemRecipes: dataConfig.ItemRecipes,
-		}
-		if err := WriteJSONFile(newItemRecipes, basePath+"/data-config/itemRecipes.json"); err != nil {
+		// newItemRecipes := struct {
+		// 	ItemRecipes map[string]ItemRecipe `json:"itemRecipes"`
+		// }{
+		// 	ItemRecipes: dataConfig.ItemRecipes,
+		// }
+		// if err := WriteJSONFile(newItemRecipes, basePath+"/data-config/itemRecipes.json"); err != nil {
+		// 	l.Errorw("cannot update itemRecipes.json file", "err", err)
+		// } else {
+		// 	l.Infow("update itemRecipes.json successfully")
+		// }
+		if err := WriteSortedJsonFile(basePath+"/data-config/itemRecipes.json", "itemRecipes", dataConfig.ItemRecipes); err != nil {
 			l.Errorw("cannot update itemRecipes.json file", "err", err)
 		} else {
 			l.Infow("update itemRecipes.json successfully")
@@ -921,7 +936,7 @@ func getPerkLevels(rawText string) []int {
 	splitText := strings.Split(rawText, ",")
 	if len(splitText) == 1 {
 		rawValue := removeRedundantText(splitText[0])
-		val := int(mustStringToInt(rawValue, 0)) - 1
+		val := int(mustStringToInt(rawValue, 0))
 		if val < 0 {
 			zap.S().Panicw("invalid perk level", "value", val)
 		}
@@ -930,7 +945,7 @@ func getPerkLevels(rawText string) []int {
 	}
 	for _, st := range splitText {
 		rawValue := removeRedundantText(st)
-		val := int(mustStringToInt(rawValue, 0)) - 1
+		val := int(mustStringToInt(rawValue, 0))
 		if val < 0 {
 			zap.S().Panicw("invalid perk level", "value", val)
 		}

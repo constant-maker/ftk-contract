@@ -24,6 +24,115 @@
       ],
       "hasEffect": false
     },
+    "2": {
+      "id": 2,
+      "name": "Fire Strike",
+      "desc": "Slash the enemy with a heated blade, dealing damage and applying a burning effect that slowly drains their health over time.",
+      "damage": 120,
+      "sp": 3,
+      "perkItemTypes": null,
+      "requiredPerkLevels": null,
+      "hasEffect": true,
+      "effect": {
+        "damage": 20,
+        "effectType": 1,
+        "turns": 2
+      }
+    },
+    "3": {
+      "id": 3,
+      "name": "Heavy Smash",
+      "desc": "Unleash a crushing blow that hits harder than a basic attack.",
+      "damage": 150,
+      "sp": 3,
+      "perkItemTypes": null,
+      "requiredPerkLevels": null,
+      "hasEffect": false
+    },
+    "4": {
+      "id": 4,
+      "name": "Fire Ball",
+      "desc": "Casts a blazing orb of fire that deals significant damage upon impact.",
+      "damage": 130,
+      "sp": 2,
+      "perkItemTypes": [
+        0
+      ],
+      "requiredPerkLevels": [
+        20
+      ],
+      "hasEffect": false
+    },
+    "5": {
+      "id": 5,
+      "name": "Amethyst Bolt",
+      "desc": "A radiant purple crystal projectile, dealing heavy magic damage to its target.",
+      "damage": 130,
+      "sp": 1,
+      "perkItemTypes": [
+        0
+      ],
+      "requiredPerkLevels": [
+        20
+      ],
+      "hasEffect": false
+    },
+    "6": {
+      "id": 6,
+      "name": "Lightning Strike",
+      "desc": "Summon a devastating bolt of electricity from the sky.",
+      "damage": 125,
+      "sp": 1,
+      "perkItemTypes": [
+        0
+      ],
+      "requiredPerkLevels": [
+        20
+      ],
+      "hasEffect": false
+    },
+    "7": {
+      "id": 7,
+      "name": "Roar of Ferocity",
+      "desc": "Unleash a thunderous roar, imbuing allies with increased strength and ferocity.",
+      "damage": 0,
+      "sp": 1,
+      "perkItemTypes": [
+        0
+      ],
+      "requiredPerkLevels": [
+        20
+      ],
+      "hasEffect": false
+    },
+    "8": {
+      "id": 8,
+      "name": "Poisonous Snake",
+      "desc": "Spit a venomous serpent that bites the target with one of the most deadly poisons ever to exist.",
+      "damage": 110,
+      "sp": 1,
+      "perkItemTypes": [
+        0
+      ],
+      "requiredPerkLevels": [
+        20
+      ],
+      "hasEffect": false
+    },
+    "9": {
+      "id": 9,
+      "name": "Maelstrom Blast",
+      "desc": "A fierce tempest that engulfs the battlefield with devastating power.",
+      "damage": 250,
+      "sp": 3,
+      "perkItemTypes": [
+        0
+      ],
+      "requiredPerkLevels": [
+        20
+      ],
+      "hasEffect": false
+    },
     "10": {
       "id": 10,
       "name": "Dagger Strike",
@@ -164,21 +273,6 @@
       ],
       "hasEffect": false
     },
-    "2": {
-      "id": 2,
-      "name": "Fire Strike",
-      "desc": "Slash the enemy with a heated blade, dealing damage and applying a burning effect that slowly drains their health over time.",
-      "damage": 120,
-      "sp": 3,
-      "perkItemTypes": null,
-      "requiredPerkLevels": null,
-      "hasEffect": true,
-      "effect": {
-        "damage": 20,
-        "effectType": 1,
-        "turns": 2
-      }
-    },
     "20": {
       "id": 20,
       "name": "Poison Attack",
@@ -273,7 +367,7 @@
         6
       ],
       "requiredPerkLevels": [
-        1
+        2
       ],
       "hasEffect": true,
       "effect": {
@@ -292,7 +386,7 @@
         6
       ],
       "requiredPerkLevels": [
-        3
+        2
       ],
       "hasEffect": false
     },
@@ -306,9 +400,14 @@
         6
       ],
       "requiredPerkLevels": [
-        5
+        6
       ],
-      "hasEffect": false
+      "hasEffect": true,
+      "effect": {
+        "damage": 0,
+        "effectType": 4,
+        "turns": 1
+      }
     },
     "29": {
       "id": 29,
@@ -320,7 +419,7 @@
         9
       ],
       "requiredPerkLevels": [
-        1
+        2
       ],
       "hasEffect": true,
       "effect": {
@@ -328,16 +427,6 @@
         "effectType": 2,
         "turns": 3
       }
-    },
-    "3": {
-      "id": 3,
-      "name": "Heavy Smash",
-      "desc": "Unleash a crushing blow that hits harder than a basic attack.",
-      "damage": 150,
-      "sp": 3,
-      "perkItemTypes": null,
-      "requiredPerkLevels": null,
-      "hasEffect": false
     },
     "30": {
       "id": 30,
@@ -349,7 +438,7 @@
         9
       ],
       "requiredPerkLevels": [
-        3
+        4
       ],
       "hasEffect": false
     },
@@ -363,7 +452,7 @@
         9
       ],
       "requiredPerkLevels": [
-        5
+        6
       ],
       "hasEffect": true,
       "effect": {
@@ -382,7 +471,7 @@
         7
       ],
       "requiredPerkLevels": [
-        1
+        2
       ],
       "hasEffect": true,
       "effect": {
@@ -401,9 +490,14 @@
         7
       ],
       "requiredPerkLevels": [
-        3
+        4
       ],
-      "hasEffect": false
+      "hasEffect": true,
+      "effect": {
+        "damage": 0,
+        "effectType": 4,
+        "turns": 1
+      }
     },
     "34": {
       "id": 34,
@@ -415,7 +509,7 @@
         7
       ],
       "requiredPerkLevels": [
-        5
+        6
       ],
       "hasEffect": false
     },
@@ -429,7 +523,7 @@
         8
       ],
       "requiredPerkLevels": [
-        1
+        2
       ],
       "hasEffect": false
     },
@@ -443,9 +537,14 @@
         8
       ],
       "requiredPerkLevels": [
-        3
+        4
       ],
-      "hasEffect": false
+      "hasEffect": true,
+      "effect": {
+        "damage": 0,
+        "effectType": 4,
+        "turns": 1
+      }
     },
     "37": {
       "id": 37,
@@ -457,7 +556,7 @@
         8
       ],
       "requiredPerkLevels": [
-        5
+        6
       ],
       "hasEffect": true,
       "effect": {
@@ -476,7 +575,7 @@
         10
       ],
       "requiredPerkLevels": [
-        1
+        2
       ],
       "hasEffect": false
     },
@@ -490,7 +589,7 @@
         10
       ],
       "requiredPerkLevels": [
-        3
+        4
       ],
       "hasEffect": true,
       "effect": {
@@ -498,20 +597,6 @@
         "effectType": 1,
         "turns": 1
       }
-    },
-    "4": {
-      "id": 4,
-      "name": "Fire Ball",
-      "desc": "Casts a blazing orb of fire that deals significant damage upon impact.",
-      "damage": 130,
-      "sp": 2,
-      "perkItemTypes": [
-        0
-      ],
-      "requiredPerkLevels": [
-        20
-      ],
-      "hasEffect": false
     },
     "40": {
       "id": 40,
@@ -523,9 +608,14 @@
         10
       ],
       "requiredPerkLevels": [
-        5
+        6
       ],
-      "hasEffect": false
+      "hasEffect": true,
+      "effect": {
+        "damage": 0,
+        "effectType": 4,
+        "turns": 1
+      }
     },
     "41": {
       "id": 41,
@@ -537,7 +627,7 @@
         11
       ],
       "requiredPerkLevels": [
-        1
+        2
       ],
       "hasEffect": true,
       "effect": {
@@ -556,7 +646,7 @@
         11
       ],
       "requiredPerkLevels": [
-        3
+        4
       ],
       "hasEffect": true,
       "effect": {
@@ -570,82 +660,116 @@
       "name": "Backstab",
       "desc": "A treacherous attack on an undefended foe, dealing absolutely devastating damage.",
       "damage": 300,
-      "sp": 3,
+      "sp": 0,
       "perkItemTypes": [
         11
       ],
       "requiredPerkLevels": [
-        5
+        6
       ],
       "hasEffect": false
     },
-    "5": {
-      "id": 5,
-      "name": "Amethyst Bolt",
-      "desc": "A radiant purple crystal projectile, dealing heavy magic damage to its target.",
-      "damage": 130,
-      "sp": 1,
+    "44": {
+      "id": 44,
+      "name": "Stab of Agony",
+      "desc": "A vicious stab laced with agonizing venom that lingers in the wound.",
+      "damage": 60,
+      "sp": 2,
       "perkItemTypes": [
-        0
+        6
       ],
       "requiredPerkLevels": [
-        20
+        4
       ],
-      "hasEffect": false
+      "hasEffect": true,
+      "effect": {
+        "damage": 60,
+        "effectType": 2,
+        "turns": 3
+      }
     },
-    "6": {
-      "id": 6,
-      "name": "Lightning Strike",
-      "desc": "Summon a devastating bolt of electricity from the sky.",
-      "damage": 125,
-      "sp": 1,
-      "perkItemTypes": [
-        0
-      ],
-      "requiredPerkLevels": [
-        20
-      ],
-      "hasEffect": false
-    },
-    "7": {
-      "id": 7,
-      "name": "Roar of Ferocity",
-      "desc": "Unleash a thunderous roar, imbuing allies with increased strength and ferocity.",
-      "damage": 0,
-      "sp": 1,
-      "perkItemTypes": [
-        0
-      ],
-      "requiredPerkLevels": [
-        20
-      ],
-      "hasEffect": false
-    },
-    "8": {
-      "id": 8,
-      "name": "Poisonous Snake",
-      "desc": "Spit a venomous serpent that bites the target with one of the most deadly poisons ever to exist.",
+    "45": {
+      "id": 45,
+      "name": "Ember Shot",
+      "desc": "Launches a flaming arrow that scorches enemies with burn damage.",
       "damage": 110,
-      "sp": 1,
+      "sp": 2,
       "perkItemTypes": [
-        0
+        9
       ],
       "requiredPerkLevels": [
-        20
+        2
+      ],
+      "hasEffect": true,
+      "effect": {
+        "damage": 110,
+        "effectType": 1,
+        "turns": 1
+      }
+    },
+    "46": {
+      "id": 46,
+      "name": "Whirlwind Strike",
+      "desc": "A cyclonic flurry of axe strikes that overwhelms defenses for devastating damage.",
+      "damage": 200,
+      "sp": 2,
+      "perkItemTypes": [
+        7
+      ],
+      "requiredPerkLevels": [
+        2
       ],
       "hasEffect": false
     },
-    "9": {
-      "id": 9,
-      "name": "Maelstrom Blast",
-      "desc": "A fierce tempest that engulfs the battlefield with devastating power.",
-      "damage": 250,
-      "sp": 3,
+    "47": {
+      "id": 47,
+      "name": "Sunlight Attack",
+      "desc": "Channels the sun's searing rays through the spearhead for sustained burning.",
+      "damage": 110,
+      "sp": 2,
       "perkItemTypes": [
-        0
+        8
       ],
       "requiredPerkLevels": [
-        20
+        2
+      ],
+      "hasEffect": true,
+      "effect": {
+        "damage": 110,
+        "effectType": 1,
+        "turns": 1
+      }
+    },
+    "48": {
+      "id": 48,
+      "name": "Noxious Gas",
+      "desc": "Envelops the area in a choking miasma that rapidly poisons those caught within.",
+      "damage": 60,
+      "sp": 2,
+      "perkItemTypes": [
+        10
+      ],
+      "requiredPerkLevels": [
+        2
+      ],
+      "hasEffect": true,
+      "effect": {
+        "damage": 60,
+        "effectType": 2,
+        "turns": 3
+      }
+    },
+    "49": {
+      "id": 49,
+      "name": "Knife Throw",
+      "desc": "A precisely aimed thrown knife that finds and exploits any unguarded opening.",
+      "damage": 200,
+      "sp": 2,
+      "perkItemTypes": [
+        11
+      ],
+      "requiredPerkLevels": [
+        2
       ],
       "hasEffect": false
     }
