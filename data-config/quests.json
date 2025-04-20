@@ -886,7 +886,7 @@
       "exp": 3500,
       "gold": 750,
       "requiredDoneQuestIds": [
-        5
+        25
       ],
       "contributeDetails": [
         {
@@ -964,7 +964,7 @@
       "exp": 3500,
       "gold": 750,
       "requiredDoneQuestIds": [
-        10
+        30
       ],
       "contributeDetails": [
         {
@@ -1042,7 +1042,7 @@
       "exp": 3500,
       "gold": 750,
       "requiredDoneQuestIds": [
-        15
+        35
       ],
       "contributeDetails": [
         {
@@ -1120,7 +1120,7 @@
       "exp": 3500,
       "gold": 750,
       "requiredDoneQuestIds": [
-        20
+        40
       ],
       "contributeDetails": [
         {
@@ -1198,7 +1198,7 @@
       "exp": 3000,
       "gold": 800,
       "requiredDoneQuestIds": [
-        5
+        25
       ],
       "contributeDetails": [
         {
@@ -1216,7 +1216,7 @@
       "exp": 3000,
       "gold": 800,
       "requiredDoneQuestIds": [
-        10
+        30
       ],
       "contributeDetails": [
         {
@@ -1234,7 +1234,7 @@
       "exp": 3000,
       "gold": 800,
       "requiredDoneQuestIds": [
-        15
+        35
       ],
       "contributeDetails": [
         {
@@ -1252,7 +1252,7 @@
       "exp": 3000,
       "gold": 800,
       "requiredDoneQuestIds": [
-        20
+        40
       ],
       "contributeDetails": [
         {
