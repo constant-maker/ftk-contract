@@ -68,7 +68,7 @@ contract LevelSystem is System, CharacterAccessControl {
       }
       characterStats.statPoint += pointsPerLevel;
     }
-    characterStats.hp += amount * Config.HP_GAIN_PER_LEVEL;
+    characterStats.hp += amount * uint32(Config.HP_GAIN_PER_LEVEL);
     characterCurrentStats.hp = characterStats.hp; // level up will help recover to max hp
     CharStats.set(characterId, characterStats);
     CharCurrentStats.set(characterId, characterCurrentStats);
@@ -161,10 +161,10 @@ contract LevelSystem is System, CharacterAccessControl {
       uint32 calcNum = i - 1;
       requiredExp += calcNum * 20 + calcNum * calcNum * calcNum / 5;
     }
-    uint16 rebornNum = CharReborn.get(characterId);
+    uint32 rebornNum = uint32(CharReborn.get(characterId));
     if (rebornNum > 0) {
       // each time the character is reborn, the required exp increases by 10%
-      requiredExp = requiredExp * (rebornNum * uint32(10) + 100) / 100;
+      requiredExp = requiredExp * (rebornNum * 10 + 100) / 100;
     }
   }
 

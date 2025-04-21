@@ -16,7 +16,7 @@ import { Errors } from "@common/index.sol";
 import { InventoryItemUtils } from "@utils/InventoryItemUtils.sol";
 
 library CharacterItemUtils {
-  uint8 public constant DEFAULT_TOOL_DURABILITY = 50;
+  uint16 public constant DEFAULT_TOOL_DURABILITY = 50;
 
   /// @dev Check whether character perk level is enough to equip item
   function checkCharacterPerkLevelByItemId(uint256 characterId, uint256 itemId) internal view {
@@ -40,7 +40,7 @@ library CharacterItemUtils {
       // get current tool supply
       uint256 newToolId = ToolSupply.get() + 1;
       Tool2Data memory toolData =
-        Tool2Data({ itemId: itemId, characterId: characterId, durability: item.tier * DEFAULT_TOOL_DURABILITY });
+        Tool2Data({ itemId: itemId, characterId: characterId, durability: uint16(item.tier) * DEFAULT_TOOL_DURABILITY });
       Tool2.set(newToolId, toolData);
       ToolSupply.set(newToolId);
     } else if (item.category == ItemCategoryType.Equipment) {

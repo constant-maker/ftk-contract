@@ -122,23 +122,23 @@ contract PvESystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
     assertEq(pve.hps[0], characterHp);
 
     // assert skill
-    assertEq(pve.characterSkillIds[0], 3);
+    assertEq(pve.characterSkillIds[0], 12);
     assertEq(pve.characterSkillIds[1], 0);
-    assertEq(pve.characterSkillIds[2], 0);
+    assertEq(pve.characterSkillIds[2], 2);
     assertEq(pve.characterSkillIds[3], 0);
     // assert dmg
     assertEq(pve.damages[0], 0); // no bonus attack
-    assertEq(pve.damages[1], 44);
-    assertEq(pve.damages[2], 24);
+    assertEq(pve.damages[1], 33);
+    assertEq(pve.damages[2], 0);
     assertEq(pve.damages[3], 22);
     assertEq(pve.damages[4], 24);
-    assertEq(pve.damages[5], 22);
+    assertEq(pve.damages[5], 33);
     assertEq(pve.damages[6], 24);
     assertEq(pve.damages[7], 22);
     assertEq(pve.damages[8], 30); // monster use skill 125% dmg ~
 
     uint32 characterCurrentHp = CharCurrentStats.getHp(characterId);
-    assertEq(characterCurrentHp, 74);
+    assertEq(characterCurrentHp, 98);
     assertEq(CharCurrentStats.getExp(characterId), 0);
   }
 

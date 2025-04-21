@@ -2,9 +2,10 @@ pragma solidity >=0.8.24;
 
 import { CharInventory, CharInventoryData } from "@codegen/index.sol";
 import { CharOtherItem } from "@codegen/tables/CharOtherItem.sol";
-import { Tool2, Tool2Data, Item, ItemData, CharFund } from "@codegen/index.sol";
+import { Tool2, Tool2Data, Item, ItemData, CharFund, CharStats } from "@codegen/index.sol";
 import { WorldFixture, SpawnSystemFixture, MoveSystemFixture } from "@fixtures/index.sol";
 import { InventoryItemUtils } from "@utils/InventoryItemUtils.sol";
+import { console2 } from "forge-std/console2.sol";
 
 abstract contract CraftSystemFixture is WorldFixture, SpawnSystemFixture, MoveSystemFixture {
   function setUp() public virtual override(WorldFixture, SpawnSystemFixture, MoveSystemFixture) {
@@ -91,5 +92,22 @@ contract CraftSystemTest is CraftSystemFixture {
 
     vm.expectRevert();
     _craftItem(player, characterId, 1, woodAxeTier1_Id, 1);
+  }
+
+  function test_ShouldCraftTier6Item() external {
+    uint256 itemRecipeID = 183;
+
+    // give player enough resources
+    vm.startPrank(worldDeployer);
+    CharStats.setWeight(characterId, 163);
+    InventoryItemUtils.addItem(characterId, 1, 30);
+    InventoryItemUtils.addItem(characterId, 10, 30);
+    InventoryItemUtils.addItem(characterId, 5, 20);
+    CharFund.setGold(characterId, 1028);
+    vm.stopPrank();
+
+    vm.startPrank(player);
+    world.app__craftItem(characterId, 1, itemRecipeID, 1);
+    vm.stopPrank();
   }
 }

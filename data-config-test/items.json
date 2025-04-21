@@ -52,10 +52,10 @@
       "id": 5,
       "type": 23,
       "category": 2,
+      "tier": 5,
+      "weight": 1,
       "name": "Enchanted Wood",
       "desc": "Almost forgotten mythical wood from the Elder Tree that predate civilization.",
-      "tier": 5,
-      "weight": 5,
       "resourceInfo": {
         "type": 0
       }
@@ -537,6 +537,15 @@
       "weight": 6,
       "name": "Standard Wood Axe",
       "desc": "The well-balanced woodcutter's axe for harvesting various types of timber."
+    },
+    "183": {
+      "id": 183,
+      "type": 0,
+      "category": 0,
+      "tier": 6,
+      "weight": 12,
+      "name": "Adept Wood Axe",
+      "desc": "An advanced axe incorporating superior techniques that dramatically improves woodcutting efficiency."
     }
   }
 }

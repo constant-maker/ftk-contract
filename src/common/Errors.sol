@@ -170,6 +170,7 @@ library Errors {
   error ConsumeSystem_ItemAmountIsZero(uint256 characterId, uint256 itemId);
   error ConsumeSystem_MustBeBerry(uint256 characterId, uint256 itemId);
   error ConsumeSystem_ItemIsNotConsumable(uint256 characterId, uint256 itemId);
+  error ConsumeSystem_Overflow(uint256 characterId, uint256 gainedHp);
 
   /* -------------------------------------------------------------------------- */
   /*                               StorageSystem                                */

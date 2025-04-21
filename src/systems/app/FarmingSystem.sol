@@ -139,7 +139,7 @@ contract FarmingSystem is CharacterAccessControl, System {
 
       for (uint256 i = 0; i < lenItem; i++) {
         uint256 itemId = itemIds[i];
-        uint16 quota = 20 - (Item.getTier(itemId) - 1) * 2; // Min tier is 1, Max tier is 10
+        uint16 quota = uint16(20) - (Item.getTier(itemId) - 1) * 2; // Min tier is 1, Max tier is 10
         quotas[i] = quota;
       }
 
@@ -186,7 +186,7 @@ contract FarmingSystem is CharacterAccessControl, System {
 
   /// @dev Calculate resource perk exp
   function _calculateResourcePerkExp(uint256 resourceItemId) private view returns (uint32 perkExp) {
-    uint8 tier = Item.getTier(resourceItemId);
+    uint32 tier = uint32(Item.getTier(resourceItemId));
     return Config.BASE_RESOURCE_PERK_EXP * tier + (tier - 1) * 2; // all tier starts from 1
   }
 

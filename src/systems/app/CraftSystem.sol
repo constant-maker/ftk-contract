@@ -33,11 +33,15 @@ contract CraftSystem is System, CharacterAccessControl {
     if (resourcesLength == 0) {
       revert Errors.CraftSystem_NoRecipeForItem(craftItemId);
     }
+    // Spend gold
     CharacterFundUtils.decreaseGold(characterId, recipe.goldCost * craftAmount);
+    // Spend resources
+    uint32[] memory sumAmounts = new uint32[](resourcesLength);
     for (uint256 i = 0; i < resourcesLength; i++) {
-      InventoryItemUtils.removeItem(characterId, recipe.itemIds[i], recipe.amounts[i] * craftAmount);
+      sumAmounts[i] = recipe.amounts[i] * craftAmount;
     }
-    // add item to inventory
+    InventoryItemUtils.removeItems(characterId, recipe.itemIds, sumAmounts);
+    // Add crafted item
     if (Item.getCategory(craftItemId) == ItemCategoryType.Other) {
       InventoryItemUtils.addItem(characterId, craftItemId, craftAmount);
       return;

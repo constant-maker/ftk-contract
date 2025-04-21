@@ -1,13 +1,11 @@
+pragma solidity >=0.8.24;
+
 library CommonUtils {
   /// @dev Returns the new weight after applying a weight change.
-  function getNewWeight(
-    uint32 currentWeight,
-    uint32 weightChange,
-    bool isReduce
-  ) internal pure returns (uint32) {
+  function getNewWeight(uint32 currentWeight, uint32 weightChange, bool isReduce) internal pure returns (uint32) {
     if (!isReduce) {
       return currentWeight + weightChange;
-    } 
+    }
     if (weightChange > currentWeight) {
       // This might happen if we increase weight of an item
       // and then remove it from the inventory

@@ -303,6 +303,24 @@
         }
       ],
       "goldCost": 50
+    },
+    "183": {
+      "itemId": 183,
+      "ingredients": [
+        {
+          "itemId": 1,
+          "amount": 30
+        },
+        {
+          "itemId": 10,
+          "amount": 30
+        },
+        {
+          "itemId": 5,
+          "amount": 20
+        }
+      ],
+      "goldCost": 14
     }
   }
 }

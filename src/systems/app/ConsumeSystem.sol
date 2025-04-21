@@ -16,7 +16,7 @@ contract ConsumeSystem is System, CharacterAccessControl {
     }
     InventoryItemUtils.removeItem(characterId, itemId, amount);
     // berry can heal equal with its tier (e.g tier 1 ~ 1 hp)
-    uint32 gainedHp = Item.getTier(itemId) * amount;
+    uint32 gainedHp = uint32(Item.getTier(itemId)) * amount;
     CharacterStatsUtils.restoreHp(characterId, gainedHp);
   }
 
@@ -37,7 +37,11 @@ contract ConsumeSystem is System, CharacterAccessControl {
   }
 
   function _healing(uint256 characterId, uint256 itemId, uint32 amount) private {
-    uint32 gainedHp = HealingItemInfo.getHpRestore(itemId) * amount;
-    CharacterStatsUtils.restoreHp(characterId, gainedHp);
+    uint32 hpPerItem = HealingItemInfo.getHpRestore(itemId);
+    uint256 gainedHp = uint256(hpPerItem) * amount;
+    if (gainedHp > type(uint32).max) {
+      revert Errors.ConsumeSystem_Overflow(characterId, gainedHp);
+    }
+    CharacterStatsUtils.restoreHp(characterId, uint32(gainedHp));
   }
 }
