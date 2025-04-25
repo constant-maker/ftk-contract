@@ -19,6 +19,6 @@ func NpcCallData(npc common.Npc) ([]byte, error) {
 	keyTuple := [][32]byte{
 		[32]byte(encodeUint256(big.NewInt(npc.Id))),
 	}
-	mt := mud.NewMudTable("Npc", "app")
+	mt := mud.NewMudTable("Npc", "app", "")
 	return mt.SetRecordRawCalldata(keyTuple, staticData, encodedLength, dynamicData)
 }

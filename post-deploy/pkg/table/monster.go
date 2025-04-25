@@ -49,7 +49,7 @@ func MonsterCallData(monster common.Monster) ([]byte, error) {
 	keyTuple := [][32]byte{
 		[32]byte(encodeUint256(big.NewInt(int64(monster.Id)))),
 	}
-	mt := mud.NewMudTable("Monster", "app")
+	mt := mud.NewMudTable("Monster", "app", "")
 	return mt.SetRecordRawCalldata(keyTuple, staticData, encodedLength, dynamicData)
 }
 
@@ -64,7 +64,7 @@ func MonsterStatsCallData(monsterId int, stats common.MonsterStats) ([]byte, err
 	}
 	encodedLength := mud.PackedCounter{}
 	dynamicData := []byte{}
-	mt := mud.NewMudTable("MonsterStats", "app")
+	mt := mud.NewMudTable("Monster", "app", "")
 	return mt.SetRecordRawCalldata(keyTuple, staticData, encodedLength, dynamicData)
 }
 
@@ -92,7 +92,7 @@ func BossInfosCallData(monsterId int, bossInfo common.BossInfo, x int32, y int32
 	}
 	encodedLength := mud.PackedCounter{}
 	dynamicData := []byte{}
-	mt := mud.NewMudTable("BossInfo", "app")
+	mt := mud.NewMudTable("BossInfo", "app", "")
 	return mt.SetRecordRawCalldata(keyTuple, staticData, encodedLength, dynamicData)
 }
 
@@ -108,6 +108,6 @@ func MonsterLocationCallData(location common.Location, monsterId, level, advanta
 	}
 	encodedLength := mud.PackedCounter{}
 	dynamicData := []byte{}
-	mt := mud.NewMudTable("MonsterLocation", "app")
+	mt := mud.NewMudTable("MonsterLocation", "app", "")
 	return mt.SetRecordRawCalldata(keyTuple, staticData, encodedLength, dynamicData)
 }

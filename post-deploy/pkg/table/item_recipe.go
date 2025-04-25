@@ -30,6 +30,6 @@ func ItemRecipeCallData(recipe common.ItemRecipe) ([]byte, error) {
 		return nil, err
 	}
 
-	mt := mud.NewMudTable("ItemRecipe", "app")
+	mt := mud.NewMudTable("ItemRecipe", "app", "")
 	return mt.SetRecordRawCalldata(keyTuple, staticData, encodedLength, dynamicData)
 }

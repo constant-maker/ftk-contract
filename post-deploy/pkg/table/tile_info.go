@@ -8,6 +8,10 @@ import (
 	"go.uber.org/zap"
 )
 
+var (
+	tileInfoFL = "0x0043050301010120200000000000000000000000000000000000000000000000"
+)
+
 func TileInfoCallData(ti common.TileInfo, dataConfig common.DataConfig) ([]byte, error) {
 	l := zap.S()
 	keyTuple := [][32]byte{
@@ -41,6 +45,19 @@ func TileInfoCallData(ti common.TileInfo, dataConfig common.DataConfig) ([]byte,
 	}
 	resourceIdsData := encodeUint256Array(resourceIds)
 	dynamicData := simpleEncodePacked(resourceIdsData, encodeUint256Array(nil), encodeUint256Array(nil))
-	mt := mud.NewMudTable("TileInfo3", "app")
+	mt := mud.NewMudTable("TileInfo3", "app", tileInfoFL)
 	return mt.SetRecordRawCalldata(keyTuple, staticData, encodedLength, dynamicData)
+}
+
+func TileInfoSetZoneCallData(ti common.TileInfo, zone uint8) ([]byte, error) {
+	keyTuple := [][32]byte{
+		[32]byte(encodeUint256(big.NewInt(int64(ti.X)))),
+		[32]byte(encodeUint256(big.NewInt(int64(ti.Y)))),
+	}
+	staticData, err := encodePacked(zone)
+	if err != nil {
+		return nil, err
+	}
+	mt := mud.NewMudTable("TileInfo3", "app", tileInfoFL)
+	return mt.SetStaticFieldRawCalldata(keyTuple, 2, staticData)
 }

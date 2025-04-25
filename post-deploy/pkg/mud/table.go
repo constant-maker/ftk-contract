@@ -8,6 +8,7 @@ import (
 	"go.uber.org/zap"
 )
 
+// ABI is in out/IBaseWorld.sol/IBaseWorld.abi.json
 var contractABI = `
 [
 	{
@@ -38,6 +39,39 @@ var contractABI = `
         "name": "dynamicData",
         "type": "bytes",
         "internalType": "bytes"
+      }
+    ],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "type": "function",
+    "name": "setStaticField",
+    "inputs": [
+      {
+        "name": "tableId",
+        "type": "bytes32",
+        "internalType": "ResourceId"
+      },
+      {
+        "name": "keyTuple",
+        "type": "bytes32[]",
+        "internalType": "bytes32[]"
+      },
+      {
+        "name": "fieldIndex",
+        "type": "uint8",
+        "internalType": "uint8"
+      },
+      {
+        "name": "data",
+        "type": "bytes",
+        "internalType": "bytes"
+      },
+      {
+        "name": "fieldLayout",
+        "type": "bytes32",
+        "internalType": "FieldLayout"
       }
     ],
     "outputs": [],
@@ -76,25 +110,25 @@ var contractABI = `
 
 // MudTable represents the equivalent Go struct for MudTable in Rust
 type MudTable struct {
-	TableName string
-	Namespace string
-	// FieldLayout FieldLayout
-	TableID ResourceId
-	abi     abi.ABI
+	TableName   string
+	Namespace   string
+	FieldLayout FieldLayout
+	TableID     ResourceId
+	abi         abi.ABI
 }
 
 // New creates a new MudTable instance
-func NewMudTable(tableName, namespace string) MudTable {
+func NewMudTable(tableName, namespace, fieldLayout string) MudTable {
 	abi, err := abi.JSON(strings.NewReader(contractABI))
 	if err != nil {
 		log.Fatalf("failed to parse ABI: %v", err)
 	}
 	return MudTable{
-		TableName: tableName,
-		Namespace: namespace,
-		// FieldLayout: fieldLayout,
-		TableID: getTableId(tableName, namespace),
-		abi:     abi,
+		TableName:   tableName,
+		Namespace:   namespace,
+		FieldLayout: getFieldLayout(fieldLayout),
+		TableID:     getTableId(tableName, namespace),
+		abi:         abi,
 	}
 }
 
@@ -122,6 +156,20 @@ func (mt *MudTable) SetDynamicFieldRawCalldata(
 	callData, err := mt.abi.Pack("setDynamicField", mt.TableID, keyTuple, dynamicFieldIndex, dynamicData)
 	if err != nil {
 		zap.S().Errorw("cannot pack data setDynamicField", "err", err)
+		return nil, err
+	}
+	return callData, nil
+}
+
+// SetDynamicFieldRawCalldata returns raw calldata of setDynamicField
+func (mt *MudTable) SetStaticFieldRawCalldata(
+	keyTuple [][32]byte,
+	staticFieldIndex int,
+	staticData []byte,
+) ([]byte, error) {
+	callData, err := mt.abi.Pack("setStaticField", mt.TableID, keyTuple, uint8(staticFieldIndex), staticData, mt.FieldLayout)
+	if err != nil {
+		zap.S().Errorw("cannot pack data setStaticField", "err", err)
 		return nil, err
 	}
 	return callData, nil

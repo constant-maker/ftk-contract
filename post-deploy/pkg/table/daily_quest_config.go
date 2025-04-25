@@ -13,6 +13,6 @@ func DailyQuestConfigCallData(dqc common.DailyQuestConfig) ([]byte, error) {
 	}
 	encodedLength := mud.PackedCounter{}
 	dynamicData := []byte{}
-	mt := mud.NewMudTable("DailyQuestConfig", "app")
+	mt := mud.NewMudTable("DailyQuestConfig", "app", "")
 	return mt.SetRecordRawCalldata(keyTuple, staticData, encodedLength, dynamicData)
 }

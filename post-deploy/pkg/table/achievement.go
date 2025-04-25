@@ -23,6 +23,6 @@ func AchievementCallData(achievement common.Achievement) ([]byte, error) {
 		len(stringToBytes(achievement.Name)),
 	})
 	dynamicData := simpleEncodePacked(stringToBytes(achievement.Name))
-	mt := mud.NewMudTable("Achievement", "app")
+	mt := mud.NewMudTable("Achievement", "app", "")
 	return mt.SetRecordRawCalldata(keyTuple, staticData, encodedLength, dynamicData)
 }

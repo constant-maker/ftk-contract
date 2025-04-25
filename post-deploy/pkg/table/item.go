@@ -23,7 +23,7 @@ func ItemCallData(item common.Item) ([]byte, error) {
 	}
 	encodedLength := mud.EncodeLengths([]int{len(stringToBytes(item.Name))})
 	dynamicData := simpleEncodePacked(stringToBytes(item.Name))
-	mt := mud.NewMudTable("Item", "app")
+	mt := mud.NewMudTable("Item", "app", "")
 	return mt.SetRecordRawCalldata(keyTuple, staticData, encodedLength, dynamicData)
 }
 
@@ -46,7 +46,7 @@ func EquipmentItemInfoCallData(equipmentInfo common.EquipmentInfo, itemId int) (
 	}
 	encodedLength := mud.PackedCounter{}
 	dynamicData := []byte{}
-	mt := mud.NewMudTable("EquipmentInfo", "app")
+	mt := mud.NewMudTable("EquipmentInfo", "app", "")
 	return mt.SetRecordRawCalldata(keyTuple, staticData, encodedLength, dynamicData)
 }
 
@@ -62,7 +62,7 @@ func HealingItemInfoCallData(healingInfo common.HealingInfo, itemId int) ([]byte
 	}
 	encodedLength := mud.PackedCounter{}
 	dynamicData := []byte{}
-	mt := mud.NewMudTable("HealingItemInfo", "app")
+	mt := mud.NewMudTable("HealingItemInfo", "app", "")
 	return mt.SetRecordRawCalldata(keyTuple, staticData, encodedLength, dynamicData)
 }
 
@@ -78,6 +78,6 @@ func ResourceItemInfoCallData(resourceInfo common.ResourceInfo, itemId int) ([]b
 	}
 	encodedLength := mud.PackedCounter{}
 	dynamicData := []byte{}
-	mt := mud.NewMudTable("ResourceInfo", "app")
+	mt := mud.NewMudTable("ResourceInfo", "app", "")
 	return mt.SetRecordRawCalldata(keyTuple, staticData, encodedLength, dynamicData)
 }
