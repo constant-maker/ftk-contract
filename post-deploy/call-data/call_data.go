@@ -458,3 +458,15 @@ func BuildAchievementData(l *zap.SugaredLogger, dataConfig common.DataConfig, fr
 	}
 	return callData, nil
 }
+
+func BuildDailyQuestData(l *zap.SugaredLogger, dataConfig common.DataConfig, fromAchievementID int) ([][]byte, error) {
+	callData := make([][]byte, 0)
+	l.Infow("len DailyQuests", "value", dataConfig.DailyQuestConfig)
+	data, err := table.DailyQuestConfigCallData(dataConfig.DailyQuestConfig)
+	if err != nil {
+		l.Errorw("cannot build DailyQuest call data", "err", err)
+		return nil, err
+	}
+	callData = append(callData, data)
+	return callData, nil
+}
