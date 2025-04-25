@@ -5,7 +5,7 @@
     "pvpNum": 2,
     "pveNum": 3,
     "rewardExp": 100,
-    "rewardGold": 20
+    "rewardGold": 60
   },
   "quests": {
     "1": {
@@ -15,7 +15,7 @@
       "description": "Sylvanreach is running low on health potion supply! Liliana needs me to gather Wild Berries from the Outer World and Sticky Mucus from defeating Slimes, also known as Puru. The berries and mucus are needed for ensuring the swift recovery of our wounded soldiers.",
       "fromNpcId": 1,
       "exp": 50,
-      "gold": 10,
+      "gold": 30,
       "requiredDoneQuestIds": [],
       "contributeDetails": [
         {
@@ -35,7 +35,7 @@
       "description": "I'm tasked with gathering Iron Ore and Rough Stones from the lands surrounding the capital. These materials will be used to forge armors and weapons to fortify the kingdom's militia. Time is of the essence.",
       "fromNpcId": 1,
       "exp": 100,
-      "gold": 20,
+      "gold": 40,
       "requiredDoneQuestIds": [
         1
       ],
@@ -57,7 +57,7 @@
       "description": "Sylvanreach's storehouses are running critically low on essential supplies. I'll need to gather some Common Wheat, Stream Fish and Sylvan Wood to restock our dwindling storage. These vital food and building supplies are essential.",
       "fromNpcId": 1,
       "exp": 150,
-      "gold": 30,
+      "gold": 50,
       "requiredDoneQuestIds": [
         2
       ],
@@ -83,7 +83,7 @@
       "description": "The craftsmen's guild asked me to gather some Birch Wood, an uncommon type of wood in the forests of Sylvanreach. This birchwood is needed to craft noble regalia for allied kingdoms. However, I'll first need to craft a better Wood Axe to chop down these hard woods.",
       "fromNpcId": 1,
       "exp": 200,
-      "gold": 40,
+      "gold": 70,
       "requiredDoneQuestIds": [
         3
       ],
@@ -101,7 +101,7 @@
       "description": "I must hunt down and eliminate the vicious Gobblekins threatening Sylvanreach's villagers and crop fields. I must slay the savage raiders at all costs, or risk the village's ruin.",
       "fromNpcId": 1,
       "exp": 250,
-      "gold": 50,
+      "gold": 80,
       "requiredDoneQuestIds": [
         4
       ],
@@ -119,7 +119,7 @@
       "description": "Maeve is concerned about Misthaven's food stores running low. I'm tasked with gathering Common Wheat and Stream Fishes, else the kingdom will be at dire food shortage!",
       "fromNpcId": 2,
       "exp": 50,
-      "gold": 10,
+      "gold": 30,
       "requiredDoneQuestIds": [],
       "contributeDetails": [
         {
@@ -139,7 +139,7 @@
       "description": "With sustenance secured, Maeve now needs materials to repair damaged structures. My mission this time is to fight and chase away some Slimes, then rebuild the outer structures of Aetheria - Misthaven's capital.",
       "fromNpcId": 2,
       "exp": 100,
-      "gold": 20,
+      "gold": 40,
       "requiredDoneQuestIds": [
         6
       ],
@@ -169,7 +169,7 @@
       "description": "Misthaven's armoury found itself lacking the resources needed to produce more weapons and other equipment. My job is to contribute more Iron Ores and Woods to ensure the safety of our soldiers.",
       "fromNpcId": 2,
       "exp": 150,
-      "gold": 30,
+      "gold": 50,
       "requiredDoneQuestIds": [
         7
       ],
@@ -191,7 +191,7 @@
       "description": "I need to craft a better Pickaxe to mine some copper ore in the Outer World. This amount of copper is crucial for securing Misthaven's valuable trade relations through decorative metalwork.",
       "fromNpcId": 2,
       "exp": 200,
-      "gold": 40,
+      "gold": 70,
       "requiredDoneQuestIds": [
         8
       ],
@@ -209,7 +209,7 @@
       "description": "I must eradicate the infestation of the dangerous Screechits, a type of bat creature overrunning some regions in Mistheaven. These creatures are more dangerous than your average slimes. so I must be fully prepared.",
       "fromNpcId": 2,
       "exp": 250,
-      "gold": 50,
+      "gold": 80,
       "requiredDoneQuestIds": [
         8
       ],
@@ -227,7 +227,7 @@
       "description": "The ever snowing land of Everfrost is in constant need of more fire fuel and emergency food. I'm tasked with bringing Sylvan Woods and Wild Berries to Marina to help heat up the cold corners of Frostgard.",
       "fromNpcId": 3,
       "exp": 50,
-      "gold": 10,
+      "gold": 30,
       "requiredDoneQuestIds": [],
       "contributeDetails": [
         {
@@ -247,7 +247,7 @@
       "description": "Slimes are present even in the harsh weather of Everfrost. I need to fend them off while bringing extra iron ores and stones to support the local military.",
       "fromNpcId": 3,
       "exp": 100,
-      "gold": 20,
+      "gold": 40,
       "requiredDoneQuestIds": [
         11
       ],
@@ -273,7 +273,7 @@
       "description": "The monthly expedition crew needs as much reserve food as they can possibly carry, and I'm tasked with bringing some Stream Fish and Common Wheat to Marina for her to begin preparing well preserved food.",
       "fromNpcId": 3,
       "exp": 150,
-      "gold": 30,
+      "gold": 50,
       "requiredDoneQuestIds": [
         12
       ],
@@ -295,7 +295,7 @@
       "description": "I must journey to the forests surrounding the capital and harvest logs of rare, sturdy birch wood using a new wood axe. This prized timber is crucial for constructing a commissioned longboat fleet to secure Everfrost's naval power.",
       "fromNpcId": 3,
       "exp": 200,
-      "gold": 40,
+      "gold": 70,
       "requiredDoneQuestIds": [
         13
       ],
@@ -313,7 +313,7 @@
       "description": "I must eradicate the magically enhanced, ravenous hordes of oversized snow rabbits that have been devouring Everfrost's critical winter food reserves. I can't stop until we cull every last one of these surprisingly fierce, swarming hares to prevent starvation in the kingdom.",
       "fromNpcId": 3,
       "exp": 250,
-      "gold": 50,
+      "gold": 80,
       "requiredDoneQuestIds": [
         13
       ],
@@ -331,7 +331,7 @@
       "description": "I need to replenish the vital supplies of the desert oasis by gathering fresh Stream Fishes from the surrounding area and slaying some lava-spewing fire Slimes that have infested the waters. Completing this quest will help feed the people and secure Dunewatch's water source.",
       "fromNpcId": 4,
       "exp": 50,
-      "gold": 10,
+      "gold": 30,
       "requiredDoneQuestIds": [],
       "contributeDetails": [
         {
@@ -351,7 +351,7 @@
       "description": "The next crucial mission is to fortify the capital's oasis against the relentless sandstorms by mining iron ores to reinforce the shelters, and gathering rough stones to repair the eroded outer walls. Securing these hardy materials will allow the oasis to withstand the fury of the dune sea's storms.",
       "fromNpcId": 4,
       "exp": 100,
-      "gold": 20,
+      "gold": 40,
       "requiredDoneQuestIds": [
         16
       ],
@@ -373,7 +373,7 @@
       "description": "I need to nurture the recovering oasis by gathering wild berries for fertile soil, common wheat to replant the crops, and a large number of sylvan wood logs for new construction. Restoring the plant life and replenishing building materials will allow the desert refuge to truly thrive once more.",
       "fromNpcId": 4,
       "exp": 150,
-      "gold": 30,
+      "gold": 50,
       "requiredDoneQuestIds": [
         17
       ],
@@ -399,7 +399,7 @@
       "description": "I'll need to explore the surrounding landscape for some copper ore. These ores are rarer than iron, so I'll need to explore the scorching desert for a long while. But first, to gather these ores, I'll need to craft a better Pick Axe with the local blacksmith.",
       "fromNpcId": 4,
       "exp": 200,
-      "gold": 40,
+      "gold": 70,
       "requiredDoneQuestIds": [
         18
       ],
@@ -417,7 +417,7 @@
       "description": "I must eradicate the menacing packs of Flaming Foxes that have made nighttime travel nearly impassable. Purging this unnatural infestation prowling the dunes is crucial to ensuring the desert trails are safe for the thriving oasis's trade and travels once more.",
       "fromNpcId": 4,
       "exp": 250,
-      "gold": 50,
+      "gold": 80,
       "requiredDoneQuestIds": [
         18
       ],
