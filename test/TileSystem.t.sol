@@ -21,8 +21,12 @@ contract TileSystemTest is WorldFixture, SpawnSystemFixture, MoveSystemFixture {
   address player = makeAddr("player");
   uint256 characterId;
 
-  uint256 constant woodTier1_Id = 1;
-  uint256 constant oreTier1_Id = 10;
+  uint256 woodTier1_Id = 1;
+  uint256 stoneTier1_Id = 6;
+  uint256 fishTier1_Id = 8;
+  uint256 oreTier1_Id = 10;
+  uint256 wheatTier1_Id = 12;
+  uint256 berriesTier1_Id = 14;
 
   function setUp() public virtual override(WorldFixture, SpawnSystemFixture, MoveSystemFixture) {
     WorldFixture.setUp();
@@ -43,21 +47,31 @@ contract TileSystemTest is WorldFixture, SpawnSystemFixture, MoveSystemFixture {
 
     vm.startPrank(worldDeployer);
     InventoryItemUtils.addItem(characterId, woodTier1_Id, 20);
-    InventoryItemUtils.addItem(characterId, oreTier1_Id, 20);
+    InventoryItemUtils.addItem(characterId, stoneTier1_Id, 20);
+    InventoryItemUtils.addItem(characterId, fishTier1_Id, 20);
+
+    InventoryItemUtils.addItem(characterId, oreTier1_Id, 30);
+    InventoryItemUtils.addItem(characterId, wheatTier1_Id, 30);
+    InventoryItemUtils.addItem(characterId, berriesTier1_Id, 30);
+    
     CharFund.setGold(characterId, 20);
     vm.stopPrank();
 
     vm.startPrank(player);
     world.app__occupyTile(characterId);
     vm.stopPrank();
-    assertEq(CharOtherItem.getAmount(characterId, woodTier1_Id), 10);
-    assertEq(CharOtherItem.getAmount(characterId, oreTier1_Id), 10);
+    assertEq(CharOtherItem.getAmount(characterId, oreTier1_Id), 20);
+    assertEq(CharOtherItem.getAmount(characterId, wheatTier1_Id), 20);
+    assertEq(CharOtherItem.getAmount(characterId, berriesTier1_Id), 20);
     assertEq(CharFund.getGold(characterId), 15);
 
     _goUp(player, characterId);
     vm.startPrank(player);
     world.app__occupyTile(characterId);
     vm.stopPrank();
+    assertEq(CharOtherItem.getAmount(characterId, woodTier1_Id), 10);
+    assertEq(CharOtherItem.getAmount(characterId, stoneTier1_Id), 10);
+    assertEq(CharOtherItem.getAmount(characterId, fishTier1_Id), 10);
     assertEq(CharFund.getGold(characterId), 10);
     CharPositionData memory charPosition = CharacterPositionUtils.currentPosition(characterId);
     console2.log("position x", charPosition.x);

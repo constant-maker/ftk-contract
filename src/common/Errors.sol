@@ -199,6 +199,7 @@ library Errors {
   error NpcShopSystem_OnlySellTierOneTool(uint256 itemId);
   error NpcShopSystem_NotEnoughGold(uint256 cityId, uint32 npcBalance, uint32 cost);
   error NpcShopSystem_ItemTierTooLow(uint256 cityId, uint256 itemId, uint32 npcBalance);
+  error NpcShopSystem_ExceedItemBalanceCap(uint256 cityId, uint256 itemId, uint32 npcItemBalance, uint32 sellAmount);
   error NpcShopSystem_NotEnoughItem(uint256 cityId, uint256 itemId, uint32 currentAmount);
   error NpcShopSystem_OnlyAcceptOtherItem(uint256 itemId);
 

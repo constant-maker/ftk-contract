@@ -18,6 +18,7 @@ library InventoryItemUtils {
     CharacterWeightUtils.addItem(characterId, itemId, amount);
   }
 
+  /// @dev Remove items from inventory, also check if the item balance is enough
   function removeItems(uint256 characterId, uint256[] memory itemIds, uint32[] memory amounts) internal {
     require(itemIds.length == amounts.length, "Mismatched array lengths: itemIds and amounts");
     for (uint256 i = 0; i < itemIds.length; i++) {

@@ -85,6 +85,7 @@ contract NpcShopSystem is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
     assertEq(NpcShopInventory.getAmount(1, 1), 97);
   }
 
+  // test with max 250
   function test_SellItemToNpc() external {
     TradeData[] memory buyData;
     TradeData[] memory sellData = new TradeData[](2);
@@ -113,33 +114,116 @@ contract NpcShopSystem is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
     assertEq(NpcShop.get(1), 99_900);
 
     vm.startPrank(worldDeployer);
-    InventoryItemUtils.addItem(characterId, 1, 9900);
+    InventoryItemUtils.addItem(characterId, 1, 150);
     vm.stopPrank();
 
-    sellData[0].amount = 9900;
+    sellData[0].amount = 151;
+    vm.expectRevert(); // exceed npc shop item balance cap
     vm.startPrank(player);
     world.app__tradeWithNpc(characterId, cityId, buyData, sellData);
     vm.stopPrank();
 
-    assertEq(CharFund.getGold(characterId), 10_000);
+    sellData[0].amount = 150;
+    vm.startPrank(player);
+    world.app__tradeWithNpc(characterId, cityId, buyData, sellData);
+    vm.stopPrank();
+
+    assertEq(CharFund.getGold(characterId), 250);
     assertEq(CharOtherItem.getAmount(characterId, 1), 1);
-    assertEq(NpcShopInventory.getAmount(1, 1), 10_000);
-    assertEq(NpcShop.get(1), 90_000);
+    assertEq(NpcShopInventory.getAmount(1, 1), 250);
+    assertEq(NpcShop.get(1), 99_750);
 
     vm.startPrank(worldDeployer);
-    InventoryItemUtils.addItem(characterId, 2, 10_001);
+    InventoryItemUtils.addItem(characterId, 2, 251);
     vm.stopPrank();
 
     sellData[0].itemId = 2;
-    sellData[0].amount = 5000;
+    sellData[0].amount = 251;
+    vm.expectRevert(); // exceed npc shop item balance cap
     vm.startPrank(player);
     world.app__tradeWithNpc(characterId, cityId, buyData, sellData);
     vm.stopPrank();
 
-    assertEq(CharFund.getGold(characterId), 20_000);
-    assertEq(CharOtherItem.getAmount(characterId, 2), 5001);
-    assertEq(NpcShopInventory.getAmount(1, 2), 5000);
-    assertEq(NpcShop.get(1), 80_000);
+    sellData[0].amount = 250;
+    vm.startPrank(player);
+    world.app__tradeWithNpc(characterId, cityId, buyData, sellData);
+    vm.stopPrank();
+
+    assertEq(CharFund.getGold(characterId), 750);
+    assertEq(CharOtherItem.getAmount(characterId, 2), 1);
+    assertEq(NpcShopInventory.getAmount(1, 2), 250);
+    assertEq(NpcShop.get(1), 99_250);
     assertEq(NpcShop.get(2), 100_000);
   }
+
+  // test with max 500
+  // function test_SellItemToNpc() external {
+  //   TradeData[] memory buyData;
+  //   TradeData[] memory sellData = new TradeData[](2);
+  //   sellData[0] = TradeData({ itemId: 18, amount: 1 });
+  //   sellData[1] = TradeData({ itemId: 1, amount: 100 });
+
+  //   vm.expectRevert();
+  //   vm.startPrank(player);
+  //   world.app__tradeWithNpc(characterId, cityId, buyData, sellData);
+  //   vm.stopPrank();
+
+  //   sellData = new TradeData[](1);
+  //   sellData[0] = TradeData({ itemId: 1, amount: 100 });
+
+  //   vm.startPrank(worldDeployer);
+  //   InventoryItemUtils.addItem(characterId, 1, 101);
+  //   vm.stopPrank();
+
+  //   vm.startPrank(player);
+  //   world.app__tradeWithNpc(characterId, cityId, buyData, sellData);
+  //   vm.stopPrank();
+
+  //   assertEq(CharFund.getGold(characterId), 100);
+  //   assertEq(CharOtherItem.getAmount(characterId, 1), 1);
+  //   assertEq(NpcShopInventory.getAmount(1, 1), 100);
+  //   assertEq(NpcShop.get(1), 99_900);
+
+  //   vm.startPrank(worldDeployer);
+  //   InventoryItemUtils.addItem(characterId, 1, 400);
+  //   vm.stopPrank();
+
+  //   sellData[0].amount = 401;
+  //   vm.expectRevert(); // exceed npc shop item balance cap
+  //   vm.startPrank(player);
+  //   world.app__tradeWithNpc(characterId, cityId, buyData, sellData);
+  //   vm.stopPrank();
+
+  //   sellData[0].amount = 400;
+  //   vm.startPrank(player);
+  //   world.app__tradeWithNpc(characterId, cityId, buyData, sellData);
+  //   vm.stopPrank();
+
+  //   assertEq(CharFund.getGold(characterId), 500);
+  //   assertEq(CharOtherItem.getAmount(characterId, 1), 1);
+  //   assertEq(NpcShopInventory.getAmount(1, 1), 500);
+  //   assertEq(NpcShop.get(1), 99_500);
+
+  //   vm.startPrank(worldDeployer);
+  //   InventoryItemUtils.addItem(characterId, 2, 501);
+  //   vm.stopPrank();
+
+  //   sellData[0].itemId = 2;
+  //   sellData[0].amount = 501;
+  //   vm.expectRevert(); // exceed npc shop item balance cap
+  //   vm.startPrank(player);
+  //   world.app__tradeWithNpc(characterId, cityId, buyData, sellData);
+  //   vm.stopPrank();
+
+  //   sellData[0].amount = 500;
+  //   vm.startPrank(player);
+  //   world.app__tradeWithNpc(characterId, cityId, buyData, sellData);
+  //   vm.stopPrank();
+
+  //   assertEq(CharFund.getGold(characterId), 1500);
+  //   assertEq(CharOtherItem.getAmount(characterId, 2), 1);
+  //   assertEq(NpcShopInventory.getAmount(1, 2), 500);
+  //   assertEq(NpcShop.get(1), 98_500);
+  //   assertEq(NpcShop.get(2), 100_000);
+  // }
 }
