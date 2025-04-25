@@ -37,34 +37,6 @@ const MAP_TABLES: any = {
     },
     key: ['id'],
   },
-  // TileInfo: {
-  //   schema: {
-  //     kingdomId: "uint8",
-  //     x: "int32",
-  //     y: "int32",
-  //     farmSlot: "uint8",
-  //     zoneType: "ZoneType",
-  //     terrainType: "TerrainType",
-  //     itemIds: "uint256[]",
-  //     monsterIds: "uint256[]",
-  //   },
-  //   key: ['x', 'y'],
-  // },
-  // TileInfo2: {
-  //   schema: {
-  //     x: "int32",
-  //     y: "int32",
-  //     kingdomId: "uint8",
-  //     farmSlot: "uint8",
-  //     zoneType: "ZoneType",
-  //     terrainType: "TerrainType",
-  //     replenishTime: "uint256",
-  //     itemIds: "uint256[]",
-  //     farmingQuotas: "uint16[]",
-  //     monsterIds: "uint256[]",
-  //   },
-  //   key: ['x', 'y'],
-  // },
   TileInfo3: {
     schema: {
       x: "int32",

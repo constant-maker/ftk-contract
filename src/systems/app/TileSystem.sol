@@ -28,14 +28,12 @@ contract TileSystem is System, CharacterAccessControl {
     uint8 kingdomId = CharInfo.getKingdomId(characterId);
     _checkTileNearBy(x, y, kingdomId);
     CharacterFundUtils.decreaseGold(characterId, TILE_OCCUPATION_COST);
-    uint256[] memory itemIds = TileInfo3.getItemIds(x, y);
-    if (itemIds.length > 0) {
-      uint32[] memory amounts = new uint32[](itemIds.length);
-      for (uint256 i = 0; i < itemIds.length; i++) {
-        amounts[i] = TILE_OCCUPATION_RESOURCE_AMOUNT;
-      }
-      InventoryItemUtils.removeItems(characterId, itemIds, amounts);
+    uint256[] memory itemIds = _getRequiredItemIds(x, y);
+    uint32[] memory amounts = new uint32[](itemIds.length);
+    for (uint256 i = 0; i < itemIds.length; i++) {
+      amounts[i] = TILE_OCCUPATION_RESOURCE_AMOUNT;
     }
+    InventoryItemUtils.removeItems(characterId, itemIds, amounts);
     // Set new tile data
     uint8 tileKingdomId = TileInfo3.getKingdomId(x, y);
     if (kingdomId != tileKingdomId) {
@@ -64,5 +62,19 @@ contract TileSystem is System, CharacterAccessControl {
       return;
     }
     revert Errors.TileSystem_NoValidTileNearBy(x, y);
+  }
+
+  function _getRequiredItemIds(int32 x, int32 y) private pure returns (uint256[] memory) {
+    uint256[] memory itemIds = new uint256[](3);
+    if ((x + y) % 2 == 0) {
+      itemIds[0] = 1; // Wood tier 1
+      itemIds[1] = 6; // Stone tier 1
+      itemIds[2] = 8; // Fish tier 1
+    } else {
+      itemIds[0] = 10; // Ore tier 1
+      itemIds[1] = 12; // Wheat tier 1
+      itemIds[2] = 14; // Berries tier 1
+    }
+    return itemIds;
   }
 }

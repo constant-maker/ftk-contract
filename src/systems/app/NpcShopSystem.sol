@@ -23,6 +23,7 @@ contract NpcShopSystem is CharacterAccessControl, System {
   uint32 constant INIT_SHOP_BALANCE = 100_000; // golds
   uint32 constant TOOL_PRICE = 25;
   uint32 constant BUY_BACK_MULTIPLY = 3;
+  uint32 constant NPC_ITEM_BALANCE_CAP = 500; // max amount of each item in npc shop
 
   function tradeWithNpc(
     uint256 characterId,
@@ -73,14 +74,17 @@ contract NpcShopSystem is CharacterAccessControl, System {
   function _sellToNpc(uint256 characterId, uint256 cityId, TradeData[] calldata data) private returns (uint32 goldEarn) {
     if (data.length == 0) return 0;
     uint32 npcBalance = NpcShop.getGold(cityId);
-    uint32 minTierToBuy;
-    for (uint256 i; i < data.length; i++) {
+    for (uint256 i = 0; i < data.length; i++) {
       uint256 itemId = data[i].itemId;
       uint32 amount = data[i].amount;
       if (Item.getCategory(itemId) != ItemCategoryType.Other) {
         revert Errors.NpcShopSystem_OnlyAcceptOtherItem(itemId);
       }
-      InventoryItemUtils.removeItem(characterId, itemId, amount); // this func already check character item balance
+      uint32 npcItemBalance = NpcShopInventory.getAmount(cityId, itemId);
+      if ((npcItemBalance + amount) > NPC_ITEM_BALANCE_CAP) {
+        revert Errors.NpcShopSystem_ExceedItemBalanceCap(cityId, itemId, npcItemBalance, amount);
+      }
+      InventoryItemUtils.removeItem(characterId, itemId, amount);
       uint8 itemTier = Item.getTier(itemId);
       uint32 earn = itemTier * amount;
       if (earn > npcBalance) {
@@ -88,10 +92,6 @@ contract NpcShopSystem is CharacterAccessControl, System {
       }
       npcBalance -= earn;
       goldEarn += earn;
-      minTierToBuy = npcBalance >= INIT_SHOP_BALANCE ? 1 : (10 - npcBalance * 10 / INIT_SHOP_BALANCE);
-      if (itemTier < minTierToBuy) {
-        revert Errors.NpcShopSystem_ItemTierTooLow(cityId, itemId, npcBalance);
-      }
       _updateNpcInventory(cityId, itemId, amount, true);
     }
     NpcShop.setGold(cityId, npcBalance);
