@@ -23,7 +23,7 @@ contract NpcShopSystem is CharacterAccessControl, System {
   uint32 constant INIT_SHOP_BALANCE = 100_000; // golds
   uint32 constant TOOL_PRICE = 25;
   uint32 constant BUY_BACK_MULTIPLY = 3;
-  uint32 constant NPC_ITEM_BALANCE_CAP = 250; // max amount of each item in npc shop
+  uint32 constant NPC_ITEM_BALANCE_CAP = 500; // max amount of each item in npc shop
 
   function tradeWithNpc(
     uint256 characterId,
