@@ -64,7 +64,7 @@ func MonsterStatsCallData(monsterId int, stats common.MonsterStats) ([]byte, err
 	}
 	encodedLength := mud.PackedCounter{}
 	dynamicData := []byte{}
-	mt := mud.NewMudTable("Monster", "app", "")
+	mt := mud.NewMudTable("MonsterStats", "app", "")
 	return mt.SetRecordRawCalldata(keyTuple, staticData, encodedLength, dynamicData)
 }
 

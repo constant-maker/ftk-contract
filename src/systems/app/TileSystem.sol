@@ -6,9 +6,7 @@ import { CharPosition, CharPositionData } from "@codegen/tables/CharPosition.sol
 import { CharInfo } from "@codegen/tables/CharInfo.sol";
 import { CharStats2 } from "@codegen/tables/CharStats2.sol";
 import { CharacterAccessControl } from "@abstracts/CharacterAccessControl.sol";
-import { CharacterPositionUtils } from "@utils/CharacterPositionUtils.sol";
-import { CharacterFundUtils } from "@utils/CharacterFundUtils.sol";
-import { InventoryItemUtils } from "@utils/InventoryItemUtils.sol";
+import { InventoryItemUtils, CharacterFundUtils, CharacterPositionUtils, TileOtherItemUtils } from "@utils/index.sol";
 import { Errors } from "@common/Errors.sol";
 
 contract TileSystem is System, CharacterAccessControl {
@@ -46,6 +44,28 @@ contract TileSystem is System, CharacterAccessControl {
       CharStats2.setFame(characterId, currentFame + 10);
     }
     TileInfo3.setOccupiedTime(x, y, block.timestamp);
+  }
+
+  function claimDropItem(
+    uint256 characterId,
+    uint256[] memory itemIds,
+    uint32[] memory amounts
+  )
+    public
+    onlyAuthorizedWallet(characterId)
+  {
+    CharPositionData memory position = CharacterPositionUtils.currentPosition(characterId);
+    int32 x = position.x;
+    int32 y = position.y;
+    if (itemIds.length != amounts.length) {
+      revert("Invalid input");
+    }
+    for (uint256 i = 0; i < itemIds.length; i++) {
+      if (TileOtherItemUtils.hasItem(x, y, itemIds[i])) {
+        TileOtherItemUtils.removeItem(x, y, itemIds[i], amounts[i]);
+        InventoryItemUtils.addItem(characterId, itemIds[i], amounts[i]);
+      }
+    }
   }
 
   function _checkTileNearBy(int32 x, int32 y, uint8 kingdomId) private view {

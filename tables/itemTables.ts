@@ -31,20 +31,6 @@ const ITEM_TABLES: any = {
     },
     key: ['itemId'],
   },
-  EquipmentInfoV2: {
-    schema: {
-      itemId: "uint256",
-      slotType: "SlotType",
-      advantageType: "AdvantageType",
-      twoHanded: "bool",
-      hp: "int32",
-      atk: "int16",
-      def: "int16",
-      agi: "int16",
-      ms: "int16",
-    },
-    key: ['itemId'],
-  },
   EquipmentInfo2: { // Upgradable equipment
     schema: {
       itemId: "uint256",
@@ -58,6 +44,16 @@ const ITEM_TABLES: any = {
     schema: {
       itemId: "uint256",
       bonusWeight: "uint32"
+    },
+    key: ['itemId'],
+  },
+  CardInfo: {
+    schema: {
+      itemId: "uint256",
+      top: "uint16",
+      left: "uint16",
+      right: "uint16",
+      bottom: "uint16",
     },
     key: ['itemId'],
   },

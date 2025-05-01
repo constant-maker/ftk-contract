@@ -28,4 +28,7 @@ func InitMapEnums(dataConfig DataConfig) {
 	for enumValue, num := range dataConfig.AdvantageTypes {
 		MapAdvantageTypes[num] = enumValue
 	}
+	for enumValue, num := range dataConfig.RarityTypes {
+		MapRarityTypes[num] = enumValue
+	}
 }

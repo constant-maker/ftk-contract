@@ -4,6 +4,7 @@ import { Equipment, Tool2, Item, CharStorage, CharStorageMigration, ItemWeightCa
 import { CommonUtils } from "./CommonUtils.sol";
 import { EquipmentUtils } from "./EquipmentUtils.sol";
 import { Errors } from "@common/Errors.sol";
+import { Config } from "@common/Config.sol";
 
 library StorageWeightUtils {
   /*    Update equipment weight    */
@@ -129,14 +130,14 @@ library StorageWeightUtils {
       uint32 equipmentWeight = EquipmentUtils.mustGetEquipmentWeight(equipmentId);
       if (
         isRemoved && equipmentId < Config.MAX_EQUIPMENT_ID_TO_CHECK_CACHE_WEIGHT
-          && !CharStorageMigration.getIsMigrate(characterId, cityId, equipmentId)
+          && !CharStorageMigration.getIsMigrate(characterId, equipmentId)
       ) {
         uint32 cacheWeight = ItemWeightCache.get(Equipment.getItemId(equipmentId));
         if (cacheWeight != 0) {
           equipmentWeight = cacheWeight;
         }
       }
-      CharStorageMigration.setIsMigrate(characterId, cityId, equipmentId, true);
+      CharStorageMigration.setIsMigrate(characterId, equipmentId, true);
       weightChange += equipmentWeight;
     }
 

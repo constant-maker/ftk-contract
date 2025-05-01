@@ -3,7 +3,7 @@ pragma solidity >=0.8.24;
 import { WorldFixture, SpawnSystemFixture, WelcomeSystemFixture } from "./fixtures/index.sol";
 import { WorldFixture } from "./fixtures/WorldFixture.sol";
 import { console } from "forge-std/console.sol";
-import { NpcShop } from "@codegen/tables/NpcShop.sol";
+import { NpcShop, NpcShop2, NpcShop2Data } from "@codegen/index.sol";
 import { CharFund } from "@codegen/tables/CharFund.sol";
 import { CharOtherItem } from "@codegen/tables/CharOtherItem.sol";
 import { NpcShopInventory } from "@codegen/tables/NpcShopInventory.sol";
@@ -225,5 +225,33 @@ contract NpcShopSystem is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
     assertEq(NpcShopInventory.getAmount(1, 2), 500);
     assertEq(NpcShop.get(1), 98_500);
     assertEq(NpcShop.get(2), 100_000);
+  }
+
+  function test_buyCard() external {
+    NpcShop2Data memory npcShop = NpcShop2.get(cityId);
+    assertEq(npcShop.cardIds.length, 2);
+    assertEq(npcShop.cardAmounts.length, 2);
+    assertEq(npcShop.cardIds[0], 184);
+    assertEq(npcShop.cardIds[1], 185);
+    assertEq(npcShop.cardAmounts[0], 2);
+    assertEq(npcShop.cardAmounts[1], 3);
+
+    uint256 _index = 0;
+    vm.startPrank(worldDeployer);
+    CharFund.setGold(characterId, 10_000);
+    vm.stopPrank();
+
+    vm.startPrank(player);
+    world.app__buyCard(characterId, cityId, _index, 1);
+    vm.stopPrank();
+
+    assertEq(CharFund.getGold(characterId), 9000);
+    uint8 cardAmount = NpcShop2.getItemCardAmounts(cityId, _index);
+    assertEq(cardAmount, 1);
+
+    vm.expectRevert();
+    vm.startPrank(player);
+    world.app__buyCard(characterId, cityId, _index, 2); // exceed max amount
+    vm.stopPrank();
   }
 }

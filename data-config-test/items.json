@@ -546,6 +546,24 @@
       "weight": 12,
       "name": "Adept Wood Axe",
       "desc": "An advanced axe incorporating superior techniques that dramatically improves woodcutting efficiency."
+    },
+    "184": {
+      "id": 184,
+      "type": 27,
+      "category": 2,
+      "name": "Card",
+      "desc": "Card",
+      "tier": 1,
+      "weight": 1
+    },
+    "185": {
+      "id": 185,
+      "type": 27,
+      "category": 2,
+      "name": "Card",
+      "desc": "Card",
+      "tier": 2,
+      "weight": 1
     }
   }
 }

@@ -55,10 +55,7 @@ library CharacterItemUtils {
       if (newEquipmentId < Config.MAX_EQUIPMENT_ID_TO_CHECK_CACHE_WEIGHT) {
         // This is only for the migration, we will remove this in the future
         CharMigration.set(characterId, newEquipmentId, true);
-        CharStorageMigration.set(characterId, 1, newEquipmentId, true);
-        CharStorageMigration.set(characterId, 2, newEquipmentId, true);
-        CharStorageMigration.set(characterId, 3, newEquipmentId, true);
-        CharStorageMigration.set(characterId, 4, newEquipmentId, true);
+        CharStorageMigration.set(characterId, newEquipmentId, true);
       }
     } else if (item.category == ItemCategoryType.Other) {
       InventoryItemUtils.addItem(characterId, itemId, 1);

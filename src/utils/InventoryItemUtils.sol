@@ -32,6 +32,23 @@ library InventoryItemUtils {
     CharacterWeightUtils.removeItem(characterId, itemId, amount);
   }
 
+  function dropAllResource(
+    uint256 characterId,
+    uint256[] memory resourceIds
+  )
+    internal
+    returns (uint32[] memory resourceAmounts)
+  {
+    if (resourceIds.length == 0) {
+      return resourceAmounts;
+    }
+    for (uint256 i = 0; i < resourceIds.length; i++) {
+      uint32 amount = CharOtherItem.getAmount(characterId, resourceIds[i]);
+    }
+    removeItems(characterId, resourceIds, resourceAmounts);
+    return resourceAmounts;
+  }
+
   function _updateItem(uint256 characterId, uint256 itemId, uint32 changeAmount, bool isReduce) private {
     if (changeAmount == 0) return;
     uint32 currentAmount = CharOtherItem.getAmount(characterId, itemId);

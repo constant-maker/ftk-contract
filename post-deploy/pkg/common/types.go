@@ -13,16 +13,26 @@ type AchievementStats struct {
 }
 
 type Item struct {
-	Id            int            `json:"id"`
-	Type          int            `json:"type"`
-	Category      int            `json:"category"`
-	Tier          int            `json:"tier"`
-	Weight        int            `json:"weight"`
-	Name          string         `json:"name"`
-	Desc          string         `json:"desc"`
-	ResourceInfo  *ResourceInfo  `json:"resourceInfo,omitempty"`
-	EquipmentInfo *EquipmentInfo `json:"equipmentInfo,omitempty"`
-	HealingInfo   *HealingInfo   `json:"healingInfo,omitempty"`
+	Id             int             `json:"id"`
+	Type           int             `json:"type"`
+	Category       int             `json:"category"`
+	Tier           int             `json:"tier"`
+	OldWeight      int             `json:"oldWeight,omitempty"`
+	Weight         int             `json:"weight"`
+	Name           string          `json:"name"`
+	Desc           string          `json:"desc"`
+	ResourceInfo   *ResourceInfo   `json:"resourceInfo,omitempty"`
+	EquipmentInfo  *EquipmentInfo  `json:"equipmentInfo,omitempty"`
+	HealingInfo    *HealingInfo    `json:"healingInfo,omitempty"`
+	EquipmentInfo3 *EquipmentInfo3 `json:"equipmentInfo3,omitempty"`
+	CardInfo       *CardInfo       `json:"cardInfo,omitempty"`
+}
+
+type CardInfo struct {
+	Top    int `json:"top"`
+	Bottom int `json:"bottom"`
+	Left   int `json:"left"`
+	Right  int `json:"right"`
 }
 
 type EquipmentInfo struct {
@@ -34,6 +44,10 @@ type EquipmentInfo struct {
 	Agi           int  `json:"agi"`
 	Hp            int  `json:"hp"`
 	Ms            int  `json:"ms"`
+}
+
+type EquipmentInfo3 struct {
+	BonusWeight int `json:"bonusWeight"`
 }
 
 type HealingInfo struct {
@@ -111,11 +125,17 @@ type ItemRecipe struct {
 }
 
 type Npc struct {
-	Id     int64  `json:"id"`
-	CityId int64  `json:"cityId"`
-	X      int32  `json:"x"`
-	Y      int32  `json:"y"`
-	Name   string `json:"name"`
+	Id     int64     `json:"id"`
+	CityId int64     `json:"cityId"`
+	X      int32     `json:"x"`
+	Y      int32     `json:"y"`
+	Name   string    `json:"name"`
+	Cards  []NpcCard `json:"cards"`
+}
+
+type NpcCard struct {
+	Id     int64 `json:"id"`
+	Amount int64 `json:"amount"`
 }
 
 type QuestType string
@@ -254,6 +274,8 @@ type DailyQuestConfig struct {
 	RewardGold uint32 `json:"rewardGold"`
 }
 
+type RarityType string
+
 type DataConfig struct {
 	Achievements             map[string]Achievement `json:"achievements"` // map id => Achievement
 	Items                    map[string]Item        `json:"items"`        // map itemId => Item
@@ -282,6 +304,7 @@ type DataConfig struct {
 	ZoneTypes          map[ZoneType]int           `json:"zoneTypes"`          // enums
 	TerrainTypes       map[TerrainType]int        `json:"terrainTypes"`       // enums
 	AdvantageTypes     map[AdvantageType]int      `json:"advantageType"`      // enums
+	RarityTypes        map[RarityType]int         `json:"rarityType"`         // enums
 }
 
 var (
@@ -295,4 +318,5 @@ var (
 	MapZoneTypes           = make(map[int]ZoneType)
 	MapTerrainTypes        = make(map[int]TerrainType)
 	MapAdvantageTypes      = make(map[int]AdvantageType)
+	MapRarityTypes         = make(map[int]RarityType)
 )

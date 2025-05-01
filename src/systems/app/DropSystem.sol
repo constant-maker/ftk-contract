@@ -29,6 +29,7 @@ contract DropSystem is System, CharacterAccessControl {
 
   /// @dev drop equipments
   function _dropEquipments(uint256 characterId, uint256[] memory equipmentIds) private {
+    // revert("maintenance");
     for (uint256 i = 0; i < equipmentIds.length; i++) {
       uint256 equipmentId = equipmentIds[i];
       if (!InventoryEquipmentUtils.hasEquipment(characterId, equipmentId)) {

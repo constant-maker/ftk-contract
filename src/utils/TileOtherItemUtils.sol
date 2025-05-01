@@ -6,7 +6,7 @@ import { Errors } from "@common/Errors.sol";
 
 library TileOtherItemUtils {
   /// @dev Add items to tile drop
-  function addItems(int32 x, int32 y, uint256[] memory itemIds, uint32[] memory amounts) internal {
+  function addItems(int32 x, int32 y, uint256[] memory itemIds, uint32[] memory amounts) public {
     require(itemIds.length == amounts.length, "Mismatched lengths");
     for (uint256 i = 0; i < itemIds.length; i++) {
       _addItem(x, y, itemIds[i], amounts[i]);
@@ -14,7 +14,7 @@ library TileOtherItemUtils {
   }
 
   /// @dev Add one item to tile drop
-  function addItem(int32 x, int32 y, uint256 itemId, uint32 amount) internal {
+  function addItem(int32 x, int32 y, uint256 itemId, uint32 amount) public {
     _addItem(x, y, itemId, amount);
   }
 
@@ -31,10 +31,12 @@ library TileOtherItemUtils {
       uint32 currentAmount = TileDrop.getItemOtherItemAmounts(x, y, valueIndex);
       TileDrop.updateOtherItemAmounts(x, y, valueIndex, currentAmount + amount);
     }
+
+    TileDrop.setLastTimeDropped(x, y, block.timestamp);
   }
 
   /// @dev Remove items from tile drop
-  function removeItems(int32 x, int32 y, uint256[] memory itemIds, uint32[] memory amounts) internal {
+  function removeItems(int32 x, int32 y, uint256[] memory itemIds, uint32[] memory amounts) public {
     require(itemIds.length == amounts.length, "Mismatched lengths");
     for (uint256 i = 0; i < itemIds.length; i++) {
       _removeItem(x, y, itemIds[i], amounts[i]);
@@ -42,7 +44,7 @@ library TileOtherItemUtils {
   }
 
   /// @dev Remove one item from tile drop
-  function removeItem(int32 x, int32 y, uint256 itemId, uint32 amount) internal {
+  function removeItem(int32 x, int32 y, uint256 itemId, uint32 amount) public {
     _removeItem(x, y, itemId, amount);
   }
 
@@ -62,7 +64,7 @@ library TileOtherItemUtils {
   }
 
   /// @dev Check if tile has a specific item
-  function hasItem(int32 x, int32 y, uint256 itemId) internal view returns (bool) {
+  function hasItem(int32 x, int32 y, uint256 itemId) public view returns (bool) {
     uint256 index = TileOtherItemIndex.get(x, y, itemId);
     return index != 0;
   }

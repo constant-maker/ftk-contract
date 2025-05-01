@@ -75,6 +75,7 @@ const MAP_TABLES: any = {
     schema: {
       cityId: "uint256",
       cardIds: "uint256[]",
+      cardAmounts: "uint8[]",
     },
     key: ['cityId'],
   },

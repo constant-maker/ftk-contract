@@ -73,6 +73,12 @@ const BATTLE_TABLES: any = {
     },
     key: ['characterId'],
   },
+  DropResource: { // List resources will be dropped in red zone
+    schema: {
+      resourceIds: "uint256[]",
+    },
+    key: [],
+  },
 };
 
 export default BATTLE_TABLES;

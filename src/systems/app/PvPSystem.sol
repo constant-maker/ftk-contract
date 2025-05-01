@@ -14,15 +14,15 @@ import {
   PvPChallengeData,
   PvPExtra,
   PvPExtraData,
-  PvPBattleCounter
+  PvPBattleCounter,
+  DropResource,
+  TileInfo3,
+  CharInfo,
+  CharStats2,
+  Alliance
 } from "@codegen/index.sol";
-import { TileInfo3 } from "@codegen/tables/TileInfo3.sol";
-import { CharInfo } from "@codegen/tables/CharInfo.sol";
-import { CharStats2 } from "@codegen/tables/CharStats2.sol";
-import { Alliance } from "@codegen/tables/Alliance.sol";
 import { BattleInfo, BattleUtils } from "@utils/BattleUtils.sol";
-import { CharacterPositionUtils } from "@utils/CharacterPositionUtils.sol";
-import { DailyQuestUtils } from "@utils/DailyQuestUtils.sol";
+import { DailyQuestUtils, InventoryItemUtils, CharacterPositionUtils, TileOtherItemUtils } from "@utils/index.sol";
 import { CharacterStateType, ZoneType } from "@codegen/common.sol";
 import { Errors } from "@common/Errors.sol";
 import { Config } from "@common/Config.sol";
@@ -48,8 +48,8 @@ contract PvPSystem is System, CharacterAccessControl {
     (uint32 attackerHp, uint32 defenderHp) = _battle(attackerId, defenderId, false);
 
     _updateCharacterFame(attackerId, defenderId, defenderHp, attackerPosition);
-    _handleBattleResult(attackerId, attackerHp);
-    _handleBattleResult(defenderId, defenderHp);
+    _handleBattleResult(attackerId, attackerHp, attackerPosition);
+    _handleBattleResult(defenderId, defenderHp, defenderPosition);
 
     DailyQuestUtils.updatePvpCount(attackerId);
   }
@@ -78,23 +78,41 @@ contract PvPSystem is System, CharacterAccessControl {
 
     uint8 attackerKingdomId = CharInfo.getKingdomId(attackerId);
     uint8 defenderKingdomId = CharInfo.getKingdomId(defenderId);
+    uint8 tileKingdomId = TileInfo3.getKingdomId(position.x, position.y);
 
     bool isAlliance =
       Alliance.get(attackerKingdomId, defenderKingdomId) || Alliance.get(defenderKingdomId, attackerKingdomId);
-    bool isSameSide = (attackerKingdomId == defenderKingdomId) || isAlliance;
+    bool isSameSide = (attackerKingdomId == defenderKingdomId && tileKingdomId == attackerKingdomId) || isAlliance;
 
-    if (isSameSide && zoneType == ZoneType.Green) {
+    if (isSameSide) {
       currentFame = currentFame > 50 ? currentFame - 50 : 1; // min is 1
       CharStats2.set(attackerId, currentFame);
     }
   }
 
-  function _handleBattleResult(uint256 characterId, uint32 characterHp) private {
+  function _applyLoss(uint256 characterId, CharPositionData memory position) private {
+    int32 x = position.x;
+    int32 y = position.y;
+    ZoneType zoneType = TileInfo3.getZoneType(x, y);
+    uint8 tileKingdomId = TileInfo3.getKingdomId(x, y);
+    uint8 characterKingdomId = CharInfo.getKingdomId(characterId);
+    if (tileKingdomId != characterKingdomId || (tileKingdomId == characterKingdomId && zoneType == ZoneType.Black)) {
+      zoneType = ZoneType.Red;
+    }
+    if (zoneType == ZoneType.Red) {
+      // drop all resource (tier > 5) in inventory
+      uint256[] memory resourceIds = DropResource.getResourceIds();
+      uint32[] memory resourceAmounts = InventoryItemUtils.dropAllResource(characterId, resourceIds);
+      TileOtherItemUtils.addItems(x, y, resourceIds, resourceAmounts);
+    }
+  }
+
+  function _handleBattleResult(uint256 characterId, uint32 characterHp, CharPositionData memory position) private {
     if (characterHp == 0) {
       CharacterPositionUtils.moveToCapital(characterId);
       CharCurrentStats.setHp(characterId, CharStats.getHp(characterId)); // set character hp to max hp
+      _applyLoss(characterId, position);
     } else {
-      // TODO the reward for winner will be updated later
       CharCurrentStats.setHp(characterId, characterHp);
     }
   }
@@ -260,15 +278,6 @@ contract PvPSystem is System, CharacterAccessControl {
       revert Errors.PvP_NotReadyToBeAttacked(nextTimeToBeAttacked);
     }
   }
-
-  // function _checkIsSamePosition(uint256 attackerId, uint256 defenderId) private view {
-  //   CharPositionData memory attackerPosition = CharacterPositionUtils.currentPosition(attackerId);
-  //   CharPositionData memory defenderPosition = CharacterPositionUtils.currentPosition(defenderId);
-  //   if (attackerPosition.x != defenderPosition.x || attackerPosition.y != defenderPosition.y) {
-  //     revert Errors.PvP_NotSamePosition(attackerPosition.x, attackerPosition.y, defenderPosition.x,
-  // defenderPosition.y);
-  //   }
-  // }
 
   function _getOriginHps(
     uint256 attackerId,

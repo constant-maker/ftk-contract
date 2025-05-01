@@ -202,6 +202,9 @@ library Errors {
   error NpcShopSystem_ExceedItemBalanceCap(uint256 cityId, uint256 itemId, uint32 npcItemBalance, uint32 sellAmount);
   error NpcShopSystem_NotEnoughItem(uint256 cityId, uint256 itemId, uint32 currentAmount);
   error NpcShopSystem_OnlyAcceptOtherItem(uint256 itemId);
+  error NpcShopSystem_CardDataMismatch(uint256 cityId);
+  error NpcShopSystem_CardIndexOutOfBounds(uint256 cityId, uint256 cardIndex);
+  error NpcShopSystem_ExceedCardAmount(uint256 cityId, uint256 cardId, uint8 amount);
 
   /* -------------------------------------------------------------------------- */
   /*                               ChatSystem                                */

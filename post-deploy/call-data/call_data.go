@@ -240,6 +240,14 @@ func BuildNpcData(l *zap.SugaredLogger, dataConfig common.DataConfig) ([][]byte,
 			return nil, err
 		}
 		callData = append(callData, npcCallData)
+		if len(npc.Cards) != 0 {
+			npcCardCallData, err := table.NpcCardCallData(npc)
+			if err != nil {
+				l.Errorw("cannot build NPC Card call data", "err", err)
+				return nil, err
+			}
+			callData = append(callData, npcCardCallData)
+		}
 	}
 	return callData, nil
 }
@@ -468,5 +476,21 @@ func BuildDailyQuestData(l *zap.SugaredLogger, dataConfig common.DataConfig, fro
 		return nil, err
 	}
 	callData = append(callData, data)
+	return callData, nil
+}
+
+func BuildItemWeightCacheData(l *zap.SugaredLogger, dataConfig common.DataConfig) ([][]byte, error) {
+	callData := make([][]byte, 0)
+	l.Infow("len Items", "value", dataConfig.Items)
+	for _, item := range dataConfig.Items {
+		if item.EquipmentInfo != nil {
+			data, err := table.ItemWeightCacheCallData(item)
+			if err != nil {
+				l.Errorw("cannot build ItemWeightCache call data", "err", err)
+				return nil, err
+			}
+			callData = append(callData, data)
+		}
+	}
 	return callData, nil
 }
