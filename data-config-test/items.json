@@ -436,42 +436,6 @@
         "hpRestore": 20
       }
     },
-    "36": {
-      "id": 36,
-      "type": 23,
-      "category": 2,
-      "tier": 3,
-      "weight": 3,
-      "name": "Draconic Heart",
-      "desc": "It is said that a dragon's soul persists in its heart after death. The heart is still pulsing, albeit faintly.",
-      "resourceInfo": {
-        "type": 6
-      }
-    },
-    "37": {
-      "id": 37,
-      "type": 23,
-      "category": 2,
-      "tier": 3,
-      "weight": 3,
-      "name": "Red Scales",
-      "desc": "Crimson dragon scales, said to be nigh-indestructible, and of course, incredibly valuable.",
-      "resourceInfo": {
-        "type": 6
-      }
-    },
-    "38": {
-      "id": 38,
-      "type": 23,
-      "category": 2,
-      "tier": 3,
-      "weight": 3,
-      "name": "Dragon Fang",
-      "desc": "A massive and sharp fang, imbued with the dragon's ferocity.",
-      "resourceInfo": {
-        "type": 6
-      }
-    },
     "39": {
       "id": 39,
       "type": 8,
@@ -537,6 +501,42 @@
       "weight": 6,
       "name": "Standard Wood Axe",
       "desc": "The well-balanced woodcutter's axe for harvesting various types of timber."
+    },
+    "66": {
+      "id": 66,
+      "type": 23,
+      "category": 2,
+      "tier": 3,
+      "weight": 3,
+      "name": "Draconic Heart",
+      "desc": "It is said that a dragon's soul persists in its heart after death. The heart is still pulsing, albeit faintly.",
+      "resourceInfo": {
+        "type": 6
+      }
+    },
+    "67": {
+      "id": 67,
+      "type": 23,
+      "category": 2,
+      "tier": 3,
+      "weight": 3,
+      "name": "Red Scales",
+      "desc": "Crimson dragon scales, said to be nigh-indestructible, and of course, incredibly valuable.",
+      "resourceInfo": {
+        "type": 6
+      }
+    },
+    "68": {
+      "id": 68,
+      "type": 23,
+      "category": 2,
+      "tier": 3,
+      "weight": 3,
+      "name": "Dragon Fang",
+      "desc": "A massive and sharp fang, imbued with the dragon's ferocity.",
+      "resourceInfo": {
+        "type": 6
+      }
     },
     "183": {
       "id": 183,

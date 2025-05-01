@@ -201,9 +201,9 @@ contract PvESystemBossTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFix
       world.app__battlePvE(characterId, bossId);
       vm.stopPrank();
     }
-    uint32 amount1 = CharOtherItem.getAmount(characterId, 36);
-    uint32 amount2 = CharOtherItem.getAmount(characterId, 37);
-    uint32 amount3 = CharOtherItem.getAmount(characterId, 38);
+    uint32 amount1 = CharOtherItem.getAmount(characterId, 66);
+    uint32 amount2 = CharOtherItem.getAmount(characterId, 67);
+    uint32 amount3 = CharOtherItem.getAmount(characterId, 68);
     assertEq(amount1 + amount2 + amount3, 10);
   }
 
