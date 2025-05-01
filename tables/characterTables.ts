@@ -182,7 +182,7 @@ const CHARACTER_TABLES: any = {
     },
     key: ['characterId', 'cityId', 'itemId'],
   },
-  CharEquipStats: {
+  CharEquipStats: { // Cached data for equipment stats
     schema: {
       characterId: "uint256",
       slotType: "SlotType",
@@ -198,6 +198,35 @@ const CHARACTER_TABLES: any = {
     schema: {
       characterId: "uint256",
       num: "uint16",
+    },
+    key: ['characterId'],
+  },
+  CharMigration: {
+    schema: {
+      characterId: "uint256",
+      equipmentId: "uint256",
+      isMigrate: "bool",
+    },
+    key: ['characterId', 'equipmentId'],
+  },
+  CharStorageMigration: {
+    schema: {
+      characterId: "uint256",
+      cityId: "uint256",
+      equipmentId: "uint256",
+      isMigrate: "bool",
+    },
+    key: ['characterId', 'cityId', 'equipmentId'],
+  },
+  CharDebuff: {
+    schema: {
+      characterId: "uint256",
+      hp: "uint8[2]", // percent, deduce the hp
+      atk: "uint8[2]", // percent, deduce the attack
+      def: "uint8[2]", // percent, deduce the defense
+      agi: "uint8[2]", // percent, deduce the agility
+      movement: "uint16[2]", // additional time to move (seconds)
+      expiredAt: "uint256[2]", // expired time
     },
     key: ['characterId'],
   },

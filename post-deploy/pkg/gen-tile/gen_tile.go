@@ -46,9 +46,9 @@ func GenMapData(
 			var allTiles []common.Location
 			for _, zone := range kingdom.Zones {
 				validateZoneLocations(kingdom.ID, zone)
-				allTiles = append(allTiles, getAllTiles(zone)...)
+				allTiles = append(allTiles, common.GetAllTilesByLocation(zone)...)
 			}
-			allTiles = removeDupTile(allTiles)
+			allTiles = common.RemoveDupTile(allTiles)
 			l.Infow("all tiles", "kingdom", kingdom.ID, "len", len(allTiles))
 
 			var capital common.City
@@ -56,7 +56,7 @@ func GenMapData(
 				if city.KingdomId == uint8(kingdom.ID) && city.IsCapital {
 					capital = city
 				}
-				allTiles = removeTile(allTiles, common.Location{
+				allTiles = common.RemoveTile(allTiles, common.Location{
 					X: city.X,
 					Y: city.Y,
 				})

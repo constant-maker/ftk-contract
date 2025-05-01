@@ -1,7 +1,8 @@
 pragma solidity >=0.8.24;
 
-import { Equipment, Tool2, Item, CharStorage } from "@codegen/index.sol";
+import { Equipment, Tool2, Item, CharStorage, CharStorageMigration, ItemWeightCache } from "@codegen/index.sol";
 import { CommonUtils } from "./CommonUtils.sol";
+import { EquipmentUtils } from "./EquipmentUtils.sol";
 import { Errors } from "@common/Errors.sol";
 
 library StorageWeightUtils {
@@ -124,11 +125,19 @@ library StorageWeightUtils {
     uint32 weightChange = 0;
 
     for (uint256 i = 0; i < length; i++) {
-      uint256 itemId = Equipment.getItemId(equipmentIds[i]);
-      if (itemId == 0) {
-        revert Errors.Equipment_NotExisted(equipmentIds[i]);
+      uint256 equipmentId = equipmentIds[i];
+      uint32 equipmentWeight = EquipmentUtils.mustGetEquipmentWeight(equipmentId);
+      if (
+        isRemoved && equipmentId < Config.MAX_EQUIPMENT_ID_TO_CHECK_CACHE_WEIGHT
+          && !CharStorageMigration.getIsMigrate(characterId, cityId, equipmentId)
+      ) {
+        uint32 cacheWeight = ItemWeightCache.get(Equipment.getItemId(equipmentId));
+        if (cacheWeight != 0) {
+          equipmentWeight = cacheWeight;
+        }
       }
-      weightChange += Item.getWeight(itemId);
+      CharStorageMigration.setIsMigrate(characterId, cityId, equipmentId, true);
+      weightChange += equipmentWeight;
     }
 
     // Update the character's weight

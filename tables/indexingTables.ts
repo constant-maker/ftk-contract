@@ -46,6 +46,16 @@ const INDEXING_TABLES: any = {
     },
     key: ['x', 'y', 'monsterId'],
   },
+
+  TileOtherItemIndex: {
+    schema: {
+      x: "int32",
+      y: "int32",
+      itemId: "uint256",
+      index: "uint256",
+    },
+    key: ['x', 'y', 'itemId'],
+  },
 };
 
 export default INDEXING_TABLES;

@@ -52,10 +52,29 @@ const MAP_TABLES: any = {
     },
     key: ['x', 'y'],
   },
+  TileDrop: {
+    schema: {
+      x: "int32",
+      y: "int32",
+      lastTimeDropped: "uint256",
+      equipmentIds: "uint256[]",
+      toolIds: "uint256[]",
+      otherItemIds: "uint256[]",
+      otherItemAmounts: "uint32[]",
+    },
+    key: ['x', 'y'],
+  },
   NpcShop: {
     schema: {
       cityId: "uint256",
       gold: "uint32",
+    },
+    key: ['cityId'],
+  },
+  NpcShop2: {
+    schema: {
+      cityId: "uint256",
+      cardIds: "uint256[]",
     },
     key: ['cityId'],
   },

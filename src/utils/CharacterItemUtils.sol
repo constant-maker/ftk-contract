@@ -9,10 +9,13 @@ import {
   Equipment,
   EquipmentData,
   EquipmentSupply,
-  CharPerk
+  CharPerk,
+  CharMigration,
+  CharStorageMigration
 } from "@codegen/index.sol";
 import { ItemCategoryType, ItemType } from "@codegen/common.sol";
 import { Errors } from "@common/index.sol";
+import { Config } from "@common/Config.sol";
 import { InventoryItemUtils } from "@utils/InventoryItemUtils.sol";
 
 library CharacterItemUtils {
@@ -49,6 +52,14 @@ library CharacterItemUtils {
         EquipmentData({ itemId: itemId, characterId: characterId, level: 1, counter: 0 });
       Equipment.set(newEquipmentId, equipmentData);
       EquipmentSupply.set(newEquipmentId);
+      if (newEquipmentId < Config.MAX_EQUIPMENT_ID_TO_CHECK_CACHE_WEIGHT) {
+        // This is only for the migration, we will remove this in the future
+        CharMigration.set(characterId, newEquipmentId, true);
+        CharStorageMigration.set(characterId, 1, newEquipmentId, true);
+        CharStorageMigration.set(characterId, 2, newEquipmentId, true);
+        CharStorageMigration.set(characterId, 3, newEquipmentId, true);
+        CharStorageMigration.set(characterId, 4, newEquipmentId, true);
+      }
     } else if (item.category == ItemCategoryType.Other) {
       InventoryItemUtils.addItem(characterId, itemId, 1);
     }
