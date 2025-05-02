@@ -7,8 +7,6 @@ import {
   CharNextPosition,
   CharNextPositionData,
   NpcShop,
-  NpcShop2,
-  NpcShop2Data,
   Item,
   ItemData,
   NpcShopInventory
@@ -33,36 +31,6 @@ contract NpcShopSystem is CharacterAccessControl, System {
   uint32 constant BUY_BACK_MULTIPLY = 3;
   uint32 constant CARD_PRICE_MULTIPLIER = 1000;
   uint32 constant NPC_ITEM_BALANCE_CAP = 500; // max amount of each item in npc shop
-
-  function buyCard(
-    uint256 characterId,
-    uint256 cityId,
-    uint256 cardIndex,
-    uint8 amount
-  )
-    public
-    onlyAuthorizedWallet(characterId)
-  {
-    CharacterPositionUtils.MustInCity(characterId, cityId);
-    NpcShop2Data memory npcShop = NpcShop2.get(cityId);
-    if (npcShop.cardIds.length != npcShop.cardAmounts.length) {
-      revert Errors.NpcShopSystem_CardDataMismatch(cityId);
-    }
-    if (cardIndex >= npcShop.cardIds.length) {
-      revert Errors.NpcShopSystem_CardIndexOutOfBounds(cityId, cardIndex);
-    }
-    uint256 cardId = npcShop.cardIds[cardIndex];
-    uint8 cardAmount = npcShop.cardAmounts[cardIndex];
-    if (amount > cardAmount) {
-      revert Errors.NpcShopSystem_ExceedCardAmount(cityId, cardId, amount);
-    }
-    uint8 tier = Item.getTier(cardId);
-    uint32 goldCost = CARD_PRICE_MULTIPLIER * tier * amount;
-    CharacterFundUtils.decreaseGold(characterId, goldCost);
-    InventoryItemUtils.addItem(characterId, cardId, amount);
-    _increaseNpcGold(cityId, goldCost);
-    NpcShop2.updateCardAmounts(cityId, cardIndex, cardAmount - amount);
-  }
 
   function tradeWithNpc(
     uint256 characterId,
@@ -101,9 +69,13 @@ contract NpcShopSystem is CharacterAccessControl, System {
         goldCost += TOOL_PRICE * amount;
         _addTools(characterId, itemId, amount);
       } else if (itemData.category == ItemCategoryType.Other) {
-        goldCost += itemData.tier * BUY_BACK_MULTIPLY * amount;
+        uint32 unitPrice = itemData.tier * BUY_BACK_MULTIPLY;
+        if (Item.getItemType(itemId) == ItemType.Card) {
+          unitPrice = CARD_PRICE_MULTIPLIER * itemData.tier;
+        }
+        goldCost += unitPrice * amount;
         InventoryItemUtils.addItem(characterId, itemId, amount);
-        _updateNpcInventory(cityId, itemId, amount, false);
+        _updateNpcInventory(cityId, itemId, amount, true);
       }
     }
     _increaseNpcGold(cityId, goldCost);
@@ -125,13 +97,13 @@ contract NpcShopSystem is CharacterAccessControl, System {
       }
       InventoryItemUtils.removeItem(characterId, itemId, amount);
       uint8 itemTier = Item.getTier(itemId);
-      uint32 earn = itemTier * amount;
+      uint32 earn = uint32(itemTier) * amount;
       if (earn > npcBalance) {
         revert Errors.NpcShopSystem_NotEnoughGold(cityId, npcBalance, earn);
       }
       npcBalance -= earn;
       goldEarn += earn;
-      _updateNpcInventory(cityId, itemId, amount, true);
+      _updateNpcInventory(cityId, itemId, amount, false);
     }
     NpcShop.setGold(cityId, npcBalance);
     return goldEarn;
@@ -148,15 +120,15 @@ contract NpcShopSystem is CharacterAccessControl, System {
     NpcShop.setGold(cityId, npcBalance + amount);
   }
 
-  function _updateNpcInventory(uint256 cityId, uint256 itemId, uint32 amount, bool isGained) private {
+  function _updateNpcInventory(uint256 cityId, uint256 itemId, uint32 amount, bool isRemoved) private {
     uint32 currentAmount = NpcShopInventory.getAmount(cityId, itemId);
-    if (!isGained && currentAmount < amount) {
+    if (isRemoved && currentAmount < amount) {
       revert Errors.NpcShopSystem_NotEnoughItem(cityId, itemId, currentAmount);
     }
     if (currentAmount == 0) {
       NpcShopInventory.set(cityId, itemId, cityId, amount);
     } else {
-      uint32 newAmount = isGained ? currentAmount + amount : currentAmount - amount;
+      uint32 newAmount = isRemoved ? currentAmount - amount : currentAmount + amount;
       NpcShopInventory.setAmount(cityId, itemId, newAmount);
     }
   }

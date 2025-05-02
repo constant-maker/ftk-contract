@@ -71,14 +71,6 @@ const MAP_TABLES: any = {
     },
     key: ['cityId'],
   },
-  NpcShop2: {
-    schema: {
-      cityId: "uint256",
-      cardIds: "uint256[]",
-      cardAmounts: "uint8[]",
-    },
-    key: ['cityId'],
-  },
   NpcShopInventory: {
     schema: {
       cityId: "uint256",

@@ -3836,9 +3836,9 @@
       "id": 266,
       "type": 22,
       "category": 1,
-      "tier": 4,
+      "tier": 1,
       "weight": 0,
-      "name": "Gray Horse",
+      "name": "Grey Horse",
       "desc": "",
       "equipmentInfo": {
         "slotType": 5,
@@ -3848,17 +3848,17 @@
         "def": 0,
         "agi": 0,
         "hp": 0,
-        "ms": 2
+        "ms": 1
       },
       "equipmentInfo3": {
-        "bonusWeight": 50
+        "bonusWeight": 40
       }
     },
     "267": {
       "id": 267,
       "type": 22,
       "category": 1,
-      "tier": 6,
+      "tier": 2,
       "weight": 0,
       "name": "White Horse",
       "desc": "",
@@ -3870,7 +3870,7 @@
         "def": 0,
         "agi": 0,
         "hp": 0,
-        "ms": 3
+        "ms": 1
       },
       "equipmentInfo3": {
         "bonusWeight": 80

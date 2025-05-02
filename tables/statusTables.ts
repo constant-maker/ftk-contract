@@ -12,10 +12,10 @@ const STATUS_TABLES: any = {
   Debuff: {
     schema: {
       id: "uint256",
-      hp: "uint8", // percent, deduce the hp
-      atk: "uint8", // percent, deduce the attack
-      def: "uint8", // percent, deduce the defense
-      agi: "uint8", // percent, deduce the agility
+      hp: "uint8", // percent, reduce the hp
+      atk: "uint8", // percent, reduce the attack
+      def: "uint8", // percent, reduce the defense
+      agi: "uint8", // percent, reduce the agility
       movement: "uint16", // additional time to move (seconds)
       duration: "uint32", // duration in seconds
     },

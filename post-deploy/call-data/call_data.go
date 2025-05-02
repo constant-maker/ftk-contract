@@ -240,14 +240,14 @@ func BuildNpcData(l *zap.SugaredLogger, dataConfig common.DataConfig) ([][]byte,
 			return nil, err
 		}
 		callData = append(callData, npcCallData)
-		if len(npc.Cards) != 0 {
-			npcCardCallData, err := table.NpcCardCallData(npc)
-			if err != nil {
-				l.Errorw("cannot build NPC Card call data", "err", err)
-				return nil, err
-			}
-			callData = append(callData, npcCardCallData)
-		}
+		// if len(npc.Cards) != 0 {
+		// 	npcCardCallData, err := table.NpcCardCallData(npc)
+		// 	if err != nil {
+		// 		l.Errorw("cannot build NPC Card call data", "err", err)
+		// 		return nil, err
+		// 	}
+		// 	callData = append(callData, npcCardCallData)
+		// }
 	}
 	return callData, nil
 }
