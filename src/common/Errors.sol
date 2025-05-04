@@ -216,8 +216,10 @@ library Errors {
   /* -------------------------------------------------------------------------- */
   error TileSystem_TileIsLocked(int32 x, int32 y, uint256 occupiedTime);
   error TileSystem_NoValidTileNearBy(int32 x, int32 y);
-  error TileSystem_ItemNotFound(int32 x, int32 y, uint256 itemId);
+  error TileSystem_ItemNotFound(int32 x, int32 y, uint256 itemIndex);
+  error TileSystem_EquipmentNotFound(int32 x, int32 y, uint256 equipmentIndex);
   error TileSystem_ExceedItemBalance(int32 x, int32 y, uint256 itemId, uint32 currentAmount, uint32 requireAmount);
+  error TileSystem_NoItemInThisTile(int32 x, int32 y, uint256 lastDropTime);
 
   /* -------------------------------------------------------------------------- */
   /*                               RebornSystem                                 */

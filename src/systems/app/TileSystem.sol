@@ -1,13 +1,26 @@
 pragma solidity >=0.8.24;
 
 import { System } from "@latticexyz/world/src/System.sol";
-import { TileInfo3, TileInfo3Data } from "@codegen/tables/TileInfo3.sol";
+import { TileInfo3, TileInfo3Data, TileInventory } from "@codegen/index.sol";
 import { CharPosition, CharPositionData } from "@codegen/tables/CharPosition.sol";
 import { CharInfo } from "@codegen/tables/CharInfo.sol";
 import { CharStats2 } from "@codegen/tables/CharStats2.sol";
 import { CharacterAccessControl } from "@abstracts/CharacterAccessControl.sol";
-import { InventoryItemUtils, CharacterFundUtils, CharacterPositionUtils, TileOtherItemUtils } from "@utils/index.sol";
-import { Errors } from "@common/Errors.sol";
+import {
+  InventoryItemUtils,
+  CharacterFundUtils,
+  CharacterPositionUtils,
+  TileInventoryUtils,
+  InventoryEquipmentUtils
+} from "@utils/index.sol";
+import { Errors, Config } from "@common/index.sol";
+import { LootItems } from "./TileSystem.sol";
+
+struct LootItems {
+  uint256[] equipmentIndexes;
+  uint256[] itemIndexes;
+  uint32[] itemAmounts;
+}
 
 contract TileSystem is System, CharacterAccessControl {
   uint32 constant TILE_OCCUPATION_COST = 5; // gold
@@ -46,25 +59,37 @@ contract TileSystem is System, CharacterAccessControl {
     TileInfo3.setOccupiedTime(x, y, block.timestamp);
   }
 
-  function claimDropItem(
-    uint256 characterId,
-    uint256[] memory itemIds,
-    uint32[] memory amounts
-  )
-    public
-    onlyAuthorizedWallet(characterId)
-  {
+  function lootItems(uint256 characterId, LootItems calldata data) public onlyAuthorizedWallet(characterId) {
+    if (data.itemIndexes.length != data.itemAmounts.length) {
+      revert("Invalid input: itemIndexes and itemAmounts");
+    }
     CharPositionData memory position = CharacterPositionUtils.currentPosition(characterId);
     int32 x = position.x;
     int32 y = position.y;
-    if (itemIds.length != amounts.length) {
-      revert("Invalid input");
+    uint256 lastDropTime = TileInventory.getLastDropTime(x, y);
+    if (lastDropTime + Config.TILE_ITEM_AVAILABLE_DURATION < block.timestamp) {
+      revert Errors.TileSystem_NoItemInThisTile(x, y, lastDropTime);
     }
-    for (uint256 i = 0; i < itemIds.length; i++) {
-      if (TileOtherItemUtils.hasItem(x, y, itemIds[i])) {
-        TileOtherItemUtils.removeItem(x, y, itemIds[i], amounts[i]);
-        InventoryItemUtils.addItem(characterId, itemIds[i], amounts[i]);
+    for (uint256 i = 0; i < data.equipmentIndexes.length; i++) {
+      uint256 equipmentIndex = data.equipmentIndexes[i];
+      if (equipmentIndex >= TileInventory.lengthEquipmentIds(x, y)) {
+        revert Errors.TileSystem_EquipmentNotFound(x, y, equipmentIndex);
       }
+      uint256 equipmentId = TileInventory.getItemEquipmentIds(x, y, equipmentIndex);
+      TileInventoryUtils.removeEquipment(x, y, equipmentIndex);
+      InventoryEquipmentUtils.addEquipment(characterId, equipmentId, true);
+    }
+    if (data.itemIndexes.length > 0) {
+      uint256[] memory itemIds = new uint256[](data.itemIndexes.length);
+      for (uint256 i = 0; i < data.itemIndexes.length; i++) {
+        uint256 index = data.itemIndexes[i];
+        if (index >= TileInventory.lengthOtherItemIds(x, y)) {
+          revert Errors.TileSystem_ItemNotFound(x, y, index);
+        }
+        itemIds[i] = TileInventory.getItemOtherItemIds(x, y, index);
+      }
+      TileInventoryUtils.removeItems(x, y, itemIds, data.itemAmounts);
+      InventoryItemUtils.addItems(characterId, itemIds, data.itemAmounts);
     }
   }
 

@@ -34,19 +34,38 @@ library InventoryItemUtils {
 
   function dropAllResource(
     uint256 characterId,
-    uint256[] memory resourceIds
+    uint256[] memory rawResourceIds
   )
     internal
-    returns (uint32[] memory resourceAmounts)
+    returns (uint256[] memory resourceIds, uint32[] memory resourceAmounts)
   {
-    if (resourceIds.length == 0) {
-      return resourceAmounts;
+    // First pass to count how many valid entries
+    uint32 count;
+    for (uint256 i = 0; i < rawResourceIds.length; i++) {
+      if (CharOtherItem.getAmount(characterId, rawResourceIds[i]) > 0) {
+        count++;
+      }
     }
-    for (uint256 i = 0; i < resourceIds.length; i++) {
-      uint32 amount = CharOtherItem.getAmount(characterId, resourceIds[i]);
+
+    // Allocate only for non-zero entries
+    resourceIds = new uint256[](count);
+    resourceAmounts = new uint32[](count);
+
+    uint256 index;
+    for (uint256 i = 0; i < rawResourceIds.length; i++) {
+      uint32 amount = CharOtherItem.getAmount(characterId, rawResourceIds[i]);
+      if (amount > 0) {
+        resourceIds[index] = rawResourceIds[i];
+        resourceAmounts[index] = amount;
+        index++;
+      }
     }
-    removeItems(characterId, resourceIds, resourceAmounts);
-    return resourceAmounts;
+
+    if (index > 0) {
+      removeItems(characterId, resourceIds, resourceAmounts);
+    }
+
+    return (resourceIds, resourceAmounts);
   }
 
   function _updateItem(uint256 characterId, uint256 itemId, uint32 changeAmount, bool isReduce) private {

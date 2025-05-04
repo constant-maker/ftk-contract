@@ -15,14 +15,13 @@ import {
   PvPExtra,
   PvPExtraData,
   PvPBattleCounter,
-  DropResource,
   TileInfo3,
   CharInfo,
   CharStats2,
   Alliance
 } from "@codegen/index.sol";
 import { BattleInfo, BattleUtils } from "@utils/BattleUtils.sol";
-import { DailyQuestUtils, InventoryItemUtils, CharacterPositionUtils, TileOtherItemUtils } from "@utils/index.sol";
+import { DailyQuestUtils, InventoryItemUtils, CharacterPositionUtils } from "@utils/index.sol";
 import { CharacterStateType, ZoneType } from "@codegen/common.sol";
 import { Errors } from "@common/Errors.sol";
 import { Config } from "@common/Config.sol";
@@ -90,28 +89,11 @@ contract PvPSystem is System, CharacterAccessControl {
     }
   }
 
-  function _applyLoss(uint256 characterId, CharPositionData memory position) private {
-    int32 x = position.x;
-    int32 y = position.y;
-    ZoneType zoneType = TileInfo3.getZoneType(x, y);
-    uint8 tileKingdomId = TileInfo3.getKingdomId(x, y);
-    uint8 characterKingdomId = CharInfo.getKingdomId(characterId);
-    if (tileKingdomId != characterKingdomId || (tileKingdomId == characterKingdomId && zoneType == ZoneType.Black)) {
-      zoneType = ZoneType.Red;
-    }
-    if (zoneType == ZoneType.Red) {
-      // drop all resource (tier > 5) in inventory
-      uint256[] memory resourceIds = DropResource.getResourceIds();
-      uint32[] memory resourceAmounts = InventoryItemUtils.dropAllResource(characterId, resourceIds);
-      TileOtherItemUtils.addItems(x, y, resourceIds, resourceAmounts);
-    }
-  }
-
   function _handleBattleResult(uint256 characterId, uint32 characterHp, CharPositionData memory position) private {
     if (characterHp == 0) {
       CharacterPositionUtils.moveToCapital(characterId);
       CharCurrentStats.setHp(characterId, CharStats.getHp(characterId)); // set character hp to max hp
-      _applyLoss(characterId, position);
+      BattleUtils.applyLoss(characterId, position);
     } else {
       CharCurrentStats.setHp(characterId, characterHp);
     }

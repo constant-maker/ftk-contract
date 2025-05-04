@@ -23,4 +23,4 @@ import { CharacterFundUtils } from "./CharacterFundUtils.sol";
 import { TileUtils } from "./TileUtils.sol";
 import { CharacterWeightUtils } from "./CharacterWeightUtils.sol";
 import { CommonUtils } from "./CommonUtils.sol";
-import { TileOtherItemUtils } from "./TileOtherItemUtils.sol";
+import { TileInventoryUtils } from "./TileInventoryUtils.sol";

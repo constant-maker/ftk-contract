@@ -216,6 +216,18 @@ func buildCallData(
 	}
 	callData = append(callData, dailyQuestConfigData)
 
+	// drop resource
+	minTier := 5 // drop from tier 5
+	if isTest {
+		minTier = 2 // drop from tier 2
+	}
+	dropResourceCallData, err := table.DropResourceCallData(dataConfig, minTier)
+	if err != nil {
+		l.Errorw("cannot build DropResource call data", "err", err)
+		return nil, err
+	}
+	callData = append(callData, dropResourceCallData)
+
 	// custom to update tile and monster location
 	var customCallData [][]byte
 	// tile infos

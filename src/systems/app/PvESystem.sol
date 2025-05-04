@@ -55,17 +55,10 @@ contract PvESystem is System, CharacterAccessControl {
     (uint32 characterHp, uint32 monsterHp) = _battle(characterId, monsterId, characterPosition, monsterLocation);
     // handle result
     _handleBattleResult(
-      characterId,
-      monsterId,
-      isBoss,
-      characterHp,
-      monsterHp,
-      monsterLocation.level,
-      characterPosition.x,
-      characterPosition.y
+      characterId, monsterId, isBoss, characterHp, monsterHp, monsterLocation.level, characterPosition
     );
     if (isBoss) {
-      BattlePvEUtils.handleBossResult(characterId, monsterId, monsterHp, characterPosition.x, characterPosition.y);
+      BattlePvEUtils.handleBossResult(characterId, monsterId, monsterHp, characterPosition);
     }
   }
 
@@ -76,13 +69,13 @@ contract PvESystem is System, CharacterAccessControl {
     uint32 characterHp,
     uint32 monsterHp,
     uint16 monsterLevel,
-    int32 x,
-    int32 y
+    CharPositionData memory characterPosition
   )
     private
   {
     if (characterHp == 0) {
       // character lost
+      BattleUtils.applyLoss(characterId, characterPosition);
       CharacterPositionUtils.moveToCapital(characterId);
       characterHp = CharStats.getHp(characterId); // set character hp to max hp
       CharCurrentStats.setExp(characterId, CharCurrentStats.getExp(characterId) * 75 / 100); // penalty 25% current exp
@@ -103,7 +96,7 @@ contract PvESystem is System, CharacterAccessControl {
       // check and update daily quest
       DailyQuestUtils.updatePveCount(characterId);
       // increase slot farm
-      TileUtils.increaseFarmSlot(x, y);
+      TileUtils.increaseFarmSlot(characterPosition.x, characterPosition.y);
       if (isBoss) {
         CharAchievementUtils.addAchievement(characterId, 3); // defeated the first boss
         if (monsterId == 9) {

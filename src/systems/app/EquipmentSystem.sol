@@ -14,7 +14,6 @@ import { CharEquipment, CharGrindSlot, Equipment, EquipmentData, EquipmentInfo, 
 import { SlotType } from "@codegen/common.sol";
 import { Errors } from "@common/index.sol";
 import { EquipData } from "./EquipmentSystem.sol";
-import { console2 } from "forge-std/console2.sol";
 
 struct EquipData {
   SlotType slotType;

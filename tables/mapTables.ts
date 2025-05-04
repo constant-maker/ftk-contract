@@ -52,11 +52,11 @@ const MAP_TABLES: any = {
     },
     key: ['x', 'y'],
   },
-  TileDrop: {
+  TileInventory: {
     schema: {
       x: "int32",
       y: "int32",
-      lastTimeDropped: "uint256",
+      lastDropTime: "uint256",
       equipmentIds: "uint256[]",
       toolIds: "uint256[]",
       otherItemIds: "uint256[]",

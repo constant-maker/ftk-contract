@@ -15,13 +15,19 @@ import {
   BossInfo,
   BossInfoData,
   SkillEffect,
-  SkillEffectData
+  SkillEffectData,
+  TileInfo3,
+  CharInfo,
+  DropResource,
+  CharPositionData
 } from "@codegen/index.sol";
 import { PvE } from "@codegen/tables/PvE.sol";
-import { AdvantageType, SlotType, EffectType } from "@codegen/common.sol";
+import { AdvantageType, SlotType, EffectType, ZoneType } from "@codegen/common.sol";
 import { Config } from "@common/Config.sol";
 import { Errors } from "@common/Errors.sol";
 import { CharacterEquipmentUtils } from "./CharacterEquipmentUtils.sol";
+import { TileInventoryUtils } from "./TileInventoryUtils.sol";
+import { InventoryItemUtils } from "./InventoryItemUtils.sol";
 
 struct BattleInfo {
   uint256 id;
@@ -332,5 +338,23 @@ library BattleUtils {
     equipmentIds[4] = CharEquipment.getEquipmentId(characterId, SlotType.Footwear);
     equipmentIds[5] = CharEquipment.getEquipmentId(characterId, SlotType.Mount);
     return equipmentIds;
+  }
+
+  function applyLoss(uint256 characterId, CharPositionData memory position) public {
+    int32 x = position.x;
+    int32 y = position.y;
+    ZoneType zoneType = TileInfo3.getZoneType(x, y);
+    uint8 tileKingdomId = TileInfo3.getKingdomId(x, y);
+    uint8 characterKingdomId = CharInfo.getKingdomId(characterId);
+    if (tileKingdomId != characterKingdomId || (tileKingdomId == characterKingdomId && zoneType == ZoneType.Black)) {
+      zoneType = ZoneType.Red;
+    }
+    if (zoneType == ZoneType.Red) {
+      // drop all resource (tier > 5) in inventory
+      uint256[] memory rawResourceIds = DropResource.getResourceIds();
+      (uint256[] memory resourceIds, uint32[] memory resourceAmounts) =
+        InventoryItemUtils.dropAllResource(characterId, rawResourceIds);
+      TileInventoryUtils.addItems(x, y, resourceIds, resourceAmounts);
+    }
   }
 }
