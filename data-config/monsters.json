@@ -222,10 +222,10 @@
       "exp": 16,
       "perkExp": 14,
       "stats": {
-        "hp": 70,
-        "atk": 10,
-        "def": 4,
-        "agi": 4,
+        "hp": 65,
+        "atk": 8,
+        "def": 3,
+        "agi": 2,
         "sp": 3
       }
     },
@@ -244,10 +244,10 @@
       "exp": 14,
       "perkExp": 16,
       "stats": {
-        "hp": 65,
-        "atk": 12,
+        "hp": 60,
+        "atk": 9,
         "def": 3,
-        "agi": 5,
+        "agi": 2,
         "sp": 3
       }
     },
@@ -266,9 +266,9 @@
       "exp": 20,
       "perkExp": 10,
       "stats": {
-        "hp": 70,
-        "atk": 10,
-        "def": 5,
+        "hp": 60,
+        "atk": 8,
+        "def": 3,
         "agi": 3,
         "sp": 3
       }
@@ -289,9 +289,9 @@
       "perkExp": 20,
       "stats": {
         "hp": 65,
-        "atk": 13,
+        "atk": 10,
         "def": 2,
-        "agi": 4,
+        "agi": 2,
         "sp": 3
       }
     },
@@ -307,13 +307,13 @@
       "skillIds": [1, 0, 0, 18, 0],
       "itemIds": [121],
       "itemAmounts": [1],
-      "exp": 18,
-      "perkExp": 12,
+      "exp": 20,
+      "perkExp": 10,
       "stats": {
-        "hp": 75,
-        "atk": 12,
-        "def": 5,
-        "agi": 5,
+        "hp": 70,
+        "atk": 9,
+        "def": 2,
+        "agi": 3,
         "sp": 3
       }
     },
@@ -329,13 +329,13 @@
       "skillIds": [1, 0, 0, 20, 0],
       "itemIds": [120],
       "itemAmounts": [1],
-      "exp": 14,
-      "perkExp": 16,
+      "exp": 10,
+      "perkExp": 20,
       "stats": {
-        "hp": 80,
-        "atk": 13,
-        "def": 3,
-        "agi": 8,
+        "hp": 70,
+        "atk": 10,
+        "def": 4,
+        "agi": 6,
         "sp": 3
       }
     },
@@ -351,13 +351,13 @@
       "skillIds": [1, 0, 0, 19, 0],
       "itemIds": [119, 175],
       "itemAmounts": [1, 1],
-      "exp": 20,
-      "perkExp": 10,
+      "exp": 15,
+      "perkExp": 15,
       "stats": {
-        "hp": 85,
-        "atk": 10,
-        "def": 10,
-        "agi": 4,
+        "hp": 75,
+        "atk": 4,
+        "def": 12,
+        "agi": 3,
         "sp": 3
       }
     },
@@ -373,13 +373,13 @@
       "skillIds": [1, 0, 0, 18, 0],
       "itemIds": [123],
       "itemAmounts": [1],
-      "exp": 15,
-      "perkExp": 15,
+      "exp": 20,
+      "perkExp": 10,
       "stats": {
         "hp": 70,
-        "atk": 13,
-        "def": 2,
-        "agi": 7,
+        "atk": 5,
+        "def": 8,
+        "agi": 2,
         "sp": 3
       }
     },
@@ -395,13 +395,13 @@
       "skillIds": [1, 0, 0, 20, 0],
       "itemIds": [122, 176],
       "itemAmounts": [1, 1],
-      "exp": 14,
-      "perkExp": 16,
+      "exp": 10,
+      "perkExp": 20,
       "stats": {
-        "hp": 75,
-        "atk": 13,
-        "def": 5,
-        "agi": 6,
+        "hp": 70,
+        "atk": 10,
+        "def": 1,
+        "agi": 8,
         "sp": 3
       }
     },
@@ -417,13 +417,13 @@
       "skillIds": [1, 0, 0, 21, 0],
       "itemIds": [124],
       "itemAmounts": [1],
-      "exp": 12,
-      "perkExp": 18,
+      "exp": 15,
+      "perkExp": 15,
       "stats": {
-        "hp": 90,
-        "atk": 10,
-        "def": 5,
-        "agi": 8,
+        "hp": 70,
+        "atk": 7,
+        "def": 6,
+        "agi": 5,
         "sp": 3
       }
     },
@@ -439,13 +439,13 @@
       "skillIds": [1, 0, 0, 22, 0],
       "itemIds": [125],
       "itemAmounts": [1],
-      "exp": 10,
-      "perkExp": 20,
+      "exp": 20,
+      "perkExp": 10,
       "stats": {
-        "hp": 80,
-        "atk": 12,
-        "def": 6,
-        "agi": 6,
+        "hp": 75,
+        "atk": 9,
+        "def": 4,
+        "agi": 4,
         "sp": 3
       }
     },
@@ -461,13 +461,13 @@
       "skillIds": [1, 0, 0, 23, 0],
       "itemIds": [126],
       "itemAmounts": [1],
-      "exp": 20,
-      "perkExp": 10,
+      "exp": 10,
+      "perkExp": 20,
       "stats": {
-        "hp": 75,
-        "atk": 15,
-        "def": 6,
-        "agi": 6,
+        "hp": 65,
+        "atk": 11,
+        "def": 2,
+        "agi": 8,
         "sp": 3
       }
     },
@@ -483,13 +483,13 @@
       "skillIds": [1, 0, 0, 21, 0],
       "itemIds": [127, 177],
       "itemAmounts": [1, 1],
-      "exp": 10,
-      "perkExp": 20,
+      "exp": 15,
+      "perkExp": 15,
       "stats": {
-        "hp": 85,
-        "atk": 9,
-        "def": 9,
-        "agi": 9,
+        "hp": 75,
+        "atk": 5,
+        "def": 10,
+        "agi": 4,
         "sp": 3
       }
     },
@@ -508,10 +508,10 @@
       "exp": 20,
       "perkExp": 10,
       "stats": {
-        "hp": 60,
-        "atk": 13,
-        "def": 5,
-        "agi": 6,
+        "hp": 65,
+        "atk": 9,
+        "def": 4,
+        "agi": 4,
         "sp": 3
       }
     },
@@ -527,13 +527,13 @@
       "skillIds": [1, 0, 0, 24, 0],
       "itemIds": [129],
       "itemAmounts": [1],
-      "exp": 18,
-      "perkExp": 12,
+      "exp": 10,
+      "perkExp": 20,
       "stats": {
-        "hp": 70,
-        "atk": 14,
+        "hp": 75,
+        "atk": 11,
         "def": 4,
-        "agi": 7,
+        "agi": 6,
         "sp": 3
       }
     },
@@ -549,13 +549,13 @@
       "skillIds": [1, 0, 0, 19, 0],
       "itemIds": [130, 178],
       "itemAmounts": [1, 1],
-      "exp": 12,
-      "perkExp": 18,
+      "exp": 15,
+      "perkExp": 15,
       "stats": {
-        "hp": 80,
-        "atk": 10,
-        "def": 9,
-        "agi": 6,
+        "hp": 75,
+        "atk": 13,
+        "def": 8,
+        "agi": 1,
         "sp": 3
       }
     },
@@ -571,13 +571,13 @@
       "skillIds": [17, 0, 0, 19, 0],
       "itemIds": [250],
       "itemAmounts": [1],
-      "exp": 25,
-      "perkExp": 5,
+      "exp": 20,
+      "perkExp": 10,
       "stats": {
         "hp": 85,
-        "atk": 12,
-        "def": 6,
-        "agi": 8,
+        "atk": 14,
+        "def": 3,
+        "agi": 7,
         "sp": 3
       }
     },
@@ -593,13 +593,13 @@
       "skillIds": [17, 0, 0, 19, 0],
       "itemIds": [251],
       "itemAmounts": [1],
-      "exp": 5,
-      "perkExp": 25,
+      "exp": 8,
+      "perkExp": 22,
       "stats": {
-        "hp": 75,
-        "atk": 11,
-        "def": 11,
-        "agi": 11,
+        "hp": 90,
+        "atk": 15,
+        "def": 4,
+        "agi": 7,
         "sp": 3
       }
     },
@@ -618,10 +618,10 @@
       "exp": 15,
       "perkExp": 15,
       "stats": {
-        "hp": 80,
-        "atk": 11,
-        "def": 6,
-        "agi": 10,
+        "hp": 70,
+        "atk": 13,
+        "def": 5,
+        "agi": 7,
         "sp": 3
       }
     },
@@ -641,9 +641,9 @@
       "perkExp": 15,
       "stats": {
         "hp": 85,
-        "atk": 7,
-        "def": 16,
-        "agi": 4,
+        "atk": 12,
+        "def": 8,
+        "agi": 5,
         "sp": 3
       }
     },
@@ -659,12 +659,12 @@
       "skillIds": [0, 15, 0, 22, 0],
       "itemIds": [254],
       "itemAmounts": [1],
-      "exp": 12,
-      "perkExp": 18,
+      "exp": 22,
+      "perkExp": 8,
       "stats": {
-        "hp": 75,
+        "hp": 70,
         "atk": 13,
-        "def": 6,
+        "def": 5,
         "agi": 8,
         "sp": 3
       }
@@ -681,13 +681,13 @@
       "skillIds": [15, 0, 0, 22, 0],
       "itemIds": [255],
       "itemAmounts": [1],
-      "exp": 18,
-      "perkExp": 12,
+      "exp": 20,
+      "perkExp": 10,
       "stats": {
-        "hp": 85,
-        "atk": 15,
+        "hp": 80,
+        "atk": 14,
         "def": 4,
-        "agi": 9,
+        "agi": 7,
         "sp": 3
       }
     },
@@ -706,10 +706,10 @@
       "exp": 10,
       "perkExp": 20,
       "stats": {
-        "hp": 80,
-        "atk": 4,
-        "def": 15,
-        "agi": 13,
+        "hp": 70,
+        "atk": 7,
+        "def": 10,
+        "agi": 8,
         "sp": 3
       }
     },
@@ -725,13 +725,13 @@
       "skillIds": [13, 0, 0, 56, 0],
       "itemIds": [257],
       "itemAmounts": [1],
-      "exp": 20,
-      "perkExp": 10,
+      "exp": 25,
+      "perkExp": 5,
       "stats": {
         "hp": 75,
         "atk": 15,
-        "def": 4,
-        "agi": 11,
+        "def": 3,
+        "agi": 8,
         "sp": 3
       }
     },
