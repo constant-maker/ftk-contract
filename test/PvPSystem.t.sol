@@ -428,13 +428,12 @@ contract PvPSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
 
     // test loot item
     vm.startPrank(player_2);
-    uint256[] memory itemIndexes = new uint256[](1);
+    uint256[] memory itemIds = new uint256[](1);
     uint32[] memory itemAmounts = new uint32[](1);
-    itemIndexes[0] = 0;
+    itemIds[0] = 2;
     itemAmounts[0] = 10;
     world.app__lootItems(
-      characterId_2,
-      LootItems({ equipmentIndexes: new uint256[](0), itemIndexes: itemIndexes, itemAmounts: itemAmounts })
+      characterId_2, LootItems({ equipmentIds: new uint256[](0), itemIds: itemIds, itemAmounts: itemAmounts })
     );
     vm.stopPrank();
     assertEq(CharOtherItem.getAmount(characterId_2, 2), 10);

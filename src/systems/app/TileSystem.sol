@@ -17,8 +17,8 @@ import { Errors, Config } from "@common/index.sol";
 import { LootItems } from "./TileSystem.sol";
 
 struct LootItems {
-  uint256[] equipmentIndexes;
-  uint256[] itemIndexes;
+  uint256[] equipmentIds;
+  uint256[] itemIds;
   uint32[] itemAmounts;
 }
 
@@ -60,8 +60,8 @@ contract TileSystem is System, CharacterAccessControl {
   }
 
   function lootItems(uint256 characterId, LootItems calldata data) public onlyAuthorizedWallet(characterId) {
-    if (data.itemIndexes.length != data.itemAmounts.length) {
-      revert("Invalid input: itemIndexes and itemAmounts");
+    if (data.itemIds.length != data.itemAmounts.length) {
+      revert("Invalid input: itemIds and itemAmounts");
     }
     CharPositionData memory position = CharacterPositionUtils.currentPosition(characterId);
     int32 x = position.x;
@@ -70,26 +70,20 @@ contract TileSystem is System, CharacterAccessControl {
     if (lastDropTime + Config.TILE_ITEM_AVAILABLE_DURATION < block.timestamp) {
       revert Errors.TileSystem_NoItemInThisTile(x, y, lastDropTime);
     }
-    for (uint256 i = 0; i < data.equipmentIndexes.length; i++) {
-      uint256 equipmentIndex = data.equipmentIndexes[i];
-      if (equipmentIndex >= TileInventory.lengthEquipmentIds(x, y)) {
-        revert Errors.TileSystem_EquipmentNotFound(x, y, equipmentIndex);
-      }
-      uint256 equipmentId = TileInventory.getItemEquipmentIds(x, y, equipmentIndex);
-      TileInventoryUtils.removeEquipment(x, y, equipmentIndex);
+    for (uint256 i = 0; i < data.equipmentIds.length; i++) {
+      uint256 equipmentId = data.equipmentIds[i];
+      TileInventoryUtils.removeEquipment(x, y, equipmentId);
       InventoryEquipmentUtils.addEquipment(characterId, equipmentId, true);
     }
-    if (data.itemIndexes.length > 0) {
-      uint256[] memory itemIds = new uint256[](data.itemIndexes.length);
-      for (uint256 i = 0; i < data.itemIndexes.length; i++) {
-        uint256 index = data.itemIndexes[i];
-        if (index >= TileInventory.lengthOtherItemIds(x, y)) {
-          revert Errors.TileSystem_ItemNotFound(x, y, index);
+    if (data.itemIds.length > 0) {
+      for (uint256 i = 0; i < data.itemIds.length; i++) {
+        uint256 itemId = data.itemIds[i];
+        if (!TileInventoryUtils.hasItem(x, y, itemId)) {
+          revert Errors.TileSystem_ItemNotFound(x, y, itemId);
         }
-        itemIds[i] = TileInventory.getItemOtherItemIds(x, y, index);
       }
-      TileInventoryUtils.removeItems(x, y, itemIds, data.itemAmounts);
-      InventoryItemUtils.addItems(characterId, itemIds, data.itemAmounts);
+      TileInventoryUtils.removeItems(x, y, data.itemIds, data.itemAmounts);
+      InventoryItemUtils.addItems(characterId, data.itemIds, data.itemAmounts);
     }
   }
 

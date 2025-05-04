@@ -532,3 +532,14 @@ func BuildItemWeightCacheData(l *zap.SugaredLogger, dataConfig common.DataConfig
 	}
 	return callData, nil
 }
+
+func BuildResourceDropData(l *zap.SugaredLogger, dataConfig common.DataConfig) ([][]byte, error) {
+	callData := make([][]byte, 0)
+	data, err := table.DropResourceCallData(dataConfig, 5) // drop from tier 5
+	if err != nil {
+		l.Errorw("cannot build DropResource call data", "err", err)
+		return nil, err
+	}
+	callData = append(callData, data)
+	return callData, nil
+}
