@@ -1,15 +1,26 @@
 pragma solidity >=0.8.24;
 
 import { System } from "@latticexyz/world/src/System.sol";
-import { TileInfo3, TileInfo3Data } from "@codegen/tables/TileInfo3.sol";
+import { TileInfo3, TileInfo3Data, TileInventory } from "@codegen/index.sol";
 import { CharPosition, CharPositionData } from "@codegen/tables/CharPosition.sol";
 import { CharInfo } from "@codegen/tables/CharInfo.sol";
 import { CharStats2 } from "@codegen/tables/CharStats2.sol";
 import { CharacterAccessControl } from "@abstracts/CharacterAccessControl.sol";
-import { CharacterPositionUtils } from "@utils/CharacterPositionUtils.sol";
-import { CharacterFundUtils } from "@utils/CharacterFundUtils.sol";
-import { InventoryItemUtils } from "@utils/InventoryItemUtils.sol";
-import { Errors } from "@common/Errors.sol";
+import {
+  InventoryItemUtils,
+  CharacterFundUtils,
+  CharacterPositionUtils,
+  TileInventoryUtils,
+  InventoryEquipmentUtils
+} from "@utils/index.sol";
+import { Errors, Config } from "@common/index.sol";
+import { LootItems } from "./TileSystem.sol";
+
+struct LootItems {
+  uint256[] equipmentIds;
+  uint256[] itemIds;
+  uint32[] itemAmounts;
+}
 
 contract TileSystem is System, CharacterAccessControl {
   uint32 constant TILE_OCCUPATION_COST = 5; // gold
@@ -46,6 +57,34 @@ contract TileSystem is System, CharacterAccessControl {
       CharStats2.setFame(characterId, currentFame + 10);
     }
     TileInfo3.setOccupiedTime(x, y, block.timestamp);
+  }
+
+  function lootItems(uint256 characterId, LootItems calldata data) public onlyAuthorizedWallet(characterId) {
+    if (data.itemIds.length != data.itemAmounts.length) {
+      revert("Invalid input: itemIds and itemAmounts");
+    }
+    CharPositionData memory position = CharacterPositionUtils.currentPosition(characterId);
+    int32 x = position.x;
+    int32 y = position.y;
+    uint256 lastDropTime = TileInventory.getLastDropTime(x, y);
+    if (lastDropTime + Config.TILE_ITEM_AVAILABLE_DURATION < block.timestamp) {
+      revert Errors.TileSystem_NoItemInThisTile(x, y, lastDropTime);
+    }
+    for (uint256 i = 0; i < data.equipmentIds.length; i++) {
+      uint256 equipmentId = data.equipmentIds[i];
+      TileInventoryUtils.removeEquipment(x, y, equipmentId);
+      InventoryEquipmentUtils.addEquipment(characterId, equipmentId, true);
+    }
+    if (data.itemIds.length > 0) {
+      for (uint256 i = 0; i < data.itemIds.length; i++) {
+        uint256 itemId = data.itemIds[i];
+        if (!TileInventoryUtils.hasItem(x, y, itemId)) {
+          revert Errors.TileSystem_ItemNotFound(x, y, itemId);
+        }
+      }
+      TileInventoryUtils.removeItems(x, y, data.itemIds, data.itemAmounts);
+      InventoryItemUtils.addItems(characterId, data.itemIds, data.itemAmounts);
+    }
   }
 
   function _checkTileNearBy(int32 x, int32 y, uint8 kingdomId) private view {

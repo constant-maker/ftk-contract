@@ -3,7 +3,7 @@ pragma solidity >=0.8.24;
 import { WorldFixture, SpawnSystemFixture, WelcomeSystemFixture } from "./fixtures/index.sol";
 import { WorldFixture } from "./fixtures/WorldFixture.sol";
 import { console } from "forge-std/console.sol";
-import { NpcShop } from "@codegen/tables/NpcShop.sol";
+import { NpcShop } from "@codegen/index.sol";
 import { CharFund } from "@codegen/tables/CharFund.sol";
 import { CharOtherItem } from "@codegen/tables/CharOtherItem.sol";
 import { NpcShopInventory } from "@codegen/tables/NpcShopInventory.sol";
@@ -225,5 +225,31 @@ contract NpcShopSystem is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
     assertEq(NpcShopInventory.getAmount(1, 2), 500);
     assertEq(NpcShop.get(1), 98_500);
     assertEq(NpcShop.get(2), 100_000);
+  }
+
+  function test_buyCard() external {
+    TradeData[] memory buyData = new TradeData[](1);
+    buyData[0] = TradeData({ itemId: 184, amount: 1 });
+    TradeData[] memory sellData;
+
+    vm.startPrank(worldDeployer);
+    CharFund.setGold(characterId, 10_000);
+    NpcShopInventory.setAmount(cityId, 184, 2);
+    NpcShopInventory.setAmount(cityId, 185, 3);
+    vm.stopPrank();
+
+    vm.startPrank(player);
+    world.app__tradeWithNpc(characterId, cityId, buyData, sellData);
+    vm.stopPrank();
+
+    assertEq(CharFund.getGold(characterId), 9000);
+    assertEq(CharOtherItem.getAmount(characterId, 184), 1);
+    assertEq(NpcShopInventory.getAmount(cityId, 184), 1);
+
+    buyData[0].amount = 2;
+    vm.expectRevert();
+    vm.startPrank(player);
+    world.app__tradeWithNpc(characterId, cityId, buyData, sellData);
+    vm.stopPrank();
   }
 }

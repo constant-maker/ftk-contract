@@ -16,15 +16,18 @@ import {
   PvPData,
   PvPChallenge,
   PvPChallengeData,
-  Equipment
+  Equipment,
+  TileInfo3,
+  Alliance,
+  CharCurrentStats,
+  TileInventory
 } from "@codegen/index.sol";
 import { EntityType, SlotType, ItemType } from "@codegen/common.sol";
 import { Errors } from "@common/Errors.sol";
 import { Config } from "@common/Config.sol";
-import { CharacterPositionUtils } from "@utils/CharacterPositionUtils.sol";
+import { CharacterPositionUtils, InventoryItemUtils } from "@utils/index.sol";
 import { CharStats2 } from "@codegen/tables/CharStats2.sol";
-import { Alliance } from "@codegen/tables/Alliance.sol";
-import { CharCurrentStats } from "@codegen/tables/CharCurrentStats.sol";
+import { LootItems } from "@systems/app/TileSystem.sol";
 
 contract PvPSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture {
   address player_1 = makeAddr("player1");
@@ -317,6 +320,7 @@ contract PvPSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
     vm.startPrank(worldDeployer);
     CharCurrentStats.setAtk(characterId_1, 10_000);
     CharCurrentStats.setAgi(characterId_1, 10_000);
+    TileInfo3.setKingdomId(20, -32, 1);
     vm.stopPrank();
 
     vm.startPrank(player_1);
@@ -336,7 +340,7 @@ contract PvPSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
 
     vm.warp(block.timestamp + 300);
 
-    _moveToTheLocation(21, -32); // BLUE zone
+    _moveToTheLocation(21, -32); // RED zone
     vm.startPrank(player_1);
     world.app__battlePvP(characterId_1, characterId_2);
     vm.stopPrank();
@@ -351,7 +355,7 @@ contract PvPSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
 
     vm.warp(block.timestamp + 300);
 
-    _moveToTheLocation(21, -32); // BLUE zone
+    _moveToTheLocation(21, -32); // RED zone
     vm.startPrank(player_1);
     world.app__battlePvP(characterId_1, characterId_2);
     vm.stopPrank();
@@ -373,6 +377,70 @@ contract PvPSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
 
     char1Fame = CharStats2.get(characterId_1);
     assertEq(char1Fame, 900);
+  }
+
+  function test_DropItemInDangerZone() external {
+    vm.warp(block.timestamp + 300);
+
+    _moveToTheLocation(20, -32);
+
+    vm.startPrank(worldDeployer);
+    // CharCurrentStats.setAtk(characterId_1, 10_000);
+    // CharCurrentStats.setAgi(characterId_1, 10_000);
+    TileInfo3.setKingdomId(20, -32, 1);
+    InventoryItemUtils.addItem(characterId_1, 1, 100);
+    InventoryItemUtils.addItem(characterId_1, 2, 100);
+    vm.stopPrank();
+
+    // update char 2 stats
+    vm.startPrank(worldDeployer);
+    CharCurrentStats.setAtk(characterId_2, 20_000);
+    CharCurrentStats.setAgi(characterId_2, 20_000);
+    vm.stopPrank();
+
+    vm.startPrank(player_2);
+    world.app__battlePvP(characterId_2, characterId_1);
+    vm.stopPrank();
+
+    assertEq(CharOtherItem.getAmount(characterId_1, 1), 100);
+    assertEq(CharOtherItem.getAmount(characterId_1, 2), 100);
+    console2.log("done test fight in green zone");
+
+    vm.warp(block.timestamp + 300);
+    console2.log("move to red zone");
+    _moveToTheLocation(21, -32); // RED zone
+    vm.startPrank(player_2);
+    world.app__battlePvP(characterId_2, characterId_1);
+    vm.stopPrank();
+
+    assertEq(CharOtherItem.getAmount(characterId_1, 1), 100);
+    assertEq(CharOtherItem.getAmount(characterId_1, 2), 0);
+
+    uint256[] memory tileItemIds = TileInventory.getOtherItemIds(21, -32);
+    uint32[] memory tileItemAmounts = TileInventory.getOtherItemAmounts(21, -32);
+    for (uint256 i = 0; i < tileItemIds.length; i++) {
+      console2.log("tile item id", tileItemIds[i]);
+      console2.log("tile item amount", tileItemAmounts[i]);
+    }
+    assertEq(tileItemIds[0], 2);
+    assertEq(tileItemAmounts[0], 100);
+    console2.log("done test fight in red zone");
+
+    // test loot item
+    vm.startPrank(player_2);
+    uint256[] memory itemIds = new uint256[](1);
+    uint32[] memory itemAmounts = new uint32[](1);
+    itemIds[0] = 2;
+    itemAmounts[0] = 10;
+    world.app__lootItems(
+      characterId_2, LootItems({ equipmentIds: new uint256[](0), itemIds: itemIds, itemAmounts: itemAmounts })
+    );
+    vm.stopPrank();
+    assertEq(CharOtherItem.getAmount(characterId_2, 2), 10);
+    assertEq(CharOtherItem.getAmount(characterId_1, 2), 0);
+    uint32 tileItemAmount = TileInventory.getItemOtherItemAmounts(21, -32, 0);
+    assertEq(tileItemAmount, 90);
+    console2.log("done test loot item");
   }
 
   function _moveToTheLocation(int32 _x, int32 _y) private {

@@ -40,7 +40,8 @@
     "Resource": 23,
     "MapSkillItem": 24,
     "HealingItem": 25,
-    "StatModifierItem": 26
+    "StatModifierItem": 26,
+    "Card": 27
   },
   "itemCategoryTypes": {
     "Tool": 0,
@@ -87,5 +88,12 @@
     "Poison": 2,
     "Frostbite": 3,
     "Stun": 4
+  },
+  "rarityType": {
+    "Common": 0,
+    "Uncommon": 1,
+    "Rare": 2,
+    "Epic": 3,
+    "Legendary": 4
   }
 }

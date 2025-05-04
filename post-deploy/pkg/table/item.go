@@ -7,6 +7,10 @@ import (
 	"github.com/ftk/post-deploy/pkg/mud"
 )
 
+const (
+	itemWeightCacheFieldLayout = "0x0004010004000000000000000000000000000000000000000000000000000000"
+)
+
 func ItemCallData(item common.Item) ([]byte, error) {
 	// zap.S().Infow("item category", "id", item.Id, "value", common.MapItemCategoryTypes[item.Category])
 	staticData, err := encodePacked(
@@ -23,7 +27,7 @@ func ItemCallData(item common.Item) ([]byte, error) {
 	}
 	encodedLength := mud.EncodeLengths([]int{len(stringToBytes(item.Name))})
 	dynamicData := simpleEncodePacked(stringToBytes(item.Name))
-	mt := mud.NewMudTable("Item", "app")
+	mt := mud.NewMudTable("Item", "app", "")
 	return mt.SetRecordRawCalldata(keyTuple, staticData, encodedLength, dynamicData)
 }
 
@@ -46,7 +50,7 @@ func EquipmentItemInfoCallData(equipmentInfo common.EquipmentInfo, itemId int) (
 	}
 	encodedLength := mud.PackedCounter{}
 	dynamicData := []byte{}
-	mt := mud.NewMudTable("EquipmentInfo", "app")
+	mt := mud.NewMudTable("EquipmentInfo", "app", "")
 	return mt.SetRecordRawCalldata(keyTuple, staticData, encodedLength, dynamicData)
 }
 
@@ -62,7 +66,7 @@ func HealingItemInfoCallData(healingInfo common.HealingInfo, itemId int) ([]byte
 	}
 	encodedLength := mud.PackedCounter{}
 	dynamicData := []byte{}
-	mt := mud.NewMudTable("HealingItemInfo", "app")
+	mt := mud.NewMudTable("HealingItemInfo", "app", "")
 	return mt.SetRecordRawCalldata(keyTuple, staticData, encodedLength, dynamicData)
 }
 
@@ -78,6 +82,20 @@ func ResourceItemInfoCallData(resourceInfo common.ResourceInfo, itemId int) ([]b
 	}
 	encodedLength := mud.PackedCounter{}
 	dynamicData := []byte{}
-	mt := mud.NewMudTable("ResourceInfo", "app")
+	mt := mud.NewMudTable("ResourceInfo", "app", "")
 	return mt.SetRecordRawCalldata(keyTuple, staticData, encodedLength, dynamicData)
+}
+
+func ItemWeightCacheCallData(item common.Item) ([]byte, error) {
+	staticData, err := encodePacked(
+		uint32(item.OldWeight),
+	)
+	if err != nil {
+		return nil, err
+	}
+	keyTuple := [][32]byte{
+		[32]byte(encodeUint256(big.NewInt(int64(item.Id)))),
+	}
+	mt := mud.NewMudTable("ItemWeightCache", "app", itemWeightCacheFieldLayout)
+	return mt.SetStaticFieldRawCalldata(keyTuple, 0, staticData)
 }

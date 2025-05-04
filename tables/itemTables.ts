@@ -31,12 +31,29 @@ const ITEM_TABLES: any = {
     },
     key: ['itemId'],
   },
-  EquipmentInfo2: {
+  EquipmentInfo2: { // Upgradable equipment
     schema: {
       itemId: "uint256",
       dmgPercent: "uint16",
       maxLevel: "uint8",
       counter: "uint8",
+    },
+    key: ['itemId'],
+  },
+  EquipmentInfo3: { // Mount
+    schema: {
+      itemId: "uint256",
+      bonusWeight: "uint32"
+    },
+    key: ['itemId'],
+  },
+  CardInfo: {
+    schema: {
+      itemId: "uint256",
+      top: "uint16",
+      left: "uint16",
+      right: "uint16",
+      bottom: "uint16",
     },
     key: ['itemId'],
   },
@@ -79,6 +96,13 @@ const ITEM_TABLES: any = {
       totalSupply: "uint256",
     },
     key: [],
+  },
+  ItemWeightCache: {
+    schema: {
+      itemId: "uint256",
+      weight: "uint32", // Old weight
+    },
+    key: ['itemId'],
   },
 };
 

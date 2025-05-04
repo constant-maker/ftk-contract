@@ -8,14 +8,18 @@ import {
   CharInventory,
   CharInventoryData,
   CharCurrentStats,
-  CharFund
+  CharFund,
+  ItemWeightCache,
+  Item,
+  CharMigration,
+  CharStorageMigration
 } from "@codegen/index.sol";
 
 import { CharOtherItem } from "@codegen/tables/CharOtherItem.sol";
 import { WorldFixture } from "@fixtures/WorldFixture.sol";
 import { SpawnSystemFixture } from "@fixtures/SpawnSystemFixture.sol";
 import { WelcomeSystemFixture } from "@fixtures/WelcomeSystemFixture.sol";
-import { CharacterFundUtils } from "@utils/CharacterFundUtils.sol";
+import { CharacterFundUtils, CharacterItemUtils } from "@utils/index.sol";
 import { console2 } from "forge-std/console2.sol";
 import { Config } from "@common/Config.sol";
 import { ItemsActionData } from "@common/Types.sol";
@@ -191,4 +195,83 @@ contract StorageSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFix
     assertEq(storagePotionAmount, 1);
     assertEq(charStorage.weight, 9);
   }
+
+  // function test_WeightMigration() external {
+  //   vm.startPrank(worldDeployer);
+  //   uint32 prevWeight = CharCurrentStats.getWeight(characterId);
+  //   // weight is 17 at the beginning
+  //   console2.log("prevWeight", prevWeight);
+
+  //   ItemWeightCache.setWeight(30, 3);
+  //   Item.setWeight(30, 1);
+  //   // add more swords to the inventory
+  //   CharacterItemUtils.addNewItem(characterId, 30); // equipment id 2
+  //   CharacterItemUtils.addNewItem(characterId, 30); // equipment id 3
+  //   CharacterItemUtils.addNewItem(characterId, 30); // equipment id 4
+  //   vm.stopPrank();
+  //   // weight now is 17 + 3 * 1 = 20
+  //   uint32 newWeight = CharCurrentStats.getWeight(characterId);
+  //   console2.log("newWeight", newWeight);
+  //   assertEq(newWeight, 20);
+  //   assertTrue(!CharMigration.get(characterId, 1));
+  //   assertTrue(CharMigration.get(characterId, 2));
+  //   assertTrue(CharMigration.get(characterId, 3));
+  //   assertTrue(CharMigration.get(characterId, 4));
+  //   assertTrue(!CharStorageMigration.get(characterId, 1));
+  //   assertTrue(CharStorageMigration.get(characterId, 2));
+  //   assertTrue(CharStorageMigration.get(characterId, 3));
+  //   assertTrue(CharStorageMigration.get(characterId, 4));
+
+  //   // transfer in 1 sword
+  //   ItemsActionData memory transferInData = ItemsActionData({
+  //     equipmentIds: new uint256[](1),
+  //     toolIds: new uint256[](0),
+  //     itemIds: new uint256[](0),
+  //     itemAmounts: new uint32[](0)
+  //   });
+  //   transferInData.equipmentIds[0] = 1;
+  //   ItemsActionData memory emptyTransferOutData;
+  //   vm.startPrank(player);
+  //   world.app__updateStorage(characterId, cityId, transferInData, emptyTransferOutData);
+  //   vm.stopPrank();
+
+  //   CharInventoryData memory charInventory = CharInventory.get(characterId);
+  //   assertEq(charInventory.equipmentIds.length, 3);
+
+  //   CharStorageData memory charStorage = CharStorage.get(characterId, cityId);
+  //   assertEq(charStorage.equipmentIds[0], 1);
+
+  //   uint32 storageWeight = CharStorage.getWeight(characterId, cityId);
+  //   console2.log("storageWeight", storageWeight);
+  //   assertEq(storageWeight, 1);
+  //   assertTrue(CharMigration.get(characterId, 1));
+  //   assertTrue(CharStorageMigration.get(characterId, 1));
+  //   newWeight = CharCurrentStats.getWeight(characterId);
+  //   console2.log("char newWeight", newWeight);
+  //   assertEq(newWeight, 17);
+
+  //   // ItemsActionData memory emptyTransferInData;
+  //   // ItemsActionData memory transferOutData = ItemsActionData({
+  //   //   equipmentIds: new uint256[](1),
+  //   //   toolIds: new uint256[](1),
+  //   //   itemIds: new uint256[](1),
+  //   //   itemAmounts: new uint32[](1)
+  //   // });
+  //   // transferOutData.equipmentIds[0] = 1;
+  //   // transferOutData.toolIds[0] = 2;
+  //   // transferOutData.itemIds[0] = healingPotion;
+  //   // transferOutData.itemAmounts[0] = 1;
+
+  //   // vm.startPrank(player);
+  //   // world.app__updateStorage(characterId, cityId, emptyTransferInData, transferOutData);
+  //   // vm.stopPrank();
+  //   // charStorage = CharStorage.get(characterId, cityId);
+
+  //   // assertEq(charStorage.toolIds[0], 1);
+  //   // assertEq(charStorage.equipmentIds.length, 0);
+  //   // storagePotionAmount = CharOtherItemStorage.getAmount(characterId, cityId, healingPotion);
+  //   // console2.log("new storagePotionAmount", storagePotionAmount);
+  //   // assertEq(storagePotionAmount, 0);
+  //   // assertEq(charStorage.weight, 2);
+  // }
 }

@@ -187,7 +187,12 @@
       "requiredPerkLevels": [
         20
       ],
-      "hasEffect": false
+      "hasEffect": true,
+      "effect": {
+        "damage": 25,
+        "effectType": 1,
+        "turns": 1
+      }
     },
     "14": {
       "id": 14,
@@ -212,7 +217,7 @@
       "id": 15,
       "name": "Frost Spikes",
       "desc": "Shards of ice shoot from the attacker, flying swiftly towards the enemy to impale with freezing precision.",
-      "damage": 125,
+      "damage": 120,
       "sp": 2,
       "perkItemTypes": [
         0
@@ -220,13 +225,18 @@
       "requiredPerkLevels": [
         20
       ],
-      "hasEffect": false
+      "hasEffect": true,
+      "effect": {
+        "damage": 25,
+        "effectType": 3,
+        "turns": 2
+      }
     },
     "16": {
       "id": 16,
       "name": "Toxic Strike",
       "desc": "The monster delivers a swift attack laced with poison, inflicting damage over time.",
-      "damage": 125,
+      "damage": 100,
       "sp": 2,
       "perkItemTypes": [
         0
@@ -234,13 +244,18 @@
       "requiredPerkLevels": [
         20
       ],
-      "hasEffect": false
+      "hasEffect": true,
+      "effect": {
+        "damage": 25,
+        "effectType": 2,
+        "turns": 3
+      }
     },
     "17": {
       "id": 17,
       "name": "Pure Force",
       "desc": "A straightforward, solid attack that uses raw physical power to hit the enemy.",
-      "damage": 125,
+      "damage": 150,
       "sp": 2,
       "perkItemTypes": [
         0
@@ -254,7 +269,7 @@
       "id": 18,
       "name": "Pollen Burst",
       "desc": "Releases a cloud of pollen that engulfs enemies, causing irritation and confusion.",
-      "damage": 150,
+      "damage": 175,
       "sp": 2,
       "perkItemTypes": [
         0
@@ -268,7 +283,7 @@
       "id": 19,
       "name": "Heavy Punch",
       "desc": "A powerful, concentrated blow delivered with full force, capable of staggering or knocking back opponents.",
-      "damage": 150,
+      "damage": 200,
       "sp": 2,
       "perkItemTypes": [
         0
@@ -282,7 +297,7 @@
       "id": 20,
       "name": "Poison Attack",
       "desc": "Delivers a venomous strike that injects toxins into the enemy, dealing damage over time and weakening their defenses.",
-      "damage": 150,
+      "damage": 170,
       "sp": 2,
       "perkItemTypes": [
         0
@@ -290,13 +305,18 @@
       "requiredPerkLevels": [
         20
       ],
-      "hasEffect": false
+      "hasEffect": true,
+      "effect": {
+        "damage": 60,
+        "effectType": 2,
+        "turns": 1
+      }
     },
     "21": {
       "id": 21,
       "name": "Fury Swipe",
       "desc": "A rapid series of claw attacks, slashing at the enemy with relentless speed and ferocity.",
-      "damage": 150,
+      "damage": 175,
       "sp": 2,
       "perkItemTypes": [
         0
@@ -310,7 +330,7 @@
       "id": 22,
       "name": "Ice Blast",
       "desc": "Unleashes a burst of frigid energy, freezing enemies on impact and dealing ice damage.",
-      "damage": 150,
+      "damage": 170,
       "sp": 2,
       "perkItemTypes": [
         0
@@ -318,13 +338,18 @@
       "requiredPerkLevels": [
         20
       ],
-      "hasEffect": false
+      "hasEffect": false,
+      "effect": {
+        "damage": 60,
+        "effectType": 3,
+        "turns": 1
+      }
     },
     "23": {
       "id": 23,
       "name": "Gale Slash",
       "desc": "Summons fierce winds that slice through enemies, delivering cutting damage with razor-sharp gusts.",
-      "damage": 150,
+      "damage": 175,
       "sp": 2,
       "perkItemTypes": [
         0
@@ -338,7 +363,7 @@
       "id": 24,
       "name": "Bloody Rush",
       "desc": "The monster launches into a brutal charge, its horn piercing and tearing through the enemy, leaving a trail of blood in its wake.",
-      "damage": 150,
+      "damage": 175,
       "sp": 2,
       "perkItemTypes": [
         0
@@ -381,7 +406,7 @@
       ],
       "hasEffect": true,
       "effect": {
-        "damage": 35,
+        "damage": 50,
         "effectType": 1,
         "turns": 2
       }
@@ -423,7 +448,7 @@
       "id": 29,
       "name": "Poisoned Arrow",
       "desc": "Fires a venomous arrow that rapidly saps the target's health.",
-      "damage": 55,
+      "damage": 70,
       "sp": 3,
       "perkItemTypes": [
         9
@@ -433,7 +458,7 @@
       ],
       "hasEffect": true,
       "effect": {
-        "damage": 55,
+        "damage": 70,
         "effectType": 2,
         "turns": 3
       }
@@ -456,7 +481,7 @@
       "id": 31,
       "name": "Frost Volley",
       "desc": "Launches an ice-enchanted volley of arrows that deals frost damage over time.",
-      "damage": 80,
+      "damage": 100,
       "sp": 2,
       "perkItemTypes": [
         9
@@ -466,7 +491,7 @@
       ],
       "hasEffect": true,
       "effect": {
-        "damage": 150,
+        "damage": 180,
         "effectType": 3,
         "turns": 2
       }
@@ -475,7 +500,7 @@
       "id": 32,
       "name": "Rotten Swing",
       "desc": "A savage swing that leaves a festering wound, causing deteriorating damage.",
-      "damage": 40,
+      "damage": 45,
       "sp": 1,
       "perkItemTypes": [
         7
@@ -485,7 +510,7 @@
       ],
       "hasEffect": true,
       "effect": {
-        "damage": 40,
+        "damage": 45,
         "effectType": 2,
         "turns": 3
       }
@@ -560,7 +585,7 @@
       "id": 37,
       "name": "Thrust of Inferno",
       "desc": "A fiery spear thrust that scorches enemies with massive flame damage.",
-      "damage": 200,
+      "damage": 260,
       "sp": 2,
       "perkItemTypes": [
         8
@@ -570,7 +595,7 @@
       ],
       "hasEffect": true,
       "effect": {
-        "damage": 90,
+        "damage": 100,
         "effectType": 1,
         "turns": 2
       }
@@ -593,7 +618,7 @@
       "id": 39,
       "name": "Fire Ball",
       "desc": "Conjures an explosive ball of flame that deals burning damage.",
-      "damage": 150,
+      "damage": 180,
       "sp": 1,
       "perkItemTypes": [
         10
@@ -603,7 +628,7 @@
       ],
       "hasEffect": true,
       "effect": {
-        "damage": 65,
+        "damage": 80,
         "effectType": 1,
         "turns": 2
       }
@@ -631,7 +656,7 @@
       "id": 41,
       "name": "Venom Stab",
       "desc": "A lightning-quick strike infused with a potent toxin for rapid health degeneration.",
-      "damage": 40,
+      "damage": 45,
       "sp": 1,
       "perkItemTypes": [
         11
@@ -641,7 +666,7 @@
       ],
       "hasEffect": true,
       "effect": {
-        "damage": 40,
+        "damage": 45,
         "effectType": 2,
         "turns": 3
       }
@@ -650,7 +675,7 @@
       "id": 42,
       "name": "Serpent Strike",
       "desc": "A snaking series of venomous strikes that repeatedly pierce and poison vulnerable areas.",
-      "damage": 80,
+      "damage": 105,
       "sp": 2,
       "perkItemTypes": [
         11
@@ -660,7 +685,7 @@
       ],
       "hasEffect": true,
       "effect": {
-        "damage": 80,
+        "damage": 105,
         "effectType": 2,
         "turns": 3
       }
@@ -683,7 +708,7 @@
       "id": 44,
       "name": "Stab of Agony",
       "desc": "A vicious stab laced with agonizing venom that lingers in the wound.",
-      "damage": 70,
+      "damage": 95,
       "sp": 1,
       "perkItemTypes": [
         6
@@ -693,7 +718,7 @@
       ],
       "hasEffect": true,
       "effect": {
-        "damage": 70,
+        "damage": 95,
         "effectType": 2,
         "turns": 3
       }
@@ -702,7 +727,7 @@
       "id": 45,
       "name": "Ember Shot",
       "desc": "Launches a flaming arrow that scorches enemies with burn damage.",
-      "damage": 100,
+      "damage": 120,
       "sp": 1,
       "perkItemTypes": [
         9
@@ -712,7 +737,7 @@
       ],
       "hasEffect": true,
       "effect": {
-        "damage": 55,
+        "damage": 65,
         "effectType": 1,
         "turns": 2
       }
@@ -735,7 +760,7 @@
       "id": 47,
       "name": "Sunlight Attack",
       "desc": "Channels the sun's searing rays through the spearhead for sustained burning.",
-      "damage": 110,
+      "damage": 130,
       "sp": 1,
       "perkItemTypes": [
         8
@@ -745,7 +770,7 @@
       ],
       "hasEffect": true,
       "effect": {
-        "damage": 50,
+        "damage": 60,
         "effectType": 1,
         "turns": 2
       }
@@ -754,7 +779,7 @@
       "id": 48,
       "name": "Noxious Gas",
       "desc": "Envelops the area in a choking miasma that rapidly poisons those caught within.",
-      "damage": 60,
+      "damage": 80,
       "sp": 2,
       "perkItemTypes": [
         10
@@ -764,7 +789,7 @@
       ],
       "hasEffect": true,
       "effect": {
-        "damage": 60,
+        "damage": 80,
         "effectType": 2,
         "turns": 3
       }
@@ -885,6 +910,25 @@
         "damage": 50,
         "effectType": 2,
         "turns": 3
+      }
+    },
+    "56": {
+      "id": 56,
+      "name": "Flame Pulse II",
+      "desc": "The dragon unleashes a quick wave of fire, dealing damage to nearby enemies.",
+      "damage": 175,
+      "sp": 2,
+      "perkItemTypes": [
+        0
+      ],
+      "requiredPerkLevels": [
+        20
+      ],
+      "hasEffect": true,
+      "effect": {
+        "damage": 75,
+        "effectType": 1,
+        "turns": 1
       }
     }
   }

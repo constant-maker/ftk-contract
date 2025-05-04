@@ -18,6 +18,7 @@ const (
 	listResourceUpdate     = "https://docs.google.com/spreadsheets/d/1re4m7CvzE2UYzBCgIgM4mTCNzWE0Yf1g66IfzbSk-xY/export?format=csv&gid=1713114657#gid=1713114657"
 	listEquipmentUpdate    = "https://docs.google.com/spreadsheets/d/1re4m7CvzE2UYzBCgIgM4mTCNzWE0Yf1g66IfzbSk-xY/export?format=csv&gid=2048021285#gid=2048021285"
 	listToolUpdate         = "https://docs.google.com/spreadsheets/d/1re4m7CvzE2UYzBCgIgM4mTCNzWE0Yf1g66IfzbSk-xY/export?format=csv&gid=1372566467#gid=1372566467"
+	listCardUpdate         = "https://docs.google.com/spreadsheets/d/1re4m7CvzE2UYzBCgIgM4mTCNzWE0Yf1g66IfzbSk-xY/export?format=csv&gid=604813635#gid=604813635"
 	listHealingItemUpdate  = "https://docs.google.com/spreadsheets/d/1re4m7CvzE2UYzBCgIgM4mTCNzWE0Yf1g66IfzbSk-xY/export?format=csv&gid=1307646345#gid=1307646345"
 	listSkillUpdate        = "https://docs.google.com/spreadsheets/d/1re4m7CvzE2UYzBCgIgM4mTCNzWE0Yf1g66IfzbSk-xY/export?format=csv&gid=1359260272#gid=1359260272"
 
@@ -135,6 +136,28 @@ func UpdateDataConfig(dataConfig *DataConfig, basePath string) {
 		}
 		shouldRewriteFile = true
 		dataConfig.Items[intToString(tool.Id)] = tool // add
+	}
+
+	// update list card
+	l.Infow("GET LIST CARD")
+	listCardUpdate, err := getListCardUpdate(*dataConfig)
+	if err != nil {
+		l.Errorw("cannot get list card update", "err", err)
+		panic(err)
+	}
+	for _, card := range listCardUpdate {
+		currentCard, ok := dataConfig.Items[intToString(card.Id)]
+		if reflect.DeepEqual(card, currentCard) {
+			// l.Infow("tool data unchanged")
+			continue
+		}
+		if !ok {
+			l.Infow("detect new card", "data", card)
+		} else {
+			l.Infow("detect card update", "data", card)
+		}
+		shouldRewriteFile = true
+		dataConfig.Items[intToString(card.Id)] = card // add
 	}
 
 	// update list skill
@@ -390,7 +413,7 @@ func getListEquipmentUpdate(dataConfig DataConfig) ([]Item, []ItemRecipe, error)
 	recipes := make([]ItemRecipe, 0)
 	var (
 		idIndex, tierIndex, weightIndex, nameIndex, descIndex, typeIndex, slotTypeIndex, advantageTypeIndex, twoHandedIndex,
-		atkIndex, defIndex, agiIndex, hpIndex, msIndex, goldCostIndex, recipeIndex int
+		atkIndex, defIndex, agiIndex, hpIndex, msIndex, goldCostIndex, recipeIndex, oldWeightIndex, bonusWeightIndex int
 	)
 	for {
 		record, err := reader.Read()
@@ -416,7 +439,9 @@ func getListEquipmentUpdate(dataConfig DataConfig) ([]Item, []ItemRecipe, error)
 			advantageTypeIndex = findIndex(record, "advantageType")
 			twoHandedIndex = findIndex(record, "twoHanded")
 			tierIndex = findIndex(record, "tier")
-			weightIndex = findIndex(record, "weight")
+			weightIndex = findIndex(record, "new_weight")
+			oldWeightIndex = findIndex(record, "old_weight")
+			bonusWeightIndex = findIndex(record, "bonus_weight")
 			atkIndex = findIndex(record, "atk")
 			defIndex = findIndex(record, "def")
 			agiIndex = findIndex(record, "agi")
@@ -449,6 +474,8 @@ func getListEquipmentUpdate(dataConfig DataConfig) ([]Item, []ItemRecipe, error)
 		id := mustStringToInt(record[idIndex], idIndex)
 		tier := mustStringToInt(record[tierIndex], tierIndex)
 		weight := mustStringToInt(record[weightIndex], weightIndex)
+		oldWeigh := mustStringToInt(record[oldWeightIndex], oldWeightIndex)
+		bonusWeight := mustStringToInt(record[bonusWeightIndex], bonusWeightIndex)
 		atk := mustStringToInt(record[atkIndex], atkIndex)
 		def := mustStringToInt(record[defIndex], defIndex)
 		agi := mustStringToInt(record[agiIndex], agiIndex)
@@ -465,14 +492,15 @@ func getListEquipmentUpdate(dataConfig DataConfig) ([]Item, []ItemRecipe, error)
 		if slotType == 0 {
 			advantageType = getSpecialNum(record[advantageTypeIndex], record)
 		}
-		equipments = append(equipments, Item{
-			Id:       id,
-			Type:     equipmentType,
-			Category: 1,
-			Tier:     tier,
-			Weight:   weight,
-			Name:     removeRedundantText(record[nameIndex]),
-			Desc:     removeRedundantText(record[descIndex]),
+		item := Item{
+			Id:        id,
+			Type:      equipmentType,
+			Category:  1,
+			Tier:      tier,
+			Weight:    weight,
+			OldWeight: oldWeigh,
+			Name:      removeRedundantText(record[nameIndex]),
+			Desc:      removeRedundantText(record[descIndex]),
 			EquipmentInfo: &EquipmentInfo{
 				SlotType:      slotType,
 				AdvantageType: advantageType,
@@ -483,7 +511,16 @@ func getListEquipmentUpdate(dataConfig DataConfig) ([]Item, []ItemRecipe, error)
 				Hp:            hp,
 				Ms:            ms,
 			},
-		})
+		}
+		if bonusWeight > 0 {
+			item.EquipmentInfo3 = &EquipmentInfo3{
+				BonusWeight: bonusWeight,
+			}
+			// skip mount type item now
+			// continue
+		}
+		equipments = append(equipments, item)
+
 		recipes = append(recipes, ItemRecipe{
 			ItemId:      id,
 			Ingredients: getMaterialList(record, record[recipeIndex], dataConfig),
@@ -621,6 +658,67 @@ func getListToolUpdate(dataConfig DataConfig) ([]Item, []ItemRecipe, error) {
 	return tool, recipes, nil
 }
 
+func getListCardUpdate(dataConfig DataConfig) ([]Item, error) {
+	l := zap.S().With("func", "getListToolUpdate")
+	reader, err := getRawCsvReader(listCardUpdate)
+	if err != nil {
+		l.Errorw("cannot csv reader", "err", err)
+		return nil, err
+	}
+	cards := make([]Item, 0)
+	var (
+		idIndex, rarityIndex, nameIndex, descIndex, topIndex, rightIndex, bottomIndex, leftIndex int
+	)
+	for {
+		record, err := reader.Read()
+		if err == io.EOF {
+			break
+		} else if err != nil {
+			l.Errorw("cannot read data", "err", err)
+			return nil, err
+		}
+		if record[0] == "" { // empty row
+			l.Warnw("invalid card data format", "data", record)
+			continue
+		}
+
+		if strings.EqualFold(record[0], "id") { // header
+			if rarityIndex != 0 && nameIndex != 0 {
+				l.Panicw("detect header more than one time", "value", record)
+			}
+			idIndex = findIndex(record, "id")
+			nameIndex = findIndex(record, "name")
+			rarityIndex = findIndex(record, "rarity")
+			topIndex = findIndex(record, "top")
+			rightIndex = findIndex(record, "right")
+			bottomIndex = findIndex(record, "bottom")
+			leftIndex = findIndex(record, "left")
+			descIndex = findIndex(record, "desc")
+			continue
+		}
+		id := mustStringToInt(record[idIndex], idIndex)
+		fmt.Println("ID", id, record)
+		rarity := getRarity(record[rarityIndex])
+		weight := 0
+		cards = append(cards, Item{
+			Id:       id,
+			Type:     27,
+			Category: 2,
+			Tier:     rarity,
+			Weight:   weight,
+			Name:     removeRedundantText(record[nameIndex]),
+			Desc:     removeRedundantText(record[descIndex]),
+			CardInfo: &CardInfo{
+				Top:    mustStringToInt(record[topIndex], topIndex),
+				Right:  mustStringToInt(record[rightIndex], rightIndex),
+				Bottom: mustStringToInt(record[bottomIndex], bottomIndex),
+				Left:   mustStringToInt(record[leftIndex], leftIndex),
+			},
+		})
+	}
+	return cards, nil
+}
+
 func getListSkillUpdate() ([]Skill, error) {
 	l := zap.S().With("func", "getListSkillUpdate")
 	reader, err := getRawCsvReader(listSkillUpdate)
@@ -752,6 +850,9 @@ func removeRedundantText(s string) string {
 }
 
 func mustStringToInt(s string, index int) int {
+	if s == "" {
+		return 0
+	}
 	num, err := strconv.ParseInt(s, 10, 64)
 	if err != nil {
 		fmt.Println("PARSE ERROR", s, index)
@@ -961,4 +1062,23 @@ func getPerkLevels(rawText string) []int {
 		result = append(result, val)
 	}
 	return result
+}
+
+func getRarity(rawText string) int {
+	switch strings.ToLower(rawText) {
+	case "common":
+		return 1
+	case "uncommon":
+		return 2
+	case "rare":
+		return 3
+	case "epic":
+		return 4
+	case "legendary":
+		return 5
+	default:
+		fmt.Println("rawText", rawText)
+		zap.S().Panicw("invalid rarity", "rarity", rawText)
+	}
+	return -1
 }

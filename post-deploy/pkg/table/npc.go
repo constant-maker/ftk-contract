@@ -19,6 +19,20 @@ func NpcCallData(npc common.Npc) ([]byte, error) {
 	keyTuple := [][32]byte{
 		[32]byte(encodeUint256(big.NewInt(npc.Id))),
 	}
-	mt := mud.NewMudTable("Npc", "app")
+	mt := mud.NewMudTable("Npc", "app", "")
+	return mt.SetRecordRawCalldata(keyTuple, staticData, encodedLength, dynamicData)
+}
+
+func NpcShopCallData(city common.City) ([]byte, error) {
+	keyTuple := [][32]byte{
+		[32]byte(encodeUint256(big.NewInt(int64(city.Id)))),
+	}
+	staticData, err := encodePacked(uint32(100_000))
+	if err != nil {
+		return nil, err
+	}
+	encodedLength := mud.PackedCounter{}
+	dynamicData := []byte{}
+	mt := mud.NewMudTable("NpcShop", "app", "")
 	return mt.SetRecordRawCalldata(keyTuple, staticData, encodedLength, dynamicData)
 }

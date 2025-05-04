@@ -44,7 +44,7 @@ func SkillCallData(skill common.Skill) ([]byte, error) {
 		return nil, err
 	}
 	dynamicData := simpleEncodePacked(stringToBytes(skill.Name), rawDynamicData)
-	mt := mud.NewMudTable("SkillV2", "app")
+	mt := mud.NewMudTable("SkillV2", "app", "")
 	return mt.SetRecordRawCalldata(keyTuple, staticData, encodedLength, dynamicData)
 }
 
@@ -62,6 +62,6 @@ func SkillEffectCallData(skillID int, skillEffect common.SkillEffect) ([]byte, e
 	}
 	encodedLength := mud.PackedCounter{}
 	dynamicData := []byte{}
-	mt := mud.NewMudTable("SkillEffect", "app")
+	mt := mud.NewMudTable("SkillEffect", "app", "")
 	return mt.SetRecordRawCalldata(keyTuple, staticData, encodedLength, dynamicData)
 }

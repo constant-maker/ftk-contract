@@ -1,10 +1,10 @@
 pragma solidity >=0.8.24;
 
-import { Equipment, EquipmentInfo, EquipmentInfoData } from "@codegen/index.sol";
+import { Equipment, EquipmentInfo, EquipmentInfoData, EquipmentInfo3 } from "@codegen/index.sol";
 import { CharStats, CharStatsData, CharCurrentStats, CharCurrentStatsData, CharBaseStats } from "@codegen/index.sol";
 import { CharEquipStats, CharEquipStatsData } from "@codegen/tables/CharEquipStats.sol";
 import { StatType, SlotType } from "@codegen/common.sol";
-import { Errors } from "@common/index.sol";
+import { Errors, Config } from "@common/index.sol";
 
 library CharacterStatsUtils {
   function validateCurrentWeight(uint256 characterId) internal view {
@@ -131,6 +131,9 @@ library CharacterStatsUtils {
         characterCurrentStats.hp = maxHp;
       }
     }
+    if (slotType == SlotType.Mount) {
+      _updateMaxWeightWithEquipment(characterId, itemId, isRemoved);
+    }
 
     if (isRemoved) {
       characterCurrentStats.ms -= equipmentInfo.ms;
@@ -145,6 +148,26 @@ library CharacterStatsUtils {
     }
 
     CharCurrentStats.set(characterId, characterCurrentStats);
+  }
+
+  function _updateMaxWeightWithEquipment(uint256 characterId, uint256 itemId, bool isRemoved) private {
+    uint32 bonusWeight = EquipmentInfo3.getBonusWeight(itemId);
+    if (bonusWeight == 0) {
+      return;
+    }
+    uint32 currentMaxWeight = CharStats.getWeight(characterId);
+    uint32 newMaxWeight;
+    if (isRemoved) {
+      if (currentMaxWeight < bonusWeight + Config.DEFAULT_WEIGHT) {
+        // This case should never happen, but safe fallback
+        newMaxWeight = Config.DEFAULT_WEIGHT;
+      } else {
+        newMaxWeight = currentMaxWeight - bonusWeight;
+      }
+    } else {
+      newMaxWeight = currentMaxWeight + bonusWeight;
+    }
+    CharStats.setWeight(characterId, newMaxWeight);
   }
 
   function _getSnapshotEquipmentStats(

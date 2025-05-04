@@ -53,7 +53,7 @@ contract TileSystemTest is WorldFixture, SpawnSystemFixture, MoveSystemFixture {
     InventoryItemUtils.addItem(characterId, oreTier1_Id, 30);
     InventoryItemUtils.addItem(characterId, wheatTier1_Id, 30);
     InventoryItemUtils.addItem(characterId, berriesTier1_Id, 30);
-    
+
     CharFund.setGold(characterId, 20);
     vm.stopPrank();
 

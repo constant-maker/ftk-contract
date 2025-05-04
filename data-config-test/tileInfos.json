@@ -46,6 +46,15 @@
       "itemIds": [
         1, 10
       ]
+    },
+    {
+      "kingdomId": 1,
+      "x": 31,
+      "y": -35,
+      "zoneType": 2,
+      "itemIds": [
+        1, 10
+      ]
     }
   ]
 }

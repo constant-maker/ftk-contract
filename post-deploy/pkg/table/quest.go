@@ -25,7 +25,7 @@ func QuestCallData(quest common.Quest2) ([]byte, error) {
 	keyTuple := [][32]byte{
 		[32]byte(encodeUint256(big.NewInt(quest.Id))),
 	}
-	mt := mud.NewMudTable("Quest2", "app")
+	mt := mud.NewMudTable("Quest2", "app", "")
 	return mt.SetRecordRawCalldata(keyTuple, staticData, encodedLength, dynamicData)
 }
 
@@ -53,7 +53,7 @@ func QuestLocateCallData(questId int64, locations []common.Location) ([]byte, er
 		return nil, err
 	}
 	dynamicData := simpleEncodePacked(xsPacked, ysPacked)
-	mt := mud.NewMudTable("QuestLocate", "app")
+	mt := mud.NewMudTable("QuestLocate", "app", "")
 	return mt.SetRecordRawCalldata(keyTuple, staticData, encodedLength, dynamicData)
 }
 
@@ -78,6 +78,6 @@ func QuestContributeCallData(questId int64, details []common.ContributeDetail) (
 	keyTuple := [][32]byte{
 		[32]byte(encodeUint256(big.NewInt(questId))),
 	}
-	mt := mud.NewMudTable("QuestContribute", "app")
+	mt := mud.NewMudTable("QuestContribute", "app", "")
 	return mt.SetRecordRawCalldata(keyTuple, staticData, encodedLength, dynamicData)
 }

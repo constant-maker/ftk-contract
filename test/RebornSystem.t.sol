@@ -13,6 +13,7 @@ import { EquipData } from "@systems/app/EquipmentSystem.sol";
 import { SlotType } from "@codegen/common.sol";
 import { Config } from "@common/Config.sol";
 import { CharAchievementUtils } from "@utils/CharAchievementUtils.sol";
+import { InventoryItemUtils } from "@utils/InventoryItemUtils.sol";
 
 contract RebornSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture {
   address player = makeAddr("player");
@@ -48,6 +49,16 @@ contract RebornSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixt
     vm.stopPrank();
 
     console2.log("setup atk", CharCurrentStats.getAtk(characterId));
+
+    vm.expectRevert(); // no resource
+    vm.startPrank(player);
+    world.app__reborn(characterId);
+    vm.stopPrank();
+
+    vm.startPrank(worldDeployer);
+    (uint256[] memory itemIds, uint32[] memory amounts) = _requiredResources(1);
+    InventoryItemUtils.addItems(characterId, itemIds, amounts);
+    vm.stopPrank();
 
     vm.startPrank(player);
     world.app__reborn(characterId);
@@ -94,6 +105,11 @@ contract RebornSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixt
 
     console2.log("setup atk", CharCurrentStats.getAtk(characterId));
 
+    vm.startPrank(worldDeployer);
+    (uint256[] memory itemIds, uint32[] memory amounts) = _requiredResources(1);
+    InventoryItemUtils.addItems(characterId, itemIds, amounts);
+    vm.stopPrank();
+
     vm.startPrank(player);
     world.app__reborn(characterId);
     vm.stopPrank();
@@ -111,5 +127,21 @@ contract RebornSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixt
     assertEq(charCurrentStats.hp, Config.DEFAULT_HP);
     assertEq(1, CharReborn.get(characterId));
     assertTrue(CharAchievementUtils.hasAchievement(characterId, 9));
+  }
+
+  function _requiredResources(uint16 rebornNum)
+    private
+    pure
+    returns (uint256[] memory itemIds, uint32[] memory amounts)
+  {
+    itemIds = new uint256[](3);
+    itemIds[0] = 67;
+    itemIds[1] = 68;
+    itemIds[2] = 69;
+    amounts = new uint32[](3);
+    amounts[0] = rebornNum;
+    amounts[1] = rebornNum;
+    amounts[2] = rebornNum;
+    return (itemIds, amounts);
   }
 }

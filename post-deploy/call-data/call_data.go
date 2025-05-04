@@ -131,6 +131,44 @@ func BuildItemData(l *zap.SugaredLogger, dataConfig common.DataConfig, fromItemI
 	return callData, nil
 }
 
+func BuildEquipmentItemData(l *zap.SugaredLogger, dataConfig common.DataConfig, fromItemID int) ([][]byte, error) {
+	callData := make([][]byte, 0)
+	l.Infow("len Items", "value", len(dataConfig.Items))
+	// make array and sort by itemId so the call data in post-deploy will be ordered by itemId
+	items := make([]common.Item, 0)
+	for k, item := range dataConfig.Items {
+		if k != strconv.FormatInt(int64(item.Id), 10) {
+			l.Errorw("wrong item key and id", "key", k, "id", item.Id)
+			return nil, fmt.Errorf("wrong item key and id %s %d", k, item.Id)
+		}
+		items = append(items, item)
+	}
+	sort.Slice(items, func(i, j int) bool {
+		return items[i].Id < items[j].Id
+	})
+	once := sync.Once{}
+	for _, item := range items {
+		if item.Id < fromItemID {
+			continue
+		}
+		if item.EquipmentInfo == nil {
+			// skip all non-equipment items
+			continue
+		}
+		once.Do(func() {
+			l.Infow("Item Info starts from ID", "value", fromItemID)
+		})
+		itemCallData, err := table.ItemCallData(item)
+		if err != nil {
+			l.Errorw("cannot build Item Detail call data", "err", err)
+			return nil, err
+		}
+		callData = append(callData, itemCallData)
+	}
+	return callData, nil
+}
+
+// BuildExtraItemInfoData includes equipment, healing, and resource item info
 func BuildExtraItemInfoData(l *zap.SugaredLogger, dataConfig common.DataConfig, fromItemID int) ([][]byte, error) {
 	callData := make([][]byte, 0)
 	// l.Infow("len Items", "value", len(dataConfig.Items))
@@ -240,6 +278,14 @@ func BuildNpcData(l *zap.SugaredLogger, dataConfig common.DataConfig) ([][]byte,
 			return nil, err
 		}
 		callData = append(callData, npcCallData)
+		// if len(npc.Cards) != 0 {
+		// 	npcCardCallData, err := table.NpcCardCallData(npc)
+		// 	if err != nil {
+		// 		l.Errorw("cannot build NPC Card call data", "err", err)
+		// 		return nil, err
+		// 	}
+		// 	callData = append(callData, npcCardCallData)
+		// }
 	}
 	return callData, nil
 }
@@ -456,5 +502,44 @@ func BuildAchievementData(l *zap.SugaredLogger, dataConfig common.DataConfig, fr
 		}
 		callData = append(callData, achievementCallData)
 	}
+	return callData, nil
+}
+
+func BuildDailyQuestData(l *zap.SugaredLogger, dataConfig common.DataConfig, fromAchievementID int) ([][]byte, error) {
+	callData := make([][]byte, 0)
+	l.Infow("len DailyQuests", "value", dataConfig.DailyQuestConfig)
+	data, err := table.DailyQuestConfigCallData(dataConfig.DailyQuestConfig)
+	if err != nil {
+		l.Errorw("cannot build DailyQuest call data", "err", err)
+		return nil, err
+	}
+	callData = append(callData, data)
+	return callData, nil
+}
+
+func BuildItemWeightCacheData(l *zap.SugaredLogger, dataConfig common.DataConfig) ([][]byte, error) {
+	callData := make([][]byte, 0)
+	l.Infow("len Items", "value", dataConfig.Items)
+	for _, item := range dataConfig.Items {
+		if item.EquipmentInfo != nil {
+			data, err := table.ItemWeightCacheCallData(item)
+			if err != nil {
+				l.Errorw("cannot build ItemWeightCache call data", "err", err)
+				return nil, err
+			}
+			callData = append(callData, data)
+		}
+	}
+	return callData, nil
+}
+
+func BuildResourceDropData(l *zap.SugaredLogger, dataConfig common.DataConfig) ([][]byte, error) {
+	callData := make([][]byte, 0)
+	data, err := table.DropResourceCallData(dataConfig, 5) // drop from tier 5
+	if err != nil {
+		l.Errorw("cannot build DropResource call data", "err", err)
+		return nil, err
+	}
+	callData = append(callData, data)
 	return callData, nil
 }

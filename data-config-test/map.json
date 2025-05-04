@@ -94,7 +94,17 @@
       "x": 30,
       "y": -36,
       "name": "Liliana",
-      "dialog": "Welcome adventurer! Feel free to choose any quest that catches your eye and help our city grow stronger."
+      "dialog": "Welcome adventurer! Feel free to choose any quest that catches your eye and help our city grow stronger.",
+      "cards": [
+        {
+          "id": 184,
+          "amount": 2
+        },
+        {
+          "id": 185,
+          "amount": 3
+        }
+      ]
     },
     "2": {
       "id": 2,

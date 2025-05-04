@@ -115,7 +115,16 @@ library BattlePvEUtils {
     return (exp, perkExp);
   }
 
-  function handleBossResult(uint256 characterId, uint256 monsterId, uint32 monsterHp, int32 x, int32 y) public {
+  function handleBossResult(
+    uint256 characterId,
+    uint256 monsterId,
+    uint32 monsterHp,
+    CharPositionData memory charPosition
+  )
+    public
+  {
+    int32 x = charPosition.x;
+    int32 y = charPosition.y;
     if (monsterHp == 0) {
       BossInfo.setHp(monsterId, x, y, MonsterStats.getHp(monsterId));
       BossInfo.setLastDefeatedTime(monsterId, x, y, block.timestamp);

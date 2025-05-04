@@ -25,6 +25,8 @@ library Config {
   uint32 public constant UPGRADE_STORAGE_COST = 50; // golds
   uint32 public constant INIT_STORAGE_MAX_WEIGHT = 300;
   uint32 public constant STORAGE_MAX_WEIGHT_INCREMENT = 100;
+  uint32 public constant TILE_ITEM_AVAILABLE_DURATION = 3600; // 1 hour (second)
 
   uint256 public constant NORMAL_ATTACK_SKILL_ID = 0;
+  uint256 public constant MAX_EQUIPMENT_ID_TO_CHECK_CACHE_WEIGHT = 16_000;
 }

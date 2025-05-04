@@ -27,6 +27,11 @@ func getTableId(tableName, nameSpace string) ResourceId {
 	return tableId
 }
 
+func getFieldLayout(rawHex string) FieldLayout {
+	hash := common.HexToHash(rawHex)
+	return FieldLayout(hash)
+}
+
 const (
 	BYTE_TO_BITS = 8
 	ACC_BITS     = 7 * BYTE_TO_BITS

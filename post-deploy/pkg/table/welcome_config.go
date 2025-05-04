@@ -14,6 +14,6 @@ func WelcomeConfigCallData(welcomeConfig common.WelcomeConfig) ([]byte, error) {
 		itemIds = append(itemIds, big.NewInt(int64(itemId)))
 	}
 	dynamicData := encodeUint256Array(itemIds)
-	mt := mud.NewMudTable("WelcomeConfig", "app")
+	mt := mud.NewMudTable("WelcomeConfig", "app", "")
 	return mt.SetDynamicFieldRawCalldata(keyTuple, 0, dynamicData)
 }

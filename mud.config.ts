@@ -28,7 +28,8 @@ export default defineWorld({
       "ClothArmor", "ClothHeadgear", "ClothFootwear",
       "LeatherArmor", "LeatherHeadgear", "LeatherFootwear",
       "PlateArmor", "PlateHeadgear", "PlateFootwear",
-      "Mount", "Resource", "MapSkillItem", "HealingItem", "StatModifierItem"
+      "Mount", "Resource", "MapSkillItem", "HealingItem", "StatModifierItem",
+      "Card"
     ],
     ItemCategoryType: ["Tool", "Equipment", "Other"],
     CharacterType: ["Male", "Female"],

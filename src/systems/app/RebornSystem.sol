@@ -15,6 +15,7 @@ import {
   CharReborn
 } from "@codegen/index.sol";
 import { CharAchievementUtils } from "@utils/CharAchievementUtils.sol";
+import { InventoryItemUtils } from "@utils/InventoryItemUtils.sol";
 import { SlotType } from "@codegen/common.sol";
 import { Errors, Config } from "@common/index.sol";
 
@@ -25,6 +26,9 @@ contract RebornSystem is System, CharacterAccessControl {
     if (charStats.level < Config.MAX_LEVEL) {
       revert Errors.RebornSystem_MustBeMaxLevel(characterId);
     }
+    uint16 rebornNum = CharReborn.get(characterId) + 1;
+    (uint256[] memory itemIds, uint32[] memory amounts) = _requiredResources(rebornNum);
+    InventoryItemUtils.removeItems(characterId, itemIds, amounts);
     // reset stat and gain extra points
     // update current stats
     CharBaseStatsData memory characterBaseStats = CharBaseStats.get(characterId);
@@ -34,7 +38,6 @@ contract RebornSystem is System, CharacterAccessControl {
     CharCurrentStats.set(characterId, charCurrentStats);
 
     // update stats
-    uint16 rebornNum = CharReborn.get(characterId) + 1;
     charStats.level = 1;
     charStats.hp = charCurrentStats.hp;
     charStats.statPoint = 20 * rebornNum;
@@ -115,5 +118,21 @@ contract RebornSystem is System, CharacterAccessControl {
     slotTypes[4] = SlotType.Footwear;
     slotTypes[5] = SlotType.Mount;
     return slotTypes;
+  }
+
+  function _requiredResources(uint16 rebornNum)
+    private
+    pure
+    returns (uint256[] memory itemIds, uint32[] memory amounts)
+  {
+    itemIds = new uint256[](3);
+    itemIds[0] = 67;
+    itemIds[1] = 68;
+    itemIds[2] = 69;
+    amounts = new uint32[](3);
+    amounts[0] = rebornNum;
+    amounts[1] = rebornNum;
+    amounts[2] = rebornNum;
+    return (itemIds, amounts);
   }
 }

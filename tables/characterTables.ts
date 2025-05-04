@@ -182,7 +182,7 @@ const CHARACTER_TABLES: any = {
     },
     key: ['characterId', 'cityId', 'itemId'],
   },
-  CharEquipStats: {
+  CharEquipStats: { // Cached data for equipment stats
     schema: {
       characterId: "uint256",
       slotType: "SlotType",
@@ -200,6 +200,22 @@ const CHARACTER_TABLES: any = {
       num: "uint16",
     },
     key: ['characterId'],
+  },
+  CharMigration: {
+    schema: {
+      characterId: "uint256",
+      equipmentId: "uint256",
+      isMigrate: "bool",
+    },
+    key: ['characterId', 'equipmentId'],
+  },
+  CharStorageMigration: {
+    schema: {
+      characterId: "uint256",
+      equipmentId: "uint256",
+      isMigrate: "bool",
+    },
+    key: ['characterId', 'equipmentId'],
   },
 };
 
