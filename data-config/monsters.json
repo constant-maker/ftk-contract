@@ -311,8 +311,8 @@
       "perkExp": 12,
       "stats": {
         "hp": 75,
-        "atk": 14,
-        "def": 3,
+        "atk": 12,
+        "def": 5,
         "agi": 5,
         "sp": 3
       }
@@ -333,9 +333,9 @@
       "perkExp": 16,
       "stats": {
         "hp": 80,
-        "atk": 15,
+        "atk": 13,
         "def": 3,
-        "agi": 6,
+        "agi": 8,
         "sp": 3
       }
     },
@@ -351,8 +351,8 @@
       "skillIds": [1, 0, 0, 19, 0],
       "itemIds": [119, 175],
       "itemAmounts": [1, 1],
-      "exp": 15,
-      "perkExp": 15,
+      "exp": 20,
+      "perkExp": 10,
       "stats": {
         "hp": 85,
         "atk": 10,
@@ -377,9 +377,9 @@
       "perkExp": 15,
       "stats": {
         "hp": 70,
-        "atk": 14,
+        "atk": 13,
         "def": 2,
-        "agi": 6,
+        "agi": 7,
         "sp": 3
       }
     },
@@ -399,9 +399,9 @@
       "perkExp": 16,
       "stats": {
         "hp": 75,
-        "atk": 14,
+        "atk": 13,
         "def": 5,
-        "agi": 5,
+        "agi": 6,
         "sp": 3
       }
     },
@@ -421,8 +421,8 @@
       "perkExp": 18,
       "stats": {
         "hp": 90,
-        "atk": 14,
-        "def": 1,
+        "atk": 10,
+        "def": 5,
         "agi": 8,
         "sp": 3
       }
@@ -439,8 +439,8 @@
       "skillIds": [1, 0, 0, 22, 0],
       "itemIds": [125],
       "itemAmounts": [1],
-      "exp": 5,
-      "perkExp": 25,
+      "exp": 10,
+      "perkExp": 20,
       "stats": {
         "hp": 80,
         "atk": 12,
@@ -461,8 +461,8 @@
       "skillIds": [1, 0, 0, 23, 0],
       "itemIds": [126],
       "itemAmounts": [1],
-      "exp": 25,
-      "perkExp": 5,
+      "exp": 20,
+      "perkExp": 10,
       "stats": {
         "hp": 75,
         "atk": 15,
@@ -509,8 +509,8 @@
       "perkExp": 10,
       "stats": {
         "hp": 60,
-        "atk": 15,
-        "def": 3,
+        "atk": 13,
+        "def": 5,
         "agi": 6,
         "sp": 3
       }
@@ -531,9 +531,9 @@
       "perkExp": 12,
       "stats": {
         "hp": 70,
-        "atk": 15,
+        "atk": 14,
         "def": 4,
-        "agi": 6,
+        "agi": 7,
         "sp": 3
       }
     },
@@ -553,8 +553,8 @@
       "perkExp": 18,
       "stats": {
         "hp": 80,
-        "atk": 15,
-        "def": 4,
+        "atk": 10,
+        "def": 9,
         "agi": 6,
         "sp": 3
       }
@@ -571,12 +571,12 @@
       "skillIds": [17, 0, 0, 19, 0],
       "itemIds": [250],
       "itemAmounts": [1],
-      "exp": 30,
-      "perkExp": 0,
+      "exp": 25,
+      "perkExp": 5,
       "stats": {
         "hp": 85,
-        "atk": 18,
-        "def": 0,
+        "atk": 12,
+        "def": 6,
         "agi": 8,
         "sp": 3
       }
@@ -593,8 +593,8 @@
       "skillIds": [17, 0, 0, 19, 0],
       "itemIds": [251],
       "itemAmounts": [1],
-      "exp": 0,
-      "perkExp": 30,
+      "exp": 5,
+      "perkExp": 25,
       "stats": {
         "hp": 75,
         "atk": 11,
@@ -619,9 +619,9 @@
       "perkExp": 15,
       "stats": {
         "hp": 80,
-        "atk": 15,
+        "atk": 11,
         "def": 6,
-        "agi": 6,
+        "agi": 10,
         "sp": 3
       }
     },
@@ -641,9 +641,9 @@
       "perkExp": 15,
       "stats": {
         "hp": 85,
-        "atk": 15,
-        "def": 10,
-        "agi": 2,
+        "atk": 7,
+        "def": 16,
+        "agi": 4,
         "sp": 3
       }
     },
@@ -663,9 +663,9 @@
       "perkExp": 18,
       "stats": {
         "hp": 75,
-        "atk": 15,
+        "atk": 13,
         "def": 6,
-        "agi": 6,
+        "agi": 8,
         "sp": 3
       }
     },
@@ -685,9 +685,9 @@
       "perkExp": 12,
       "stats": {
         "hp": 85,
-        "atk": 16,
+        "atk": 15,
         "def": 4,
-        "agi": 8,
+        "agi": 9,
         "sp": 3
       }
     },
@@ -707,9 +707,9 @@
       "perkExp": 20,
       "stats": {
         "hp": 80,
-        "atk": 2,
+        "atk": 4,
         "def": 15,
-        "agi": 15,
+        "agi": 13,
         "sp": 3
       }
     },
@@ -729,9 +729,9 @@
       "perkExp": 10,
       "stats": {
         "hp": 75,
-        "atk": 18,
-        "def": 2,
-        "agi": 10,
+        "atk": 15,
+        "def": 4,
+        "agi": 11,
         "sp": 3
       }
     },
