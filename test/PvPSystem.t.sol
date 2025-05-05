@@ -20,14 +20,16 @@ import {
   TileInfo3,
   Alliance,
   CharCurrentStats,
-  TileInventory
+  TileInventory,
+  DropResource
 } from "@codegen/index.sol";
-import { EntityType, SlotType, ItemType } from "@codegen/common.sol";
+import { EntityType, SlotType, ItemType, ZoneType } from "@codegen/common.sol";
 import { Errors } from "@common/Errors.sol";
 import { Config } from "@common/Config.sol";
 import { CharacterPositionUtils, InventoryItemUtils } from "@utils/index.sol";
 import { CharStats2 } from "@codegen/tables/CharStats2.sol";
 import { LootItems } from "@systems/app/TileSystem.sol";
+import { EquipData } from "@systems/app/EquipmentSystem.sol";
 
 contract PvPSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture {
   address player_1 = makeAddr("player1");
@@ -382,6 +384,12 @@ contract PvPSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
   function test_DropItemInDangerZone() external {
     vm.warp(block.timestamp + 300);
 
+    uint256[] memory dropResourceIds = DropResource.get();
+    console2.log("drop resource ids length", dropResourceIds.length);
+    for (uint256 i = 0; i < dropResourceIds.length; i++) {
+      console2.log("resource id", dropResourceIds[i]);
+    }
+
     _moveToTheLocation(20, -32);
 
     vm.startPrank(worldDeployer);
@@ -425,6 +433,31 @@ contract PvPSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
     assertEq(tileItemIds[0], 2);
     assertEq(tileItemAmounts[0], 100);
     console2.log("done test fight in red zone");
+
+    vm.warp(block.timestamp + 300);
+    vm.startPrank(worldDeployer);
+    TileInfo3.setZoneType(21, -32, ZoneType.Black);
+    vm.stopPrank();
+    console2.log("tile kingdom id", TileInfo3.getKingdomId(21, -32));
+
+    vm.startPrank(player_1);
+    EquipData[] memory equipDatas = new EquipData[](1);
+    equipDatas[0] = EquipData({ slotType: SlotType.Weapon, equipmentId: 1 });
+    world.app__gearUpEquipments(characterId_1, equipDatas);
+    vm.stopPrank();
+
+    console2.log("equipped weapon id", CharEquipment.get(characterId_1, SlotType.Weapon));
+
+    console2.log("move to black zone");
+    _moveToTheLocation(21, -32); // RED zone
+    vm.startPrank(player_2);
+    world.app__battlePvP(characterId_2, characterId_1);
+    vm.stopPrank();
+    uint256[] memory tileEquipmentIds = TileInventory.getEquipmentIds(21, -32);
+    assertEq(tileEquipmentIds.length, 1);
+    assertEq(tileEquipmentIds[0], 1);
+
+    console2.log("done test fight in black zone");
 
     // test loot item
     vm.startPrank(player_2);

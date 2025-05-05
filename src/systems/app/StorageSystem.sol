@@ -35,7 +35,6 @@ contract StorageSystem is System, CharacterAccessControl {
     public
     onlyAuthorizedWallet(characterId)
   {
-    // revert("maintenance");
     CharacterPositionUtils.MustInCity(characterId, cityId);
 
     // set default max weight for storage

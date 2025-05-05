@@ -434,21 +434,21 @@ func BuildMonsterData(l *zap.SugaredLogger, dataConfig common.DataConfig, fromMo
 		callData = append(callData, monsterStatsCallData)
 
 		// boss stats
-		if monster.BossInfo != nil {
-			for _, ml := range dataConfig.MonsterLocationsBoss {
-				if ml.MonsterId == monster.Id {
-					for _, location := range ml.Locations {
-						l.Infow("data", "value", location, "monster", monster.BossInfo)
-						bossInfosCallData, err := table.BossInfosCallData(monster.Id, *monster.BossInfo, location.X, location.Y)
-						if err != nil {
-							l.Errorw("cannot build BossInfo call data", "err", err)
-							return nil, err
-						}
-						callData = append(callData, bossInfosCallData)
-					}
-				}
-			}
-		}
+		// if monster.BossInfo != nil {
+		// 	for _, ml := range dataConfig.MonsterLocationsBoss {
+		// 		if ml.MonsterId == monster.Id {
+		// 			for _, location := range ml.Locations {
+		// 				l.Infow("data", "value", location, "monster", monster.BossInfo)
+		// 				bossInfosCallData, err := table.BossInfosCallData(monster.Id, *monster.BossInfo, location.X, location.Y)
+		// 				if err != nil {
+		// 					l.Errorw("cannot build BossInfo call data", "err", err)
+		// 					return nil, err
+		// 				}
+		// 				callData = append(callData, bossInfosCallData)
+		// 			}
+		// 		}
+		// 	}
+		// }
 	}
 	return callData, nil
 }
@@ -534,12 +534,10 @@ func BuildItemWeightCacheData(l *zap.SugaredLogger, dataConfig common.DataConfig
 }
 
 func BuildResourceDropData(l *zap.SugaredLogger, dataConfig common.DataConfig) ([][]byte, error) {
-	callData := make([][]byte, 0)
 	data, err := table.DropResourceCallData(dataConfig, 5) // drop from tier 5
 	if err != nil {
 		l.Errorw("cannot build DropResource call data", "err", err)
 		return nil, err
 	}
-	callData = append(callData, data)
-	return callData, nil
+	return [][]byte{data}, nil
 }

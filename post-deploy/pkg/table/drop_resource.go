@@ -19,7 +19,7 @@ func DropResourceCallData(config common.DataConfig, minTier int) ([]byte, error)
 			// exclude hunting-resource items
 			continue
 		}
-		zap.S().Infow("item", "item", item.Name)
+		zap.S().Infow("drop item", "item", item.Name)
 		if item.Tier >= minTier {
 			resourceIds = append(resourceIds, big.NewInt(int64(item.Id)))
 		}

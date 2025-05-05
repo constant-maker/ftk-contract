@@ -3,11 +3,10 @@ pragma solidity >=0.8.24;
 import { ResourceId } from "@latticexyz/store/src/ResourceId.sol";
 import { WorldResourceIdLib } from "@latticexyz/world/src/WorldResourceId.sol";
 import { RESOURCE_SYSTEM } from "@latticexyz/world/src/worldResourceTypes.sol";
-import { CharState, CharStateData, CharNextPosition } from "@codegen/index.sol";
+import { CharState, CharStateData, CharNextPosition, Item, CharFarmingState } from "@codegen/index.sol";
 import { CharacterStateType } from "@codegen/common.sol";
 import { MoveSystemUtils } from "./MoveSystemUtils.sol";
-import { Errors } from "@common/index.sol";
-import { Config } from "@common/Config.sol";
+import { Errors, Config } from "@common/index.sol";
 
 library CharacterStateUtils {
   /// @dev Return character action duration base on current character state
@@ -16,9 +15,15 @@ library CharacterStateUtils {
   function getCharacterActionDuration(uint256 characterId, CharacterStateType state) internal view returns (uint16) {
     if (state == CharacterStateType.Moving) {
       return MoveSystemUtils.getMovementDuration(characterId);
-    } else {
-      return Config.DEFAULT_PLAYER_ACTION_DURATION;
     }
+    if (state == CharacterStateType.Farming) {
+      uint256 itemId = CharFarmingState.getItemId(characterId);
+      uint8 tier = Item.getTier(itemId);
+      if (tier > 0) {
+        return Config.DEFAULT_PLAYER_ACTION_DURATION * uint16(tier);
+      }
+    }
+    return Config.DEFAULT_PLAYER_ACTION_DURATION;
   }
 
   /// @dev Revert when the character last action is not finished and character state is not equal to the required

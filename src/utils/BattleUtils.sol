@@ -4,22 +4,18 @@ import {
   SkillV2,
   SkillV2Data,
   Monster,
-  MonsterStats,
-  MonsterStatsData,
-  MonsterLocationData,
   CharStats,
   CharCurrentStats,
   CharCurrentStatsData,
   CharSkill,
   CharEquipment,
-  BossInfo,
-  BossInfoData,
   SkillEffect,
   SkillEffectData,
   TileInfo3,
   CharInfo,
   DropResource,
-  CharPositionData
+  CharPositionData,
+  CharInventory
 } from "@codegen/index.sol";
 import { PvE } from "@codegen/tables/PvE.sol";
 import { AdvantageType, SlotType, EffectType, ZoneType } from "@codegen/common.sol";
@@ -28,6 +24,7 @@ import { Errors } from "@common/Errors.sol";
 import { CharacterEquipmentUtils } from "./CharacterEquipmentUtils.sol";
 import { TileInventoryUtils } from "./TileInventoryUtils.sol";
 import { InventoryItemUtils } from "./InventoryItemUtils.sol";
+import { InventoryEquipmentUtils } from "./InventoryEquipmentUtils.sol";
 
 struct BattleInfo {
   uint256 id;
@@ -42,20 +39,12 @@ struct BattleInfo {
 }
 
 library BattleUtils {
-  uint8 public constant BERSERK_SP_BONUS = 5;
-
   /// @dev Return list of valid skills based on character SP.
   function getCharacterSkillIds(uint256 characterId) public view returns (uint256[5] memory skillIds) {
     uint8 characterSp = CharStats.getSp(characterId);
     uint256[5] memory characterSkillIds = CharSkill.getSkillIds(characterId);
 
     return reBuildSkills(characterSkillIds, characterSp);
-  }
-
-  function getMonsterSkillIds(uint256 monsterId, uint8 monsterSp) public view returns (uint256[5] memory skillIds) {
-    uint256[5] memory monsterSkillIds = Monster.getSkillIds(monsterId);
-
-    return reBuildSkills(monsterSkillIds, monsterSp);
   }
 
   function reBuildSkills(
@@ -79,45 +68,6 @@ library BattleUtils {
     }
 
     return skillIds;
-  }
-
-  /// @dev build monster BattleInfo
-  function buildMonsterBattleInfo(
-    uint256 monsterId,
-    int32 x,
-    int32 y,
-    MonsterLocationData memory monsterLocation
-  )
-    public
-    view
-    returns (BattleInfo memory monsterBattleInfo)
-  {
-    monsterBattleInfo.id = monsterId;
-    MonsterStatsData memory monsterStats = MonsterStats.get(monsterId);
-    uint8 monsterSp = monsterStats.sp;
-    if (!Monster.getIsBoss(monsterId)) {
-      grewMonsterStats(monsterId, monsterStats, monsterLocation.level);
-    } else {
-      BossInfoData memory bossInfo = BossInfo.get(monsterId, x, y);
-      monsterBattleInfo.barrier = bossInfo.barrier; // set barrier
-      if (bossInfo.hp <= monsterStats.hp * bossInfo.berserkHpThreshold / 100) {
-        uint16 multiplier = 100 + bossInfo.boostPercent;
-        monsterStats.atk = monsterStats.atk * multiplier / 100;
-        monsterStats.def = monsterStats.def * multiplier / 100;
-        monsterStats.agi = monsterStats.agi * multiplier / 100;
-        monsterSp += BERSERK_SP_BONUS;
-      }
-      monsterStats.hp = bossInfo.hp; // use current boss hp
-    }
-    monsterBattleInfo.hp = monsterStats.hp;
-    monsterBattleInfo.atk = monsterStats.atk;
-    monsterBattleInfo.def = monsterStats.def;
-    monsterBattleInfo.agi = monsterStats.agi;
-    monsterBattleInfo.level = monsterLocation.level;
-    monsterBattleInfo.advantageType = monsterLocation.advantageType;
-    monsterBattleInfo.skillIds = getMonsterSkillIds(monsterId, monsterSp);
-
-    return monsterBattleInfo;
   }
 
   /// @dev build character BattleInfo
@@ -298,15 +248,6 @@ library BattleUtils {
     return skill;
   }
 
-  function grewMonsterStats(uint256 monsterId, MonsterStatsData memory monsterStats, uint16 level) public view {
-    uint8 grow = Monster.getGrow(monsterId);
-    uint16 multiplier = (100 + (level - 1) * grow);
-    monsterStats.hp = monsterStats.hp * multiplier / 100;
-    monsterStats.atk = monsterStats.atk * multiplier / 100;
-    monsterStats.def = monsterStats.def * multiplier / 100;
-    monsterStats.agi = monsterStats.agi * multiplier / 100;
-  }
-
   function getRewardItem(
     uint256 characterId,
     uint256 monsterId
@@ -331,12 +272,9 @@ library BattleUtils {
   }
 
   function getCharacterEquipments(uint256 characterId) public view returns (uint256[6] memory equipmentIds) {
-    equipmentIds[0] = CharEquipment.getEquipmentId(characterId, SlotType.Weapon);
-    equipmentIds[1] = CharEquipment.getEquipmentId(characterId, SlotType.SubWeapon);
-    equipmentIds[2] = CharEquipment.getEquipmentId(characterId, SlotType.Headgear);
-    equipmentIds[3] = CharEquipment.getEquipmentId(characterId, SlotType.Armor);
-    equipmentIds[4] = CharEquipment.getEquipmentId(characterId, SlotType.Footwear);
-    equipmentIds[5] = CharEquipment.getEquipmentId(characterId, SlotType.Mount);
+    for (uint8 i = 0; i <= uint8(SlotType.Mount); i++) {
+      equipmentIds[i] = CharEquipment.getEquipmentId(characterId, SlotType(i));
+    }
     return equipmentIds;
   }
 
@@ -346,15 +284,26 @@ library BattleUtils {
     ZoneType zoneType = TileInfo3.getZoneType(x, y);
     uint8 tileKingdomId = TileInfo3.getKingdomId(x, y);
     uint8 characterKingdomId = CharInfo.getKingdomId(characterId);
-    if (tileKingdomId != characterKingdomId || (tileKingdomId == characterKingdomId && zoneType == ZoneType.Black)) {
+    if (zoneType == ZoneType.Black) {
+      if (tileKingdomId == characterKingdomId) {
+        zoneType = ZoneType.Red;
+      }
+    } else if (tileKingdomId != characterKingdomId) {
       zoneType = ZoneType.Red;
     }
-    if (zoneType == ZoneType.Red) {
-      // drop all resource (tier > 5) in inventory
+    if (zoneType == ZoneType.Red || zoneType == ZoneType.Black) {
+      // drop resource in inventory
       uint256[] memory rawResourceIds = DropResource.getResourceIds();
       (uint256[] memory resourceIds, uint32[] memory resourceAmounts) =
         InventoryItemUtils.dropAllResource(characterId, rawResourceIds);
       TileInventoryUtils.addItems(x, y, resourceIds, resourceAmounts);
+    }
+    if (zoneType == ZoneType.Black) {
+      // drop equipment in inventory
+      CharacterEquipmentUtils.unequipAllEquipment(characterId);
+      uint256[] memory equipmentIds = CharInventory.getEquipmentIds(characterId);
+      InventoryEquipmentUtils.removeEquipments(characterId, equipmentIds, true);
+      TileInventoryUtils.addEquipments(x, y, equipmentIds);
     }
   }
 }

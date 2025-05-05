@@ -2,11 +2,11 @@ pragma solidity >=0.8.24;
 
 import { System } from "@latticexyz/world/src/System.sol";
 import {
-  CharacterUtils,
   CharacterItemUtils,
   InventoryEquipmentUtils,
   CharacterStatsUtils,
-  EquipmentUtils
+  EquipmentUtils,
+  CharacterEquipmentUtils
 } from "@utils/index.sol";
 import { CharacterAccessControl } from "@abstracts/CharacterAccessControl.sol";
 import { CharEquipment, CharGrindSlot, Equipment, EquipmentData, EquipmentInfo, Item } from "@codegen/index.sol";
@@ -49,7 +49,7 @@ contract EquipmentSystem is System, CharacterAccessControl {
     uint256 equipmentId = equipData.equipmentId;
     SlotType equipmentSlotType = equipData.slotType;
     if (equipmentId == 0) {
-      _unequipEquipment(characterId, equipmentSlotType);
+      CharacterEquipmentUtils.unequipEquipment(characterId, equipmentSlotType);
       return;
     }
     if (!InventoryEquipmentUtils.hasEquipment(characterId, equipmentId)) {
@@ -64,12 +64,12 @@ contract EquipmentSystem is System, CharacterAccessControl {
 
     if (slotType == SlotType.Weapon && EquipmentInfo.getTwoHanded(equipmentData.itemId)) {
       // if equipment is a two-handed weapon, we need to unequip subweapon
-      _unequipEquipment(characterId, SlotType.SubWeapon);
+      CharacterEquipmentUtils.unequipEquipment(characterId, SlotType.SubWeapon);
     } else if (slotType == SlotType.SubWeapon) {
       // if equipment is a subweapon, we need to unequip weapon if it is two-handed
       uint256 currentWeaponId = CharEquipment.get(characterId, SlotType.Weapon);
       if (currentWeaponId != 0 && EquipmentInfo.getTwoHanded(Equipment.getItemId(currentWeaponId))) {
-        _unequipEquipmentById(characterId, SlotType.Weapon, currentWeaponId);
+        CharacterEquipmentUtils.unequipEquipmentById(characterId, SlotType.Weapon, currentWeaponId);
       }
     }
     uint256 currentEquipmentId = CharEquipment.get(characterId, slotType);
@@ -84,24 +84,5 @@ contract EquipmentSystem is System, CharacterAccessControl {
     InventoryEquipmentUtils.removeEquipment(characterId, equipmentId, false);
     // update character stats
     CharacterStatsUtils.addEquipment(characterId, equipmentId, slotType);
-  }
-
-  /// @dev unequip equipment
-  function _unequipEquipment(uint256 characterId, SlotType slotType) private {
-    uint256 currentEquipmentId = CharEquipment.get(characterId, slotType);
-    if (currentEquipmentId == 0) {
-      // current slot is empty
-      return;
-    }
-    _unequipEquipmentById(characterId, slotType, currentEquipmentId);
-  }
-
-  /// @dev unequip equipment by id
-  function _unequipEquipmentById(uint256 characterId, SlotType slotType, uint256 currentEquipmentId) private {
-    // move current equipment back to inventory
-    InventoryEquipmentUtils.addEquipment(characterId, currentEquipmentId, false);
-    // update character stats
-    CharacterStatsUtils.removeEquipment(characterId, currentEquipmentId, slotType);
-    CharEquipment.set(characterId, slotType, 0);
   }
 }

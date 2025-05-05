@@ -1585,15 +1585,15 @@
       "ingredients": [
         {
           "itemId": 1,
-          "amount": 30
+          "amount": 10
         },
         {
           "itemId": 10,
-          "amount": 30
+          "amount": 10
         },
         {
           "itemId": 2,
-          "amount": 20
+          "amount": 10
         }
       ],
       "goldCost": 3
@@ -1603,15 +1603,15 @@
       "ingredients": [
         {
           "itemId": 1,
-          "amount": 30
+          "amount": 10
         },
         {
           "itemId": 10,
-          "amount": 30
+          "amount": 10
         },
         {
           "itemId": 7,
-          "amount": 20
+          "amount": 10
         }
       ],
       "goldCost": 3
@@ -1621,15 +1621,15 @@
       "ingredients": [
         {
           "itemId": 1,
-          "amount": 30
+          "amount": 10
         },
         {
           "itemId": 10,
-          "amount": 30
+          "amount": 10
         },
         {
           "itemId": 9,
-          "amount": 20
+          "amount": 10
         }
       ],
       "goldCost": 3
@@ -1639,15 +1639,15 @@
       "ingredients": [
         {
           "itemId": 1,
-          "amount": 30
+          "amount": 10
         },
         {
           "itemId": 10,
-          "amount": 30
+          "amount": 10
         },
         {
           "itemId": 11,
-          "amount": 20
+          "amount": 10
         }
       ],
       "goldCost": 3
@@ -1657,15 +1657,15 @@
       "ingredients": [
         {
           "itemId": 1,
-          "amount": 30
+          "amount": 10
         },
         {
           "itemId": 10,
-          "amount": 30
+          "amount": 10
         },
         {
           "itemId": 13,
-          "amount": 20
+          "amount": 10
         }
       ],
       "goldCost": 3
@@ -1675,15 +1675,15 @@
       "ingredients": [
         {
           "itemId": 1,
-          "amount": 30
+          "amount": 10
         },
         {
           "itemId": 10,
-          "amount": 30
+          "amount": 10
         },
         {
           "itemId": 15,
-          "amount": 20
+          "amount": 10
         }
       ],
       "goldCost": 3
@@ -1693,15 +1693,15 @@
       "ingredients": [
         {
           "itemId": 1,
-          "amount": 40
+          "amount": 30
         },
         {
           "itemId": 10,
-          "amount": 40
+          "amount": 30
         },
         {
           "itemId": 3,
-          "amount": 20
+          "amount": 10
         }
       ],
       "goldCost": 4
@@ -1711,15 +1711,15 @@
       "ingredients": [
         {
           "itemId": 1,
-          "amount": 40
+          "amount": 30
         },
         {
           "itemId": 10,
-          "amount": 40
+          "amount": 30
         },
         {
           "itemId": 78,
-          "amount": 20
+          "amount": 10
         }
       ],
       "goldCost": 4
@@ -1729,15 +1729,15 @@
       "ingredients": [
         {
           "itemId": 1,
-          "amount": 40
+          "amount": 30
         },
         {
           "itemId": 10,
-          "amount": 40
+          "amount": 30
         },
         {
           "itemId": 86,
-          "amount": 20
+          "amount": 10
         }
       ],
       "goldCost": 4
@@ -1747,15 +1747,15 @@
       "ingredients": [
         {
           "itemId": 1,
-          "amount": 40
+          "amount": 30
         },
         {
           "itemId": 10,
-          "amount": 40
+          "amount": 30
         },
         {
           "itemId": 94,
-          "amount": 20
+          "amount": 10
         }
       ],
       "goldCost": 4
@@ -1765,15 +1765,15 @@
       "ingredients": [
         {
           "itemId": 1,
-          "amount": 40
+          "amount": 30
         },
         {
           "itemId": 10,
-          "amount": 40
+          "amount": 30
         },
         {
           "itemId": 110,
-          "amount": 20
+          "amount": 10
         }
       ],
       "goldCost": 4
@@ -1783,15 +1783,15 @@
       "ingredients": [
         {
           "itemId": 1,
-          "amount": 40
+          "amount": 30
         },
         {
           "itemId": 10,
-          "amount": 40
+          "amount": 30
         },
         {
           "itemId": 102,
-          "amount": 20
+          "amount": 10
         }
       ],
       "goldCost": 4
@@ -1855,15 +1855,15 @@
       "ingredients": [
         {
           "itemId": 2,
-          "amount": 30
+          "amount": 10
         },
         {
           "itemId": 11,
-          "amount": 30
+          "amount": 10
         },
         {
           "itemId": 4,
-          "amount": 20
+          "amount": 10
         }
       ],
       "goldCost": 6
@@ -1873,15 +1873,15 @@
       "ingredients": [
         {
           "itemId": 2,
-          "amount": 40
+          "amount": 30
         },
         {
           "itemId": 11,
-          "amount": 40
+          "amount": 30
         },
         {
           "itemId": 5,
-          "amount": 20
+          "amount": 10
         }
       ],
       "goldCost": 8
@@ -1891,15 +1891,15 @@
       "ingredients": [
         {
           "itemId": 3,
-          "amount": 30
+          "amount": 10
         },
         {
           "itemId": 94,
-          "amount": 30
+          "amount": 10
         },
         {
           "itemId": 73,
-          "amount": 20
+          "amount": 10
         }
       ],
       "goldCost": 10
@@ -1909,15 +1909,15 @@
       "ingredients": [
         {
           "itemId": 3,
-          "amount": 40
+          "amount": 30
         },
         {
           "itemId": 94,
-          "amount": 40
+          "amount": 30
         },
         {
           "itemId": 74,
-          "amount": 20
+          "amount": 10
         }
       ],
       "goldCost": 12
@@ -1927,15 +1927,15 @@
       "ingredients": [
         {
           "itemId": 4,
-          "amount": 30
+          "amount": 10
         },
         {
           "itemId": 95,
-          "amount": 30
+          "amount": 10
         },
         {
           "itemId": 75,
-          "amount": 20
+          "amount": 10
         }
       ],
       "goldCost": 14
@@ -1945,15 +1945,15 @@
       "ingredients": [
         {
           "itemId": 4,
-          "amount": 40
+          "amount": 30
         },
         {
           "itemId": 95,
-          "amount": 40
+          "amount": 30
         },
         {
           "itemId": 76,
-          "amount": 20
+          "amount": 10
         }
       ],
       "goldCost": 16
@@ -1963,15 +1963,15 @@
       "ingredients": [
         {
           "itemId": 2,
-          "amount": 30
+          "amount": 10
         },
         {
           "itemId": 11,
-          "amount": 30
+          "amount": 10
         },
         {
           "itemId": 79,
-          "amount": 20
+          "amount": 10
         }
       ],
       "goldCost": 6
@@ -1981,15 +1981,15 @@
       "ingredients": [
         {
           "itemId": 2,
-          "amount": 40
+          "amount": 30
         },
         {
           "itemId": 11,
-          "amount": 40
+          "amount": 30
         },
         {
           "itemId": 80,
-          "amount": 20
+          "amount": 10
         }
       ],
       "goldCost": 8
@@ -1999,15 +1999,15 @@
       "ingredients": [
         {
           "itemId": 3,
-          "amount": 30
+          "amount": 10
         },
         {
           "itemId": 94,
-          "amount": 30
+          "amount": 10
         },
         {
           "itemId": 81,
-          "amount": 20
+          "amount": 10
         }
       ],
       "goldCost": 10
@@ -2017,15 +2017,15 @@
       "ingredients": [
         {
           "itemId": 3,
-          "amount": 40
+          "amount": 30
         },
         {
           "itemId": 94,
-          "amount": 40
+          "amount": 30
         },
         {
           "itemId": 82,
-          "amount": 20
+          "amount": 10
         }
       ],
       "goldCost": 12
@@ -2035,15 +2035,15 @@
       "ingredients": [
         {
           "itemId": 4,
-          "amount": 30
+          "amount": 10
         },
         {
           "itemId": 95,
-          "amount": 30
+          "amount": 10
         },
         {
           "itemId": 83,
-          "amount": 20
+          "amount": 10
         }
       ],
       "goldCost": 14
@@ -2053,15 +2053,15 @@
       "ingredients": [
         {
           "itemId": 4,
-          "amount": 40
+          "amount": 30
         },
         {
           "itemId": 95,
-          "amount": 40
+          "amount": 30
         },
         {
           "itemId": 84,
-          "amount": 20
+          "amount": 10
         }
       ],
       "goldCost": 16
@@ -2071,15 +2071,15 @@
       "ingredients": [
         {
           "itemId": 2,
-          "amount": 30
+          "amount": 10
         },
         {
           "itemId": 11,
-          "amount": 30
+          "amount": 10
         },
         {
           "itemId": 87,
-          "amount": 20
+          "amount": 10
         }
       ],
       "goldCost": 6
@@ -2089,15 +2089,15 @@
       "ingredients": [
         {
           "itemId": 2,
-          "amount": 40
+          "amount": 30
         },
         {
           "itemId": 11,
-          "amount": 40
+          "amount": 30
         },
         {
           "itemId": 88,
-          "amount": 20
+          "amount": 10
         }
       ],
       "goldCost": 8
@@ -2107,15 +2107,15 @@
       "ingredients": [
         {
           "itemId": 3,
-          "amount": 30
+          "amount": 10
         },
         {
           "itemId": 94,
-          "amount": 30
+          "amount": 10
         },
         {
           "itemId": 89,
-          "amount": 20
+          "amount": 10
         }
       ],
       "goldCost": 10
@@ -2125,15 +2125,15 @@
       "ingredients": [
         {
           "itemId": 3,
-          "amount": 40
+          "amount": 30
         },
         {
           "itemId": 94,
-          "amount": 40
+          "amount": 30
         },
         {
           "itemId": 90,
-          "amount": 20
+          "amount": 10
         }
       ],
       "goldCost": 12
@@ -2143,15 +2143,15 @@
       "ingredients": [
         {
           "itemId": 4,
-          "amount": 30
+          "amount": 10
         },
         {
           "itemId": 95,
-          "amount": 30
+          "amount": 10
         },
         {
           "itemId": 91,
-          "amount": 20
+          "amount": 10
         }
       ],
       "goldCost": 14
@@ -2161,15 +2161,15 @@
       "ingredients": [
         {
           "itemId": 4,
-          "amount": 40
+          "amount": 30
         },
         {
           "itemId": 95,
-          "amount": 40
+          "amount": 30
         },
         {
           "itemId": 92,
-          "amount": 20
+          "amount": 10
         }
       ],
       "goldCost": 16
@@ -2179,15 +2179,15 @@
       "ingredients": [
         {
           "itemId": 2,
-          "amount": 30
+          "amount": 10
         },
         {
           "itemId": 11,
-          "amount": 30
+          "amount": 10
         },
         {
           "itemId": 95,
-          "amount": 20
+          "amount": 10
         }
       ],
       "goldCost": 6
@@ -2197,15 +2197,15 @@
       "ingredients": [
         {
           "itemId": 2,
-          "amount": 40
+          "amount": 30
         },
         {
           "itemId": 11,
-          "amount": 40
+          "amount": 30
         },
         {
           "itemId": 96,
-          "amount": 20
+          "amount": 10
         }
       ],
       "goldCost": 8
@@ -2215,15 +2215,15 @@
       "ingredients": [
         {
           "itemId": 3,
-          "amount": 30
+          "amount": 10
         },
         {
           "itemId": 94,
-          "amount": 30
+          "amount": 10
         },
         {
           "itemId": 97,
-          "amount": 20
+          "amount": 10
         }
       ],
       "goldCost": 10
@@ -2233,15 +2233,15 @@
       "ingredients": [
         {
           "itemId": 3,
-          "amount": 40
+          "amount": 30
         },
         {
           "itemId": 94,
-          "amount": 40
+          "amount": 30
         },
         {
           "itemId": 98,
-          "amount": 20
+          "amount": 10
         }
       ],
       "goldCost": 12
@@ -2251,15 +2251,15 @@
       "ingredients": [
         {
           "itemId": 4,
-          "amount": 30
+          "amount": 10
         },
         {
           "itemId": 95,
-          "amount": 30
+          "amount": 10
         },
         {
           "itemId": 99,
-          "amount": 20
+          "amount": 10
         }
       ],
       "goldCost": 14
@@ -2269,15 +2269,15 @@
       "ingredients": [
         {
           "itemId": 4,
-          "amount": 40
+          "amount": 30
         },
         {
           "itemId": 95,
-          "amount": 40
+          "amount": 30
         },
         {
           "itemId": 100,
-          "amount": 20
+          "amount": 10
         }
       ],
       "goldCost": 16
@@ -2287,15 +2287,15 @@
       "ingredients": [
         {
           "itemId": 2,
-          "amount": 30
+          "amount": 10
         },
         {
           "itemId": 11,
-          "amount": 30
+          "amount": 10
         },
         {
           "itemId": 111,
-          "amount": 20
+          "amount": 10
         }
       ],
       "goldCost": 6
@@ -2305,15 +2305,15 @@
       "ingredients": [
         {
           "itemId": 2,
-          "amount": 40
+          "amount": 30
         },
         {
           "itemId": 11,
-          "amount": 40
+          "amount": 30
         },
         {
           "itemId": 112,
-          "amount": 20
+          "amount": 10
         }
       ],
       "goldCost": 8
@@ -2323,15 +2323,15 @@
       "ingredients": [
         {
           "itemId": 3,
-          "amount": 30
+          "amount": 10
         },
         {
           "itemId": 94,
-          "amount": 30
+          "amount": 10
         },
         {
           "itemId": 113,
-          "amount": 20
+          "amount": 10
         }
       ],
       "goldCost": 10
@@ -2341,15 +2341,15 @@
       "ingredients": [
         {
           "itemId": 3,
-          "amount": 40
+          "amount": 30
         },
         {
           "itemId": 94,
-          "amount": 40
+          "amount": 30
         },
         {
           "itemId": 114,
-          "amount": 20
+          "amount": 10
         }
       ],
       "goldCost": 12
@@ -2359,15 +2359,15 @@
       "ingredients": [
         {
           "itemId": 4,
-          "amount": 30
+          "amount": 10
         },
         {
           "itemId": 95,
-          "amount": 30
+          "amount": 10
         },
         {
           "itemId": 115,
-          "amount": 20
+          "amount": 10
         }
       ],
       "goldCost": 14
@@ -2377,15 +2377,15 @@
       "ingredients": [
         {
           "itemId": 4,
-          "amount": 40
+          "amount": 30
         },
         {
           "itemId": 95,
-          "amount": 40
+          "amount": 30
         },
         {
           "itemId": 116,
-          "amount": 20
+          "amount": 10
         }
       ],
       "goldCost": 16
@@ -2395,15 +2395,15 @@
       "ingredients": [
         {
           "itemId": 2,
-          "amount": 30
+          "amount": 10
         },
         {
           "itemId": 11,
-          "amount": 30
+          "amount": 10
         },
         {
           "itemId": 103,
-          "amount": 20
+          "amount": 10
         }
       ],
       "goldCost": 6
@@ -2413,15 +2413,15 @@
       "ingredients": [
         {
           "itemId": 2,
-          "amount": 40
+          "amount": 30
         },
         {
           "itemId": 11,
-          "amount": 40
+          "amount": 30
         },
         {
           "itemId": 104,
-          "amount": 20
+          "amount": 10
         }
       ],
       "goldCost": 8
@@ -2431,15 +2431,15 @@
       "ingredients": [
         {
           "itemId": 3,
-          "amount": 30
+          "amount": 10
         },
         {
           "itemId": 94,
-          "amount": 30
+          "amount": 10
         },
         {
           "itemId": 105,
-          "amount": 20
+          "amount": 10
         }
       ],
       "goldCost": 10
@@ -2449,15 +2449,15 @@
       "ingredients": [
         {
           "itemId": 3,
-          "amount": 40
+          "amount": 30
         },
         {
           "itemId": 94,
-          "amount": 40
+          "amount": 30
         },
         {
           "itemId": 106,
-          "amount": 20
+          "amount": 10
         }
       ],
       "goldCost": 12
@@ -2467,15 +2467,15 @@
       "ingredients": [
         {
           "itemId": 4,
-          "amount": 30
+          "amount": 10
         },
         {
           "itemId": 95,
-          "amount": 30
+          "amount": 10
         },
         {
           "itemId": 107,
-          "amount": 20
+          "amount": 10
         }
       ],
       "goldCost": 14
@@ -2485,15 +2485,15 @@
       "ingredients": [
         {
           "itemId": 4,
-          "amount": 40
+          "amount": 30
         },
         {
           "itemId": 95,
-          "amount": 40
+          "amount": 30
         },
         {
           "itemId": 108,
-          "amount": 20
+          "amount": 10
         }
       ],
       "goldCost": 16

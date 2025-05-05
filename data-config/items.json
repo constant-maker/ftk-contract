@@ -802,8 +802,8 @@
         "advantageType": 0,
         "twoHanded": false,
         "atk": 2,
-        "def": 3,
-        "agi": 6,
+        "def": 4,
+        "agi": 5,
         "hp": 20,
         "ms": 0
       }
@@ -842,8 +842,8 @@
         "advantageType": 0,
         "twoHanded": false,
         "atk": 0,
-        "def": 2,
-        "agi": 4,
+        "def": 3,
+        "agi": 3,
         "hp": 10,
         "ms": 0
       }
@@ -882,8 +882,8 @@
         "advantageType": 0,
         "twoHanded": false,
         "atk": 0,
-        "def": 2,
-        "agi": 4,
+        "def": 3,
+        "agi": 3,
         "hp": 0,
         "ms": 1
       }
@@ -2226,8 +2226,8 @@
         "advantageType": 0,
         "twoHanded": false,
         "atk": 4,
-        "def": 12,
-        "agi": 8,
+        "def": 10,
+        "agi": 10,
         "hp": 35,
         "ms": 0
       }
@@ -2246,8 +2246,8 @@
         "advantageType": 0,
         "twoHanded": false,
         "atk": 7,
-        "def": 25,
-        "agi": 12,
+        "def": 18,
+        "agi": 19,
         "hp": 60,
         "ms": 0
       }
@@ -2286,8 +2286,8 @@
         "advantageType": 0,
         "twoHanded": false,
         "atk": 6,
-        "def": 15,
-        "agi": 5,
+        "def": 10,
+        "agi": 10,
         "hp": 30,
         "ms": 0
       }
@@ -2306,8 +2306,8 @@
         "advantageType": 0,
         "twoHanded": false,
         "atk": 2,
-        "def": 7,
-        "agi": 5,
+        "def": 6,
+        "agi": 6,
         "hp": 0,
         "ms": 1
       }
@@ -2326,8 +2326,8 @@
         "advantageType": 0,
         "twoHanded": false,
         "atk": 3,
-        "def": 14,
-        "agi": 9,
+        "def": 12,
+        "agi": 11,
         "hp": 0,
         "ms": 1
       }
@@ -3382,8 +3382,8 @@
         "advantageType": 0,
         "twoHanded": false,
         "atk": 11,
-        "def": 30,
-        "agi": 9,
+        "def": 20,
+        "agi": 19,
         "hp": 50,
         "ms": 0
       }
@@ -3402,8 +3402,8 @@
         "advantageType": 0,
         "twoHanded": false,
         "atk": 16,
-        "def": 52,
-        "agi": 14,
+        "def": 32,
+        "agi": 34,
         "hp": 70,
         "ms": 0
       }
@@ -3422,8 +3422,8 @@
         "advantageType": 0,
         "twoHanded": false,
         "atk": 14,
-        "def": 29,
-        "agi": 7,
+        "def": 18,
+        "agi": 18,
         "hp": 0,
         "ms": 1
       }
@@ -3442,8 +3442,8 @@
         "advantageType": 0,
         "twoHanded": false,
         "atk": 10,
-        "def": 56,
-        "agi": 16,
+        "def": 38,
+        "agi": 34,
         "hp": 0,
         "ms": 1
       }
@@ -3462,8 +3462,8 @@
         "advantageType": 0,
         "twoHanded": false,
         "atk": 8,
-        "def": 46,
-        "agi": 18,
+        "def": 30,
+        "agi": 34,
         "hp": 90,
         "ms": 0
       }
@@ -3482,8 +3482,8 @@
         "advantageType": 0,
         "twoHanded": false,
         "atk": 16,
-        "def": 70,
-        "agi": 22,
+        "def": 44,
+        "agi": 48,
         "hp": 120,
         "ms": 0
       }

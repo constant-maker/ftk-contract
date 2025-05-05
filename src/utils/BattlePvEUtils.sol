@@ -5,12 +5,14 @@ import {
   CharBattle,
   MonsterLocationData,
   Monster,
-  MonsterStats,
   PvE,
   PvEData,
   PvEExtra,
   PvEExtraData,
-  BossInfo
+  BossInfo,
+  BossInfoData,
+  MonsterStats,
+  MonsterStatsData
 } from "@codegen/index.sol";
 import { BattleInfo, BattleUtils } from "@utils/BattleUtils.sol";
 import { CharacterFundUtils } from "@utils/CharacterFundUtils.sol";
@@ -19,6 +21,8 @@ import { Errors } from "@common/Errors.sol";
 import { Config } from "@common/Config.sol";
 
 library BattlePvEUtils {
+  uint8 public constant BERSERK_SP_BONUS = 5;
+
   /// @dev perform and return the result of the fight
   /// hps is final hp of character and monster
   function performFight(
@@ -37,7 +41,7 @@ library BattlePvEUtils {
     BattleInfo memory characterBattleInfo =
       BattleUtils.buildCharacterBattleInfo(characterId, characterSkills, characterOriginHp);
     BattleInfo memory monsterBattleInfo =
-      BattleUtils.buildMonsterBattleInfo(monsterId, characterPosition.x, characterPosition.y, monsterLocation);
+      buildMonsterBattleInfo(monsterId, characterPosition.x, characterPosition.y, monsterLocation);
 
     // Determine the first attacker based on agility
     if (characterBattleInfo.agi >= monsterBattleInfo.agi) {
@@ -149,5 +153,59 @@ library BattlePvEUtils {
     if (block.timestamp < respawnTime) {
       revert Errors.PvE_BossIsNotRespawnedYet(monsterId, respawnTime);
     }
+  }
+
+  /// @dev build monster BattleInfo
+  function buildMonsterBattleInfo(
+    uint256 monsterId,
+    int32 x,
+    int32 y,
+    MonsterLocationData memory monsterLocation
+  )
+    public
+    view
+    returns (BattleInfo memory monsterBattleInfo)
+  {
+    monsterBattleInfo.id = monsterId;
+    MonsterStatsData memory monsterStats = MonsterStats.get(monsterId);
+    uint8 monsterSp = monsterStats.sp;
+    if (!Monster.getIsBoss(monsterId)) {
+      grewMonsterStats(monsterId, monsterStats, monsterLocation.level);
+    } else {
+      BossInfoData memory bossInfo = BossInfo.get(monsterId, x, y);
+      monsterBattleInfo.barrier = bossInfo.barrier; // set barrier
+      if (bossInfo.hp <= monsterStats.hp * bossInfo.berserkHpThreshold / 100) {
+        uint16 multiplier = 100 + bossInfo.boostPercent;
+        monsterStats.atk = monsterStats.atk * multiplier / 100;
+        monsterStats.def = monsterStats.def * multiplier / 100;
+        monsterStats.agi = monsterStats.agi * multiplier / 100;
+        monsterSp += BERSERK_SP_BONUS;
+      }
+      monsterStats.hp = bossInfo.hp; // use current boss hp
+    }
+    monsterBattleInfo.hp = monsterStats.hp;
+    monsterBattleInfo.atk = monsterStats.atk;
+    monsterBattleInfo.def = monsterStats.def;
+    monsterBattleInfo.agi = monsterStats.agi;
+    monsterBattleInfo.level = monsterLocation.level;
+    monsterBattleInfo.advantageType = monsterLocation.advantageType;
+    monsterBattleInfo.skillIds = getMonsterSkillIds(monsterId, monsterSp);
+
+    return monsterBattleInfo;
+  }
+
+  function getMonsterSkillIds(uint256 monsterId, uint8 monsterSp) public view returns (uint256[5] memory skillIds) {
+    uint256[5] memory monsterSkillIds = Monster.getSkillIds(monsterId);
+
+    return BattleUtils.reBuildSkills(monsterSkillIds, monsterSp);
+  }
+
+  function grewMonsterStats(uint256 monsterId, MonsterStatsData memory monsterStats, uint16 level) public view {
+    uint8 grow = Monster.getGrow(monsterId);
+    uint16 multiplier = (100 + (level - 1) * grow);
+    monsterStats.hp = monsterStats.hp * multiplier / 100;
+    monsterStats.atk = monsterStats.atk * multiplier / 100;
+    monsterStats.def = monsterStats.def * multiplier / 100;
+    monsterStats.agi = monsterStats.agi * multiplier / 100;
   }
 }
