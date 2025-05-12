@@ -14,8 +14,9 @@ import {
   MonsterStats,
   MonsterStatsData
 } from "@codegen/index.sol";
-import { BattleInfo, BattleUtils } from "@utils/BattleUtils.sol";
-import { CharacterFundUtils } from "@utils/CharacterFundUtils.sol";
+import { BattleInfo, BattleUtils } from "./BattleUtils.sol";
+import { CharacterFundUtils } from "./CharacterFundUtils.sol";
+import { InventoryItemUtils } from "./InventoryItemUtils.sol";
 import { EntityType } from "@codegen/common.sol";
 import { Errors } from "@common/Errors.sol";
 import { Config } from "@common/Config.sol";
@@ -87,11 +88,6 @@ library BattlePvEUtils {
     CharBattle.setPveLastAtkTime(characterId, block.timestamp);
   }
 
-  function storePvEExtraData(uint256 characterId, uint256 rewardItemId, uint32 rewardItemAmount) public {
-    PvEExtraData memory pveExtra = PvEExtraData({ itemId: rewardItemId, itemAmount: rewardItemAmount });
-    PvEExtra.set(characterId, pveExtra);
-  }
-
   function getExpAndPerkExpReward(
     uint256 monsterId,
     bool isBoss,
@@ -127,6 +123,9 @@ library BattlePvEUtils {
   )
     public
   {
+    if (!Monster.getIsBoss(monsterId)) {
+      return;
+    }
     int32 x = charPosition.x;
     int32 y = charPosition.y;
     if (monsterHp == 0) {
@@ -147,6 +146,9 @@ library BattlePvEUtils {
   }
 
   function checkIsBossReady(uint256 monsterId, CharPositionData memory characterPosition) public view {
+    if (!Monster.getIsBoss(monsterId)) {
+      return;
+    }
     // respawnDuration is in hour
     uint256 respawnTime = BossInfo.getLastDefeatedTime(monsterId, characterPosition.x, characterPosition.y)
       + uint32(BossInfo.getRespawnDuration(monsterId, characterPosition.x, characterPosition.y)) * 60 * 60;
@@ -207,5 +209,29 @@ library BattlePvEUtils {
     monsterStats.atk = monsterStats.atk * multiplier / 100;
     monsterStats.def = monsterStats.def * multiplier / 100;
     monsterStats.agi = monsterStats.agi * multiplier / 100;
+  }
+
+  function claimReward(uint256 characterId, uint256 monsterId) public {
+    uint256[] memory itemIds = Monster.getItemIds(monsterId);
+    uint32[] memory itemAmounts = Monster.getItemAmounts(monsterId);
+    if (itemIds.length == 0) {
+      return;
+    }
+    if (itemIds.length != itemAmounts.length) {
+      revert Errors.Monster_InvalidResourceData(monsterId, itemIds.length, itemAmounts.length);
+    }
+    uint256 index;
+    if (itemIds.length > 1) {
+      index = PvE.getCounter(characterId) % itemIds.length;
+    }
+    uint256 itemId = itemIds[index];
+    uint32 amount = itemAmounts[index];
+    InventoryItemUtils.addItem(characterId, itemId, amount);
+    storePvEExtraData(characterId, itemId, amount);
+  }
+
+  function storePvEExtraData(uint256 characterId, uint256 rewardItemId, uint32 rewardItemAmount) public {
+    PvEExtraData memory pveExtra = PvEExtraData({ itemId: rewardItemId, itemAmount: rewardItemAmount });
+    PvEExtra.set(characterId, pveExtra);
   }
 }

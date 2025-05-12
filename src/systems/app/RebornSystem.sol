@@ -12,10 +12,12 @@ import {
   CharCurrentStatsData,
   CharBaseStats,
   CharBaseStatsData,
-  CharReborn
+  CharReborn,
+  CharInfo
 } from "@codegen/index.sol";
 import { CharAchievementUtils } from "@utils/CharAchievementUtils.sol";
 import { InventoryItemUtils } from "@utils/InventoryItemUtils.sol";
+import { CharacterEquipmentUtils } from "@utils/CharacterEquipmentUtils.sol";
 import { SlotType } from "@codegen/common.sol";
 import { Errors, Config } from "@common/index.sol";
 
@@ -33,7 +35,9 @@ contract RebornSystem is System, CharacterAccessControl {
     // update current stats
     CharBaseStatsData memory characterBaseStats = CharBaseStats.get(characterId);
     CharCurrentStatsData memory charCurrentStats = CharCurrentStats.get(characterId);
-
+    // unequip all equipment
+    CharacterEquipmentUtils.unequipAllEquipment(characterId);
+    // update current stats
     charCurrentStats = _getRebornCurrentStats(characterId, characterBaseStats, charCurrentStats);
     CharCurrentStats.set(characterId, charCurrentStats);
 
@@ -62,62 +66,23 @@ contract RebornSystem is System, CharacterAccessControl {
     view
     returns (CharCurrentStatsData memory)
   {
-    (uint32 eHp, uint16 eAtk, uint16 eDef, uint16 eAgi) = _getTotalEquipmentStats(characterId);
-    // hp
-    charCurrentStats.hp = Config.DEFAULT_HP + eHp;
-    // atk
-    if (charCurrentStats.atk > characterBaseStats.atk + eAtk) {
-      charCurrentStats.atk = charCurrentStats.atk - characterBaseStats.atk;
-    } else {
-      charCurrentStats.atk = 4 + eAtk;
-    }
-    // def
-    if (charCurrentStats.def > characterBaseStats.def + eDef) {
-      charCurrentStats.def = charCurrentStats.def - characterBaseStats.def;
-    } else {
-      charCurrentStats.def = block.number % 2 == 0 ? 3 : 2 + eDef;
-    }
-    // agi
-    if (charCurrentStats.agi > characterBaseStats.agi + eAgi) {
-      charCurrentStats.agi = charCurrentStats.agi - characterBaseStats.agi;
-    } else {
-      charCurrentStats.agi = block.number % 2 == 0 ? 2 : 3 + eAgi;
-    }
-    // exp
+    (uint16 oAtk, uint16 oDef, uint16 oAgi) = _getCharacterOriginalStats(characterId);
+    // set new current stats
+    charCurrentStats.hp = Config.DEFAULT_HP;
+    charCurrentStats.atk = oAtk;
+    charCurrentStats.def = oDef;
+    charCurrentStats.agi = oAgi;
     charCurrentStats.exp = 0;
 
     return charCurrentStats;
   }
 
-  function _getTotalEquipmentStats(uint256 characterId)
-    private
-    view
-    returns (uint32 hp, uint16 atk, uint16 def, uint16 agi)
-  {
-    SlotType[] memory slotTypes = _getAllSlotType();
-    for (uint256 i = 0; i < slotTypes.length; i++) {
-      uint256 equipmentId = CharEquipment.getEquipmentId(characterId, slotTypes[i]);
-      if (equipmentId > 0) {
-        uint256 itemId = Equipment.getItemId(equipmentId);
-        EquipmentInfoData memory equipmentInfo = EquipmentInfo.get(itemId);
-        hp += equipmentInfo.hp;
-        atk += equipmentInfo.atk;
-        def += equipmentInfo.def;
-        agi += equipmentInfo.agi;
-      }
-    }
-    return (hp, atk, def, agi);
-  }
-
-  function _getAllSlotType() private pure returns (SlotType[] memory slotTypes) {
-    SlotType[] memory slotTypes = new SlotType[](6);
-    slotTypes[0] = SlotType.Weapon;
-    slotTypes[1] = SlotType.SubWeapon;
-    slotTypes[3] = SlotType.Headgear;
-    slotTypes[2] = SlotType.Armor;
-    slotTypes[4] = SlotType.Footwear;
-    slotTypes[5] = SlotType.Mount;
-    return slotTypes;
+  function _getCharacterOriginalStats(uint256 characterId) private view returns (uint16 atk, uint16 def, uint16 agi) {
+    uint16[3] memory traits = CharInfo.getTraits(characterId);
+    atk = 1 + traits[0];
+    def = 1 + traits[1];
+    agi = 1 + traits[2];
+    return (atk, def, agi);
   }
 
   function _requiredResources(uint16 rebornNum)

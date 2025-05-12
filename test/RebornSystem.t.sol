@@ -8,7 +8,7 @@ import { console2 } from "forge-std/console2.sol";
 import { CharStats, CharStatsData } from "@codegen/tables/CharStats.sol";
 import { CharCurrentStats, CharCurrentStatsData } from "@codegen/tables/CharCurrentStats.sol";
 import { CharBaseStats, CharBaseStatsData } from "@codegen/tables/CharBaseStats.sol";
-import { CharReborn } from "@codegen/index.sol";
+import { CharReborn, CharInfo } from "@codegen/index.sol";
 import { EquipData } from "@systems/app/EquipmentSystem.sol";
 import { SlotType } from "@codegen/common.sol";
 import { Config } from "@common/Config.sol";
@@ -37,6 +37,11 @@ contract RebornSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixt
     vm.startPrank(player);
     world.app__reborn(characterId);
     vm.stopPrank();
+
+    (uint16 oAtk, uint16 oDef, uint16 oAgi) = _getCharacterOriginalStats(characterId);
+    console2.log("original atk", oAtk);
+    console2.log("original def", oDef);
+    console2.log("original agi", oAgi);
 
     CharCurrentStatsData memory prevCharCurrentStats = CharCurrentStats.get(characterId);
     console2.log("prev atk", prevCharCurrentStats.atk);
@@ -72,7 +77,7 @@ contract RebornSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixt
     console2.log("current atk", charCurrentStats.atk);
     assertEq(charCurrentStats.atk, prevCharCurrentStats.atk + 3); // achievement
     assertEq(charCurrentStats.def, prevCharCurrentStats.def + 3);
-    assertEq(charCurrentStats.agi + 1, prevCharCurrentStats.agi + 3);
+    assertEq(charCurrentStats.agi, prevCharCurrentStats.agi + 3);
   }
 
   function test_RebornWithEquipment() external {
@@ -143,5 +148,13 @@ contract RebornSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixt
     amounts[1] = rebornNum;
     amounts[2] = rebornNum;
     return (itemIds, amounts);
+  }
+
+  function _getCharacterOriginalStats(uint256 characterId) private view returns (uint16 atk, uint16 def, uint16 agi) {
+    uint16[3] memory traits = CharInfo.getTraits(characterId);
+    atk = 1 + traits[0];
+    def = 1 + traits[1];
+    agi = 1 + traits[2];
+    return (atk, def, agi);
   }
 }

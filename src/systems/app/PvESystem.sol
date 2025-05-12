@@ -31,7 +31,8 @@ contract PvESystem is System, CharacterAccessControl {
   /// @dev character init a battle with a monster
   function battlePvE(
     uint256 characterId,
-    uint256 monsterId
+    uint256 monsterId,
+    bool claimItem
   )
     public
     onlyAuthorizedWallet(characterId)
@@ -46,33 +47,24 @@ contract PvESystem is System, CharacterAccessControl {
     if (monsterLocation.level == 0) {
       revert Errors.PvE_MonsterIsNotExist(characterPosition.x, characterPosition.y, monsterId);
     }
-    // check respawn time if monster is boss
-    bool isBoss = Monster.getIsBoss(monsterId);
-    if (isBoss) {
-      BattlePvEUtils.checkIsBossReady(monsterId, characterPosition);
-    }
+    // check if monster is boss and check respawn time
+    BattlePvEUtils.checkIsBossReady(monsterId, characterPosition);
     // battle
-    (uint32 characterHp, uint32 monsterHp) = _battle(characterId, monsterId, characterPosition, monsterLocation);
-    // handle result
-    _handleBattleResult(
-      characterId, monsterId, isBoss, characterHp, monsterHp, monsterLocation.level, characterPosition
-    );
-    if (isBoss) {
-      BattlePvEUtils.handleBossResult(characterId, monsterId, monsterHp, characterPosition);
-    }
+    _battle(characterId, monsterId, characterPosition, monsterLocation, claimItem);
   }
 
   function _handleBattleResult(
     uint256 characterId,
     uint256 monsterId,
-    bool isBoss,
     uint32 characterHp,
     uint32 monsterHp,
     uint16 monsterLevel,
-    CharPositionData memory characterPosition
+    CharPositionData memory characterPosition,
+    bool claimItem
   )
     private
   {
+    bool isBoss = Monster.getIsBoss(monsterId);
     if (characterHp == 0) {
       // character lost
       BattleUtils.applyLoss(characterId, characterPosition);
@@ -86,11 +78,9 @@ contract PvESystem is System, CharacterAccessControl {
       // character won
       (uint32 gainedExp, uint32 gainedPerkExp) =
         BattlePvEUtils.getExpAndPerkExpReward(monsterId, isBoss, monsterLevel, CharStats.getLevel(characterId));
-      // claim reward item
-      (uint256 itemId, uint32 amount) = BattleUtils.getRewardItem(characterId, monsterId);
-      if (itemId != 0) {
-        InventoryItemUtils.addItem(characterId, itemId, amount);
-        BattlePvEUtils.storePvEExtraData(characterId, itemId, amount);
+      if (claimItem) {
+        // claim reward
+        BattlePvEUtils.claimReward(characterId, monsterId);
       }
       _updateCharacterExp(characterId, gainedExp, gainedPerkExp);
       // check and update daily quest
@@ -131,10 +121,10 @@ contract PvESystem is System, CharacterAccessControl {
     uint256 characterId,
     uint256 monsterId,
     CharPositionData memory characterPosition,
-    MonsterLocationData memory monsterLocation
+    MonsterLocationData memory monsterLocation,
+    bool claimItem
   )
     private
-    returns (uint32 characterFinalHp, uint32 monsterFinalHp)
   {
     uint256[5] memory characterSkills = BattleUtils.getCharacterSkillIds(characterId);
     // perform the fight and get results
@@ -148,6 +138,8 @@ contract PvESystem is System, CharacterAccessControl {
       characterId, monsterId, characterOriginHp, firstAttacker, characterPosition, characterSkills, damages
     );
 
-    return (hps[0], hps[1]);
+    // handle battle result
+    _handleBattleResult(characterId, monsterId, hps[0], hps[1], monsterLocation.level, characterPosition, claimItem);
+    BattlePvEUtils.handleBossResult(characterId, monsterId, hps[1], characterPosition);
   }
 }

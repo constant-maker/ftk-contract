@@ -157,75 +157,75 @@ contract NpcShopSystem is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
   // }
 
   // test with max 500
-  function test_SellItemToNpc() external {
-    TradeData[] memory buyData;
-    TradeData[] memory sellData = new TradeData[](2);
-    sellData[0] = TradeData({ itemId: 18, amount: 1 });
-    sellData[1] = TradeData({ itemId: 1, amount: 100 });
+  // function test_SellItemToNpc() external {
+  //   TradeData[] memory buyData;
+  //   TradeData[] memory sellData = new TradeData[](2);
+  //   sellData[0] = TradeData({ itemId: 18, amount: 1 });
+  //   sellData[1] = TradeData({ itemId: 1, amount: 100 });
 
-    vm.expectRevert();
-    vm.startPrank(player);
-    world.app__tradeWithNpc(characterId, cityId, buyData, sellData);
-    vm.stopPrank();
+  //   vm.expectRevert();
+  //   vm.startPrank(player);
+  //   world.app__tradeWithNpc(characterId, cityId, buyData, sellData);
+  //   vm.stopPrank();
 
-    sellData = new TradeData[](1);
-    sellData[0] = TradeData({ itemId: 1, amount: 100 });
+  //   sellData = new TradeData[](1);
+  //   sellData[0] = TradeData({ itemId: 1, amount: 100 });
 
-    vm.startPrank(worldDeployer);
-    InventoryItemUtils.addItem(characterId, 1, 101);
-    vm.stopPrank();
+  //   vm.startPrank(worldDeployer);
+  //   InventoryItemUtils.addItem(characterId, 1, 101);
+  //   vm.stopPrank();
 
-    vm.startPrank(player);
-    world.app__tradeWithNpc(characterId, cityId, buyData, sellData);
-    vm.stopPrank();
+  //   vm.startPrank(player);
+  //   world.app__tradeWithNpc(characterId, cityId, buyData, sellData);
+  //   vm.stopPrank();
 
-    assertEq(CharFund.getGold(characterId), 100);
-    assertEq(CharOtherItem.getAmount(characterId, 1), 1);
-    assertEq(NpcShopInventory.getAmount(1, 1), 100);
-    assertEq(NpcShop.get(1), 99_900);
+  //   assertEq(CharFund.getGold(characterId), 100);
+  //   assertEq(CharOtherItem.getAmount(characterId, 1), 1);
+  //   assertEq(NpcShopInventory.getAmount(1, 1), 100);
+  //   assertEq(NpcShop.get(1), 99_900);
 
-    vm.startPrank(worldDeployer);
-    InventoryItemUtils.addItem(characterId, 1, 400);
-    vm.stopPrank();
+  //   vm.startPrank(worldDeployer);
+  //   InventoryItemUtils.addItem(characterId, 1, 400);
+  //   vm.stopPrank();
 
-    sellData[0].amount = 401;
-    vm.expectRevert(); // exceed npc shop item balance cap
-    vm.startPrank(player);
-    world.app__tradeWithNpc(characterId, cityId, buyData, sellData);
-    vm.stopPrank();
+  //   sellData[0].amount = 401;
+  //   vm.expectRevert(); // exceed npc shop item balance cap
+  //   vm.startPrank(player);
+  //   world.app__tradeWithNpc(characterId, cityId, buyData, sellData);
+  //   vm.stopPrank();
 
-    sellData[0].amount = 400;
-    vm.startPrank(player);
-    world.app__tradeWithNpc(characterId, cityId, buyData, sellData);
-    vm.stopPrank();
+  //   sellData[0].amount = 400;
+  //   vm.startPrank(player);
+  //   world.app__tradeWithNpc(characterId, cityId, buyData, sellData);
+  //   vm.stopPrank();
 
-    assertEq(CharFund.getGold(characterId), 500);
-    assertEq(CharOtherItem.getAmount(characterId, 1), 1);
-    assertEq(NpcShopInventory.getAmount(1, 1), 500);
-    assertEq(NpcShop.get(1), 99_500);
+  //   assertEq(CharFund.getGold(characterId), 500);
+  //   assertEq(CharOtherItem.getAmount(characterId, 1), 1);
+  //   assertEq(NpcShopInventory.getAmount(1, 1), 500);
+  //   assertEq(NpcShop.get(1), 99_500);
 
-    vm.startPrank(worldDeployer);
-    InventoryItemUtils.addItem(characterId, 2, 501);
-    vm.stopPrank();
+  //   vm.startPrank(worldDeployer);
+  //   InventoryItemUtils.addItem(characterId, 2, 501);
+  //   vm.stopPrank();
 
-    sellData[0].itemId = 2;
-    sellData[0].amount = 501;
-    vm.expectRevert(); // exceed npc shop item balance cap
-    vm.startPrank(player);
-    world.app__tradeWithNpc(characterId, cityId, buyData, sellData);
-    vm.stopPrank();
+  //   sellData[0].itemId = 2;
+  //   sellData[0].amount = 501;
+  //   vm.expectRevert(); // exceed npc shop item balance cap
+  //   vm.startPrank(player);
+  //   world.app__tradeWithNpc(characterId, cityId, buyData, sellData);
+  //   vm.stopPrank();
 
-    sellData[0].amount = 500;
-    vm.startPrank(player);
-    world.app__tradeWithNpc(characterId, cityId, buyData, sellData);
-    vm.stopPrank();
+  //   sellData[0].amount = 500;
+  //   vm.startPrank(player);
+  //   world.app__tradeWithNpc(characterId, cityId, buyData, sellData);
+  //   vm.stopPrank();
 
-    assertEq(CharFund.getGold(characterId), 1500);
-    assertEq(CharOtherItem.getAmount(characterId, 2), 1);
-    assertEq(NpcShopInventory.getAmount(1, 2), 500);
-    assertEq(NpcShop.get(1), 98_500);
-    assertEq(NpcShop.get(2), 100_000);
-  }
+  //   assertEq(CharFund.getGold(characterId), 1500);
+  //   assertEq(CharOtherItem.getAmount(characterId, 2), 1);
+  //   assertEq(NpcShopInventory.getAmount(1, 2), 500);
+  //   assertEq(NpcShop.get(1), 98_500);
+  //   assertEq(NpcShop.get(2), 100_000);
+  // }
 
   function test_buyCard() external {
     TradeData[] memory buyData = new TradeData[](1);

@@ -62,7 +62,7 @@ contract PvESystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
 
     vm.warp(block.timestamp + 300);
     vm.startPrank(player);
-    world.app__battlePvE(characterId, monsterId);
+    world.app__battlePvE(characterId, monsterId, true);
     vm.stopPrank();
 
     PvEData memory pve = PvE.get(characterId);
@@ -111,7 +111,7 @@ contract PvESystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
 
     vm.warp(block.timestamp + 300);
     vm.startPrank(player);
-    world.app__battlePvE(characterId, monsterId);
+    world.app__battlePvE(characterId, monsterId, true);
     vm.stopPrank();
 
     PvEData memory pve = PvE.get(characterId);
@@ -158,7 +158,7 @@ contract PvESystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
 
     vm.warp(block.timestamp + 300);
     vm.startPrank(player);
-    world.app__battlePvE(characterId, monsterId);
+    world.app__battlePvE(characterId, monsterId, true);
     vm.stopPrank();
 
     PvEData memory pve = PvE.get(characterId);
@@ -196,7 +196,7 @@ contract PvESystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
 
     vm.warp(block.timestamp + 300);
     vm.startPrank(player);
-    world.app__battlePvE(characterId, monsterId2);
+    world.app__battlePvE(characterId, monsterId2, true);
     vm.stopPrank();
 
     PvEData memory pve = PvE.get(characterId);
@@ -257,7 +257,7 @@ contract PvESystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
 
     vm.warp(block.timestamp + 300);
     vm.startPrank(player);
-    world.app__battlePvE(characterId, monsterId2);
+    world.app__battlePvE(characterId, monsterId2, true);
     vm.stopPrank();
 
     PvEData memory pve = PvE.get(characterId);
@@ -322,7 +322,7 @@ contract PvESystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
 
     vm.warp(block.timestamp + 300);
     vm.startPrank(player);
-    world.app__battlePvE(characterId, monsterId2);
+    world.app__battlePvE(characterId, monsterId2, true);
     vm.stopPrank();
 
     PvEData memory pve = PvE.get(characterId);
@@ -377,7 +377,7 @@ contract PvESystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
 
     vm.warp(block.timestamp + 300);
     vm.startPrank(player);
-    world.app__battlePvE(characterId, monsterId2);
+    world.app__battlePvE(characterId, monsterId2, true);
     vm.stopPrank();
 
     PvEData memory pve = PvE.get(characterId);
@@ -439,7 +439,7 @@ contract PvESystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
 
     vm.warp(block.timestamp + 300);
     vm.startPrank(player);
-    world.app__battlePvE(characterId, monsterId2);
+    world.app__battlePvE(characterId, monsterId2, true);
     vm.stopPrank();
 
     PvEData memory pve = PvE.get(characterId);
@@ -487,7 +487,7 @@ contract PvESystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
 
     vm.warp(block.timestamp + 300);
     vm.startPrank(player);
-    world.app__battlePvE(characterId, monsterId);
+    world.app__battlePvE(characterId, monsterId, true);
     vm.stopPrank();
 
     PvEData memory pve = PvE.get(characterId);
@@ -524,7 +524,7 @@ contract PvESystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
     vm.warp(block.timestamp + 300);
     vm.expectRevert();
     vm.startPrank(player);
-    world.app__battlePvE(characterId, monsterId);
+    world.app__battlePvE(characterId, monsterId, true);
     vm.stopPrank();
   }
 
@@ -538,7 +538,7 @@ contract PvESystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
     vm.stopPrank();
     vm.expectRevert();
     vm.startPrank(player);
-    world.app__battlePvE(characterId, monsterId);
+    world.app__battlePvE(characterId, monsterId, true);
     vm.stopPrank();
   }
 
@@ -564,7 +564,7 @@ contract PvESystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
 
     vm.warp(block.timestamp + 300);
     vm.startPrank(player);
-    world.app__battlePvE(characterId, monsterId);
+    world.app__battlePvE(characterId, monsterId, true);
     vm.stopPrank();
 
     PvEData memory pve = PvE.get(characterId);
@@ -617,7 +617,7 @@ contract PvESystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
 
     vm.warp(block.timestamp + 300);
     vm.startPrank(player);
-    world.app__battlePvE(characterId, monsterId);
+    world.app__battlePvE(characterId, monsterId, true);
     vm.stopPrank();
 
     PvEData memory pve = PvE.get(characterId);

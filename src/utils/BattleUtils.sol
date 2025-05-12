@@ -248,29 +248,6 @@ library BattleUtils {
     return skill;
   }
 
-  function getRewardItem(
-    uint256 characterId,
-    uint256 monsterId
-  )
-    public
-    view
-    returns (uint256 itemId, uint32 itemAmount)
-  {
-    uint256[] memory itemIds = Monster.getItemIds(monsterId);
-    uint32[] memory itemAmounts = Monster.getItemAmounts(monsterId);
-    if (itemIds.length == 0) {
-      return (0, 0);
-    }
-    if (itemIds.length != itemAmounts.length) {
-      revert Errors.Monster_InvalidResourceData(monsterId, itemIds.length, itemAmounts.length);
-    }
-    uint256 index;
-    if (itemIds.length > 1) {
-      index = PvE.getCounter(characterId) % itemIds.length;
-    }
-    return (itemIds[index], itemAmounts[index]);
-  }
-
   function getCharacterEquipments(uint256 characterId) public view returns (uint256[6] memory equipmentIds) {
     for (uint8 i = 0; i <= uint8(SlotType.Mount); i++) {
       equipmentIds[i] = CharEquipment.getEquipmentId(characterId, SlotType(i));

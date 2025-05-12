@@ -84,7 +84,7 @@ contract PvESystemBossTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFix
 
     vm.warp(block.timestamp + 4320 * 24 * 60 * 60);
     vm.startPrank(player);
-    world.app__battlePvE(characterId, bossId);
+    world.app__battlePvE(characterId, bossId, true);
     vm.stopPrank();
 
     PvEData memory pve = PvE.get(1);
@@ -134,7 +134,7 @@ contract PvESystemBossTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFix
 
     vm.warp(block.timestamp + 4320 * 24 * 60 * 60);
     vm.startPrank(player);
-    world.app__battlePvE(characterId, bossId);
+    world.app__battlePvE(characterId, bossId, true);
     vm.stopPrank();
 
     PvEData memory pve = PvE.get(1);
@@ -175,12 +175,12 @@ contract PvESystemBossTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFix
 
     vm.expectRevert();
     vm.startPrank(player);
-    world.app__battlePvE(characterId, bossId);
+    world.app__battlePvE(characterId, bossId, true);
     vm.stopPrank();
 
     vm.warp(block.timestamp + 4320 * 24 * 60 * 60);
     vm.startPrank(player);
-    world.app__battlePvE(characterId, bossId);
+    world.app__battlePvE(characterId, bossId, true);
     vm.stopPrank();
   }
 
@@ -202,7 +202,7 @@ contract PvESystemBossTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFix
     for (uint256 i = 0; i < 10; i++) {
       vm.warp(block.timestamp + 4320 * 24 * 60 * 60);
       vm.startPrank(player);
-      world.app__battlePvE(characterId, bossId);
+      world.app__battlePvE(characterId, bossId, true);
       vm.stopPrank();
     }
     uint32 amount1 = CharOtherItem.getAmount(characterId, 66);
@@ -229,7 +229,7 @@ contract PvESystemBossTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFix
 
     vm.warp(block.timestamp + 4320 * 24 * 60 * 60);
     vm.startPrank(player);
-    world.app__battlePvE(characterId, bossId);
+    world.app__battlePvE(characterId, bossId, true);
     vm.stopPrank();
 
     PvEData memory pve = PvE.get(1);
@@ -278,7 +278,7 @@ contract PvESystemBossTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFix
 
     vm.warp(block.timestamp + 4320 * 24 * 60 * 60);
     vm.startPrank(player);
-    world.app__battlePvE(characterId, bossId);
+    world.app__battlePvE(characterId, bossId, true);
     vm.stopPrank();
 
     PvEData memory pve = PvE.get(1);
@@ -324,7 +324,7 @@ contract PvESystemBossTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFix
 
     vm.warp(block.timestamp + 24 * 60 * 60);
     vm.startPrank(player);
-    world.app__battlePvE(characterId, bossId);
+    world.app__battlePvE(characterId, bossId, true);
     vm.stopPrank();
 
     PvEData memory pve = PvE.get(1);
