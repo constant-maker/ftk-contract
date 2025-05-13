@@ -9,8 +9,7 @@ import {
   CharacterEquipmentUtils
 } from "@utils/index.sol";
 import { CharacterAccessControl } from "@abstracts/CharacterAccessControl.sol";
-import { CharEquipment, CharGrindSlot, Equipment, EquipmentData, EquipmentInfo, Item } from "@codegen/index.sol";
-// import { CharEquipStats } from "@codegen/tables/CharEquipStats.sol";
+import { CharEquipment, CharGrindSlot, Equipment, EquipmentData, EquipmentInfo, Item, CharStats } from "@codegen/index.sol";
 import { SlotType } from "@codegen/common.sol";
 import { Errors } from "@common/index.sol";
 import { EquipData } from "./EquipmentSystem.sol";
@@ -56,6 +55,7 @@ contract EquipmentSystem is System, CharacterAccessControl {
       revert Errors.Equipment_NotOwned(characterId, equipmentId);
     }
     EquipmentData memory equipmentData = EquipmentUtils.mustGetEquipmentData(equipmentId);
+    _checkCharacterLevel(characterId, equipmentData.itemId);
     CharacterItemUtils.checkCharacterPerkLevelByItemId(characterId, equipmentData.itemId);
     SlotType slotType = EquipmentInfo.getSlotType(equipmentData.itemId);
     if (equipmentSlotType != slotType) {
@@ -84,5 +84,13 @@ contract EquipmentSystem is System, CharacterAccessControl {
     InventoryEquipmentUtils.removeEquipment(characterId, equipmentId, false);
     // update character stats
     CharacterStatsUtils.addEquipment(characterId, equipmentId, slotType);
+  }
+
+  function _checkCharacterLevel(uint256 characterId, uint256 itemId) private view {
+    uint16 level = CharStats.getLevel(characterId);
+    uint8 itemTier = Item.getTier(itemId);
+    if (level + 10 < uint16(itemTier) * 10) {
+      revert Errors.EquipmentSystem_CharacterLevelTooLow(characterId, level, itemTier);
+    }
   }
 }

@@ -86,7 +86,7 @@ contract DailyQuestSystemTest is
       _moveToMonsterLocation(characterId);
       vm.warp(block.timestamp + 300);
       vm.startPrank(player);
-      world.app__battlePvE(characterId, 1);
+      world.app__battlePvE(characterId, 1, true);
       vm.stopPrank();
     }
     uint8 pveCount = CharDailyQuest.getPveCount(characterId);
@@ -191,7 +191,7 @@ contract DailyQuestSystemTest is
       _moveToMonsterLocation(characterId);
       vm.warp(block.timestamp + 300);
       vm.startPrank(player);
-      world.app__battlePvE(characterId, 1);
+      world.app__battlePvE(characterId, 1, true);
       vm.stopPrank();
     }
     uint8 pveCount = CharDailyQuest.getPveCount(characterId);
@@ -244,7 +244,7 @@ contract DailyQuestSystemTest is
       _moveToMonsterLocation(characterId);
       vm.warp(block.timestamp + 300);
       vm.startPrank(player);
-      world.app__battlePvE(characterId, 1);
+      world.app__battlePvE(characterId, 1, true);
       vm.stopPrank();
     }
     uint8 pveCount = CharDailyQuest.getPveCount(characterId);
@@ -315,7 +315,7 @@ contract DailyQuestSystemTest is
       _moveToMonsterLocation(characterId);
       vm.warp(block.timestamp + 300);
       vm.startPrank(player);
-      world.app__battlePvE(characterId, 1);
+      world.app__battlePvE(characterId, 1, true);
       vm.stopPrank();
     }
     uint8 pveCount = CharDailyQuest.getPveCount(characterId);

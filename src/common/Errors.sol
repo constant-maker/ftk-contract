@@ -46,6 +46,7 @@ library Errors {
   error Equipment_NotOwned(uint256 characterId, uint256 equipmentId);
   error Equipment_AlreadyHad(uint256 characterId, uint256 equipmentId);
   error Equipment_NotExisted(uint256 equipmentId);
+  error EquipmentSystem_CharacterLevelTooLow(uint256 characterId, uint16 level, uint8 itemTier);
 
   /* -------------------------------------------------------------------------- */
   /*                                 Move system                                */
@@ -220,6 +221,7 @@ library Errors {
   error TileSystem_EquipmentNotFound(int32 x, int32 y, uint256 equipmentIndex);
   error TileSystem_ExceedItemBalance(int32 x, int32 y, uint256 itemId, uint32 currentAmount, uint32 requireAmount);
   error TileSystem_NoItemInThisTile(int32 x, int32 y, uint256 lastDropTime);
+  error TileSystem_TileAlreadyOccupied(int32 x, int32 y);
 
   /* -------------------------------------------------------------------------- */
   /*                               RebornSystem                                 */

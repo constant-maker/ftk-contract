@@ -1,7 +1,7 @@
 pragma solidity >=0.8.24;
 
 import { System } from "@latticexyz/world/src/System.sol";
-import { TileInfo3, TileInfo3Data, TileInventory } from "@codegen/index.sol";
+import { TileInfo3, TileInfo3Data, TileInventory, Equipment } from "@codegen/index.sol";
 import { CharPosition, CharPositionData } from "@codegen/tables/CharPosition.sol";
 import { CharInfo } from "@codegen/tables/CharInfo.sol";
 import { CharStats2 } from "@codegen/tables/CharStats2.sol";
@@ -37,6 +37,9 @@ contract TileSystem is System, CharacterAccessControl {
       revert Errors.TileSystem_TileIsLocked(x, y, occupiedTime);
     }
     uint8 kingdomId = CharInfo.getKingdomId(characterId);
+    if (TileInfo3.getKingdomId(x, y) == kingdomId) {
+      revert Errors.TileSystem_TileAlreadyOccupied(x, y);
+    }
     _checkTileNearBy(x, y, kingdomId);
     CharacterFundUtils.decreaseGold(characterId, TILE_OCCUPATION_COST);
     uint256[] memory itemIds = _getRequiredItemIds(x, y);
@@ -46,16 +49,13 @@ contract TileSystem is System, CharacterAccessControl {
     }
     InventoryItemUtils.removeItems(characterId, itemIds, amounts);
     // Set new tile data
-    uint8 tileKingdomId = TileInfo3.getKingdomId(x, y);
-    if (kingdomId != tileKingdomId) {
-      TileInfo3.setKingdomId(x, y, kingdomId);
-      // increase fame
-      uint32 currentFame = CharStats2.getFame(characterId);
-      if (currentFame == 0) {
-        currentFame = 1000; // default
-      }
-      CharStats2.setFame(characterId, currentFame + 10);
+    TileInfo3.setKingdomId(x, y, kingdomId);
+    // increase fame
+    uint32 currentFame = CharStats2.getFame(characterId);
+    if (currentFame == 0) {
+      currentFame = 1000; // default
     }
+    CharStats2.setFame(characterId, currentFame + 10);
     TileInfo3.setOccupiedTime(x, y, block.timestamp);
   }
 
@@ -73,6 +73,7 @@ contract TileSystem is System, CharacterAccessControl {
     for (uint256 i = 0; i < data.equipmentIds.length; i++) {
       uint256 equipmentId = data.equipmentIds[i];
       TileInventoryUtils.removeEquipment(x, y, equipmentId);
+      Equipment.setCharacterId(equipmentId, characterId);
       InventoryEquipmentUtils.addEquipment(characterId, equipmentId, true);
     }
     if (data.itemIds.length > 0) {

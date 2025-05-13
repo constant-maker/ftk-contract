@@ -114,7 +114,7 @@ contract MoveSystemTest is WorldFixture, MoveSystemFixture, SpawnSystemFixture, 
 
     vm.expectRevert();
     vm.startPrank(player);
-    world.app__startFarming(characterId, 1, 1);
+    world.app__startFarming(characterId, 1, 1, true);
     vm.stopPrank();
   }
 }

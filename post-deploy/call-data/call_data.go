@@ -396,7 +396,7 @@ func BuildSkillData(l *zap.SugaredLogger, dataConfig common.DataConfig, fromSkil
 	return callData, nil
 }
 
-func BuildMonsterData(l *zap.SugaredLogger, dataConfig common.DataConfig, fromMonsterID int) ([][]byte, error) {
+func BuildMonsterData(l *zap.SugaredLogger, dataConfig common.DataConfig, fromMonsterID int, resetBossData bool) ([][]byte, error) {
 	callData := make([][]byte, 0)
 	l.Infow("len Monsters", "value", len(dataConfig.Monsters))
 	var monsters []common.Monster
@@ -434,21 +434,21 @@ func BuildMonsterData(l *zap.SugaredLogger, dataConfig common.DataConfig, fromMo
 		callData = append(callData, monsterStatsCallData)
 
 		// boss stats
-		// if monster.BossInfo != nil {
-		// 	for _, ml := range dataConfig.MonsterLocationsBoss {
-		// 		if ml.MonsterId == monster.Id {
-		// 			for _, location := range ml.Locations {
-		// 				l.Infow("data", "value", location, "monster", monster.BossInfo)
-		// 				bossInfosCallData, err := table.BossInfosCallData(monster.Id, *monster.BossInfo, location.X, location.Y)
-		// 				if err != nil {
-		// 					l.Errorw("cannot build BossInfo call data", "err", err)
-		// 					return nil, err
-		// 				}
-		// 				callData = append(callData, bossInfosCallData)
-		// 			}
-		// 		}
-		// 	}
-		// }
+		if monster.BossInfo != nil && resetBossData {
+			for _, ml := range dataConfig.MonsterLocationsBoss {
+				if ml.MonsterId == monster.Id {
+					for _, location := range ml.Locations {
+						l.Infow("data", "value", location, "monster", monster.BossInfo)
+						bossInfosCallData, err := table.BossInfosCallData(monster.Id, *monster.BossInfo, location.X, location.Y)
+						if err != nil {
+							l.Errorw("cannot build BossInfo call data", "err", err)
+							return nil, err
+						}
+						callData = append(callData, bossInfosCallData)
+					}
+				}
+			}
+		}
 	}
 	return callData, nil
 }

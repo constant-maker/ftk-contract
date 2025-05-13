@@ -26,10 +26,11 @@ import {
 import { EntityType, SlotType, ItemType, ZoneType } from "@codegen/common.sol";
 import { Errors } from "@common/Errors.sol";
 import { Config } from "@common/Config.sol";
-import { CharacterPositionUtils, InventoryItemUtils } from "@utils/index.sol";
+import { CharacterPositionUtils, InventoryItemUtils, InventoryEquipmentUtils } from "@utils/index.sol";
 import { CharStats2 } from "@codegen/tables/CharStats2.sol";
 import { LootItems } from "@systems/app/TileSystem.sol";
 import { EquipData } from "@systems/app/EquipmentSystem.sol";
+import { ItemsActionData } from "@common/Types.sol";
 
 contract PvPSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture {
   address player_1 = makeAddr("player1");
@@ -461,18 +462,40 @@ contract PvPSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
 
     // test loot item
     vm.startPrank(player_2);
+    uint256[] memory equipmentIds = new uint256[](1);
+    equipmentIds[0] = 1;
     uint256[] memory itemIds = new uint256[](1);
     uint32[] memory itemAmounts = new uint32[](1);
     itemIds[0] = 2;
     itemAmounts[0] = 10;
     world.app__lootItems(
-      characterId_2, LootItems({ equipmentIds: new uint256[](0), itemIds: itemIds, itemAmounts: itemAmounts })
+      characterId_2, LootItems({ equipmentIds: equipmentIds, itemIds: itemIds, itemAmounts: itemAmounts })
     );
     vm.stopPrank();
     assertEq(CharOtherItem.getAmount(characterId_2, 2), 10);
     assertEq(CharOtherItem.getAmount(characterId_1, 2), 0);
     uint32 tileItemAmount = TileInventory.getItemOtherItemAmounts(21, -32, 0);
     assertEq(tileItemAmount, 90);
+    tileEquipmentIds = TileInventory.getEquipmentIds(21, -32);
+    assertEq(tileEquipmentIds.length, 0);
+
+    console2.log("has equipment", InventoryEquipmentUtils.hasEquipment(characterId_1, 1));
+    console2.log("has equipment", InventoryEquipmentUtils.hasEquipment(characterId_2, 1));
+    console2.log("char id", characterId_2);
+
+    // uint256[] memory equipmentIds = new uint256[](1);
+    // equipmentIds[0] = 1;
+    ItemsActionData memory dropData = ItemsActionData({
+      equipmentIds: equipmentIds,
+      toolIds: new uint256[](0),
+      itemIds: new uint256[](0),
+      itemAmounts: new uint32[](0)
+    });
+
+    vm.startPrank(player_2);
+    world.app__drop(characterId_2, dropData);
+    vm.stopPrank();
+
     console2.log("done test loot item");
   }
 

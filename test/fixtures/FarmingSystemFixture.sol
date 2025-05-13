@@ -19,7 +19,7 @@ abstract contract FarmingSystemFixture is WorldFixture {
     vm.stopPrank();
 
     vm.startPrank(_player);
-    world.app__startFarming(_characterId, _resourceId, _toolId);
+    world.app__startFarming(_characterId, _resourceId, _toolId, true);
     vm.stopPrank();
   }
 
@@ -33,19 +33,19 @@ abstract contract FarmingSystemFixture is WorldFixture {
   {
     vm.expectRevert();
     vm.startPrank(_player);
-    world.app__startFarming(_characterId, _resourceId, _toolId);
+    world.app__startFarming(_characterId, _resourceId, _toolId, true);
     vm.stopPrank();
   }
 
   function _finishFarming(address _player, uint256 _characterId) internal {
     vm.startPrank(_player);
-    world.app__finishFarming(_characterId, false);
+    world.app__finishFarming(_characterId, false, true);
     vm.stopPrank();
   }
 
   function _finishFarmingAndFarmAgain(address _player, uint256 _characterId) internal {
     vm.startPrank(_player);
-    world.app__finishFarming(_characterId, true);
+    world.app__finishFarming(_characterId, true, true);
     vm.stopPrank();
   }
 

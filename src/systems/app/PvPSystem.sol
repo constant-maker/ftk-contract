@@ -46,7 +46,7 @@ contract PvPSystem is System, CharacterAccessControl {
 
     (uint32 attackerHp, uint32 defenderHp) = _battle(attackerId, defenderId, false);
 
-    _updateCharacterFame(attackerId, defenderId, defenderHp, attackerPosition);
+    _updateCharacterFame(attackerId, defenderId, attackerPosition);
     _handleBattleResult(attackerId, attackerHp, attackerPosition);
     _handleBattleResult(defenderId, defenderHp, defenderPosition);
 
@@ -60,16 +60,7 @@ contract PvPSystem is System, CharacterAccessControl {
     DailyQuestUtils.updatePvpCount(attackerId);
   }
 
-  function _updateCharacterFame(
-    uint256 attackerId,
-    uint256 defenderId,
-    uint32 defenderHp,
-    CharPositionData memory position
-  )
-    private
-  {
-    ZoneType zoneType = TileInfo3.getZoneType(position.x, position.y);
-
+  function _updateCharacterFame(uint256 attackerId, uint256 defenderId, CharPositionData memory position) private {
     uint32 currentFame = CharStats2.getFame(attackerId);
     if (currentFame == 0) {
       currentFame = 1000; // default

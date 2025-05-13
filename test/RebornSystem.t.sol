@@ -8,7 +8,7 @@ import { console2 } from "forge-std/console2.sol";
 import { CharStats, CharStatsData } from "@codegen/tables/CharStats.sol";
 import { CharCurrentStats, CharCurrentStatsData } from "@codegen/tables/CharCurrentStats.sol";
 import { CharBaseStats, CharBaseStatsData } from "@codegen/tables/CharBaseStats.sol";
-import { CharReborn } from "@codegen/index.sol";
+import { CharReborn, CharInfo, Item, CharInventory } from "@codegen/index.sol";
 import { EquipData } from "@systems/app/EquipmentSystem.sol";
 import { SlotType } from "@codegen/common.sol";
 import { Config } from "@common/Config.sol";
@@ -37,6 +37,11 @@ contract RebornSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixt
     vm.startPrank(player);
     world.app__reborn(characterId);
     vm.stopPrank();
+
+    (uint16 oAtk, uint16 oDef, uint16 oAgi) = _getCharacterOriginalStats(characterId);
+    console2.log("original atk", oAtk);
+    console2.log("original def", oDef);
+    console2.log("original agi", oAgi);
 
     CharCurrentStatsData memory prevCharCurrentStats = CharCurrentStats.get(characterId);
     console2.log("prev atk", prevCharCurrentStats.atk);
@@ -72,7 +77,7 @@ contract RebornSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixt
     console2.log("current atk", charCurrentStats.atk);
     assertEq(charCurrentStats.atk, prevCharCurrentStats.atk + 3); // achievement
     assertEq(charCurrentStats.def, prevCharCurrentStats.def + 3);
-    assertEq(charCurrentStats.agi + 1, prevCharCurrentStats.agi + 3);
+    assertEq(charCurrentStats.agi, prevCharCurrentStats.agi + 3);
   }
 
   function test_RebornWithEquipment() external {
@@ -86,24 +91,21 @@ contract RebornSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixt
     world.app__reborn(characterId);
     vm.stopPrank();
 
+    vm.startPrank(worldDeployer);
+    CharStats.setLevel(characterId, 99);
+    vm.stopPrank();
+
+    CharCurrentStatsData memory prevCharCurrentStats = CharCurrentStats.get(characterId);
+    console2.log("prev atk", prevCharCurrentStats.atk);
+    console2.log("prev def", prevCharCurrentStats.def);
+    console2.log("prev agi", prevCharCurrentStats.agi);
+
     EquipData memory equipData = EquipData({ slotType: SlotType.Weapon, equipmentId: 1 });
     EquipData[] memory equipDatas = new EquipData[](1);
     equipDatas[0] = equipData;
     vm.startPrank(player);
     world.app__gearUpEquipments(characterId, equipDatas);
     vm.stopPrank();
-
-    CharCurrentStatsData memory prevCharCurrentStats = CharCurrentStats.get(characterId);
-    console2.log("prev atk", prevCharCurrentStats.atk);
-
-    vm.startPrank(worldDeployer);
-    CharStats.setLevel(characterId, 99);
-    CharBaseStats.setAtk(characterId, 10);
-    CharBaseStats.setAgi(characterId, 1);
-    CharCurrentStats.setAtk(characterId, prevCharCurrentStats.atk + 5); // smaller than actual 5 unit
-    vm.stopPrank();
-
-    console2.log("setup atk", CharCurrentStats.getAtk(characterId));
 
     vm.startPrank(worldDeployer);
     (uint256[] memory itemIds, uint32[] memory amounts) = _requiredResources(1);
@@ -120,13 +122,34 @@ contract RebornSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixt
     assertEq(charStats.level, 1);
     assertEq(charStats.statPoint, 20);
     assertEq(charCurrentStats.exp, 0);
-    console2.log(" atk", charCurrentStats.atk); // should be 9 (6 + 3 (achievement bonus))
-    assertEq(charCurrentStats.atk, 9);
+    console2.log(" atk", charCurrentStats.atk); // should be 5 (2 + 3 (achievement bonus))
+    assertEq(charCurrentStats.atk, prevCharCurrentStats.atk + 3); // achievement
     assertEq(charCurrentStats.def, prevCharCurrentStats.def + 3);
-    assertEq(charCurrentStats.agi + 1, prevCharCurrentStats.agi + 3);
+    assertEq(charCurrentStats.agi, prevCharCurrentStats.agi + 3);
     assertEq(charCurrentStats.hp, Config.DEFAULT_HP);
     assertEq(1, CharReborn.get(characterId));
     assertTrue(CharAchievementUtils.hasAchievement(characterId, 9));
+
+    uint256[] memory equipmentIds = CharInventory.getEquipmentIds(characterId);
+    assertEq(equipmentIds.length, 1);
+    assertEq(equipmentIds[0], 1);
+
+    vm.startPrank(worldDeployer);
+    Item.setTier(30, 2);
+    vm.stopPrank();
+
+    vm.expectRevert();
+    vm.startPrank(player);
+    world.app__gearUpEquipments(characterId, equipDatas);
+    vm.stopPrank();
+
+    vm.startPrank(worldDeployer);
+    Item.setTier(30, 1);
+    vm.stopPrank();
+    vm.startPrank(player);
+    world.app__gearUpEquipments(characterId, equipDatas);
+    vm.stopPrank();
+    assertEq(CharCurrentStats.getAtk(characterId), 7);
   }
 
   function _requiredResources(uint16 rebornNum)
@@ -143,5 +166,13 @@ contract RebornSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixt
     amounts[1] = rebornNum;
     amounts[2] = rebornNum;
     return (itemIds, amounts);
+  }
+
+  function _getCharacterOriginalStats(uint256 characterId) private view returns (uint16 atk, uint16 def, uint16 agi) {
+    uint16[3] memory traits = CharInfo.getTraits(characterId);
+    atk = 1 + traits[0];
+    def = 1 + traits[1];
+    agi = 1 + traits[2];
+    return (atk, def, agi);
   }
 }
