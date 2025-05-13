@@ -13,7 +13,6 @@ import { CharEquipment, CharGrindSlot, Equipment, EquipmentData, EquipmentInfo, 
 import { SlotType } from "@codegen/common.sol";
 import { Errors } from "@common/index.sol";
 import { EquipData } from "./EquipmentSystem.sol";
-import { console2 } from "forge-std/console2.sol";
 
 struct EquipData {
   SlotType slotType;
@@ -88,11 +87,8 @@ contract EquipmentSystem is System, CharacterAccessControl {
   }
 
   function _checkCharacterLevel(uint256 characterId, uint256 itemId) private view {
-    console2.log("itemId", itemId);
     uint16 level = CharStats.getLevel(characterId);
-    console2.log("level", level);
     uint8 itemTier = Item.getTier(itemId);
-    console2.log("itemTier", itemTier);
     if (level + 10 < uint16(itemTier) * 10) {
       revert Errors.EquipmentSystem_CharacterLevelTooLow(characterId, level, itemTier);
     }
