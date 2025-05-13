@@ -46,6 +46,7 @@ library Errors {
   error Equipment_NotOwned(uint256 characterId, uint256 equipmentId);
   error Equipment_AlreadyHad(uint256 characterId, uint256 equipmentId);
   error Equipment_NotExisted(uint256 equipmentId);
+  error EquipmentSystem_CharacterLevelTooLow(uint256 characterId, uint16 level, uint8 itemTier);
 
   /* -------------------------------------------------------------------------- */
   /*                                 Move system                                */
