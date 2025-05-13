@@ -3,6 +3,7 @@ pragma solidity >=0.8.24;
 import { console2 } from "forge-std/console2.sol";
 import { WorldFixture, SpawnSystemFixture, WelcomeSystemFixture, MoveSystemFixture } from "./fixtures/index.sol";
 import {
+  CharCurrentStatsData,
   CharCurrentStats,
   CharStats,
   CharSkill,
@@ -126,7 +127,10 @@ contract PvESystemBossTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFix
     uint32 characterHp = CharCurrentStats.getHp(characterId);
     uint256[5] memory skills = CharSkill.get(characterId);
 
-    uint16 prevAgi = CharCurrentStats.getAgi(characterId);
+    CharCurrentStatsData memory charCurrentStats = CharCurrentStats.get(characterId);
+    console2.log("character atk", charCurrentStats.atk);
+    console2.log("character def", charCurrentStats.def);
+    console2.log("character agi", charCurrentStats.agi);
 
     vm.warp(block.timestamp + 4320 * 24 * 60 * 60);
     vm.startPrank(player);
@@ -167,7 +171,7 @@ contract PvESystemBossTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFix
     assertEq(CharAchievement.getAchievementIds(characterId)[0], 3);
     assertTrue(CharAchievementUtils.hasAchievement(characterId, 3));
 
-    assertEq(prevAgi + 1, CharCurrentStats.getAgi(characterId));
+    assertEq(charCurrentStats.agi + 1, CharCurrentStats.getAgi(characterId));
 
     vm.expectRevert();
     vm.startPrank(player);

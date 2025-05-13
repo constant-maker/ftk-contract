@@ -200,7 +200,7 @@ func buildCallData(
 	callData = append(callData, skillCallData...)
 
 	// monsters
-	monsterCallData, err := calldata.BuildMonsterData(l, dataConfig, 0)
+	monsterCallData, err := calldata.BuildMonsterData(l, dataConfig, 0, true)
 	if err != nil {
 		l.Errorw("cannot build monsterCallData", "err", err)
 		return nil, err
