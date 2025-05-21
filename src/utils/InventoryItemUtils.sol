@@ -27,6 +27,7 @@ library InventoryItemUtils {
     CharacterWeightUtils.removeItems(characterId, itemIds, amounts);
   }
 
+  /// @dev Remove item from inventory, also check if the item balance is enough
   function removeItem(uint256 characterId, uint256 itemId, uint32 amount) internal {
     _updateItem(characterId, itemId, amount, true);
     CharacterWeightUtils.removeItem(characterId, itemId, amount);

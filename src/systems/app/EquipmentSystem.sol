@@ -1,6 +1,7 @@
 pragma solidity >=0.8.24;
 
 import { System } from "@latticexyz/world/src/System.sol";
+import { CharacterAccessControl } from "@abstracts/CharacterAccessControl.sol";
 import {
   CharacterItemUtils,
   InventoryEquipmentUtils,
@@ -8,8 +9,9 @@ import {
   EquipmentUtils,
   CharacterEquipmentUtils
 } from "@utils/index.sol";
-import { CharacterAccessControl } from "@abstracts/CharacterAccessControl.sol";
-import { CharEquipment, CharGrindSlot, Equipment, EquipmentData, EquipmentInfo, Item, CharStats } from "@codegen/index.sol";
+import {
+  CharEquipment, CharGrindSlot, Equipment, EquipmentData, EquipmentInfo, Item, CharStats
+} from "@codegen/index.sol";
 import { SlotType } from "@codegen/common.sol";
 import { Errors } from "@common/index.sol";
 import { EquipData } from "./EquipmentSystem.sol";

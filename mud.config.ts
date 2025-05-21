@@ -13,6 +13,7 @@ import MONSTER_TABLES from "./tables/monsterTables";
 import CONSUMABLE_INFO_TABLES from "./tables/consumableInfoTables";
 import ACHIEVEMENT_TABLES from "./tables/achievementTables";
 import SOCIAL_TABLES from "./tables/socialTables";
+import MARKET_TABLES from "./tables/marketTables";
 
 export default defineWorld({
   deploy: {
@@ -69,6 +70,7 @@ export default defineWorld({
     ...MONSTER_TABLES,
     ...ACHIEVEMENT_TABLES,
     ...SOCIAL_TABLES,
+    ...MARKET_TABLES,
   },
   excludeSystems: ["SpawnSystem"],
 });

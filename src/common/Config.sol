@@ -7,6 +7,7 @@ library Config {
   uint8 public constant DEFAULT_SKILL_POINT = 3;
   uint8 public constant MAX_PERK_LEVEL = 9; // perk level starts from 0 ~ so max is 10 on UI
   uint8 public constant AMOUNT_RECEIVE_FROM_FARMING = 5;
+  uint8 public constant DEFAULT_MARKET_FEE = 5; // 5%
 
   uint16 public constant DEFAULT_MOVEMENT_DURATION = 10;
   uint16 public constant DEFAULT_PLAYER_ACTION_DURATION = 10;
