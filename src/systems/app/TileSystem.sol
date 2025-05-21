@@ -1,11 +1,18 @@
 pragma solidity >=0.8.24;
 
 import { System } from "@latticexyz/world/src/System.sol";
-import { TileInfo3, TileInfo3Data, TileInventory, Equipment } from "@codegen/index.sol";
-import { CharPosition, CharPositionData } from "@codegen/tables/CharPosition.sol";
-import { CharInfo } from "@codegen/tables/CharInfo.sol";
-import { CharStats2 } from "@codegen/tables/CharStats2.sol";
 import { CharacterAccessControl } from "@abstracts/CharacterAccessControl.sol";
+import {
+  TileInfo3,
+  TileInfo3Data,
+  TileInventory,
+  Equipment,
+  CharNextPosition,
+  CharPosition,
+  CharPositionData,
+  CharInfo,
+  CharStats2
+} from "@codegen/index.sol";
 import {
   InventoryItemUtils,
   CharacterFundUtils,
@@ -26,6 +33,7 @@ contract TileSystem is System, CharacterAccessControl {
   uint32 constant TILE_OCCUPATION_COST = 5; // gold
   uint32 constant TILE_OCCUPATION_RESOURCE_AMOUNT = 10;
   uint32 constant TILE_LOCKED_DURATION = 3600; // 1 hour (second)
+  uint32 constant TILE_OCCUPATION_DURATION_REQUIRE = 300; // 5 minutes (second)
 
   /// @dev Occupy a tile to expand your kingdom area
   function occupyTile(uint256 characterId) public onlyAuthorizedWallet(characterId) {
@@ -37,8 +45,15 @@ contract TileSystem is System, CharacterAccessControl {
       revert Errors.TileSystem_TileIsLocked(x, y, occupiedTime);
     }
     uint8 kingdomId = CharInfo.getKingdomId(characterId);
-    if (TileInfo3.getKingdomId(x, y) == kingdomId) {
+    uint8 tileKingdomId = TileInfo3.getKingdomId(x, y);
+    if (tileKingdomId == kingdomId) {
       revert Errors.TileSystem_TileAlreadyOccupied(x, y);
+    }
+    if (tileKingdomId != 0 && tileKingdomId != kingdomId) {
+      uint256 arriveTimestamp = CharNextPosition.getArriveTimestamp(characterId);
+      if (arriveTimestamp + TILE_OCCUPATION_DURATION_REQUIRE >= block.timestamp) {
+        revert Errors.TileSystem_TileIsNotReadyToOccupy(x, y, arriveTimestamp);
+      }
     }
     _checkTileNearBy(x, y, kingdomId);
     CharacterFundUtils.decreaseGold(characterId, TILE_OCCUPATION_COST);
