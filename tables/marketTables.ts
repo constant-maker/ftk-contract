@@ -24,6 +24,14 @@ const MARKET_TABLES: any = {
     },
     key: ['id'],
   },
+  Order2: {
+    schema: {
+      id: "uint256",
+      createdTime: "uint256",
+      updateTime: "uint256",
+    },
+    key: ['id'],
+  },
   KingdomFee: {
     schema: {
       kingdomAId: "uint8",

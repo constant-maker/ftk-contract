@@ -235,6 +235,7 @@ library Errors {
   error MarketSystem_FameTooLow(uint256 characterId, uint32 fame);
   error MarketSystem_ZeroPrice();
   error MarketSystem_ZeroAmount();
+  error MarketSystem_TakerOrderZeroAmount();
   error MarketSystem_ZeroItemId();
   error MarketSystem_ExceedMaxWeight(uint256 characterId, uint256 cityId, uint32 totalWeight, uint32 maxWeight);
   error MarketSystem_InsufficientGold(uint256 characterId, uint32 charGold, uint32 requiredGold);

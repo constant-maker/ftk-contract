@@ -9,7 +9,7 @@ import {
   CharacterPositionUtils,
   MarketWeightUtils
 } from "@utils/index.sol";
-import { OrderCounter, Order, OrderData, Equipment, CharMarketWeight, CharOtherItem } from "@codegen/index.sol";
+import { OrderCounter, Order, OrderData, Equipment, CharMarketWeight, CharOtherItem, Order2 } from "@codegen/index.sol";
 import { OrderParams, TakeOrderParams, MarketSystemUtils } from "@utils/MarketSystemUtils.sol";
 import { ItemCategoryType } from "@codegen/common.sol";
 import { Errors, Config } from "@common/index.sol";
@@ -26,8 +26,9 @@ contract MarketSystem is System, CharacterAccessControl {
     MarketSystemUtils.validateOrder(characterId, order);
     MarketSystemUtils.validateCharacter(characterId, order);
     _lockAsset(characterId, order);
+    uint256 orderId = _getNewOrderId();
     Order.set(
-      _getNewOrderId(),
+      orderId,
       order.cityId,
       characterId,
       order.equipmentId,
@@ -37,6 +38,7 @@ contract MarketSystem is System, CharacterAccessControl {
       order.isBuy,
       false
     );
+    Order2.set(orderId, block.timestamp, block.timestamp);
   }
 
   function cancelOrder(uint256 characterId, uint256 orderId) public onlyAuthorizedWallet(characterId) {
@@ -47,7 +49,7 @@ contract MarketSystem is System, CharacterAccessControl {
       revert Errors.MarketSystem_OrderAlreadyDone(orderId);
     }
     _unlockAsset(characterId, order);
-    Order.setIsDone(orderId, true);
+    Order.deleteRecord(orderId);
   }
 
   function takeOrder(
@@ -66,11 +68,15 @@ contract MarketSystem is System, CharacterAccessControl {
       if (order.characterId == 0) {
         revert Errors.MarketSystem_OrderIsNotExist(top.orderId);
       }
+      if (top.amount == 0) {
+        revert Errors.MarketSystem_TakerOrderZeroAmount();
+      }
       if (order.isBuy) {
         MarketSystemUtils.takeBuyOrder(characterId, order, top);
       } else {
         MarketSystemUtils.takeSellOrder(characterId, order, top);
       }
+      Order2.setUpdateTime(top.orderId, block.timestamp);
     }
   }
 

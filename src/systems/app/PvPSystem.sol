@@ -46,7 +46,9 @@ contract PvPSystem is System, CharacterAccessControl {
 
     (uint32 attackerHp, uint32 defenderHp) = _battle(attackerId, defenderId, false);
 
-    _updateCharacterFame(attackerId, defenderId, attackerPosition);
+    if (defenderHp == 0) {
+      _updateCharacterFame(attackerId, defenderId, attackerPosition);
+    }
     _handleBattleResult(attackerId, attackerHp, attackerPosition);
     _handleBattleResult(defenderId, defenderHp, defenderPosition);
 
@@ -77,7 +79,7 @@ contract PvPSystem is System, CharacterAccessControl {
     if (isSameSide) {
       attackerFame = attackerFame > 50 ? attackerFame - 50 : 1; // min is 1
       CharStats2.set(attackerId, attackerFame);
-    } else  {
+    } else {
       uint32 defenderFame = CharStats2.getFame(defenderId);
       if (defenderFame >= 1020 && attackerKingdomId == tileKingdomId) {
         attackerFame += 20;
