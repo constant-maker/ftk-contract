@@ -46,7 +46,9 @@ contract PvPSystem is System, CharacterAccessControl {
 
     (uint32 attackerHp, uint32 defenderHp) = _battle(attackerId, defenderId, false);
 
-    _updateCharacterFame(attackerId, defenderId, attackerPosition);
+    if (defenderHp == 0) {
+      _updateCharacterFame(attackerId, defenderId, attackerPosition);
+    }
     _handleBattleResult(attackerId, attackerHp, attackerPosition);
     _handleBattleResult(defenderId, defenderHp, defenderPosition);
 
@@ -61,9 +63,9 @@ contract PvPSystem is System, CharacterAccessControl {
   }
 
   function _updateCharacterFame(uint256 attackerId, uint256 defenderId, CharPositionData memory position) private {
-    uint32 currentFame = CharStats2.getFame(attackerId);
-    if (currentFame == 0) {
-      currentFame = 1000; // default
+    uint32 attackerFame = CharStats2.getFame(attackerId);
+    if (attackerFame == 0) {
+      attackerFame = 1000; // default
     }
 
     uint8 attackerKingdomId = CharInfo.getKingdomId(attackerId);
@@ -75,8 +77,16 @@ contract PvPSystem is System, CharacterAccessControl {
     bool isSameSide = (attackerKingdomId == defenderKingdomId && tileKingdomId == attackerKingdomId) || isAlliance;
 
     if (isSameSide) {
-      currentFame = currentFame > 50 ? currentFame - 50 : 1; // min is 1
-      CharStats2.set(attackerId, currentFame);
+      attackerFame = attackerFame > 50 ? attackerFame - 50 : 1; // min is 1
+      CharStats2.set(attackerId, attackerFame);
+    } else {
+      uint32 defenderFame = CharStats2.getFame(defenderId);
+      if (defenderFame >= 1020 && attackerKingdomId == tileKingdomId) {
+        attackerFame += 20;
+        defenderFame -= 20;
+        CharStats2.set(defenderId, defenderFame);
+        CharStats2.set(attackerId, attackerFame);
+      }
     }
   }
 

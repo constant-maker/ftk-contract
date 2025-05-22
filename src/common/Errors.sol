@@ -222,9 +222,32 @@ library Errors {
   error TileSystem_ExceedItemBalance(int32 x, int32 y, uint256 itemId, uint32 currentAmount, uint32 requireAmount);
   error TileSystem_NoItemInThisTile(int32 x, int32 y, uint256 lastDropTime);
   error TileSystem_TileAlreadyOccupied(int32 x, int32 y);
+  error TileSystem_TileIsNotReadyToOccupy(int32 x, int32 y, uint256 arrivalTime);
 
   /* -------------------------------------------------------------------------- */
   /*                               RebornSystem                                 */
   /* -------------------------------------------------------------------------- */
   error RebornSystem_MustBeMaxLevel(uint256 characterId);
+
+  /* -------------------------------------------------------------------------- */
+  /*                               MarketSystem                                 */
+  /* -------------------------------------------------------------------------- */
+  error MarketSystem_FameTooLow(uint256 characterId, uint32 fame);
+  error MarketSystem_ZeroPrice();
+  error MarketSystem_ZeroAmount();
+  error MarketSystem_TakerOrderZeroAmount();
+  error MarketSystem_ZeroItemId();
+  error MarketSystem_ExceedMaxWeight(uint256 characterId, uint256 cityId, uint32 totalWeight, uint32 maxWeight);
+  error MarketSystem_InsufficientGold(uint256 characterId, uint32 charGold, uint32 requiredGold);
+  error MarketSystem_InsufficientItem(uint256 characterId, uint256 itemId, uint32 requiredAmount);
+  error MarketSystem_SellEquipmentOrderAmount(uint32 amount);
+  error MarketSystem_CharacterNotOwner(uint256 characterId, uint256 orderId);
+  error MarketSystem_CityNotMatch(uint256 existingOrderCityId, uint256 orderId);
+  error MarketSystem_ExceedMaxPrice(uint32 orderPrice);
+  error MarketSystem_OrderAlreadyDone(uint256 orderId);
+  error MarketSystem_InvalidTakerOrderEquipmentData(uint256 orderId, uint32 amount, uint256 lenEquipmentIds);
+  error MarketSystem_InvalidOfferEquipment(uint256 orderId, uint256 itemId, uint256 offerEquipmentId);
+  error MarketSystem_InvalidTakerAmount(uint256 orderId, uint32 maxAmount, uint32 takeAmount);
+  error MarketSystem_InvalidItemType(uint256 itemId);
+  error MarketSystem_OrderIsNotExist(uint256 orderId);
 }

@@ -106,12 +106,19 @@ contract TileSystemTest is WorldFixture, SpawnSystemFixture, MoveSystemFixture {
     world.app__occupyTile(characterId);
     vm.stopPrank();
 
-    // vm.warp(block.timestamp + 3600);
-    // vm.startPrank(player);
-    // world.app__occupyTile(characterId);
-    // vm.stopPrank();
-    // assertEq(CharFund.getGold(characterId), 0);
+    vm.warp(block.timestamp + 3600);
+    _goUp(player, characterId);
+    _goDown(player, characterId);
+    charPosition = CharacterPositionUtils.currentPosition(characterId);
+    vm.startPrank(worldDeployer);
+    TileInfo3.setKingdomId(charPosition.x, charPosition.y, 4);
+    vm.stopPrank();
+    vm.warp(block.timestamp + 301);
+    vm.startPrank(player);
+    world.app__occupyTile(characterId);
+    vm.stopPrank();
+    assertEq(CharFund.getGold(characterId), 0);
 
-    // assertEq(CharStats2.getFame(characterId), 1030);
+    assertEq(CharStats2.getFame(characterId), 1040);
   }
 }
