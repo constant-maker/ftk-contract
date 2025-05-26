@@ -40,7 +40,6 @@ struct TakeOrderParams {
 
 library MarketSystemUtils {
   uint32 constant REQUIRED_FAME = 1050;
-  uint32 constant DEFAULT_MAX_WEIGHT = 200;
 
   /// @dev Take a buy order, no need to decrease gold from order owner because it's already locked when order is created
   function takeBuyOrder(uint256 takerId, OrderData memory order, TakeOrderParams memory top) public {

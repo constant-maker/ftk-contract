@@ -1,15 +1,13 @@
 pragma solidity >=0.8.24;
 
 import { CharMarketWeight, OrderData, Item } from "@codegen/index.sol";
-import { Errors } from "@common/index.sol";
+import { Errors, Config } from "@common/index.sol";
 
 library MarketWeightUtils {
-  uint32 constant DEFAULT_MAX_WEIGHT = 200;
-
   function checkAndSetMaxWeight(uint256 characterId, uint256 cityId) public {
     uint32 maxWeight = CharMarketWeight.getMaxWeight(characterId, cityId);
     if (maxWeight == 0) {
-      maxWeight = DEFAULT_MAX_WEIGHT;
+      maxWeight = Config.INIT_STORAGE_MAX_WEIGHT;
       CharMarketWeight.setMaxWeight(characterId, cityId, maxWeight);
     }
   }

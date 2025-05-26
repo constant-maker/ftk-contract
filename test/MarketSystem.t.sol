@@ -4,6 +4,7 @@ import { console2 } from "forge-std/console2.sol";
 import { WorldFixture, SpawnSystemFixture, WelcomeSystemFixture } from "./fixtures/index.sol";
 import { CharacterPositionUtils, InventoryEquipmentUtils, CharacterItemUtils } from "@utils/index.sol";
 import { OrderParams, TakeOrderParams, MarketSystemUtils } from "@utils/MarketSystemUtils.sol";
+import { Config } from "@common/index.sol";
 import {
   City,
   OrderData,
@@ -64,7 +65,7 @@ contract MarketSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixt
     uint32 newMarketWeight = CharMarketWeight.getWeight(characterId1, city1);
     console2.log("new character market weight", newMarketWeight);
     assertEq(newMarketWeight, prevMarketWeight + 3);
-    assertEq(CharMarketWeight.getMaxWeight(characterId1, city1), MarketSystemUtils.DEFAULT_MAX_WEIGHT);
+    assertEq(CharMarketWeight.getMaxWeight(characterId1, city1), Config.INIT_STORAGE_MAX_WEIGHT);
     assertEq(CharCurrentStats.getWeight(characterId1), prevCurrentWeight - 3);
 
     orderParams.equipmentId = 2; // equipment not owned (belong to player2)
@@ -102,7 +103,7 @@ contract MarketSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixt
     newMarketWeight = CharMarketWeight.getWeight(characterId1, city1);
     console2.log("new character market weight", newMarketWeight);
     assertEq(newMarketWeight, prevMarketWeight);
-    assertEq(CharMarketWeight.getMaxWeight(characterId1, city1), MarketSystemUtils.DEFAULT_MAX_WEIGHT);
+    assertEq(CharMarketWeight.getMaxWeight(characterId1, city1), Config.INIT_STORAGE_MAX_WEIGHT);
     assertEq(CharCurrentStats.getWeight(characterId1), prevCurrentWeight);
 
     OrderData memory order = Order.get(2);
