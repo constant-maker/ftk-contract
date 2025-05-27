@@ -27,3 +27,4 @@ import { TileInventoryUtils } from "./TileInventoryUtils.sol";
 import { FarmingUtils } from "./FarmingUtils.sol";
 import { MarketSystemUtils } from "./MarketSystemUtils.sol";
 import { MarketWeightUtils } from "./MarketWeightUtils.sol";
+import { CharAchievementUtils } from "./CharAchievementUtils.sol";

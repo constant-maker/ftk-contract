@@ -13,6 +13,7 @@ import {
   CharInfo,
   CharStats2
 } from "@codegen/index.sol";
+import { ZoneType } from "@codegen/common.sol";
 import {
   InventoryItemUtils,
   CharacterFundUtils,
@@ -119,16 +120,29 @@ contract TileSystem is System, CharacterAccessControl {
     revert Errors.TileSystem_NoValidTileNearBy(x, y);
   }
 
-  function _getRequiredItemIds(int32 x, int32 y) private pure returns (uint256[] memory) {
+  function _getRequiredItemIds(int32 x, int32 y) private view returns (uint256[] memory) {
     uint256[] memory itemIds = new uint256[](3);
+    ZoneType zoneType = TileInfo3.getZoneType(x, y);
     if ((x + y) % 2 == 0) {
-      itemIds[0] = 1; // Wood tier 1
-      itemIds[1] = 6; // Stone tier 1
-      itemIds[2] = 8; // Fish tier 1
+      if (zoneType == ZoneType.Black) {
+        itemIds[0] = 3; // Wood tier 3
+        itemIds[1] = 78; // Stone tier 3
+        itemIds[2] = 86; // Fish tier 3
+      } else {
+        itemIds[0] = 1; // Wood tier 1
+        itemIds[1] = 6; // Stone tier 1
+        itemIds[2] = 8; // Fish tier 1
+      }
     } else {
-      itemIds[0] = 10; // Ore tier 1
-      itemIds[1] = 12; // Wheat tier 1
-      itemIds[2] = 14; // Berries tier 1
+      if (zoneType == ZoneType.Black) {
+        itemIds[0] = 94; // Ore tier 3
+        itemIds[1] = 102; // Wheat tier 3
+        itemIds[2] = 110; // Berries tier 3
+      } else {
+        itemIds[0] = 10; // Ore tier 1
+        itemIds[1] = 12; // Wheat tier 1
+        itemIds[2] = 14; // Berries tier 1
+      }
     }
     return itemIds;
   }

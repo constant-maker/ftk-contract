@@ -3,8 +3,8 @@ pragma solidity >=0.8.24;
 import { InventoryEquipmentUtils } from "./InventoryEquipmentUtils.sol";
 import { InventoryItemUtils } from "./InventoryItemUtils.sol";
 import { CharacterFundUtils } from "./CharacterFundUtils.sol";
-import { CharacterPositionUtils } from "./CharacterPositionUtils.sol";
 import { MarketWeightUtils } from "./MarketWeightUtils.sol";
+import { CharAchievementUtils } from "./CharAchievementUtils.sol";
 import {
   CharStats2,
   OrderCounter,
@@ -17,7 +17,11 @@ import {
   Item,
   CharInfo,
   City,
-  KingdomFee
+  KingdomFee,
+  FillOrder,
+  FillCounter,
+  CityVault2,
+  Kingdom
 } from "@codegen/index.sol";
 import { ItemCategoryType } from "@codegen/common.sol";
 import { Errors, Config } from "@common/index.sol";
@@ -81,6 +85,7 @@ library MarketSystemUtils {
     uint32 totalGold = order.unitPrice * top.amount;
     // fee is always smaller than totalGold
     uint32 orderFee = calculateOrderFee(takerId, order.cityId, totalGold);
+    updateCityVault(order.cityId, orderFee);
     CharacterFundUtils.increaseGold(takerId, totalGold - orderFee);
     // update order
     uint32 newAmount = order.amount - top.amount;
@@ -109,6 +114,7 @@ library MarketSystemUtils {
     // increase gold for order owner
     // fee is always smaller than totalGold
     uint32 orderFee = calculateOrderFee(order.characterId, order.cityId, totalGold);
+    updateCityVault(order.cityId, orderFee);
     CharacterFundUtils.increaseGold(order.characterId, totalGold - orderFee);
     // transfer item to taker
     if (order.equipmentId != 0) {
@@ -128,6 +134,28 @@ library MarketSystemUtils {
       // update order amount
       Order.setAmount(top.orderId, newAmount);
     }
+  }
+
+  function storeFillOrder(OrderData memory order, uint256 takerId, uint32 fillAmount) public {
+    uint256 newFillOrderId = FillCounter.get() + 1;
+    FillCounter.set(newFillOrderId);
+    bool isBuy = order.isBuy ? false : true; // reverse isBuy for fill order
+    FillOrder.set(
+      newFillOrderId,
+      order.cityId,
+      takerId,
+      order.equipmentId,
+      order.itemId,
+      fillAmount,
+      order.unitPrice,
+      isBuy,
+      block.timestamp
+    );
+  }
+
+  function updateCityVault(uint256 cityId, uint32 gainedGold) public {
+    uint32 currentGold = CityVault2.getGold(cityId);
+    CityVault2.setGold(cityId, currentGold + gainedGold);
   }
 
   /// @dev Calculate order fee in gold
@@ -199,7 +227,8 @@ library MarketSystemUtils {
   /// @dev validate character (fame, gold, weight)
   function validateCharacter(uint256 characterId, OrderParams memory order) public view {
     uint32 fame = CharStats2.getFame(characterId);
-    if (fame < REQUIRED_FAME) {
+    if (fame < REQUIRED_FAME && !CharAchievementUtils.hasAchievement(characterId, 3)) {
+      // 3 - Knight of Valor
       revert Errors.MarketSystem_FameTooLow(characterId, fame);
     }
     if (order.isBuy) {
