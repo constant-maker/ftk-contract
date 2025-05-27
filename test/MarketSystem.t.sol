@@ -2,8 +2,9 @@ pragma solidity >=0.8.24;
 
 import { console2 } from "forge-std/console2.sol";
 import { WorldFixture, SpawnSystemFixture, WelcomeSystemFixture } from "./fixtures/index.sol";
-import { CharacterPositionUtils, InventoryEquipmentUtils, CharacterItemUtils } from "@utils/index.sol";
+import { CharacterPositionUtils, InventoryEquipmentUtils, CharacterItemUtils, CharAchievementUtils } from "@utils/index.sol";
 import { OrderParams, TakeOrderParams, MarketSystemUtils } from "@utils/MarketSystemUtils.sol";
+import { Config } from "@common/index.sol";
 import {
   City,
   OrderData,
@@ -15,7 +16,11 @@ import {
   Equipment,
   CharFund,
   CharOtherItem,
-  KingdomFee
+  KingdomFee,
+  CharAchievement,
+  CharAchievementIndex,
+  FillOrder,
+  FillOrderData
 } from "@codegen/index.sol";
 
 contract MarketSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture {
@@ -64,7 +69,7 @@ contract MarketSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixt
     uint32 newMarketWeight = CharMarketWeight.getWeight(characterId1, city1);
     console2.log("new character market weight", newMarketWeight);
     assertEq(newMarketWeight, prevMarketWeight + 3);
-    assertEq(CharMarketWeight.getMaxWeight(characterId1, city1), MarketSystemUtils.DEFAULT_MAX_WEIGHT);
+    assertEq(CharMarketWeight.getMaxWeight(characterId1, city1), Config.INIT_STORAGE_MAX_WEIGHT);
     assertEq(CharCurrentStats.getWeight(characterId1), prevCurrentWeight - 3);
 
     orderParams.equipmentId = 2; // equipment not owned (belong to player2)
@@ -102,7 +107,7 @@ contract MarketSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixt
     newMarketWeight = CharMarketWeight.getWeight(characterId1, city1);
     console2.log("new character market weight", newMarketWeight);
     assertEq(newMarketWeight, prevMarketWeight);
-    assertEq(CharMarketWeight.getMaxWeight(characterId1, city1), MarketSystemUtils.DEFAULT_MAX_WEIGHT);
+    assertEq(CharMarketWeight.getMaxWeight(characterId1, city1), Config.INIT_STORAGE_MAX_WEIGHT);
     assertEq(CharCurrentStats.getWeight(characterId1), prevCurrentWeight);
 
     OrderData memory order = Order.get(2);
@@ -122,6 +127,23 @@ contract MarketSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixt
     vm.startPrank(player1);
     world.app__takeOrder(characterId1, takeOrderParamsArray);
     vm.stopPrank();
+
+    FillOrderData memory fillOrder = FillOrder.get(1);
+    console2.log("fill order city id", fillOrder.cityId);
+    console2.log("fill order character id", fillOrder.characterId);
+    console2.log("fill order equipment id", fillOrder.equipmentId);
+    console2.log("fill order item id", fillOrder.itemId);
+    console2.log("fill order amount", fillOrder.amount);
+    console2.log("fill order unit price", fillOrder.unitPrice);
+    console2.log("fill order is buy", fillOrder.isBuy);
+    console2.log("fill order timestamp", fillOrder.filledAt);
+    assertEq(fillOrder.cityId, city1);
+    assertEq(fillOrder.characterId, characterId1);
+    assertEq(fillOrder.equipmentId, 2);
+    assertEq(fillOrder.itemId, 30);
+    assertEq(fillOrder.amount, 1);
+    assertEq(fillOrder.unitPrice, 100);
+    assertEq(fillOrder.isBuy, true);
 
     assertEq(CharMarketWeight.getWeight(characterId2, city1), 0); // market weight decrease because of taking order
     assertEq(CharCurrentStats.getWeight(characterId1), prevCurrentWeight + 3); // weight increase because of taking
@@ -191,6 +213,23 @@ contract MarketSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixt
     world.app__takeOrder(characterId2, takeOrderParamsArray);
     vm.stopPrank();
 
+    FillOrderData memory fillOrder = FillOrder.get(1);
+    console2.log("fill order city id", fillOrder.cityId);
+    console2.log("fill order character id", fillOrder.characterId);
+    console2.log("fill order equipment id", fillOrder.equipmentId);
+    console2.log("fill order item id", fillOrder.itemId);
+    console2.log("fill order amount", fillOrder.amount);
+    console2.log("fill order unit price", fillOrder.unitPrice);
+    console2.log("fill order is buy", fillOrder.isBuy);
+    console2.log("fill order timestamp", fillOrder.filledAt);
+    assertEq(fillOrder.cityId, city1);
+    assertEq(fillOrder.characterId, characterId2);
+    assertEq(fillOrder.equipmentId, 0);
+    assertEq(fillOrder.itemId, 1);
+    assertEq(fillOrder.amount, 50);
+    assertEq(fillOrder.unitPrice, 1);
+    assertEq(fillOrder.isBuy, true);
+
     console2.log("character 2 take order success");
     assertEq(CharMarketWeight.getWeight(characterId1, city1), 50); // from 100 to 50 (50 is taken)
     assertEq(CharCurrentStats.getWeight(characterId2), prevChar2CurrentWeight + 50); // weight increase because of
@@ -240,6 +279,24 @@ contract MarketSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixt
     world.app__takeOrder(characterId2, takeOrderParamsArray);
     vm.stopPrank();
     console2.log("character 2 take order part 2 success");
+
+    fillOrder = FillOrder.get(2);
+    console2.log("fill order city id", fillOrder.cityId);
+    console2.log("fill order character id", fillOrder.characterId);
+    console2.log("fill order equipment id", fillOrder.equipmentId);
+    console2.log("fill order item id", fillOrder.itemId);
+    console2.log("fill order amount", fillOrder.amount);
+    console2.log("fill order unit price", fillOrder.unitPrice);
+    console2.log("fill order is buy", fillOrder.isBuy);
+    console2.log("fill order timestamp", fillOrder.filledAt);
+    assertEq(fillOrder.cityId, city1);
+    assertEq(fillOrder.characterId, characterId2);
+    assertEq(fillOrder.equipmentId, 0);
+    assertEq(fillOrder.itemId, 1);
+    assertEq(fillOrder.amount, 50);
+    assertEq(fillOrder.unitPrice, 2);
+    assertEq(fillOrder.isBuy, true);
+
     assertEq(CharMarketWeight.getWeight(characterId1, city1), 0); // from 50 to 0 (50 is taken)
     assertEq(CharCurrentStats.getWeight(characterId1), prevCurrentWeight - 100);
     assertEq(CharCurrentStats.getWeight(characterId2), prevChar2CurrentWeight + 100); // weight increase because of
@@ -332,6 +389,23 @@ contract MarketSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixt
     vm.startPrank(player2);
     world.app__takeOrder(characterId2, takeOrderParamsArray);
     vm.stopPrank();
+
+    FillOrderData memory fillOrder = FillOrder.get(1);
+    console2.log("fill order city id", fillOrder.cityId);
+    console2.log("fill order character id", fillOrder.characterId);
+    console2.log("fill order equipment id", fillOrder.equipmentId);
+    console2.log("fill order item id", fillOrder.itemId);
+    console2.log("fill order amount", fillOrder.amount);
+    console2.log("fill order unit price", fillOrder.unitPrice);
+    console2.log("fill order is buy", fillOrder.isBuy);
+    console2.log("fill order timestamp", fillOrder.filledAt);
+    assertEq(fillOrder.cityId, city1);
+    assertEq(fillOrder.characterId, characterId2);
+    assertEq(fillOrder.equipmentId, 0);
+    assertEq(fillOrder.itemId, 1);
+    assertEq(fillOrder.amount, 50);
+    assertEq(fillOrder.unitPrice, 1);
+    assertEq(fillOrder.isBuy, false);
 
     console2.log("character 2 take order success");
 
@@ -451,6 +525,40 @@ contract MarketSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixt
     assertTrue(InventoryEquipmentUtils.hasEquipment(characterId1, 2));
     assertEq(Equipment.getCharacterId(2), characterId1);
     assertEq(Equipment.getCharacterId(3), characterId1);
+  }
+
+  function test_PlaceOrderWithFameOrAchievement() public {
+    vm.startPrank(worldDeployer);
+
+    CharOtherItem.setAmount(characterId1, 1, 100);
+    CharCurrentStats.setWeight(characterId1, CharCurrentStats.getWeight(characterId1) + 100);
+    CharOtherItem.setAmount(characterId2, 1, 100);
+    CharCurrentStats.setWeight(characterId2, CharCurrentStats.getWeight(characterId2) + 100);
+    // CharStats2.setFame(characterId1, 1050);
+    CharFund.setGold(characterId1, 200);
+    // CharStats2.setFame(characterId2, 1050);
+    CharFund.setGold(characterId2, 200);
+    vm.stopPrank();
+
+    // buy equipment
+    OrderParams memory orderParams =
+      OrderParams({ orderId: 0, cityId: city1, equipmentId: 0, itemId: 30, amount: 2, unitPrice: 100, isBuy: true });
+    vm.expectRevert(); // fame too low
+    vm.startPrank(player1);
+    world.app__placeOrder(characterId1, orderParams);
+    vm.stopPrank();
+
+    vm.startPrank(worldDeployer);
+    CharAchievement.pushAchievementIds(characterId1, 3);
+    // The value is stored at length-1, but we add 1 to all indexes
+    // and use 0 as a sentinel value
+    uint256 index = CharAchievement.lengthAchievementIds(characterId1);
+    CharAchievementIndex.set(characterId1, 3, index);
+    vm.stopPrank();
+
+    vm.startPrank(player1);
+    world.app__placeOrder(characterId1, orderParams);
+    vm.stopPrank();
   }
 
   function _moveToCity(uint256 characterId, uint256 cityId) internal {

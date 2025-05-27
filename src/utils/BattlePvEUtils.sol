@@ -12,7 +12,10 @@ import {
   BossInfo,
   BossInfoData,
   MonsterStats,
-  MonsterStatsData
+  MonsterStatsData,
+  CharCurrentStats,
+  CharStats,
+  Item
 } from "@codegen/index.sol";
 import { BattleInfo, BattleUtils } from "./BattleUtils.sol";
 import { CharacterFundUtils } from "./CharacterFundUtils.sol";
@@ -226,6 +229,12 @@ library BattlePvEUtils {
     }
     uint256 itemId = itemIds[index];
     uint32 amount = itemAmounts[index];
+    uint32 itemWeight = Item.getWeight(itemId);
+    uint32 newWeight = CharCurrentStats.getWeight(characterId) + itemWeight * amount;
+    uint32 maxWeight = CharStats.getWeight(characterId);
+    if (newWeight > maxWeight) {
+      revert Errors.Character_WeightsExceed(newWeight, maxWeight);
+    }
     InventoryItemUtils.addItem(characterId, itemId, amount);
     storePvEExtraData(characterId, itemId, amount);
   }

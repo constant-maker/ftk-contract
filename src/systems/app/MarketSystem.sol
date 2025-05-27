@@ -77,13 +77,15 @@ contract MarketSystem is System, CharacterAccessControl {
         MarketSystemUtils.takeSellOrder(characterId, order, top);
       }
       Order2.setUpdateTime(top.orderId, block.timestamp);
+      // store fill order
+      MarketSystemUtils.storeFillOrder(order, characterId, top.amount);
     }
   }
 
   function upgradeMarketWeight(uint256 characterId, uint256 cityId) public onlyAuthorizedWallet(characterId) {
     uint32 maxWeight = CharMarketWeight.getMaxWeight(characterId, cityId);
-    if (maxWeight == 0) maxWeight = MarketSystemUtils.DEFAULT_MAX_WEIGHT;
-    uint32 multiplier = (maxWeight - MarketSystemUtils.DEFAULT_MAX_WEIGHT) / Config.STORAGE_MAX_WEIGHT_INCREMENT;
+    if (maxWeight == 0) maxWeight = Config.INIT_STORAGE_MAX_WEIGHT;
+    uint32 multiplier = (maxWeight - Config.INIT_STORAGE_MAX_WEIGHT) / Config.STORAGE_MAX_WEIGHT_INCREMENT;
 
     CharacterFundUtils.decreaseGold(characterId, Config.UPGRADE_STORAGE_COST * (multiplier + 1));
     CharMarketWeight.setMaxWeight(characterId, cityId, maxWeight + Config.STORAGE_MAX_WEIGHT_INCREMENT);

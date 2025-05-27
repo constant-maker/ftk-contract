@@ -46,9 +46,7 @@ contract PvPSystem is System, CharacterAccessControl {
 
     (uint32 attackerHp, uint32 defenderHp) = _battle(attackerId, defenderId, false);
 
-    if (defenderHp == 0) {
-      _updateCharacterFame(attackerId, defenderId, attackerPosition);
-    }
+    _updateCharacterFame(attackerId, attackerHp, defenderId, defenderHp, attackerPosition);
     _handleBattleResult(attackerId, attackerHp, attackerPosition);
     _handleBattleResult(defenderId, defenderHp, defenderPosition);
 
@@ -62,12 +60,20 @@ contract PvPSystem is System, CharacterAccessControl {
     DailyQuestUtils.updatePvpCount(attackerId);
   }
 
-  function _updateCharacterFame(uint256 attackerId, uint256 defenderId, CharPositionData memory position) private {
-    uint32 attackerFame = CharStats2.getFame(attackerId);
-    if (attackerFame == 0) {
-      attackerFame = 1000; // default
+  function _updateCharacterFame(
+    uint256 attackerId,
+    uint32 attackerHp,
+    uint256 defenderId,
+    uint32 defenderHp,
+    CharPositionData memory position
+  )
+    private
+  {
+    if ((attackerHp != 0 && defenderHp != 0) || TileInfo3.getZoneType(position.x, position.y) == ZoneType.Black) {
+      // no need to update fame if both characters are alive or in black zone
+      return;
     }
-
+    uint32 attackerFame = CharStats2.getFame(attackerId);
     uint8 attackerKingdomId = CharInfo.getKingdomId(attackerId);
     uint8 defenderKingdomId = CharInfo.getKingdomId(defenderId);
     uint8 tileKingdomId = TileInfo3.getKingdomId(position.x, position.y);
@@ -76,12 +82,17 @@ contract PvPSystem is System, CharacterAccessControl {
       Alliance.get(attackerKingdomId, defenderKingdomId) || Alliance.get(defenderKingdomId, attackerKingdomId);
     bool isSameSide = (attackerKingdomId == defenderKingdomId && tileKingdomId == attackerKingdomId) || isAlliance;
 
-    if (isSameSide) {
+    if (isSameSide && defenderHp == 0) {
       attackerFame = attackerFame > 50 ? attackerFame - 50 : 1; // min is 1
       CharStats2.set(attackerId, attackerFame);
-    } else {
+    } else if (!isSameSide) {
       uint32 defenderFame = CharStats2.getFame(defenderId);
-      if (defenderFame >= 1020 && attackerKingdomId == tileKingdomId) {
+      if (attackerHp == 0 && attackerFame >= 1020 && defenderKingdomId == tileKingdomId) {
+        attackerFame -= 20;
+        defenderFame += 20;
+        CharStats2.set(defenderId, defenderFame);
+        CharStats2.set(attackerId, attackerFame);
+      } else if (defenderHp == 0 && defenderFame >= 1020 && attackerKingdomId == tileKingdomId) {
         attackerFame += 20;
         defenderFame -= 20;
         CharStats2.set(defenderId, defenderFame);

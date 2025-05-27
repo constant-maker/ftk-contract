@@ -19,6 +19,13 @@ const MAP_TABLES: any = {
     },
     key: ['cityId', 'itemId'],
   },
+  CityVault2: {
+    schema: {
+      cityId: "uint256",
+      gold: "uint32",
+    },
+    key: ['cityId'],
+  },
   Kingdom: {
     schema: {
       id: "uint8",
