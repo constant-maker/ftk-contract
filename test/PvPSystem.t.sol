@@ -394,8 +394,6 @@ contract PvPSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
     _moveToTheLocation(20, -32);
 
     vm.startPrank(worldDeployer);
-    // CharCurrentStats.setAtk(characterId_1, 10_000);
-    // CharCurrentStats.setAgi(characterId_1, 10_000);
     TileInfo3.setKingdomId(20, -32, 1);
     InventoryItemUtils.addItem(characterId_1, 1, 100);
     InventoryItemUtils.addItem(characterId_1, 2, 100);
@@ -406,6 +404,11 @@ contract PvPSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
     CharCurrentStats.setAtk(characterId_2, 20_000);
     CharCurrentStats.setAgi(characterId_2, 20_000);
     vm.stopPrank();
+
+    uint32 weightChar1 = CharCurrentStats.getWeight(characterId_1);
+    console2.log("weight char 1", weightChar1);
+    uint32 weightChar2 = CharCurrentStats.getWeight(characterId_2);
+    console2.log("weight char 2", weightChar2);
 
     vm.startPrank(player_2);
     world.app__battlePvP(characterId_2, characterId_1);
@@ -423,7 +426,10 @@ contract PvPSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
     vm.stopPrank();
 
     assertEq(CharOtherItem.getAmount(characterId_1, 1), 100);
-    assertEq(CharOtherItem.getAmount(characterId_1, 2), 0);
+    assertEq(CharOtherItem.getAmount(characterId_1, 2), 0); // dropped 100 items
+    uint32 newWeightChar1 = CharCurrentStats.getWeight(characterId_1);
+    console2.log("new weight char 1 in red zone", newWeightChar1);
+    assertEq(newWeightChar1, weightChar1 - 200); // 100 items dropped (weight 2 each)
 
     uint256[] memory tileItemIds = TileInventory.getOtherItemIds(21, -32);
     uint32[] memory tileItemAmounts = TileInventory.getOtherItemAmounts(21, -32);
@@ -450,10 +456,15 @@ contract PvPSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
     console2.log("equipped weapon id", CharEquipment.get(characterId_1, SlotType.Weapon));
 
     console2.log("move to black zone");
-    _moveToTheLocation(21, -32); // RED zone
+    _moveToTheLocation(21, -32); // BLACK zone
     vm.startPrank(player_2);
     world.app__battlePvP(characterId_2, characterId_1);
     vm.stopPrank();
+
+    newWeightChar1 = CharCurrentStats.getWeight(characterId_1);
+    console2.log("new weight char 1 in black zone", newWeightChar1);
+    assertEq(newWeightChar1, weightChar1 - 200 - 3); // 100 items dropped (weight 2 each) + 3 weight for equipped weapon
+
     uint256[] memory tileEquipmentIds = TileInventory.getEquipmentIds(21, -32);
     assertEq(tileEquipmentIds.length, 1);
     assertEq(tileEquipmentIds[0], 1);
@@ -481,7 +492,12 @@ contract PvPSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
 
     console2.log("has equipment", InventoryEquipmentUtils.hasEquipment(characterId_1, 1));
     console2.log("has equipment", InventoryEquipmentUtils.hasEquipment(characterId_2, 1));
-    console2.log("char id", characterId_2);
+    console2.log("char id", Equipment.getCharacterId(1));
+    assertEq(Equipment.getCharacterId(1), characterId_2);
+
+    uint32 newWeightChar2 = CharCurrentStats.getWeight(characterId_2);
+    console2.log("new weight char 2 in black zone", newWeightChar2);
+    assertEq(newWeightChar2, weightChar2 + 3 + 10 * 2); // 3 for equipped weapon + 10 items (weight 2 each)
 
     // uint256[] memory equipmentIds = new uint256[](1);
     // equipmentIds[0] = 1;
@@ -495,6 +511,10 @@ contract PvPSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
     vm.startPrank(player_2);
     world.app__drop(characterId_2, dropData);
     vm.stopPrank();
+
+    newWeightChar2 = CharCurrentStats.getWeight(characterId_2);
+    console2.log("new weight char 2 in black zone", newWeightChar2);
+    assertEq(newWeightChar2, weightChar2 + 10 * 2); // + 10 items (weight 2 each)
 
     console2.log("done test loot item");
   }
