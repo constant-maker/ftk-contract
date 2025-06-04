@@ -42,12 +42,6 @@ contract CraftSystem is System, CharacterAccessControl {
     }
     InventoryItemUtils.removeItems(characterId, recipe.itemIds, sumAmounts);
     // Add crafted item
-    if (Item.getCategory(craftItemId) == ItemCategoryType.Other) {
-      InventoryItemUtils.addItem(characterId, craftItemId, craftAmount);
-      return;
-    }
-    for (uint256 i = 0; i < craftAmount; i++) {
-      CharacterItemUtils.addNewItem(characterId, craftItemId);
-    }
+    CharacterItemUtils.addNewItem(characterId, craftItemId, craftAmount);
   }
 }

@@ -423,7 +423,7 @@ contract PvESystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
     _gearUpEquipment();
 
     vm.startPrank(worldDeployer);
-    CharacterItemUtils.addNewItem(characterId, 34); // add shield
+    CharacterItemUtils.addNewItem(characterId, 34, 1); // add shield
     CharEquipment.set(characterId, SlotType.SubWeapon, 2);
     CharGrindSlot.set(characterId, SlotType.SubWeapon);
     vm.stopPrank();

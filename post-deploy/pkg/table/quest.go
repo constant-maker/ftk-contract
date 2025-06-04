@@ -1,31 +1,48 @@
 package table
 
 import (
+	"errors"
 	"math/big"
 
 	"github.com/ftk/post-deploy/pkg/common"
 	"github.com/ftk/post-deploy/pkg/mud"
+	"go.uber.org/zap"
 )
 
-func QuestCallData(quest common.Quest2) ([]byte, error) {
+func QuestCallData(quest common.Quest3) ([]byte, error) {
 	// zap.S().Infow("quest.TitleId", "value", quest.AchievementId)
 	staticData, err := encodePacked(quest.Exp, quest.Gold, uint8(quest.QuestType),
 		big.NewInt(quest.FromNpcId), big.NewInt(quest.ToNpcId), big.NewInt(quest.AchievementId))
 	if err != nil {
 		return nil, err
 	}
+	if len(quest.RewardItemIds) != len(quest.RewardItemAmounts) {
+		return nil, errors.New("invalid quest: RewardItemIds and RewardItemAmounts must have the same length")
+	}
+	if len(quest.RewardItemIds) > 0 {
+		zap.S().Infow("quest data", "quest", quest)
+	}
 	encodedLength := mud.EncodeLengths([]int{
 		32 * len(quest.RequiredDoneQuestIds),
+		32 * len(quest.RewardItemIds),
+		4 * len(quest.RewardItemAmounts),
 	})
 	var requiredDoneQuestIds []*big.Int
+	var rewardItemIds []*big.Int
 	for _, id := range quest.RequiredDoneQuestIds {
 		requiredDoneQuestIds = append(requiredDoneQuestIds, big.NewInt(id))
 	}
-	dynamicData := encodeUint256Array(requiredDoneQuestIds)
+	for _, itemId := range quest.RewardItemIds {
+		rewardItemIds = append(rewardItemIds, big.NewInt(itemId))
+	}
+	dynamicData, err := encodePacked(requiredDoneQuestIds, rewardItemIds, quest.RewardItemAmounts)
+	if err != nil {
+		return nil, err
+	}
 	keyTuple := [][32]byte{
 		[32]byte(encodeUint256(big.NewInt(quest.Id))),
 	}
-	mt := mud.NewMudTable("Quest2", "app", "")
+	mt := mud.NewMudTable("Quest3", "app", "")
 	return mt.SetRecordRawCalldata(keyTuple, staticData, encodedLength, dynamicData)
 }
 

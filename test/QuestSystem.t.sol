@@ -3,8 +3,8 @@ pragma solidity >=0.8.24;
 import { console2 } from "forge-std/console2.sol";
 import { WorldFixture, SpawnSystemFixture, WelcomeSystemFixture, FarmingSystemFixture } from "./fixtures/index.sol";
 import {
-  Quest2,
-  Quest2Data,
+  Quest3,
+  Quest3Data,
   QuestContribute,
   QuestContributeData,
   QuestLocate,
@@ -190,14 +190,14 @@ contract QuestSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixtu
     assertEq(npc.x, npc2X);
     assertEq(npc.y, npc2Y);
 
-    Quest2Data memory quest = Quest2.get(1);
+    Quest3Data memory quest = Quest3.get(1);
     assertEq(quest.exp, 14);
     assertEq(quest.gold, 5);
     assertEq(quest.fromNpcId, 1);
     assertEq(quest.toNpcId, 1);
     assertEq(quest.requiredDoneQuestIds.length, 0);
 
-    quest = Quest2.get(4);
+    quest = Quest3.get(4);
     assertEq(quest.exp, 56);
     assertEq(quest.fromNpcId, 1);
     assertEq(quest.toNpcId, 1);
@@ -211,12 +211,21 @@ contract QuestSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixtu
     assertEq(questContribute.itemIds.length, 3);
     assertEq(questContribute.amounts.length, 3);
 
-    quest = Quest2.get(9);
+    quest = Quest3.get(9);
     assertEq(quest.gold, 5);
     QuestLocateData memory questLocate = QuestLocate.get(9);
     assertEq(questLocate.xs.length, 2);
     assertEq(questLocate.ys.length, 2);
     assertEq(questLocate.xs[1], 31);
+
+    quest = Quest3.get(10);
+    assertEq(quest.fromNpcId, 1);
+    assertEq(quest.rewardItemIds.length, 2);
+    assertEq(quest.rewardItemAmounts.length, 2);
+    assertEq(quest.rewardItemIds[0], 30);
+    assertEq(quest.rewardItemIds[1], 1);
+    assertEq(quest.rewardItemAmounts[0], 1);
+    assertEq(quest.rewardItemAmounts[1], 100);
   }
 
   function test_ShouldReceiveAndFinishQuest() external {
@@ -350,5 +359,42 @@ contract QuestSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixtu
     vm.stopPrank();
 
     assertEq(true, CharQuestStatus.get(characterId, 4) == QuestStatusType.InProgress);
+  }
+
+  function test_ReceiveItemResource() external {
+    // set position same as npc 1
+    vm.startPrank(worldDeployer);
+    CharacterPositionUtils.moveToLocation(characterId, npc1X, npc1Y);
+    vm.stopPrank();
+    // after state
+    CharPositionData memory characterPosition = CharacterPositionUtils.currentPosition(characterId);
+    assertEq(characterPosition.x, npc1X);
+    assertEq(characterPosition.y, npc1Y);
+
+    // receive quest
+    vm.startPrank(player);
+    world.app__receiveQuest(characterId, 1, 10);
+    vm.stopPrank();
+
+    assertEq(true, CharQuestStatus.get(characterId, 10) == QuestStatusType.InProgress);
+
+    // set position same as npc 1
+    vm.startPrank(worldDeployer);
+    InventoryItemUtils.addItem(characterId, 1, 50);
+    vm.stopPrank();
+
+    uint32 prevWeight = CharCurrentStats.getWeight(characterId);
+    console2.log("prevWeight", prevWeight);
+
+    vm.startPrank(player);
+    world.app__finishQuest(characterId, 1, 10);
+    vm.stopPrank();
+    assertEq(true, CharQuestStatus.get(characterId, 10) == QuestStatusType.Done);
+
+    uint32 currentWeight = CharCurrentStats.getWeight(characterId);
+    console2.log("currentWeight", currentWeight);
+    assertEq(prevWeight + 103 - 50, currentWeight);
+    // check if item is received
+    assertEq(CharOtherItem.getAmount(characterId, 1), 100);
   }
 }

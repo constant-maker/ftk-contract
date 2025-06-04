@@ -67,7 +67,7 @@ contract NpcShopSystem is CharacterAccessControl, System {
       if (itemData.category == ItemCategoryType.Tool) {
         if (itemData.tier != 1) revert Errors.NpcShopSystem_OnlySellTierOneTool(itemId);
         goldCost += TOOL_PRICE * amount;
-        _addTools(characterId, itemId, amount);
+        CharacterItemUtils.addNewItem(characterId, itemId, amount);
       } else if (itemData.category == ItemCategoryType.Other) {
         uint32 unitPrice = itemData.tier * BUY_BACK_MULTIPLY;
         if (Item.getItemType(itemId) == ItemType.Card) {
@@ -107,12 +107,6 @@ contract NpcShopSystem is CharacterAccessControl, System {
     }
     NpcShop.setGold(cityId, npcBalance);
     return goldEarn;
-  }
-
-  function _addTools(uint256 characterId, uint256 itemId, uint32 amount) private {
-    for (uint256 i = 0; i < amount; i++) {
-      CharacterItemUtils.addNewItem(characterId, itemId);
-    }
   }
 
   function _increaseNpcGold(uint256 cityId, uint32 amount) private {

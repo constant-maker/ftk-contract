@@ -82,7 +82,7 @@ library Errors {
   error EquipmentSystem_InvalidSlotType(SlotType paramSlotType);
 
   /* -------------------------------------------------------------------------- */
-  /*                                    Quest2                                   */
+  /*                                    Quest3                                   */
   /* -------------------------------------------------------------------------- */
   error QuestSystem_AlreadyReceived(uint256 characterId, uint256 questId);
   error QuestSystem_NotSamePositionWithNpc(int32 characterX, int32 characterY, int32 npcX, int32 npcY);
@@ -94,6 +94,7 @@ library Errors {
   error QuestSystem_InvalidSocialTypeOrAlreadyClaimed(uint256 characterId, SocialType socialType);
   error QuestSystem_InvalidLocateQuest(uint256 lenXs, uint256 lenYs);
   error QuestSystem_WrongLocation(int32 questX, int32 questY, int32 characterX, int32 characterY);
+  error QuestSystem_InvalidRewardItemLength(uint256 questId, uint256 lenRewardItemIds, uint256 lenRewardAmounts);
 
   /* -------------------------------------------------------------------------- */
   /*                                LevelSystem                                 */
