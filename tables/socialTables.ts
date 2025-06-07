@@ -1,10 +1,12 @@
 const SOCIAL_TABLES: any = {
-  GlobalChat: {
+  GlobalChatV2: {
     schema: {
       id: "uint256",
       charId: "uint256",
       timestamp: "uint256",
       rawId: "uint256",
+      kingdomId: "uint256",
+      name: "string",
       content: "string",
     },
     key: ['id'],

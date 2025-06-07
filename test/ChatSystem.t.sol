@@ -4,7 +4,7 @@ import { CharOtherItem, CharCurrentStats, CharStats } from "@codegen/index.sol";
 import { WorldFixture, SpawnSystemFixture } from "@fixtures/index.sol";
 import { WelcomeSystemFixture } from "@fixtures/WelcomeSystemFixture.sol";
 import { ChatCounter } from "@codegen/tables/ChatCounter.sol";
-import { GlobalChat } from "@codegen/tables/GlobalChat.sol";
+import { GlobalChatV2 } from "@codegen/tables/GlobalChatV2.sol";
 
 contract ChatSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture {
   address player = makeAddr("player");
@@ -34,10 +34,12 @@ contract ChatSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixtur
     }
 
     assertEq(ChatCounter.get(), 102);
-    assertEq(GlobalChat.getRawId(101), 0); // max id is 100
-    assertEq(GlobalChat.getRawId(2), 102);
-    assertEq(GlobalChat.getContent(2), "hi pro");
-    assertEq(GlobalChat.getCharId(2), 2);
+    assertEq(GlobalChatV2.getRawId(101), 0); // max id is 100
+    assertEq(GlobalChatV2.getRawId(2), 102);
+    assertEq(GlobalChatV2.getContent(2), "hi pro");
+    assertEq(GlobalChatV2.getCharId(2), 2);
+    assertEq(GlobalChatV2.getName(2), "123");
+    assertEq(GlobalChatV2.getKingdomId(2), 1);
   }
 
   function test_ChatRevert() external {
