@@ -1,6 +1,6 @@
 pragma solidity >=0.8.24;
 
-import { CharPosition, CharPositionData, CharQuestStatus, Npc, NpcData, Quest3 } from "@codegen/index.sol";
+import { CharPosition, CharPositionData, CharQuestStatus, Npc, NpcData, Quest3, Quest3Data } from "@codegen/index.sol";
 import { QuestStatusType } from "@codegen/common.sol";
 import { Errors } from "@common/index.sol";
 import { CharacterPositionUtils } from "@utils/CharacterPositionUtils.sol";
@@ -19,15 +19,17 @@ library CharacterQuestUtils {
   /// @dev Check if character receives quest from right npc, quest is not done yet,
   /// and the character has completed all previous quests
   function mustReceiveValidQuest(uint256 characterId, uint256 npcId, uint256 questId) internal view {
-    if (Quest3.getFromNpcId(questId) != npcId) {
+    Quest3Data memory questData = Quest3.get(questId);
+    if (questData.fromNpcId == 0 && questData.exp == 0 && questData.gold == 0) {
+      revert Errors.QuestSystem_QuestNotFound(questId);
+    }
+    if (questData.fromNpcId != npcId) {
       revert Errors.QuestSystem_ReceiveFromWrongNpc(npcId, questId);
     }
-
     if (CharQuestStatus.getQuestStatus(characterId, questId) != QuestStatusType.NotReceived) {
       revert Errors.QuestSystem_AlreadyReceived(npcId, questId);
     }
-
-    uint256[] memory requiredDoneQuestIds = Quest3.getRequiredDoneQuestIds(questId);
+    uint256[] memory requiredDoneQuestIds = questData.requiredDoneQuestIds;
     for (uint256 i; i < requiredDoneQuestIds.length; i++) {
       if (CharQuestStatus.getQuestStatus(characterId, requiredDoneQuestIds[i]) != QuestStatusType.Done) {
         revert Errors.QuestSystem_RequiredQuestsAreNotDone(characterId, requiredDoneQuestIds[i]);

@@ -84,6 +84,7 @@ library Errors {
   /* -------------------------------------------------------------------------- */
   /*                                    Quest3                                   */
   /* -------------------------------------------------------------------------- */
+  error QuestSystem_QuestNotFound(uint256 questId);
   error QuestSystem_AlreadyReceived(uint256 characterId, uint256 questId);
   error QuestSystem_NotSamePositionWithNpc(int32 characterX, int32 characterY, int32 npcX, int32 npcY);
   error QuestSystem_ReceiveFromWrongNpc(uint256 npcId, uint256 questId);
