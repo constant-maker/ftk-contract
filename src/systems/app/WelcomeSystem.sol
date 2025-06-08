@@ -16,7 +16,7 @@ contract WelcomeSystem is System {
     uint256[] memory beginnerItemDetailIds = WelcomeConfig.getItemDetailIds();
     for (uint256 i = 0; i < beginnerItemDetailIds.length; i++) {
       uint256 itemDetailId = beginnerItemDetailIds[i];
-      CharacterItemUtils.addNewItem(characterId, itemDetailId);
+      CharacterItemUtils.addNewItem(characterId, itemDetailId, 1);
     }
 
     WelcomePackages.set(characterId, true);

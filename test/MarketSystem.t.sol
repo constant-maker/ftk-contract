@@ -510,7 +510,7 @@ contract MarketSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixt
     assertFalse(Order.getIsDone(1));
 
     vm.startPrank(worldDeployer);
-    CharacterItemUtils.addNewItem(characterId2, 30); // equipment id 3
+    CharacterItemUtils.addNewItem(characterId2, 30, 1); // equipment id 3
     vm.stopPrank();
     assertTrue(InventoryEquipmentUtils.hasEquipment(characterId2, 3));
     takeOrderParams.equipmentIds[0] = 3; // equipment owned by player2

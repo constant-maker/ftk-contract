@@ -39,18 +39,7 @@ const QUEST_TABLES: any = {
     },
     key: [],
   },
-  // Quest2: {
-  //   schema: {
-  //     id: "uint256",
-  //     exp: "uint32",
-  //     gold: "uint32",
-  //     questType: "QuestType",
-  //     npcId: "uint256",
-  //     requiredDoneQuestIds: "uint256[]",
-  //   },
-  //   key: ['id'],
-  // },
-  Quest2: {
+  Quest3: {
     schema: {
       id: "uint256",
       exp: "uint32",
@@ -60,6 +49,8 @@ const QUEST_TABLES: any = {
       toNpcId: "uint256",
       achievementId: "uint256",
       requiredDoneQuestIds: "uint256[]",
+      rewardItemIds: "uint256[]",
+      rewardItemAmounts: "uint32[]",
     },
     key: ['id'],
   },

@@ -293,7 +293,7 @@ func BuildNpcData(l *zap.SugaredLogger, dataConfig common.DataConfig) ([][]byte,
 func BuildQuestData(l *zap.SugaredLogger, dataConfig common.DataConfig, fromQuestID int) ([][]byte, error) {
 	callData := make([][]byte, 0)
 	l.Infow("len Quests", "value", len(dataConfig.Quests))
-	var quests []common.Quest2
+	var quests []common.Quest3
 	for k, quest := range dataConfig.Quests {
 		if k != strconv.FormatInt(int64(quest.Id), 10) {
 			l.Errorw("wrong quest key and id", "key", k, "id", quest.Id)
@@ -328,7 +328,7 @@ func BuildQuestData(l *zap.SugaredLogger, dataConfig common.DataConfig, fromQues
 		}
 		questCallData, err := table.QuestCallData(quest)
 		if err != nil {
-			l.Errorw("cannot build Quest2 call data", "err", err)
+			l.Errorw("cannot build Quest3 call data", "err", err)
 			return nil, err
 		}
 		callData = append(callData, questCallData)

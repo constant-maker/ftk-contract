@@ -109,7 +109,7 @@ contract EquipmentSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemF
     console2.log("prevAtk", prevAtk);
 
     vm.startPrank(worldDeployer);
-    CharacterItemUtils.addNewItem(characterId, 32); // add bow tier 1
+    CharacterItemUtils.addNewItem(characterId, 32, 1); // add bow tier 1
     CharPerk.setLevel(characterId, ItemType.Bow, 2); // set perk level for bow to level 2
     vm.stopPrank();
 
@@ -136,63 +136,6 @@ contract EquipmentSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemF
     SlotType currentGrindSlot = CharGrindSlot.get(characterId);
     assertTrue(currentGrindSlot == SlotType.Armor);
   }
-
-  // function test_EquipTwoHandedWeapon() external {
-  //   vm.startPrank(worldDeployer);
-  //   CharacterItemUtils.addNewItem(characterId, 15); // add bow
-  //   CharacterItemUtils.addNewItem(characterId, 9); // add shield
-  //   CharPerk.setLevel(characterId, ItemType.Bow, 2); // set perk level for bow to level 2
-  //   vm.stopPrank();
-  //   // after state
-  //   uint256 currentEquipmentsInInventory = CharInventory.getEquipmentIds(characterId).length;
-  //   assertEq(currentEquipmentsInInventory, 3);
-
-  //   // gear up equipments
-  //   EquipData[] memory equipDatas = new EquipData[](2);
-  //   equipDatas[0] = EquipData({ slotType: SlotType.Weapon, equipmentId: 1 });
-  //   equipDatas[1] = EquipData({
-  //     slotType: SlotType.SubWeapon,
-  //     equipmentId: 3 // shield
-  //    });
-  //   vm.startPrank(player);
-  //   bytes memory data = abi.encodeWithSignature("gearUpEquipments(uint256,(uint8,uint256)[])", characterId,
-  // equipDatas);
-  //   world.call(SystemResourceUtils.getEquipmentSystemId(), data);
-  //   vm.stopPrank();
-
-  //   // gear up two handed weapon
-  //   equipDatas = new EquipData[](1);
-  //   equipDatas[0] = EquipData({
-  //     slotType: SlotType.Weapon,
-  //     equipmentId: 2 // bow
-  //    });
-
-  //   vm.startPrank(player);
-  //   data = abi.encodeWithSignature("gearUpEquipments(uint256,(uint8,uint256)[])", characterId, equipDatas);
-  //   world.call(SystemResourceUtils.getEquipmentSystemId(), data);
-  //   vm.stopPrank();
-
-  //   currentEquipmentsInInventory = CharInventory.getEquipmentIds(characterId).length;
-  //   assertEq(currentEquipmentsInInventory, 2);
-  //   uint256 subWeaponId = CharEquipment.get(characterId, SlotType.SubWeapon);
-  //   assertEq(subWeaponId, 0);
-  //   assertEq(CharEquipment.get(characterId, SlotType.Weapon), 2);
-
-  //   // gear up subweapon when already equipped two-handed weapon
-  //   equipDatas = new EquipData[](1);
-  //   equipDatas[0] = EquipData({
-  //     slotType: SlotType.SubWeapon,
-  //     equipmentId: 3 // shield
-  //    });
-
-  //   vm.startPrank(player);
-  //   data = abi.encodeWithSignature("gearUpEquipments(uint256,(uint8,uint256)[])", characterId, equipDatas);
-  //   world.call(SystemResourceUtils.getEquipmentSystemId(), data);
-  //   vm.stopPrank();
-  //   currentEquipmentsInInventory = CharInventory.getEquipmentIds(characterId).length;
-  //   assertEq(currentEquipmentsInInventory, 2);
-  //   assertEq(CharEquipment.get(characterId, SlotType.Weapon), 0);
-  // }
 
   function test_Revert_GearUpNonexistentEquipment() external {
     EquipData[] memory equipDatas = new EquipData[](1);

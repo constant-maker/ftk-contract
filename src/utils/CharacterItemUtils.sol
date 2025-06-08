@@ -37,29 +37,34 @@ library CharacterItemUtils {
   }
 
   /// @dev add new item to character inventory
-  function addNewItem(uint256 characterId, uint256 itemId) internal {
+  function addNewItem(uint256 characterId, uint256 itemId, uint32 amount) internal {
     ItemData memory item = Item.get(itemId);
-    if (item.category == ItemCategoryType.Tool) {
-      // get new tool id
-      uint256 newToolId = ToolSupply.get() + 1;
-      Tool2Data memory toolData =
-        Tool2Data({ itemId: itemId, characterId: characterId, durability: uint16(item.tier) * DEFAULT_TOOL_DURABILITY });
-      Tool2.set(newToolId, toolData);
-      ToolSupply.set(newToolId);
-    } else if (item.category == ItemCategoryType.Equipment) {
-      // get new equipment id
-      uint256 newEquipmentId = EquipmentSupply.get() + 1;
-      EquipmentData memory equipmentData =
-        EquipmentData({ itemId: itemId, characterId: characterId, level: 1, counter: 0 });
-      Equipment.set(newEquipmentId, equipmentData);
-      EquipmentSupply.set(newEquipmentId);
-      if (newEquipmentId < Config.MAX_EQUIPMENT_ID_TO_CHECK_CACHE_WEIGHT) {
-        // This is only for the migration, we will remove this in the future
-        CharMigration.set(characterId, newEquipmentId, true);
-        CharStorageMigration.set(characterId, newEquipmentId, true);
+    if (item.category == ItemCategoryType.Other) {
+      InventoryItemUtils.addItem(characterId, itemId, amount);
+      return;
+    }
+    // item is tool or equipment
+    for (uint32 i = 0; i < amount; i++) {
+      if (item.category == ItemCategoryType.Tool) {
+        // get new tool id
+        uint256 newToolId = ToolSupply.get() + 1;
+        Tool2Data memory toolData =
+          Tool2Data({ itemId: itemId, characterId: characterId, durability: uint16(item.tier) * DEFAULT_TOOL_DURABILITY });
+        Tool2.set(newToolId, toolData);
+        ToolSupply.set(newToolId);
+      } else {
+        // get new equipment id
+        uint256 newEquipmentId = EquipmentSupply.get() + 1;
+        EquipmentData memory equipmentData =
+          EquipmentData({ itemId: itemId, characterId: characterId, level: 1, counter: 0 });
+        Equipment.set(newEquipmentId, equipmentData);
+        EquipmentSupply.set(newEquipmentId);
+        if (newEquipmentId < Config.MAX_EQUIPMENT_ID_TO_CHECK_CACHE_WEIGHT) {
+          // This is only for the migration, we will remove this in the future
+          CharMigration.set(characterId, newEquipmentId, true);
+          CharStorageMigration.set(characterId, newEquipmentId, true);
+        }
       }
-    } else if (item.category == ItemCategoryType.Other) {
-      InventoryItemUtils.addItem(characterId, itemId, 1);
     }
   }
 }

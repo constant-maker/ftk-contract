@@ -10,13 +10,15 @@ import {
   QuestLocateData,
   QuestLocateTracking2,
   Npc,
-  CityVault
+  CityVault,
+  Item,
+  Quest3Data
 } from "@codegen/index.sol";
-import { Quest2 } from "@codegen/tables/Quest2.sol";
+import { Quest3 } from "@codegen/tables/Quest3.sol";
 import { QuestContribute, QuestContributeData } from "@codegen/tables/QuestContribute.sol";
 import { CharacterAccessControl } from "@abstracts/CharacterAccessControl.sol";
-import { CharacterQuestUtils, InventoryItemUtils, CharacterStatsUtils, CharacterFundUtils } from "@utils/index.sol";
-import { QuestStatusType, QuestType, SocialType } from "@codegen/common.sol";
+import { CharacterQuestUtils, InventoryItemUtils, CharacterStatsUtils, CharacterFundUtils, CharacterItemUtils } from "@utils/index.sol";
+import { QuestStatusType, QuestType, SocialType, ItemCategoryType } from "@codegen/common.sol";
 import { Errors } from "@common/index.sol";
 import { CharacterPositionUtils } from "@utils/CharacterPositionUtils.sol";
 import { CharAchievementUtils } from "@utils/CharAchievementUtils.sol";
@@ -39,8 +41,8 @@ contract QuestSystem is System, CharacterAccessControl {
 
   /// @dev finish quest with a specific npc
   function finishQuest(uint256 characterId, uint256 toNpcId, uint256 questId) public onlyAuthorizedWallet(characterId) {
-    QuestType questType = Quest2.getQuestType(questId);
-    if (Quest2.getToNpcId(questId) != toNpcId) {
+    QuestType questType = Quest3.getQuestType(questId);
+    if (Quest3.getToNpcId(questId) != toNpcId) {
       revert Errors.QuestSystem_FinishWithWrongNpc(toNpcId, questId);
     }
     CharacterQuestUtils.mustFinishInProgressQuest(characterId, questId);
@@ -117,13 +119,19 @@ contract QuestSystem is System, CharacterAccessControl {
   }
 
   function _claimReward(uint256 characterId, uint256 questId) private {
-    uint32 questExp = Quest2.getExp(questId);
-    CharacterStatsUtils.updateExp(characterId, questExp, true);
-    uint32 questGold = Quest2.getGold(questId);
-    CharacterFundUtils.increaseGold(characterId, questGold);
-    uint256 achievementId = Quest2.getAchievementId(questId);
-    if (achievementId > 0) {
-      CharAchievementUtils.addAchievement(characterId, achievementId);
+    Quest3Data memory questData = Quest3.get(questId);
+    CharacterStatsUtils.updateExp(characterId, questData.exp, true);
+    CharacterFundUtils.increaseGold(characterId, questData.gold);
+    if (questData.achievementId > 0) {
+      CharAchievementUtils.addAchievement(characterId, questData.achievementId);
+    }
+    if (questData.rewardItemIds.length > 0) {
+      if (questData.rewardItemIds.length != questData.rewardItemAmounts.length) {
+        revert Errors.QuestSystem_InvalidRewardItemLength(questId, questData.rewardItemIds.length, questData.rewardItemAmounts.length);
+      }
+      for (uint256 i = 0; i < questData.rewardItemIds.length; i++) {
+        CharacterItemUtils.addNewItem(characterId, questData.rewardItemIds[i], questData.rewardItemAmounts[i]);
+      }
     }
   }
 }

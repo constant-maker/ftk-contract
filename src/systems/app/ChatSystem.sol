@@ -2,8 +2,7 @@ pragma solidity >=0.8.24;
 
 import { System } from "@latticexyz/world/src/System.sol";
 import { CharacterAccessControl } from "@abstracts/CharacterAccessControl.sol";
-import { ChatCounter } from "@codegen/tables/ChatCounter.sol";
-import { GlobalChat } from "@codegen/tables/GlobalChat.sol";
+import { ChatCounter, GlobalChatV2, CharInfo, CharInfoData } from "@codegen/index.sol";
 import { Errors } from "@common/Errors.sol";
 
 contract ChatSystem is System, CharacterAccessControl {
@@ -15,7 +14,8 @@ contract ChatSystem is System, CharacterAccessControl {
     _validateChat(content);
     uint256 nextCounter = ChatCounter.get() + 1;
     uint256 id = nextCounter % MAX_RECORD_MESSAGE;
-    GlobalChat.set(id, characterId, block.timestamp, nextCounter, content);
+    CharInfoData memory charInfo = CharInfo.get(characterId);
+    GlobalChatV2.set(id, characterId, block.timestamp, nextCounter, charInfo.kingdomId, charInfo.name, content);
     ChatCounter.set(nextCounter);
   }
 

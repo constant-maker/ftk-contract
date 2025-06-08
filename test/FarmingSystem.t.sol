@@ -140,7 +140,7 @@ contract FarmingSystemTest is FarmingSystemFixture, SpawnSystemFixture, MoveSyst
 
   function test_FarmTier3() external {
     vm.startPrank(worldDeployer);
-    CharacterItemUtils.addNewItem(characterId, 42);
+    CharacterItemUtils.addNewItem(characterId, 42, 1);
     CharPerk.setLevel(characterId, ItemType.WoodAxe, 5);
     vm.stopPrank();
     uint256 toolId = 7;
@@ -169,7 +169,7 @@ contract FarmingSystemTest is FarmingSystemFixture, SpawnSystemFixture, MoveSyst
   function test_CheckTileQuota() external {
     vm.startPrank(worldDeployer);
     CharStats.setWeight(characterId, 1000);
-    CharacterItemUtils.addNewItem(characterId, 42);
+    CharacterItemUtils.addNewItem(characterId, 42, 1);
     CharPerk.setLevel(characterId, ItemType.WoodAxe, 5);
     vm.stopPrank();
     uint8 perkLevel = CharPerk.getLevel(characterId, ItemType.WoodAxe);

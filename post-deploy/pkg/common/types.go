@@ -145,7 +145,7 @@ const (
 	QuestLocate     QuestType = "Locate"
 )
 
-type Quest2 struct {
+type Quest3 struct {
 	Id                   int64              `json:"id"`
 	QuestType            int                `json:"questType"`
 	Name                 string             `json:"name"`
@@ -158,6 +158,8 @@ type Quest2 struct {
 	ContributeDetails    []ContributeDetail `json:"contributeDetails"`
 	LocateDetails        []Location         `json:"locateDetails"`
 	AchievementId        int64              `json:"achievementId"`
+	RewardItemIds        []int64            `json:"rewardItemIds"`
+	RewardItemAmounts    []uint32           `json:"rewardItemAmounts"`
 }
 
 type ContributeDetail struct {
@@ -287,7 +289,7 @@ type DataConfig struct {
 	TileInfos                []TileInfo             `json:"tileInfos"`
 	ItemRecipes              map[string]ItemRecipe  `json:"itemRecipes"`
 	DailyQuestConfig         DailyQuestConfig       `json:"dailyQuestConfig"`
-	Quests                   map[string]Quest2      `json:"quests"`
+	Quests                   map[string]Quest3      `json:"quests"`
 	Skills                   map[string]Skill       `json:"skills"`
 	Monsters                 map[string]Monster     `json:"monsters"`
 	MonsterLocationsCache    []MonsterLocation      `json:"monsterLocationsCache"`
