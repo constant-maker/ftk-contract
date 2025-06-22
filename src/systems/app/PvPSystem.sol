@@ -42,7 +42,7 @@ contract PvPSystem is System, CharacterAccessControl {
     if (attackerPosition.x != defenderPosition.x || attackerPosition.y != defenderPosition.y) {
       revert Errors.PvP_NotSamePosition(attackerPosition.x, attackerPosition.y, defenderPosition.x, defenderPosition.y);
     }
-    _checkIsReadyToBattle(attackerId, defenderId);
+    // _checkIsReadyToBattle(attackerId, defenderId);
 
     (uint32 attackerHp, uint32 defenderHp) = _battle(attackerId, defenderId, false);
 
@@ -262,16 +262,16 @@ contract PvPSystem is System, CharacterAccessControl {
     return skills;
   }
 
-  function _checkIsReadyToBattle(uint256 attackerId, uint256 defenderId) private view {
-    uint256 nextAttackTime = CharBattle.getPvpLastAtkTime(attackerId) + Config.ATTACK_COOLDOWN;
-    if (block.timestamp < nextAttackTime) {
-      revert Errors.PvP_NotReadyToAttack(nextAttackTime);
-    }
-    uint256 nextTimeToBeAttacked = CharBattle.getPvpLastDefTime(defenderId) + Config.PROTECTION_DURATION;
-    if (block.timestamp < nextTimeToBeAttacked) {
-      revert Errors.PvP_NotReadyToBeAttacked(nextTimeToBeAttacked);
-    }
-  }
+  // function _checkIsReadyToBattle(uint256 attackerId, uint256 defenderId) private view {
+  //   uint256 nextAttackTime = CharBattle.getPvpLastAtkTime(attackerId) + Config.ATTACK_COOLDOWN;
+  //   if (block.timestamp < nextAttackTime) {
+  //     revert Errors.PvP_NotReadyToAttack(nextAttackTime);
+  //   }
+  //   uint256 nextTimeToBeAttacked = CharBattle.getPvpLastDefTime(defenderId) + Config.PROTECTION_DURATION;
+  //   if (block.timestamp < nextTimeToBeAttacked) {
+  //     revert Errors.PvP_NotReadyToBeAttacked(nextTimeToBeAttacked);
+  //   }
+  // }
 
   function _getOriginHps(
     uint256 attackerId,

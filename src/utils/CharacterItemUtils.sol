@@ -48,8 +48,11 @@ library CharacterItemUtils {
       if (item.category == ItemCategoryType.Tool) {
         // get new tool id
         uint256 newToolId = ToolSupply.get() + 1;
-        Tool2Data memory toolData =
-          Tool2Data({ itemId: itemId, characterId: characterId, durability: uint16(item.tier) * DEFAULT_TOOL_DURABILITY });
+        Tool2Data memory toolData = Tool2Data({
+          itemId: itemId,
+          characterId: characterId,
+          durability: uint16(item.tier) * DEFAULT_TOOL_DURABILITY
+        });
         Tool2.set(newToolId, toolData);
         ToolSupply.set(newToolId);
       } else {

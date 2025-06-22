@@ -1,7 +1,6 @@
 package main
 
 import (
-	"encoding/json"
 	"fmt"
 	"os"
 
@@ -21,7 +20,7 @@ func loadTileInfos(kingdomId int) ([]common.TileInfo, error) {
 		fmt.Println("file does not exist.")
 		return nil, nil
 	}
-	if err := parseConfig(fileName, &result); err != nil {
+	if err := common.ParseFile(fileName, &result); err != nil {
 		l.Errorw("cannot parse mapConfig", "err", err)
 		return result, err
 	}
@@ -39,7 +38,7 @@ func loadTileInfos(kingdomId int) ([]common.TileInfo, error) {
 // 		fmt.Println("file does not exist.")
 // 		return nil, nil
 // 	}
-// 	if err := parseConfig(fileName, &result); err != nil {
+// 	if err := common.ParseFile(fileName, &result); err != nil {
 // 		l.Errorw("cannot parse mapConfig", "err", err)
 // 		return result, err
 // 	}
@@ -57,7 +56,7 @@ func loadMonsterLocations(kingdomId int) ([]common.MonsterLocation, error) {
 		fmt.Println("file does not exist.")
 		return nil, nil
 	}
-	if err := parseConfig(fileName, &result); err != nil {
+	if err := common.ParseFile(fileName, &result); err != nil {
 		l.Errorw("cannot parse mapConfig", "err", err)
 		return result, err
 	}
@@ -69,7 +68,7 @@ func getMapConfig() ([]gentile.KingdomMap, error) {
 		result []gentile.KingdomMap
 		l      = zap.S().With("func", "getMapConfig")
 	)
-	if err := parseConfig("./mapConfig.json", &result); err != nil {
+	if err := common.ParseFile("./mapConfig.json", &result); err != nil {
 		l.Errorw("cannot parse mapConfig", "err", err)
 		return result, err
 	}
@@ -93,21 +92,10 @@ func getDataConfig(isTest bool) (common.DataConfig, error) {
 	}
 	for _, f := range files {
 		filePath := fmt.Sprintf("%s/%s", dir, f)
-		if err := parseConfig(filePath, &dataConfig); err != nil {
+		if err := common.ParseFile(filePath, &dataConfig); err != nil {
 			l.Errorw("cannot parse config", "err", err, "file", filePath)
 			return dataConfig, err
 		}
 	}
 	return dataConfig, nil
-}
-
-func parseConfig(filePath string, data interface{}) error {
-	f, err := os.ReadFile(filePath)
-	if err != nil {
-		return err
-	}
-	if err := json.Unmarshal(f, &data); err != nil {
-		return err
-	}
-	return nil
 }
