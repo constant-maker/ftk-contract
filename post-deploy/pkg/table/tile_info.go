@@ -61,3 +61,17 @@ func TileInfoSetZoneCallData(ti common.TileInfo, zone uint8) ([]byte, error) {
 	mt := mud.NewMudTable("TileInfo3", "app", tileInfoFL)
 	return mt.SetStaticFieldRawCalldata(keyTuple, 2, staticData)
 }
+
+func TileInfoSetResourceCallData(ti common.TileInfo, resources []int64) ([]byte, error) {
+	keyTuple := [][32]byte{
+		[32]byte(encodeUint256(big.NewInt(int64(ti.X)))),
+		[32]byte(encodeUint256(big.NewInt(int64(ti.Y)))),
+	}
+	bigResources := make([]*big.Int, 0)
+	for _, r := range resources {
+		bigResources = append(bigResources, big.NewInt(r))
+	}
+	dynamicData := encodeUint256Array(bigResources)
+	mt := mud.NewMudTable("TileInfo3", "app", tileInfoFL)
+	return mt.SetDynamicFieldRawCalldata(keyTuple, 0, dynamicData)
+}

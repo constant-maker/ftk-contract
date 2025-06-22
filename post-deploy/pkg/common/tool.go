@@ -10,7 +10,7 @@ import (
 	"go.uber.org/zap"
 )
 
-func ParseFile(filePath string, data interface{}) error {
+func ParseFile(filePath string, data any) error {
 	f, err := os.ReadFile(filePath)
 	if err != nil {
 		return err
@@ -21,7 +21,7 @@ func ParseFile(filePath string, data interface{}) error {
 	return nil
 }
 
-func WriteJSONFile(data interface{}, path string) error {
+func WriteJSONFile(data any, path string) error {
 	l := zap.S().With("func", "WriteJSONFile")
 	fileContent, err := json.MarshalIndent(data, "", "  ")
 	if err != nil {

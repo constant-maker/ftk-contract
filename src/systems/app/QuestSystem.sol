@@ -17,7 +17,13 @@ import {
 import { Quest3 } from "@codegen/tables/Quest3.sol";
 import { QuestContribute, QuestContributeData } from "@codegen/tables/QuestContribute.sol";
 import { CharacterAccessControl } from "@abstracts/CharacterAccessControl.sol";
-import { CharacterQuestUtils, InventoryItemUtils, CharacterStatsUtils, CharacterFundUtils, CharacterItemUtils } from "@utils/index.sol";
+import {
+  CharacterQuestUtils,
+  InventoryItemUtils,
+  CharacterStatsUtils,
+  CharacterFundUtils,
+  CharacterItemUtils
+} from "@utils/index.sol";
 import { QuestStatusType, QuestType, SocialType, ItemCategoryType } from "@codegen/common.sol";
 import { Errors } from "@common/index.sol";
 import { CharacterPositionUtils } from "@utils/CharacterPositionUtils.sol";
@@ -127,7 +133,9 @@ contract QuestSystem is System, CharacterAccessControl {
     }
     if (questData.rewardItemIds.length > 0) {
       if (questData.rewardItemIds.length != questData.rewardItemAmounts.length) {
-        revert Errors.QuestSystem_InvalidRewardItemLength(questId, questData.rewardItemIds.length, questData.rewardItemAmounts.length);
+        revert Errors.QuestSystem_InvalidRewardItemLength(
+          questId, questData.rewardItemIds.length, questData.rewardItemAmounts.length
+        );
       }
       for (uint256 i = 0; i < questData.rewardItemIds.length; i++) {
         CharacterItemUtils.addNewItem(characterId, questData.rewardItemIds[i], questData.rewardItemAmounts[i]);
