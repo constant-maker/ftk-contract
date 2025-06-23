@@ -69,20 +69,21 @@ contract PvPSystem is System, CharacterAccessControl {
   )
     private
   {
-    if ((attackerHp != 0 && defenderHp != 0) || TileInfo3.getZoneType(position.x, position.y) == ZoneType.Black) {
-      // no need to update fame if both characters are alive or in black zone
+    if (attackerHp != 0 && defenderHp != 0) {
+      // no need to update fame if both characters are alive
       return;
     }
     uint32 attackerFame = CharStats2.getFame(attackerId);
     uint8 attackerKingdomId = CharInfo.getKingdomId(attackerId);
     uint8 defenderKingdomId = CharInfo.getKingdomId(defenderId);
     uint8 tileKingdomId = TileInfo3.getKingdomId(position.x, position.y);
+    ZoneType zoneType = TileInfo3.getZoneType(position.x, position.y);
 
     bool isAlliance =
       Alliance.get(attackerKingdomId, defenderKingdomId) || Alliance.get(defenderKingdomId, attackerKingdomId);
     bool isSameSide = (attackerKingdomId == defenderKingdomId && tileKingdomId == attackerKingdomId) || isAlliance;
 
-    if (isSameSide && defenderHp == 0) {
+    if (isSameSide && defenderHp == 0 && zoneType != ZoneType.Black) {
       attackerFame = attackerFame > 50 ? attackerFame - 50 : 1; // min is 1
       CharStats2.set(attackerId, attackerFame);
     } else if (!isSameSide) {

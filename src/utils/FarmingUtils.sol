@@ -45,7 +45,7 @@ library FarmingUtils {
     uint256[] memory itemIds = tileInfo.itemIds;
     uint256 lenItem = itemIds.length;
 
-    if (tileInfo.farmingQuotas.length == 0 || block.timestamp > tileInfo.replenishTime) {
+    if (tileInfo.farmingQuotas.length != itemIds.length || block.timestamp > tileInfo.replenishTime) {
       // Initialize quotas if they haven't been set or after replenish time
       uint16[] memory quotas = new uint16[](lenItem);
 
