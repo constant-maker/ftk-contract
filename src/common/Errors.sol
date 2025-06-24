@@ -252,4 +252,12 @@ library Errors {
   error MarketSystem_InvalidTakerAmount(uint256 orderId, uint32 maxAmount, uint32 takeAmount);
   error MarketSystem_InvalidItemType(uint256 itemId);
   error MarketSystem_OrderIsNotExist(uint256 orderId);
+
+  /* -------------------------------------------------------------------------- */
+  /*                               KingSystem                                   */
+  /* -------------------------------------------------------------------------- */
+  error KingSystem_InsufficientFameForKingRegistration(uint256 characterId, uint32 fame);
+  error KingSystem_NotInElectionTime();
+  error KingSystem_AlreadyRegistered(uint256 characterId);
+  error KingSystem_NotRegistered(uint256 characterId);
 }
