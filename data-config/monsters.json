@@ -201,7 +201,7 @@
         "barrier": 100,
         "hp": 15000,
         "crystal": 1000,
-        "respawnDuration": 86400,
+        "respawnDuration": 43200,
         "berserkHpThreshold": 30,
         "boostPercent": 20,
         "lastDefeatedTime": 0
