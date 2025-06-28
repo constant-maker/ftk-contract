@@ -87,11 +87,12 @@ const MAP_TABLES: any = {
     },
     key: ['cityId', 'itemId'],
   },
-  Alliance: {
+  AllianceV2: {
     schema: {
       kingdomA: "uint8",
       kingdomB: "uint8",
       isAlliance: "bool",
+      isApproved: "bool",
     },
     key: ['kingdomA', 'kingdomB'],
   },

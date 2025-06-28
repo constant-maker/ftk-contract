@@ -70,14 +70,6 @@ const QUEST_TABLES: any = {
     },
     key: ['questId'],
   },
-  // QuestLocateTracking2: {
-  //   schema: {
-  //     charaterId: "uint256",
-  //     questId: "uint256",
-  //     trackIndex: "uint8"
-  //   },
-  //   key: ['charaterId', 'questId'],
-  // },
   QuestLocateTracking2: {
     schema: {
       characterId: "uint256",

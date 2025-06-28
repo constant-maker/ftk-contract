@@ -5,17 +5,25 @@ import { StorageWeightUtils } from "@utils/StorageWeightUtils.sol";
 import { Errors } from "@common/Errors.sol";
 
 library StorageItemUtils {
-  function addItems(uint256 characterId, uint256 cityId, uint256[] memory itemIds, uint32[] memory amounts) internal {
+  function addItems(
+    uint256 characterId,
+    uint256 cityId,
+    uint256[] memory itemIds,
+    uint32[] memory amounts,
+    bool checkMaxWeight
+  )
+    internal
+  {
     require(itemIds.length == amounts.length, "Mismatched array lengths: itemIds and amounts");
     for (uint256 i = 0; i < itemIds.length; i++) {
       _updateItem(characterId, cityId, itemIds[i], amounts[i], false);
     }
-    StorageWeightUtils.addItems(characterId, cityId, itemIds, amounts);
+    StorageWeightUtils.addItems(characterId, cityId, itemIds, amounts, checkMaxWeight);
   }
 
-  function addItem(uint256 characterId, uint256 cityId, uint256 itemId, uint32 amount) internal {
+  function addItem(uint256 characterId, uint256 cityId, uint256 itemId, uint32 amount, bool checkMaxWeight) internal {
     _updateItem(characterId, cityId, itemId, amount, false);
-    StorageWeightUtils.addItem(characterId, cityId, itemId, amount);
+    StorageWeightUtils.addItem(characterId, cityId, itemId, amount, checkMaxWeight);
   }
 
   function removeItems(uint256 characterId, uint256 cityId, uint256[] memory itemIds, uint32[] memory amounts) internal {
@@ -28,7 +36,7 @@ library StorageItemUtils {
 
   function removeItem(uint256 characterId, uint256 cityId, uint256 itemId, uint32 amount) internal {
     _updateItem(characterId, cityId, itemId, amount, true);
-    StorageWeightUtils.addItem(characterId, cityId, itemId, amount);
+    StorageWeightUtils.removeItem(characterId, cityId, itemId, amount);
   }
 
   function _updateItem(uint256 characterId, uint256 cityId, uint256 itemId, uint32 changeAmount, bool isReduce) private {

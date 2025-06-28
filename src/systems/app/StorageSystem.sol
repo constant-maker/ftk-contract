@@ -50,7 +50,7 @@ contract StorageSystem is System, CharacterAccessControl {
     // transfer in equipments
     uint256[] memory equipmentIds = data.equipmentIds;
     if (equipmentIds.length > 0) {
-      StorageEquipmentUtils.addEquipments(characterId, cityId, equipmentIds);
+      StorageEquipmentUtils.addEquipments(characterId, cityId, equipmentIds, true);
       InventoryEquipmentUtils.removeEquipments(characterId, equipmentIds, true);
     }
 
@@ -65,7 +65,7 @@ contract StorageSystem is System, CharacterAccessControl {
     uint256[] memory itemIds = data.itemIds;
     uint32[] memory itemAmounts = data.itemAmounts;
     if (itemIds.length > 0 && itemAmounts.length > 0) {
-      StorageItemUtils.addItems(characterId, cityId, itemIds, itemAmounts);
+      StorageItemUtils.addItems(characterId, cityId, itemIds, itemAmounts, true);
       InventoryItemUtils.removeItems(characterId, itemIds, itemAmounts);
     }
   }

@@ -3,7 +3,12 @@ pragma solidity >=0.8.24;
 import { console2 } from "forge-std/console2.sol";
 import { WorldFixture, SpawnSystemFixture, WelcomeSystemFixture } from "./fixtures/index.sol";
 import {
-  CharacterPositionUtils, InventoryEquipmentUtils, CharacterItemUtils, CharAchievementUtils
+  CharacterPositionUtils,
+  InventoryEquipmentUtils,
+  CharacterItemUtils,
+  CharAchievementUtils,
+  StorageEquipmentUtils,
+  StorageItemUtils
 } from "@utils/index.sol";
 import { OrderParams, TakeOrderParams, MarketSystemUtils } from "@utils/MarketSystemUtils.sol";
 import { Config } from "@common/index.sol";
@@ -18,11 +23,12 @@ import {
   Equipment,
   CharFund,
   CharOtherItem,
-  KingdomFee,
+  MarketFee,
   CharAchievement,
   CharAchievementIndex,
   FillOrder,
-  FillOrderData
+  FillOrderData,
+  CharOtherItemStorage
 } from "@codegen/index.sol";
 
 contract MarketSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture {
@@ -316,7 +322,7 @@ contract MarketSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixt
     // move to city2, to test kingdom fee
     prevCurrentWeight = CharCurrentStats.getWeight(characterId1);
     vm.startPrank(worldDeployer);
-    KingdomFee.setFee(2, 1, 100);
+    MarketFee.setFee(2, 1, 100);
     vm.stopPrank();
     _moveAllToCity(city2);
     orderParams =
@@ -414,7 +420,7 @@ contract MarketSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixt
     assertEq(CharCurrentStats.getWeight(characterId2), prevChar2CurrentWeight - 50); // selling order decrease weight
     assertEq(CharOtherItem.getAmount(characterId2, 1), 50);
     assertEq(CharFund.getGold(characterId2), 248); // 200 + 50 - 5% fee
-    assertEq(CharOtherItem.getAmount(characterId1, 1), 150); // 100 + 50
+    assertEq(CharOtherItemStorage.getAmount(characterId1, 1, 1), 50); // + 50
     assertEq(Order.getAmount(1), 50); // 100 - 50
     assertFalse(Order.getIsDone(1));
 
@@ -446,7 +452,7 @@ contract MarketSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixt
     vm.stopPrank();
 
     vm.startPrank(worldDeployer);
-    KingdomFee.setFee(1, 2, 100);
+    MarketFee.setFee(1, 2, 100);
     vm.stopPrank();
     takeOrderParamsArray[0].amount = 50;
     vm.startPrank(player2);
@@ -454,7 +460,7 @@ contract MarketSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixt
     vm.stopPrank();
     assertTrue(Order.getIsDone(1));
     assertEq(CharFund.getGold(characterId2), 248); // nothing changed because of kingdom fee is 100%
-    assertEq(CharOtherItem.getAmount(characterId1, 1), 200); // 150 + 50
+    assertEq(CharOtherItemStorage.getAmount(characterId1, 1, 1), 100); // 50 + 50
   }
 
   function test_BuyEquipment() public {
@@ -523,8 +529,8 @@ contract MarketSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixt
     console2.log("character 2 take order success 2");
     assertTrue(Order.getIsDone(1));
     assertEq(CharFund.getGold(characterId2), prevChar2Fund + 95 + 95); // 200 + 100 - 5% fee + 100 - 5% fee
-    assertTrue(InventoryEquipmentUtils.hasEquipment(characterId1, 3));
-    assertTrue(InventoryEquipmentUtils.hasEquipment(characterId1, 2));
+    assertTrue(StorageEquipmentUtils.hasEquipment(characterId1, 1, 3));
+    assertTrue(StorageEquipmentUtils.hasEquipment(characterId1, 1, 2));
     assertEq(Equipment.getCharacterId(2), characterId1);
     assertEq(Equipment.getCharacterId(3), characterId1);
   }

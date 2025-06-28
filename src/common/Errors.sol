@@ -256,8 +256,16 @@ library Errors {
   /* -------------------------------------------------------------------------- */
   /*                               KingSystem                                   */
   /* -------------------------------------------------------------------------- */
-  error KingSystem_InsufficientFameForKingRegistration(uint256 characterId, uint32 fame);
+  error KingSystem_InsufficientFameForKingElection(uint256 characterId, uint32 fame);
   error KingSystem_NotInElectionTime();
   error KingSystem_AlreadyRegistered(uint256 characterId);
   error KingSystem_NotRegistered(uint256 characterId);
+  error KingSystem_CannotVoteForSelf(uint256 characterId);
+  error KingSystem_ElectionPeriodNotOverYet();
+  error KingSystem_InsufficientFameForVoting(uint256 characterId, uint32 fame);
+  error KingSystem_AlreadyVoted(uint256 characterId);
+  error KingSystem_InvalidCandidate(uint256 candidateId);
+  error KingSystem_NotKing(uint256 characterId);
+  error KingSystem_InvalidKingdomId(uint8 kingdomId);
+  error KingSystem_InvalidMarketFee(uint8 fee);
 }

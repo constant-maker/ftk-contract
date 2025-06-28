@@ -18,7 +18,8 @@ import {
   TileInfo3,
   CharInfo,
   CharStats2,
-  Alliance
+  AllianceV2,
+  AllianceV2Data
 } from "@codegen/index.sol";
 import { BattleInfo, BattleUtils } from "@utils/BattleUtils.sol";
 import { DailyQuestUtils, InventoryItemUtils, CharacterPositionUtils } from "@utils/index.sol";
@@ -79,8 +80,13 @@ contract PvPSystem is System, CharacterAccessControl {
     uint8 tileKingdomId = TileInfo3.getKingdomId(position.x, position.y);
     ZoneType zoneType = TileInfo3.getZoneType(position.x, position.y);
 
-    bool isAlliance =
-      Alliance.get(attackerKingdomId, defenderKingdomId) || Alliance.get(defenderKingdomId, attackerKingdomId);
+    AllianceV2Data memory allianceData = AllianceV2.get(attackerKingdomId, defenderKingdomId);
+    bool isAlliance = allianceData.isAlliance && allianceData.isApproved;
+    if (!isAlliance) {
+      allianceData = AllianceV2.get(defenderKingdomId, attackerKingdomId);
+      isAlliance = allianceData.isAlliance && allianceData.isApproved;
+    }
+
     bool isSameSide = (attackerKingdomId == defenderKingdomId && tileKingdomId == attackerKingdomId) || isAlliance;
 
     if (isSameSide && defenderHp == 0 && zoneType != ZoneType.Black) {
