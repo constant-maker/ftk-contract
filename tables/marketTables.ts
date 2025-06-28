@@ -47,7 +47,7 @@ const MARKET_TABLES: any = {
     },
     key: ['id'],
   },
-  KingdomFee: {
+  MarketFee: {
     schema: {
       kingdomAId: "uint8",
       kingdomBId: "uint8",

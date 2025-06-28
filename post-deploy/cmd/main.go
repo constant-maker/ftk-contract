@@ -11,11 +11,12 @@ import (
 )
 
 const (
-	testFlag        = "test"
-	outFlag         = "out"
-	out2Flag        = "out2"
-	localFlag       = "local"
-	dataPercentFlag = "data-percent"
+	testFlag         = "test"
+	outFlag          = "out"
+	out2Flag         = "out2"
+	localFlag        = "local"
+	updateOnlineFlag = "update-online"
+	dataPercentFlag  = "data-percent"
 
 	pathToTestFile = "../../post_deploy_test.txt"
 )
@@ -52,6 +53,10 @@ func main() {
 			Name:  out2Flag,
 			Usage: "path to output reserve data file",
 			Value: "../../post_deploy_reserve.txt",
+		},
+		cli.BoolFlag{
+			Name:  updateOnlineFlag,
+			Usage: "fetch online data to update local config",
 		},
 		cli.BoolFlag{
 			Name:  localFlag,
@@ -110,7 +115,9 @@ func run(c *cli.Context) error {
 				return err
 			}
 		}
-		common.UpdateDataConfig(&dataConfig, "../..") // update config by online data
+		if c.Bool(updateOnlineFlag) {
+			common.UpdateDataConfig(&dataConfig, "../..") // update config by online data
+		}
 	}
 
 	// buildCallData build post_deploy data

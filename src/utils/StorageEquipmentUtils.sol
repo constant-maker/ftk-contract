@@ -6,17 +6,24 @@ import { Errors } from "@common/Errors.sol";
 
 library StorageEquipmentUtils {
   /// @dev Add equipments to storage
-  function addEquipments(uint256 characterId, uint256 cityId, uint256[] memory equipmentIds) public {
+  function addEquipments(
+    uint256 characterId,
+    uint256 cityId,
+    uint256[] memory equipmentIds,
+    bool checkMaxWeight
+  )
+    public
+  {
     for (uint256 i = 0; i < equipmentIds.length; i++) {
       _addEquipment(characterId, cityId, equipmentIds[i]);
     }
-    StorageWeightUtils.addEquipments(characterId, cityId, equipmentIds);
+    StorageWeightUtils.addEquipments(characterId, cityId, equipmentIds, checkMaxWeight);
   }
 
   /// @dev Add equipment to storage
-  function addEquipment(uint256 characterId, uint256 cityId, uint256 equipmentId) public {
+  function addEquipment(uint256 characterId, uint256 cityId, uint256 equipmentId, bool checkMaxWeight) public {
     _addEquipment(characterId, cityId, equipmentId);
-    StorageWeightUtils.addEquipment(characterId, cityId, equipmentId);
+    StorageWeightUtils.addEquipment(characterId, cityId, equipmentId, checkMaxWeight);
   }
 
   function _addEquipment(uint256 characterId, uint256 cityId, uint256 equipmentId) private {

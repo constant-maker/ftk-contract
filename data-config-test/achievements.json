@@ -54,6 +54,18 @@
         "def": 3,
         "agi": 3
       }
+    },
+    "10": {
+      "id": 10,
+      "name": "King",
+      "content": "Through countless battles and rebirths, you have transcended mortal limits. Your soul now carries the strength of past lifetimes.",
+      "instruction": "Become the King of your kingdom.",
+      "stats": {
+        "atk": 15,
+        "def": 15,
+        "agi": 15
+      },
+      "color": "#e0c000"
     }
   }
 }

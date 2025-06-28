@@ -14,6 +14,7 @@ import CONSUMABLE_INFO_TABLES from "./tables/consumableInfoTables";
 import ACHIEVEMENT_TABLES from "./tables/achievementTables";
 import SOCIAL_TABLES from "./tables/socialTables";
 import MARKET_TABLES from "./tables/marketTables";
+import VOTE_TABLES from "./tables/voteTables";
 
 export default defineWorld({
   deploy: {
@@ -71,6 +72,7 @@ export default defineWorld({
     ...ACHIEVEMENT_TABLES,
     ...SOCIAL_TABLES,
     ...MARKET_TABLES,
+    ...VOTE_TABLES,
   },
   excludeSystems: ["SpawnSystem"],
 });

@@ -5,6 +5,8 @@ import { InventoryItemUtils } from "./InventoryItemUtils.sol";
 import { CharacterFundUtils } from "./CharacterFundUtils.sol";
 import { MarketWeightUtils } from "./MarketWeightUtils.sol";
 import { CharAchievementUtils } from "./CharAchievementUtils.sol";
+import { StorageEquipmentUtils } from "./StorageEquipmentUtils.sol";
+import { StorageItemUtils } from "./StorageItemUtils.sol";
 import {
   CharStats2,
   OrderCounter,
@@ -17,7 +19,7 @@ import {
   Item,
   CharInfo,
   City,
-  KingdomFee,
+  MarketFee,
   FillOrder,
   FillCounter,
   CityVault2,
@@ -68,7 +70,7 @@ library MarketSystemUtils {
         InventoryEquipmentUtils.removeEquipment(takerId, equipmentId, true);
         // transfer equipment to order owner
         Equipment.setCharacterId(equipmentId, order.characterId);
-        InventoryEquipmentUtils.addEquipment(order.characterId, equipmentId, true);
+        StorageEquipmentUtils.addEquipment(order.characterId, order.cityId, equipmentId, false);
       }
     } else {
       // other item order
@@ -79,7 +81,7 @@ library MarketSystemUtils {
       // remove item from taker
       InventoryItemUtils.removeItem(takerId, order.itemId, top.amount);
       // transfer item to order owner
-      InventoryItemUtils.addItem(order.characterId, order.itemId, top.amount);
+      StorageItemUtils.addItem(order.characterId, order.cityId, order.itemId, top.amount, false);
     }
     // claim gold from order
     uint32 totalGold = order.unitPrice * top.amount;
@@ -165,7 +167,7 @@ library MarketSystemUtils {
     if (receiverKingdomId == marketKingdomId) {
       return value * uint32(Config.DEFAULT_MARKET_FEE) / 100;
     }
-    uint8 fee = KingdomFee.getFee(marketKingdomId, receiverKingdomId);
+    uint8 fee = MarketFee.getFee(marketKingdomId, receiverKingdomId);
     if (fee == 0) {
       // default fee
       fee = Config.DEFAULT_MARKET_FEE;

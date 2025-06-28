@@ -18,7 +18,7 @@ import {
   PvPChallengeData,
   Equipment,
   TileInfo3,
-  Alliance,
+  AllianceV2,
   CharCurrentStats,
   TileInventory,
   DropResource
@@ -371,7 +371,7 @@ contract PvPSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
     // test alliance
     vm.warp(block.timestamp + 300);
     vm.startPrank(worldDeployer);
-    Alliance.set(1, 2, true);
+    AllianceV2.set(1, 2, true, true);
     vm.stopPrank();
     _moveToTheLocation(20, -32); // GREEN zone
     vm.startPrank(player_1);
