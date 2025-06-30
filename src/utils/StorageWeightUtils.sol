@@ -35,21 +35,21 @@ library StorageWeightUtils {
 
   /*    Update tool weight    */
   function removeTools(uint256 characterId, uint256 cityId, uint256[] memory toolIds) internal {
-    _updateToolsWeight(characterId, cityId, toolIds, true);
+    _updateToolsWeight(characterId, cityId, toolIds, true, false);
   }
 
   function removeTool(uint256 characterId, uint256 cityId, uint256 toolId) internal {
     uint256[] memory toolIds = CommonUtils.wrapUint256(toolId);
-    _updateToolsWeight(characterId, cityId, toolIds, true);
+    _updateToolsWeight(characterId, cityId, toolIds, true, false);
   }
 
   function addTools(uint256 characterId, uint256 cityId, uint256[] memory toolIds) internal {
-    _updateToolsWeight(characterId, cityId, toolIds, false);
+    _updateToolsWeight(characterId, cityId, toolIds, false, true);
   }
 
   function addTool(uint256 characterId, uint256 cityId, uint256 toolId) internal {
     uint256[] memory toolIds = CommonUtils.wrapUint256(toolId);
-    _updateToolsWeight(characterId, cityId, toolIds, false);
+    _updateToolsWeight(characterId, cityId, toolIds, false, true);
   }
 
   /*    Update item weight    */
@@ -107,7 +107,15 @@ library StorageWeightUtils {
     _validateAndSetWeight(characterId, cityId, newWeight, checkMaxWeight);
   }
 
-  function _updateToolsWeight(uint256 characterId, uint256 cityId, uint256[] memory toolIds, bool isRemoved) private {
+  function _updateToolsWeight(
+    uint256 characterId,
+    uint256 cityId,
+    uint256[] memory toolIds,
+    bool isRemoved,
+    bool checkMaxWeight
+  )
+    private
+  {
     // Check if the array is empty and return early if so
     uint256 length = toolIds.length;
     if (length == 0) return;
@@ -124,7 +132,7 @@ library StorageWeightUtils {
     // Update the character's weight
     uint32 storageWeight = CharStorage.getWeight(characterId, cityId);
     uint32 newWeight = CommonUtils.getNewWeight(storageWeight, weightChange, isRemoved);
-    _validateAndSetWeight(characterId, cityId, newWeight, true);
+    _validateAndSetWeight(characterId, cityId, newWeight, checkMaxWeight);
   }
 
   function _updateEquipmentsWeight(
