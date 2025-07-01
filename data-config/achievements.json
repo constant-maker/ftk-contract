@@ -106,6 +106,18 @@
         "agi": 3
       },
       "color": "#e0c000"
+    },
+    "10": {
+      "id": 10,
+      "name": "The King",
+      "content": "By right of might and mind, you have claimed the throne. Your reign begins, and history will remember your name",
+      "instruction": "Become the King of your kingdom.",
+      "stats": {
+        "atk": 15,
+        "def": 15,
+        "agi": 15
+      },
+      "color": "#e0c000"
     }
   }
 }

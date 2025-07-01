@@ -9,61 +9,76 @@ import { Config } from "@common/Config.sol";
 library StorageWeightUtils {
   /*    Update equipment weight    */
   function removeEquipments(uint256 characterId, uint256 cityId, uint256[] memory equipmentIds) internal {
-    _updateEquipmentsWeight(characterId, cityId, equipmentIds, true);
+    _updateEquipmentsWeight(characterId, cityId, equipmentIds, true, false);
   }
 
   function removeEquipment(uint256 characterId, uint256 cityId, uint256 equipmentId) internal {
     uint256[] memory equipmentIds = CommonUtils.wrapUint256(equipmentId);
-    _updateEquipmentsWeight(characterId, cityId, equipmentIds, true);
+    _updateEquipmentsWeight(characterId, cityId, equipmentIds, true, false);
   }
 
-  function addEquipments(uint256 characterId, uint256 cityId, uint256[] memory equipmentIds) internal {
-    _updateEquipmentsWeight(characterId, cityId, equipmentIds, false);
+  function addEquipments(
+    uint256 characterId,
+    uint256 cityId,
+    uint256[] memory equipmentIds,
+    bool checkMaxWeight
+  )
+    internal
+  {
+    _updateEquipmentsWeight(characterId, cityId, equipmentIds, false, checkMaxWeight);
   }
 
-  function addEquipment(uint256 characterId, uint256 cityId, uint256 equipmentId) internal {
+  function addEquipment(uint256 characterId, uint256 cityId, uint256 equipmentId, bool checkMaxWeight) internal {
     uint256[] memory equipmentIds = CommonUtils.wrapUint256(equipmentId);
-    _updateEquipmentsWeight(characterId, cityId, equipmentIds, false);
+    _updateEquipmentsWeight(characterId, cityId, equipmentIds, false, checkMaxWeight);
   }
 
   /*    Update tool weight    */
   function removeTools(uint256 characterId, uint256 cityId, uint256[] memory toolIds) internal {
-    _updateToolsWeight(characterId, cityId, toolIds, true);
+    _updateToolsWeight(characterId, cityId, toolIds, true, false);
   }
 
   function removeTool(uint256 characterId, uint256 cityId, uint256 toolId) internal {
     uint256[] memory toolIds = CommonUtils.wrapUint256(toolId);
-    _updateToolsWeight(characterId, cityId, toolIds, true);
+    _updateToolsWeight(characterId, cityId, toolIds, true, false);
   }
 
   function addTools(uint256 characterId, uint256 cityId, uint256[] memory toolIds) internal {
-    _updateToolsWeight(characterId, cityId, toolIds, false);
+    _updateToolsWeight(characterId, cityId, toolIds, false, true);
   }
 
   function addTool(uint256 characterId, uint256 cityId, uint256 toolId) internal {
     uint256[] memory toolIds = CommonUtils.wrapUint256(toolId);
-    _updateToolsWeight(characterId, cityId, toolIds, false);
+    _updateToolsWeight(characterId, cityId, toolIds, false, true);
   }
 
   /*    Update item weight    */
   function removeItems(uint256 characterId, uint256 cityId, uint256[] memory itemIds, uint32[] memory amounts) internal {
-    _updateItemsWeight(characterId, cityId, itemIds, amounts, true);
+    _updateItemsWeight(characterId, cityId, itemIds, amounts, true, false);
   }
 
   function removeItem(uint256 characterId, uint256 cityId, uint256 itemId, uint32 amount) internal {
     uint256[] memory itemIds = CommonUtils.wrapUint256(itemId);
     uint32[] memory amounts = CommonUtils.wrapUint32(amount);
-    _updateItemsWeight(characterId, cityId, itemIds, amounts, true);
+    _updateItemsWeight(characterId, cityId, itemIds, amounts, true, false);
   }
 
-  function addItems(uint256 characterId, uint256 cityId, uint256[] memory itemIds, uint32[] memory amounts) internal {
-    _updateItemsWeight(characterId, cityId, itemIds, amounts, false);
+  function addItems(
+    uint256 characterId,
+    uint256 cityId,
+    uint256[] memory itemIds,
+    uint32[] memory amounts,
+    bool checkMaxWeight
+  )
+    internal
+  {
+    _updateItemsWeight(characterId, cityId, itemIds, amounts, false, checkMaxWeight);
   }
 
-  function addItem(uint256 characterId, uint256 cityId, uint256 itemId, uint32 amount) internal {
+  function addItem(uint256 characterId, uint256 cityId, uint256 itemId, uint32 amount, bool checkMaxWeight) internal {
     uint256[] memory itemIds = CommonUtils.wrapUint256(itemId);
     uint32[] memory amounts = CommonUtils.wrapUint32(amount);
-    _updateItemsWeight(characterId, cityId, itemIds, amounts, false);
+    _updateItemsWeight(characterId, cityId, itemIds, amounts, false, checkMaxWeight);
   }
 
   function _updateItemsWeight(
@@ -71,7 +86,8 @@ library StorageWeightUtils {
     uint256 cityId,
     uint256[] memory itemIds,
     uint32[] memory amounts,
-    bool isRemoved
+    bool isRemoved,
+    bool checkMaxWeight
   )
     private
   {
@@ -88,10 +104,18 @@ library StorageWeightUtils {
 
     uint32 storageWeight = CharStorage.getWeight(characterId, cityId);
     uint32 newWeight = CommonUtils.getNewWeight(storageWeight, weightChange, isRemoved);
-    _validateAndSetWeight(characterId, cityId, newWeight);
+    _validateAndSetWeight(characterId, cityId, newWeight, checkMaxWeight);
   }
 
-  function _updateToolsWeight(uint256 characterId, uint256 cityId, uint256[] memory toolIds, bool isRemoved) private {
+  function _updateToolsWeight(
+    uint256 characterId,
+    uint256 cityId,
+    uint256[] memory toolIds,
+    bool isRemoved,
+    bool checkMaxWeight
+  )
+    private
+  {
     // Check if the array is empty and return early if so
     uint256 length = toolIds.length;
     if (length == 0) return;
@@ -108,14 +132,15 @@ library StorageWeightUtils {
     // Update the character's weight
     uint32 storageWeight = CharStorage.getWeight(characterId, cityId);
     uint32 newWeight = CommonUtils.getNewWeight(storageWeight, weightChange, isRemoved);
-    _validateAndSetWeight(characterId, cityId, newWeight);
+    _validateAndSetWeight(characterId, cityId, newWeight, checkMaxWeight);
   }
 
   function _updateEquipmentsWeight(
     uint256 characterId,
     uint256 cityId,
     uint256[] memory equipmentIds,
-    bool isRemoved
+    bool isRemoved,
+    bool checkMaxWeight
   )
     private
   {
@@ -144,13 +169,15 @@ library StorageWeightUtils {
     // Update the character's weight
     uint32 storageWeight = CharStorage.getWeight(characterId, cityId);
     uint32 newWeight = CommonUtils.getNewWeight(storageWeight, weightChange, isRemoved);
-    _validateAndSetWeight(characterId, cityId, newWeight);
+    _validateAndSetWeight(characterId, cityId, newWeight, checkMaxWeight);
   }
 
-  function _validateAndSetWeight(uint256 characterId, uint256 cityId, uint32 newWeight) private {
-    uint32 maxWeight = CharStorage.getMaxWeight(characterId, cityId);
-    if (newWeight > maxWeight) {
-      revert Errors.Storage_ExceedMaxWeight(maxWeight, newWeight);
+  function _validateAndSetWeight(uint256 characterId, uint256 cityId, uint32 newWeight, bool checkMaxWeight) private {
+    if (checkMaxWeight) {
+      uint32 maxWeight = CharStorage.getMaxWeight(characterId, cityId);
+      if (newWeight > maxWeight) {
+        revert Errors.Storage_ExceedMaxWeight(maxWeight, newWeight);
+      }
     }
     CharStorage.setWeight(characterId, cityId, newWeight);
   }

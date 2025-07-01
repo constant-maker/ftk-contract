@@ -157,14 +157,16 @@ contract RebornSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixt
     pure
     returns (uint256[] memory itemIds, uint32[] memory amounts)
   {
-    itemIds = new uint256[](3);
-    itemIds[0] = 67;
-    itemIds[1] = 68;
-    itemIds[2] = 69;
-    amounts = new uint32[](3);
-    amounts[0] = rebornNum;
-    amounts[1] = rebornNum;
-    amounts[2] = rebornNum;
+    uint256 len = 4;
+    itemIds = new uint256[](len);
+    itemIds[0] = 258;
+    itemIds[1] = 259;
+    itemIds[2] = 260;
+    itemIds[3] = 261;
+    amounts = new uint32[](len);
+    for (uint256 i = 0; i < len; i++) {
+      amounts[i] = rebornNum;
+    }
     return (itemIds, amounts);
   }
 
