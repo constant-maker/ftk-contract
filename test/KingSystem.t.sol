@@ -220,11 +220,15 @@ contract KingSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixtur
 
     vm.expectRevert(); // not king
     vm.startPrank(candidate);
-    world.app__setMarketFee(candidateId, 2, 99);
+    uint8[] memory kingdomIds = new uint8[](1);
+    kingdomIds[0] = 2;
+    uint8[] memory fees = new uint8[](1);
+    fees[0] = 99;
+    world.app__setMarketFee(candidateId, kingdomIds, fees);
     vm.stopPrank();
 
     vm.startPrank(voter);
-    world.app__setMarketFee(voterId, 2, 99);
+    world.app__setMarketFee(voterId, kingdomIds, fees);
     vm.stopPrank();
     assertEq(MarketFee.get(1, 2), 99);
   }

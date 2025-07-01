@@ -117,17 +117,21 @@ contract KingSystem is CharacterAccessControl, System {
     AllianceV2.set(charKingdomId, otherKingdomId, true, false);
   }
 
-  function setMarketFee(uint256 characterId, uint8 kingdomId, uint8 fee) public onlyAuthorizedWallet(characterId) {
+  function setMarketFee(uint256 characterId, uint8[] calldata kingdomIds, uint8[] calldata fee) public onlyAuthorizedWallet(characterId) {
     uint8 charKingdomId = CharInfo.getKingdomId(characterId);
     _mustBeKing(charKingdomId, characterId);
-    _validateKingdomId(kingdomId);
-    if (charKingdomId == kingdomId) {
-      return;
+    for (uint256 i = 0; i < kingdomIds.length; i++) {
+      uint8 kingdomId = kingdomIds[i];
+      uint8 fee = fee[i];
+      _validateKingdomId(kingdomId);
+      if (charKingdomId == kingdomId) {
+        continue; // skip setting fee for own kingdom
+      }
+      if (fee > 100) {
+        revert Errors.KingSystem_InvalidMarketFee(fee);
+      }
+      MarketFee.set(charKingdomId, kingdomId, fee);
     }
-    if (fee > 100) {
-      revert Errors.KingSystem_InvalidMarketFee(fee);
-    }
-    MarketFee.set(charKingdomId, kingdomId, fee);
   }
 
   function _mustBeKing(uint8 charKingdomId, uint256 characterId) private view {
