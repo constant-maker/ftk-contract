@@ -7,6 +7,7 @@ import {
   CharStats,
   CharCurrentStats,
   CharCurrentStatsData,
+  CharCStats2,
   CharSkill,
   CharEquipment,
   SkillEffect,
@@ -83,7 +84,7 @@ library BattleUtils {
     CharCurrentStatsData memory characterCurrentStats = CharCurrentStats.get(characterId);
     characterBattleInfo = BattleInfo({
       id: characterId,
-      barrier: 0,
+      barrier: CharCStats2.getShieldBarrier(characterId),
       hp: characterHp,
       agi: characterCurrentStats.agi,
       atk: characterCurrentStats.atk,
@@ -261,12 +262,10 @@ library BattleUtils {
     ZoneType zoneType = TileInfo3.getZoneType(x, y);
     uint8 tileKingdomId = TileInfo3.getKingdomId(x, y);
     uint8 characterKingdomId = CharInfo.getKingdomId(characterId);
-    if (zoneType == ZoneType.Black) {
-      if (tileKingdomId == characterKingdomId) {
-        zoneType = ZoneType.Red;
-      }
-    } else if (tileKingdomId != characterKingdomId) {
+    if (zoneType == ZoneType.Black && tileKingdomId == characterKingdomId) {
       zoneType = ZoneType.Red;
+    } else if (zoneType != ZoneType.Black) {
+      zoneType = (characterKingdomId == tileKingdomId) ? ZoneType.Green : ZoneType.Red;
     }
     if (zoneType == ZoneType.Red || zoneType == ZoneType.Black) {
       // drop resource in inventory

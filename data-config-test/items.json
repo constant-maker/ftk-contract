@@ -487,10 +487,12 @@
         "advantageType": 0,
         "twoHanded": false,
         "atk": 0,
-        "def": 12,
+        "def": 0,
         "agi": 0,
         "hp": 50,
-        "ms": 0
+        "ms": 0,
+        "bonusWeight": 10,
+        "shieldBarrier": 20
       }
     },
     "42": {

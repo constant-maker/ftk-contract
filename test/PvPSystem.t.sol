@@ -472,13 +472,13 @@ contract PvPSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
     console2.log("done test fight in black zone");
 
     // test loot item
-    vm.startPrank(player_2);
     uint256[] memory equipmentIds = new uint256[](1);
     equipmentIds[0] = 1;
     uint256[] memory itemIds = new uint256[](1);
     uint32[] memory itemAmounts = new uint32[](1);
     itemIds[0] = 2;
     itemAmounts[0] = 10;
+    vm.startPrank(player_2);
     world.app__lootItems(
       characterId_2, LootItems({ equipmentIds: equipmentIds, itemIds: itemIds, itemAmounts: itemAmounts })
     );
@@ -517,6 +517,80 @@ contract PvPSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
     assertEq(newWeightChar2, weightChar2 + 10 * 2); // + 10 items (weight 2 each)
 
     console2.log("done test loot item");
+  }
+
+  function test_LootItem() external {
+    // update char 2 stats
+    vm.startPrank(worldDeployer);
+    CharCurrentStats.setAtk(characterId_2, 20_000);
+    CharCurrentStats.setAgi(characterId_2, 20_000);
+
+    TileInfo3.setZoneType(21, -32, ZoneType.Black);
+
+    InventoryItemUtils.addItem(characterId_1, 1, 100);
+    InventoryItemUtils.addItem(characterId_1, 2, 100);
+    vm.stopPrank();
+
+    uint32 weightChar1 = CharCurrentStats.getWeight(characterId_1);
+    console2.log("weight char 1 in black zone", weightChar1);
+
+    console2.log("move to black zone");
+    _moveToTheLocation(21, -32); // BLACK zone
+    vm.startPrank(player_2);
+    world.app__battlePvP(characterId_2, characterId_1);
+    vm.stopPrank();
+
+    uint32 newWeightChar1 = CharCurrentStats.getWeight(characterId_1);
+    console2.log("new weight char 1 in black zone", newWeightChar1);
+    assertEq(newWeightChar1, weightChar1 - 200 - 3); // 100 items dropped (weight 2 each) + 3 weight for equipped weapon
+
+    uint256[] memory tileEquipmentIds = TileInventory.getEquipmentIds(21, -32);
+    assertEq(tileEquipmentIds.length, 1);
+    assertEq(tileEquipmentIds[0], 1);
+
+    console2.log("test loot item in black zone");
+
+    // test loot item
+    uint256[] memory equipmentIds = new uint256[](1);
+    equipmentIds[0] = 1;
+    uint256[] memory itemIds = new uint256[](1);
+    uint32[] memory itemAmounts = new uint32[](1);
+    itemIds[0] = 2;
+    itemAmounts[0] = 10;
+    uint256[] memory emptyArray = new uint256[](0);
+    uint32[] memory emptyArray32 = new uint32[](0);
+    CharPositionData memory charPosition1 = CharacterPositionUtils.currentPosition(characterId_1);
+    console2.log("char 1 position x", charPosition1.x);
+    console2.log("char 1 position y", charPosition1.y);
+    console2.log("play 1 try to loot item");
+    vm.expectRevert();
+    vm.startPrank(player_1);
+    world.app__lootItems(
+      characterId_1, LootItems({ equipmentIds: equipmentIds, itemIds: emptyArray, itemAmounts: emptyArray32 })
+    );
+    vm.stopPrank();
+
+    uint32 weightChar2 = CharCurrentStats.getWeight(characterId_2);
+    vm.startPrank(player_2);
+    world.app__lootItems(
+      characterId_2, LootItems({ equipmentIds: equipmentIds, itemIds: itemIds, itemAmounts: itemAmounts })
+    );
+    vm.stopPrank();
+    assertEq(CharOtherItem.getAmount(characterId_2, 2), 10);
+    assertEq(CharOtherItem.getAmount(characterId_1, 2), 0);
+    uint32 tileItemAmount = TileInventory.getItemOtherItemAmounts(21, -32, 0);
+    assertEq(tileItemAmount, 90);
+    tileEquipmentIds = TileInventory.getEquipmentIds(21, -32);
+    assertEq(tileEquipmentIds.length, 0);
+
+    console2.log("has equipment", InventoryEquipmentUtils.hasEquipment(characterId_1, 1));
+    console2.log("has equipment", InventoryEquipmentUtils.hasEquipment(characterId_2, 1));
+    console2.log("char id", Equipment.getCharacterId(1));
+    assertEq(Equipment.getCharacterId(1), characterId_2);
+
+    uint32 newWeightChar2 = CharCurrentStats.getWeight(characterId_2);
+    console2.log("new weight char 2 in black zone", newWeightChar2);
+    assertEq(newWeightChar2, weightChar2 + 3 + 10 * 2); // 3 for equipped weapon + 10 items (weight 2 each)
   }
 
   function _moveToTheLocation(int32 _x, int32 _y) private {

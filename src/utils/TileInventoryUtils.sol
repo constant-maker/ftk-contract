@@ -22,6 +22,18 @@ library TileInventoryUtils {
 
   function _addItem(int32 x, int32 y, uint256 itemId, uint32 amount) private {
     uint256 index = TileOtherItemIndex.get(x, y, itemId);
+    if (index != 0) {
+      bool indexOutOfBounds = index >= TileInventory.lengthOtherItemIds(x, y);
+      bool itemMismatch = TileInventory.getItemOtherItemIds(x, y, index - 1) != itemId;
+      if (indexOutOfBounds || itemMismatch) {
+        // If index is out of bounds or the itemId at that index does not match,
+        // we need to reset the index for this itemId.
+        // This can happen if items were removed or the inventory was modified.
+        // We delete the record and re-add it.
+        TileOtherItemIndex.deleteRecord(x, y, itemId);
+        index = 0;
+      }
+    }
     if (index == 0) {
       TileInventory.pushOtherItemIds(x, y, itemId);
       TileInventory.pushOtherItemAmounts(x, y, amount);
@@ -119,6 +131,19 @@ library TileInventoryUtils {
   /// @dev Get the amount of a specific item in the tile inventory
   function _checkToResetData(int32 x, int32 y) private {
     if (TileInventory.getLastDropTime(x, y) + Config.TILE_ITEM_AVAILABLE_DURATION < block.timestamp) {
+      // reset equipment index
+      // no need to reset equipment because id is unique but this help reduce size of indexer
+      uint256[] memory equipmentIds = TileInventory.getEquipmentIds(x, y);
+      for (uint256 i = 0; i < equipmentIds.length; i++) {
+        uint256 equipmentId = equipmentIds[i];
+        TileEquipmentIndex.deleteRecord(x, y, equipmentId);
+      }
+      // reset other items index
+      uint256[] memory itemIds = TileInventory.getOtherItemIds(x, y);
+      for (uint256 i = 0; i < itemIds.length; i++) {
+        uint256 itemId = itemIds[i];
+        TileOtherItemIndex.deleteRecord(x, y, itemId);
+      }
       TileInventory.deleteRecord(x, y);
     }
   }

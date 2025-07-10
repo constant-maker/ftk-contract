@@ -166,6 +166,8 @@ library Errors {
   error CraftSystem_MustInACity(uint256 characterId);
   error CraftSystem_NoRecipeForItem(uint256 itemId);
   error CraftSystem_CraftAmountIsZero();
+  error CraftSystem_InvalidRecipeData(uint256 itemId);
+  error CraftSystem_PerkLevelIsNotEnough(uint256 characterId, uint256 itemId);
 
   /* -------------------------------------------------------------------------- */
   /*                               ConsumeSystem                                */

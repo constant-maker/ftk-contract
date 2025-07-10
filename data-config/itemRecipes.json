@@ -2,6 +2,8 @@
   "itemRecipes": {
     "21": {
       "itemId": 21,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 1,
@@ -16,6 +18,8 @@
     },
     "22": {
       "itemId": 22,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 1,
@@ -30,6 +34,8 @@
     },
     "23": {
       "itemId": 23,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 1,
@@ -44,6 +50,8 @@
     },
     "24": {
       "itemId": 24,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 1,
@@ -58,6 +66,8 @@
     },
     "25": {
       "itemId": 25,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 1,
@@ -72,6 +82,8 @@
     },
     "26": {
       "itemId": 26,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 1,
@@ -86,6 +98,8 @@
     },
     "27": {
       "itemId": 27,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 1,
@@ -100,6 +114,8 @@
     },
     "28": {
       "itemId": 28,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 1,
@@ -114,6 +130,8 @@
     },
     "29": {
       "itemId": 29,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 1,
@@ -128,6 +146,8 @@
     },
     "30": {
       "itemId": 30,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 1,
@@ -142,6 +162,8 @@
     },
     "31": {
       "itemId": 31,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 1,
@@ -156,6 +178,8 @@
     },
     "32": {
       "itemId": 32,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 1,
@@ -170,6 +194,8 @@
     },
     "33": {
       "itemId": 33,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 1,
@@ -184,6 +210,8 @@
     },
     "34": {
       "itemId": 34,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 1,
@@ -198,6 +226,8 @@
     },
     "35": {
       "itemId": 35,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 1,
@@ -212,6 +242,8 @@
     },
     "36": {
       "itemId": 36,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 1,
@@ -230,6 +262,8 @@
     },
     "37": {
       "itemId": 37,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 1,
@@ -248,6 +282,8 @@
     },
     "38": {
       "itemId": 38,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 1,
@@ -266,6 +302,8 @@
     },
     "39": {
       "itemId": 39,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 1,
@@ -288,6 +326,8 @@
     },
     "40": {
       "itemId": 40,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 1,
@@ -302,6 +342,8 @@
     },
     "41": {
       "itemId": 41,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 1,
@@ -320,6 +362,8 @@
     },
     "42": {
       "itemId": 42,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 1,
@@ -334,6 +378,8 @@
     },
     "43": {
       "itemId": 43,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 1,
@@ -356,6 +402,8 @@
     },
     "44": {
       "itemId": 44,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 10,
@@ -370,6 +418,8 @@
     },
     "45": {
       "itemId": 45,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 6,
@@ -388,6 +438,8 @@
     },
     "46": {
       "itemId": 46,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 1,
@@ -406,6 +458,8 @@
     },
     "47": {
       "itemId": 47,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 1,
@@ -424,6 +478,8 @@
     },
     "48": {
       "itemId": 48,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 12,
@@ -438,6 +494,8 @@
     },
     "49": {
       "itemId": 49,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 13,
@@ -452,6 +510,8 @@
     },
     "50": {
       "itemId": 50,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 12,
@@ -466,6 +526,8 @@
     },
     "51": {
       "itemId": 51,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 13,
@@ -480,6 +542,8 @@
     },
     "52": {
       "itemId": 52,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 12,
@@ -498,6 +562,8 @@
     },
     "53": {
       "itemId": 53,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 13,
@@ -516,6 +582,8 @@
     },
     "54": {
       "itemId": 54,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 12,
@@ -534,6 +602,8 @@
     },
     "55": {
       "itemId": 55,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 13,
@@ -548,6 +618,8 @@
     },
     "56": {
       "itemId": 56,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 12,
@@ -566,6 +638,8 @@
     },
     "57": {
       "itemId": 57,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 12,
@@ -584,6 +658,8 @@
     },
     "58": {
       "itemId": 58,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 12,
@@ -602,6 +678,8 @@
     },
     "59": {
       "itemId": 59,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 13,
@@ -620,6 +698,8 @@
     },
     "60": {
       "itemId": 60,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 10,
@@ -642,6 +722,8 @@
     },
     "61": {
       "itemId": 61,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 11,
@@ -664,6 +746,8 @@
     },
     "62": {
       "itemId": 62,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 10,
@@ -682,6 +766,8 @@
     },
     "63": {
       "itemId": 63,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 11,
@@ -704,6 +790,8 @@
     },
     "64": {
       "itemId": 64,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 10,
@@ -722,6 +810,8 @@
     },
     "65": {
       "itemId": 65,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 11,
@@ -740,6 +830,8 @@
     },
     "66": {
       "itemId": 66,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 14,
@@ -754,13 +846,15 @@
     },
     "70": {
       "itemId": 70,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 69,
           "amount": 1
         },
         {
-          "itemId": 73,
+          "itemId": 81,
           "amount": 40
         },
         {
@@ -768,7 +862,7 @@
           "amount": 30
         },
         {
-          "itemId": 95,
+          "itemId": 4,
           "amount": 50
         },
         {
@@ -780,6 +874,8 @@
     },
     "71": {
       "itemId": 71,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 67,
@@ -810,13 +906,15 @@
     },
     "72": {
       "itemId": 72,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 68,
           "amount": 1
         },
         {
-          "itemId": 73,
+          "itemId": 81,
           "amount": 40
         },
         {
@@ -840,10 +938,12 @@
     },
     "118": {
       "itemId": 118,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
-          "itemId": 14,
-          "amount": 15
+          "itemId": 15,
+          "amount": 10
         },
         {
           "itemId": 12,
@@ -854,6 +954,8 @@
     },
     "131": {
       "itemId": 131,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 124,
@@ -876,6 +978,8 @@
     },
     "132": {
       "itemId": 132,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 122,
@@ -886,11 +990,11 @@
           "amount": 20
         },
         {
-          "itemId": 79,
+          "itemId": 95,
           "amount": 30
         },
         {
-          "itemId": 94,
+          "itemId": 78,
           "amount": 30
         }
       ],
@@ -898,13 +1002,15 @@
     },
     "133": {
       "itemId": 133,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 120,
           "amount": 10
         },
         {
-          "itemId": 3,
+          "itemId": 78,
           "amount": 20
         },
         {
@@ -912,7 +1018,7 @@
           "amount": 20
         },
         {
-          "itemId": 7,
+          "itemId": 2,
           "amount": 20
         }
       ],
@@ -920,6 +1026,8 @@
     },
     "134": {
       "itemId": 134,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 130,
@@ -946,6 +1054,8 @@
     },
     "135": {
       "itemId": 135,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 123,
@@ -956,7 +1066,7 @@
           "amount": 30
         },
         {
-          "itemId": 110,
+          "itemId": 102,
           "amount": 30
         },
         {
@@ -968,6 +1078,8 @@
     },
     "136": {
       "itemId": 136,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 178,
@@ -978,11 +1090,11 @@
           "amount": 20
         },
         {
-          "itemId": 102,
+          "itemId": 110,
           "amount": 30
         },
         {
-          "itemId": 111,
+          "itemId": 103,
           "amount": 30
         }
       ],
@@ -990,6 +1102,8 @@
     },
     "137": {
       "itemId": 137,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 13,
@@ -1004,7 +1118,7 @@
           "amount": 20
         },
         {
-          "itemId": 86,
+          "itemId": 110,
           "amount": 20
         }
       ],
@@ -1012,6 +1126,8 @@
     },
     "138": {
       "itemId": 138,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 175,
@@ -1022,7 +1138,7 @@
           "amount": 10
         },
         {
-          "itemId": 103,
+          "itemId": 111,
           "amount": 30
         },
         {
@@ -1034,6 +1150,8 @@
     },
     "139": {
       "itemId": 139,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 121,
@@ -1044,7 +1162,7 @@
           "amount": 30
         },
         {
-          "itemId": 86,
+          "itemId": 3,
           "amount": 20
         },
         {
@@ -1056,6 +1174,8 @@
     },
     "140": {
       "itemId": 140,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 176,
@@ -1066,7 +1186,7 @@
           "amount": 20
         },
         {
-          "itemId": 87,
+          "itemId": 4,
           "amount": 20
         },
         {
@@ -1082,9 +1202,11 @@
     },
     "141": {
       "itemId": 141,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
-          "itemId": 94,
+          "itemId": 110,
           "amount": 30
         },
         {
@@ -1104,6 +1226,8 @@
     },
     "142": {
       "itemId": 142,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 119,
@@ -1114,15 +1238,15 @@
           "amount": 20
         },
         {
-          "itemId": 95,
+          "itemId": 94,
           "amount": 30
         },
         {
-          "itemId": 3,
+          "itemId": 2,
           "amount": 30
         },
         {
-          "itemId": 18,
+          "itemId": 111,
           "amount": 10
         }
       ],
@@ -1130,13 +1254,15 @@
     },
     "143": {
       "itemId": 143,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 124,
           "amount": 20
         },
         {
-          "itemId": 2,
+          "itemId": 86,
           "amount": 20
         },
         {
@@ -1152,6 +1278,8 @@
     },
     "144": {
       "itemId": 144,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 122,
@@ -1162,7 +1290,7 @@
           "amount": 30
         },
         {
-          "itemId": 95,
+          "itemId": 87,
           "amount": 20
         },
         {
@@ -1178,6 +1306,8 @@
     },
     "145": {
       "itemId": 145,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 128,
@@ -1192,7 +1322,7 @@
           "amount": 30
         },
         {
-          "itemId": 94,
+          "itemId": 78,
           "amount": 30
         }
       ],
@@ -1200,6 +1330,8 @@
     },
     "146": {
       "itemId": 146,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 130,
@@ -1210,7 +1342,7 @@
           "amount": 10
         },
         {
-          "itemId": 95,
+          "itemId": 79,
           "amount": 30
         },
         {
@@ -1222,6 +1354,8 @@
     },
     "147": {
       "itemId": 147,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 2,
@@ -1244,6 +1378,8 @@
     },
     "148": {
       "itemId": 148,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 119,
@@ -1270,6 +1406,8 @@
     },
     "149": {
       "itemId": 149,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 2,
@@ -1280,7 +1418,7 @@
           "amount": 20
         },
         {
-          "itemId": 15,
+          "itemId": 102,
           "amount": 30
         },
         {
@@ -1292,6 +1430,8 @@
     },
     "150": {
       "itemId": 150,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 127,
@@ -1302,7 +1442,7 @@
           "amount": 20
         },
         {
-          "itemId": 4,
+          "itemId": 103,
           "amount": 30
         },
         {
@@ -1314,6 +1454,8 @@
     },
     "151": {
       "itemId": 151,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 125,
@@ -1324,7 +1466,7 @@
           "amount": 30
         },
         {
-          "itemId": 86,
+          "itemId": 110,
           "amount": 20
         },
         {
@@ -1336,6 +1478,8 @@
     },
     "152": {
       "itemId": 152,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 127,
@@ -1346,11 +1490,11 @@
           "amount": 20
         },
         {
-          "itemId": 103,
+          "itemId": 111,
           "amount": 20
         },
         {
-          "itemId": 110,
+          "itemId": 102,
           "amount": 20
         },
         {
@@ -1362,6 +1506,8 @@
     },
     "153": {
       "itemId": 153,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 124,
@@ -1380,6 +1526,8 @@
     },
     "154": {
       "itemId": 154,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 122,
@@ -1390,11 +1538,11 @@
           "amount": 20
         },
         {
-          "itemId": 111,
+          "itemId": 103,
           "amount": 20
         },
         {
-          "itemId": 102,
+          "itemId": 110,
           "amount": 30
         }
       ],
@@ -1402,6 +1550,8 @@
     },
     "155": {
       "itemId": 155,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 123,
@@ -1412,7 +1562,7 @@
           "amount": 20
         },
         {
-          "itemId": 78,
+          "itemId": 86,
           "amount": 20
         },
         {
@@ -1424,6 +1574,8 @@
     },
     "156": {
       "itemId": 156,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 123,
@@ -1446,6 +1598,8 @@
     },
     "157": {
       "itemId": 157,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 129,
@@ -1456,7 +1610,7 @@
           "amount": 20
         },
         {
-          "itemId": 11,
+          "itemId": 7,
           "amount": 40
         },
         {
@@ -1468,6 +1622,8 @@
     },
     "158": {
       "itemId": 158,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 130,
@@ -1478,7 +1634,7 @@
           "amount": 20
         },
         {
-          "itemId": 94,
+          "itemId": 78,
           "amount": 40
         },
         {
@@ -1494,6 +1650,8 @@
     },
     "159": {
       "itemId": 159,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 120,
@@ -1504,7 +1662,7 @@
           "amount": 20
         },
         {
-          "itemId": 102,
+          "itemId": 86,
           "amount": 10
         },
         {
@@ -1516,6 +1674,8 @@
     },
     "160": {
       "itemId": 160,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 128,
@@ -1526,7 +1686,7 @@
           "amount": 10
         },
         {
-          "itemId": 95,
+          "itemId": 87,
           "amount": 20
         },
         {
@@ -1538,6 +1698,8 @@
     },
     "161": {
       "itemId": 161,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 126,
@@ -1560,6 +1722,8 @@
     },
     "162": {
       "itemId": 162,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 130,
@@ -1570,7 +1734,7 @@
           "amount": 20
         },
         {
-          "itemId": 4,
+          "itemId": 79,
           "amount": 30
         },
         {
@@ -1582,6 +1746,8 @@
     },
     "163": {
       "itemId": 163,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 1,
@@ -1600,6 +1766,8 @@
     },
     "164": {
       "itemId": 164,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 1,
@@ -1618,6 +1786,8 @@
     },
     "165": {
       "itemId": 165,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 1,
@@ -1636,6 +1806,8 @@
     },
     "166": {
       "itemId": 166,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 1,
@@ -1654,6 +1826,8 @@
     },
     "167": {
       "itemId": 167,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 1,
@@ -1672,6 +1846,8 @@
     },
     "168": {
       "itemId": 168,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 1,
@@ -1690,6 +1866,8 @@
     },
     "169": {
       "itemId": 169,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 1,
@@ -1708,6 +1886,8 @@
     },
     "170": {
       "itemId": 170,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 1,
@@ -1726,6 +1906,8 @@
     },
     "171": {
       "itemId": 171,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 1,
@@ -1744,6 +1926,8 @@
     },
     "172": {
       "itemId": 172,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 1,
@@ -1762,6 +1946,8 @@
     },
     "173": {
       "itemId": 173,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 1,
@@ -1780,6 +1966,8 @@
     },
     "174": {
       "itemId": 174,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 1,
@@ -1798,17 +1986,15 @@
     },
     "179": {
       "itemId": 179,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
-          "itemId": 15,
-          "amount": 5
-        },
-        {
-          "itemId": 14,
+          "itemId": 102,
           "amount": 10
         },
         {
-          "itemId": 12,
+          "itemId": 13,
           "amount": 10
         }
       ],
@@ -1816,17 +2002,15 @@
     },
     "180": {
       "itemId": 180,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
-          "itemId": 102,
-          "amount": 5
+          "itemId": 103,
+          "amount": 10
         },
         {
-          "itemId": 15,
-          "amount": 5
-        },
-        {
-          "itemId": 12,
+          "itemId": 110,
           "amount": 10
         }
       ],
@@ -1834,17 +2018,15 @@
     },
     "181": {
       "itemId": 181,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
-          "itemId": 103,
-          "amount": 5
+          "itemId": 104,
+          "amount": 10
         },
         {
-          "itemId": 15,
-          "amount": 5
-        },
-        {
-          "itemId": 110,
+          "itemId": 111,
           "amount": 10
         }
       ],
@@ -1852,6 +2034,8 @@
     },
     "182": {
       "itemId": 182,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 2,
@@ -1870,6 +2054,8 @@
     },
     "183": {
       "itemId": 183,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 2,
@@ -1888,6 +2074,8 @@
     },
     "184": {
       "itemId": 184,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 3,
@@ -1906,6 +2094,8 @@
     },
     "185": {
       "itemId": 185,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 3,
@@ -1924,6 +2114,8 @@
     },
     "186": {
       "itemId": 186,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 4,
@@ -1942,6 +2134,8 @@
     },
     "187": {
       "itemId": 187,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 4,
@@ -1960,6 +2154,8 @@
     },
     "188": {
       "itemId": 188,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 2,
@@ -1978,6 +2174,8 @@
     },
     "189": {
       "itemId": 189,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 2,
@@ -1996,6 +2194,8 @@
     },
     "190": {
       "itemId": 190,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 3,
@@ -2014,6 +2214,8 @@
     },
     "191": {
       "itemId": 191,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 3,
@@ -2032,6 +2234,8 @@
     },
     "192": {
       "itemId": 192,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 4,
@@ -2050,6 +2254,8 @@
     },
     "193": {
       "itemId": 193,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 4,
@@ -2068,6 +2274,8 @@
     },
     "194": {
       "itemId": 194,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 2,
@@ -2086,6 +2294,8 @@
     },
     "195": {
       "itemId": 195,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 2,
@@ -2104,6 +2314,8 @@
     },
     "196": {
       "itemId": 196,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 3,
@@ -2122,6 +2334,8 @@
     },
     "197": {
       "itemId": 197,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 3,
@@ -2140,6 +2354,8 @@
     },
     "198": {
       "itemId": 198,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 4,
@@ -2158,6 +2374,8 @@
     },
     "199": {
       "itemId": 199,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 4,
@@ -2176,6 +2394,8 @@
     },
     "200": {
       "itemId": 200,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 2,
@@ -2194,6 +2414,8 @@
     },
     "201": {
       "itemId": 201,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 2,
@@ -2212,6 +2434,8 @@
     },
     "202": {
       "itemId": 202,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 3,
@@ -2230,6 +2454,8 @@
     },
     "203": {
       "itemId": 203,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 3,
@@ -2248,6 +2474,8 @@
     },
     "204": {
       "itemId": 204,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 4,
@@ -2266,6 +2494,8 @@
     },
     "205": {
       "itemId": 205,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 4,
@@ -2284,6 +2514,8 @@
     },
     "206": {
       "itemId": 206,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 2,
@@ -2302,6 +2534,8 @@
     },
     "207": {
       "itemId": 207,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 2,
@@ -2320,6 +2554,8 @@
     },
     "208": {
       "itemId": 208,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 3,
@@ -2338,6 +2574,8 @@
     },
     "209": {
       "itemId": 209,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 3,
@@ -2356,6 +2594,8 @@
     },
     "210": {
       "itemId": 210,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 4,
@@ -2374,6 +2614,8 @@
     },
     "211": {
       "itemId": 211,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 4,
@@ -2392,6 +2634,8 @@
     },
     "212": {
       "itemId": 212,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 2,
@@ -2410,6 +2654,8 @@
     },
     "213": {
       "itemId": 213,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 2,
@@ -2428,6 +2674,8 @@
     },
     "214": {
       "itemId": 214,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 3,
@@ -2446,6 +2694,8 @@
     },
     "215": {
       "itemId": 215,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 3,
@@ -2464,6 +2714,8 @@
     },
     "216": {
       "itemId": 216,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 4,
@@ -2482,6 +2734,8 @@
     },
     "217": {
       "itemId": 217,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 4,
@@ -2500,6 +2754,8 @@
     },
     "218": {
       "itemId": 218,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 252,
@@ -2510,11 +2766,11 @@
           "amount": 20
         },
         {
-          "itemId": 96,
+          "itemId": 88,
           "amount": 30
         },
         {
-          "itemId": 5,
+          "itemId": 4,
           "amount": 20
         },
         {
@@ -2526,21 +2782,23 @@
     },
     "219": {
       "itemId": 219,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 253,
-          "amount": 20
+          "amount": 10
         },
         {
           "itemId": 123,
+          "amount": 10
+        },
+        {
+          "itemId": 89,
           "amount": 20
         },
         {
-          "itemId": 97,
-          "amount": 20
-        },
-        {
-          "itemId": 73,
+          "itemId": 96,
           "amount": 30
         },
         {
@@ -2552,6 +2810,8 @@
     },
     "220": {
       "itemId": 220,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 250,
@@ -2574,6 +2834,8 @@
     },
     "221": {
       "itemId": 221,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 257,
@@ -2600,6 +2862,8 @@
     },
     "222": {
       "itemId": 222,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 254,
@@ -2610,7 +2874,7 @@
           "amount": 20
         },
         {
-          "itemId": 95,
+          "itemId": 103,
           "amount": 30
         },
         {
@@ -2622,6 +2886,8 @@
     },
     "223": {
       "itemId": 223,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 257,
@@ -2636,7 +2902,7 @@
           "amount": 30
         },
         {
-          "itemId": 96,
+          "itemId": 112,
           "amount": 40
         },
         {
@@ -2648,13 +2914,15 @@
     },
     "224": {
       "itemId": 224,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 256,
           "amount": 20
         },
         {
-          "itemId": 96,
+          "itemId": 80,
           "amount": 40
         },
         {
@@ -2666,6 +2934,8 @@
     },
     "225": {
       "itemId": 225,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 257,
@@ -2676,7 +2946,7 @@
           "amount": 10
         },
         {
-          "itemId": 97,
+          "itemId": 81,
           "amount": 30
         },
         {
@@ -2684,7 +2954,7 @@
           "amount": 30
         },
         {
-          "itemId": 79,
+          "itemId": 95,
           "amount": 30
         }
       ],
@@ -2692,17 +2962,19 @@
     },
     "226": {
       "itemId": 226,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 254,
           "amount": 20
         },
         {
-          "itemId": 5,
+          "itemId": 104,
           "amount": 20
         },
         {
-          "itemId": 79,
+          "itemId": 4,
           "amount": 40
         },
         {
@@ -2714,6 +2986,8 @@
     },
     "227": {
       "itemId": 227,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 255,
@@ -2724,15 +2998,15 @@
           "amount": 10
         },
         {
-          "itemId": 73,
+          "itemId": 105,
           "amount": 30
         },
         {
-          "itemId": 80,
+          "itemId": 87,
           "amount": 20
         },
         {
-          "itemId": 81,
+          "itemId": 5,
           "amount": 20
         }
       ],
@@ -2740,13 +3014,15 @@
     },
     "228": {
       "itemId": 228,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 250,
           "amount": 20
         },
         {
-          "itemId": 5,
+          "itemId": 112,
           "amount": 20
         },
         {
@@ -2762,6 +3038,8 @@
     },
     "229": {
       "itemId": 229,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 251,
@@ -2772,7 +3050,7 @@
           "amount": 10
         },
         {
-          "itemId": 73,
+          "itemId": 113,
           "amount": 40
         },
         {
@@ -2788,6 +3066,8 @@
     },
     "230": {
       "itemId": 230,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 256,
@@ -2810,6 +3090,8 @@
     },
     "231": {
       "itemId": 231,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 255,
@@ -2836,17 +3118,19 @@
     },
     "232": {
       "itemId": 232,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 250,
           "amount": 20
         },
         {
-          "itemId": 112,
+          "itemId": 104,
           "amount": 20
         },
         {
-          "itemId": 103,
+          "itemId": 4,
           "amount": 40
         }
       ],
@@ -2854,13 +3138,15 @@
     },
     "233": {
       "itemId": 233,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 253,
           "amount": 20
         },
         {
-          "itemId": 113,
+          "itemId": 105,
           "amount": 20
         },
         {
@@ -2876,6 +3162,8 @@
     },
     "234": {
       "itemId": 234,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 250,
@@ -2886,7 +3174,7 @@
           "amount": 20
         },
         {
-          "itemId": 111,
+          "itemId": 95,
           "amount": 20
         },
         {
@@ -2898,17 +3186,19 @@
     },
     "235": {
       "itemId": 235,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 251,
           "amount": 20
         },
         {
-          "itemId": 105,
+          "itemId": 113,
           "amount": 30
         },
         {
-          "itemId": 112,
+          "itemId": 88,
           "amount": 20
         },
         {
@@ -2920,13 +3210,15 @@
     },
     "236": {
       "itemId": 236,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 256,
           "amount": 20
         },
         {
-          "itemId": 88,
+          "itemId": 5,
           "amount": 30
         },
         {
@@ -2942,13 +3234,15 @@
     },
     "237": {
       "itemId": 237,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 255,
           "amount": 20
         },
         {
-          "itemId": 89,
+          "itemId": 73,
           "amount": 20
         },
         {
@@ -2960,7 +3254,7 @@
           "amount": 30
         },
         {
-          "itemId": 4,
+          "itemId": 87,
           "amount": 10
         }
       ],
@@ -2968,17 +3262,19 @@
     },
     "238": {
       "itemId": 238,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 252,
           "amount": 20
         },
         {
-          "itemId": 112,
+          "itemId": 104,
           "amount": 30
         },
         {
-          "itemId": 103,
+          "itemId": 95,
           "amount": 30
         }
       ],
@@ -2986,6 +3282,8 @@
     },
     "239": {
       "itemId": 239,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 255,
@@ -3008,13 +3306,15 @@
     },
     "240": {
       "itemId": 240,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 250,
           "amount": 20
         },
         {
-          "itemId": 80,
+          "itemId": 88,
           "amount": 20
         },
         {
@@ -3026,6 +3326,8 @@
     },
     "241": {
       "itemId": 241,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 251,
@@ -3048,13 +3350,15 @@
     },
     "242": {
       "itemId": 242,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 256,
           "amount": 20
         },
         {
-          "itemId": 88,
+          "itemId": 112,
           "amount": 30
         },
         {
@@ -3070,17 +3374,19 @@
     },
     "243": {
       "itemId": 243,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 257,
           "amount": 20
         },
         {
-          "itemId": 105,
+          "itemId": 113,
           "amount": 20
         },
         {
-          "itemId": 112,
+          "itemId": 5,
           "amount": 30
         },
         {
@@ -3096,13 +3402,15 @@
     },
     "244": {
       "itemId": 244,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 254,
           "amount": 20
         },
         {
-          "itemId": 96,
+          "itemId": 88,
           "amount": 30
         },
         {
@@ -3114,13 +3422,15 @@
     },
     "245": {
       "itemId": 245,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 251,
           "amount": 20
         },
         {
-          "itemId": 97,
+          "itemId": 89,
           "amount": 20
         },
         {
@@ -3136,6 +3446,8 @@
     },
     "246": {
       "itemId": 246,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 256,
@@ -3150,7 +3462,7 @@
           "amount": 10
         },
         {
-          "itemId": 78,
+          "itemId": 3,
           "amount": 20
         }
       ],
@@ -3158,13 +3470,15 @@
     },
     "247": {
       "itemId": 247,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 257,
           "amount": 20
         },
         {
-          "itemId": 97,
+          "itemId": 81,
           "amount": 30
         },
         {
@@ -3180,6 +3494,8 @@
     },
     "248": {
       "itemId": 248,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 252,
@@ -3190,7 +3506,7 @@
           "amount": 30
         },
         {
-          "itemId": 95,
+          "itemId": 111,
           "amount": 20
         },
         {
@@ -3202,6 +3518,8 @@
     },
     "249": {
       "itemId": 249,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 251,
@@ -3224,17 +3542,19 @@
     },
     "262": {
       "itemId": 262,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 258,
           "amount": 1
         },
         {
-          "itemId": 110,
+          "itemId": 111,
           "amount": 30
         },
         {
-          "itemId": 95,
+          "itemId": 94,
           "amount": 30
         },
         {
@@ -3250,17 +3570,19 @@
     },
     "263": {
       "itemId": 263,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 260,
           "amount": 1
         },
         {
-          "itemId": 102,
+          "itemId": 103,
           "amount": 30
         },
         {
-          "itemId": 4,
+          "itemId": 3,
           "amount": 30
         },
         {
@@ -3276,6 +3598,8 @@
     },
     "264": {
       "itemId": 264,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 259,
@@ -3286,7 +3610,7 @@
           "amount": 20
         },
         {
-          "itemId": 95,
+          "itemId": 87,
           "amount": 30
         },
         {
@@ -3294,7 +3618,7 @@
           "amount": 30
         },
         {
-          "itemId": 4,
+          "itemId": 3,
           "amount": 30
         }
       ],
@@ -3302,6 +3626,8 @@
     },
     "265": {
       "itemId": 265,
+      "perkTypes": null,
+      "perkLevels": null,
       "ingredients": [
         {
           "itemId": 261,
@@ -3312,11 +3638,11 @@
           "amount": 20
         },
         {
-          "itemId": 78,
+          "itemId": 79,
           "amount": 30
         },
         {
-          "itemId": 95,
+          "itemId": 94,
           "amount": 30
         },
         {
@@ -3325,6 +3651,638 @@
         }
       ],
       "goldCost": 100
+    },
+    "266": {
+      "itemId": 266,
+      "perkTypes": null,
+      "perkLevels": null,
+      "ingredients": [
+        {
+          "itemId": 121,
+          "amount": 10
+        },
+        {
+          "itemId": 125,
+          "amount": 10
+        },
+        {
+          "itemId": 124,
+          "amount": 10
+        },
+        {
+          "itemId": 128,
+          "amount": 10
+        },
+        {
+          "itemId": 102,
+          "amount": 20
+        },
+        {
+          "itemId": 78,
+          "amount": 20
+        },
+        {
+          "itemId": 86,
+          "amount": 20
+        },
+        {
+          "itemId": 110,
+          "amount": 20
+        }
+      ],
+      "goldCost": 100
+    },
+    "267": {
+      "itemId": 267,
+      "perkTypes": null,
+      "perkLevels": null,
+      "ingredients": [
+        {
+          "itemId": 344,
+          "amount": 1
+        },
+        {
+          "itemId": 345,
+          "amount": 1
+        },
+        {
+          "itemId": 346,
+          "amount": 1
+        },
+        {
+          "itemId": 347,
+          "amount": 1
+        }
+      ],
+      "goldCost": 210
+    },
+    "324": {
+      "itemId": 324,
+      "perkTypes": null,
+      "perkLevels": null,
+      "ingredients": [
+        {
+          "itemId": 349,
+          "amount": 10
+        },
+        {
+          "itemId": 256,
+          "amount": 10
+        },
+        {
+          "itemId": 90,
+          "amount": 30
+        },
+        {
+          "itemId": 73,
+          "amount": 20
+        },
+        {
+          "itemId": 80,
+          "amount": 20
+        }
+      ],
+      "goldCost": 280
+    },
+    "325": {
+      "itemId": 325,
+      "perkTypes": null,
+      "perkLevels": null,
+      "ingredients": [
+        {
+          "itemId": 351,
+          "amount": 10
+        },
+        {
+          "itemId": 254,
+          "amount": 10
+        },
+        {
+          "itemId": 74,
+          "amount": 30
+        },
+        {
+          "itemId": 81,
+          "amount": 20
+        },
+        {
+          "itemId": 96,
+          "amount": 20
+        }
+      ],
+      "goldCost": 500
+    },
+    "326": {
+      "itemId": 326,
+      "perkTypes": null,
+      "perkLevels": null,
+      "ingredients": [
+        {
+          "itemId": 350,
+          "amount": 10
+        },
+        {
+          "itemId": 256,
+          "amount": 10
+        },
+        {
+          "itemId": 98,
+          "amount": 30
+        },
+        {
+          "itemId": 105,
+          "amount": 20
+        },
+        {
+          "itemId": 5,
+          "amount": 20
+        }
+      ],
+      "goldCost": 500
+    },
+    "327": {
+      "itemId": 327,
+      "perkTypes": null,
+      "perkLevels": null,
+      "ingredients": [
+        {
+          "itemId": 351,
+          "amount": 10
+        },
+        {
+          "itemId": 250,
+          "amount": 10
+        },
+        {
+          "itemId": 82,
+          "amount": 30
+        },
+        {
+          "itemId": 73,
+          "amount": 20
+        },
+        {
+          "itemId": 112,
+          "amount": 20
+        }
+      ],
+      "goldCost": 280
+    },
+    "328": {
+      "itemId": 328,
+      "perkTypes": null,
+      "perkLevels": null,
+      "ingredients": [
+        {
+          "itemId": 350,
+          "amount": 10
+        },
+        {
+          "itemId": 252,
+          "amount": 10
+        },
+        {
+          "itemId": 106,
+          "amount": 30
+        },
+        {
+          "itemId": 97,
+          "amount": 20
+        },
+        {
+          "itemId": 88,
+          "amount": 20
+        }
+      ],
+      "goldCost": 280
+    },
+    "329": {
+      "itemId": 329,
+      "perkTypes": null,
+      "perkLevels": null,
+      "ingredients": [
+        {
+          "itemId": 348,
+          "amount": 10
+        },
+        {
+          "itemId": 254,
+          "amount": 10
+        },
+        {
+          "itemId": 114,
+          "amount": 30
+        },
+        {
+          "itemId": 97,
+          "amount": 20
+        },
+        {
+          "itemId": 104,
+          "amount": 20
+        }
+      ],
+      "goldCost": 280
+    },
+    "330": {
+      "itemId": 330,
+      "perkTypes": null,
+      "perkLevels": null,
+      "ingredients": [
+        {
+          "itemId": 350,
+          "amount": 10
+        },
+        {
+          "itemId": 82,
+          "amount": 20
+        },
+        {
+          "itemId": 257,
+          "amount": 10
+        },
+        {
+          "itemId": 89,
+          "amount": 20
+        },
+        {
+          "itemId": 113,
+          "amount": 20
+        }
+      ],
+      "goldCost": 280
+    },
+    "331": {
+      "itemId": 331,
+      "perkTypes": null,
+      "perkLevels": null,
+      "ingredients": [
+        {
+          "itemId": 348,
+          "amount": 10
+        },
+        {
+          "itemId": 74,
+          "amount": 30
+        },
+        {
+          "itemId": 81,
+          "amount": 20
+        },
+        {
+          "itemId": 96,
+          "amount": 20
+        },
+        {
+          "itemId": 104,
+          "amount": 20
+        }
+      ],
+      "goldCost": 280
+    },
+    "332": {
+      "itemId": 332,
+      "perkTypes": null,
+      "perkLevels": null,
+      "ingredients": [
+        {
+          "itemId": 349,
+          "amount": 10
+        },
+        {
+          "itemId": 114,
+          "amount": 30
+        },
+        {
+          "itemId": 73,
+          "amount": 20
+        },
+        {
+          "itemId": 80,
+          "amount": 20
+        }
+      ],
+      "goldCost": 280
+    },
+    "333": {
+      "itemId": 333,
+      "perkTypes": null,
+      "perkLevels": null,
+      "ingredients": [
+        {
+          "itemId": 350,
+          "amount": 10
+        },
+        {
+          "itemId": 106,
+          "amount": 30
+        },
+        {
+          "itemId": 97,
+          "amount": 20
+        },
+        {
+          "itemId": 80,
+          "amount": 20
+        }
+      ],
+      "goldCost": 280
+    },
+    "334": {
+      "itemId": 334,
+      "perkTypes": null,
+      "perkLevels": null,
+      "ingredients": [
+        {
+          "itemId": 351,
+          "amount": 10
+        },
+        {
+          "itemId": 114,
+          "amount": 30
+        },
+        {
+          "itemId": 97,
+          "amount": 20
+        },
+        {
+          "itemId": 5,
+          "amount": 20
+        },
+        {
+          "itemId": 104,
+          "amount": 20
+        }
+      ],
+      "goldCost": 280
+    },
+    "335": {
+      "itemId": 335,
+      "perkTypes": null,
+      "perkLevels": null,
+      "ingredients": [
+        {
+          "itemId": 348,
+          "amount": 10
+        },
+        {
+          "itemId": 90,
+          "amount": 30
+        },
+        {
+          "itemId": 113,
+          "amount": 20
+        },
+        {
+          "itemId": 80,
+          "amount": 20
+        }
+      ],
+      "goldCost": 280
+    },
+    "336": {
+      "itemId": 336,
+      "perkTypes": null,
+      "perkLevels": null,
+      "ingredients": [
+        {
+          "itemId": 349,
+          "amount": 10
+        },
+        {
+          "itemId": 106,
+          "amount": 30
+        },
+        {
+          "itemId": 97,
+          "amount": 20
+        },
+        {
+          "itemId": 88,
+          "amount": 20
+        }
+      ],
+      "goldCost": 280
+    },
+    "337": {
+      "itemId": 337,
+      "perkTypes": null,
+      "perkLevels": null,
+      "ingredients": [
+        {
+          "itemId": 350,
+          "amount": 10
+        },
+        {
+          "itemId": 98,
+          "amount": 30
+        },
+        {
+          "itemId": 81,
+          "amount": 20
+        },
+        {
+          "itemId": 5,
+          "amount": 20
+        },
+        {
+          "itemId": 112,
+          "amount": 20
+        }
+      ],
+      "goldCost": 280
+    },
+    "338": {
+      "itemId": 338,
+      "perkTypes": null,
+      "perkLevels": null,
+      "ingredients": [
+        {
+          "itemId": 351,
+          "amount": 10
+        },
+        {
+          "itemId": 82,
+          "amount": 30
+        },
+        {
+          "itemId": 89,
+          "amount": 20
+        },
+        {
+          "itemId": 5,
+          "amount": 20
+        }
+      ],
+      "goldCost": 280
+    },
+    "339": {
+      "itemId": 339,
+      "perkTypes": null,
+      "perkLevels": null,
+      "ingredients": [
+        {
+          "itemId": 348,
+          "amount": 10
+        },
+        {
+          "itemId": 90,
+          "amount": 30
+        },
+        {
+          "itemId": 105,
+          "amount": 20
+        },
+        {
+          "itemId": 96,
+          "amount": 20
+        }
+      ],
+      "goldCost": 280
+    },
+    "340": {
+      "itemId": 340,
+      "perkTypes": null,
+      "perkLevels": null,
+      "ingredients": [
+        {
+          "itemId": 352,
+          "amount": 1
+        },
+        {
+          "itemId": 69,
+          "amount": 1
+        },
+        {
+          "itemId": 349,
+          "amount": 10
+        },
+        {
+          "itemId": 255,
+          "amount": 10
+        },
+        {
+          "itemId": 106,
+          "amount": 30
+        },
+        {
+          "itemId": 82,
+          "amount": 30
+        },
+        {
+          "itemId": 73,
+          "amount": 20
+        }
+      ],
+      "goldCost": 280
+    },
+    "341": {
+      "itemId": 341,
+      "perkTypes": null,
+      "perkLevels": null,
+      "ingredients": [
+        {
+          "itemId": 353,
+          "amount": 1
+        },
+        {
+          "itemId": 67,
+          "amount": 1
+        },
+        {
+          "itemId": 351,
+          "amount": 10
+        },
+        {
+          "itemId": 253,
+          "amount": 10
+        },
+        {
+          "itemId": 98,
+          "amount": 30
+        },
+        {
+          "itemId": 114,
+          "amount": 30
+        },
+        {
+          "itemId": 89,
+          "amount": 20
+        }
+      ],
+      "goldCost": 280
+    },
+    "342": {
+      "itemId": 342,
+      "perkTypes": null,
+      "perkLevels": null,
+      "ingredients": [
+        {
+          "itemId": 354,
+          "amount": 1
+        },
+        {
+          "itemId": 68,
+          "amount": 1
+        },
+        {
+          "itemId": 348,
+          "amount": 10
+        },
+        {
+          "itemId": 257,
+          "amount": 10
+        },
+        {
+          "itemId": 114,
+          "amount": 30
+        },
+        {
+          "itemId": 90,
+          "amount": 30
+        },
+        {
+          "itemId": 81,
+          "amount": 20
+        }
+      ],
+      "goldCost": 280
+    },
+    "343": {
+      "itemId": 343,
+      "perkTypes": null,
+      "perkLevels": null,
+      "ingredients": [
+        {
+          "itemId": 355,
+          "amount": 1
+        },
+        {
+          "itemId": 68,
+          "amount": 1
+        },
+        {
+          "itemId": 350,
+          "amount": 10
+        },
+        {
+          "itemId": 251,
+          "amount": 10
+        },
+        {
+          "itemId": 106,
+          "amount": 30
+        },
+        {
+          "itemId": 74,
+          "amount": 30
+        },
+        {
+          "itemId": 113,
+          "amount": 20
+        }
+      ],
+      "goldCost": 280
     }
   }
 }

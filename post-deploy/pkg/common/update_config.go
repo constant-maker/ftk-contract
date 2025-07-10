@@ -413,7 +413,7 @@ func getListEquipmentUpdate(dataConfig DataConfig) ([]Item, []ItemRecipe, error)
 	recipes := make([]ItemRecipe, 0)
 	var (
 		idIndex, tierIndex, weightIndex, nameIndex, descIndex, typeIndex, slotTypeIndex, advantageTypeIndex, twoHandedIndex,
-		atkIndex, defIndex, agiIndex, hpIndex, msIndex, goldCostIndex, recipeIndex, oldWeightIndex, bonusWeightIndex int
+		atkIndex, defIndex, agiIndex, hpIndex, msIndex, goldCostIndex, recipeIndex, oldWeightIndex, bonusWeightIndex, shieldBarrierIndex int
 	)
 	for {
 		record, err := reader.Read()
@@ -450,6 +450,7 @@ func getListEquipmentUpdate(dataConfig DataConfig) ([]Item, []ItemRecipe, error)
 			goldCostIndex = findIndex(record, "goldCost")
 			recipeIndex = findIndex(record, "recipe")
 			descIndex = findIndex(record, "desc")
+			shieldBarrierIndex = findIndex(record, "shieldBarrier")
 			l.Infow(
 				"list index",
 				"idIndex", idIndex,
@@ -467,7 +468,8 @@ func getListEquipmentUpdate(dataConfig DataConfig) ([]Item, []ItemRecipe, error)
 				"msIndex", msIndex,
 				"goldCostIndex", goldCostIndex,
 				"recipeIndex", recipeIndex,
-				"descIndex", descIndex)
+				"descIndex", descIndex,
+				"shieldBarrierIndex", shieldBarrierIndex)
 			continue
 		}
 
@@ -481,6 +483,7 @@ func getListEquipmentUpdate(dataConfig DataConfig) ([]Item, []ItemRecipe, error)
 		agi := mustStringToInt(record[agiIndex], agiIndex)
 		hp := mustStringToInt(record[hpIndex], hpIndex)
 		ms := mustStringToInt(record[msIndex], msIndex)
+		shieldBarrierIndex := mustStringToInt(record[shieldBarrierIndex], shieldBarrierIndex)
 
 		twoHanded := false
 		if strings.EqualFold(record[twoHandedIndex], "TRUE") {
@@ -510,14 +513,9 @@ func getListEquipmentUpdate(dataConfig DataConfig) ([]Item, []ItemRecipe, error)
 				Agi:           agi,
 				Hp:            hp,
 				Ms:            ms,
+				BonusWeight:   bonusWeight,
+				ShieldBarrier: shieldBarrierIndex,
 			},
-		}
-		if bonusWeight > 0 {
-			item.EquipmentInfo3 = &EquipmentInfo3{
-				BonusWeight: bonusWeight,
-			}
-			// skip mount type item now
-			// continue
 		}
 		equipments = append(equipments, item)
 

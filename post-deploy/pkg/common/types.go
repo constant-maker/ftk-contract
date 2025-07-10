@@ -13,19 +13,18 @@ type AchievementStats struct {
 }
 
 type Item struct {
-	Id             int             `json:"id"`
-	Type           int             `json:"type"`
-	Category       int             `json:"category"`
-	Tier           int             `json:"tier"`
-	OldWeight      int             `json:"oldWeight,omitempty"`
-	Weight         int             `json:"weight"`
-	Name           string          `json:"name"`
-	Desc           string          `json:"desc"`
-	ResourceInfo   *ResourceInfo   `json:"resourceInfo,omitempty"`
-	EquipmentInfo  *EquipmentInfo  `json:"equipmentInfo,omitempty"`
-	HealingInfo    *HealingInfo    `json:"healingInfo,omitempty"`
-	EquipmentInfo3 *EquipmentInfo3 `json:"equipmentInfo3,omitempty"`
-	CardInfo       *CardInfo       `json:"cardInfo,omitempty"`
+	Id            int            `json:"id"`
+	Type          int            `json:"type"`
+	Category      int            `json:"category"`
+	Tier          int            `json:"tier"`
+	OldWeight     int            `json:"oldWeight,omitempty"`
+	Weight        int            `json:"weight"`
+	Name          string         `json:"name"`
+	Desc          string         `json:"desc"`
+	ResourceInfo  *ResourceInfo  `json:"resourceInfo,omitempty"`
+	EquipmentInfo *EquipmentInfo `json:"equipmentInfo,omitempty"`
+	HealingInfo   *HealingInfo   `json:"healingInfo,omitempty"`
+	CardInfo      *CardInfo      `json:"cardInfo,omitempty"`
 }
 
 type CardInfo struct {
@@ -44,10 +43,8 @@ type EquipmentInfo struct {
 	Agi           int  `json:"agi"`
 	Hp            int  `json:"hp"`
 	Ms            int  `json:"ms"`
-}
-
-type EquipmentInfo3 struct {
-	BonusWeight int `json:"bonusWeight"`
+	BonusWeight   int  `json:"bonusWeight"`
+	ShieldBarrier int  `json:"shieldBarrier"`
 }
 
 type HealingInfo struct {
@@ -119,9 +116,11 @@ type Ingredient struct {
 }
 
 type ItemRecipe struct {
-	ItemId      int          `json:"itemId"`
-	Ingredients []Ingredient `json:"ingredients"`
-	GoldCost    int          `json:"goldCost"`
+	ItemId             int          `json:"itemId"`
+	PerkItemTypes      []int        `json:"perkTypes,omitempty"`
+	RequiredPerkLevels []int        `json:"perkLevels,omitempty"`
+	Ingredients        []Ingredient `json:"ingredients"`
+	GoldCost           int          `json:"goldCost"`
 }
 
 type Npc struct {
