@@ -413,7 +413,8 @@ func getListEquipmentUpdate(dataConfig DataConfig) ([]Item, []ItemRecipe, error)
 	recipes := make([]ItemRecipe, 0)
 	var (
 		idIndex, tierIndex, weightIndex, nameIndex, descIndex, typeIndex, slotTypeIndex, advantageTypeIndex, twoHandedIndex,
-		atkIndex, defIndex, agiIndex, hpIndex, msIndex, goldCostIndex, recipeIndex, oldWeightIndex, bonusWeightIndex, shieldBarrierIndex int
+		atkIndex, defIndex, agiIndex, hpIndex, msIndex, goldCostIndex, recipeIndex, oldWeightIndex, bonusWeightIndex, shieldBarrierIndex,
+		perkRequireToCraftIndex int
 	)
 	for {
 		record, err := reader.Read()
@@ -451,6 +452,7 @@ func getListEquipmentUpdate(dataConfig DataConfig) ([]Item, []ItemRecipe, error)
 			recipeIndex = findIndex(record, "recipe")
 			descIndex = findIndex(record, "desc")
 			shieldBarrierIndex = findIndex(record, "shieldBarrier")
+			perkRequireToCraftIndex = findIndex(record, "perkRequireToCraft")
 			l.Infow(
 				"list index",
 				"idIndex", idIndex,
@@ -469,7 +471,9 @@ func getListEquipmentUpdate(dataConfig DataConfig) ([]Item, []ItemRecipe, error)
 				"goldCostIndex", goldCostIndex,
 				"recipeIndex", recipeIndex,
 				"descIndex", descIndex,
-				"shieldBarrierIndex", shieldBarrierIndex)
+				"shieldBarrierIndex", shieldBarrierIndex,
+				"perkRequireToCraftIndex", perkRequireToCraftIndex,
+			)
 			continue
 		}
 
@@ -484,6 +488,19 @@ func getListEquipmentUpdate(dataConfig DataConfig) ([]Item, []ItemRecipe, error)
 		hp := mustStringToInt(record[hpIndex], hpIndex)
 		ms := mustStringToInt(record[msIndex], msIndex)
 		shieldBarrierIndex := mustStringToInt(record[shieldBarrierIndex], shieldBarrierIndex)
+		rawPerkRequireToCraft := record[perkRequireToCraftIndex]
+		perkItemTypes := make([]int, 0)
+		requiredPerkLevels := make([]int, 0)
+		if rawPerkRequireToCraft != "" {
+			perkRequireToCraft := strings.Split(rawPerkRequireToCraft, " - ")
+			if len(perkRequireToCraft) != 2 {
+				l.Panicw("Invalid perk require to craft", "data", record, "perkRequireToCraft", rawPerkRequireToCraft)
+			}
+			perkType := getItemType(removeRedundantText(perkRequireToCraft[0]))
+			perkItemTypes = append(perkItemTypes, perkType)
+			perkLevel := mustStringToInt(removeRedundantText(perkRequireToCraft[1]), 1)
+			requiredPerkLevels = append(requiredPerkLevels, perkLevel)
+		}
 
 		twoHanded := false
 		if strings.EqualFold(record[twoHandedIndex], "TRUE") {
@@ -519,11 +536,16 @@ func getListEquipmentUpdate(dataConfig DataConfig) ([]Item, []ItemRecipe, error)
 		}
 		equipments = append(equipments, item)
 
-		recipes = append(recipes, ItemRecipe{
+		equipmentRecipe := ItemRecipe{
 			ItemId:      id,
 			Ingredients: getMaterialList(record, record[recipeIndex], dataConfig),
 			GoldCost:    mustStringToInt(record[goldCostIndex], goldCostIndex),
-		})
+		}
+		if len(perkItemTypes) > 0 {
+			equipmentRecipe.PerkItemTypes = perkItemTypes
+			equipmentRecipe.RequiredPerkLevels = requiredPerkLevels
+		}
+		recipes = append(recipes, equipmentRecipe)
 	}
 	return equipments, recipes, nil
 }

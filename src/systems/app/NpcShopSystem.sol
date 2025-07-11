@@ -128,9 +128,9 @@ contract NpcShopSystem is CharacterAccessControl, System {
   }
 
   function _getNpcSellUnitPrice(uint8 itemTier) private pure returns (uint32) {
-    if (itemTier <= 5) {
+    if (itemTier < 5) {
       return BUY_BACK_MULTIPLY * itemTier;
     }
-    return (itemTier - 5) * 5 * itemTier;
+    return (itemTier - 4) * 5 * itemTier;
   }
 }
