@@ -321,3 +321,9 @@ var (
 	MapAdvantageTypes      = make(map[int]AdvantageType)
 	MapRarityTypes         = make(map[int]RarityType)
 )
+
+type MapColor struct {
+	FullMap [4]Location            `json:"full_map"`
+	Black   [4]Location            `json:"black"`
+	Greens  map[string][4]Location `json:"greens"`
+}

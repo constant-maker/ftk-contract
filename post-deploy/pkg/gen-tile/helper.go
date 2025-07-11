@@ -1,7 +1,6 @@
 package gentile
 
 import (
-	"math"
 	"sort"
 
 	"github.com/ftk/post-deploy/pkg/common"
@@ -31,31 +30,6 @@ func validateZoneLocations(kingdomId int, locations [4]common.Location) {
 	if locations[3].X != locations[0].X {
 		l.Panic("must equal X - 3 0")
 	}
-}
-
-func sortTileByDistanceToCapital(allTiles []common.Location, capital common.Location) []common.Location {
-	result := make([]common.Location, 0, len(allTiles))
-	lExts := make([]locationExt, 0, len(allTiles))
-	for _, tile := range allTiles {
-		lExts = append(lExts, locationExt{
-			Tile: tile,
-			Distance: calculateDistance(tile, common.Location{
-				X: capital.X,
-				Y: capital.Y,
-			}),
-		})
-	}
-	sort.Slice(lExts, func(i, j int) bool {
-		return lExts[i].Distance < lExts[j].Distance
-	})
-	for _, lExt := range lExts {
-		result = append(result, lExt.Tile)
-	}
-	return result
-}
-
-func calculateDistance(tile, capital common.Location) float64 {
-	return math.Sqrt(math.Pow(float64(tile.X-capital.X), 2) + math.Pow(float64(tile.Y-capital.Y), 2))
 }
 
 func sortItemByTier(mapItem map[string]common.Item) []common.Item {

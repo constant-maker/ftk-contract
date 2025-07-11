@@ -1233,12 +1233,12 @@
       "id": 57,
       "questType": 0,
       "name": "Stillness Beneath the Snow",
-      "description": "In the frostbitten wilds of Everfrost, something ancient stirs beneath the snow. FayLinn senses something deeper… not death, but dormant memory—waiting to awaken.",
+      "description": "In the frostbitten wilds of Everfrost, something ancient stirs beneath the snow. FayLinn senses something deeper… not death, but dormant memory, just waiting to awaken.",
       "fromNpcId": 14,
       "exp": 12500,
       "gold": 800,
       "rewardItemIds": [
-        262
+        344
       ],
       "rewardItemAmounts": [
         1
@@ -1261,12 +1261,12 @@
       "id": 58,
       "questType": 0,
       "name": "Echoes of the Flow",
-      "description": "The Essence of Stillness pulses faintly in my pack. FayLinn feels another echo—gentler this time, elusive, like fog sliding over water. Alongside Duval and Hazel, I must uncover the source of this disturbance—and awaken the next fragment of the Capybara Spirit.",
+      "description": "The Essence of Stillness pulses faintly in my pack. FayLinn feels another echo, this time gentler, elusive, like fog sliding over water. Alongside Duval and Hazel, I must uncover the source of this disturbance and awaken the next fragment of the Capybara Spirit.",
       "fromNpcId": 13,
       "exp": 12500,
       "gold": 800,
       "rewardItemIds": [
-        263
+        345
       ],
       "rewardItemAmounts": [
         1
@@ -1289,12 +1289,12 @@
       "id": 59,
       "questType": 0,
       "name": "The Ember Buried Deep",
-      "description": "The second Essence glows brighter in my pack, warm now—restless. FayLinn feels the pull of something ancient buried deep in Sunscar’s dunes. Only fire reveals fire—and only those who endure it may claim the Essence of Flame.",
+      "description": "The second Essence glows brighter in my pack, warm and restless. FayLinn feels the pull of something ancient buried deep in Sunscar’s dunes. Only fire reveals fire, and only those who endure it may claim the Essence of Flame.",
       "fromNpcId": 15,
       "exp": 12500,
       "gold": 800,
       "rewardItemIds": [
-        264
+        346
       ],
       "rewardItemAmounts": [
         1
@@ -1322,7 +1322,7 @@
       "exp": 12500,
       "gold": 800,
       "rewardItemIds": [
-        265
+        347
       ],
       "rewardItemAmounts": [
         1

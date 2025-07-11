@@ -8,7 +8,7 @@ import (
 	"go.uber.org/zap"
 )
 
-func genMonsterInfos(
+func GenMonsterInfos(
 	kingdomId int,
 	rawSortedAllTiles []common.Location,
 	monsterIds []int,
@@ -21,7 +21,13 @@ func genMonsterInfos(
 	if len(monsterIds) == 0 {
 		l.Panic("invalid monster ids len 0")
 	} else {
-		l.Infow("list monster", "value", monsterIds)
+		for _, v := range monsterIds {
+			if monster, ok := mapMonster[strconv.Itoa(v)]; !ok {
+				l.Panicw("invalid monster id", "id", v)
+			} else {
+				l.Infow("monster data", "monster id", monster.Id, "levels", monster.Levels)
+			}
+		}
 	}
 	mapCustomMonsterLocation := make(map[common.Location]bool)
 	for _, cml := range customMonsterLocations {
@@ -35,6 +41,7 @@ func genMonsterInfos(
 			sortedAllTiles = append(sortedAllTiles, tile)
 		}
 	}
+
 	l.Infow("len tiles", "sortedAllTiles", len(sortedAllTiles), "rawSortedAllTiles", len(rawSortedAllTiles))
 	// distribute
 	allMonsterLocations := make([]common.MonsterLocation, 0)

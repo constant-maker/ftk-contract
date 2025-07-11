@@ -23,8 +23,3 @@ type KingdomMap struct {
 	Resources  [6]common.ResourceType `json:"resources"`
 	MonsterIds []int                  `json:"monsterIds"`
 }
-
-type locationExt struct {
-	Tile     common.Location
-	Distance float64
-}

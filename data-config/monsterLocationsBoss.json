@@ -54,6 +54,17 @@
       "monsterId": 37,
       "level": 50,
       "advantageType": 3
+    },
+    {
+      "locations": [
+        {
+          "x": 18,
+          "y": -1
+        }
+      ],
+      "monsterId": 42,
+      "level": 85,
+      "advantageType": 2
     }
   ]
 }

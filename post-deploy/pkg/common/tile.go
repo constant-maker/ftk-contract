@@ -59,6 +59,13 @@ func RemoveTile(allTiles []Location, rTile Location) []Location {
 	return newArr
 }
 
+func RemoveTiles(allTiles []Location, rTiles []Location) []Location {
+	for _, rTile := range rTiles {
+		allTiles = RemoveTile(allTiles, rTile)
+	}
+	return allTiles
+}
+
 func RemoveDupTile(allTiles []Location) []Location {
 	newArr := make([]Location, 0)
 	mapTile := make(map[Location]bool)

@@ -23,12 +23,13 @@ func getAllCachedDeployData(kingdoms []gentile.KingdomMap) ([]common.TileInfo, [
 			return nil, nil, err
 		}
 		tileInfos = append(tileInfos, cTileInfos...)
-
 		// load monster location
 		// if kingdom.ID < 5 {
 		// 	continue
 		// }
-		cMonsterLocations, err := loadMonsterLocations(kingdom.ID)
+	}
+	for i := 1; i <= 12; i++ {
+		cMonsterLocations, err := loadMonsterLocations(i)
 		if err != nil {
 			l.Errorw("cannot get monster location", "err", err)
 			return nil, nil, err

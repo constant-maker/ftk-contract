@@ -64,7 +64,7 @@ func GenMapData(
 			l.Infow("all tiles", "len", len(allTiles), "capital", capital)
 
 			// sortedAllTiles is all tile in kingdom excludes the capital and city sorted by distance to capital
-			sortedAllTiles := sortTileByDistanceToCapital(allTiles, common.Location{X: capital.X, Y: capital.Y})
+			sortedAllTiles := common.SortTileByDistanceToCapital(allTiles, common.Location{X: capital.X, Y: capital.Y})
 			if len(sortedAllTiles) != len(allTiles) {
 				l.Panicw("invalid sortedAllTiles len", "len sortedAllTiles", len(sortedAllTiles), "len allTiles", len(allTiles))
 			}
@@ -97,7 +97,7 @@ func GenMapData(
 			}
 
 			if shouldGenMonster {
-				monsterLocations := genMonsterInfos(
+				monsterLocations := GenMonsterInfos(
 					kingdom.ID, sortedAllTiles, kingdom.MonsterIds,
 					mapMonster, customMonsterLocations)
 				if err := writeMonsterLocationsFile(monsterLocations, kingdom.ID); err != nil {

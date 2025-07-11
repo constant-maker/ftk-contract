@@ -930,6 +930,190 @@
         "effectType": 1,
         "turns": 1
       }
+    },
+    "57": {
+      "id": 57,
+      "name": "Thornwhip",
+      "desc": "The tail extends with sharp thorny vines, lashing foes and causing bleeding wounds.",
+      "damage": 200,
+      "sp": 1,
+      "perkItemTypes": [
+        0
+      ],
+      "requiredPerkLevels": [
+        20
+      ],
+      "hasEffect": false
+    },
+    "58": {
+      "id": 58,
+      "name": "Savage Uproot",
+      "desc": "With a ferocious leap, the monster delivers a crushing kick that sends shockwaves through the ground, uprooting enemies and hurling them backward. Deals massive damage and stuns targets briefly.",
+      "damage": 300,
+      "sp": 1,
+      "perkItemTypes": [
+        0
+      ],
+      "requiredPerkLevels": [
+        20
+      ],
+      "hasEffect": false
+    },
+    "59": {
+      "id": 59,
+      "name": "Tide Grasp",
+      "desc": "The monster summons spiraling torrents of water that wrap around its target, locking them in place and stunning them briefly.",
+      "damage": 200,
+      "sp": 2,
+      "perkItemTypes": [
+        0
+      ],
+      "requiredPerkLevels": [
+        20
+      ],
+      "hasEffect": true,
+      "effect": {
+        "damage": 0,
+        "effectType": 4,
+        "turns": 1
+      }
+    },
+    "60": {
+      "id": 60,
+      "name": "Bubble Shot",
+      "desc": "Fires a fast-moving bubble at the enemy, dealing light water damage. Has a small chance to reduce the target's movement speed.",
+      "damage": 200,
+      "sp": 1,
+      "perkItemTypes": [
+        0
+      ],
+      "requiredPerkLevels": [
+        20
+      ],
+      "hasEffect": false
+    },
+    "61": {
+      "id": 61,
+      "name": "Glacier Fist ",
+      "desc": "A slow but devastating ice punch",
+      "damage": 150,
+      "sp": 1,
+      "perkItemTypes": [
+        0
+      ],
+      "requiredPerkLevels": [
+        20
+      ],
+      "hasEffect": true,
+      "effect": {
+        "damage": 75,
+        "effectType": 2,
+        "turns": 2
+      }
+    },
+    "62": {
+      "id": 62,
+      "name": "Crystalline Eruption",
+      "desc": "The monster slams the ground with both fists, releasing a shockwave of icy shards in all directions. Deals massive ice damage to all nearby enemies and has a chance to freeze them in place.",
+      "damage": 350,
+      "sp": 2,
+      "perkItemTypes": [
+        0
+      ],
+      "requiredPerkLevels": [
+        20
+      ],
+      "hasEffect": false
+    },
+    "63": {
+      "id": 63,
+      "name": "Ember Curse",
+      "desc": "Curses the target with lingering flames, dealing fire damage over several turns.",
+      "damage": 75,
+      "sp": 1,
+      "perkItemTypes": [
+        0
+      ],
+      "requiredPerkLevels": [
+        20
+      ],
+      "hasEffect": true,
+      "effect": {
+        "damage": 100,
+        "effectType": 1,
+        "turns": 2
+      }
+    },
+    "64": {
+      "id": 64,
+      "name": "Hellfire Surge",
+      "desc": "Unleashes a wave of hellfire, dealing heavy fire damage to all enemies and applying burn for several turns.",
+      "damage": 200,
+      "sp": 2,
+      "perkItemTypes": [
+        0
+      ],
+      "requiredPerkLevels": [
+        20
+      ],
+      "hasEffect": true,
+      "effect": {
+        "damage": 200,
+        "effectType": 1,
+        "turns": 1
+      }
+    },
+    "65": {
+      "id": 65,
+      "name": "Serpent's Kiss",
+      "desc": "Delivers a venomous bite that poisons the target, dealing damage over time and weakening their defenses.",
+      "damage": 200,
+      "sp": 2,
+      "perkItemTypes": [
+        0
+      ],
+      "requiredPerkLevels": [
+        20
+      ],
+      "hasEffect": true,
+      "effect": {
+        "damage": 100,
+        "effectType": 2,
+        "turns": 1
+      }
+    },
+    "66": {
+      "id": 66,
+      "name": "Serpent’s Cataclysm",
+      "desc": "Unleashing its full fury, the serpent erupts into a violent frenzy — coiling, crushing, and striking with venomous force. All nearby enemies suffer massive damage and are left poisoned and broken.",
+      "damage": 400,
+      "sp": 5,
+      "perkItemTypes": [
+        0
+      ],
+      "requiredPerkLevels": [
+        20
+      ],
+      "hasEffect": true,
+      "effect": {
+        "damage": 200,
+        "effectType": 2,
+        "turns": 1
+      }
+    },
+    "67": {
+      "id": 67,
+      "name": "Serpent’s Oblivion",
+      "desc": "In its final moments, the serpent releases a toxic curse across the battlefield. All enemies are poisoned, their defenses shattered, and healing severely reduced.",
+      "damage": 400,
+      "sp": 3,
+      "perkItemTypes": [
+        0
+      ],
+      "requiredPerkLevels": [
+        20
+      ],
+      "hasEffect": false
     }
   }
 }
