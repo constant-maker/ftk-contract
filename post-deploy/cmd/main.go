@@ -119,7 +119,6 @@ func run(c *cli.Context) error {
 			common.UpdateDataConfig(&dataConfig, "../..") // update config by online data
 		}
 	}
-	return nil
 
 	// buildCallData build post_deploy data
 	rawCallDatas, err := buildCallData(dataConfig, mapConfig, cacheMonsterLocations,
