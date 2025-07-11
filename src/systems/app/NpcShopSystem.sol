@@ -69,7 +69,7 @@ contract NpcShopSystem is CharacterAccessControl, System {
         goldCost += TOOL_PRICE * amount;
         CharacterItemUtils.addNewItem(characterId, itemId, amount);
       } else if (itemData.category == ItemCategoryType.Other) {
-        uint32 unitPrice = itemData.tier * BUY_BACK_MULTIPLY;
+        uint32 unitPrice = _getNpcSellUnitPrice(itemData.tier);
         if (Item.getItemType(itemId) == ItemType.Card) {
           unitPrice = CARD_PRICE_MULTIPLIER * itemData.tier;
         }
@@ -125,5 +125,12 @@ contract NpcShopSystem is CharacterAccessControl, System {
       uint32 newAmount = isRemoved ? currentAmount - amount : currentAmount + amount;
       NpcShopInventory.setAmount(cityId, itemId, newAmount);
     }
+  }
+
+  function _getNpcSellUnitPrice(uint8 itemTier) private pure returns (uint32) {
+    if (itemTier < 5) {
+      return BUY_BACK_MULTIPLY * itemTier;
+    }
+    return (itemTier - 4) * 5 * itemTier;
   }
 }

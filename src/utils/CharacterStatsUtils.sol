@@ -1,7 +1,18 @@
 pragma solidity >=0.8.24;
 
-import { Equipment, EquipmentInfo, EquipmentInfoData, EquipmentInfo3 } from "@codegen/index.sol";
-import { CharStats, CharStatsData, CharCurrentStats, CharCurrentStatsData, CharBaseStats } from "@codegen/index.sol";
+import {
+  CharStats,
+  CharStatsData,
+  CharCurrentStats,
+  CharCurrentStatsData,
+  CharCStats2,
+  CharBaseStats,
+  Equipment,
+  EquipmentInfo,
+  EquipmentInfoData,
+  EquipmentInfo2V2,
+  EquipmentInfo2V2Data
+} from "@codegen/index.sol";
 import { CharEquipStats, CharEquipStatsData } from "@codegen/tables/CharEquipStats.sol";
 import { StatType, SlotType } from "@codegen/common.sol";
 import { Errors, Config } from "@common/index.sol";
@@ -119,7 +130,9 @@ library CharacterStatsUtils {
     }
 
     CharCurrentStatsData memory characterCurrentStats = CharCurrentStats.get(characterId);
+    uint32 shieldBarrier = CharCStats2.getBarrier(characterId);
     EquipmentInfoData memory equipmentInfo = _getSnapshotEquipmentStats(characterId, slotType, itemId, isRemoved);
+    EquipmentInfo2V2Data memory equipmentInfo2V2 = EquipmentInfo2V2.get(itemId);
 
     if (equipmentInfo.hp > 0) {
       uint32 maxHp = CharStats.getHp(characterId);
@@ -132,29 +145,41 @@ library CharacterStatsUtils {
       }
     }
     if (slotType == SlotType.Mount) {
-      _updateMaxWeightWithEquipment(characterId, itemId, isRemoved);
+      _updateMaxWeightWithEquipment(characterId, equipmentInfo2V2.bonusWeight, isRemoved);
     }
+
+    bool shouldUpdateShieldBarrier = equipmentInfo2V2.shieldBarrier > 0;
 
     if (isRemoved) {
       characterCurrentStats.ms -= equipmentInfo.ms;
       characterCurrentStats.atk -= equipmentInfo.atk;
       characterCurrentStats.def -= equipmentInfo.def;
       characterCurrentStats.agi -= equipmentInfo.agi;
+      if (shouldUpdateShieldBarrier) {
+        if (shieldBarrier < equipmentInfo2V2.shieldBarrier) {
+          shieldBarrier = 0;
+        } else {
+          shieldBarrier -= equipmentInfo2V2.shieldBarrier;
+        }
+      }
     } else {
       characterCurrentStats.ms += equipmentInfo.ms;
       characterCurrentStats.atk += equipmentInfo.atk;
       characterCurrentStats.def += equipmentInfo.def;
       characterCurrentStats.agi += equipmentInfo.agi;
+      if (shouldUpdateShieldBarrier) {
+        shieldBarrier += equipmentInfo2V2.shieldBarrier;
+      }
     }
 
     CharCurrentStats.set(characterId, characterCurrentStats);
+    if (shouldUpdateShieldBarrier) {
+      CharCStats2.setBarrier(characterId, shieldBarrier);
+    }
   }
 
-  function _updateMaxWeightWithEquipment(uint256 characterId, uint256 itemId, bool isRemoved) private {
-    uint32 bonusWeight = EquipmentInfo3.getBonusWeight(itemId);
-    if (bonusWeight == 0) {
-      return;
-    }
+  function _updateMaxWeightWithEquipment(uint256 characterId, uint32 bonusWeight, bool isRemoved) private {
+    if (bonusWeight == 0) return;
     uint32 currentMaxWeight = CharStats.getWeight(characterId);
     uint32 newMaxWeight;
     if (isRemoved) {

@@ -267,7 +267,7 @@ contract LevelSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixtu
 
     // try to level 10
     vm.startPrank(worldDeployer);
-    CharPerk.setExp(characterId, swordType, 1_443_750);
+    CharPerk.setExp(characterId, swordType, 1_893_750);
     vm.stopPrank();
 
     vm.startPrank(player);

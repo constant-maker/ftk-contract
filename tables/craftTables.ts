@@ -1,8 +1,10 @@
 const CRAFT_TABLES: any = {
-  ItemRecipe: {
+  ItemRecipeV2: {
     schema: {
       itemId: "uint256",
       goldCost: "uint32",
+      perkTypes: "uint8[]", // require perk
+      requiredPerkLevels: "uint8[]",
       itemIds: "uint256[]",
       amounts: "uint32[]",
     },

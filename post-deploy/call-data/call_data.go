@@ -200,7 +200,12 @@ func BuildExtraItemInfoData(l *zap.SugaredLogger, dataConfig common.DataConfig, 
 				l.Errorw("cannot build Equipment Item Info call data", "err", err)
 				return nil, err
 			}
-			callData = append(callData, equipmentItemInfoCallData)
+			equipmentItemInfo2V2CallData, err := table.EquipmentItemInfo2V2CallData(*item.EquipmentInfo, item.Id)
+			if err != nil {
+				l.Errorw("cannot build Equipment Item Info 2V2 call data", "err", err)
+				return nil, err
+			}
+			callData = append(callData, equipmentItemInfoCallData, equipmentItemInfo2V2CallData)
 		case item.HealingInfo != nil:
 			l.Infow("healing info", "value", item.HealingInfo)
 			healingItemInfoCallData, err := table.HealingItemInfoCallData(*item.HealingInfo, item.Id)

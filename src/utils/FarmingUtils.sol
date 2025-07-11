@@ -51,7 +51,13 @@ library FarmingUtils {
 
       for (uint256 i = 0; i < lenItem; i++) {
         uint256 itemId = itemIds[i];
-        uint16 quota = uint16(20) - (Item.getTier(itemId) - 1) * 2; // Min tier is 1, Max tier is 10
+        uint16 tier = Item.getTier(itemId);
+        uint16 quota;
+        if (tier <= 5) {
+          quota = 20 - (tier - 1) * 2;
+        } else {
+          quota = uint16((11 - tier) * 12 / 10); // scaled up by 1.2x
+        }
         quotas[i] = quota;
       }
 

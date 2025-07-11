@@ -18,7 +18,7 @@ import { Errors } from "@common/index.sol";
 
 contract KingSystem is CharacterAccessControl, System {
   uint32 constant KING_MIN_FAME_REQUIRE = 2000;
-  uint32 constant VOTER_MIN_FAME_REQUIRE = 1050;
+  uint32 constant VOTER_MIN_FAME_REQUIRE = 1020;
   uint32 constant TERM_DURATION = 1_209_600; // 14 days in seconds
   uint32 constant OFFSET_DURATION = 172_800; // 2 days in seconds
   uint256 constant KING_ACHIEVEMENT_ID = 10;
@@ -50,7 +50,10 @@ contract KingSystem is CharacterAccessControl, System {
     if (kingElection.timestamp > block.timestamp) {
       revert Errors.KingSystem_ElectionPeriodNotOverYet();
     }
-    if (kingElection.candidateIds.length == 0) return;
+    if (kingElection.candidateIds.length == 0) {
+      uint256 nextElectionTimestamp = KingElection.getTimestamp(kingdomId) + TERM_DURATION;
+      KingElection.setTimestamp(kingdomId, nextElectionTimestamp);
+    }
 
     uint256 topCandidateId = _findTopCandidate(kingElection.candidateIds, kingElection.votesReceived);
     _assignKing(kingdomId, kingElection.kingId, topCandidateId);
@@ -105,28 +108,40 @@ contract KingSystem is CharacterAccessControl, System {
     }
     AllianceV2Data memory allianceData = AllianceV2.get(charKingdomId, otherKingdomId);
     if (allianceData.isAlliance) {
+      // Already in alliance or already proposed
       return;
     }
+
+    // Check if the other kingdom has proposed an alliance
     allianceData = AllianceV2.get(otherKingdomId, charKingdomId);
-    if (allianceData.isAlliance && !allianceData.isApproved) {
+    if (allianceData.isAlliance) {
+      if (allianceData.isApproved) {
+        // The other kingdom has already approved the alliance
+        return;
+      }
       // The other kingdom has proposed but not approved yet, so approve it.
       AllianceV2.set(otherKingdomId, charKingdomId, true, true);
       return;
     }
+
     // Initiate alliance request from this kingdom
     AllianceV2.set(charKingdomId, otherKingdomId, true, false);
   }
 
-  function setMarketFee(uint256 characterId, uint8[] calldata kingdomIds, uint8[] calldata fee) public onlyAuthorizedWallet(characterId) {
+  function setMarketFee(
+    uint256 characterId,
+    uint8[] calldata kingdomIds,
+    uint8[] calldata fee
+  )
+    public
+    onlyAuthorizedWallet(characterId)
+  {
     uint8 charKingdomId = CharInfo.getKingdomId(characterId);
     _mustBeKing(charKingdomId, characterId);
     for (uint256 i = 0; i < kingdomIds.length; i++) {
       uint8 kingdomId = kingdomIds[i];
       uint8 fee = fee[i];
       _validateKingdomId(kingdomId);
-      if (charKingdomId == kingdomId) {
-        continue; // skip setting fee for own kingdom
-      }
       if (fee > 100) {
         revert Errors.KingSystem_InvalidMarketFee(fee);
       }

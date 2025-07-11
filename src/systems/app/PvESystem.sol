@@ -14,7 +14,7 @@ import {
   Monster,
   Equipment,
   Item,
-  PvEExtra
+  PvEExtraV2
 } from "@codegen/index.sol";
 import { CharacterPositionUtils, CharacterPerkUtils } from "@utils/index.sol";
 import { InventoryItemUtils } from "@utils/InventoryItemUtils.sol";
@@ -71,8 +71,8 @@ contract PvESystem is System, CharacterAccessControl {
       CharacterPositionUtils.moveToCapital(characterId);
       characterHp = CharStats.getHp(characterId); // set character hp to max hp
       CharCurrentStats.setExp(characterId, CharCurrentStats.getExp(characterId) * 75 / 100); // penalty 25% current exp
-      if (PvEExtra.getItemId(characterId) != 0) {
-        PvEExtra.deleteRecord(characterId); // reset extra data
+      if (PvEExtraV2.getItemId(characterId) != 0) {
+        PvEExtraV2.deleteRecord(characterId); // reset extra data
       }
     } else if (monsterHp == 0) {
       // character won

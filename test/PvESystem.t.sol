@@ -18,8 +18,8 @@ import {
   MonsterStats,
   PvE,
   PvEData,
-  PvEExtra,
-  PvEExtraData,
+  PvEExtraV2,
+  PvEExtraV2Data,
   TileInfo3
 } from "@codegen/index.sol";
 import { EntityType, SlotType, ItemType } from "@codegen/common.sol";
@@ -221,7 +221,7 @@ contract PvESystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
     assertEq(CharPerk.getExp(characterId, ItemType.Sword), 6);
     // assertEq(CharOtherItem.getAmount(characterId, 17), 1);
     // assertEq(CharOtherItem.getAmount(characterId, 16), 1);
-    PvEExtraData memory pvpExtra = PvEExtra.get(characterId);
+    PvEExtraV2Data memory pvpExtra = PvEExtraV2.get(characterId);
     uint256 rewardItemId = pvpExtra.itemId;
     uint256 rewardItemAmount = pvpExtra.itemAmount;
     assertEq(CharOtherItem.getAmount(characterId, rewardItemId), rewardItemAmount);
@@ -282,7 +282,7 @@ contract PvESystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
     assertEq(CharPerk.getExp(characterId, ItemType.Sword), 6);
     // assertEq(CharOtherItem.getAmount(characterId, 17), 1);
     // assertEq(CharOtherItem.getAmount(characterId, 16), 1);
-    PvEExtraData memory pvpExtra = PvEExtra.get(characterId);
+    PvEExtraV2Data memory pvpExtra = PvEExtraV2.get(characterId);
     uint256 rewardItemId = pvpExtra.itemId;
     uint256 rewardItemAmount = pvpExtra.itemAmount;
     assertEq(CharOtherItem.getAmount(characterId, rewardItemId), rewardItemAmount);
@@ -397,7 +397,7 @@ contract PvESystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
     uint32 characterCurrentHp = CharCurrentStats.getHp(characterId);
     assertEq(characterCurrentHp, 77);
 
-    PvEExtraData memory pvpExtra = PvEExtra.get(characterId);
+    PvEExtraV2Data memory pvpExtra = PvEExtraV2.get(characterId);
 
     assertEq(CharCurrentStats.getExp(characterId), 0);
     assertEq(CharPerk.getExp(characterId, ItemType.Sword), 6);

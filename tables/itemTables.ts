@@ -31,19 +31,14 @@ const ITEM_TABLES: any = {
     },
     key: ['itemId'],
   },
-  EquipmentInfo2: { // Upgradable equipment
+  EquipmentInfo2V2: {
     schema: {
       itemId: "uint256",
-      dmgPercent: "uint16",
       maxLevel: "uint8",
       counter: "uint8",
-    },
-    key: ['itemId'],
-  },
-  EquipmentInfo3: { // Mount
-    schema: {
-      itemId: "uint256",
-      bonusWeight: "uint32"
+      dmgPercent: "uint16",
+      bonusWeight: "uint32",
+      shieldBarrier: "uint32",
     },
     key: ['itemId'],
   },

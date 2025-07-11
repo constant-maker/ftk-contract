@@ -54,6 +54,26 @@ func EquipmentItemInfoCallData(equipmentInfo common.EquipmentInfo, itemId int) (
 	return mt.SetRecordRawCalldata(keyTuple, staticData, encodedLength, dynamicData)
 }
 
+func EquipmentItemInfo2V2CallData(equipmentInfo common.EquipmentInfo, itemId int) ([]byte, error) {
+	staticData, err := encodePacked(
+		uint8(0),  // max level
+		uint8(0),  // counter
+		uint16(0), // dmg percentage
+		uint32(equipmentInfo.BonusWeight),
+		uint32(equipmentInfo.ShieldBarrier),
+	)
+	if err != nil {
+		return nil, err
+	}
+	keyTuple := [][32]byte{
+		[32]byte(encodeUint256(big.NewInt(int64(itemId)))),
+	}
+	encodedLength := mud.PackedCounter{}
+	dynamicData := []byte{}
+	mt := mud.NewMudTable("EquipmentInfo2V2", "app", "")
+	return mt.SetRecordRawCalldata(keyTuple, staticData, encodedLength, dynamicData)
+}
+
 func HealingItemInfoCallData(healingInfo common.HealingInfo, itemId int) ([]byte, error) {
 	staticData, err := encodePacked(
 		uint32(healingInfo.HpRestore),

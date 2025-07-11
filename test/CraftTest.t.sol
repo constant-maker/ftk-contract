@@ -2,7 +2,8 @@ pragma solidity >=0.8.24;
 
 import { CharInventory, CharInventoryData } from "@codegen/index.sol";
 import { CharOtherItem } from "@codegen/tables/CharOtherItem.sol";
-import { Tool2, Tool2Data, Item, ItemData, CharFund, CharStats } from "@codegen/index.sol";
+import { Tool2, Tool2Data, Item, ItemData, CharFund, CharStats, CharPerk } from "@codegen/index.sol";
+import { ItemType } from "@codegen/common.sol";
 import { WorldFixture, SpawnSystemFixture, MoveSystemFixture } from "@fixtures/index.sol";
 import { InventoryItemUtils } from "@utils/InventoryItemUtils.sol";
 import { console2 } from "forge-std/console2.sol";
@@ -104,6 +105,16 @@ contract CraftSystemTest is CraftSystemFixture {
     InventoryItemUtils.addItem(characterId, 10, 30);
     InventoryItemUtils.addItem(characterId, 5, 20);
     CharFund.setGold(characterId, 1028);
+    vm.stopPrank();
+
+    vm.expectRevert(); // expect revert if perk level is not enough
+    vm.startPrank(player);
+    world.app__craftItem(characterId, 1, itemRecipeID, 1);
+    vm.stopPrank();
+
+    vm.startPrank(worldDeployer);
+    CharPerk.setLevel(characterId, ItemType.StoneHammer, 5);
+    CharPerk.setLevel(characterId, ItemType.FishingRod, 6);
     vm.stopPrank();
 
     vm.startPrank(player);

@@ -12,14 +12,15 @@ import {
   PvPData,
   PvPChallenge,
   PvPChallengeData,
-  PvPExtra,
-  PvPExtraData,
+  PvPExtraV2,
+  PvPExtraV2Data,
   PvPBattleCounter,
   TileInfo3,
   CharInfo,
   CharStats2,
   AllianceV2,
-  AllianceV2Data
+  AllianceV2Data,
+  CharCStats2
 } from "@codegen/index.sol";
 import { BattleInfo, BattleUtils } from "@utils/BattleUtils.sol";
 import { DailyQuestUtils, InventoryItemUtils, CharacterPositionUtils } from "@utils/index.sol";
@@ -78,33 +79,38 @@ contract PvPSystem is System, CharacterAccessControl {
     uint8 attackerKingdomId = CharInfo.getKingdomId(attackerId);
     uint8 defenderKingdomId = CharInfo.getKingdomId(defenderId);
     uint8 tileKingdomId = TileInfo3.getKingdomId(position.x, position.y);
-    ZoneType zoneType = TileInfo3.getZoneType(position.x, position.y);
-
+    ZoneType zoneType = TileInfo3.getZoneType(position.x, position.y); // for defender
+    if (zoneType == ZoneType.Black && defenderKingdomId == tileKingdomId) {
+      zoneType = ZoneType.Red;
+    } else if (zoneType != ZoneType.Black) {
+      zoneType = (defenderKingdomId == tileKingdomId) ? ZoneType.Green : ZoneType.Red;
+    }
     AllianceV2Data memory allianceData = AllianceV2.get(attackerKingdomId, defenderKingdomId);
     bool isAlliance = allianceData.isAlliance && allianceData.isApproved;
     if (!isAlliance) {
       allianceData = AllianceV2.get(defenderKingdomId, attackerKingdomId);
       isAlliance = allianceData.isAlliance && allianceData.isApproved;
     }
-
+    if (isAlliance && attackerKingdomId == tileKingdomId) {
+      zoneType = ZoneType.Green;
+    }
     bool isSameSide = (attackerKingdomId == defenderKingdomId && tileKingdomId == attackerKingdomId) || isAlliance;
-
-    if (isSameSide && defenderHp == 0 && zoneType != ZoneType.Black) {
+    if (isSameSide && defenderHp == 0 && zoneType == ZoneType.Green) {
       attackerFame = attackerFame > 50 ? attackerFame - 50 : 1; // min is 1
       CharStats2.set(attackerId, attackerFame);
-    } else if (!isSameSide) {
-      uint32 defenderFame = CharStats2.getFame(defenderId);
-      if (attackerHp == 0 && attackerFame >= 1020 && defenderKingdomId == tileKingdomId) {
-        attackerFame -= 20;
-        defenderFame += 20;
-        CharStats2.set(defenderId, defenderFame);
-        CharStats2.set(attackerId, attackerFame);
-      } else if (defenderHp == 0 && defenderFame >= 1020 && attackerKingdomId == tileKingdomId) {
-        attackerFame += 20;
-        defenderFame -= 20;
-        CharStats2.set(defenderId, defenderFame);
-        CharStats2.set(attackerId, attackerFame);
-      }
+      return;
+    }
+    uint32 defenderFame = CharStats2.getFame(defenderId);
+    if (attackerHp == 0 && attackerFame >= 1020) {
+      attackerFame -= 20;
+      defenderFame += 20;
+      CharStats2.set(defenderId, defenderFame);
+      CharStats2.set(attackerId, attackerFame);
+    } else if (defenderHp == 0 && defenderFame >= 1020 && zoneType != ZoneType.Green) {
+      attackerFame += 20;
+      defenderFame -= 20;
+      CharStats2.set(defenderId, defenderFame);
+      CharStats2.set(attackerId, attackerFame);
     }
   }
 
@@ -192,12 +198,16 @@ contract PvPSystem is System, CharacterAccessControl {
   function _storePvPExtraData(uint256 pvpId, uint256 attackerId, uint256 defenderId) private {
     uint256[6] memory attackerEquipmentIds = BattleUtils.getCharacterEquipments(attackerId);
     uint256[6] memory defenderEquipmentIds = BattleUtils.getCharacterEquipments(defenderId);
-    PvPExtraData memory pvpExtra = PvPExtraData({
+    uint32[2] memory barriers;
+    barriers[0] = CharCStats2.getBarrier(attackerId);
+    barriers[1] = CharCStats2.getBarrier(defenderId);
+    PvPExtraV2Data memory pvpExtra = PvPExtraV2Data({
       characterLevels: [CharStats.getLevel(attackerId), CharStats.getLevel(defenderId)],
       characterSps: [CharStats.getSp(attackerId), CharStats.getSp(defenderId)],
+      barriers: barriers,
       equipmentIds: _mergeEquipmentIds(attackerEquipmentIds, defenderEquipmentIds)
     });
-    PvPExtra.set(pvpId, pvpExtra);
+    PvPExtraV2.set(pvpId, pvpExtra);
   }
 
   function _mergeEquipmentIds(

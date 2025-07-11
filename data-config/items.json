@@ -365,7 +365,9 @@
         "def": 1,
         "agi": 0,
         "hp": 0,
-        "ms": 0
+        "ms": 0,
+        "bonusWeight": 0,
+        "shieldBarrier": 0
       }
     },
     "34": {
@@ -385,7 +387,9 @@
         "def": 1,
         "agi": 0,
         "hp": 0,
-        "ms": 0
+        "ms": 0,
+        "bonusWeight": 0,
+        "shieldBarrier": 0
       }
     },
     "35": {
@@ -405,7 +409,9 @@
         "def": 0,
         "agi": 0,
         "hp": 0,
-        "ms": 0
+        "ms": 0,
+        "bonusWeight": 0,
+        "shieldBarrier": 0
       }
     },
     "36": {
@@ -425,7 +431,9 @@
         "def": 0,
         "agi": 2,
         "hp": 0,
-        "ms": 0
+        "ms": 0,
+        "bonusWeight": 0,
+        "shieldBarrier": 0
       }
     },
     "37": {
@@ -445,7 +453,9 @@
         "def": 3,
         "agi": 0,
         "hp": 0,
-        "ms": 0
+        "ms": 0,
+        "bonusWeight": 0,
+        "shieldBarrier": 0
       }
     },
     "38": {
@@ -465,7 +475,9 @@
         "def": 2,
         "agi": 0,
         "hp": 0,
-        "ms": 0
+        "ms": 0,
+        "bonusWeight": 0,
+        "shieldBarrier": 0
       }
     },
     "39": {
@@ -485,7 +497,9 @@
         "def": 3,
         "agi": 1,
         "hp": 0,
-        "ms": 0
+        "ms": 0,
+        "bonusWeight": 0,
+        "shieldBarrier": 0
       }
     },
     "40": {
@@ -505,7 +519,9 @@
         "def": 0,
         "agi": 1,
         "hp": 0,
-        "ms": 0
+        "ms": 0,
+        "bonusWeight": 0,
+        "shieldBarrier": 0
       }
     },
     "41": {
@@ -525,7 +541,9 @@
         "def": 1,
         "agi": 2,
         "hp": 0,
-        "ms": 0
+        "ms": 0,
+        "bonusWeight": 0,
+        "shieldBarrier": 0
       }
     },
     "42": {
@@ -545,7 +563,9 @@
         "def": 1,
         "agi": 1,
         "hp": 0,
-        "ms": 0
+        "ms": 0,
+        "bonusWeight": 0,
+        "shieldBarrier": 0
       }
     },
     "43": {
@@ -565,7 +585,9 @@
         "def": 4,
         "agi": 1,
         "hp": 0,
-        "ms": 0
+        "ms": 0,
+        "bonusWeight": 0,
+        "shieldBarrier": 0
       }
     },
     "44": {
@@ -585,7 +607,9 @@
         "def": 0,
         "agi": 4,
         "hp": 0,
-        "ms": 0
+        "ms": 0,
+        "bonusWeight": 0,
+        "shieldBarrier": 0
       }
     },
     "45": {
@@ -605,7 +629,9 @@
         "def": 0,
         "agi": 7,
         "hp": 0,
-        "ms": 0
+        "ms": 0,
+        "bonusWeight": 0,
+        "shieldBarrier": 0
       }
     },
     "46": {
@@ -625,7 +651,9 @@
         "def": 3,
         "agi": 0,
         "hp": 0,
-        "ms": 0
+        "ms": 0,
+        "bonusWeight": 0,
+        "shieldBarrier": 15
       }
     },
     "47": {
@@ -645,7 +673,9 @@
         "def": 9,
         "agi": 0,
         "hp": 0,
-        "ms": 0
+        "ms": 0,
+        "bonusWeight": 0,
+        "shieldBarrier": 30
       }
     },
     "48": {
@@ -665,7 +695,9 @@
         "def": 0,
         "agi": 3,
         "hp": 10,
-        "ms": 0
+        "ms": 0,
+        "bonusWeight": 0,
+        "shieldBarrier": 0
       }
     },
     "49": {
@@ -685,7 +717,9 @@
         "def": 0,
         "agi": 8,
         "hp": 20,
-        "ms": 0
+        "ms": 0,
+        "bonusWeight": 0,
+        "shieldBarrier": 0
       }
     },
     "50": {
@@ -705,7 +739,9 @@
         "def": 1,
         "agi": 1,
         "hp": 5,
-        "ms": 0
+        "ms": 0,
+        "bonusWeight": 0,
+        "shieldBarrier": 0
       }
     },
     "51": {
@@ -725,7 +761,9 @@
         "def": 0,
         "agi": 5,
         "hp": 10,
-        "ms": 0
+        "ms": 0,
+        "bonusWeight": 0,
+        "shieldBarrier": 0
       }
     },
     "52": {
@@ -745,7 +783,9 @@
         "def": 0,
         "agi": 2,
         "hp": 0,
-        "ms": 1
+        "ms": 1,
+        "bonusWeight": 0,
+        "shieldBarrier": 0
       }
     },
     "53": {
@@ -765,7 +805,9 @@
         "def": 0,
         "agi": 6,
         "hp": 0,
-        "ms": 1
+        "ms": 1,
+        "bonusWeight": 0,
+        "shieldBarrier": 0
       }
     },
     "54": {
@@ -785,7 +827,9 @@
         "def": 1,
         "agi": 2,
         "hp": 10,
-        "ms": 0
+        "ms": 0,
+        "bonusWeight": 0,
+        "shieldBarrier": 0
       }
     },
     "55": {
@@ -805,7 +849,9 @@
         "def": 4,
         "agi": 5,
         "hp": 20,
-        "ms": 0
+        "ms": 0,
+        "bonusWeight": 0,
+        "shieldBarrier": 0
       }
     },
     "56": {
@@ -825,7 +871,9 @@
         "def": 1,
         "agi": 1,
         "hp": 5,
-        "ms": 0
+        "ms": 0,
+        "bonusWeight": 0,
+        "shieldBarrier": 0
       }
     },
     "57": {
@@ -845,7 +893,9 @@
         "def": 3,
         "agi": 3,
         "hp": 10,
-        "ms": 0
+        "ms": 0,
+        "bonusWeight": 0,
+        "shieldBarrier": 0
       }
     },
     "58": {
@@ -865,7 +915,9 @@
         "def": 1,
         "agi": 1,
         "hp": 0,
-        "ms": 1
+        "ms": 1,
+        "bonusWeight": 0,
+        "shieldBarrier": 0
       }
     },
     "59": {
@@ -885,7 +937,9 @@
         "def": 3,
         "agi": 3,
         "hp": 0,
-        "ms": 1
+        "ms": 1,
+        "bonusWeight": 0,
+        "shieldBarrier": 0
       }
     },
     "60": {
@@ -905,7 +959,9 @@
         "def": 3,
         "agi": 0,
         "hp": 30,
-        "ms": 0
+        "ms": 0,
+        "bonusWeight": 0,
+        "shieldBarrier": 0
       }
     },
     "61": {
@@ -925,7 +981,9 @@
         "def": 9,
         "agi": 0,
         "hp": 50,
-        "ms": 0
+        "ms": 0,
+        "bonusWeight": 0,
+        "shieldBarrier": 0
       }
     },
     "62": {
@@ -945,7 +1003,9 @@
         "def": 1,
         "agi": 0,
         "hp": 15,
-        "ms": 0
+        "ms": 0,
+        "bonusWeight": 0,
+        "shieldBarrier": 0
       }
     },
     "63": {
@@ -965,7 +1025,9 @@
         "def": 5,
         "agi": 0,
         "hp": 25,
-        "ms": 0
+        "ms": 0,
+        "bonusWeight": 0,
+        "shieldBarrier": 0
       }
     },
     "64": {
@@ -985,7 +1047,9 @@
         "def": 2,
         "agi": 0,
         "hp": 0,
-        "ms": 0
+        "ms": 0,
+        "bonusWeight": 0,
+        "shieldBarrier": 0
       }
     },
     "65": {
@@ -1005,7 +1069,9 @@
         "def": 6,
         "agi": 0,
         "hp": 0,
-        "ms": 0
+        "ms": 0,
+        "bonusWeight": 0,
+        "shieldBarrier": 0
       }
     },
     "66": {
@@ -1017,7 +1083,7 @@
       "name": "Small Healing Potion",
       "desc": "A small potion that restores a small amount of health. Ideal for quick recovery during early adventures.",
       "healingInfo": {
-        "hpRestore": 40
+        "hpRestore": 50
       }
     },
     "67": {
@@ -1073,7 +1139,9 @@
         "def": 12,
         "agi": 34,
         "hp": 0,
-        "ms": 0
+        "ms": 0,
+        "bonusWeight": 0,
+        "shieldBarrier": 0
       }
     },
     "71": {
@@ -1093,7 +1161,9 @@
         "def": 80,
         "agi": 10,
         "hp": 380,
-        "ms": 0
+        "ms": 0,
+        "bonusWeight": 0,
+        "shieldBarrier": 0
       }
     },
     "72": {
@@ -1113,7 +1183,9 @@
         "def": 100,
         "agi": 0,
         "hp": 0,
-        "ms": 0
+        "ms": 0,
+        "bonusWeight": 0,
+        "shieldBarrier": 150
       }
     },
     "73": {
@@ -1829,7 +1901,9 @@
         "def": 3,
         "agi": 12,
         "hp": 0,
-        "ms": 0
+        "ms": 0,
+        "bonusWeight": 0,
+        "shieldBarrier": 0
       }
     },
     "132": {
@@ -1849,7 +1923,9 @@
         "def": 3,
         "agi": 17,
         "hp": 0,
-        "ms": 0
+        "ms": 0,
+        "bonusWeight": 0,
+        "shieldBarrier": 0
       }
     },
     "133": {
@@ -1869,7 +1945,9 @@
         "def": 15,
         "agi": 3,
         "hp": 0,
-        "ms": 0
+        "ms": 0,
+        "bonusWeight": 0,
+        "shieldBarrier": 50
       }
     },
     "134": {
@@ -1889,7 +1967,9 @@
         "def": 32,
         "agi": 0,
         "hp": 0,
-        "ms": 0
+        "ms": 0,
+        "bonusWeight": 0,
+        "shieldBarrier": 70
       }
     },
     "135": {
@@ -1909,7 +1989,9 @@
         "def": 3,
         "agi": 10,
         "hp": 20,
-        "ms": 0
+        "ms": 0,
+        "bonusWeight": 0,
+        "shieldBarrier": 0
       }
     },
     "136": {
@@ -1929,7 +2011,9 @@
         "def": 3,
         "agi": 18,
         "hp": 40,
-        "ms": 0
+        "ms": 0,
+        "bonusWeight": 0,
+        "shieldBarrier": 0
       }
     },
     "137": {
@@ -1949,7 +2033,9 @@
         "def": 0,
         "agi": 12,
         "hp": 0,
-        "ms": 1
+        "ms": 1,
+        "bonusWeight": 0,
+        "shieldBarrier": 0
       }
     },
     "138": {
@@ -1969,7 +2055,9 @@
         "def": 2,
         "agi": 16,
         "hp": 0,
-        "ms": 1
+        "ms": 1,
+        "bonusWeight": 0,
+        "shieldBarrier": 0
       }
     },
     "139": {
@@ -1989,7 +2077,9 @@
         "def": 8,
         "agi": 14,
         "hp": 35,
-        "ms": 0
+        "ms": 0,
+        "bonusWeight": 0,
+        "shieldBarrier": 0
       }
     },
     "140": {
@@ -2009,7 +2099,9 @@
         "def": 5,
         "agi": 30,
         "hp": 60,
-        "ms": 0
+        "ms": 0,
+        "bonusWeight": 0,
+        "shieldBarrier": 0
       }
     },
     "141": {
@@ -2029,7 +2121,9 @@
         "def": 8,
         "agi": 7,
         "hp": 0,
-        "ms": 0
+        "ms": 0,
+        "bonusWeight": 0,
+        "shieldBarrier": 0
       }
     },
     "142": {
@@ -2049,7 +2143,9 @@
         "def": 10,
         "agi": 5,
         "hp": 0,
-        "ms": 0
+        "ms": 0,
+        "bonusWeight": 0,
+        "shieldBarrier": 0
       }
     },
     "143": {
@@ -2069,7 +2165,9 @@
         "def": 3,
         "agi": 7,
         "hp": 0,
-        "ms": 0
+        "ms": 0,
+        "bonusWeight": 0,
+        "shieldBarrier": 0
       }
     },
     "144": {
@@ -2089,7 +2187,9 @@
         "def": 6,
         "agi": 10,
         "hp": 0,
-        "ms": 0
+        "ms": 0,
+        "bonusWeight": 0,
+        "shieldBarrier": 0
       }
     },
     "145": {
@@ -2109,7 +2209,9 @@
         "def": 2,
         "agi": 6,
         "hp": 0,
-        "ms": 0
+        "ms": 0,
+        "bonusWeight": 0,
+        "shieldBarrier": 0
       }
     },
     "146": {
@@ -2129,7 +2231,9 @@
         "def": 6,
         "agi": 15,
         "hp": 0,
-        "ms": 0
+        "ms": 0,
+        "bonusWeight": 0,
+        "shieldBarrier": 0
       }
     },
     "147": {
@@ -2149,7 +2253,9 @@
         "def": 5,
         "agi": 12,
         "hp": 0,
-        "ms": 0
+        "ms": 0,
+        "bonusWeight": 0,
+        "shieldBarrier": 0
       }
     },
     "148": {
@@ -2169,7 +2275,9 @@
         "def": 10,
         "agi": 14,
         "hp": 0,
-        "ms": 0
+        "ms": 0,
+        "bonusWeight": 0,
+        "shieldBarrier": 0
       }
     },
     "149": {
@@ -2189,7 +2297,9 @@
         "def": 5,
         "agi": 3,
         "hp": 0,
-        "ms": 0
+        "ms": 0,
+        "bonusWeight": 0,
+        "shieldBarrier": 0
       }
     },
     "150": {
@@ -2209,7 +2319,9 @@
         "def": 12,
         "agi": 6,
         "hp": 0,
-        "ms": 0
+        "ms": 0,
+        "bonusWeight": 0,
+        "shieldBarrier": 0
       }
     },
     "151": {
@@ -2229,7 +2341,9 @@
         "def": 10,
         "agi": 10,
         "hp": 35,
-        "ms": 0
+        "ms": 0,
+        "bonusWeight": 0,
+        "shieldBarrier": 0
       }
     },
     "152": {
@@ -2249,7 +2363,9 @@
         "def": 18,
         "agi": 19,
         "hp": 60,
-        "ms": 0
+        "ms": 0,
+        "bonusWeight": 0,
+        "shieldBarrier": 0
       }
     },
     "153": {
@@ -2269,7 +2385,9 @@
         "def": 6,
         "agi": 5,
         "hp": 15,
-        "ms": 0
+        "ms": 0,
+        "bonusWeight": 0,
+        "shieldBarrier": 0
       }
     },
     "154": {
@@ -2289,7 +2407,9 @@
         "def": 10,
         "agi": 10,
         "hp": 30,
-        "ms": 0
+        "ms": 0,
+        "bonusWeight": 0,
+        "shieldBarrier": 0
       }
     },
     "155": {
@@ -2309,7 +2429,9 @@
         "def": 6,
         "agi": 6,
         "hp": 0,
-        "ms": 1
+        "ms": 1,
+        "bonusWeight": 0,
+        "shieldBarrier": 0
       }
     },
     "156": {
@@ -2329,7 +2451,9 @@
         "def": 12,
         "agi": 11,
         "hp": 0,
-        "ms": 1
+        "ms": 1,
+        "bonusWeight": 0,
+        "shieldBarrier": 0
       }
     },
     "157": {
@@ -2349,7 +2473,9 @@
         "def": 18,
         "agi": 0,
         "hp": 100,
-        "ms": 0
+        "ms": 0,
+        "bonusWeight": 0,
+        "shieldBarrier": 0
       }
     },
     "158": {
@@ -2369,7 +2495,9 @@
         "def": 30,
         "agi": 1,
         "hp": 180,
-        "ms": 0
+        "ms": 0,
+        "bonusWeight": 0,
+        "shieldBarrier": 0
       }
     },
     "159": {
@@ -2389,7 +2517,9 @@
         "def": 10,
         "agi": 0,
         "hp": 40,
-        "ms": 0
+        "ms": 0,
+        "bonusWeight": 0,
+        "shieldBarrier": 0
       }
     },
     "160": {
@@ -2409,7 +2539,9 @@
         "def": 18,
         "agi": 1,
         "hp": 65,
-        "ms": 0
+        "ms": 0,
+        "bonusWeight": 0,
+        "shieldBarrier": 0
       }
     },
     "161": {
@@ -2429,7 +2561,9 @@
         "def": 12,
         "agi": 0,
         "hp": 0,
-        "ms": 0
+        "ms": 0,
+        "bonusWeight": 0,
+        "shieldBarrier": 0
       }
     },
     "162": {
@@ -2449,7 +2583,9 @@
         "def": 25,
         "agi": 2,
         "hp": 0,
-        "ms": 0
+        "ms": 0,
+        "bonusWeight": 0,
+        "shieldBarrier": 0
       }
     },
     "163": {
@@ -2617,7 +2753,7 @@
       "name": "Greater Healing Potion",
       "desc": "An enhanced mixture that provides substantial healing power, favored by experienced adventurers.",
       "healingInfo": {
-        "hpRestore": 250
+        "hpRestore": 150
       }
     },
     "180": {
@@ -2629,7 +2765,7 @@
       "name": "Grand Healing Potion",
       "desc": "A potent blend that rapidly restores significant health, crafted by skilled alchemists.",
       "healingInfo": {
-        "hpRestore": 500
+        "hpRestore": 200
       }
     },
     "181": {
@@ -2641,7 +2777,7 @@
       "name": "Master Healing Potion",
       "desc": "An expertly crafted elixir that provides powerful healing.",
       "healingInfo": {
-        "hpRestore": 800
+        "hpRestore": 250
       }
     },
     "182": {
@@ -2985,7 +3121,9 @@
         "def": 8,
         "agi": 18,
         "hp": 0,
-        "ms": 0
+        "ms": 0,
+        "bonusWeight": 0,
+        "shieldBarrier": 0
       }
     },
     "219": {
@@ -3005,7 +3143,9 @@
         "def": 21,
         "agi": 32,
         "hp": 0,
-        "ms": 0
+        "ms": 0,
+        "bonusWeight": 0,
+        "shieldBarrier": 0
       }
     },
     "220": {
@@ -3025,7 +3165,9 @@
         "def": 10,
         "agi": 21,
         "hp": 0,
-        "ms": 0
+        "ms": 0,
+        "bonusWeight": 0,
+        "shieldBarrier": 0
       }
     },
     "221": {
@@ -3045,7 +3187,9 @@
         "def": 19,
         "agi": 30,
         "hp": 0,
-        "ms": 0
+        "ms": 0,
+        "bonusWeight": 0,
+        "shieldBarrier": 0
       }
     },
     "222": {
@@ -3065,7 +3209,9 @@
         "def": 7,
         "agi": 28,
         "hp": 0,
-        "ms": 0
+        "ms": 0,
+        "bonusWeight": 0,
+        "shieldBarrier": 0
       }
     },
     "223": {
@@ -3085,7 +3231,9 @@
         "def": 8,
         "agi": 43,
         "hp": 0,
-        "ms": 0
+        "ms": 0,
+        "bonusWeight": 0,
+        "shieldBarrier": 0
       }
     },
     "224": {
@@ -3105,7 +3253,9 @@
         "def": 10,
         "agi": 19,
         "hp": 0,
-        "ms": 0
+        "ms": 0,
+        "bonusWeight": 0,
+        "shieldBarrier": 0
       }
     },
     "225": {
@@ -3125,7 +3275,9 @@
         "def": 8,
         "agi": 19,
         "hp": 0,
-        "ms": 0
+        "ms": 0,
+        "bonusWeight": 0,
+        "shieldBarrier": 0
       }
     },
     "226": {
@@ -3145,7 +3297,9 @@
         "def": 19,
         "agi": 9,
         "hp": 0,
-        "ms": 0
+        "ms": 0,
+        "bonusWeight": 0,
+        "shieldBarrier": 0
       }
     },
     "227": {
@@ -3165,7 +3319,9 @@
         "def": 26,
         "agi": 12,
         "hp": 0,
-        "ms": 0
+        "ms": 0,
+        "bonusWeight": 0,
+        "shieldBarrier": 0
       }
     },
     "228": {
@@ -3185,7 +3341,9 @@
         "def": 16,
         "agi": 13,
         "hp": 0,
-        "ms": 0
+        "ms": 0,
+        "bonusWeight": 0,
+        "shieldBarrier": 0
       }
     },
     "229": {
@@ -3205,7 +3363,9 @@
         "def": 38,
         "agi": 20,
         "hp": 0,
-        "ms": 0
+        "ms": 0,
+        "bonusWeight": 0,
+        "shieldBarrier": 0
       }
     },
     "230": {
@@ -3225,7 +3385,9 @@
         "def": 50,
         "agi": 0,
         "hp": 0,
-        "ms": 0
+        "ms": 0,
+        "bonusWeight": 0,
+        "shieldBarrier": 100
       }
     },
     "231": {
@@ -3245,7 +3407,9 @@
         "def": 75,
         "agi": 10,
         "hp": 0,
-        "ms": 0
+        "ms": 0,
+        "bonusWeight": 0,
+        "shieldBarrier": 150
       }
     },
     "232": {
@@ -3265,7 +3429,9 @@
         "def": 6,
         "agi": 36,
         "hp": 60,
-        "ms": 0
+        "ms": 0,
+        "bonusWeight": 0,
+        "shieldBarrier": 0
       }
     },
     "233": {
@@ -3285,7 +3451,9 @@
         "def": 10,
         "agi": 58,
         "hp": 90,
-        "ms": 0
+        "ms": 0,
+        "bonusWeight": 0,
+        "shieldBarrier": 0
       }
     },
     "234": {
@@ -3305,7 +3473,9 @@
         "def": 6,
         "agi": 30,
         "hp": 0,
-        "ms": 1
+        "ms": 1,
+        "bonusWeight": 0,
+        "shieldBarrier": 0
       }
     },
     "235": {
@@ -3325,7 +3495,9 @@
         "def": 8,
         "agi": 54,
         "hp": 0,
-        "ms": 1
+        "ms": 1,
+        "bonusWeight": 0,
+        "shieldBarrier": 0
       }
     },
     "236": {
@@ -3345,7 +3517,9 @@
         "def": 6,
         "agi": 58,
         "hp": 90,
-        "ms": 0
+        "ms": 0,
+        "bonusWeight": 0,
+        "shieldBarrier": 0
       }
     },
     "237": {
@@ -3365,7 +3539,9 @@
         "def": 12,
         "agi": 88,
         "hp": 120,
-        "ms": 0
+        "ms": 0,
+        "bonusWeight": 0,
+        "shieldBarrier": 0
       }
     },
     "238": {
@@ -3385,7 +3561,9 @@
         "def": 20,
         "agi": 19,
         "hp": 50,
-        "ms": 0
+        "ms": 0,
+        "bonusWeight": 0,
+        "shieldBarrier": 0
       }
     },
     "239": {
@@ -3405,7 +3583,9 @@
         "def": 32,
         "agi": 34,
         "hp": 70,
-        "ms": 0
+        "ms": 0,
+        "bonusWeight": 0,
+        "shieldBarrier": 0
       }
     },
     "240": {
@@ -3425,7 +3605,9 @@
         "def": 18,
         "agi": 18,
         "hp": 0,
-        "ms": 1
+        "ms": 1,
+        "bonusWeight": 0,
+        "shieldBarrier": 0
       }
     },
     "241": {
@@ -3445,7 +3627,9 @@
         "def": 38,
         "agi": 34,
         "hp": 0,
-        "ms": 1
+        "ms": 1,
+        "bonusWeight": 0,
+        "shieldBarrier": 0
       }
     },
     "242": {
@@ -3465,7 +3649,9 @@
         "def": 30,
         "agi": 34,
         "hp": 90,
-        "ms": 0
+        "ms": 0,
+        "bonusWeight": 0,
+        "shieldBarrier": 0
       }
     },
     "243": {
@@ -3485,7 +3671,9 @@
         "def": 44,
         "agi": 48,
         "hp": 120,
-        "ms": 0
+        "ms": 0,
+        "bonusWeight": 0,
+        "shieldBarrier": 0
       }
     },
     "244": {
@@ -3505,7 +3693,9 @@
         "def": 34,
         "agi": 3,
         "hp": 100,
-        "ms": 0
+        "ms": 0,
+        "bonusWeight": 0,
+        "shieldBarrier": 0
       }
     },
     "245": {
@@ -3525,7 +3715,9 @@
         "def": 64,
         "agi": 4,
         "hp": 140,
-        "ms": 0
+        "ms": 0,
+        "bonusWeight": 0,
+        "shieldBarrier": 0
       }
     },
     "246": {
@@ -3545,7 +3737,9 @@
         "def": 42,
         "agi": 3,
         "hp": 0,
-        "ms": 0
+        "ms": 0,
+        "bonusWeight": 0,
+        "shieldBarrier": 0
       }
     },
     "247": {
@@ -3565,7 +3759,9 @@
         "def": 68,
         "agi": 5,
         "hp": 0,
-        "ms": 0
+        "ms": 0,
+        "bonusWeight": 0,
+        "shieldBarrier": 0
       }
     },
     "248": {
@@ -3585,7 +3781,9 @@
         "def": 50,
         "agi": 4,
         "hp": 250,
-        "ms": 0
+        "ms": 0,
+        "bonusWeight": 0,
+        "shieldBarrier": 0
       }
     },
     "249": {
@@ -3605,7 +3803,9 @@
         "def": 80,
         "agi": 6,
         "hp": 350,
-        "ms": 0
+        "ms": 0,
+        "bonusWeight": 0,
+        "shieldBarrier": 0
       }
     },
     "250": {
@@ -3710,8 +3910,8 @@
       "category": 2,
       "tier": 4,
       "weight": 1,
-      "name": "Orb of the True Sun",
-      "desc": "The Sun was once whole, until it was split into three. These are the golden fragments of that long-gone era.",
+      "name": "Orb of the Forest Soul",
+      "desc": "The Forest had a soul once, and a name. These are the nature's fragments of that long-gone era.",
       "resourceInfo": {
         "type": 6
       }
@@ -3747,7 +3947,7 @@
       "tier": 4,
       "weight": 1,
       "name": "Orb of Cataclysm",
-      "desc": "Fire changes. Lands shift. Yet Sunscar remain. These are the formless fragments of that long-gone era.",
+      "desc": "Fire changes. Lands shift. Yet Sunscar remain. These are the fiery fragments of that long-gone era.",
       "resourceInfo": {
         "type": 6
       }
@@ -3769,7 +3969,9 @@
         "def": 14,
         "agi": 4,
         "hp": 0,
-        "ms": 0
+        "ms": 0,
+        "bonusWeight": 0,
+        "shieldBarrier": 0
       }
     },
     "263": {
@@ -3789,7 +3991,9 @@
         "def": 20,
         "agi": 10,
         "hp": 0,
-        "ms": 0
+        "ms": 0,
+        "bonusWeight": 0,
+        "shieldBarrier": 0
       }
     },
     "264": {
@@ -3809,7 +4013,9 @@
         "def": 7,
         "agi": 15,
         "hp": 0,
-        "ms": 0
+        "ms": 0,
+        "bonusWeight": 0,
+        "shieldBarrier": 0
       }
     },
     "265": {
@@ -3829,17 +4035,19 @@
         "def": 8,
         "agi": 7,
         "hp": 0,
-        "ms": 0
+        "ms": 0,
+        "bonusWeight": 0,
+        "shieldBarrier": 0
       }
     },
     "266": {
       "id": 266,
       "type": 22,
       "category": 1,
-      "tier": 1,
+      "tier": 3,
       "weight": 0,
-      "name": "Grey Horse",
-      "desc": "",
+      "name": "Work Horse",
+      "desc": "A friendly and loyal companion that will stay with you through thick and thin in this adventure.",
       "equipmentInfo": {
         "slotType": 5,
         "advantageType": 0,
@@ -3848,20 +4056,19 @@
         "def": 0,
         "agi": 0,
         "hp": 0,
-        "ms": 1
-      },
-      "equipmentInfo3": {
-        "bonusWeight": 40
+        "ms": 1,
+        "bonusWeight": 40,
+        "shieldBarrier": 0
       }
     },
     "267": {
       "id": 267,
       "type": 22,
       "category": 1,
-      "tier": 2,
+      "tier": 5,
       "weight": 0,
-      "name": "White Horse",
-      "desc": "",
+      "name": "Capybara",
+      "desc": "A guardian spirit of gentle strength, the Ancient Capybara carries the memory of the four kingdoms and walks with the calm of a thousand seasons.",
       "equipmentInfo": {
         "slotType": 5,
         "advantageType": 0,
@@ -3869,11 +4076,10 @@
         "atk": 0,
         "def": 0,
         "agi": 0,
-        "hp": 0,
-        "ms": 1
-      },
-      "equipmentInfo3": {
-        "bonusWeight": 80
+        "hp": 50,
+        "ms": 1,
+        "bonusWeight": 80,
+        "shieldBarrier": 0
       }
     },
     "268": {
@@ -4714,6 +4920,570 @@
         "bottom": 9,
         "left": 9,
         "right": 5
+      }
+    },
+    "324": {
+      "id": 324,
+      "type": 7,
+      "category": 1,
+      "tier": 7,
+      "weight": 11,
+      "name": "Waraxe of Frenzy",
+      "desc": "A brutal axe that pulses with chaotic energy, driving its wielder into a whirlwind of unstoppable carnage.",
+      "equipmentInfo": {
+        "slotType": 0,
+        "advantageType": 2,
+        "twoHanded": false,
+        "atk": 156,
+        "def": 25,
+        "agi": 19,
+        "hp": 0,
+        "ms": 0,
+        "bonusWeight": 0,
+        "shieldBarrier": 0
+      }
+    },
+    "325": {
+      "id": 325,
+      "type": 9,
+      "category": 1,
+      "tier": 7,
+      "weight": 22,
+      "name": "Lionsnare",
+      "desc": "A bow strung with the sinew of ancient beasts, said to bring down even the fiercest prey with a single shot.",
+      "equipmentInfo": {
+        "slotType": 0,
+        "advantageType": 3,
+        "twoHanded": true,
+        "atk": 270,
+        "def": 40,
+        "agi": 15,
+        "hp": 0,
+        "ms": 0,
+        "bonusWeight": 0,
+        "shieldBarrier": 0
+      }
+    },
+    "326": {
+      "id": 326,
+      "type": 11,
+      "category": 1,
+      "tier": 7,
+      "weight": 22,
+      "name": "Ruptured Twins",
+      "desc": "A pair of daggers cursed and bound by blood, feeding off the fury of battle and striking with eerie precision.",
+      "equipmentInfo": {
+        "slotType": 0,
+        "advantageType": 3,
+        "twoHanded": true,
+        "atk": 263,
+        "def": 14,
+        "agi": 63,
+        "hp": 0,
+        "ms": 0,
+        "bonusWeight": 0,
+        "shieldBarrier": 0
+      }
+    },
+    "327": {
+      "id": 327,
+      "type": 8,
+      "category": 1,
+      "tier": 7,
+      "weight": 11,
+      "name": "Spear of Blazing Fury",
+      "desc": "Forged in the heart of a fallen star, this spear blazes with searing wrath, leaving scorched trails in its wake.",
+      "equipmentInfo": {
+        "slotType": 0,
+        "advantageType": 1,
+        "twoHanded": false,
+        "atk": 170,
+        "def": 9,
+        "agi": 16,
+        "hp": 0,
+        "ms": 0,
+        "bonusWeight": 0,
+        "shieldBarrier": 0
+      }
+    },
+    "328": {
+      "id": 328,
+      "type": 10,
+      "category": 1,
+      "tier": 7,
+      "weight": 11,
+      "name": "Staff of Adoration",
+      "desc": "An elegant staff imbued with celestial charm, weaving spells that enthrall as much as they destroy.",
+      "equipmentInfo": {
+        "slotType": 0,
+        "advantageType": 3,
+        "twoHanded": false,
+        "atk": 153,
+        "def": 38,
+        "agi": 14,
+        "hp": 0,
+        "ms": 0,
+        "bonusWeight": 0,
+        "shieldBarrier": 0
+      }
+    },
+    "329": {
+      "id": 329,
+      "type": 6,
+      "category": 1,
+      "tier": 7,
+      "weight": 11,
+      "name": "Meteoric Katana",
+      "desc": "This blade, born of the heavens, cuts through armor and air alike with meteoric grace and lethal clarity.",
+      "equipmentInfo": {
+        "slotType": 0,
+        "advantageType": 0,
+        "twoHanded": false,
+        "atk": 161,
+        "def": 28,
+        "agi": 11,
+        "hp": 0,
+        "ms": 0,
+        "bonusWeight": 0,
+        "shieldBarrier": 0
+      }
+    },
+    "330": {
+      "id": 330,
+      "type": 12,
+      "category": 1,
+      "tier": 7,
+      "weight": 8,
+      "name": "Mirror Shield",
+      "desc": "Forged from polished aetherglass, this shield reflects not only blows but the dark intent behind them.",
+      "equipmentInfo": {
+        "slotType": 1,
+        "advantageType": 0,
+        "twoHanded": false,
+        "atk": 8,
+        "def": 105,
+        "agi": 15,
+        "hp": 0,
+        "ms": 0,
+        "bonusWeight": 0,
+        "shieldBarrier": 200
+      }
+    },
+    "331": {
+      "id": 331,
+      "type": 13,
+      "category": 1,
+      "tier": 7,
+      "weight": 7,
+      "name": "Robe of the Royal Assassin",
+      "desc": "Woven from shadows and silken betrayal, this robe grants its wearer an almost spectral presence.",
+      "equipmentInfo": {
+        "slotType": 2,
+        "advantageType": 0,
+        "twoHanded": false,
+        "atk": 19,
+        "def": 10,
+        "agi": 125,
+        "hp": 140,
+        "ms": 0,
+        "bonusWeight": 0,
+        "shieldBarrier": 0
+      }
+    },
+    "332": {
+      "id": 332,
+      "type": 15,
+      "category": 1,
+      "tier": 7,
+      "weight": 5,
+      "name": "Boots of the Royal Assassin",
+      "desc": "Silent as midnight wind, these boots carry their master across rooftops and through bloodied halls unseen.",
+      "equipmentInfo": {
+        "slotType": 4,
+        "advantageType": 0,
+        "twoHanded": false,
+        "atk": 22,
+        "def": 8,
+        "agi": 98,
+        "hp": 0,
+        "ms": 1,
+        "bonusWeight": 0,
+        "shieldBarrier": 0
+      }
+    },
+    "333": {
+      "id": 333,
+      "type": 14,
+      "category": 1,
+      "tier": 7,
+      "weight": 5,
+      "name": "Mask of the Royal Assassin",
+      "desc": "Veiled in mystery, this mask conceals all emotion and reveals nothing but the intent to kill.",
+      "equipmentInfo": {
+        "slotType": 3,
+        "advantageType": 0,
+        "twoHanded": false,
+        "atk": 20,
+        "def": 18,
+        "agi": 90,
+        "hp": 100,
+        "ms": 0,
+        "bonusWeight": 0,
+        "shieldBarrier": 0
+      }
+    },
+    "334": {
+      "id": 334,
+      "type": 16,
+      "category": 1,
+      "tier": 7,
+      "weight": 8,
+      "name": "Mistborn's Leather Armor",
+      "desc": "Crafted in the fog-cloaked wilds, this armor slips through the senses like a phantom mist.",
+      "equipmentInfo": {
+        "slotType": 2,
+        "advantageType": 0,
+        "twoHanded": false,
+        "atk": 22,
+        "def": 70,
+        "agi": 62,
+        "hp": 150,
+        "ms": 0,
+        "bonusWeight": 0,
+        "shieldBarrier": 0
+      }
+    },
+    "335": {
+      "id": 335,
+      "type": 18,
+      "category": 1,
+      "tier": 7,
+      "weight": 6,
+      "name": "Mistborn's Boots",
+      "desc": "These boots leave no trace, stepping as if upon fog, favored by those who walk where no trail dares linger.",
+      "equipmentInfo": {
+        "slotType": 4,
+        "advantageType": 0,
+        "twoHanded": false,
+        "atk": 15,
+        "def": 58,
+        "agi": 55,
+        "hp": 0,
+        "ms": 1,
+        "bonusWeight": 0,
+        "shieldBarrier": 0
+      }
+    },
+    "336": {
+      "id": 336,
+      "type": 17,
+      "category": 1,
+      "tier": 7,
+      "weight": 6,
+      "name": "Mistborn's Helm",
+      "desc": "A helm etched with runes of silence, worn by those who vanish before the echo of battle fades.",
+      "equipmentInfo": {
+        "slotType": 3,
+        "advantageType": 0,
+        "twoHanded": false,
+        "atk": 12,
+        "def": 58,
+        "agi": 58,
+        "hp": 90,
+        "ms": 0,
+        "bonusWeight": 0,
+        "shieldBarrier": 0
+      }
+    },
+    "337": {
+      "id": 337,
+      "type": 19,
+      "category": 1,
+      "tier": 7,
+      "weight": 9,
+      "name": "Kingsguard's Heavy Armor",
+      "desc": "A suit of valor-steeped steel, once donned by the royal vanguard who stood against a thousand foes.",
+      "equipmentInfo": {
+        "slotType": 2,
+        "advantageType": 0,
+        "twoHanded": false,
+        "atk": 16,
+        "def": 120,
+        "agi": 10,
+        "hp": 450,
+        "ms": 0,
+        "bonusWeight": 0,
+        "shieldBarrier": 0
+      }
+    },
+    "338": {
+      "id": 338,
+      "type": 21,
+      "category": 1,
+      "tier": 7,
+      "weight": 7,
+      "name": "Kingsguard's Metal Boots",
+      "desc": "Each step in these iron-forged boots resounds with duty, echoing the march of kings' most loyal defenders.",
+      "equipmentInfo": {
+        "slotType": 4,
+        "advantageType": 0,
+        "twoHanded": false,
+        "atk": 20,
+        "def": 105,
+        "agi": 10,
+        "hp": 0,
+        "ms": 0,
+        "bonusWeight": 0,
+        "shieldBarrier": 0
+      }
+    },
+    "339": {
+      "id": 339,
+      "type": 20,
+      "category": 1,
+      "tier": 7,
+      "weight": 7,
+      "name": "Kingsguard's War Helmet",
+      "desc": "This crowned helm bears the scars of war and the gaze of unwavering honor beneath its steel brow.",
+      "equipmentInfo": {
+        "slotType": 3,
+        "advantageType": 0,
+        "twoHanded": false,
+        "atk": 15,
+        "def": 103,
+        "agi": 7,
+        "hp": 180,
+        "ms": 0,
+        "bonusWeight": 0,
+        "shieldBarrier": 0
+      }
+    },
+    "340": {
+      "id": 340,
+      "type": 10,
+      "category": 1,
+      "tier": 7,
+      "weight": 11,
+      "name": "The Beholder",
+      "desc": "A crimson staff crowned with a serpent’s eye, said to pierce illusions and channel forgotten arcane fury.",
+      "equipmentInfo": {
+        "slotType": 0,
+        "advantageType": 3,
+        "twoHanded": false,
+        "atk": 180,
+        "def": 45,
+        "agi": 15,
+        "hp": 0,
+        "ms": 0,
+        "bonusWeight": 0,
+        "shieldBarrier": 0
+      }
+    },
+    "341": {
+      "id": 341,
+      "type": 16,
+      "category": 1,
+      "tier": 7,
+      "weight": 8,
+      "name": "Scaled Armor of Kalyndra",
+      "desc": "Forged from the Great Serpent’s back, this armor bends like leather but deflects blades like steel.",
+      "equipmentInfo": {
+        "slotType": 2,
+        "advantageType": 0,
+        "twoHanded": false,
+        "atk": 32,
+        "def": 85,
+        "agi": 77,
+        "hp": 150,
+        "ms": 0,
+        "bonusWeight": 0,
+        "shieldBarrier": 0
+      }
+    },
+    "342": {
+      "id": 342,
+      "type": 18,
+      "category": 1,
+      "tier": 7,
+      "weight": 6,
+      "name": "Boots of the Great Serpent",
+      "desc": "Lined with scaled hide and silent as a stalking serpent, these boots carry their wearer with eerie grace.",
+      "equipmentInfo": {
+        "slotType": 4,
+        "advantageType": 0,
+        "twoHanded": false,
+        "atk": 23,
+        "def": 75,
+        "agi": 70,
+        "hp": 0,
+        "ms": 1,
+        "bonusWeight": 0,
+        "shieldBarrier": 0
+      }
+    },
+    "343": {
+      "id": 343,
+      "type": 17,
+      "category": 1,
+      "tier": 7,
+      "weight": 6,
+      "name": "Helm of the Great Serpent",
+      "desc": "Shaped from Kalyndra’s crown, this helm sharpens the senses and imbues its bearer with an aura of primal dread.",
+      "equipmentInfo": {
+        "slotType": 3,
+        "advantageType": 0,
+        "twoHanded": false,
+        "atk": 22,
+        "def": 73,
+        "agi": 73,
+        "hp": 90,
+        "ms": 0,
+        "bonusWeight": 0,
+        "shieldBarrier": 0
+      }
+    },
+    "344": {
+      "id": 344,
+      "type": 23,
+      "category": 2,
+      "tier": 4,
+      "weight": 1,
+      "name": "Essence of Stillness",
+      "desc": "A glowing orb, pulsing like a heartbeat in the snow. It holds the Capybara’s patience and watchfulness.",
+      "resourceInfo": {
+        "type": 6
+      }
+    },
+    "345": {
+      "id": 345,
+      "type": 23,
+      "category": 2,
+      "tier": 4,
+      "weight": 1,
+      "name": "Essence of Flow",
+      "desc": "A wisp of energy that dances and swirls. It holds the Capybara’s adaptability and inner strength.",
+      "resourceInfo": {
+        "type": 6
+      }
+    },
+    "346": {
+      "id": 346,
+      "type": 23,
+      "category": 2,
+      "tier": 4,
+      "weight": 1,
+      "name": "Essence of Flame",
+      "desc": "A burning core of golden-red light. It holds the Capybara’s courage and unwavering will.",
+      "resourceInfo": {
+        "type": 6
+      }
+    },
+    "347": {
+      "id": 347,
+      "type": 23,
+      "category": 2,
+      "tier": 4,
+      "weight": 1,
+      "name": "Essence of Harmony",
+      "desc": "A green core infused with natural energy. It holds the Capybara’s bond with the world and its tranquil wisdom.",
+      "resourceInfo": {
+        "type": 6
+      }
+    },
+    "348": {
+      "id": 348,
+      "type": 23,
+      "category": 2,
+      "tier": 7,
+      "weight": 1,
+      "name": "Venombloom Petal",
+      "desc": "A rare, thorned petal infused with corrosive nectar, used in potent poisons and nature-based enchantments.",
+      "resourceInfo": {
+        "type": 6
+      }
+    },
+    "349": {
+      "id": 349,
+      "type": 23,
+      "category": 2,
+      "tier": 7,
+      "weight": 1,
+      "name": "Phantom Waterglide",
+      "desc": "A ribbon of living water that never dries. This material is prized by alchemists for elemental rituals.",
+      "resourceInfo": {
+        "type": 6
+      }
+    },
+    "350": {
+      "id": 350,
+      "type": 23,
+      "category": 2,
+      "tier": 7,
+      "weight": 1,
+      "name": "Fractured Heartshard",
+      "desc": "This frozen and pulsating crystal is said to be the frozen heartbeat of the mountain itself.",
+      "resourceInfo": {
+        "type": 6
+      }
+    },
+    "351": {
+      "id": 351,
+      "type": 23,
+      "category": 2,
+      "tier": 7,
+      "weight": 1,
+      "name": "Molten Core",
+      "desc": "A searing-hot ember encased in obsidian that burns and gnaws forever, unless sealed in enchanted stone.",
+      "resourceInfo": {
+        "type": 6
+      }
+    },
+    "352": {
+      "id": 352,
+      "type": 23,
+      "category": 2,
+      "tier": 7,
+      "weight": 1,
+      "name": "Eye of Kalyndra",
+      "desc": "A glowing, slit-pupiled gem, said to grant visions of truths best left unseen.",
+      "resourceInfo": {
+        "type": 6
+      }
+    },
+    "353": {
+      "id": 353,
+      "type": 23,
+      "category": 2,
+      "tier": 7,
+      "weight": 1,
+      "name": "Kalyndra's Ridgeplate",
+      "desc": "A thick, flexible scale-plated fragment from the serpent’s back. Tougher than tempered steel, but much lighter.",
+      "resourceInfo": {
+        "type": 6
+      }
+    },
+    "354": {
+      "id": 354,
+      "type": 23,
+      "category": 2,
+      "tier": 7,
+      "weight": 1,
+      "name": "Fangroot",
+      "desc": "A long, dark fang with faint green veins running along its edge.",
+      "resourceInfo": {
+        "type": 6
+      }
+    },
+    "355": {
+      "id": 355,
+      "type": 23,
+      "category": 2,
+      "tier": 7,
+      "weight": 1,
+      "name": "Heart of Venom",
+      "desc": "A pulsing core-like fragment, tinted deep purple and green.",
+      "resourceInfo": {
+        "type": 6
       }
     }
   }
