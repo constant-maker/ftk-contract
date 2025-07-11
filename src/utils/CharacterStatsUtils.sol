@@ -130,7 +130,7 @@ library CharacterStatsUtils {
     }
 
     CharCurrentStatsData memory characterCurrentStats = CharCurrentStats.get(characterId);
-    uint32 shieldBarrier = CharCStats2.getShieldBarrier(characterId);
+    uint32 shieldBarrier = CharCStats2.getBarrier(characterId);
     EquipmentInfoData memory equipmentInfo = _getSnapshotEquipmentStats(characterId, slotType, itemId, isRemoved);
     EquipmentInfo2V2Data memory equipmentInfo2V2 = EquipmentInfo2V2.get(itemId);
 
@@ -174,7 +174,7 @@ library CharacterStatsUtils {
 
     CharCurrentStats.set(characterId, characterCurrentStats);
     if (shouldUpdateShieldBarrier) {
-      CharCStats2.setShieldBarrier(characterId, shieldBarrier);
+      CharCStats2.setBarrier(characterId, shieldBarrier);
     }
   }
 

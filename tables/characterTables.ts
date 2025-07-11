@@ -65,7 +65,7 @@ const CHARACTER_TABLES: any = {
   CharCStats2: { // Character Current Stats 2
     schema: {
       characterId: "uint256",
-      shieldBarrier: "uint32", // shield barrier for equipment
+      barrier: "uint32", // shield barrier
     },
     key: ['characterId'],
   },

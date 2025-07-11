@@ -16,8 +16,8 @@ import {
   BossInfoData,
   PvE,
   PvEData,
-  PvEExtra,
-  PvEExtraData,
+  PvEExtraV2,
+  PvEExtraV2Data,
   TileInfo3,
   CharFund
 } from "@codegen/index.sol";
@@ -368,10 +368,7 @@ contract PvESystemBossTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFix
     vm.stopPrank();
 
     EquipData[] memory equipDatas = new EquipData[](1);
-    equipDatas[0] = EquipData({
-      slotType: SlotType(1),
-      equipmentId: 2
-    });
+    equipDatas[0] = EquipData({ slotType: SlotType(1), equipmentId: 2 });
 
     vm.startPrank(player);
     world.app__gearUpEquipments(characterId, equipDatas);

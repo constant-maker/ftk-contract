@@ -16,6 +16,7 @@ func loadTileInfos(kingdomId int) ([]common.TileInfo, error) {
 		l      = zap.S().With("func", "loadTileInfos")
 	)
 	fileName := fmt.Sprintf("./tileInfos_%d.json", kingdomId)
+	fmt.Println("FILE NAME", fileName)
 	if _, err := os.Stat(fileName); os.IsNotExist(err) {
 		fmt.Println("file does not exist.")
 		return nil, nil

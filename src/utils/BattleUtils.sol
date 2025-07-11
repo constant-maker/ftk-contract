@@ -84,7 +84,7 @@ library BattleUtils {
     CharCurrentStatsData memory characterCurrentStats = CharCurrentStats.get(characterId);
     characterBattleInfo = BattleInfo({
       id: characterId,
-      barrier: CharCStats2.getShieldBarrier(characterId),
+      barrier: CharCStats2.getBarrier(characterId),
       hp: characterHp,
       agi: characterCurrentStats.agi,
       atk: characterCurrentStats.atk,

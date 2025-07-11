@@ -858,6 +858,125 @@
         "boostPercent": 20,
         "lastDefeatedTime": 0
       }
+    },
+    "38": {
+      "id": 38,
+      "name": "Virelantis",
+      "desc": "Whispered in druidic tongues as the guardian of the Deepgrove, Virelantis slithers through undergrowth with leafy grace and a venomous bite that saps the will to fight.",
+      "kingdom": 1,
+      "tier": 5,
+      "isBoss": false,
+      "levels": [100, 120],
+      "grow": 19,
+      "skillIds": [13, 0, 0, 56, 0],
+      "itemIds": [348],
+      "itemAmounts": [1],
+      "exp": 25,
+      "perkExp": 5,
+      "stats": {
+        "hp": 75,
+        "atk": 15,
+        "def": 3,
+        "agi": 7,
+        "sp": 3
+      }
+    },
+    "39": {
+      "id": 39,
+      "name": "Tidelure",
+      "desc": "A lithe predator of water and mist, Tidelure flows as much as it strikes, drowning intruders in illusions and waves alike.",
+      "kingdom": 2,
+      "tier": 5,
+      "isBoss": false,
+      "levels": [100, 120],
+      "grow": 19,
+      "skillIds": [13, 0, 0, 56, 0],
+      "itemIds": [349],
+      "itemAmounts": [1],
+      "exp": 25,
+      "perkExp": 5,
+      "stats": {
+        "hp": 75,
+        "atk": 15,
+        "def": 3,
+        "agi": 7,
+        "sp": 3
+      }
+    },
+    "40": {
+      "id": 40,
+      "name": "Shardback",
+      "desc": "A colossal glacier-born golem, the Shardback’s body is encrusted with sentient ice crystals that pulse with ancient frostbound rage.",
+      "kingdom": 3,
+      "tier": 5,
+      "isBoss": false,
+      "levels": [100, 120],
+      "grow": 19,
+      "skillIds": [13, 0, 0, 56, 0],
+      "itemIds": [350],
+      "itemAmounts": [1],
+      "exp": 25,
+      "perkExp": 5,
+      "stats": {
+        "hp": 75,
+        "atk": 15,
+        "def": 3,
+        "agi": 7,
+        "sp": 3
+      }
+    },
+    "41": {
+      "id": 41,
+      "name": "Ignarok",
+      "desc": "Forged in the molten core beneath Sunscar’s volcanic heart, Ignarok is fire incarnate—its every step leaving rivers of flame in its wake.",
+      "kingdom": 4,
+      "tier": 5,
+      "isBoss": false,
+      "levels": [100, 120],
+      "grow": 19,
+      "skillIds": [13, 0, 0, 56, 0],
+      "itemIds": [351],
+      "itemAmounts": [1],
+      "exp": 25,
+      "perkExp": 5,
+      "stats": {
+        "hp": 75,
+        "atk": 15,
+        "def": 3,
+        "agi": 7,
+        "sp": 3
+      }
+    },
+    "42": {
+      "id": 42,
+      "name": "Kalyndra the Great Serpent",
+      "desc": "Nothing dares to touch this molten menace, even the mighty descendants of dragons. Dissolves anything unlucky enough to cross its path, even its lesser puru slime monsters.",
+      "kingdom": 0,
+      "tier": 5,
+      "isBoss": true,
+      "levels": [70, 70],
+      "grow": 0,
+      "skillIds": [50, 53, 0, 0, 51],
+      "itemIds": [352, 353, 354, 355],
+      "itemAmounts": [1, 1, 1, 1],
+      "exp": 500,
+      "perkExp": 300,
+      "stats": {
+        "hp": 7500,
+        "atk": 115,
+        "def": 20,
+        "agi": 40,
+        "sp": 5
+      },
+      "bossInfo": {
+        "barrier": 100,
+        "hp": 7500,
+        "crystal": 500,
+        "respawnDuration": 21600,
+        "berserkHpThreshold": 30,
+        "boostPercent": 20,
+        "lastDefeatedTime": 0
+      }
     }
   }
 }

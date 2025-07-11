@@ -7,15 +7,16 @@ import {
   Monster,
   PvE,
   PvEData,
-  PvEExtra,
-  PvEExtraData,
+  PvEExtraV2,
+  PvEExtraV2Data,
   BossInfo,
   BossInfoData,
   MonsterStats,
   MonsterStatsData,
   CharCurrentStats,
   CharStats,
-  Item
+  Item,
+  CharCStats2
 } from "@codegen/index.sol";
 import { BattleInfo, BattleUtils } from "./BattleUtils.sol";
 import { CharacterFundUtils } from "./CharacterFundUtils.sol";
@@ -240,7 +241,11 @@ library BattlePvEUtils {
   }
 
   function storePvEExtraData(uint256 characterId, uint256 rewardItemId, uint32 rewardItemAmount) public {
-    PvEExtraData memory pveExtra = PvEExtraData({ itemId: rewardItemId, itemAmount: rewardItemAmount });
-    PvEExtra.set(characterId, pveExtra);
+    PvEExtraV2Data memory pveExtra = PvEExtraV2Data({
+      itemId: rewardItemId,
+      itemAmount: rewardItemAmount,
+      characterBarrier: CharCStats2.getBarrier(characterId)
+    });
+    PvEExtraV2.set(characterId, pveExtra);
   }
 }

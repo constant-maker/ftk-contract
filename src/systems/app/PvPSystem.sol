@@ -12,14 +12,15 @@ import {
   PvPData,
   PvPChallenge,
   PvPChallengeData,
-  PvPExtra,
-  PvPExtraData,
+  PvPExtraV2,
+  PvPExtraV2Data,
   PvPBattleCounter,
   TileInfo3,
   CharInfo,
   CharStats2,
   AllianceV2,
-  AllianceV2Data
+  AllianceV2Data,
+  CharCStats2
 } from "@codegen/index.sol";
 import { BattleInfo, BattleUtils } from "@utils/BattleUtils.sol";
 import { DailyQuestUtils, InventoryItemUtils, CharacterPositionUtils } from "@utils/index.sol";
@@ -197,12 +198,16 @@ contract PvPSystem is System, CharacterAccessControl {
   function _storePvPExtraData(uint256 pvpId, uint256 attackerId, uint256 defenderId) private {
     uint256[6] memory attackerEquipmentIds = BattleUtils.getCharacterEquipments(attackerId);
     uint256[6] memory defenderEquipmentIds = BattleUtils.getCharacterEquipments(defenderId);
-    PvPExtraData memory pvpExtra = PvPExtraData({
+    uint32[2] memory barriers;
+    barriers[0] = CharCStats2.getBarrier(attackerId);
+    barriers[1] = CharCStats2.getBarrier(defenderId);
+    PvPExtraV2Data memory pvpExtra = PvPExtraV2Data({
       characterLevels: [CharStats.getLevel(attackerId), CharStats.getLevel(defenderId)],
       characterSps: [CharStats.getSp(attackerId), CharStats.getSp(defenderId)],
+      barriers: barriers,
       equipmentIds: _mergeEquipmentIds(attackerEquipmentIds, defenderEquipmentIds)
     });
-    PvPExtra.set(pvpId, pvpExtra);
+    PvPExtraV2.set(pvpId, pvpExtra);
   }
 
   function _mergeEquipmentIds(
