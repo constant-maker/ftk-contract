@@ -24,6 +24,10 @@ library CharacterItemUtils {
   /// @dev Check whether character perk level is enough to equip item
   function checkCharacterPerkLevelByItemId(uint256 characterId, uint256 itemId) internal view {
     ItemData memory item = Item.get(itemId);
+    if (item.itemType == ItemType.Mount) {
+      // Mounts do not require perk level check
+      return;
+    }
     checkCharacterPerkLevel(characterId, item);
   }
 
