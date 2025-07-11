@@ -959,22 +959,22 @@
       "skillIds": [65, 0, 66, 0, 67],
       "itemIds": [352, 353, 354, 355],
       "itemAmounts": [1, 1, 1, 1],
-      "exp": 1000,
-      "perkExp": 600,
+      "exp": 30000,
+      "perkExp": 15000,
       "stats": {
-        "hp": 15000,
-        "atk": 155,
-        "def": 30,
-        "agi": 55,
+        "hp": 30000,
+        "atk": 300,
+        "def": 85,
+        "agi": 120,
         "sp": 5
       },
       "bossInfo": {
         "barrier": 200,
-        "hp": 15000,
+        "hp": 30000,
         "crystal": 1000,
-        "respawnDuration": 43200,
-        "berserkHpThreshold": 30,
-        "boostPercent": 30,
+        "respawnDuration": 64800,
+        "berserkHpThreshold": 33,
+        "boostPercent": 40,
         "lastDefeatedTime": 0
       }
     }
