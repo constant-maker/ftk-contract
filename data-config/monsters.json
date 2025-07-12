@@ -198,13 +198,13 @@
         "sp": 5
       },
       "bossInfo": {
-        "barrier": 100,
+        "barrier": 200,
         "hp": 15000,
         "crystal": 1000,
         "respawnDuration": 43200,
-        "berserkHpThreshold": 30,
-        "boostPercent": 20,
-        "lastDefeatedTime": 0
+        "berserkHpThreshold": 33,
+        "boostPercent": 25,
+        "lastDefeatedTime": 1752282919
       }
     },
     "10": {
@@ -964,18 +964,18 @@
       "stats": {
         "hp": 30000,
         "atk": 300,
-        "def": 85,
-        "agi": 120,
+        "def": 90,
+        "agi": 150,
         "sp": 5
       },
       "bossInfo": {
-        "barrier": 200,
+        "barrier": 500,
         "hp": 30000,
         "crystal": 1000,
         "respawnDuration": 64800,
         "berserkHpThreshold": 33,
         "boostPercent": 40,
-        "lastDefeatedTime": 0
+        "lastDefeatedTime": 1752257662
       }
     }
   }
