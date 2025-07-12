@@ -1243,9 +1243,7 @@
       "rewardItemAmounts": [
         1
       ],
-      "requiredDoneQuestIds": [
-        11
-      ],
+      "requiredDoneQuestIds": [],
       "contributeDetails": [
         {
           "itemId": 126,
@@ -1272,7 +1270,7 @@
         1
       ],
       "requiredDoneQuestIds": [
-        6
+        57
       ],
       "contributeDetails": [
         {
@@ -1300,7 +1298,7 @@
         1
       ],
       "requiredDoneQuestIds": [
-        16
+        58
       ],
       "contributeDetails": [
         {
@@ -1328,7 +1326,7 @@
         1
       ],
       "requiredDoneQuestIds": [
-        1
+        59
       ],
       "contributeDetails": [
         {
