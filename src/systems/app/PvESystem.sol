@@ -91,6 +91,8 @@ contract PvESystem is System, CharacterAccessControl {
         CharAchievementUtils.addAchievement(characterId, 3); // defeated the first boss
         if (monsterId == 9) {
           CharAchievementUtils.addAchievement(characterId, 4); // defeated the Ignis
+        } else if (monsterId == 42) {
+          CharAchievementUtils.addAchievement(characterId, 11); // defeated Kalyndra the Great Serpent 
         }
       }
       if (_tryToLevelUp(characterId)) return; // if level up success character hp will be recover to max hp
@@ -99,6 +101,10 @@ contract PvESystem is System, CharacterAccessControl {
   }
 
   function _updateCharacterExp(uint256 characterId, uint32 gainedExp, uint32 gainedPerkExp) private {
+    // EVENT: x2 perk exp and exp, will remove later
+    gainedExp *= 2;
+    gainedPerkExp *= 2;
+    // update character exp and perk exp
     CharCurrentStats.setExp(characterId, CharCurrentStats.getExp(characterId) + gainedExp);
     SlotType grindSlot = CharGrindSlot.get(characterId);
     uint256 grindEquipmentId = CharEquipment.getEquipmentId(characterId, grindSlot);

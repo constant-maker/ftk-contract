@@ -85,7 +85,10 @@ library FarmingUtils {
   /// @dev Calculate resource perk exp
   function calculateResourcePerkExp(uint256 resourceItemId) public view returns (uint32 perkExp) {
     uint32 tier = uint32(Item.getTier(resourceItemId));
-    return Config.BASE_RESOURCE_PERK_EXP * tier + (tier - 1) * 2; // all tier starts from 1
+    perkExp = Config.BASE_RESOURCE_PERK_EXP * tier + (tier - 1) * 2; // all tier starts from 1
+    // EVENT: x1.5 perk exp, will remove later
+    perkExp = uint32(perkExp * 15 / 10);
+    return perkExp;
   }
 
   /// @dev Validate resource and tool
