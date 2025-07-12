@@ -43,8 +43,8 @@ type EquipmentInfo struct {
 	Agi           int  `json:"agi"`
 	Hp            int  `json:"hp"`
 	Ms            int  `json:"ms"`
-	BonusWeight   int  `json:"bonusWeight"`
-	ShieldBarrier int  `json:"shieldBarrier"`
+	BonusWeight   int  `json:"weight"`
+	ShieldBarrier int  `json:"barrier"`
 }
 
 type HealingInfo struct {
