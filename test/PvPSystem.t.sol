@@ -21,12 +21,13 @@ import {
   AllianceV2,
   CharCurrentStats,
   TileInventory,
-  DropResource
+  DropResource,
+  KingSetting
 } from "@codegen/index.sol";
 import { EntityType, SlotType, ItemType, ZoneType } from "@codegen/common.sol";
 import { Errors } from "@common/Errors.sol";
 import { Config } from "@common/Config.sol";
-import { CharacterPositionUtils, InventoryItemUtils, InventoryEquipmentUtils } from "@utils/index.sol";
+import { CharacterPositionUtils, InventoryItemUtils, InventoryEquipmentUtils, CharAchievementUtils } from "@utils/index.sol";
 import { CharStats2 } from "@codegen/tables/CharStats2.sol";
 import { LootItems } from "@systems/app/TileSystem.sol";
 import { EquipData } from "@systems/app/EquipmentSystem.sol";
@@ -591,6 +592,85 @@ contract PvPSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
     uint32 newWeightChar2 = CharCurrentStats.getWeight(characterId_2);
     console2.log("new weight char 2 in black zone", newWeightChar2);
     assertEq(newWeightChar2, weightChar2 + 3 + 10 * 2); // 3 for equipped weapon + 10 items (weight 2 each)
+  }
+
+  function test_KingSettingAndAchievement() external {
+    // update char 2 stats
+    vm.startPrank(worldDeployer);
+    CharCurrentStats.setAtk(characterId_1, 5_000);
+    CharCurrentStats.setAgi(characterId_1, 5_000);
+
+    TileInfo3.setZoneType(20, -32, ZoneType.Green);
+    TileInfo3.setKingdomId(20, -32, 1);
+
+    AllianceV2.set(1, 2, true, true);
+    vm.stopPrank();
+
+    _moveToTheLocation(20, -32);
+    // fight in safe zone, no king setting
+    vm.startPrank(player_1);
+    world.app__battlePvP(characterId_1, characterId_2);
+    vm.stopPrank();
+    assertEq(CharStats2.get(characterId_1), 950);
+
+    vm.startPrank(worldDeployer);
+    TileInfo3.setKingdomId(20, -32, 2);
+
+    CharCurrentStats.setAtk(characterId_3, 9_000);
+    CharCurrentStats.setAgi(characterId_3, 9_000);
+    vm.stopPrank();
+    // fight in ally safe zone, no king setting
+    vm.startPrank(player_3);
+    world.app__battlePvP(characterId_3, characterId_1);
+    vm.stopPrank();
+
+    assertEq(CharStats2.get(characterId_3), 950);
+
+    // fight in safe zone with king setting
+    vm.startPrank(worldDeployer);
+    TileInfo3.setKingdomId(20, -32, 1);
+    KingSetting.setPvpFamePenalty(1, 10);
+    vm.stopPrank();
+    _moveToTheLocation(20, -32);
+    vm.startPrank(player_1);
+    world.app__battlePvP(characterId_1, characterId_2);
+    vm.stopPrank();
+    assertEq(CharStats2.get(characterId_1), 940);
+
+    // fight in death zone with king setting
+    vm.startPrank(worldDeployer);
+    TileInfo3.setZoneType(20, -32, ZoneType.Black);
+    CharCurrentStats.setAtk(characterId_3, 9);
+    CharCurrentStats.setAgi(characterId_3, 9);
+    vm.stopPrank();
+    _moveToTheLocation(20, -32);
+
+    vm.startPrank(player_1);
+    world.app__battlePvP(characterId_1, characterId_3);
+    vm.stopPrank();
+    assertEq(CharStats2.get(characterId_1), 930);
+
+    // test achievement
+    vm.startPrank(worldDeployer);
+    AllianceV2.deleteRecord(1, 2);
+    CharStats2.setFame(characterId_3, 100_000);
+    vm.stopPrank();
+
+    uint32 char1Fame = CharStats2.get(characterId_1);
+
+    for (uint256 i = 0; i < 500; i++) {
+      _moveToTheLocation(20, -32);
+      vm.startPrank(player_1);
+      world.app__battlePvP(characterId_1, characterId_3);
+      vm.stopPrank();
+    }
+
+    assertEq(CharStats2.get(characterId_1), char1Fame + 500 * 20); // 20 fame per fight
+    assertTrue(CharAchievementUtils.hasAchievement(characterId_1, 12));
+    assertTrue(CharAchievementUtils.hasAchievement(characterId_1, 13));
+    assertTrue(CharAchievementUtils.hasAchievement(characterId_1, 14));
+    assertTrue(CharAchievementUtils.hasAchievement(characterId_1, 15));
+    assertTrue(CharAchievementUtils.hasAchievement(characterId_1, 16));
   }
 
   function _moveToTheLocation(int32 _x, int32 _y) private {

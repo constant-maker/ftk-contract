@@ -11,7 +11,8 @@ import {
   CharInfo,
   MarketFee,
   AllianceV2,
-  AllianceV2Data
+  AllianceV2Data,
+  KingSetting
 } from "@codegen/index.sol";
 import { CharAchievementUtils } from "@utils/index.sol";
 import { Errors } from "@common/index.sol";
@@ -147,6 +148,24 @@ contract KingSystem is CharacterAccessControl, System {
       }
       MarketFee.set(charKingdomId, kingdomId, fee);
     }
+  }
+
+  function setPvPFamePenalty(uint256 characterId, uint8 penalty) public onlyAuthorizedWallet(characterId) {
+    uint8 charKingdomId = CharInfo.getKingdomId(characterId);
+    _mustBeKing(charKingdomId, characterId);
+    if (penalty > 100) {
+      revert Errors.KingSystem_InvalidFamePenalty(penalty);
+    }
+    KingSetting.setPvpFamePenalty(charKingdomId, penalty);
+  }
+
+  function setCaptureTileFamePenalty(uint256 characterId, uint8 penalty) public onlyAuthorizedWallet(characterId) {
+    uint8 charKingdomId = CharInfo.getKingdomId(characterId);
+    _mustBeKing(charKingdomId, characterId);
+    if (penalty > 100) {
+      revert Errors.KingSystem_InvalidFamePenalty(penalty);
+    }
+    KingSetting.setCaptureTilePenalty(charKingdomId, penalty);
   }
 
   function _mustBeKing(uint8 charKingdomId, uint256 characterId) private view {

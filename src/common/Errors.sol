@@ -270,4 +270,5 @@ library Errors {
   error KingSystem_NotKing(uint256 characterId);
   error KingSystem_InvalidKingdomId(uint8 kingdomId);
   error KingSystem_InvalidMarketFee(uint8 fee);
+  error KingSystem_InvalidFamePenalty(uint8 famePenalty);
 }

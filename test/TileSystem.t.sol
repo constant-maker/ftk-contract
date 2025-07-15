@@ -16,6 +16,7 @@ import { CharacterFundUtils } from "@utils/CharacterFundUtils.sol";
 import { InventoryItemUtils } from "@utils/InventoryItemUtils.sol";
 import { TestHelper } from "./TestHelper.sol";
 import { console2 } from "forge-std/console2.sol";
+import { KingSetting, AllianceV2 } from "@codegen/index.sol";
 
 contract TileSystemTest is WorldFixture, SpawnSystemFixture, MoveSystemFixture {
   address player = makeAddr("player");
@@ -120,5 +121,58 @@ contract TileSystemTest is WorldFixture, SpawnSystemFixture, MoveSystemFixture {
     assertEq(CharFund.getGold(characterId), 0);
 
     assertEq(CharStats2.getFame(characterId), 1040);
+  }
+
+  function test_OccupyAllianceType() external {
+    vm.warp(block.timestamp + 100_000);
+    _goUp(player, characterId);
+
+    vm.startPrank(worldDeployer);
+    InventoryItemUtils.addItem(characterId, woodTier1_Id, 20);
+    InventoryItemUtils.addItem(characterId, stoneTier1_Id, 20);
+    InventoryItemUtils.addItem(characterId, fishTier1_Id, 20);
+
+    InventoryItemUtils.addItem(characterId, oreTier1_Id, 30);
+    InventoryItemUtils.addItem(characterId, wheatTier1_Id, 30);
+    InventoryItemUtils.addItem(characterId, berriesTier1_Id, 30);
+
+    CharFund.setGold(characterId, 20);
+
+    KingSetting.setCaptureTilePenalty(CharInfo.getKingdomId(characterId), 100);
+    AllianceV2.set(1, 2, true, true);
+    vm.stopPrank();
+
+    uint32 charFame = CharStats2.getFame(characterId);
+
+    vm.startPrank(player);
+    world.app__occupyTile(characterId);
+    vm.stopPrank();
+    assertEq(CharOtherItem.getAmount(characterId, oreTier1_Id), 20);
+    assertEq(CharOtherItem.getAmount(characterId, wheatTier1_Id), 20);
+    assertEq(CharOtherItem.getAmount(characterId, berriesTier1_Id), 20);
+    assertEq(CharFund.getGold(characterId), 15);
+
+    uint32 newFame = CharStats2.getFame(characterId);
+    assertEq(newFame, charFame + 10); // got 10 fame for occupying tile
+
+    _goUp(player, characterId);
+    vm.warp(block.timestamp + 100_000);
+    CharPositionData memory charPosition = CharacterPositionUtils.currentPosition(characterId);
+    vm.startPrank(worldDeployer);
+    TileInfo3.setKingdomId(charPosition.x, charPosition.y, 2);
+    vm.stopPrank();
+    vm.startPrank(player);
+    world.app__occupyTile(characterId);
+    vm.stopPrank();
+    assertEq(CharOtherItem.getAmount(characterId, woodTier1_Id), 10);
+    assertEq(CharOtherItem.getAmount(characterId, stoneTier1_Id), 10);
+    assertEq(CharOtherItem.getAmount(characterId, fishTier1_Id), 10);
+    assertEq(CharFund.getGold(characterId), 10);
+    charPosition = CharacterPositionUtils.currentPosition(characterId);
+    console2.log("position x", charPosition.x);
+    console2.log("position y", charPosition.y);
+
+    newFame = CharStats2.getFame(characterId);
+    assertEq(newFame, charFame + 10 - 100); // penalty 100 fame for occupying tile in alliance territory
   }
 }

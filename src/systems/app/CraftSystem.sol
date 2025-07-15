@@ -53,7 +53,8 @@ contract CraftSystem is System, CharacterAccessControl {
         revert Errors.CraftSystem_InvalidRecipeData(craftItemId);
       }
       for (uint256 i = 0; i < lenPerkTypes; i++) {
-        uint8 currentPerk = CharPerk.getLevel(characterId, ItemType(recipe.perkTypes[i])) + 1; // +1 because perk start from 0
+        uint8 currentPerk = CharPerk.getLevel(characterId, ItemType(recipe.perkTypes[i])) + 1; // +1 because perk start
+          // from 0
         if (currentPerk < recipe.requiredPerkLevels[i]) {
           revert Errors.CraftSystem_PerkLevelIsNotEnough(characterId, craftItemId);
         }

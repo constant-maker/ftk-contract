@@ -66,6 +66,66 @@
         "agi": 15
       },
       "color": "#e0c000"
+    },
+    "12": {
+      "id": 12,
+      "name": "Bloodmarked",
+      "content": "A warrior freshly baptized in battle, known for leaving trails of blood in the dust of their duels.",
+      "instruction": "Kill 20 enemies in PvP combat.",
+      "stats": {
+        "atk": 1,
+        "def": 0,
+        "agi": 0
+      },
+      "color": "#e0c000"
+    },
+    "13": {
+      "id": 13,
+      "name": "Renowned Duelist",
+      "content": "Feared in the open field and narrow halls alike, this fighter ends lives with ruthless precision and an unflinching gaze.",
+      "instruction": "Kill 50 enemies in PvP combat.",
+      "stats": {
+        "atk": 2,
+        "def": 0,
+        "agi": 0
+      },
+      "color": "#e0c000"
+    },
+    "14": {
+      "id": 14,
+      "name": "Warlust Ascendant",
+      "content": "No longer just a soldier, you're now a rising force of violence and hunger, driven by the thrill of conquest and the silence of the fallen.",
+      "instruction": "Kill 100 enemies in PvP combat.",
+      "stats": {
+        "atk": 3,
+        "def": 0,
+        "agi": 0
+      },
+      "color": "#e0c000"
+    },
+    "15": {
+      "id": 15,
+      "name": "The Great Reaper",
+      "content": "Your true name is rarely mentioned. The legend of your bloody footsteps is spoken with unease in war camps and city squares.",
+      "instruction": "Kill 250 enemies in PvP combat.",
+      "stats": {
+        "atk": 5,
+        "def": 0,
+        "agi": 0
+      },
+      "color": "#e0c000"
+    },
+    "16": {
+      "id": 16,
+      "name": "Death Incarnate",
+      "content": "You're the God of Death, the incarnate of destruction, a force of nature that cannot be stopped. You are simply unmatched.",
+      "instruction": "Kill 500 enemies in PvP combat.",
+      "stats": {
+        "atk": 10,
+        "def": 0,
+        "agi": 0
+      },
+      "color": "#e0c000"
     }
   }
 }

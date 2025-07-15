@@ -10,7 +10,8 @@ import {
   Tool2Data,
   TileInfo3,
   TileInfo3Data,
-  ResourceInfo
+  ResourceInfo,
+  ExpAmpConfig
 } from "@codegen/index.sol";
 import { ResourceType, ItemType } from "@codegen/common.sol";
 import { Errors } from "@common/Errors.sol";
@@ -86,8 +87,11 @@ library FarmingUtils {
   function calculateResourcePerkExp(uint256 resourceItemId) public view returns (uint32 perkExp) {
     uint32 tier = uint32(Item.getTier(resourceItemId));
     perkExp = Config.BASE_RESOURCE_PERK_EXP * tier + (tier - 1) * 2; // all tier starts from 1
-    // EVENT: x1.5 perk exp, will remove later
-    perkExp = uint32(perkExp * 15 / 10);
+    uint32 farmingPerkAmp = ExpAmpConfig.getFarmingPerkAmp();
+    uint256 ampExpireTime = ExpAmpConfig.getExpireTime();
+    if (block.timestamp <= ampExpireTime) {
+      perkExp = (perkExp * farmingPerkAmp) / 100; // apply farming perk amp
+    }
     return perkExp;
   }
 

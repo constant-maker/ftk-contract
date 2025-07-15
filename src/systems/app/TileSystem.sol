@@ -11,7 +11,8 @@ import {
   CharPosition,
   CharPositionData,
   CharInfo,
-  CharStats2
+  CharStats2,
+  KingSetting
 } from "@codegen/index.sol";
 import { ZoneType } from "@codegen/common.sol";
 import {
@@ -19,7 +20,8 @@ import {
   CharacterFundUtils,
   CharacterPositionUtils,
   TileInventoryUtils,
-  InventoryEquipmentUtils
+  InventoryEquipmentUtils,
+  KingdomUtils
 } from "@utils/index.sol";
 import { Errors, Config } from "@common/index.sol";
 import { LootItems } from "./TileSystem.sol";
@@ -63,6 +65,7 @@ contract TileSystem is System, CharacterAccessControl {
     for (uint256 i = 0; i < itemIds.length; i++) {
       amounts[i] = TILE_OCCUPATION_RESOURCE_AMOUNT;
     }
+    bool isAlliance = KingdomUtils.getIsAlliance(kingdomId, tileKingdomId);
     InventoryItemUtils.removeItems(characterId, itemIds, amounts);
     // Set new tile data
     TileInfo3.setKingdomId(x, y, kingdomId);
@@ -71,7 +74,15 @@ contract TileSystem is System, CharacterAccessControl {
     if (currentFame == 0) {
       currentFame = 1000; // default
     }
-    CharStats2.setFame(characterId, currentFame + 10);
+    if (isAlliance) {
+      uint16 captureTilePenalty = KingSetting.getCaptureTilePenalty(kingdomId);
+      if (captureTilePenalty > 0) {
+        currentFame = currentFame > captureTilePenalty ? currentFame - captureTilePenalty : 1; // min fame is 1
+      }
+    } else {
+      currentFame += 10;
+    }
+    CharStats2.setFame(characterId, currentFame);
     TileInfo3.setOccupiedTime(x, y, block.timestamp);
   }
 

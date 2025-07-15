@@ -1,4 +1,4 @@
-const VOTE_TABLES: any = {
+const KING_TABLES: any = {
   KingElection: {
     schema: {
       kingdomId: 'uint8', // kingdom id
@@ -26,6 +26,14 @@ const VOTE_TABLES: any = {
     },
     key: ['characterId'],
   },
+  KingSetting: {
+    schema: {
+      kingdomId: 'uint8',
+      pvpFamePenalty: 'uint16', // penalty for killing ally
+      captureTilePenalty: 'uint16', // penalty for capturing tile of ally kingdom
+    },
+    key: ['kingdomId'],
+  },
 }
 
-export default VOTE_TABLES;
+export default KING_TABLES;

@@ -491,8 +491,8 @@
         "agi": 0,
         "hp": 50,
         "ms": 0,
-        "bonusWeight": 10,
-        "shieldBarrier": 20
+        "weight": 10,
+        "barrier": 20
       }
     },
     "42": {

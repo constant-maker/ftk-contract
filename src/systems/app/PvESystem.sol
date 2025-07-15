@@ -14,7 +14,9 @@ import {
   Monster,
   Equipment,
   Item,
-  PvEExtraV2
+  PvEExtraV2,
+  ExpAmpConfig,
+  ExpAmpConfigData
 } from "@codegen/index.sol";
 import { CharacterPositionUtils, CharacterPerkUtils } from "@utils/index.sol";
 import { InventoryItemUtils } from "@utils/InventoryItemUtils.sol";
@@ -92,7 +94,7 @@ contract PvESystem is System, CharacterAccessControl {
         if (monsterId == 9) {
           CharAchievementUtils.addAchievement(characterId, 4); // defeated the Ignis
         } else if (monsterId == 42) {
-          CharAchievementUtils.addAchievement(characterId, 11); // defeated Kalyndra the Great Serpent 
+          CharAchievementUtils.addAchievement(characterId, 11); // defeated Kalyndra the Great Serpent
         }
       }
       if (_tryToLevelUp(characterId)) return; // if level up success character hp will be recover to max hp
@@ -101,9 +103,11 @@ contract PvESystem is System, CharacterAccessControl {
   }
 
   function _updateCharacterExp(uint256 characterId, uint32 gainedExp, uint32 gainedPerkExp) private {
-    // EVENT: x2 perk exp and exp, will remove later
-    gainedExp *= 2;
-    gainedPerkExp *= 2;
+    ExpAmpConfigData memory expAmpConfig = ExpAmpConfig.get();
+    if (block.timestamp <= expAmpConfig.expireTime) {
+      gainedExp = (gainedExp * expAmpConfig.pveExpAmp) / 100;
+      gainedPerkExp = (gainedPerkExp * expAmpConfig.pvePerkAmp) / 100;
+    }
     // update character exp and perk exp
     CharCurrentStats.setExp(characterId, CharCurrentStats.getExp(characterId) + gainedExp);
     SlotType grindSlot = CharGrindSlot.get(characterId);

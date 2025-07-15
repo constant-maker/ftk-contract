@@ -51,6 +51,13 @@ const BATTLE_TABLES: any = {
     },
     key: [],
   },
+  PvPEnemyCounter: {
+    schema: {
+      characterId: "uint256",
+      counter: "uint256",
+    },
+    key: ['characterId'],
+  },
   PvE: {
     schema: {
       characterId: "uint256",

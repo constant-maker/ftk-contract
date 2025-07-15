@@ -20,13 +20,15 @@ import {
   CharStats2,
   AllianceV2,
   AllianceV2Data,
-  CharCStats2
+  CharCStats2,
+  KingSetting,
+  PvPEnemyCounter
 } from "@codegen/index.sol";
 import { BattleInfo, BattleUtils } from "@utils/BattleUtils.sol";
-import { DailyQuestUtils, InventoryItemUtils, CharacterPositionUtils } from "@utils/index.sol";
+import { DailyQuestUtils, InventoryItemUtils, CharacterPositionUtils, CharAchievementUtils } from "@utils/index.sol";
 import { CharacterStateType, ZoneType } from "@codegen/common.sol";
-import { Errors } from "@common/Errors.sol";
-import { Config } from "@common/Config.sol";
+import { Errors, Config } from "@common/index.sol";
+import { ZoneInfo, KingdomUtils } from "@utils/KingdomUtils.sol";
 
 contract PvPSystem is System, CharacterAccessControl {
   /// @dev character init a battle with other player
@@ -72,31 +74,31 @@ contract PvPSystem is System, CharacterAccessControl {
     private
   {
     if (attackerHp != 0 && defenderHp != 0) {
-      // no need to update fame if both characters are alive
-      return;
+      return; // both alive, no fame change
     }
     uint32 attackerFame = CharStats2.getFame(attackerId);
-    uint8 attackerKingdomId = CharInfo.getKingdomId(attackerId);
-    uint8 defenderKingdomId = CharInfo.getKingdomId(defenderId);
-    uint8 tileKingdomId = TileInfo3.getKingdomId(position.x, position.y);
-    ZoneType zoneType = TileInfo3.getZoneType(position.x, position.y); // for defender
-    if (zoneType == ZoneType.Black && defenderKingdomId == tileKingdomId) {
-      zoneType = ZoneType.Red;
-    } else if (zoneType != ZoneType.Black) {
-      zoneType = (defenderKingdomId == tileKingdomId) ? ZoneType.Green : ZoneType.Red;
-    }
-    AllianceV2Data memory allianceData = AllianceV2.get(attackerKingdomId, defenderKingdomId);
-    bool isAlliance = allianceData.isAlliance && allianceData.isApproved;
-    if (!isAlliance) {
-      allianceData = AllianceV2.get(defenderKingdomId, attackerKingdomId);
-      isAlliance = allianceData.isAlliance && allianceData.isApproved;
-    }
-    if (isAlliance && attackerKingdomId == tileKingdomId) {
+    ZoneInfo memory zoneInfo = KingdomUtils.getZoneTypeFull(position.x, position.y, attackerId, defenderId);
+    bool isAlliance = KingdomUtils.getIsAlliance(zoneInfo.attackerKingdomId, zoneInfo.defenderKingdomId);
+
+    ZoneType zoneType = zoneInfo.zoneType;
+
+    // Apply alliance adjustment to zoneType (only if attacker owns tile)
+    if (isAlliance && zoneInfo.attackerKingdomId == zoneInfo.tileKingdomId) {
       zoneType = ZoneType.Green;
     }
-    bool isSameSide = (attackerKingdomId == defenderKingdomId && tileKingdomId == attackerKingdomId) || isAlliance;
+    bool isSameSide = (
+      zoneInfo.attackerKingdomId == zoneInfo.defenderKingdomId && zoneInfo.tileKingdomId == zoneInfo.attackerKingdomId
+    ) || isAlliance;
+
+    uint16 famePenalty = KingSetting.getPvpFamePenalty(zoneInfo.attackerKingdomId);
+    if (famePenalty > 0 && isSameSide) {
+      attackerFame = attackerFame > famePenalty ? attackerFame - famePenalty : 1; // min fame is 1
+      CharStats2.set(attackerId, attackerFame);
+      return;
+    }
+
     if (isSameSide && defenderHp == 0 && zoneType == ZoneType.Green) {
-      attackerFame = attackerFame > 50 ? attackerFame - 50 : 1; // min is 1
+      attackerFame = attackerFame > 50 ? attackerFame - 50 : 1; // min fame is 1
       CharStats2.set(attackerId, attackerFame);
       return;
     }
@@ -111,6 +113,29 @@ contract PvPSystem is System, CharacterAccessControl {
       defenderFame -= 20;
       CharStats2.set(defenderId, defenderFame);
       CharStats2.set(attackerId, attackerFame);
+      _checkAndGiveAchievement(attackerId);
+    }
+  }
+
+  function _checkAndGiveAchievement(uint256 characterId) private {
+    uint256 currentKills = PvPEnemyCounter.get(characterId);
+    uint256 newKills = currentKills + 1;
+    PvPEnemyCounter.set(characterId, newKills);
+
+    if (newKills >= 20) {
+      CharAchievementUtils.addAchievement(characterId, 12);
+    }
+    if (newKills >= 50) {
+      CharAchievementUtils.addAchievement(characterId, 13);
+    }
+    if (newKills >= 100) {
+      CharAchievementUtils.addAchievement(characterId, 14);
+    }
+    if (newKills >= 250) {
+      CharAchievementUtils.addAchievement(characterId, 15);
+    }
+    if (newKills >= 500) {
+      CharAchievementUtils.addAchievement(characterId, 16);
     }
   }
 
