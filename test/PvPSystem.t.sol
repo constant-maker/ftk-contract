@@ -27,7 +27,9 @@ import {
 import { EntityType, SlotType, ItemType, ZoneType } from "@codegen/common.sol";
 import { Errors } from "@common/Errors.sol";
 import { Config } from "@common/Config.sol";
-import { CharacterPositionUtils, InventoryItemUtils, InventoryEquipmentUtils, CharAchievementUtils } from "@utils/index.sol";
+import {
+  CharacterPositionUtils, InventoryItemUtils, InventoryEquipmentUtils, CharAchievementUtils
+} from "@utils/index.sol";
 import { CharStats2 } from "@codegen/tables/CharStats2.sol";
 import { LootItems } from "@systems/app/TileSystem.sol";
 import { EquipData } from "@systems/app/EquipmentSystem.sol";
@@ -597,8 +599,8 @@ contract PvPSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
   function test_KingSettingAndAchievement() external {
     // update char 2 stats
     vm.startPrank(worldDeployer);
-    CharCurrentStats.setAtk(characterId_1, 5_000);
-    CharCurrentStats.setAgi(characterId_1, 5_000);
+    CharCurrentStats.setAtk(characterId_1, 5000);
+    CharCurrentStats.setAgi(characterId_1, 5000);
 
     TileInfo3.setZoneType(20, -32, ZoneType.Green);
     TileInfo3.setKingdomId(20, -32, 1);
@@ -616,8 +618,8 @@ contract PvPSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
     vm.startPrank(worldDeployer);
     TileInfo3.setKingdomId(20, -32, 2);
 
-    CharCurrentStats.setAtk(characterId_3, 9_000);
-    CharCurrentStats.setAgi(characterId_3, 9_000);
+    CharCurrentStats.setAtk(characterId_3, 9000);
+    CharCurrentStats.setAgi(characterId_3, 9000);
     vm.stopPrank();
     // fight in ally safe zone, no king setting
     vm.startPrank(player_3);
@@ -635,7 +637,7 @@ contract PvPSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
     vm.startPrank(player_1);
     world.app__battlePvP(characterId_1, characterId_2);
     vm.stopPrank();
-    assertEq(CharStats2.get(characterId_1), 940);
+    assertEq(CharStats2.get(characterId_1), 900);
 
     // fight in death zone with king setting
     vm.startPrank(worldDeployer);
@@ -648,7 +650,7 @@ contract PvPSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
     vm.startPrank(player_1);
     world.app__battlePvP(characterId_1, characterId_3);
     vm.stopPrank();
-    assertEq(CharStats2.get(characterId_1), 930);
+    assertEq(CharStats2.get(characterId_1), 890);
 
     // test achievement
     vm.startPrank(worldDeployer);

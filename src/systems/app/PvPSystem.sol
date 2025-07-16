@@ -83,25 +83,31 @@ contract PvPSystem is System, CharacterAccessControl {
     ZoneType zoneType = zoneInfo.zoneType;
 
     // Apply alliance adjustment to zoneType (only if attacker owns tile)
-    if (isAlliance && zoneInfo.attackerKingdomId == zoneInfo.tileKingdomId) {
+    if (
+      TileInfo3.getZoneType(position.x, position.y) != ZoneType.Black && isAlliance
+        && zoneInfo.attackerKingdomId == zoneInfo.tileKingdomId
+    ) {
       zoneType = ZoneType.Green;
     }
     bool isSameSide = (
       zoneInfo.attackerKingdomId == zoneInfo.defenderKingdomId && zoneInfo.tileKingdomId == zoneInfo.attackerKingdomId
     ) || isAlliance;
 
-    uint16 famePenalty = KingSetting.getPvpFamePenalty(zoneInfo.attackerKingdomId);
-    if (famePenalty > 0 && isSameSide) {
-      attackerFame = attackerFame > famePenalty ? attackerFame - famePenalty : 1; // min fame is 1
-      CharStats2.set(attackerId, attackerFame);
-      return;
+    if (isSameSide && defenderHp == 0) {
+      if (zoneType == ZoneType.Green) {
+        attackerFame = attackerFame > 50 ? attackerFame - 50 : 1; // min fame is 1
+        CharStats2.set(attackerId, attackerFame);
+        return;
+      } else {
+        uint16 famePenalty = KingSetting.getPvpFamePenalty(zoneInfo.attackerKingdomId);
+        if (famePenalty > 0) {
+          attackerFame = attackerFame > famePenalty ? attackerFame - famePenalty : 1; // min fame is 1
+          CharStats2.set(attackerId, attackerFame);
+          return;
+        }
+      }
     }
 
-    if (isSameSide && defenderHp == 0 && zoneType == ZoneType.Green) {
-      attackerFame = attackerFame > 50 ? attackerFame - 50 : 1; // min fame is 1
-      CharStats2.set(attackerId, attackerFame);
-      return;
-    }
     uint32 defenderFame = CharStats2.getFame(defenderId);
     if (attackerHp == 0 && attackerFame >= 1020) {
       attackerFame -= 20;
