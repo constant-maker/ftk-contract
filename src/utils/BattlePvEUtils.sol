@@ -3,6 +3,7 @@ pragma solidity >=0.8.24;
 import {
   CharPositionData,
   CharBattle,
+  MonsterLocation,
   MonsterLocationData,
   Monster,
   PvE,
@@ -27,6 +28,7 @@ import { Config } from "@common/Config.sol";
 
 library BattlePvEUtils {
   uint8 public constant BERSERK_SP_BONUS = 5;
+  uint256 constant KALYNDRA_ID = 42;
 
   /// @dev perform and return the result of the fight
   /// hps is final hp of character and monster
@@ -133,9 +135,20 @@ library BattlePvEUtils {
     int32 x = charPosition.x;
     int32 y = charPosition.y;
     if (monsterHp == 0) {
+      CharacterFundUtils.increaseCrystal(characterId, BossInfo.getCrystal(monsterId, x, y));
       BossInfo.setHp(monsterId, x, y, MonsterStats.getHp(monsterId));
       BossInfo.setLastDefeatedTime(monsterId, x, y, block.timestamp);
-      CharacterFundUtils.increaseCrystal(characterId, BossInfo.getCrystal(monsterId, x, y));
+      if (monsterId == KALYNDRA_ID) { // Kalyndra the Great Serpent
+        // switch boss position
+        int32 newX = x == 18 ? int32(-28) : int32(18);
+        int32 newY = y == -1 ? int32(17) : int32(-1);
+        MonsterLocationData memory currentMonsterLocation = MonsterLocation.get(x, y, monsterId);
+        MonsterLocation.deleteRecord(x, y, monsterId); // delete old location
+        MonsterLocation.set(newX, newY, monsterId, currentMonsterLocation);
+        BossInfoData memory currentBossInfo = BossInfo.get(monsterId, x, y);
+        BossInfo.deleteRecord(monsterId, x, y); // delete old boss info
+        BossInfo.set(monsterId, newX, newY, currentBossInfo);
+      }
     } else {
       BossInfo.setHp(monsterId, x, y, monsterHp);
     }

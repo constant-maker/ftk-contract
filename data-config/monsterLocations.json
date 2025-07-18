@@ -26676,13 +26676,8 @@
     ],
     "-28_17": [
       {
-        "monsterId": 15,
-        "level": 50,
-        "advantageType": 3
-      },
-      {
-        "monsterId": 16,
-        "level": 59,
+        "monsterId": 42,
+        "level": 85,
         "advantageType": 2
       }
     ],
