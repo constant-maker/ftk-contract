@@ -119,7 +119,9 @@ contract PvPSystem is System, CharacterAccessControl {
       defenderFame -= 20;
       CharStats2.set(defenderId, defenderFame);
       CharStats2.set(attackerId, attackerFame);
-      _checkAndGiveAchievement(attackerId);
+      if (zoneInfo.attackerKingdomId != zoneInfo.defenderKingdomId) {
+        _checkAndGiveAchievement(attackerId);
+      }
     }
   }
 

@@ -90,9 +90,9 @@ contract KingSystem is CharacterAccessControl, System {
     if (candidateIndex == type(uint256).max) {
       revert Errors.KingSystem_InvalidCandidate(candidateId);
     }
-
-    KingElection.updateVotesReceived(kingdomId, candidateIndex, kingElection.votesReceived[candidateIndex] + fame);
-    CharVote.set(characterId, candidateId, fame, block.timestamp);
+    uint32 votePower = fame - 1000; // 1000 fame is the base vote power
+    KingElection.updateVotesReceived(kingdomId, candidateIndex, kingElection.votesReceived[candidateIndex] + votePower);
+    CharVote.set(characterId, candidateId, votePower, block.timestamp);
   }
 
   function setAlliance(uint256 characterId, uint8 otherKingdomId, bool value) public onlyAuthorizedWallet(characterId) {

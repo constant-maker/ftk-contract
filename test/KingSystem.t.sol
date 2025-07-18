@@ -106,9 +106,9 @@ contract KingSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixtur
     world.app__voteKing(voterId, candidateId);
     vm.stopPrank();
     k1Election = KingElection.get(candidateKingdomId);
-    assertEq(k1Election.votesReceived[0], 1050);
+    assertEq(k1Election.votesReceived[0], 50);
     CharVoteData memory charVote = CharVote.get(voterId);
-    assertEq(charVote.votePower, 1050);
+    assertEq(charVote.votePower, 50);
     assertEq(charVote.candidateId, candidateId);
     uint256 currentElectionTimestamp = k1Election.timestamp;
 
