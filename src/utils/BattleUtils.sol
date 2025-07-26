@@ -16,16 +16,18 @@ import {
   CharInfo,
   DropResource,
   CharPositionData,
-  CharInventory
+  CharInventory,
+  CharState
 } from "@codegen/index.sol";
 import { PvE } from "@codegen/tables/PvE.sol";
-import { AdvantageType, SlotType, EffectType, ZoneType } from "@codegen/common.sol";
+import { AdvantageType, SlotType, EffectType, ZoneType, CharacterStateType } from "@codegen/common.sol";
 import { Config } from "@common/Config.sol";
 import { Errors } from "@common/Errors.sol";
 import { CharacterEquipmentUtils } from "./CharacterEquipmentUtils.sol";
 import { TileInventoryUtils } from "./TileInventoryUtils.sol";
 import { InventoryItemUtils } from "./InventoryItemUtils.sol";
 import { InventoryEquipmentUtils } from "./InventoryEquipmentUtils.sol";
+import { CharacterPositionUtils } from "./CharacterPositionUtils.sol";
 
 struct BattleInfo {
   uint256 id;
@@ -256,7 +258,14 @@ library BattleUtils {
     return equipmentIds;
   }
 
+  /// @dev apply loss to character, move back to capital and reset character state
+  /// @param characterId character id
+  /// @param position character position
+  /// @notice This function is used when character lost in battle, it will reset character state
+  /// and move character back to capital. It will also drop all resources and equipments in inventory
+  /// to the tile where character lost.
   function applyLoss(uint256 characterId, CharPositionData memory position) public {
+    // check if inventory should be dropped
     int32 x = position.x;
     int32 y = position.y;
     ZoneType zoneType = TileInfo3.getZoneType(x, y);
@@ -281,5 +290,9 @@ library BattleUtils {
       InventoryEquipmentUtils.removeEquipments(characterId, equipmentIds, true);
       TileInventoryUtils.addEquipments(x, y, equipmentIds);
     }
+
+    // move back to city and reset character state to standby
+    CharacterPositionUtils.moveToCapital(characterId);
+    CharState.setState(characterId, CharacterStateType.Standby);
   }
 }

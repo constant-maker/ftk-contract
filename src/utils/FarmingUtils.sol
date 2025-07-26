@@ -76,8 +76,8 @@ library FarmingUtils {
           revert Errors.FarmingSystem_ExceedFarmingQuota(x, y, resourceItemId);
         }
         // Decrease quota and store updated value
-        tileInfo.farmingQuotas[i]--;
-        TileInfo3.setFarmingQuotas(x, y, tileInfo.farmingQuotas);
+        uint16 newQuota = tileInfo.farmingQuotas[i] - 1;
+        TileInfo3.updateFarmingQuotas(x, y, i, newQuota);
         break;
       }
     }

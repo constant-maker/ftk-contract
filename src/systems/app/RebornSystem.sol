@@ -47,6 +47,9 @@ contract RebornSystem is System, CharacterAccessControl {
     charStats.statPoint = 20 * rebornNum;
     CharStats.set(characterId, charStats);
 
+    // add all achievement stats to character
+    CharAchievementUtils.addAllAchievementStats(characterId);
+
     // reset base stats
     CharBaseStats.set(characterId, 0, 0, 0);
 

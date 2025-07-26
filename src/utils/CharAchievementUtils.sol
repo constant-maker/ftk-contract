@@ -42,6 +42,15 @@ library CharAchievementUtils {
     return index != 0;
   }
 
+  /// @dev Add all achievement stats to character
+  /// @notice This function is used to add all achievement stats to character when the character is reborn
+  function addAllAchievementStats(uint256 characterId) public {
+    uint256[] memory achievementIds = CharAchievement.getAchievementIds(characterId);
+    for (uint256 i = 0; i < achievementIds.length; i++) {
+      _updateStats(characterId, achievementIds[i], false);
+    }
+  }
+
   function _updateStats(uint256 characterId, uint256 achievementId, bool isRemove) private {
     AchievementData memory achievement = Achievement.get(achievementId);
     CharCurrentStatsData memory charCurrentStats = CharCurrentStats.get(characterId);

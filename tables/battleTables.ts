@@ -35,12 +35,13 @@ const BATTLE_TABLES: any = {
     },
     key: ['id'],
   },
-  PvPExtraV2: {
+  PvPExtraV3: {
     schema: {
       pvpId: "uint256",
       characterLevels: "uint16[2]",
       characterSps: "uint8[2]",
       barriers: "uint32[2]",
+      fames: "uint32[2]",
       equipmentIds: "uint256[12]",
     },
     key: ['pvpId'],
