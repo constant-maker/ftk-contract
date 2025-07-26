@@ -12,8 +12,8 @@ import {
   PvPData,
   PvPChallenge,
   PvPChallengeData,
-  PvPExtraV2,
-  PvPExtraV2Data,
+  PvPExtraV3,
+  PvPExtraV3Data,
   PvPBattleCounter,
   TileInfo3,
   CharInfo,
@@ -46,13 +46,13 @@ contract PvPSystem is System, CharacterAccessControl {
     if (attackerPosition.x != defenderPosition.x || attackerPosition.y != defenderPosition.y) {
       revert Errors.PvP_NotSamePosition(attackerPosition.x, attackerPosition.y, defenderPosition.x, defenderPosition.y);
     }
-    // _checkIsReadyToBattle(attackerId, defenderId);
+    _checkIsReadyToBattle(attackerId, defenderId);
 
     (uint32 attackerHp, uint32 defenderHp) = _battle(attackerId, defenderId, false);
 
     _updateCharacterFame(attackerId, attackerHp, defenderId, defenderHp, attackerPosition);
-    _handleBattleResult(attackerId, attackerHp, attackerPosition);
-    _handleBattleResult(defenderId, defenderHp, defenderPosition);
+    _handleBattleResult(attackerId, attackerHp, attackerPosition); // handle attacker result
+    _handleBattleResult(defenderId, defenderHp, defenderPosition); // handle defender result
 
     DailyQuestUtils.updatePvpCount(attackerId);
   }
@@ -149,9 +149,8 @@ contract PvPSystem is System, CharacterAccessControl {
 
   function _handleBattleResult(uint256 characterId, uint32 characterHp, CharPositionData memory position) private {
     if (characterHp == 0) {
-      CharacterPositionUtils.moveToCapital(characterId);
-      CharCurrentStats.setHp(characterId, CharStats.getHp(characterId)); // set character hp to max hp
       BattleUtils.applyLoss(characterId, position);
+      CharCurrentStats.setHp(characterId, CharStats.getHp(characterId)); // set character hp to max hp
     } else {
       CharCurrentStats.setHp(characterId, characterHp);
     }
@@ -234,13 +233,17 @@ contract PvPSystem is System, CharacterAccessControl {
     uint32[2] memory barriers;
     barriers[0] = CharCStats2.getBarrier(attackerId);
     barriers[1] = CharCStats2.getBarrier(defenderId);
-    PvPExtraV2Data memory pvpExtra = PvPExtraV2Data({
+    uint32[2] memory fames;
+    fames[0] = CharStats2.getFame(attackerId);
+    fames[1] = CharStats2.getFame(defenderId);
+    PvPExtraV3Data memory pvpExtra = PvPExtraV3Data({
       characterLevels: [CharStats.getLevel(attackerId), CharStats.getLevel(defenderId)],
       characterSps: [CharStats.getSp(attackerId), CharStats.getSp(defenderId)],
       barriers: barriers,
+      fames: fames,
       equipmentIds: _mergeEquipmentIds(attackerEquipmentIds, defenderEquipmentIds)
     });
-    PvPExtraV2.set(pvpId, pvpExtra);
+    PvPExtraV3.set(pvpId, pvpExtra);
   }
 
   function _mergeEquipmentIds(
@@ -312,16 +315,16 @@ contract PvPSystem is System, CharacterAccessControl {
     return skills;
   }
 
-  // function _checkIsReadyToBattle(uint256 attackerId, uint256 defenderId) private view {
-  //   uint256 nextAttackTime = CharBattle.getPvpLastAtkTime(attackerId) + Config.ATTACK_COOLDOWN;
-  //   if (block.timestamp < nextAttackTime) {
-  //     revert Errors.PvP_NotReadyToAttack(nextAttackTime);
-  //   }
-  //   uint256 nextTimeToBeAttacked = CharBattle.getPvpLastDefTime(defenderId) + Config.PROTECTION_DURATION;
-  //   if (block.timestamp < nextTimeToBeAttacked) {
-  //     revert Errors.PvP_NotReadyToBeAttacked(nextTimeToBeAttacked);
-  //   }
-  // }
+  function _checkIsReadyToBattle(uint256 attackerId, uint256 defenderId) private view {
+    uint256 nextAttackTime = CharBattle.getPvpLastAtkTime(attackerId) + Config.ATTACK_COOLDOWN;
+    if (block.timestamp < nextAttackTime) {
+      revert Errors.PvP_NotReadyToAttack(nextAttackTime);
+    }
+    // uint256 nextTimeToBeAttacked = CharBattle.getPvpLastDefTime(defenderId) + Config.PROTECTION_DURATION;
+    // if (block.timestamp < nextTimeToBeAttacked) {
+    //   revert Errors.PvP_NotReadyToBeAttacked(nextTimeToBeAttacked);
+    // }
+  }
 
   function _getOriginHps(
     uint256 attackerId,

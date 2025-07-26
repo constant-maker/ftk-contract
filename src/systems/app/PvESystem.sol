@@ -70,7 +70,6 @@ contract PvESystem is System, CharacterAccessControl {
     if (characterHp == 0) {
       // character lost
       BattleUtils.applyLoss(characterId, characterPosition);
-      CharacterPositionUtils.moveToCapital(characterId);
       characterHp = CharStats.getHp(characterId); // set character hp to max hp
       CharCurrentStats.setExp(characterId, CharCurrentStats.getExp(characterId) * 75 / 100); // penalty 25% current exp
       if (PvEExtraV2.getItemId(characterId) != 0) {

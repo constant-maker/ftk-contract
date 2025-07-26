@@ -539,6 +539,7 @@ contract PvPSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
 
     console2.log("move to black zone");
     _moveToTheLocation(21, -32); // BLACK zone
+    vm.warp(block.timestamp + 3);
     vm.startPrank(player_2);
     world.app__battlePvP(characterId_2, characterId_1);
     vm.stopPrank();
@@ -610,6 +611,7 @@ contract PvPSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
 
     _moveToTheLocation(20, -32);
     // fight in safe zone, no king setting
+    vm.warp(block.timestamp + 3);
     vm.startPrank(player_1);
     world.app__battlePvP(characterId_1, characterId_2);
     vm.stopPrank();
@@ -622,6 +624,7 @@ contract PvPSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
     CharCurrentStats.setAgi(characterId_3, 9000);
     vm.stopPrank();
     // fight in ally safe zone, no king setting
+    vm.warp(block.timestamp + 3);
     vm.startPrank(player_3);
     world.app__battlePvP(characterId_3, characterId_1);
     vm.stopPrank();
@@ -634,6 +637,7 @@ contract PvPSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
     KingSetting.setPvpFamePenalty(1, 10);
     vm.stopPrank();
     _moveToTheLocation(20, -32);
+    vm.warp(block.timestamp + 3);
     vm.startPrank(player_1);
     world.app__battlePvP(characterId_1, characterId_2);
     vm.stopPrank();
@@ -647,6 +651,7 @@ contract PvPSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
     vm.stopPrank();
     _moveToTheLocation(20, -32);
 
+    vm.warp(block.timestamp + 3);
     vm.startPrank(player_1);
     world.app__battlePvP(characterId_1, characterId_3);
     vm.stopPrank();
@@ -662,6 +667,7 @@ contract PvPSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
 
     for (uint256 i = 0; i < 500; i++) {
       _moveToTheLocation(20, -32);
+      vm.warp(block.timestamp + 3);
       vm.startPrank(player_1);
       world.app__battlePvP(characterId_1, characterId_3);
       vm.stopPrank();

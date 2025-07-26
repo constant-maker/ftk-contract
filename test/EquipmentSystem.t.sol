@@ -8,11 +8,14 @@ import {
   CharInventory,
   CharPerk,
   CharStats,
+  CharStatsData,
   CharCurrentStats,
+  CharCurrentStatsData,
   CharBaseStats,
   CharGrindSlot,
   Equipment,
-  EquipmentInfo
+  EquipmentInfo,
+  Item
 } from "@codegen/index.sol";
 import { SlotType, ItemType } from "@codegen/common.sol";
 import { EquipData } from "@systems/app/EquipmentSystem.sol";
@@ -47,6 +50,7 @@ contract EquipmentSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemF
   }
 
   function test_ShouldUnequipEquipments() external {
+    console2.log("init attack", CharCurrentStats.getAtk(characterId));
     EquipData[] memory equipDatas = new EquipData[](1);
     equipDatas[0] = EquipData({ slotType: SlotType.Weapon, equipmentId: 1 });
     vm.startPrank(player);
@@ -95,7 +99,7 @@ contract EquipmentSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemF
     vm.startPrank(player);
     world.app__gearUpEquipments(characterId, equipDatas);
     vm.stopPrank();
-    assertEq(currentAtk + 1, CharCurrentStats.getAtk(characterId)); // atk decrease 1
+    assertEq(currentAtk + 2, CharCurrentStats.getAtk(characterId)); // atk increased by 2
   }
 
   function test_ShouldReplaceEquipment() external {
@@ -109,7 +113,7 @@ contract EquipmentSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemF
     console2.log("prevAtk", prevAtk);
 
     vm.startPrank(worldDeployer);
-    CharacterItemUtils.addNewItem(characterId, 32, 1); // add bow tier 1
+    CharacterItemUtils.addNewItem(characterId, 35, 1); // add bow tier 1
     CharPerk.setLevel(characterId, ItemType.Bow, 2); // set perk level for bow to level 2
     vm.stopPrank();
 
@@ -124,7 +128,7 @@ contract EquipmentSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemF
 
     uint16 currentAtk = CharCurrentStats.getAtk(characterId);
     console2.log("currentAtk", currentAtk);
-    assertEq(currentAtk, prevAtk + 2);
+    assertEq(currentAtk, prevAtk + 3);
   }
 
   function test_ShouldUpdateGrindSlot() external {
@@ -135,6 +139,80 @@ contract EquipmentSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemF
     vm.stopPrank();
     SlotType currentGrindSlot = CharGrindSlot.get(characterId);
     assertTrue(currentGrindSlot == SlotType.Armor);
+  }
+
+  function test_UnequipAndEquipSameTx() external {
+    vm.startPrank(worldDeployer);
+    CharacterItemUtils.addNewItem(characterId, 56, 1); // headgear - 2
+    CharacterItemUtils.addNewItem(characterId, 72, 1); // shield - 3
+    CharacterItemUtils.addNewItem(characterId, 262, 1); // sword - 4
+    CharacterItemUtils.addNewItem(characterId, 266, 1); // mount - 1 / - 5
+    CharacterItemUtils.addNewItem(characterId, 219, 1); // axe - weapon - 6
+    CharacterItemUtils.addNewItem(characterId, 245, 1); // headgear - 7
+    CharacterItemUtils.addNewItem(characterId, 267, 1); // mount - 2 - 8
+    for (uint8 i = 0; i < 25; i++) {
+      CharPerk.setLevel(characterId, ItemType(i), 9);
+    }
+    CharStats.setLevel(characterId, 90);
+    vm.stopPrank();
+
+    uint256[] memory equipmentIds = CharInventory.getEquipmentIds(characterId);
+    // for (uint256 i = 0; i < equipmentIds.length; i++) {
+      // console2.log("equipment id", equipmentIds[i]);
+      // uint256 itemId = Equipment.getItemId(equipmentIds[i]);
+      // console2.log("item id", itemId);
+      // console2.log("item name", Item.getName(itemId));
+    // }
+    CharCurrentStatsData memory currentStats = CharCurrentStats.get(characterId);
+    CharStatsData memory stats = CharStats.get(characterId);
+    console2.log("current atk", currentStats.atk);
+    console2.log("current def", currentStats.def);
+    console2.log("current hp", currentStats.hp);
+    console2.log("max hp", stats.hp);
+    console2.log("current ms", currentStats.ms);
+    console2.log("max weight", stats.weight);
+
+    EquipData[] memory equipDatas = new EquipData[](4);
+    equipDatas[0] = EquipData({ slotType: SlotType.Headgear, equipmentId: 2 });
+    equipDatas[1] = EquipData({ slotType: SlotType.SubWeapon, equipmentId: 3 });
+    equipDatas[2] = EquipData({ slotType: SlotType.Weapon, equipmentId: 4 });
+    equipDatas[3] = EquipData({ slotType: SlotType.Mount, equipmentId: 5 });
+
+    vm.startPrank(player);
+    world.app__gearUpEquipments(characterId, equipDatas);
+    vm.stopPrank();
+
+    currentStats = CharCurrentStats.get(characterId);
+    stats = CharStats.get(characterId);
+
+    console2.log("current atk", currentStats.atk);
+    console2.log("current def", currentStats.def);
+    console2.log("current hp", currentStats.hp);
+    console2.log("max hp", stats.hp);
+    console2.log("current ms", currentStats.ms);
+    console2.log("max weight", stats.weight);
+    assertEq(stats.weight, 240);
+
+    equipDatas = new EquipData[](6);
+    equipDatas[0] = EquipData({ slotType: SlotType.Mount, equipmentId: 8 });
+    equipDatas[1] = EquipData({ slotType: SlotType.Headgear, equipmentId: 0 });
+    equipDatas[2] = EquipData({ slotType: SlotType.Weapon, equipmentId: 0 });
+    // equipDatas[3] = EquipData({ slotType: SlotType.Mount, equipmentId: 0 });
+    equipDatas[3] = EquipData({ slotType: SlotType.Headgear, equipmentId: 7 });
+    equipDatas[4] = EquipData({ slotType: SlotType.Weapon, equipmentId: 6 });
+
+    vm.startPrank(player);
+    world.app__gearUpEquipments(characterId, equipDatas);
+    vm.stopPrank();
+    currentStats = CharCurrentStats.get(characterId);
+    stats = CharStats.get(characterId);
+    console2.log("current atk", currentStats.atk);
+    console2.log("current def", currentStats.def);
+    console2.log("current hp", currentStats.hp);
+    console2.log("max hp", stats.hp);
+    console2.log("current ms", currentStats.ms);
+    console2.log("max weight", stats.weight);
+    assertEq(stats.weight, 280);
   }
 
   function test_Revert_GearUpNonexistentEquipment() external {

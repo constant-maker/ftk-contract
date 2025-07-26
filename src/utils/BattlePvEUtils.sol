@@ -138,7 +138,8 @@ library BattlePvEUtils {
       CharacterFundUtils.increaseCrystal(characterId, BossInfo.getCrystal(monsterId, x, y));
       BossInfo.setHp(monsterId, x, y, MonsterStats.getHp(monsterId));
       BossInfo.setLastDefeatedTime(monsterId, x, y, block.timestamp);
-      if (monsterId == KALYNDRA_ID) { // Kalyndra the Great Serpent
+      if (monsterId == KALYNDRA_ID) {
+        // Kalyndra the Great Serpent
         // switch boss position
         int32 newX = x == 18 ? int32(-28) : int32(18);
         int32 newY = y == -1 ? int32(17) : int32(-1);

@@ -171,7 +171,7 @@ contract LevelSystem is System, CharacterAccessControl {
   function _calculateRequiredPerkExp(uint8 currentLevel, uint8 toLevel) private pure returns (uint32 requiredExp) {
     for (uint8 i = currentLevel + 1; i <= toLevel; i++) {
       // character perk starts from 0 so we don't use i - 1
-      if (i >= 6) {
+      if (i >= 5) {
         requiredExp += uint32(1000) * i * i * i;
       } else {
         requiredExp += uint32(750) * i * i * i;
