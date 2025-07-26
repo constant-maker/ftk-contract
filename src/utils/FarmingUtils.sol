@@ -100,7 +100,8 @@ library FarmingUtils {
     uint256 characterId,
     ResourceType resourceType,
     uint8 resourceItemTier,
-    Tool2Data memory tool
+    Tool2Data memory tool,
+    uint256 toolId
   )
     public
     view
@@ -120,7 +121,7 @@ library FarmingUtils {
       revert Errors.Tool_TierNotSatisfied(resourceItemTier, item.tier);
     }
     if (tool.durability < requireDurability) {
-      revert Errors.Tool_InsufficientDurability();
+      revert Errors.Tool_InsufficientDurability(toolId);
     }
     return (item.itemType, requireDurability);
   }

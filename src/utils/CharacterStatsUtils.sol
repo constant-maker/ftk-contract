@@ -112,8 +112,8 @@ library CharacterStatsUtils {
   }
 
   function addEquipment(uint256 characterId, uint256 equipmentId, SlotType slotType) internal {
-    _updateWithEquipmentStats(characterId, equipmentId, slotType, false);
     _snapshotStats(characterId, equipmentId, slotType);
+    _updateWithEquipmentStats(characterId, equipmentId, slotType, false);
   }
 
   function _updateWithEquipmentStats(
@@ -137,10 +137,10 @@ library CharacterStatsUtils {
     if (equipmentInfo.hp > 0) {
       uint32 maxHp = CharStats.getHp(characterId);
       uint32 currentHp = characterCurrentStats.hp;
+      bool wasFullHp = (maxHp == currentHp);
       maxHp = isRemoved ? maxHp - equipmentInfo.hp : maxHp + equipmentInfo.hp;
       CharStats.setHp(characterId, maxHp);
-      if (currentHp >= maxHp) {
-        // if current hp is greater than or equal to max hp, set it to max hp
+      if (wasFullHp || currentHp > maxHp) {
         characterCurrentStats.hp = maxHp;
       }
     }
@@ -212,6 +212,12 @@ library CharacterStatsUtils {
     equipmentInfo.def = charEquipStats.def;
     equipmentInfo.agi = charEquipStats.agi;
     equipmentInfo.ms = charEquipStats.ms;
+    if (
+      equipmentInfo.hp == 0 && equipmentInfo.atk == 0 && equipmentInfo.def == 0 && equipmentInfo.agi == 0
+        && equipmentInfo.ms == 0
+    ) {
+      revert Errors.EquipmentSystem_EquipmentSnapshotStatsNotFound(characterId, itemId, slotType);
+    }
     return equipmentInfo;
   }
 

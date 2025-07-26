@@ -425,7 +425,7 @@
       "desc": "A basic hunting bow - plain, yet versatile.",
       "equipmentInfo": {
         "slotType": 0,
-        "advantageType": 3,
+        "advantageType": 1,
         "twoHanded": false,
         "atk": 12,
         "def": 0,

@@ -108,7 +108,7 @@ contract FarmingSystem is CharacterAccessControl, System {
     Tool2Data memory tool = ToolUtils.mustGetToolData(toolId);
     // ensure using the right tool, enough tool durability
     (ItemType itemType, uint16 requireDurability) =
-      FarmingUtils.validateResourceAndTool(characterId, resourceType, resourceItem.tier, tool);
+      FarmingUtils.validateResourceAndTool(characterId, resourceType, resourceItem.tier, tool, toolId);
 
     // check if the resourceItem weight is exceed the character max weight
     if (claimResource) {

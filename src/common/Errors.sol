@@ -37,7 +37,7 @@ library Errors {
   error Tool_NotOwned(uint256 characterId, uint256 toolId);
   error Tool_TierNotSatisfied(uint8 resourceTier, uint8 itemTier);
   error Tool_InvalidItemType(ResourceType resourceType, ItemType gotItemType);
-  error Tool_InsufficientDurability();
+  error Tool_InsufficientDurability(uint256 toolId);
   error Tool_AlreadyHad(uint256 characterId, uint256 toolId);
 
   /* -------------------------------------------------------------------------- */
@@ -80,6 +80,7 @@ library Errors {
   error EquipmentSystem_InsufficientDurability(uint256 equipmentId, uint32 currentDurability, uint32 durabilityCost);
   error EquipmentSystem_UnmatchSlotType(SlotType equipmentSlotType, SlotType paramSlotType);
   error EquipmentSystem_InvalidSlotType(SlotType paramSlotType);
+  error EquipmentSystem_EquipmentSnapshotStatsNotFound(uint256 characterId, uint256 itemId, SlotType slotType);
 
   /* -------------------------------------------------------------------------- */
   /*                                    Quest3                                   */

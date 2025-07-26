@@ -22,7 +22,9 @@ import {
   CharCurrentStats,
   TileInventory,
   DropResource,
-  KingSetting
+  KingSetting,
+  PvPExtraV3,
+  PvPExtraV3Data
 } from "@codegen/index.sol";
 import { EntityType, SlotType, ItemType, ZoneType } from "@codegen/common.sol";
 import { Errors } from "@common/Errors.sol";
@@ -255,9 +257,12 @@ contract PvPSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
 
     // add equipment
     uint256 equipmentId = 100;
-    _addEquipment(characterId_2, equipmentId, 33); // 33 Hunting Bow - Green
+    _addEquipment(characterId_2, equipmentId, 36); // 36 Hunting Bow - Green
     _gearUpWeapon(characterId_2, equipmentId);
     _gearUpWeapon(characterId_1, 1); // Rusty Sword - Red
+
+    console2.log("character 1 atk", CharCurrentStats.getAtk(characterId_1));
+    console2.log("character 2 def", CharCurrentStats.getDef(characterId_2));
 
     // vm.startPrank(worldDeployer);
     // vm.stopPrank();
@@ -432,7 +437,7 @@ contract PvPSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
     assertEq(CharOtherItem.getAmount(characterId_1, 2), 0); // dropped 100 items
     uint32 newWeightChar1 = CharCurrentStats.getWeight(characterId_1);
     console2.log("new weight char 1 in red zone", newWeightChar1);
-    assertEq(newWeightChar1, weightChar1 - 200); // 100 items dropped (weight 2 each)
+    assertEq(newWeightChar1, weightChar1 - 100); // 100 items dropped (weight 1 each)
 
     uint256[] memory tileItemIds = TileInventory.getOtherItemIds(21, -32);
     uint32[] memory tileItemAmounts = TileInventory.getOtherItemAmounts(21, -32);
@@ -466,7 +471,7 @@ contract PvPSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
 
     newWeightChar1 = CharCurrentStats.getWeight(characterId_1);
     console2.log("new weight char 1 in black zone", newWeightChar1);
-    assertEq(newWeightChar1, weightChar1 - 200 - 3); // 100 items dropped (weight 2 each) + 3 weight for equipped weapon
+    assertEq(newWeightChar1, weightChar1 - 100 - 5); // 100 items dropped (weight 2 each) + 5 weight for equipped weapon
 
     uint256[] memory tileEquipmentIds = TileInventory.getEquipmentIds(21, -32);
     assertEq(tileEquipmentIds.length, 1);
@@ -500,7 +505,7 @@ contract PvPSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
 
     uint32 newWeightChar2 = CharCurrentStats.getWeight(characterId_2);
     console2.log("new weight char 2 in black zone", newWeightChar2);
-    assertEq(newWeightChar2, weightChar2 + 3 + 10 * 2); // 3 for equipped weapon + 10 items (weight 2 each)
+    assertEq(newWeightChar2, weightChar2 + 5 + 10); // 5 for equipped weapon + 10 items (weight 1 each)
 
     // uint256[] memory equipmentIds = new uint256[](1);
     // equipmentIds[0] = 1;
@@ -517,7 +522,7 @@ contract PvPSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
 
     newWeightChar2 = CharCurrentStats.getWeight(characterId_2);
     console2.log("new weight char 2 in black zone", newWeightChar2);
-    assertEq(newWeightChar2, weightChar2 + 10 * 2); // + 10 items (weight 2 each)
+    assertEq(newWeightChar2, weightChar2 + 10); // + 10 items (weight 1 each)
 
     console2.log("done test loot item");
   }
@@ -546,7 +551,7 @@ contract PvPSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
 
     uint32 newWeightChar1 = CharCurrentStats.getWeight(characterId_1);
     console2.log("new weight char 1 in black zone", newWeightChar1);
-    assertEq(newWeightChar1, weightChar1 - 200 - 3); // 100 items dropped (weight 2 each) + 3 weight for equipped weapon
+    assertEq(newWeightChar1, weightChar1 - 100 - 5); // 100 items dropped (weight 1 each) + 5 weight for equipped weapon
 
     uint256[] memory tileEquipmentIds = TileInventory.getEquipmentIds(21, -32);
     assertEq(tileEquipmentIds.length, 1);
@@ -594,7 +599,7 @@ contract PvPSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
 
     uint32 newWeightChar2 = CharCurrentStats.getWeight(characterId_2);
     console2.log("new weight char 2 in black zone", newWeightChar2);
-    assertEq(newWeightChar2, weightChar2 + 3 + 10 * 2); // 3 for equipped weapon + 10 items (weight 2 each)
+    assertEq(newWeightChar2, weightChar2 + 5 + 10); // 5 for equipped weapon + 10 items (weight 1 each)
   }
 
   function test_KingSettingAndAchievement() external {
@@ -630,6 +635,10 @@ contract PvPSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
     vm.stopPrank();
 
     assertEq(CharStats2.get(characterId_3), 950);
+    uint256 lastPvpId = CharBattle.getLastPvpId(characterId_3);
+    PvPExtraV3Data memory pvpExtra = PvPExtraV3.get(lastPvpId);
+    assertEq(pvpExtra.fames[0], -50);
+    assertEq(pvpExtra.fames[1], 0);
 
     // fight in safe zone with king setting
     vm.startPrank(worldDeployer);
@@ -642,6 +651,10 @@ contract PvPSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
     world.app__battlePvP(characterId_1, characterId_2);
     vm.stopPrank();
     assertEq(CharStats2.get(characterId_1), 900);
+    lastPvpId = CharBattle.getLastPvpId(characterId_1);
+    pvpExtra = PvPExtraV3.get(lastPvpId);
+    assertEq(pvpExtra.fames[0], -50);
+    assertEq(pvpExtra.fames[1], 0);
 
     // fight in death zone with king setting
     vm.startPrank(worldDeployer);
@@ -656,6 +669,10 @@ contract PvPSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
     world.app__battlePvP(characterId_1, characterId_3);
     vm.stopPrank();
     assertEq(CharStats2.get(characterId_1), 890);
+    lastPvpId = CharBattle.getLastPvpId(characterId_1);
+    pvpExtra = PvPExtraV3.get(lastPvpId);
+    assertEq(pvpExtra.fames[0], -10);
+    assertEq(pvpExtra.fames[1], 0);
 
     // test achievement
     vm.startPrank(worldDeployer);
@@ -671,6 +688,10 @@ contract PvPSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
       vm.startPrank(player_1);
       world.app__battlePvP(characterId_1, characterId_3);
       vm.stopPrank();
+      lastPvpId = CharBattle.getLastPvpId(characterId_1);
+      pvpExtra = PvPExtraV3.get(lastPvpId);
+      assertEq(pvpExtra.fames[0], 20);
+      assertEq(pvpExtra.fames[1], -20);
     }
 
     assertEq(CharStats2.get(characterId_1), char1Fame + 500 * 20); // 20 fame per fight

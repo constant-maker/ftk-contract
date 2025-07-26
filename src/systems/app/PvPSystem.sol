@@ -76,6 +76,8 @@ contract PvPSystem is System, CharacterAccessControl {
     if (attackerHp != 0 && defenderHp != 0) {
       return; // both alive, no fame change
     }
+    int32 attackerFameChange = 0;
+    int32 defenderFameChange = 0;
     uint32 attackerFame = CharStats2.getFame(attackerId);
     ZoneInfo memory zoneInfo = KingdomUtils.getZoneTypeFull(position.x, position.y, attackerId, defenderId);
     bool isAlliance = KingdomUtils.getIsAlliance(zoneInfo.attackerKingdomId, zoneInfo.defenderKingdomId);
@@ -97,32 +99,55 @@ contract PvPSystem is System, CharacterAccessControl {
       if (zoneType == ZoneType.Green) {
         attackerFame = attackerFame > 50 ? attackerFame - 50 : 1; // min fame is 1
         CharStats2.set(attackerId, attackerFame);
-        return;
+        attackerFameChange = -50;
       } else {
-        uint16 famePenalty = KingSetting.getPvpFamePenalty(zoneInfo.attackerKingdomId);
+        uint32 famePenalty = KingSetting.getPvpFamePenalty(zoneInfo.attackerKingdomId);
         if (famePenalty > 0) {
+          attackerFameChange = -int32(famePenalty);
           attackerFame = attackerFame > famePenalty ? attackerFame - famePenalty : 1; // min fame is 1
           CharStats2.set(attackerId, attackerFame);
-          return;
         }
       }
+      _storeFameChange(attackerFameChange, 0, attackerId, defenderId);
+      return;
     }
 
     uint32 defenderFame = CharStats2.getFame(defenderId);
     if (attackerHp == 0 && attackerFame >= 1020) {
-      attackerFame -= 20;
-      defenderFame += 20;
-      CharStats2.set(defenderId, defenderFame);
-      CharStats2.set(attackerId, attackerFame);
+      _setFame(attackerId, defenderId, -20); // fame transfer from attacker to defender
     } else if (defenderHp == 0 && defenderFame >= 1020 && zoneType != ZoneType.Green) {
-      attackerFame += 20;
-      defenderFame -= 20;
-      CharStats2.set(defenderId, defenderFame);
-      CharStats2.set(attackerId, attackerFame);
+      _setFame(attackerId, defenderId, 20); // fame transfer from defender to attacker
       if (zoneInfo.attackerKingdomId != zoneInfo.defenderKingdomId) {
         _checkAndGiveAchievement(attackerId);
       }
     }
+  }
+
+  function _setFame(uint256 attackerId, uint256 defenderId, int32 fameChange) private {
+    int32 attackerFameChange = fameChange;
+    int32 defenderFameChange = -fameChange;
+
+    uint32 attackerFame = CharStats2.getFame(attackerId);
+    uint32 defenderFame = CharStats2.getFame(defenderId);
+    int32 newAttackerFame = int32(attackerFame) + attackerFameChange;
+    int32 newDefenderFame = int32(defenderFame) + defenderFameChange;
+    CharStats2.set(attackerId, uint32(newAttackerFame));
+    CharStats2.set(defenderId, uint32(newDefenderFame));
+
+    _storeFameChange(attackerFameChange, defenderFameChange, attackerId, defenderId);
+  }
+
+  function _storeFameChange(
+    int32 attackerFameChange,
+    int32 defenderFameChange,
+    uint256 attackerId,
+    uint256 defenderId
+  )
+    private
+  {
+    uint256 pvpId = PvPBattleCounter.getCounter(); // this return the current pvpId
+    int32[2] memory fameChanges = [attackerFameChange, defenderFameChange];
+    PvPExtraV3.setFames(pvpId, fameChanges);
   }
 
   function _checkAndGiveAchievement(uint256 characterId) private {
@@ -233,9 +258,7 @@ contract PvPSystem is System, CharacterAccessControl {
     uint32[2] memory barriers;
     barriers[0] = CharCStats2.getBarrier(attackerId);
     barriers[1] = CharCStats2.getBarrier(defenderId);
-    uint32[2] memory fames;
-    fames[0] = CharStats2.getFame(attackerId);
-    fames[1] = CharStats2.getFame(defenderId);
+    int32[2] memory fames; // this will be update later
     PvPExtraV3Data memory pvpExtra = PvPExtraV3Data({
       characterLevels: [CharStats.getLevel(attackerId), CharStats.getLevel(defenderId)],
       characterSps: [CharStats.getSp(attackerId), CharStats.getSp(defenderId)],

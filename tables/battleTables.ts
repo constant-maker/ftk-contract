@@ -41,7 +41,7 @@ const BATTLE_TABLES: any = {
       characterLevels: "uint16[2]",
       characterSps: "uint8[2]",
       barriers: "uint32[2]",
-      fames: "uint32[2]",
+      fames: "int32[2]",
       equipmentIds: "uint256[12]",
     },
     key: ['pvpId'],
