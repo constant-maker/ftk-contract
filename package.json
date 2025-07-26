@@ -16,11 +16,11 @@
     "test": "mud test"
   },
   "dependencies": {
-    "@latticexyz/cli": "2.2.21",
-    "@latticexyz/schema-type": "2.2.21",
-    "@latticexyz/store": "2.2.21",
-    "@latticexyz/world": "2.2.21",
-    "@latticexyz/world-modules": "2.2.21"
+    "@latticexyz/cli": "2.2.22",
+    "@latticexyz/schema-type": "2.2.22",
+    "@latticexyz/store": "2.2.22",
+    "@latticexyz/world": "2.2.22",
+    "@latticexyz/world-modules": "2.2.22"
   },
   "devDependencies": {
     "@types/node": "^18.15.11",
@@ -30,7 +30,7 @@
     "prettier-plugin-solidity": "^1.0.0-beta.19",
     "rimraf": "^5.0.5",
     "solhint": "^3.3.7",
-    "solhint-config-mud": "2.2.21",
-    "solhint-plugin-mud": "2.2.21"
+    "solhint-config-mud": "2.2.22",
+    "solhint-plugin-mud": "2.2.22"
   }
 }
