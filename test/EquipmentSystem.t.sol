@@ -158,10 +158,10 @@ contract EquipmentSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemF
 
     uint256[] memory equipmentIds = CharInventory.getEquipmentIds(characterId);
     // for (uint256 i = 0; i < equipmentIds.length; i++) {
-      // console2.log("equipment id", equipmentIds[i]);
-      // uint256 itemId = Equipment.getItemId(equipmentIds[i]);
-      // console2.log("item id", itemId);
-      // console2.log("item name", Item.getName(itemId));
+    // console2.log("equipment id", equipmentIds[i]);
+    // uint256 itemId = Equipment.getItemId(equipmentIds[i]);
+    // console2.log("item id", itemId);
+    // console2.log("item name", Item.getName(itemId));
     // }
     CharCurrentStatsData memory currentStats = CharCurrentStats.get(characterId);
     CharStatsData memory stats = CharStats.get(characterId);
