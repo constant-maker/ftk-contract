@@ -18,7 +18,7 @@ import {
   ExpAmpConfig,
   ExpAmpConfigData
 } from "@codegen/index.sol";
-import { CharacterPositionUtils, CharacterPerkUtils } from "@utils/index.sol";
+import { CharacterPositionUtils, CharacterPerkUtils, BattleUtils2 } from "@utils/index.sol";
 import { InventoryItemUtils } from "@utils/InventoryItemUtils.sol";
 import { BattleUtils } from "@utils/BattleUtils.sol";
 import { BattlePvEUtils } from "@utils/BattlePvEUtils.sol";
@@ -69,7 +69,7 @@ contract PvESystem is System, CharacterAccessControl {
     bool isBoss = Monster.getIsBoss(monsterId);
     if (characterHp == 0) {
       // character lost
-      BattleUtils.applyLoss(characterId, characterPosition);
+      BattleUtils2.applyLoss(characterId, characterPosition);
       characterHp = CharStats.getHp(characterId); // set character hp to max hp
       CharCurrentStats.setExp(characterId, CharCurrentStats.getExp(characterId) * 75 / 100); // penalty 25% current exp
       if (PvEExtraV2.getItemId(characterId) != 0) {
