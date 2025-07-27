@@ -24,24 +24,22 @@ import { Errors, Config } from "@common/index.sol";
 contract RebornSystem is System, CharacterAccessControl {
   function reborn(uint256 characterId) public onlyAuthorizedWallet(characterId) {
     // require character level 99
-    CharStatsData memory charStats = CharStats.get(characterId);
-    if (charStats.level < Config.MAX_LEVEL) {
+    uint16 currentLevel = CharStats.getLevel(characterId);
+    if (currentLevel < Config.MAX_LEVEL) {
       revert Errors.RebornSystem_MustBeMaxLevel(characterId);
     }
     uint16 rebornNum = CharReborn.get(characterId) + 1;
     (uint256[] memory itemIds, uint32[] memory amounts) = _requiredResources(rebornNum);
     InventoryItemUtils.removeItems(characterId, itemIds, amounts);
-    // reset stat and gain extra points
-    // update current stats
-    CharBaseStatsData memory characterBaseStats = CharBaseStats.get(characterId);
-    CharCurrentStatsData memory charCurrentStats = CharCurrentStats.get(characterId);
     // unequip all equipment
     CharacterEquipmentUtils.unequipAllEquipment(characterId);
-    // update current stats
-    charCurrentStats = _getRebornCurrentStats(characterId, characterBaseStats, charCurrentStats);
-    CharCurrentStats.set(characterId, charCurrentStats);
 
-    // update stats
+    // reset stat and gain extra points
+    // update current stats
+    CharCurrentStatsData memory charCurrentStats = _getRebornCurrentStats(characterId);
+    CharCurrentStats.set(characterId, charCurrentStats);
+    // reset character stats
+    CharStatsData memory charStats = CharStats.get(characterId);
     charStats.level = 1;
     charStats.hp = charCurrentStats.hp;
     charStats.statPoint = 20 * rebornNum;
@@ -60,15 +58,8 @@ contract RebornSystem is System, CharacterAccessControl {
     CharAchievementUtils.addAchievement(characterId, 9); // Ascended Soul
   }
 
-  function _getRebornCurrentStats(
-    uint256 characterId,
-    CharBaseStatsData memory characterBaseStats,
-    CharCurrentStatsData memory charCurrentStats
-  )
-    private
-    view
-    returns (CharCurrentStatsData memory)
-  {
+  function _getRebornCurrentStats(uint256 characterId) private view returns (CharCurrentStatsData memory) {
+    CharCurrentStatsData memory charCurrentStats = CharCurrentStats.get(characterId);
     (uint16 oAtk, uint16 oDef, uint16 oAgi) = _getCharacterOriginalStats(characterId);
     // set new current stats
     charCurrentStats.hp = Config.DEFAULT_HP;

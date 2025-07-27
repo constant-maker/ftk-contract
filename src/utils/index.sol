@@ -31,3 +31,4 @@ import { CharAchievementUtils } from "./CharAchievementUtils.sol";
 import { StorageItemUtils } from "./StorageItemUtils.sol";
 import { StorageEquipmentUtils } from "./StorageEquipmentUtils.sol";
 import { KingdomUtils } from "./KingdomUtils.sol";
+import { BattleUtils2 } from "./BattleUtils2.sol";

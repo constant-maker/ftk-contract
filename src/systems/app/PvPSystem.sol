@@ -3,7 +3,6 @@ pragma solidity >=0.8.24;
 import { System } from "@latticexyz/world/src/System.sol";
 import { CharacterAccessControl } from "@abstracts/CharacterAccessControl.sol";
 import {
-  CharPosition,
   CharPositionData,
   CharCurrentStats,
   CharStats,
@@ -16,16 +15,13 @@ import {
   PvPExtraV3Data,
   PvPBattleCounter,
   TileInfo3,
-  CharInfo,
   CharStats2,
-  AllianceV2,
-  AllianceV2Data,
   CharCStats2,
   KingSetting,
   PvPEnemyCounter
 } from "@codegen/index.sol";
 import { BattleInfo, BattleUtils } from "@utils/BattleUtils.sol";
-import { DailyQuestUtils, InventoryItemUtils, CharacterPositionUtils, CharAchievementUtils } from "@utils/index.sol";
+import { DailyQuestUtils, CharacterPositionUtils, CharAchievementUtils, BattleUtils2 } from "@utils/index.sol";
 import { CharacterStateType, ZoneType } from "@codegen/common.sol";
 import { Errors, Config } from "@common/index.sol";
 import { ZoneInfo, KingdomUtils } from "@utils/KingdomUtils.sol";
@@ -174,7 +170,7 @@ contract PvPSystem is System, CharacterAccessControl {
 
   function _handleBattleResult(uint256 characterId, uint32 characterHp, CharPositionData memory position) private {
     if (characterHp == 0) {
-      BattleUtils.applyLoss(characterId, position);
+      BattleUtils2.applyLoss(characterId, position);
       CharCurrentStats.setHp(characterId, CharStats.getHp(characterId)); // set character hp to max hp
     } else {
       CharCurrentStats.setHp(characterId, characterHp);
