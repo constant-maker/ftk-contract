@@ -1,12 +1,23 @@
 pragma solidity >=0.8.24;
 
-import { TileInfo3, CharInfo, DropResource, CharPositionData, CharInventory, CharState } from "@codegen/index.sol";
+import {
+  TileInfo3,
+  CharInfo,
+  DropResource,
+  CharPositionData,
+  CharInventory,
+  CharState,
+  PvEAfk,
+  PvEAfkData
+} from "@codegen/index.sol";
 import { ZoneType, CharacterStateType } from "@codegen/common.sol";
 import { CharacterEquipmentUtils } from "./CharacterEquipmentUtils.sol";
 import { TileInventoryUtils } from "./TileInventoryUtils.sol";
 import { InventoryItemUtils } from "./InventoryItemUtils.sol";
 import { InventoryEquipmentUtils } from "./InventoryEquipmentUtils.sol";
 import { CharacterPositionUtils } from "./CharacterPositionUtils.sol";
+import { CharacterStateUtils } from "./CharacterStateUtils.sol";
+import { BattlePvEUtils2 } from "./BattlePvEUtils2.sol";
 
 library BattleUtils2 {
   /// @dev apply loss to character, move back to capital and reset character state
@@ -45,5 +56,14 @@ library BattleUtils2 {
     // move back to city and reset character state to standby
     CharacterPositionUtils.moveToCapital(characterId);
     CharState.setState(characterId, CharacterStateType.Standby);
+  }
+
+  /// @dev check if character is in a state that can be forced to stop AFK
+  function checkAndForceStopAFK(uint256 characterId, CharPositionData memory position) public {
+    if (CharacterStateUtils.getCharacterState(characterId) == CharacterStateType.PvE) {
+      // force stop AFK
+      PvEAfkData memory afkData = PvEAfk.get(characterId);
+      BattlePvEUtils2.stopPvEAFK(characterId, afkData, position);
+    }
   }
 }

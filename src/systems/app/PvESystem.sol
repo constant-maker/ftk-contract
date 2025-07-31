@@ -4,32 +4,59 @@ import { System } from "@latticexyz/world/src/System.sol";
 import { WorldContextProviderLib } from "@latticexyz/world/src/WorldContext.sol";
 import { CharacterAccessControl } from "@abstracts/CharacterAccessControl.sol";
 import {
-  CharEquipment,
-  CharGrindSlot,
   CharPositionData,
   CharCurrentStats,
   CharStats,
   MonsterLocation,
   MonsterLocationData,
   Monster,
-  Equipment,
-  Item,
   PvEExtraV2,
-  ExpAmpConfig,
-  ExpAmpConfigData
+  PvEAfk,
+  PvEAfkData
 } from "@codegen/index.sol";
-import { CharacterPositionUtils, CharacterPerkUtils, BattleUtils2 } from "@utils/index.sol";
-import { InventoryItemUtils } from "@utils/InventoryItemUtils.sol";
-import { BattleUtils } from "@utils/BattleUtils.sol";
-import { BattlePvEUtils } from "@utils/BattlePvEUtils.sol";
-import { DailyQuestUtils } from "@utils/DailyQuestUtils.sol";
-import { SystemUtils } from "@utils/SystemUtils.sol";
-import { TileUtils } from "@utils/TileUtils.sol";
-import { CharacterStateType, EntityType, SlotType } from "@codegen/common.sol";
-import { Errors } from "@common/Errors.sol";
+import {
+  CharacterPositionUtils,
+  BattleUtils2,
+  CharacterStatsUtils,
+  CharacterStateUtils,
+  BattlePvEUtils2,
+  BattleUtils,
+  BattlePvEUtils,
+  DailyQuestUtils,
+  SystemUtils,
+  TileUtils
+} from "@utils/index.sol";
+import { CharacterStateType, EntityType } from "@codegen/common.sol";
+import { Config, Errors } from "@common/index.sol";
 import { CharAchievementUtils } from "@utils/CharAchievementUtils.sol";
 
 contract PvESystem is System, CharacterAccessControl {
+  function pveAFK(
+    uint256 characterId,
+    uint256 monsterId,
+    bool stop
+  )
+    public
+    onlyAuthorizedWallet(characterId)
+    validateCurrentWeight(characterId)
+  {
+    PvEAfkData memory afkData = PvEAfk.get(characterId);
+    CharPositionData memory characterPosition = CharacterPositionUtils.currentPosition(characterId);
+    if (stop) {
+      BattlePvEUtils2.stopPvEAFK(characterId, afkData, characterPosition);
+    } else {
+      CharacterStateUtils.mustInState(characterId, CharacterStateType.Standby);
+      BattlePvEUtils.checkIsReadyToBattlePvE(characterId);
+      if (Monster.getIsBoss(monsterId)) {
+        revert Errors.PvE_CannotAFKWithBoss(monsterId);
+      }
+      if (afkData.monsterId != 0) {
+        revert Errors.PvE_AfkAlreadyStarted(characterId, afkData.monsterId);
+      }
+      BattlePvEUtils2.startPvEAFK(characterId, monsterId, afkData, characterPosition);
+    }
+  }
+
   /// @dev character init a battle with a monster
   function battlePvE(
     uint256 characterId,
@@ -38,11 +65,10 @@ contract PvESystem is System, CharacterAccessControl {
   )
     public
     onlyAuthorizedWallet(characterId)
-    mustInState(characterId, CharacterStateType.Standby)
     validateCurrentWeight(characterId)
   {
     // check whether character is ready to battle
-    BattlePvEUtils.checkIsReadyToBattle(characterId);
+    BattlePvEUtils.checkIsReadyToBattlePvE(characterId);
     CharPositionData memory characterPosition = CharacterPositionUtils.currentPosition(characterId);
     MonsterLocationData memory monsterLocation =
       MonsterLocation.get(characterPosition.x, characterPosition.y, monsterId);
@@ -83,7 +109,7 @@ contract PvESystem is System, CharacterAccessControl {
         // claim reward
         BattlePvEUtils.claimReward(characterId, monsterId);
       }
-      _updateCharacterExp(characterId, gainedExp, gainedPerkExp);
+      BattlePvEUtils2.updateCharacterExp(characterId, gainedExp, gainedPerkExp);
       // check and update daily quest
       DailyQuestUtils.updatePveCount(characterId);
       // increase slot farm
@@ -99,22 +125,6 @@ contract PvESystem is System, CharacterAccessControl {
       if (_tryToLevelUp(characterId)) return; // if level up success character hp will be recover to max hp
     }
     CharCurrentStats.setHp(characterId, characterHp);
-  }
-
-  function _updateCharacterExp(uint256 characterId, uint32 gainedExp, uint32 gainedPerkExp) private {
-    ExpAmpConfigData memory expAmpConfig = ExpAmpConfig.get();
-    if (block.timestamp <= expAmpConfig.expireTime) {
-      gainedExp = (gainedExp * expAmpConfig.pveExpAmp) / 100;
-      gainedPerkExp = (gainedPerkExp * expAmpConfig.pvePerkAmp) / 100;
-    }
-    // update character exp and perk exp
-    CharCurrentStats.setExp(characterId, CharCurrentStats.getExp(characterId) + gainedExp);
-    SlotType grindSlot = CharGrindSlot.get(characterId);
-    uint256 grindEquipmentId = CharEquipment.getEquipmentId(characterId, grindSlot);
-    if (grindEquipmentId != 0) {
-      uint256 itemId = Equipment.getItemId(grindEquipmentId);
-      CharacterPerkUtils.updateCharacterPerkExp(characterId, Item.getItemType(itemId), gainedPerkExp);
-    }
   }
 
   // try to level up character to next level if exp is enough

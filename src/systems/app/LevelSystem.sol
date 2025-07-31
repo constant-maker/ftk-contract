@@ -39,7 +39,7 @@ contract LevelSystem is System, CharacterAccessControl {
 
     CharCurrentStatsData memory characterCurrentStats = CharCurrentStats.get(characterId);
     uint32 currentExp = characterCurrentStats.exp;
-    uint32 requiredExp = _calculateRequiredExp(characterId, currentLevel, toLevel);
+    uint32 requiredExp = CharacterStatsUtils.calculateRequiredExp(characterId, currentLevel, toLevel);
 
     if (requiredExp > currentExp) {
       revert Errors.LevelSystem_InsufficientExp(currentLevel, toLevel, requiredExp, currentExp);
@@ -146,26 +146,6 @@ contract LevelSystem is System, CharacterAccessControl {
     uint16 toStat = currentStat + data.amount;
     CharacterStatsUtils.setStatByStatType(characterId, data.statType, toStat);
     return statPoint - totalPointToUse;
-  }
-
-  function _calculateRequiredExp(
-    uint256 characterId,
-    uint16 currentLevel,
-    uint16 toLevel
-  )
-    private
-    view
-    returns (uint32 requiredExp)
-  {
-    for (uint16 i = currentLevel + 1; i <= toLevel; i++) {
-      uint32 calcNum = i - 1;
-      requiredExp += calcNum * 20 + calcNum * calcNum * calcNum / 5;
-    }
-    uint32 rebornNum = uint32(CharReborn.get(characterId));
-    if (rebornNum > 0) {
-      // each time the character is reborn, the required exp increases by 10%
-      requiredExp = requiredExp * (rebornNum * 10 + 100) / 100;
-    }
   }
 
   function _calculateRequiredPerkExp(uint8 currentLevel, uint8 toLevel) private pure returns (uint32 requiredExp) {
