@@ -98,7 +98,7 @@
       "level": [100, 100],
       "grow": 50,
       "skillIds": [0, 6, 10, 9, 0],
-      "itemIds": [66, 67, 68],
+      "itemIds": [67, 68, 69],
       "itemAmounts": [1, 1, 1],
       "exp": 300,
       "perkExp": 150,

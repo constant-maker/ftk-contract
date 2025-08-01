@@ -393,7 +393,7 @@ contract QuestSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixtu
 
     uint32 currentWeight = CharCurrentStats.getWeight(characterId);
     console2.log("currentWeight", currentWeight);
-    assertEq(prevWeight + 103 - 50, currentWeight);
+    assertEq(prevWeight + 104 - 50, currentWeight);
     // check if item is received
     assertEq(CharOtherItem.getAmount(characterId, 1), 100);
   }

@@ -22,7 +22,7 @@ export default defineWorld({
   },
   namespace: "app",
   enums: {
-    CharacterStateType: ["Standby", "Farming", "Moving", "PvE"],
+    CharacterStateType: ["Standby", "Farming", "Moving", "Hunting"],
     ResourceType: ["Wood", "Stone", "Fish", "Ore", "Wheat", "Berry", "MonsterLoot"],
     ItemType: [
       "WoodAxe", "StoneHammer", "FishingRod", "Pickaxe", "Sickle", "BerryShears",

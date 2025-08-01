@@ -10,7 +10,7 @@ contract ConsumeSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFix
   uint256 characterId;
 
   uint256 berryId = 14;
-  uint256 healPotionId = 35;
+  uint256 healPotionId = 66;
 
   function setUp() public virtual override(WorldFixture, SpawnSystemFixture, WelcomeSystemFixture) {
     WorldFixture.setUp();
@@ -64,7 +64,7 @@ contract ConsumeSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFix
     vm.stopPrank();
 
     uint32 currentHp = CharCurrentStats.getHp(characterId);
-    assertEq(currentHp, 21);
+    assertEq(currentHp, 51);
     uint32 currentPotionAmount = CharOtherItem.getAmount(characterId, healPotionId);
     assertEq(currentPotionAmount, 0);
     uint32 newCurrentWeight = CharCurrentStats.getWeight(characterId);

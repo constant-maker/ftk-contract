@@ -60,7 +60,7 @@ library BattleUtils2 {
 
   /// @dev check if character is in a state that can be forced to stop AFK
   function checkAndForceStopAFK(uint256 characterId, CharPositionData memory position) public {
-    if (CharacterStateUtils.getCharacterState(characterId) == CharacterStateType.PvE) {
+    if (CharacterStateUtils.getCharacterState(characterId) == CharacterStateType.Hunting) {
       // force stop AFK
       PvEAfkData memory afkData = PvEAfk.get(characterId);
       BattlePvEUtils2.stopPvEAFK(characterId, afkData, position);

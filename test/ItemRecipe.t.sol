@@ -10,9 +10,9 @@ contract ItemRecipeTest is WorldFixture {
   }
 
   function test_Recipe_ShouldHaveRightInfo() external {
-    uint256 itemId = 18; // wood axe
+    uint256 itemId = 21; // wood axe
     ItemRecipeV2Data memory data = ItemRecipeV2.get(itemId);
-    assertEq(data.goldCost, uint32(5));
+    assertEq(data.goldCost, uint32(1));
     assertEq(data.itemIds.length, uint256(2));
     assertEq(data.amounts.length, uint256(2));
     assertEq(data.itemIds[0], uint256(1));

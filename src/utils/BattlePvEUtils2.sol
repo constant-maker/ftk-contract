@@ -57,7 +57,7 @@ library BattlePvEUtils2 {
     uint32 maxTick = maxExp / gainedExp;
     PvEAfk.set(characterId, monsterId, block.timestamp, gainedExp, gainedPerkExp, maxTick);
     PvEAfkLoc.set(characterPosition.x, characterPosition.y, monsterId);
-    CharState.setState(characterId, CharacterStateType.PvE);
+    CharState.setState(characterId, CharacterStateType.Hunting);
   }
 
   function stopPvEAFK(
@@ -67,7 +67,7 @@ library BattlePvEUtils2 {
   )
     internal
   {
-    CharacterStateUtils.mustInState(characterId, CharacterStateType.PvE);
+    CharacterStateUtils.mustInState(characterId, CharacterStateType.Hunting);
     if (afkData.monsterId == 0) {
       revert Errors.PvE_AfkNotStarted(characterId);
     }

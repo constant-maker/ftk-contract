@@ -121,7 +121,7 @@ contract PvESystem2Test is WorldFixture, SpawnSystemFixture, WelcomeSystemFixtur
     vm.startPrank(player);
     world.app__pveAFK(characterId, monsterId, false);
     vm.stopPrank();
-    CharacterStateUtils.mustInState(characterId, CharacterStateType.PvE);
+    CharacterStateUtils.mustInState(characterId, CharacterStateType.Hunting);
 
     PvEAfkData memory afk = PvEAfk.get(characterId);
     console2.log("afk monsterId", afk.monsterId);

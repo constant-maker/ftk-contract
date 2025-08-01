@@ -12,7 +12,7 @@ import {
 import {
   CharEquipment, CharGrindSlot, Equipment, EquipmentData, EquipmentInfo, Item, CharStats
 } from "@codegen/index.sol";
-import { SlotType } from "@codegen/common.sol";
+import { SlotType, CharacterStateType } from "@codegen/common.sol";
 import { Errors } from "@common/index.sol";
 import { EquipData } from "./EquipmentSystem.sol";
 
@@ -28,6 +28,7 @@ contract EquipmentSystem is System, CharacterAccessControl {
     EquipData[] calldata equipDatas
   )
     public
+    mustInState(characterId, CharacterStateType.Standby)
     onlyAuthorizedWallet(characterId)
   {
     for (uint256 i = 0; i < equipDatas.length; ++i) {
