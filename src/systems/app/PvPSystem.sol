@@ -170,6 +170,7 @@ contract PvPSystem is System, CharacterAccessControl {
 
   function _handleBattleResult(uint256 characterId, uint32 characterHp, CharPositionData memory position) private {
     if (characterHp == 0) {
+      BattleUtils2.checkAndForceStopAFK(characterId, position);
       BattleUtils2.applyLoss(characterId, position);
       CharCurrentStats.setHp(characterId, CharStats.getHp(characterId)); // set character hp to max hp
     } else {

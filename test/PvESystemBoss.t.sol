@@ -206,9 +206,9 @@ contract PvESystemBossTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFix
       world.app__battlePvE(characterId, bossId, true);
       vm.stopPrank();
     }
-    uint32 amount1 = CharOtherItem.getAmount(characterId, 66);
-    uint32 amount2 = CharOtherItem.getAmount(characterId, 67);
-    uint32 amount3 = CharOtherItem.getAmount(characterId, 68);
+    uint32 amount1 = CharOtherItem.getAmount(characterId, 67);
+    uint32 amount2 = CharOtherItem.getAmount(characterId, 68);
+    uint32 amount3 = CharOtherItem.getAmount(characterId, 69);
     assertEq(amount1 + amount2 + amount3, 10);
   }
 
@@ -362,9 +362,10 @@ contract PvESystemBossTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFix
     CharCurrentStats.setAgi(characterId, 1000);
     uint256[5] memory customSkillIds = [uint256(12), uint256(0), uint256(0), uint256(0), uint256(0)];
     CharSkill.setSkillIds(characterId, customSkillIds);
-    CharacterItemUtils.addNewItem(characterId, 41, 1);
-    CharStats.setLevel(characterId, 30);
+    CharacterItemUtils.addNewItem(characterId, 72, 1);
+    CharStats.setLevel(characterId, 99);
     CharPerk.setLevel(characterId, ItemType(21), 5);
+    CharPerk.setLevel(characterId, ItemType(12), 6);
     vm.stopPrank();
 
     EquipData[] memory equipDatas = new EquipData[](1);
@@ -403,11 +404,11 @@ contract PvESystemBossTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFix
     // }
     // assertEq(pve.damages[0], 21); // bonus attack
     // assertEq(pve.damages[1], 31);
-    assertEq(pve.damages[2], 130); // level 100 + 20 (min dmg) + atk 12 (boost) - def 2 ~ boss immune to stun
+    assertEq(pve.damages[2], 120); // level 100 + 20 (min dmg) + atk 12 (boost) - def 2 ~ boss immune to stun
 
     characterHp = CharCurrentStats.getHp(characterId);
     console2.log("character final hp", characterHp);
-    assertEq(characterHp, 8824);
+    assertEq(characterHp, 10000);
   }
 
   function _gearUpEquipment() private {

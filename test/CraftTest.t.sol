@@ -35,7 +35,7 @@ contract CraftSystemTest is CraftSystemFixture {
   uint256 constant woodTier1_Id = 1;
   uint256 constant oreTier1_Id = 10;
 
-  uint256 constant woodAxeTier1_Id = 18;
+  uint256 constant woodAxeTier1_Id = 21;
 
   function setUp() public virtual override {
     CraftSystemFixture.setUp();
@@ -48,7 +48,7 @@ contract CraftSystemTest is CraftSystemFixture {
     InventoryItemUtils.addItem(characterId, woodTier1_Id, 20);
     InventoryItemUtils.addItem(characterId, oreTier1_Id, 20);
     InventoryItemUtils.addItem(characterId, 14, 20);
-    InventoryItemUtils.addItem(characterId, 12, 15);
+    InventoryItemUtils.addItem(characterId, 12, 20);
     CharFund.setGold(characterId, 12);
     vm.stopPrank();
 
@@ -61,22 +61,22 @@ contract CraftSystemTest is CraftSystemFixture {
     assertEq(stoneTier1_Amount, 0);
 
     uint32 goldBalance = CharFund.getGold(characterId);
-    assertEq(goldBalance, 2);
+    assertEq(goldBalance, 10);
 
     CharInventoryData memory characterInventoryData = CharInventory.get(characterId);
     assertEq(characterInventoryData.toolIds.length, 2);
 
-    uint256 healingPotionId = 35;
+    uint256 healingPotionId = 66;
     _craftItem(player, characterId, 1, healingPotionId, 2);
 
     // assertion remaining resource amounts
     uint256 material1_amount = CharOtherItem.getAmount(characterId, 14);
     assertEq(material1_amount, 0);
     uint256 material2_amount = CharOtherItem.getAmount(characterId, 12);
-    assertEq(material2_amount, 5);
+    assertEq(material2_amount, 0);
 
     goldBalance = CharFund.getGold(characterId);
-    assertEq(goldBalance, 0);
+    assertEq(goldBalance, 10);
 
     assertEq(CharOtherItem.getAmount(characterId, healingPotionId), 2);
   }

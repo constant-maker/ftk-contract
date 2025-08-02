@@ -1,3 +1,5 @@
+import { start } from "repl";
+
 const BATTLE_TABLES: any = {
   CharBattle: {
     schema: {
@@ -88,6 +90,25 @@ const BATTLE_TABLES: any = {
       resourceIds: "uint256[]",
     },
     key: [],
+  },
+  PvEAfk: {
+    schema: {
+      characterId: "uint256",
+      monsterId: "uint256",
+      startTime: "uint256",
+      expPerTick: "uint32",
+      perkExpPerTick: "uint32",
+      maxTick: "uint32",
+    },
+    key: ['characterId'],
+  },
+  PvEAfkLoc: {
+    schema: {
+      x: "int32",
+      y: "int32",
+      monsterId: "uint256",
+    },
+    key: ['x', 'y'],
   },
 };
 

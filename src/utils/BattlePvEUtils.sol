@@ -155,9 +155,9 @@ library BattlePvEUtils {
     }
   }
 
-  function checkIsReadyToBattle(uint256 characterId) public view {
+  function checkIsReadyToBattlePvE(uint256 characterId) public view {
     uint256 lastPvETimestamp = CharBattle.getPveLastAtkTime(characterId);
-    uint256 nextBattleTimestamp = lastPvETimestamp + Config.ATTACK_COOLDOWN;
+    uint256 nextBattleTimestamp = lastPvETimestamp + Config.PVE_ATTACK_COOLDOWN;
     if (block.timestamp < nextBattleTimestamp) {
       revert Errors.PvE_NotReadyToBattle(nextBattleTimestamp);
     }

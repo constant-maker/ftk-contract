@@ -12,15 +12,15 @@ contract ItemTest is WorldFixture, SpawnSystemFixture {
   }
 
   function test_HaveData() external {
-    ItemData memory item = Item.get(185);
+    ItemData memory item = Item.get(269);
     assertTrue(item.itemType == ItemType.Card);
-    assertEq(item.tier, 2);
+    assertEq(item.tier, 1);
 
     EquipmentInfo2V2Data memory equipmentInfoV2 = EquipmentInfo2V2.get(41);
     assertEq(equipmentInfoV2.maxLevel, 0);
     assertEq(equipmentInfoV2.counter, 0);
     assertEq(equipmentInfoV2.dmgPercent, 0);
-    assertEq(equipmentInfoV2.bonusWeight, 10);
-    assertEq(equipmentInfoV2.shieldBarrier, 20);
+    assertEq(equipmentInfoV2.bonusWeight, 0);
+    assertEq(equipmentInfoV2.shieldBarrier, 0);
   }
 }

@@ -73,4 +73,11 @@ library CharacterStateUtils {
     }
     return characterState;
   }
+
+  function mustInState(uint256 characterId, CharacterStateType requiredCharacterState) internal view {
+    CharacterStateType characterState = getCharacterState(characterId);
+    if (characterState != requiredCharacterState) {
+      revert Errors.Character_MustInState(characterState, requiredCharacterState, block.timestamp);
+    }
+  }
 }

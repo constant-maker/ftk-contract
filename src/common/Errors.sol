@@ -135,6 +135,13 @@ library Errors {
   error PvE_MonsterIsNotExist(int32 x, int32 y, uint256 monsterId);
   error PvE_NotReadyToBattle(uint256 nextBattleTimestamp);
   error PvE_BossIsNotRespawnedYet(uint256 monsterId, uint256 respawnTime);
+  error PvE_AfkNotStarted(uint256 characterId);
+  error PvE_AfkAlreadyStarted(uint256 characterId, uint256 monsterId);
+  error PvE_SomeoneIsFightingThisMonster(int32 x, int32 y, uint256 monsterId);
+  error PvE_CannotAFKWithBoss(uint256 monsterId);
+  error PvE_NotCapableToAFK(
+    uint256 characterId, uint256 monsterId, int32 characterX, int32 characterY, uint16 monsterLevel
+  );
 
   /* -------------------------------------------------------------------------- */
   /*                                    PvP                                     */

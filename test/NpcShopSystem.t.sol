@@ -37,7 +37,7 @@ contract NpcShopSystem is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
     uint256 prevLen = CharInventory.lengthToolIds(characterId);
 
     TradeData[] memory buyData = new TradeData[](1);
-    buyData[0] = TradeData({ itemId: 18, amount: 1 });
+    buyData[0] = TradeData({ itemId: 21, amount: 1 });
     TradeData[] memory sellData;
 
     vm.startPrank(player);
@@ -229,13 +229,13 @@ contract NpcShopSystem is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
 
   function test_buyCard() external {
     TradeData[] memory buyData = new TradeData[](1);
-    buyData[0] = TradeData({ itemId: 184, amount: 1 });
+    buyData[0] = TradeData({ itemId: 268, amount: 1 });
     TradeData[] memory sellData;
 
     vm.startPrank(worldDeployer);
     CharFund.setGold(characterId, 10_000);
-    NpcShopInventory.setAmount(cityId, 184, 2);
-    NpcShopInventory.setAmount(cityId, 185, 3);
+    NpcShopInventory.setAmount(cityId, 268, 2);
+    NpcShopInventory.setAmount(cityId, 269, 3);
     vm.stopPrank();
 
     vm.startPrank(player);
@@ -243,8 +243,8 @@ contract NpcShopSystem is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
     vm.stopPrank();
 
     assertEq(CharFund.getGold(characterId), 9000);
-    assertEq(CharOtherItem.getAmount(characterId, 184), 1);
-    assertEq(NpcShopInventory.getAmount(cityId, 184), 1);
+    assertEq(CharOtherItem.getAmount(characterId, 268), 1);
+    assertEq(NpcShopInventory.getAmount(cityId, 268), 1);
 
     buyData[0].amount = 2;
     vm.expectRevert();

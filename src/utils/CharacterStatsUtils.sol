@@ -11,13 +11,35 @@ import {
   EquipmentInfo,
   EquipmentInfoData,
   EquipmentInfo2V2,
-  EquipmentInfo2V2Data
+  EquipmentInfo2V2Data,
+  CharReborn
 } from "@codegen/index.sol";
 import { CharEquipStats, CharEquipStatsData } from "@codegen/tables/CharEquipStats.sol";
 import { StatType, SlotType } from "@codegen/common.sol";
 import { Errors, Config } from "@common/index.sol";
 
 library CharacterStatsUtils {
+  /// @dev calculate the required exp to level up
+  function calculateRequiredExp(
+    uint256 characterId,
+    uint16 currentLevel,
+    uint16 toLevel
+  )
+    internal
+    view
+    returns (uint32 requiredExp)
+  {
+    for (uint16 i = currentLevel + 1; i <= toLevel; i++) {
+      uint32 calcNum = i - 1;
+      requiredExp += calcNum * 20 + calcNum * calcNum * calcNum / 5;
+    }
+    uint32 rebornNum = uint32(CharReborn.get(characterId));
+    if (rebornNum > 0) {
+      // each time the character is reborn, the required exp increases by 10%
+      requiredExp = requiredExp * (rebornNum * 10 + 100) / 100;
+    }
+  }
+
   function validateCurrentWeight(uint256 characterId) internal view {
     uint32 currentWeight = CharCurrentStats.getWeight(characterId);
     uint32 maxWeight = CharStats.getWeight(characterId);

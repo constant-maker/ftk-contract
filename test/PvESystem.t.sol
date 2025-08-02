@@ -54,7 +54,7 @@ contract PvESystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
 
     vm.startPrank(worldDeployer);
     MonsterStats.setHp(monsterId, 200);
-    CharCurrentStats.setHp(monsterId, 200);
+    CharCurrentStats.setHp(characterId, 200);
     vm.stopPrank();
 
     uint32 characterHp = CharCurrentStats.getHp(characterId);
@@ -103,7 +103,7 @@ contract PvESystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
     uint256[5] memory customSkillIds = [uint256(12), uint256(0), uint256(2), uint256(1), uint256(0)];
     vm.startPrank(worldDeployer);
     MonsterStats.setHp(monsterId, 200);
-    CharCurrentStats.setHp(monsterId, 200);
+    CharCurrentStats.setHp(characterId, 200);
     CharSkill.setSkillIds(characterId, customSkillIds);
     vm.stopPrank();
 
@@ -423,7 +423,7 @@ contract PvESystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
     _gearUpEquipment();
 
     vm.startPrank(worldDeployer);
-    CharacterItemUtils.addNewItem(characterId, 34, 1); // add shield
+    CharacterItemUtils.addNewItem(characterId, 46, 1); // add shield
     CharEquipment.set(characterId, SlotType.SubWeapon, 2);
     CharGrindSlot.set(characterId, SlotType.SubWeapon);
     vm.stopPrank();
@@ -551,7 +551,7 @@ contract PvESystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
 
     vm.startPrank(worldDeployer);
     MonsterStats.setHp(monsterId, 200);
-    CharCurrentStats.setHp(monsterId, 200);
+    CharCurrentStats.setHp(characterId, 200);
     CharPerk.setLevel(characterId, ItemType.StoneHammer, 1);
     uint256[5] memory customSkillIds = [uint256(0), 11, 0, 0, 0];
     CharSkill.setSkillIds(characterId, customSkillIds);
@@ -604,7 +604,7 @@ contract PvESystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
 
     vm.startPrank(worldDeployer);
     MonsterStats.setHp(monsterId, 200);
-    CharCurrentStats.setHp(monsterId, 200);
+    CharCurrentStats.setHp(characterId, 200);
     CharPerk.setLevel(characterId, ItemType.StoneHammer, 1);
     uint256[5] memory customSkillIds = [uint256(0), 12, 0, 0, 0];
     CharSkill.setSkillIds(characterId, customSkillIds);

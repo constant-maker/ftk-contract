@@ -32,8 +32,8 @@ contract WelcomePackagesTest is WorldFixture, SpawnSystemFixture, WelcomeSystemF
 
       Tool2Data memory tool = Tool2.get(toolId);
       assertEq(tool.characterId, characterId_1);
-      assertGe(tool.itemId, 18);
-      assertLe(tool.itemId, 29);
+      assertGe(tool.itemId, 21);
+      assertLe(tool.itemId, 31);
     }
   }
 
@@ -44,7 +44,7 @@ contract WelcomePackagesTest is WorldFixture, SpawnSystemFixture, WelcomeSystemF
 
     EquipmentData memory equipment = Equipment.get(equipmentId);
     assertEq(equipment.characterId, characterId_1);
-    assertEq(equipment.itemId, 30); // rusty sword
+    assertEq(equipment.itemId, 33); // rusty sword
   }
 
   function test_ShouldReceiveHealingPotion() external { }
@@ -61,8 +61,8 @@ contract WelcomePackagesTest is WorldFixture, SpawnSystemFixture, WelcomeSystemF
         assertTrue(Item.getItemType(tool.itemId) == ItemType.StoneHammer);
       }
       assertEq(tool.characterId, characterId_2);
-      assertGe(tool.itemId, 18);
-      assertLe(tool.itemId, 29);
+      assertGe(tool.itemId, 21);
+      assertLe(tool.itemId, 31);
     }
   }
 }

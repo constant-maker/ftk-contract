@@ -64,7 +64,7 @@ contract DropSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixtur
 
     uint32 currentWeight = CharCurrentStats.getWeight(characterId);
     console2.log("current weight", currentWeight);
-    assertEq(currentWeight + 3, beforeWeight);
+    assertEq(currentWeight + 5, beforeWeight);
 
     assertFalse(InventoryEquipmentUtils.hasEquipment(characterId, equipmentRustySword));
   }

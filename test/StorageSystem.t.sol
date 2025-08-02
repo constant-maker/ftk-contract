@@ -28,7 +28,7 @@ contract StorageSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFix
   address player = makeAddr("player");
   uint256 characterId;
 
-  uint256 healingPotion = 35;
+  uint256 healingPotion = 66;
   uint256 cityId = 1;
 
   function setUp() public virtual override(WorldFixture, SpawnSystemFixture, WelcomeSystemFixture) {
@@ -119,7 +119,7 @@ contract StorageSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFix
     uint32 storagePotionAmount = CharOtherItemStorage.getAmount(characterId, cityId, healingPotion);
     console2.log("storagePotionAmount", storagePotionAmount);
     assertEq(storagePotionAmount, 1);
-    assertEq(charStorage.weight, 9);
+    assertEq(charStorage.weight, 11);
 
     ItemsActionData memory emptyTransferInData;
     ItemsActionData memory transferOutData = ItemsActionData({
@@ -172,7 +172,7 @@ contract StorageSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFix
 
     // set new max weight and retry, expect success
     vm.startPrank(worldDeployer);
-    CharStorage.setMaxWeight(characterId, cityId, 10);
+    CharStorage.setMaxWeight(characterId, cityId, 11);
     vm.stopPrank();
 
     vm.startPrank(player);
@@ -193,6 +193,6 @@ contract StorageSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFix
     uint32 storagePotionAmount = CharOtherItemStorage.getAmount(characterId, cityId, healingPotion);
     console2.log("storagePotionAmount", storagePotionAmount);
     assertEq(storagePotionAmount, 1);
-    assertEq(charStorage.weight, 9);
+    assertEq(charStorage.weight, 11);
   }
 }
