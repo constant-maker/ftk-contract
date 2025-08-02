@@ -236,6 +236,14 @@ type MonsterLocation struct {
 	AdvantageType int        `json:"advantageType"`
 }
 
+type SingleMonsterLocation struct {
+	X             int32 `json:"x"`
+	Y             int32 `json:"y"`
+	MonsterId     int   `json:"monster_id"`
+	Level         int   `json:"level"`
+	AdvantageType int   `json:"advantage_type"`
+}
+
 type MonsterLocationDetail struct {
 	MonsterId     int `json:"monsterId"`
 	Level         int `json:"level"`

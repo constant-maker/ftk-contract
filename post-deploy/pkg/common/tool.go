@@ -88,3 +88,50 @@ func WriteSortedJsonFile[T any](filePath string, mainKey string, data map[string
 
 	return nil
 }
+
+func MustStringToNumber[T comparable](s string) T {
+	var zero T
+	if s == "" {
+		return zero
+	}
+
+	var anyVal any
+	var err error
+
+	switch any(zero).(type) {
+	case int:
+		var v int64
+		v, err = strconv.ParseInt(s, 10, 0)
+		anyVal = int(v)
+	case int16:
+		var v int64
+		v, err = strconv.ParseInt(s, 10, 16)
+		anyVal = int16(v)
+	case int32:
+		var v int64
+		v, err = strconv.ParseInt(s, 10, 32)
+		anyVal = int32(v)
+	case int64:
+		anyVal, err = strconv.ParseInt(s, 10, 64)
+	case uint16:
+		var v uint64
+		v, err = strconv.ParseUint(s, 10, 16)
+		anyVal = uint16(v)
+	case uint32:
+		var v uint64
+		v, err = strconv.ParseUint(s, 10, 32)
+		anyVal = uint32(v)
+	case uint64:
+		anyVal, err = strconv.ParseUint(s, 10, 64)
+	case float64:
+		anyVal, err = strconv.ParseFloat(s, 64)
+	default:
+		zap.S().Panicw("MustParseString: unsupported type", "type", fmt.Sprintf("%T", zero))
+	}
+
+	if err != nil {
+		zap.S().Panicw("MustParseString: parse failed", "err", err, "value", s)
+	}
+
+	return anyVal.(T)
+}
