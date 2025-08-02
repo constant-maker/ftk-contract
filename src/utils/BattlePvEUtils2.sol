@@ -72,7 +72,11 @@ library BattlePvEUtils2 {
       revert Errors.PvE_AfkNotStarted(characterId);
     }
     uint32 tick = uint32((block.timestamp - afkData.startTime) / Config.PVE_ATTACK_COOLDOWN);
-    if (tick == 0) return; // no exp gained
+    if (tick == 0) {
+      // no exp gained
+      CharState.setState(characterId, CharacterStateType.Standby);
+      return;
+    }
     uint32 gainedExp = afkData.maxTick > tick ? tick * afkData.expPerTick : afkData.maxTick * afkData.expPerTick;
     uint32 gainedPerkExp = tick * afkData.perkExpPerTick;
     // update character exp and perk exp
