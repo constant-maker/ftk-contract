@@ -2,7 +2,8 @@
   "characterStates": {
     "Standby": 0,
     "Farming": 1,
-    "Moving": 2
+    "Moving": 2,
+    "Hunting": 3
   },
   "resourceTypes": {
     "Wood": 0,
