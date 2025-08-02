@@ -690,11 +690,11 @@ contract PvPSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
       vm.stopPrank();
       lastPvpId = CharBattle.getLastPvpId(characterId_1);
       pvpExtra = PvPExtraV3.get(lastPvpId);
-      assertEq(pvpExtra.fames[0], 20);
+      assertEq(pvpExtra.fames[0], 10);
       assertEq(pvpExtra.fames[1], -20);
     }
 
-    assertEq(CharStats2.get(characterId_1), char1Fame + 500 * 20); // 20 fame per fight
+    assertEq(CharStats2.get(characterId_1), char1Fame + 500 * 10); // 10 fame per fight
     assertTrue(CharAchievementUtils.hasAchievement(characterId_1, 12));
     assertTrue(CharAchievementUtils.hasAchievement(characterId_1, 13));
     assertTrue(CharAchievementUtils.hasAchievement(characterId_1, 14));
