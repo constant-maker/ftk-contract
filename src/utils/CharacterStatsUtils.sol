@@ -159,10 +159,10 @@ library CharacterStatsUtils {
     if (equipmentInfo.hp > 0) {
       uint32 maxHp = CharStats.getHp(characterId);
       uint32 currentHp = characterCurrentStats.hp;
-      bool wasFullHp = (maxHp == currentHp);
       maxHp = isRemoved ? maxHp - equipmentInfo.hp : maxHp + equipmentInfo.hp;
       CharStats.setHp(characterId, maxHp);
-      if (wasFullHp || currentHp > maxHp) {
+      if (currentHp > maxHp) {
+        // if current hp is greater than max hp, set it to max hp
         characterCurrentStats.hp = maxHp;
       }
     }

@@ -54,7 +54,7 @@ library BattlePvEUtils2 {
     (uint32 gainedExp, uint32 gainedPerkExp) =
       BattlePvEUtils.getExpAndPerkExpReward(monsterId, false, monsterLocation.level, charLevel);
     uint32 maxExp = _calculateMaxAFKExp(monsterLocation.level, charLevel, characterId);
-    uint32 maxTick = maxExp / gainedExp;
+    uint32 maxTick = gainedExp == 0 ? 0 : maxExp / gainedExp;
     PvEAfk.set(characterId, monsterId, block.timestamp, gainedExp, gainedPerkExp, maxTick);
     PvEAfkLoc.set(characterPosition.x, characterPosition.y, monsterId);
     CharState.setState(characterId, CharacterStateType.Hunting);
