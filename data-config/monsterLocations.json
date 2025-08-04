@@ -26629,6 +26629,13 @@
         "advantageType": 3
       }
     ],
+    "-28_17": [
+      {
+        "monsterId": 42,
+        "level": 85,
+        "advantageType": 2
+      }
+    ],
     "-28_18": [
       {
         "monsterId": 15,
@@ -92262,6 +92269,13 @@
         "monsterId": 19,
         "level": 45,
         "advantageType": 1
+      }
+    ],
+    "18_-1": [
+      {
+        "monsterId": 42,
+        "level": 85,
+        "advantageType": 2
       }
     ],
     "18_-10": [
