@@ -1,7 +1,7 @@
 pragma solidity >=0.8.24;
 
 import {
-  Kingdom,
+  KingdomV2,
   City,
   CityData,
   CharPosition,
@@ -53,7 +53,7 @@ library CharacterPositionUtils {
   /// @dev move character to their original capital
   function moveToCapital(uint256 characterId) internal {
     uint8 kingdomId = CharInfo.getKingdomId(characterId);
-    uint256 capitalId = Kingdom.getCapitalId(kingdomId);
+    uint256 capitalId = KingdomV2.getCapitalId(kingdomId);
     CityData memory city = City.get(capitalId);
     CharPosition.set(characterId, city.x, city.y);
     CharNextPosition.set(characterId, city.x, city.y, block.timestamp);

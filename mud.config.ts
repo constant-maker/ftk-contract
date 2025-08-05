@@ -15,6 +15,7 @@ import ACHIEVEMENT_TABLES from "./tables/achievementTables";
 import SOCIAL_TABLES from "./tables/socialTables";
 import MARKET_TABLES from "./tables/marketTables";
 import KING_TABLES from "./tables/kingTables";
+import CITY_TABLES from "./tables/cityTables";
 
 export default defineWorld({
   deploy: {
@@ -47,6 +48,7 @@ export default defineWorld({
     AdvantageType: ["Red", "Green", "Blue", "Grey"],
     EntityType: ["Character", "Monster"],
     EffectType: ["None", "Burn", "Poison", "Frostbite", "Stun"],
+    RoleType: ["None", "VaultKeeper", "KingGuard"],
   },
   tables: {
     Unmovable: {
@@ -73,6 +75,7 @@ export default defineWorld({
     ...SOCIAL_TABLES,
     ...MARKET_TABLES,
     ...KING_TABLES,
+    ...CITY_TABLES,
   },
   excludeSystems: ["SpawnSystem"],
 });

@@ -2,7 +2,7 @@ pragma solidity >=0.8.24;
 
 import { System } from "@latticexyz/world/src/System.sol";
 import { LibString } from "@solady/utils/LibString.sol";
-import { CharState, CharInfo, CharInfoData, CharName, ActiveChar, Kingdom } from "@codegen/index.sol";
+import { CharState, CharInfo, CharInfoData, CharName, ActiveChar, KingdomV2 } from "@codegen/index.sol";
 import { CharStats2 } from "@codegen/tables/CharStats2.sol";
 import { CharacterStateType } from "@codegen/common.sol";
 import { CharacterPositionUtils } from "@utils/CharacterPositionUtils.sol";
@@ -38,7 +38,7 @@ contract SpawnSystem is System {
 
   /// @dev Validate the data to create character
   function _validateCreateCharacterData(CharInfoData memory data) private view {
-    uint256 capitalId = Kingdom.getCapitalId(data.kingdomId);
+    uint256 capitalId = KingdomV2.getCapitalId(data.kingdomId);
     if (capitalId == 0) {
       revert Errors.SpawnSystem_InvalidKingdomId(data.kingdomId);
     }
