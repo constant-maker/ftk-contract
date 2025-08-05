@@ -224,6 +224,13 @@ const CHARACTER_TABLES: any = {
     },
     key: ['characterId', 'equipmentId'],
   },
+  CharRole: {
+    schema: {
+      characterId: "uint256",
+      roleType: "RoleType",
+    },
+    key: ['characterId'],
+  },
 };
 
 export default CHARACTER_TABLES;

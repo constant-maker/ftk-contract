@@ -12,10 +12,17 @@ import {
   MarketFee,
   AllianceV2,
   AllianceV2Data,
-  KingSetting
+  KingSetting,
+  TileInfo3,
+  City,
+  RestrictLocation,
+  CityCounter,
+  KingdomV2,
+  CharRole
 } from "@codegen/index.sol";
-import { CharAchievementUtils } from "@utils/index.sol";
+import { CharAchievementUtils, MapUtils, CharacterRoleUtils } from "@utils/index.sol";
 import { Errors } from "@common/index.sol";
+import { ZoneType, RoleType } from "@codegen/common.sol";
 
 contract KingSystem is CharacterAccessControl, System {
   uint32 constant KING_MIN_FAME_REQUIRE = 2000;
@@ -97,7 +104,7 @@ contract KingSystem is CharacterAccessControl, System {
 
   function setAlliance(uint256 characterId, uint8 otherKingdomId, bool value) public onlyAuthorizedWallet(characterId) {
     uint8 charKingdomId = CharInfo.getKingdomId(characterId);
-    _mustBeKing(charKingdomId, characterId);
+    CharacterRoleUtils.mustBeKing(charKingdomId, characterId);
     _validateKingdomId(otherKingdomId);
     if (charKingdomId == otherKingdomId) {
       return;
@@ -138,7 +145,7 @@ contract KingSystem is CharacterAccessControl, System {
     onlyAuthorizedWallet(characterId)
   {
     uint8 charKingdomId = CharInfo.getKingdomId(characterId);
-    _mustBeKing(charKingdomId, characterId);
+    CharacterRoleUtils.mustBeKing(charKingdomId, characterId);
     for (uint256 i = 0; i < kingdomIds.length; i++) {
       uint8 kingdomId = kingdomIds[i];
       uint8 fee = fee[i];
@@ -152,7 +159,7 @@ contract KingSystem is CharacterAccessControl, System {
 
   function setPvPFamePenalty(uint256 characterId, uint8 penalty) public onlyAuthorizedWallet(characterId) {
     uint8 charKingdomId = CharInfo.getKingdomId(characterId);
-    _mustBeKing(charKingdomId, characterId);
+    CharacterRoleUtils.mustBeKing(charKingdomId, characterId);
     if (penalty > 100) {
       revert Errors.KingSystem_InvalidFamePenalty(penalty);
     }
@@ -161,17 +168,62 @@ contract KingSystem is CharacterAccessControl, System {
 
   function setCaptureTileFamePenalty(uint256 characterId, uint8 penalty) public onlyAuthorizedWallet(characterId) {
     uint8 charKingdomId = CharInfo.getKingdomId(characterId);
-    _mustBeKing(charKingdomId, characterId);
+    CharacterRoleUtils.mustBeKing(charKingdomId, characterId);
     if (penalty > 100) {
       revert Errors.KingSystem_InvalidFamePenalty(penalty);
     }
     KingSetting.setCaptureTilePenalty(charKingdomId, penalty);
   }
 
-  function _mustBeKing(uint8 charKingdomId, uint256 characterId) private view {
-    uint256 currentKingId = KingElection.getKingId(charKingdomId);
-    if (currentKingId != characterId) {
-      revert Errors.KingSystem_NotKing(characterId);
+  function setNewCity(
+    uint256 characterId,
+    int32 x,
+    int32 y,
+    string memory name
+  )
+    public
+    onlyAuthorizedWallet(characterId)
+  {
+    uint8 charKingdomId = CharInfo.getKingdomId(characterId);
+    CharacterRoleUtils.mustBeKing(charKingdomId, characterId);
+    if (TileInfo3.getKingdomId(x, y) != charKingdomId) {
+      revert Errors.KingSystem_NotOwnTile(charKingdomId, x, y);
+    }
+    if (!MapUtils.isValidCityLocation(x, y)) {
+      revert Errors.KingSystem_InvalidCityLocation(x, y);
+    }
+    if (bytes(name).length < 3 || bytes(name).length > 20) {
+      revert Errors.KingSystem_InvalidCityName(name);
+    }
+    uint8 numCityToBuild = KingdomV2.getNumCityToBuild(charKingdomId);
+    if (numCityToBuild == 0) {
+      revert Errors.KingSystem_NoCityToBuild(charKingdomId);
+    }
+    KingdomV2.setNumCityToBuild(charKingdomId, numCityToBuild - 1);
+    uint256 newCityId = CityCounter.get() + 1;
+    CityCounter.set(newCityId);
+
+    City.set(newCityId, x, y, false, charKingdomId, 0, name);
+    RestrictLocation.set(x, y, true); // Mark the location as restricted for new cities
+  }
+
+  function setRole(uint256 characterId, uint256 citizenId, RoleType role) public onlyAuthorizedWallet(characterId) {
+    uint8 charKingdomId = CharInfo.getKingdomId(characterId);
+    CharacterRoleUtils.mustBeKing(charKingdomId, characterId);
+    if (CharInfo.getKingdomId(citizenId) != charKingdomId) {
+      revert Errors.KingSystem_NotCitizenOfKingdom(citizenId, charKingdomId);
+    }
+    if (CharRole.get(characterId) == role) {
+      return; // No change needed
+    }
+    if (role == RoleType.None) {
+      CharRole.deleteRecord(citizenId);
+      return;
+    }
+    if (role == RoleType.VaultKeeper || role == RoleType.KingGuard) {
+      CharRole.set(citizenId, role);
+    } else {
+      revert Errors.KingSystem_InvalidRole(role); // Ensure only valid roles are set
     }
   }
 
