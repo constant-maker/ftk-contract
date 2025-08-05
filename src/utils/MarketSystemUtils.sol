@@ -23,7 +23,7 @@ import {
   FillOrder,
   FillCounter,
   CityVault2,
-  Kingdom
+  KingdomV2
 } from "@codegen/index.sol";
 import { ItemCategoryType } from "@codegen/common.sol";
 import { Errors, Config } from "@common/index.sol";

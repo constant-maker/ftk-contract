@@ -408,7 +408,7 @@ contract PvESystemBossTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFix
 
     characterHp = CharCurrentStats.getHp(characterId);
     console2.log("character final hp", characterHp);
-    assertEq(characterHp, 10000);
+    assertEq(characterHp, 10_000);
   }
 
   function _gearUpEquipment() private {
