@@ -72,20 +72,19 @@ library BattlePvEUtils2 {
       revert Errors.PvE_AfkNotStarted(characterId);
     }
     uint32 tick = uint32((block.timestamp - afkData.startTime) / Config.PVE_ATTACK_COOLDOWN);
-    if (tick == 0) {
-      // no exp gained
-      CharState.setState(characterId, CharacterStateType.Standby);
-      return;
+    if (tick != 0) {
+      uint32 gainedExp = afkData.maxTick > tick ? tick * afkData.expPerTick : afkData.maxTick * afkData.expPerTick;
+      uint32 gainedPerkExp = tick * afkData.perkExpPerTick;
+      // update character exp and perk exp
+      updateCharacterExp(characterId, gainedExp, gainedPerkExp);
+
+      CharBattle.setPveLastAtkTime(characterId, block.timestamp);
     }
-    uint32 gainedExp = afkData.maxTick > tick ? tick * afkData.expPerTick : afkData.maxTick * afkData.expPerTick;
-    uint32 gainedPerkExp = tick * afkData.perkExpPerTick;
-    // update character exp and perk exp
-    updateCharacterExp(characterId, gainedExp, gainedPerkExp);
+
     // reset afk data
     PvEAfk.deleteRecord(characterId);
     PvEAfkLoc.deleteRecord(characterPosition.x, characterPosition.y);
     CharState.setState(characterId, CharacterStateType.Standby);
-    CharBattle.setPveLastAtkTime(characterId, block.timestamp);
   }
 
   function updateCharacterExp(uint256 characterId, uint32 gainedExp, uint32 gainedPerkExp) internal {
