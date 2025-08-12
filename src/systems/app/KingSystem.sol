@@ -18,7 +18,8 @@ import {
   RestrictLocation,
   CityCounter,
   KingdomV2,
-  CharRole
+  CharRole,
+  CharRoleCounter
 } from "@codegen/index.sol";
 import { CharAchievementUtils, MapUtils, CharacterRoleUtils } from "@utils/index.sol";
 import { Errors } from "@common/index.sol";
@@ -197,7 +198,7 @@ contract KingSystem is CharacterAccessControl, System {
     }
     uint8 numCityToBuild = KingdomV2.getNumCityToBuild(charKingdomId);
     if (numCityToBuild == 0) {
-      revert Errors.KingSystem_NoCityToBuild(charKingdomId);
+      revert Errors.KingSystem_ExceedMaxNumCity(charKingdomId);
     }
     KingdomV2.setNumCityToBuild(charKingdomId, numCityToBuild - 1);
     uint256 newCityId = CityCounter.get() + 1;
@@ -210,21 +211,42 @@ contract KingSystem is CharacterAccessControl, System {
   function setRole(uint256 characterId, uint256 citizenId, RoleType role) public onlyAuthorizedWallet(characterId) {
     uint8 charKingdomId = CharInfo.getKingdomId(characterId);
     CharacterRoleUtils.mustBeKing(charKingdomId, characterId);
+
     if (CharInfo.getKingdomId(citizenId) != charKingdomId) {
       revert Errors.KingSystem_NotCitizenOfKingdom(citizenId, charKingdomId);
     }
-    if (CharRole.get(characterId) == role) {
-      return; // No change needed
-    }
-    if (role == RoleType.None) {
+
+    RoleType currentRole = CharRole.get(citizenId);
+    if (currentRole == role) return;
+
+    if (currentRole != RoleType.None) {
       CharRole.deleteRecord(citizenId);
-      return;
+      CharacterRoleUtils.updateRoleAchievement(citizenId, currentRole, true);
+      uint32 currentCount = CharRoleCounter.getCount(charKingdomId, currentRole);
+      if (currentCount > 0) {
+        CharRoleCounter.setCount(charKingdomId, currentRole, currentCount - 1);
+      }
     }
+
+    if (role == RoleType.None) return;
+
     if (role == RoleType.VaultKeeper || role == RoleType.KingGuard) {
+      _checkAndUpdateRoleLimit(charKingdomId, role);
       CharRole.set(citizenId, role);
+      CharacterRoleUtils.updateRoleAchievement(citizenId, role, false);
     } else {
-      revert Errors.KingSystem_InvalidRole(role); // Ensure only valid roles are set
+      revert Errors.KingSystem_InvalidRole(role);
     }
+  }
+
+  /// @dev Check and update the role limit for a specific role in a kingdom
+  function _checkAndUpdateRoleLimit(uint8 kingdomId, RoleType roleType) private {
+    uint32 currentCount = CharRoleCounter.getCount(kingdomId, roleType);
+    uint32 maxLimit = KingdomV2.getLevel(kingdomId) * uint32(10); // max limit is 10 times the kingdom level
+    if (currentCount >= maxLimit) {
+      revert Errors.KingSystem_RoleLimitReached(roleType, maxLimit);
+    }
+    CharRoleCounter.setCount(kingdomId, roleType, currentCount + 1);
   }
 
   function _validateKingdomId(uint8 kingdomId) private view {

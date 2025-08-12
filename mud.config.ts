@@ -16,6 +16,7 @@ import SOCIAL_TABLES from "./tables/socialTables";
 import MARKET_TABLES from "./tables/marketTables";
 import KING_TABLES from "./tables/kingTables";
 import CITY_TABLES from "./tables/cityTables";
+import ROLE_TABLES from "./tables/roleTables";
 
 export default defineWorld({
   deploy: {
@@ -76,6 +77,7 @@ export default defineWorld({
     ...MARKET_TABLES,
     ...KING_TABLES,
     ...CITY_TABLES,
+    ...ROLE_TABLES,
   },
   excludeSystems: ["SpawnSystem"],
 });

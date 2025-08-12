@@ -80,4 +80,11 @@ library CharacterStateUtils {
       revert Errors.Character_MustInState(characterState, requiredCharacterState, block.timestamp);
     }
   }
+
+  function mustInStateStandByOrMoving(uint256 characterId) internal view {
+    CharacterStateType characterState = getCharacterState(characterId);
+    if (characterState != CharacterStateType.Standby && characterState != CharacterStateType.Moving) {
+      revert Errors.Character_MustInState(characterState, CharacterStateType.Standby, block.timestamp);
+    }
+  }
 }

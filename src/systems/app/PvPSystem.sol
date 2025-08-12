@@ -34,7 +34,7 @@ contract PvPSystem is System, CharacterAccessControl {
   )
     public
     onlyAuthorizedWallet(attackerId)
-    mustInState(attackerId, CharacterStateType.Standby)
+    mustInStateStandByOrMoving(attackerId)
     validateCurrentWeight(attackerId)
   {
     CharPositionData memory attackerPosition = CharacterPositionUtils.currentPosition(attackerId);

@@ -178,6 +178,18 @@
         "agi": 0
       },
       "color": "#e0c000"
+    },
+    "17": {
+      "id": 17,
+      "name": "The Vault Keeper",
+      "content": "You have become the guardian of the Vault, a place of untold riches and secrets. Your duty is to protect it at all costs.",
+      "instruction": "Get the Vault Keeper role.",
+      "stats": {
+        "atk": 1,
+        "def": 1,
+        "agi": 1
+      },
+      "color": "#e0c000"
     }
   }
 }

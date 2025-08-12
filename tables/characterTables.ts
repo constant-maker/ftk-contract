@@ -1,3 +1,5 @@
+import { X } from "@latticexyz/store/dist/store-CDoWdOke";
+
 const CHARACTER_TABLES: any = {
   ActiveChar: {
     schema: {
@@ -224,10 +226,12 @@ const CHARACTER_TABLES: any = {
     },
     key: ['characterId', 'equipmentId'],
   },
-  CharRole: {
+  CharSavePoint: {
     schema: {
       characterId: "uint256",
-      roleType: "RoleType",
+      cityId: "uint256",
+      x: "int32",
+      y: "int32",
     },
     key: ['characterId'],
   },

@@ -60,7 +60,7 @@ contract MarketSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixt
 
     vm.startPrank(worldDeployer);
     CharStats2.setFame(characterId1, 1050);
-    CharFund.setGold(characterId1, 100);
+    CharFund.setGold(characterId1, 105); // 100 + 5% fee
     CharStats2.setFame(characterId2, 1050);
     CharFund.setGold(characterId2, 100);
     vm.stopPrank();
@@ -243,7 +243,7 @@ contract MarketSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixt
     assertEq(CharCurrentStats.getWeight(characterId2), prevChar2CurrentWeight + 50); // weight increase because of
       // taking order
     assertEq(CharOtherItem.getAmount(characterId2, 1), 50);
-    assertEq(CharFund.getGold(characterId2), 150); // 200 - 50
+    assertEq(CharFund.getGold(characterId2), 148); // 200 - 50 - 2 (fee)
     assertEq(CharFund.getGold(characterId1), 248); // 200 + 50 - 5% fee
     assertEq(Order.getAmount(1), 50); // 100 - 50
     assertFalse(Order.getIsDone(1));
@@ -310,7 +310,7 @@ contract MarketSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixt
     assertEq(CharCurrentStats.getWeight(characterId2), prevChar2CurrentWeight + 100); // weight increase because of
       // taking order
     assertEq(CharOtherItem.getAmount(characterId2, 1), 100);
-    assertEq(CharFund.getGold(characterId2), 50); // 150 - 100 (unit price changed to 2)
+    assertEq(CharFund.getGold(characterId2), 43); // 148 - 100 - 5 (fee) (unit price changed to 2)
     assertEq(CharFund.getGold(characterId1), 248 + 95); // 248 + 100 - 5% fee
     assertTrue(Order.getIsDone(1));
     console2.log("orderParams", orderParams.orderId);
@@ -339,7 +339,7 @@ contract MarketSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixt
     vm.stopPrank();
     assertEq(CharMarketWeight.getWeight(characterId1, city2), 0);
     assertEq(CharFund.getGold(characterId1), 248 + 95); // nothing changed because of kingdom fee
-    assertEq(CharFund.getGold(characterId2), 30); // 50 - (10 * 2)
+    assertEq(CharFund.getGold(characterId2), 22); // 43 - (10 * 2) - 1 (fee)
   }
 
   function test_BuyOtherItemOrder() public {

@@ -284,9 +284,10 @@ library Errors {
   error KingSystem_NotOwnTile(uint8 kingdomId, int32 x, int32 y);
   error KingSystem_InvalidCityLocation(int32 x, int32 y);
   error KingSystem_InvalidCityName(string name);
-  error KingSystem_NoCityToBuild(uint8 kingdomId);
+  error KingSystem_ExceedMaxNumCity(uint8 kingdomId);
   error KingSystem_NotCitizenOfKingdom(uint256 citizenId, uint8 kingdomId);
   error KingSystem_InvalidRole(RoleType roleType);
+  error KingSystem_RoleLimitReached(RoleType roleType, uint32 maxLimit);
 
   /* -------------------------------------------------------------------------- */
   /*                               VaultSystem                                  */
@@ -308,4 +309,9 @@ library Errors {
   error CitySystem_InsufficientVaultAmount(
     uint256 cityId, uint256 itemId, uint32 currentVaultAmount, uint32 withdrawAmount
   );
+  error CitySystem_CityLevelTooLow(uint256 cityId, uint8 cityLevel);
+  error CitySystem_FromCityIsNotCapital(uint256 cityId);
+  error CitySystem_ToCityIsCapital(uint256 cityId);
+  error CitySystem_CitiesNotInSameKingdom(uint256 fromCityId, uint256 toCityId);
+  error CitySystem_CityBelongsToOtherKingdom(uint8 originalKingdomId, uint8 currentKingdomId);
 }

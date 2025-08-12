@@ -13,6 +13,6 @@ library MapUtils {
   }
 
   function isValidCityLocation(int32 x, int32 y) internal view returns (bool) {
-    return RestrictLocation.get(x, y);
+    return !RestrictLocation.get(x, y);
   }
 }

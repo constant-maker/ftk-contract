@@ -2,7 +2,7 @@ pragma solidity >=0.8.24;
 
 import { System } from "@latticexyz/world/src/System.sol";
 import { CharacterAccessControl } from "@abstracts/CharacterAccessControl.sol";
-import { CharRole, City, CharInfo, CityVault } from "@codegen/index.sol";
+import { CharRole, City, CharInfo, CityVault, CVaultHistory, HistoryCounter } from "@codegen/index.sol";
 import { RoleType } from "@codegen/common.sol";
 import { CharacterPositionUtils, InventoryItemUtils } from "@utils/index.sol";
 import { Errors } from "@common/Errors.sol";
@@ -17,7 +17,7 @@ contract VaultSystem is System, CharacterAccessControl {
     public
     onlyAuthorizedWallet(characterId)
   {
-    CharacterPositionUtils.MustInCity(characterId, cityId);
+    CharacterPositionUtils.mustInCity(characterId, cityId);
     if (CharRole.get(characterId) != RoleType.VaultKeeper) {
       revert Errors.VaultSystem_MustBeVaultKeeper(characterId);
     }
@@ -43,6 +43,7 @@ contract VaultSystem is System, CharacterAccessControl {
       }
       uint32 newVaultAmount = currentVaultAmount - amounts[i];
       CityVault.setAmount(cityId, itemIds[i], newVaultAmount);
+      CVaultHistory.set(cityId, _getVaultHistoryId(cityId), characterId, itemIds[i], amounts[i], block.timestamp, false);
     }
     InventoryItemUtils.addItems(characterId, itemIds, amounts);
   }
@@ -60,7 +61,7 @@ contract VaultSystem is System, CharacterAccessControl {
     if (itemIds.length != amounts.length) {
       revert Errors.VaultSystem_InvalidParamsLen(itemIds.length, amounts.length);
     }
-    CharacterPositionUtils.MustInCity(characterId, cityId);
+    CharacterPositionUtils.mustInCity(characterId, cityId);
     InventoryItemUtils.removeItems(characterId, itemIds, amounts);
     for (uint256 i = 0; i < itemIds.length; i++) {
       if (itemIds[i] == 0 || amounts[i] == 0) {
@@ -69,6 +70,14 @@ contract VaultSystem is System, CharacterAccessControl {
       uint32 currentVaultAmount = CityVault.getAmount(cityId, itemIds[i]);
       uint32 newVaultAmount = currentVaultAmount + amounts[i];
       CityVault.setAmount(cityId, itemIds[i], newVaultAmount);
+      CVaultHistory.set(cityId, _getVaultHistoryId(cityId), characterId, itemIds[i], amounts[i], block.timestamp, true);
     }
+  }
+
+  function _getVaultHistoryId(uint256 cityId) private returns (uint256 id) {
+    uint256 currentCounter = HistoryCounter.get(cityId);
+    uint256 newCounter = currentCounter + 1;
+    HistoryCounter.setCounter(cityId, newCounter);
+    return newCounter % 100; // wrap around after 100 entries
   }
 }

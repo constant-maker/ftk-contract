@@ -17,7 +17,7 @@ import { Errors, Config } from "@common/index.sol";
 contract MarketSystem is System, CharacterAccessControl {
   function placeOrder(uint256 characterId, OrderParams memory order) public onlyAuthorizedWallet(characterId) {
     MarketWeightUtils.checkAndSetMaxWeight(characterId, order.cityId); // set default max weight if not set
-    CharacterPositionUtils.MustInCity(characterId, order.cityId);
+    CharacterPositionUtils.mustInCity(characterId, order.cityId);
     _updateOrderParams(order);
     if (order.orderId != 0) {
       _updateOrder(characterId, order);
@@ -44,7 +44,7 @@ contract MarketSystem is System, CharacterAccessControl {
   function cancelOrder(uint256 characterId, uint256 orderId) public onlyAuthorizedWallet(characterId) {
     _checkOrderOwnership(characterId, orderId);
     OrderData memory order = Order.get(orderId);
-    CharacterPositionUtils.MustInCity(characterId, order.cityId);
+    CharacterPositionUtils.mustInCity(characterId, order.cityId);
     if (order.isDone) {
       revert Errors.MarketSystem_OrderAlreadyDone(orderId);
     }

@@ -34,6 +34,7 @@ const CITY_TABLES: any = {
       itemId: "uint256",
       amount: "uint32",
       timestamp: "uint256",
+      isContributed: "bool",
     },
     key: ['cityId', 'id'],
   },
