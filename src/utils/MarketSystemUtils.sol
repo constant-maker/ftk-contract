@@ -23,7 +23,7 @@ import {
   FillOrder,
   FillCounter,
   CityVault2,
-  Kingdom
+  KingdomV2
 } from "@codegen/index.sol";
 import { ItemCategoryType } from "@codegen/common.sol";
 import { Errors, Config } from "@common/index.sol";
@@ -112,12 +112,13 @@ library MarketSystemUtils {
       revert Errors.MarketSystem_InsufficientGold(takerId, charGold, totalGold);
     }
     // remove gold from taker
-    CharacterFundUtils.decreaseGold(takerId, totalGold);
+    uint32 takerOrderFee = calculateOrderFee(takerId, order.cityId, totalGold);
+    CharacterFundUtils.decreaseGold(takerId, totalGold + takerOrderFee);
     // increase gold for order owner
     // fee is always smaller than totalGold
-    uint32 orderFee = calculateOrderFee(order.characterId, order.cityId, totalGold);
-    updateCityVault(order.cityId, orderFee);
-    CharacterFundUtils.increaseGold(order.characterId, totalGold - orderFee);
+    uint32 makerOrderFee = calculateOrderFee(order.characterId, order.cityId, totalGold);
+    updateCityVault(order.cityId, makerOrderFee);
+    CharacterFundUtils.increaseGold(order.characterId, totalGold > makerOrderFee ? totalGold - makerOrderFee : 0);
     // transfer item to taker
     if (order.equipmentId != 0) {
       InventoryEquipmentUtils.addEquipment(takerId, order.equipmentId, true);
@@ -161,13 +162,13 @@ library MarketSystemUtils {
   }
 
   /// @dev Calculate order fee in gold
-  function calculateOrderFee(uint256 receiverId, uint256 cityId, uint32 value) public view returns (uint32) {
-    uint8 receiverKingdomId = CharInfo.getKingdomId(receiverId);
+  function calculateOrderFee(uint256 character, uint256 cityId, uint32 value) public view returns (uint32) {
+    uint8 characterKingdomId = CharInfo.getKingdomId(character);
     uint8 marketKingdomId = City.getKingdomId(cityId);
-    if (receiverKingdomId == marketKingdomId) {
+    if (characterKingdomId == marketKingdomId) {
       return value * uint32(Config.DEFAULT_MARKET_FEE) / 100;
     }
-    uint8 fee = MarketFee.getFee(marketKingdomId, receiverKingdomId);
+    uint8 fee = MarketFee.getFee(marketKingdomId, characterKingdomId);
     if (fee == 0) {
       // default fee
       fee = Config.DEFAULT_MARKET_FEE;

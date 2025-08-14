@@ -1,6 +1,8 @@
 pragma solidity >=0.8.24;
 
-import { CharacterStateType, ResourceType, ItemType, SlotType, StatType, SocialType } from "../codegen/common.sol";
+import {
+  CharacterStateType, ResourceType, ItemType, SlotType, StatType, SocialType, RoleType
+} from "../codegen/common.sol";
 
 library Errors {
   // common errors
@@ -279,4 +281,37 @@ library Errors {
   error KingSystem_InvalidKingdomId(uint8 kingdomId);
   error KingSystem_InvalidMarketFee(uint8 fee);
   error KingSystem_InvalidFamePenalty(uint8 famePenalty);
+  error KingSystem_NotOwnTile(uint8 kingdomId, int32 x, int32 y);
+  error KingSystem_InvalidCityLocation(int32 x, int32 y);
+  error KingSystem_InvalidCityName(string name);
+  error KingSystem_ExceedMaxNumCity(uint8 kingdomId);
+  error KingSystem_NotCitizenOfKingdom(uint256 citizenId, uint8 kingdomId);
+  error KingSystem_InvalidRole(RoleType roleType);
+  error KingSystem_RoleLimitReached(RoleType roleType, uint32 maxLimit);
+
+  /* -------------------------------------------------------------------------- */
+  /*                               VaultSystem                                  */
+  /* -------------------------------------------------------------------------- */
+  error VaultSystem_MustBeVaultKeeper(uint256 characterId);
+  error VaultSystem_CharacterNotInSameKingdom(uint256 characterId, uint256 cityId);
+  error VaultSystem_InvalidParamsLen(uint256 lenItemId, uint256 lenAmount);
+  error VaultSystem_InvalidParamsValue(uint256 itemId, uint32 amount);
+  error VaultSystem_InsufficientVaultAmount(
+    uint256 cityId, uint256 itemId, uint32 currentVaultAmount, uint32 withdrawAmount
+  );
+
+  /* -------------------------------------------------------------------------- */
+  /*                               CitySystem                                   */
+  /* -------------------------------------------------------------------------- */
+  error CitySystem_AlreadyMaxLevel(uint256 cityId);
+  error CitySystem_CityIsNotYourKingdom(uint8 charKingdomId, uint8 cityKingdomId);
+  error CitySystem_InvalidResourceRequire(uint256 lenResourceIds, uint256 lenAmounts);
+  error CitySystem_InsufficientVaultAmount(
+    uint256 cityId, uint256 itemId, uint32 currentVaultAmount, uint32 withdrawAmount
+  );
+  error CitySystem_CityLevelTooLow(uint256 cityId, uint8 cityLevel);
+  error CitySystem_FromCityIsNotCapital(uint256 cityId);
+  error CitySystem_ToCityIsCapital(uint256 cityId);
+  error CitySystem_CitiesNotInSameKingdom(uint256 fromCityId, uint256 toCityId);
+  error CitySystem_CityBelongsToOtherKingdom(uint8 originalKingdomId, uint8 currentKingdomId);
 }

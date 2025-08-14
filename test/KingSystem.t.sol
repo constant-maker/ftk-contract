@@ -18,8 +18,12 @@ import {
   CharCurrentStatsData,
   AllianceV2,
   AllianceV2Data,
-  MarketFee
+  MarketFee,
+  CharRole,
+  CharRoleCounter
 } from "@codegen/index.sol";
+
+import { RoleType } from "@codegen/common.sol";
 
 contract KingSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture {
   address candidate = makeAddr("candidate");
@@ -231,5 +235,45 @@ contract KingSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixtur
     world.app__setMarketFee(voterId, kingdomIds, fees);
     vm.stopPrank();
     assertEq(MarketFee.get(1, 2), 99);
+  }
+
+  function test_SetRole() external {
+    uint256[] memory candidateIds;
+    uint32[] memory votesReceived;
+
+    vm.startPrank(worldDeployer);
+    KingElection.set(1, candidateId, block.timestamp + 10_000, candidateIds, votesReceived);
+    CharRoleCounter.setCount(1, RoleType.VaultKeeper, 10);
+    vm.stopPrank();
+
+    vm.startPrank(candidate);
+    world.app__setRole(candidateId, voterId, RoleType.None);
+    vm.stopPrank();
+
+    RoleType voterRole = CharRole.getRoleType(voterId);
+    assertEq(uint8(voterRole), uint8(RoleType.None));
+
+    CharCurrentStatsData memory prevVoterCurrentStats = CharCurrentStats.get(voterId);
+    vm.expectRevert(); // role limit reached
+    vm.startPrank(candidate);
+    world.app__setRole(candidateId, voterId, RoleType.VaultKeeper);
+    vm.stopPrank();
+
+    vm.startPrank(worldDeployer);
+    CharRoleCounter.setCount(1, RoleType.VaultKeeper, 1);
+    vm.stopPrank();
+
+    vm.startPrank(candidate);
+    world.app__setRole(candidateId, voterId, RoleType.VaultKeeper);
+    vm.stopPrank();
+
+    // achievement give each attribute 1 point
+    assertEq(CharCurrentStats.getAtk(voterId), prevVoterCurrentStats.atk + 1);
+    assertEq(CharCurrentStats.getDef(voterId), prevVoterCurrentStats.def + 1);
+    assertEq(CharCurrentStats.getAgi(voterId), prevVoterCurrentStats.agi + 1);
+
+    assertEq(CharRoleCounter.getCount(1, RoleType.VaultKeeper), 2);
+
+    assertEq(uint8(CharRole.getRoleType(voterId)), uint8(RoleType.VaultKeeper));
   }
 }

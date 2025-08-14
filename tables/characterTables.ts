@@ -1,3 +1,5 @@
+import { X } from "@latticexyz/store/dist/store-CDoWdOke";
+
 const CHARACTER_TABLES: any = {
   ActiveChar: {
     schema: {
@@ -223,6 +225,15 @@ const CHARACTER_TABLES: any = {
       isMigrate: "bool",
     },
     key: ['characterId', 'equipmentId'],
+  },
+  CharSavePoint: {
+    schema: {
+      characterId: "uint256",
+      cityId: "uint256",
+      x: "int32",
+      y: "int32",
+    },
+    key: ['characterId'],
   },
 };
 

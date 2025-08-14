@@ -1,14 +1,17 @@
 pragma solidity >=0.8.24;
 
 import {
-  Kingdom,
+  KingdomV2,
   City,
   CityData,
   CharPosition,
   CharPositionData,
   CharNextPosition,
   CharNextPositionData,
-  CharInfo
+  CharInfo,
+  CharSavePoint,
+  CharSavePointData,
+  TileInfo3
 } from "@codegen/index.sol";
 import { Errors } from "@common/Errors.sol";
 
@@ -22,7 +25,7 @@ library CharacterPositionUtils {
     if (!city.isCapital) {
       return false;
     }
-    CharPositionData memory characterPosition = CharacterPositionUtils.currentPosition(characterId);
+    CharPositionData memory characterPosition = currentPosition(characterId);
     if (city.x == characterPosition.x && city.y == characterPosition.y) {
       return true;
     }
@@ -30,9 +33,9 @@ library CharacterPositionUtils {
   }
 
   /// @dev character must be in a city
-  function MustInCity(uint256 characterId, uint256 cityId) internal view {
+  function mustInCity(uint256 characterId, uint256 cityId) internal view {
     if (!isInCity(characterId, cityId)) {
-      CharPositionData memory characterPosition = CharacterPositionUtils.currentPosition(characterId);
+      CharPositionData memory characterPosition = currentPosition(characterId);
       revert Errors.MustInACity(cityId, characterPosition.x, characterPosition.y);
     }
   }
@@ -43,7 +46,7 @@ library CharacterPositionUtils {
     if (city.kingdomId == 0) {
       revert Errors.InvalidCityId(cityId);
     }
-    CharPositionData memory characterPosition = CharacterPositionUtils.currentPosition(characterId);
+    CharPositionData memory characterPosition = currentPosition(characterId);
     if (city.x == characterPosition.x && city.y == characterPosition.y) {
       return true;
     }
@@ -53,7 +56,19 @@ library CharacterPositionUtils {
   /// @dev move character to their original capital
   function moveToCapital(uint256 characterId) internal {
     uint8 kingdomId = CharInfo.getKingdomId(characterId);
-    uint256 capitalId = Kingdom.getCapitalId(kingdomId);
+    uint256 capitalId = KingdomV2.getCapitalId(kingdomId);
+    // check if character have save point => move back to that point
+    CharSavePointData memory charSavePoint = CharSavePoint.get(characterId);
+    if (charSavePoint.cityId != 0 && charSavePoint.cityId != capitalId) {
+      uint8 tileKingdomId = TileInfo3.getKingdomId(charSavePoint.x, charSavePoint.y);
+      // other kingdom occupied the city
+      if (tileKingdomId == kingdomId) {
+        CharPosition.set(characterId, charSavePoint.x, charSavePoint.y);
+        CharNextPosition.set(characterId, charSavePoint.x, charSavePoint.y, block.timestamp);
+        return;
+      }
+    }
+    // fallback back to capital
     CityData memory city = City.get(capitalId);
     CharPosition.set(characterId, city.x, city.y);
     CharNextPosition.set(characterId, city.x, city.y, block.timestamp);

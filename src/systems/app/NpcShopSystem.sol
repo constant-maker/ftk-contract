@@ -13,10 +13,13 @@ import {
 } from "@codegen/index.sol";
 import { Errors } from "@common/Errors.sol";
 import { CharacterAccessControl } from "@abstracts/CharacterAccessControl.sol";
-import { CharacterPositionUtils } from "@utils/CharacterPositionUtils.sol";
-import { CharacterItemUtils } from "@utils/CharacterItemUtils.sol";
-import { CharacterFundUtils } from "@utils/CharacterFundUtils.sol";
-import { InventoryItemUtils } from "@utils/InventoryItemUtils.sol";
+import {
+  MarketSystemUtils,
+  InventoryItemUtils,
+  CharacterFundUtils,
+  CharacterItemUtils,
+  CharacterPositionUtils
+} from "@utils/index.sol";
 import { ItemCategoryType, ItemType } from "@codegen/common.sol";
 import { TradeData } from "./NpcShopSystem.sol";
 
@@ -41,7 +44,7 @@ contract NpcShopSystem is CharacterAccessControl, System {
     public
     onlyAuthorizedWallet(characterId)
   {
-    CharacterPositionUtils.MustInCity(characterId, cityId);
+    CharacterPositionUtils.mustInCity(characterId, cityId);
     uint32 goldCost = _buyFromNpc(characterId, cityId, buyData);
     uint32 goldEarn = _sellToNpc(characterId, cityId, sellData);
     if (goldCost > goldEarn) {
@@ -73,6 +76,8 @@ contract NpcShopSystem is CharacterAccessControl, System {
         if (Item.getItemType(itemId) == ItemType.Card) {
           unitPrice = CARD_PRICE_MULTIPLIER * itemData.tier;
         }
+        // apply tax
+        unitPrice += MarketSystemUtils.calculateOrderFee(characterId, cityId, unitPrice);
         goldCost += unitPrice * amount;
         InventoryItemUtils.addItem(characterId, itemId, amount);
         _updateNpcInventory(cityId, itemId, amount, true);
@@ -96,8 +101,9 @@ contract NpcShopSystem is CharacterAccessControl, System {
         revert Errors.NpcShopSystem_ExceedItemBalanceCap(cityId, itemId, npcItemBalance, amount);
       }
       InventoryItemUtils.removeItem(characterId, itemId, amount);
-      uint8 itemTier = Item.getTier(itemId);
-      uint32 earn = uint32(itemTier) * amount;
+      uint32 unitPrice = uint32(Item.getTier(itemId));
+      unitPrice += MarketSystemUtils.calculateOrderFee(characterId, cityId, unitPrice);
+      uint32 earn = unitPrice * amount;
       if (earn > npcBalance) {
         revert Errors.NpcShopSystem_NotEnoughGold(cityId, npcBalance, earn);
       }

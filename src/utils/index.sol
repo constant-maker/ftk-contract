@@ -34,3 +34,4 @@ import { KingdomUtils } from "./KingdomUtils.sol";
 import { BattleUtils2 } from "./BattleUtils2.sol";
 import { BattlePvEUtils } from "./BattlePvEUtils.sol";
 import { BattlePvEUtils2 } from "./BattlePvEUtils2.sol";
+import { CharacterRoleUtils } from "./CharacterRoleUtils.sol";

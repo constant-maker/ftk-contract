@@ -1,35 +1,10 @@
 const MAP_TABLES: any = {
-  City: {
-    schema: {
-      id: "uint256",
-      x: "int32",
-      y: "int32",
-      isCapital: "bool",
-      kingdomId: "uint8",
-      level: "uint8",
-      name: "string",
-    },
-    key: ['id'],
-  },
-  CityVault: {
-    schema: {
-      cityId: "uint256",
-      itemId: "uint256",
-      amount: "uint32",
-    },
-    key: ['cityId', 'itemId'],
-  },
-  CityVault2: {
-    schema: {
-      cityId: "uint256",
-      gold: "uint32",
-    },
-    key: ['cityId'],
-  },
-  Kingdom: {
+  KingdomV2: {
     schema: {
       id: "uint8",
       capitalId: "uint256",
+      level: "uint8",
+      numCityToBuild: "uint8",
       name: "string",
     },
     key: ['id'],

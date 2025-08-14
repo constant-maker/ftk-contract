@@ -28,7 +28,7 @@ contract EquipmentSystem is System, CharacterAccessControl {
     EquipData[] calldata equipDatas
   )
     public
-    mustInState(characterId, CharacterStateType.Standby)
+    mustInStateStandByOrMoving(characterId)
     onlyAuthorizedWallet(characterId)
   {
     for (uint256 i = 0; i < equipDatas.length; ++i) {

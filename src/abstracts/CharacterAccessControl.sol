@@ -31,10 +31,13 @@ abstract contract CharacterAccessControl {
 
   /// @dev ensure that character must be in a specific state
   modifier mustInState(uint256 characterId, CharacterStateType requiredCharacterState) {
-    CharacterStateType characterState = CharacterStateUtils.getCharacterState(characterId);
-    if (characterState != requiredCharacterState) {
-      revert Errors.Character_MustInState(characterState, requiredCharacterState, block.timestamp);
-    }
+    CharacterStateUtils.mustInState(characterId, requiredCharacterState);
+    _;
+  }
+
+  /// @dev ensure that character must be in a specific state
+  modifier mustInStateStandByOrMoving(uint256 characterId) {
+    CharacterStateUtils.mustInStateStandByOrMoving(characterId);
     _;
   }
 
