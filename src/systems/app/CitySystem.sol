@@ -62,9 +62,10 @@ contract CitySystem is System, CharacterAccessControl {
     uint32 missingHp = maxHp - currentHp;
     if (missingHp == 0) return;
     uint32 goldCost = missingHp / 50;
-    if (goldCost != 0) {
-      CharacterFundUtils.decreaseGold(characterId, goldCost);
+    if (missingHp % 50 != 0) {
+      goldCost++;
     }
+    CharacterFundUtils.decreaseGold(characterId, goldCost);
     CharCurrentStats.setHp(characterId, maxHp);
   }
 
