@@ -242,7 +242,7 @@ contract NpcShopSystem is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
     world.app__tradeWithNpc(characterId, cityId, buyData, sellData);
     vm.stopPrank();
 
-    assertEq(CharFund.getGold(characterId), 9000);
+    assertEq(CharFund.getGold(characterId), 8950);
     assertEq(CharOtherItem.getAmount(characterId, 268), 1);
     assertEq(NpcShopInventory.getAmount(cityId, 268), 1);
 

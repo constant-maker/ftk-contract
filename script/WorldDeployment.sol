@@ -1,6 +1,6 @@
 pragma solidity >=0.8.24;
 
-import { console } from "forge-std/console.sol";
+import { console2 } from "forge-std/console2.sol";
 import { ResourceId } from "@latticexyz/store/src/ResourceId.sol";
 import { WorldResourceIdLib, WorldResourceIdInstance } from "@latticexyz/world/src/WorldResourceId.sol";
 import { PuppetModule } from "@latticexyz/world-modules/src/modules/puppet/PuppetModule.sol";
@@ -58,9 +58,9 @@ contract WorldDeployment is Script {
       maxMovementSpeed: Config.MAX_MOVEMENT_SPEED,
       duration: Config.DEFAULT_MOVEMENT_DURATION
     });
-    console.log("Base character movement speed %d", data.baseMovementSpeed);
-    console.log("Max movement speed %d", data.maxMovementSpeed);
-    console.log("Movement duration secs %d", data.duration);
+    console2.log("Base character movement speed", data.baseMovementSpeed);
+    console2.log("Max movement speed", data.maxMovementSpeed);
+    console2.log("Movement duration secs", data.duration);
     MovementConfig.set(data);
   }
 
