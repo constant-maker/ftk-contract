@@ -178,7 +178,7 @@ contract CitySystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixtur
     vm.stopPrank();
     vm.expectRevert(); // city level too low
     vm.startPrank(voter);
-    world.app__cityHealing(voterId, cityId, 200);
+    world.app__cityHealing(voterId, cityId);
     vm.stopPrank();
 
     console2.log("test upgrade city");
@@ -207,11 +207,11 @@ contract CitySystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixtur
 
     console2.log("re-test healing");
     vm.startPrank(voter);
-    world.app__cityHealing(voterId, newCityId, 200);
+    world.app__cityHealing(voterId, newCityId);
     vm.stopPrank();
 
     assertEq(CharCurrentStats.getHp(voterId), 500);
-    assertEq(CharFund.getGold(voterId), 198);
+    assertEq(CharFund.getGold(voterId), 197);
 
     vm.startPrank(candidate);
     world.app__upgradeCity(candidateId, newCityId);
@@ -228,14 +228,14 @@ contract CitySystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixtur
     vm.startPrank(voter);
     world.app__cityTeleport(voterId, cityId, newCityId); // only can teleport from capital to new city
     vm.stopPrank();
-    assertEq(CharFund.getGold(voterId), 98);
+    assertEq(CharFund.getGold(voterId), 97);
     CharPositionData memory position = CharacterPositionUtils.currentPosition(voterId);
     assertEq(position.x, newCityX);
     assertEq(position.y, newCityY);
 
     console2.log("test save point");
     vm.startPrank(voter);
-    world.app__citySavePoint(voterId, newCityId, false);
+    world.app__citySavePoint(voterId, newCityId);
     vm.stopPrank();
 
     vm.startPrank(worldDeployer);
@@ -248,13 +248,20 @@ contract CitySystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixtur
     vm.startPrank(candidate);
     world.app__battlePvP(candidateId, voterId);
     vm.stopPrank();
-      
+
     position = CharacterPositionUtils.currentPosition(voterId);
     assertEq(position.x, newCityX);
     assertEq(position.y, newCityY);
 
+    CityData memory capital = City.get(cityId);
+    vm.startPrank(worldDeployer);
+    CharacterPositionUtils.moveToLocation(voterId, capital.x, capital.y);
+    vm.stopPrank();
     vm.startPrank(voter);
-    world.app__citySavePoint(voterId, newCityId, true);
+    world.app__citySavePoint(voterId, cityId);
+    vm.stopPrank();
+    vm.startPrank(worldDeployer);
+    CharacterPositionUtils.moveToLocation(voterId, newCityX, newCityY);
     vm.stopPrank();
 
     vm.startPrank(worldDeployer);

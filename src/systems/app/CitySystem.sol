@@ -24,7 +24,6 @@ contract CitySystem is System, CharacterAccessControl {
 
   function upgradeCity(uint256 characterId, uint256 cityId) public onlyAuthorizedWallet(characterId) {
     uint8 charKingdomId = CharInfo.getKingdomId(characterId);
-    CharacterRoleUtils.mustBeKing(charKingdomId, characterId);
     CharacterPositionUtils.mustInCity(characterId, cityId);
     uint8 cityKingdomId = City.getKingdomId(cityId);
     if (charKingdomId != cityKingdomId) {
@@ -55,24 +54,19 @@ contract CitySystem is System, CharacterAccessControl {
     City.setLevel(cityId, nextLevel);
   }
 
-  function cityHealing(uint256 characterId, uint256 cityId, uint32 gainedHp) public onlyAuthorizedWallet(characterId) {
+  function cityHealing(uint256 characterId, uint256 cityId) public onlyAuthorizedWallet(characterId) {
     _validateCity(characterId, cityId, 1);
     CharacterPositionUtils.mustInCity(characterId, cityId);
     uint32 currentHp = CharCurrentStats.getHp(characterId);
     uint32 maxHp = CharStats.getHp(characterId);
     uint32 missingHp = maxHp - currentHp;
     if (missingHp == 0) return;
-    if (gainedHp > missingHp) gainedHp = missingHp;
-    uint32 goldCost = gainedHp / 100 + 1;
+    uint32 goldCost = missingHp / 50 + 1;
     CharacterFundUtils.decreaseGold(characterId, goldCost);
-    CharCurrentStats.setHp(characterId, currentHp + gainedHp);
+    CharCurrentStats.setHp(characterId, maxHp);
   }
 
-  function citySavePoint(uint256 characterId, uint256 cityId, bool isRemoved) public onlyAuthorizedWallet(characterId) {
-    if (isRemoved) {
-      CharSavePoint.deleteRecord(characterId);
-      return;
-    }
+  function citySavePoint(uint256 characterId, uint256 cityId) public onlyAuthorizedWallet(characterId) {
     _validateCity(characterId, cityId, 2);
     CharacterPositionUtils.mustInCity(characterId, cityId);
     CityData memory city = City.get(cityId);
