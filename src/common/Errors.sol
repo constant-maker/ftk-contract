@@ -296,6 +296,7 @@ library Errors {
   error VaultSystem_CharacterNotInSameKingdom(uint256 characterId, uint256 cityId);
   error VaultSystem_InvalidParamsLen(uint256 lenItemId, uint256 lenAmount);
   error VaultSystem_InvalidParamsValue(uint256 itemId, uint32 amount);
+  error VaultSystem_FameTooLow(uint256 characterId, uint32 fame);
   error VaultSystem_InsufficientVaultAmount(
     uint256 cityId, uint256 itemId, uint32 currentVaultAmount, uint32 withdrawAmount
   );
@@ -309,6 +310,7 @@ library Errors {
   error CitySystem_InsufficientVaultAmount(
     uint256 cityId, uint256 itemId, uint32 currentVaultAmount, uint32 withdrawAmount
   );
+  error CitySystem_InsufficientVaultGold(uint256 cityId, uint32 currentGold, uint32 vaultGold);
   error CitySystem_CityLevelTooLow(uint256 cityId, uint8 cityLevel);
   error CitySystem_FromCityIsNotCapital(uint256 cityId);
   error CitySystem_ToCityIsCapital(uint256 cityId);

@@ -8,6 +8,7 @@ import {
   CityData,
   CharInfo,
   CityVault,
+  CityVault2,
   CResourceRequire,
   CResourceRequireData,
   CharCurrentStats,
@@ -21,6 +22,7 @@ import { Errors } from "@common/Errors.sol";
 
 contract CitySystem is System, CharacterAccessControl {
   uint32 constant TELEPORT_COST = 100;
+  uint32 constant UPGRADE_GOLD_COST = 5000;
 
   function upgradeCity(uint256 characterId, uint256 cityId) public onlyAuthorizedWallet(characterId) {
     uint8 charKingdomId = CharInfo.getKingdomId(characterId);
@@ -51,6 +53,12 @@ contract CitySystem is System, CharacterAccessControl {
       }
       CityVault.setAmount(cityId, resourceId, currentVaultAmount - amount);
     }
+    uint32 requiredGold = nextLevel * UPGRADE_GOLD_COST;
+    uint32 currentCityGold = CityVault2.getGold(cityId);
+    if (currentCityGold < requiredGold) {
+      revert Errors.CitySystem_InsufficientVaultGold(cityId, currentCityGold, requiredGold);
+    }
+    CityVault2.setGold(cityId, currentCityGold - requiredGold);
     City.setLevel(cityId, nextLevel);
   }
 

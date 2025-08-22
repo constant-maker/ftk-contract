@@ -25,7 +25,8 @@ import {
   CVaultHistoryV2,
   CVaultHistoryV2Data,
   CharOtherItem,
-  CharPositionData
+  CharPositionData,
+  CharFund
 } from "@codegen/index.sol";
 import { RoleType } from "@codegen/common.sol";
 import { CharacterPositionUtils, InventoryItemUtils } from "@utils/index.sol";
@@ -174,7 +175,7 @@ contract CitySystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixtur
     vm.startPrank(worldDeployer);
     CharStats.setHp(voterId, 500);
     CharCurrentStats.setHp(voterId, 500 - 102);
-    CharFund.setGold(voterId, 200);
+    CharFund.setGold(voterId, 100_200);
     vm.stopPrank();
     // vm.expectRevert(); // city level too low
     vm.startPrank(voter);
@@ -185,10 +186,11 @@ contract CitySystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixtur
     vm.startPrank(worldDeployer);
     CharacterPositionUtils.moveToLocation(candidateId, newCityX, newCityY);
     CharacterPositionUtils.moveToLocation(voterId, newCityX, newCityY);
+    CharStats2.setFame(voterId, 1050);
     City.setLevel(cityId, 3);
     vm.stopPrank();
     vm.startPrank(voter);
-    world.app__contributeItemToCity(voterId, newCityId, resourceIds, withdrawAmounts, 0);
+    world.app__contributeItemToCity(voterId, newCityId, resourceIds, withdrawAmounts, 100_000);
     vm.stopPrank();
     history = CVaultHistoryV2.get(newCityId, 1);
     assertTrue(history.isContributed);

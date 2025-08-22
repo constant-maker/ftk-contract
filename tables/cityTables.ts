@@ -26,18 +26,18 @@ const CITY_TABLES: any = {
     },
     key: ['cityId'],
   },
-  CVaultHistory: {
-    schema: {
-      cityId: "uint256",
-      id: "uint256",
-      characterId: "uint256",
-      itemId: "uint256",
-      amount: "uint32",
-      timestamp: "uint256",
-      isContributed: "bool",
-    },
-    key: ['cityId', 'id'],
-  },
+  // CVaultHistory: {
+  //   schema: {
+  //     cityId: "uint256",
+  //     id: "uint256",
+  //     characterId: "uint256",
+  //     itemId: "uint256",
+  //     amount: "uint32",
+  //     timestamp: "uint256",
+  //     isContributed: "bool",
+  //   },
+  //   key: ['cityId', 'id'],
+  // },
   CVaultHistoryV2: {
     schema: {
       cityId: "uint256",

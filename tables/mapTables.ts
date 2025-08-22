@@ -7,16 +7,16 @@ const MAP_TABLES: any = {
     },
     key: ['id'],
   },
-  KingdomV2: {
-    schema: {
-      id: "uint8",
-      capitalId: "uint256",
-      level: "uint8",
-      numCityToBuild: "uint8",
-      name: "string",
-    },
-    key: ['id'],
-  },
+  // KingdomV2: {
+  //   schema: {
+  //     id: "uint8",
+  //     capitalId: "uint256",
+  //     level: "uint8",
+  //     numCityToBuild: "uint8",
+  //     name: "string",
+  //   },
+  //   key: ['id'],
+  // },
   Npc: {
     schema: {
       id: "uint256",

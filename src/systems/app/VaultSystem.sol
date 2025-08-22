@@ -10,7 +10,8 @@ import {
   CityVault2,
   CVaultHistoryV2,
   HistoryCounter,
-  KingElection
+  KingElection,
+  CharStats2
 } from "@codegen/index.sol";
 import { RoleType } from "@codegen/common.sol";
 import { CharacterPositionUtils, InventoryItemUtils, CharacterFundUtils } from "@utils/index.sol";
@@ -69,8 +70,14 @@ contract VaultSystem is System, CharacterAccessControl {
     public
     onlyAuthorizedWallet(characterId)
   {
-    CharacterFundUtils.decreaseGold(characterId, gold);
-    CityVault2.setGold(cityId, CityVault2.getGold(cityId) + gold);
+    if (gold > 0) {
+      uint32 fame = CharStats2.getFame(characterId);
+      if (fame < 1050) {
+        revert Errors.VaultSystem_FameTooLow(characterId, fame);
+      }
+      CharacterFundUtils.decreaseGold(characterId, gold);
+      CityVault2.setGold(cityId, CityVault2.getGold(cityId) + gold);
+    }
     // no need check character and city kingdom id, because it's free to contribute to any city
     if (itemIds.length != amounts.length) {
       revert Errors.VaultSystem_InvalidParamsLen(itemIds.length, amounts.length);
