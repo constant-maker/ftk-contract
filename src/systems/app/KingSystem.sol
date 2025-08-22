@@ -17,9 +17,10 @@ import {
   City,
   RestrictLocation,
   CityCounter,
-  KingdomV2,
+  Kingdom,
   CharRole,
-  CharRoleCounter
+  CharRoleCounter,
+  KingdomCityCounter
 } from "@codegen/index.sol";
 import { CharAchievementUtils, MapUtils, CharacterRoleUtils } from "@utils/index.sol";
 import { Errors } from "@common/index.sol";
@@ -196,11 +197,12 @@ contract KingSystem is CharacterAccessControl, System {
     if (bytes(name).length < 3 || bytes(name).length > 20) {
       revert Errors.KingSystem_InvalidCityName(name);
     }
-    uint8 numCityToBuild = KingdomV2.getNumCityToBuild(charKingdomId);
-    if (numCityToBuild == 0) {
+    uint256 currentCounter = KingdomCityCounter.getCounter(charKingdomId);
+    // each 5 levels will gain 1 city
+    if (currentCounter >= (City.getLevel(Kingdom.getCapitalId(charKingdomId)) / 5) + 1) {
       revert Errors.KingSystem_ExceedMaxNumCity(charKingdomId);
     }
-    KingdomV2.setNumCityToBuild(charKingdomId, numCityToBuild - 1);
+    KingdomCityCounter.set(charKingdomId, currentCounter + 1);
     uint256 newCityId = CityCounter.get() + 1;
     CityCounter.set(newCityId);
 
@@ -242,7 +244,7 @@ contract KingSystem is CharacterAccessControl, System {
   /// @dev Check and update the role limit for a specific role in a kingdom
   function _checkAndUpdateRoleLimit(uint8 kingdomId, RoleType roleType) private {
     uint32 currentCount = CharRoleCounter.getCount(kingdomId, roleType);
-    uint32 maxLimit = KingdomV2.getLevel(kingdomId) * uint32(10); // max limit is 10 times the kingdom level
+    uint32 maxLimit = City.getLevel(Kingdom.getCapitalId(kingdomId)) * 5;
     if (currentCount >= maxLimit) {
       revert Errors.KingSystem_RoleLimitReached(roleType, maxLimit);
     }

@@ -1,4 +1,12 @@
 const MAP_TABLES: any = {
+  Kingdom: {
+    schema: {
+      id: "uint8",
+      capitalId: "uint256",
+      name: "string",
+    },
+    key: ['id'],
+  },
   KingdomV2: {
     schema: {
       id: "uint8",

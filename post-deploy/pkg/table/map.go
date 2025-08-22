@@ -27,13 +27,13 @@ func KingdomCallData(kd common.Kingdom) ([]byte, error) {
 	keyTuple := [][32]byte{
 		[32]byte(encodeUint256(big.NewInt(int64(kd.Id)))),
 	}
-	staticData, err := encodePacked(big.NewInt(int64(kd.CapitalId)), uint8(1), uint8(1))
+	staticData, err := encodePacked(big.NewInt(int64(kd.CapitalId)))
 	if err != nil {
 		return nil, err
 	}
 	encodedLength := mud.EncodeLengths([]int{len(stringToBytes(kd.Name))})
 	dynamicData := simpleEncodePacked(stringToBytes(kd.Name))
-	mt := mud.NewMudTable("KingdomV2", "app", "")
+	mt := mud.NewMudTable("Kingdom", "app", "")
 	return mt.SetRecordRawCalldata(keyTuple, staticData, encodedLength, dynamicData)
 }
 

@@ -2,9 +2,18 @@ pragma solidity >=0.8.24;
 
 import { System } from "@latticexyz/world/src/System.sol";
 import { CharacterAccessControl } from "@abstracts/CharacterAccessControl.sol";
-import { CharRole, City, CharInfo, CityVault, CVaultHistory, HistoryCounter } from "@codegen/index.sol";
+import {
+  CharRole,
+  City,
+  CharInfo,
+  CityVault,
+  CityVault2,
+  CVaultHistoryV2,
+  HistoryCounter,
+  KingElection
+} from "@codegen/index.sol";
 import { RoleType } from "@codegen/common.sol";
-import { CharacterPositionUtils, InventoryItemUtils } from "@utils/index.sol";
+import { CharacterPositionUtils, InventoryItemUtils, CharacterFundUtils } from "@utils/index.sol";
 import { Errors } from "@common/Errors.sol";
 
 contract VaultSystem is System, CharacterAccessControl {
@@ -18,9 +27,6 @@ contract VaultSystem is System, CharacterAccessControl {
     onlyAuthorizedWallet(characterId)
   {
     CharacterPositionUtils.mustInCity(characterId, cityId);
-    if (CharRole.get(characterId) != RoleType.VaultKeeper) {
-      revert Errors.VaultSystem_MustBeVaultKeeper(characterId);
-    }
     // check kingdom id
     uint8 kingdomId = City.getKingdomId(cityId);
     if (kingdomId == 0) {
@@ -29,6 +35,9 @@ contract VaultSystem is System, CharacterAccessControl {
     uint8 charKingdomId = CharInfo.getKingdomId(characterId);
     if (kingdomId != charKingdomId) {
       revert Errors.VaultSystem_CharacterNotInSameKingdom(characterId, cityId);
+    }
+    if (KingElection.getKingId(kingdomId) != characterId && CharRole.get(characterId) != RoleType.VaultKeeper) {
+      revert Errors.VaultSystem_MustBeVaultKeeper(characterId);
     }
     if (itemIds.length != amounts.length) {
       revert Errors.VaultSystem_InvalidParamsLen(itemIds.length, amounts.length);
@@ -43,7 +52,9 @@ contract VaultSystem is System, CharacterAccessControl {
       }
       uint32 newVaultAmount = currentVaultAmount - amounts[i];
       CityVault.setAmount(cityId, itemIds[i], newVaultAmount);
-      CVaultHistory.set(cityId, _getVaultHistoryId(cityId), characterId, itemIds[i], amounts[i], block.timestamp, false);
+      CVaultHistoryV2.set(
+        cityId, _getVaultHistoryId(cityId), characterId, itemIds[i], amounts[i], 0, block.timestamp, false
+      );
     }
     InventoryItemUtils.addItems(characterId, itemIds, amounts);
   }
@@ -52,11 +63,14 @@ contract VaultSystem is System, CharacterAccessControl {
     uint256 characterId,
     uint256 cityId,
     uint256[] memory itemIds,
-    uint32[] memory amounts
+    uint32[] memory amounts,
+    uint32 gold
   )
     public
     onlyAuthorizedWallet(characterId)
   {
+    CharacterFundUtils.decreaseGold(characterId, gold);
+    CityVault2.setGold(cityId, CityVault2.getGold(cityId) + gold);
     // no need check character and city kingdom id, because it's free to contribute to any city
     if (itemIds.length != amounts.length) {
       revert Errors.VaultSystem_InvalidParamsLen(itemIds.length, amounts.length);
@@ -70,7 +84,9 @@ contract VaultSystem is System, CharacterAccessControl {
       uint32 currentVaultAmount = CityVault.getAmount(cityId, itemIds[i]);
       uint32 newVaultAmount = currentVaultAmount + amounts[i];
       CityVault.setAmount(cityId, itemIds[i], newVaultAmount);
-      CVaultHistory.set(cityId, _getVaultHistoryId(cityId), characterId, itemIds[i], amounts[i], block.timestamp, true);
+      CVaultHistoryV2.set(
+        cityId, _getVaultHistoryId(cityId), characterId, itemIds[i], amounts[i], gold, block.timestamp, true
+      );
     }
   }
 

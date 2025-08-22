@@ -7,7 +7,7 @@
       "kingdomId": 1,
       "name": "Lumindale",
       "isCapital": true,
-      "level": 0
+      "level": 3
     },
     "2": {
       "id": 2,
@@ -16,7 +16,7 @@
       "kingdomId": 2,
       "name": "Aetheria",
       "isCapital": true,
-      "level": 0
+      "level": 3
     },
     "3": {
       "id": 3,
@@ -25,7 +25,7 @@
       "kingdomId": 3,
       "name": "Frostgard",
       "isCapital": true,
-      "level": 0
+      "level": 3
     },
     "4": {
       "id": 4,
@@ -34,7 +34,7 @@
       "kingdomId": 4,
       "name": "Dunewatch",
       "isCapital": true,
-      "level": 0
+      "level": 3
     }
   },
   "kingdoms": {

@@ -11,8 +11,8 @@ import {
   CharNextPositionData,
   CharInfo,
   CharInfoData,
-  KingdomV2,
-  KingdomV2Data,
+  Kingdom,
+  KingdomData,
   CharState,
   CharStateData,
   ActiveChar,
@@ -195,7 +195,7 @@ contract CreateCharacter is SpawnSystemFixture {
   }
 
   function testFuzz_ShouldBeReverted_WithInvalidKingdomId(uint8 kingdomId) external {
-    KingdomV2Data memory kingdomData = KingdomV2.get(kingdomId);
+    KingdomData memory kingdomData = Kingdom.get(kingdomId);
     vm.assume(kingdomId > 4);
 
     CharInfoData memory characterInfo = CharacterInfoMock.getCharacterInfoData();
@@ -233,7 +233,7 @@ contract CreateCharacter is SpawnSystemFixture {
   function test_ShouldBeOk_WithValidData() external {
     // create one character
     uint256 characterId = _createCharacter(player, CharacterInfoMock.getCharacterInfoData());
-    console.log("KingdomV2 Id %d", CharacterInfoMock.getCharacterInfoData().kingdomId);
+    console.log("Kingdom Id %d", CharacterInfoMock.getCharacterInfoData().kingdomId);
 
     // expect character nft is minted
     _expectCharacterNftOwner(characterId, player);

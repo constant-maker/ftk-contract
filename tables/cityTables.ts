@@ -38,6 +38,19 @@ const CITY_TABLES: any = {
     },
     key: ['cityId', 'id'],
   },
+  CVaultHistoryV2: {
+    schema: {
+      cityId: "uint256",
+      id: "uint256",
+      characterId: "uint256",
+      itemId: "uint256",
+      amount: "uint32",
+      gold: "uint32",
+      timestamp: "uint256",
+      isContributed: "bool",
+    },
+    key: ['cityId', 'id'],
+  },
   HistoryCounter: {
     schema: {
       cityId: "uint256",
@@ -58,6 +71,13 @@ const CITY_TABLES: any = {
       counter: "uint256",
     },
     key: [],
+  },
+  KingdomCityCounter: {
+    schema: {
+      kingdomId: "uint8",
+      counter: "uint256",
+    },
+    key: ['kingdomId'],
   },
   CResourceRequire: {
     schema: {

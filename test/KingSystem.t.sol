@@ -243,7 +243,7 @@ contract KingSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixtur
 
     vm.startPrank(worldDeployer);
     KingElection.set(1, candidateId, block.timestamp + 10_000, candidateIds, votesReceived);
-    CharRoleCounter.setCount(1, RoleType.VaultKeeper, 10);
+    CharRoleCounter.setCount(1, RoleType.VaultKeeper, 15);
     vm.stopPrank();
 
     vm.startPrank(candidate);

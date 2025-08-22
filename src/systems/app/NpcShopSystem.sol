@@ -102,7 +102,7 @@ contract NpcShopSystem is CharacterAccessControl, System {
       }
       InventoryItemUtils.removeItem(characterId, itemId, amount);
       uint32 unitPrice = uint32(Item.getTier(itemId));
-      unitPrice += MarketSystemUtils.calculateOrderFee(characterId, cityId, unitPrice);
+      unitPrice -= MarketSystemUtils.calculateOrderFee(characterId, cityId, unitPrice);
       uint32 earn = unitPrice * amount;
       if (earn > npcBalance) {
         revert Errors.NpcShopSystem_NotEnoughGold(cityId, npcBalance, earn);
