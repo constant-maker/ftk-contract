@@ -312,6 +312,5 @@ library Errors {
   );
   error CitySystem_InsufficientVaultGold(uint256 cityId, uint32 currentGold, uint32 vaultGold);
   error CitySystem_CityLevelTooLow(uint256 cityId, uint8 cityLevel);
-  error CitySystem_CitiesNotInSameKingdom(uint256 fromCityId, uint256 toCityId);
   error CitySystem_CityBelongsToOtherKingdom(uint8 originalKingdomId, uint8 currentKingdomId);
 }

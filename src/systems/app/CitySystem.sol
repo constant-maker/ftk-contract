@@ -93,14 +93,10 @@ contract CitySystem is System, CharacterAccessControl {
     onlyAuthorizedWallet(characterId)
     mustInState(characterId, CharacterStateType.Standby)
   {
+    _validateCity(characterId, fromCityId, 3);
     _validateCity(characterId, toCityId, 3);
     CharacterPositionUtils.mustInCity(characterId, fromCityId);
-    CityData memory fromCity = City.get(fromCityId);
     CityData memory toCity = City.get(toCityId);
-    // this ensure fromCity is also from same kingdom with character, because we already check in _validateCity
-    if (fromCity.kingdomId != toCity.kingdomId) {
-      revert Errors.CitySystem_CitiesNotInSameKingdom(fromCityId, toCityId);
-    }
     CharacterFundUtils.decreaseGold(characterId, TELEPORT_COST);
     CharacterPositionUtils.moveToLocation(characterId, toCity.x, toCity.y);
   }
