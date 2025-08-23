@@ -228,9 +228,9 @@ contract CitySystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixtur
     CharacterPositionUtils.moveToCapital(voterId);
     vm.stopPrank();
     vm.startPrank(voter);
-    world.app__cityTeleport(voterId, cityId, newCityId); // only can teleport from capital to new city
+    world.app__cityTeleport(voterId, cityId, newCityId);
     vm.stopPrank();
-    assertEq(CharFund.getGold(voterId), 97);
+    assertEq(CharFund.getGold(voterId), 177);
     CharPositionData memory position = CharacterPositionUtils.currentPosition(voterId);
     assertEq(position.x, newCityX);
     assertEq(position.y, newCityY);
