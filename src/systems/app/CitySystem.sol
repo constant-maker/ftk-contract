@@ -21,7 +21,7 @@ import { CharacterPositionUtils, CharacterRoleUtils, CharacterFundUtils } from "
 import { Errors } from "@common/Errors.sol";
 
 contract CitySystem is System, CharacterAccessControl {
-  uint32 constant TELEPORT_COST = 100;
+  uint32 constant TELEPORT_COST = 20;
   uint32 constant UPGRADE_GOLD_COST = 5000;
 
   function upgradeCity(uint256 characterId, uint256 cityId) public onlyAuthorizedWallet(characterId) {
@@ -97,12 +97,6 @@ contract CitySystem is System, CharacterAccessControl {
     CharacterPositionUtils.mustInCity(characterId, fromCityId);
     CityData memory fromCity = City.get(fromCityId);
     CityData memory toCity = City.get(toCityId);
-    if (!fromCity.isCapital) {
-      revert Errors.CitySystem_FromCityIsNotCapital(fromCityId);
-    }
-    if (toCity.isCapital) {
-      revert Errors.CitySystem_ToCityIsCapital(toCityId);
-    }
     // this ensure fromCity is also from same kingdom with character, because we already check in _validateCity
     if (fromCity.kingdomId != toCity.kingdomId) {
       revert Errors.CitySystem_CitiesNotInSameKingdom(fromCityId, toCityId);
