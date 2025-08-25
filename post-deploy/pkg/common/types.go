@@ -111,7 +111,7 @@ type ResourceLocation struct {
 }
 
 type Ingredient struct {
-	ItemId int `json:"itemId"`
+	ItemId int `json:"id"`
 	Amount int `json:"amount"`
 }
 
@@ -162,7 +162,7 @@ type Quest3 struct {
 }
 
 type ContributeDetail struct {
-	ItemId int64  `json:"itemId"`
+	ItemId int64  `json:"id"`
 	Amount uint32 `json:"amount"`
 }
 
