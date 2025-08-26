@@ -16,7 +16,7 @@ import {
   CharRoleCounter,
   CResourceRequire,
   CityVault,
-  RestrictLocation,
+  RestrictLocV2,
   TileInfo3,
   CityCounter,
   City,
@@ -147,7 +147,7 @@ contract CitySystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixtur
     vm.startPrank(worldDeployer);
     TileInfo3.setKingdomId(newCityX, newCityY, 1);
     TileInfo3.setKingdomId(newCityX, newCityY + 1, 1);
-    RestrictLocation.set(newCityX, newCityY - 1, true);
+    RestrictLocV2.set(newCityX, newCityY - 1, 0, true);
     vm.stopPrank();
 
     vm.expectRevert(); // the coordinates must be valid

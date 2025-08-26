@@ -66,6 +66,15 @@ const CITY_TABLES: any = {
     },
     key: ['x', 'y'],
   },
+  RestrictLocV2: {
+    schema: {
+      x: "int32",
+      y: "int32",
+      cityId: "uint256",
+      isRestricted: "bool",
+    },
+    key: ['x', 'y'],
+  },
   CityCounter: {
     schema: {
       counter: "uint256",

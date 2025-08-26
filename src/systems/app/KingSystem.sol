@@ -15,7 +15,7 @@ import {
   KingSetting,
   TileInfo3,
   City,
-  RestrictLocation,
+  RestrictLocV2,
   CityCounter,
   Kingdom,
   CharRole,
@@ -207,7 +207,7 @@ contract KingSystem is CharacterAccessControl, System {
     CityCounter.set(newCityId);
 
     City.set(newCityId, x, y, false, charKingdomId, 0, name);
-    RestrictLocation.set(x, y, true); // Mark the location as restricted for new cities
+    RestrictLocV2.set(x, y, newCityId, true); // Mark the location as restricted for new cities
   }
 
   function setRole(uint256 characterId, uint256 citizenId, RoleType role) public onlyAuthorizedWallet(characterId) {
@@ -216,6 +216,10 @@ contract KingSystem is CharacterAccessControl, System {
 
     if (CharInfo.getKingdomId(citizenId) != charKingdomId) {
       revert Errors.KingSystem_NotCitizenOfKingdom(citizenId, charKingdomId);
+    }
+
+    if (characterId == citizenId) {
+      revert Errors.KingSystem_CannotSetRoleForKing();
     }
 
     RoleType currentRole = CharRole.get(citizenId);

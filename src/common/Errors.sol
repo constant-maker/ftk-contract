@@ -151,6 +151,8 @@ library Errors {
   error PvP_NotReadyToAttack(uint256 nextAttackTime);
   error PvP_NotReadyToBeAttacked(uint256 nextTimeToBeAttacked);
   error PvP_NotSamePosition(int32 attackerX, int32 attackerY, int32 defenderX, int32 defenderY);
+  error PvP_CannotBattleInCapitalCity();
+  error PvP_CannotBattleInCity();
 
   /* -------------------------------------------------------------------------- */
   /*                                DropSystem                                  */
@@ -288,6 +290,7 @@ library Errors {
   error KingSystem_NotCitizenOfKingdom(uint256 citizenId, uint8 kingdomId);
   error KingSystem_InvalidRole(RoleType roleType);
   error KingSystem_RoleLimitReached(RoleType roleType, uint32 maxLimit);
+  error KingSystem_CannotSetRoleForKing();
 
   /* -------------------------------------------------------------------------- */
   /*                               VaultSystem                                  */

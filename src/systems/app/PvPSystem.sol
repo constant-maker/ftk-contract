@@ -18,7 +18,10 @@ import {
   CharStats2,
   CharCStats2,
   KingSetting,
-  PvPEnemyCounter
+  PvPEnemyCounter,
+  RestrictLocV2,
+  City,
+  CharInfo
 } from "@codegen/index.sol";
 import { BattleInfo, BattleUtils } from "@utils/BattleUtils.sol";
 import { DailyQuestUtils, CharacterPositionUtils, CharAchievementUtils, BattleUtils2 } from "@utils/index.sol";
@@ -42,6 +45,7 @@ contract PvPSystem is System, CharacterAccessControl {
     if (attackerPosition.x != defenderPosition.x || attackerPosition.y != defenderPosition.y) {
       revert Errors.PvP_NotSamePosition(attackerPosition.x, attackerPosition.y, defenderPosition.x, defenderPosition.y);
     }
+    _checkIfInCity(attackerId, defenderId, attackerPosition);
     _checkIsReadyToBattle(attackerId, defenderId);
 
     (uint32 attackerHp, uint32 defenderHp) = _battle(attackerId, defenderId, false);
@@ -358,5 +362,27 @@ contract PvPSystem is System, CharacterAccessControl {
     return isChallenge
       ? [CharStats.getHp(attackerId), CharStats.getHp(defenderId)]
       : [CharCurrentStats.getHp(attackerId), CharCurrentStats.getHp(defenderId)];
+  }
+
+  function _checkIfInCity(
+    uint256 attackerId,
+    uint256 defenderId,
+    CharPositionData memory currentPosition
+  ) private view {
+    uint256 cityId = RestrictLocV2.getCityId(currentPosition.x, currentPosition.y);
+    if (cityId == 0) return; // not in city
+
+    if (City.getIsCapital(cityId)) {
+      revert Errors.PvP_CannotBattleInCapitalCity();
+    }
+
+    uint8 cityKingdomId     = City.getKingdomId(cityId);
+    uint8 attackerKingdomId = CharInfo.getKingdomId(attackerId);
+    uint8 defenderKingdomId = CharInfo.getKingdomId(defenderId);
+
+    // Block only when both players share a kingdom AND that kingdom owns the city
+    if (attackerKingdomId == defenderKingdomId && attackerKingdomId == cityKingdomId) {
+      revert Errors.PvP_CannotBattleInCity();
+    }
   }
 }

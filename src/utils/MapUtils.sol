@@ -1,6 +1,6 @@
 pragma solidity >=0.8.24;
 
-import { Unmovable, RestrictLocation } from "@codegen/index.sol";
+import { Unmovable, RestrictLocV2 } from "@codegen/index.sol";
 
 library MapUtils {
   function getTileId(int32 x, int32 y) internal pure returns (bytes32) {
@@ -13,6 +13,6 @@ library MapUtils {
   }
 
   function isValidCityLocation(int32 x, int32 y) internal view returns (bool) {
-    return !RestrictLocation.get(x, y);
+    return !RestrictLocV2.getIsRestricted(x, y);
   }
 }
