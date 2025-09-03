@@ -203,6 +203,15 @@ const CHARACTER_TABLES: any = {
     },
     key: ['characterId', 'slotType'],
   },
+  CharEquipStats2: { // Cached data for equipment stats 2
+    schema: {
+      characterId: "uint256",
+      slotType: "SlotType",
+      barrier: "uint32",
+      weight: "uint32", // bonus weight
+    },
+    key: ['characterId', 'slotType'],
+  },
   CharReborn: {
     schema: {
       characterId: "uint256",

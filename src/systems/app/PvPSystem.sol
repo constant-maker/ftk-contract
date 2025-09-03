@@ -5,6 +5,7 @@ import { CharacterAccessControl } from "@abstracts/CharacterAccessControl.sol";
 import {
   CharPositionData,
   CharCurrentStats,
+  CharCurrentStatsData,
   CharStats,
   CharBattle,
   PvP,
@@ -13,6 +14,8 @@ import {
   PvPChallengeData,
   PvPExtraV3,
   PvPExtraV3Data,
+  PvPExtra2,
+  PvPExtra2Data,
   PvPBattleCounter,
   TileInfo3,
   CharStats2,
@@ -24,7 +27,13 @@ import {
   CharInfo
 } from "@codegen/index.sol";
 import { BattleInfo, BattleUtils } from "@utils/BattleUtils.sol";
-import { DailyQuestUtils, CharacterPositionUtils, CharAchievementUtils, BattleUtils2 } from "@utils/index.sol";
+import {
+  DailyQuestUtils,
+  CharacterPositionUtils,
+  CharAchievementUtils,
+  BattleUtils2,
+  CharacterStatsUtils
+} from "@utils/index.sol";
 import { CharacterStateType, ZoneType } from "@codegen/common.sol";
 import { Errors, Config } from "@common/index.sol";
 import { ZoneInfo, KingdomUtils } from "@utils/KingdomUtils.sol";
@@ -54,7 +63,7 @@ contract PvPSystem is System, CharacterAccessControl {
     _handleBattleResult(attackerId, attackerHp, attackerPosition); // handle attacker result
     _handleBattleResult(defenderId, defenderHp, defenderPosition); // handle defender result
 
-    DailyQuestUtils.updatePvpCount(attackerId);
+    // DailyQuestUtils.updatePvpCount(attackerId);
   }
 
   /// @dev character try to challenge with other player, result is only win or lose, no hp or exp update
@@ -115,11 +124,10 @@ contract PvPSystem is System, CharacterAccessControl {
     uint32 defenderFame = CharStats2.getFame(defenderId);
     if (attackerHp == 0 && attackerFame >= 1020) {
       _setFame(attackerId, defenderId, -20, 10); // fame transfer from attacker to defender
+      _checkAndGiveAchievement(defenderId, zoneInfo);
     } else if (defenderHp == 0 && defenderFame >= 1020 && zoneType != ZoneType.Green) {
       _setFame(attackerId, defenderId, 10, -20); // fame transfer from defender to attacker
-      if (zoneInfo.attackerKingdomId != zoneInfo.defenderKingdomId) {
-        _checkAndGiveAchievement(attackerId);
-      }
+      _checkAndGiveAchievement(attackerId, zoneInfo);
     }
   }
 
@@ -150,7 +158,10 @@ contract PvPSystem is System, CharacterAccessControl {
     PvPExtraV3.setFames(pvpId, fameChanges);
   }
 
-  function _checkAndGiveAchievement(uint256 characterId) private {
+  function _checkAndGiveAchievement(uint256 characterId, ZoneInfo memory zoneInfo) private {
+    if (zoneInfo.attackerKingdomId == zoneInfo.defenderKingdomId) {
+      return;
+    }
     uint256 currentKills = PvPEnemyCounter.get(characterId);
     uint256 newKills = currentKills + 1;
     PvPEnemyCounter.set(characterId, newKills);
@@ -178,7 +189,8 @@ contract PvPSystem is System, CharacterAccessControl {
       BattleUtils2.applyLoss(characterId, position);
       CharCurrentStats.setHp(characterId, CharStats.getHp(characterId)); // set character hp to max hp
     } else {
-      CharCurrentStats.setHp(characterId, characterHp);
+      // update new hp
+      CharacterStatsUtils.setNewHp(characterId, characterHp);
     }
   }
 
@@ -268,6 +280,16 @@ contract PvPSystem is System, CharacterAccessControl {
       equipmentIds: _mergeEquipmentIds(attackerEquipmentIds, defenderEquipmentIds)
     });
     PvPExtraV3.set(pvpId, pvpExtra);
+    PvPExtra2Data memory pvpExtra2 =
+      PvPExtra2Data({ attackerStats: _buildCharStats(attackerId), defenderStats: _buildCharStats(defenderId) });
+    PvPExtra2.set(pvpId, pvpExtra2);
+  }
+
+  function _buildCharStats(uint256 characterId) private view returns (uint16[3] memory stats) {
+    CharCurrentStatsData memory currentStats = CharCurrentStats.get(characterId);
+    stats[0] = currentStats.atk;
+    stats[1] = currentStats.def;
+    stats[2] = currentStats.agi;
   }
 
   function _mergeEquipmentIds(
@@ -364,11 +386,7 @@ contract PvPSystem is System, CharacterAccessControl {
       : [CharCurrentStats.getHp(attackerId), CharCurrentStats.getHp(defenderId)];
   }
 
-  function _checkIfInCity(
-    uint256 attackerId,
-    uint256 defenderId,
-    CharPositionData memory currentPosition
-  ) private view {
+  function _checkIfInCity(uint256 attackerId, uint256 defenderId, CharPositionData memory currentPosition) private view {
     uint256 cityId = RestrictLocV2.getCityId(currentPosition.x, currentPosition.y);
     if (cityId == 0) return; // not in city
 
@@ -376,7 +394,7 @@ contract PvPSystem is System, CharacterAccessControl {
       revert Errors.PvP_CannotBattleInCapitalCity();
     }
 
-    uint8 cityKingdomId     = City.getKingdomId(cityId);
+    uint8 cityKingdomId = City.getKingdomId(cityId);
     uint8 attackerKingdomId = CharInfo.getKingdomId(attackerId);
     uint8 defenderKingdomId = CharInfo.getKingdomId(defenderId);
 

@@ -7,7 +7,8 @@ import {
   InventoryEquipmentUtils,
   CharacterStatsUtils,
   EquipmentUtils,
-  CharacterEquipmentUtils
+  CharacterEquipmentUtils,
+  CharacterFundUtils
 } from "@utils/index.sol";
 import {
   CharEquipment, CharGrindSlot, Equipment, EquipmentData, EquipmentInfo, Item, CharStats
@@ -44,6 +45,48 @@ contract EquipmentSystem is System, CharacterAccessControl {
       revert Errors.EquipmentSystem_InvalidSlotType(slotType);
     }
     CharGrindSlot.set(characterId, slotType);
+  }
+
+  function upgradeEquipment(
+    uint256 characterId,
+    uint256 targetEquipmentId,
+    uint256 materialEquipmentId
+  )
+    public
+    onlyAuthorizedWallet(characterId)
+  {
+    // ensure ownership of target equipment and it's not equipped
+    if (!InventoryEquipmentUtils.hasEquipment(characterId, targetEquipmentId)) {
+      revert Errors.Equipment_NotOwned(characterId, targetEquipmentId);
+    }
+    if (!InventoryEquipmentUtils.hasEquipment(characterId, materialEquipmentId)) {
+      revert Errors.Equipment_NotOwned(characterId, materialEquipmentId);
+    }
+    EquipmentData memory targetEquipmentData = EquipmentUtils.mustGetEquipmentData(targetEquipmentId);
+    EquipmentData memory materialEquipmentData = EquipmentUtils.mustGetEquipmentData(materialEquipmentId);
+    if (
+      targetEquipmentData.itemId != materialEquipmentData.itemId
+        || targetEquipmentData.level != materialEquipmentData.level
+    ) {
+      revert Errors.EquipmentSystem_UnmatchEquipmentId(targetEquipmentId, materialEquipmentId);
+    }
+    uint8 nextLevel = targetEquipmentData.level + 1;
+    if (nextLevel > 3) {
+      revert Errors.EquipmentSystem_ExceedMaxLevel(3);
+    }
+    uint32 upgradeCost = _getUpgradeCost(targetEquipmentData.level, targetEquipmentData.itemId);
+    CharacterFundUtils.decreaseGold(characterId, upgradeCost);
+    InventoryEquipmentUtils.removeEquipment(characterId, materialEquipmentId, true);
+    Equipment.setLevel(targetEquipmentId, nextLevel);
+  }
+
+  function _getUpgradeCost(uint8 level, uint256 itemId) private view returns (uint32 cost) {
+    uint32 goldMultiply = 50;
+    uint8 itemTier = Item.getTier(itemId);
+    if (itemTier >= 7) {
+      goldMultiply = 200;
+    }
+    cost = uint32(itemTier) * uint32(level) * goldMultiply;
   }
 
   /// @dev gear up equipment

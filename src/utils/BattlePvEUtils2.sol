@@ -35,7 +35,7 @@ library BattlePvEUtils2 {
     PvEAfkData memory afkData,
     CharPositionData memory characterPosition
   )
-    internal
+    public
   {
     if (PvEAfkLoc.getMonsterId(characterPosition.x, characterPosition.y) == monsterId) {
       revert Errors.PvE_SomeoneIsFightingThisMonster(characterPosition.x, characterPosition.y, monsterId);
@@ -60,13 +60,7 @@ library BattlePvEUtils2 {
     CharState.setState(characterId, CharacterStateType.Hunting);
   }
 
-  function stopPvEAFK(
-    uint256 characterId,
-    PvEAfkData memory afkData,
-    CharPositionData memory characterPosition
-  )
-    internal
-  {
+  function stopPvEAFK(uint256 characterId, PvEAfkData memory afkData, CharPositionData memory characterPosition) public {
     CharacterStateUtils.mustInState(characterId, CharacterStateType.Hunting);
     if (afkData.monsterId == 0) {
       revert Errors.PvE_AfkNotStarted(characterId);
@@ -87,7 +81,7 @@ library BattlePvEUtils2 {
     CharState.setState(characterId, CharacterStateType.Standby);
   }
 
-  function updateCharacterExp(uint256 characterId, uint32 gainedExp, uint32 gainedPerkExp) internal {
+  function updateCharacterExp(uint256 characterId, uint32 gainedExp, uint32 gainedPerkExp) public {
     ExpAmpConfigData memory expAmpConfig = ExpAmpConfig.get();
     if (block.timestamp <= expAmpConfig.expireTime) {
       gainedExp = (gainedExp * expAmpConfig.pveExpAmp) / 100;

@@ -22,8 +22,8 @@ import {
   City,
   CityData,
   CharFund,
-  CVaultHistoryV2,
-  CVaultHistoryV2Data,
+  CVaultHistoryV3,
+  CVaultHistoryV3Data,
   CharOtherItem,
   CharPositionData,
   CharFund
@@ -126,14 +126,15 @@ contract CitySystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixtur
     vm.startPrank(voter);
     world.app__withdrawItemFromCity(voterId, cityId, resourceIds, withdrawAmounts);
     vm.stopPrank();
-    CVaultHistoryV2Data memory history = CVaultHistoryV2.get(cityId, 1);
-    assertEq(history.itemId, 1);
-    assertEq(history.amount, 300);
+    console2.log("test vault history 1");
+    CVaultHistoryV3Data memory history = CVaultHistoryV3.get(cityId, 1);
+    assertEq(history.itemIds[0], 1);
+    assertEq(history.amounts[0], 300);
     assertFalse(history.isContributed);
-    history = CVaultHistoryV2.get(cityId, 3);
-    assertEq(history.itemId, 3);
-    assertEq(history.amount, 33);
-    assertFalse(history.isContributed);
+    assertEq(history.itemIds[2], 3);
+    assertEq(history.amounts[2], 33);
+    console2.log("test vault history 2");
+
     assertEq(CharOtherItem.getAmount(voterId, 1), 300);
     assertEq(CharOtherItem.getAmount(voterId, 3), 33);
     assertEq(CityVault.getAmount(cityId, 1), 700);
@@ -192,10 +193,11 @@ contract CitySystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixtur
     vm.startPrank(voter);
     world.app__contributeItemToCity(voterId, newCityId, resourceIds, withdrawAmounts, 100_000);
     vm.stopPrank();
-    history = CVaultHistoryV2.get(newCityId, 1);
+    history = CVaultHistoryV3.get(newCityId, 1);
     assertTrue(history.isContributed);
-    assertEq(history.itemId, 1);
-    assertEq(history.amount, 300);
+    assertEq(history.itemIds[0], 1);
+    assertEq(history.amounts[0], 300);
+    assertEq(history.gold, 100_000);
 
     console2.log("upgrade city to level 1");
     vm.startPrank(candidate);
@@ -243,8 +245,8 @@ contract CitySystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixtur
     vm.startPrank(worldDeployer);
     CharacterPositionUtils.moveToLocation(candidateId, newCityX, newCityY + 1);
     CharacterPositionUtils.moveToLocation(voterId, newCityX, newCityY + 1);
-    CharCurrentStats.setAgi(candidateId, 10_000);
-    CharCurrentStats.setAtk(candidateId, 10_000);
+    CharCurrentStats.setAgi(candidateId, 1000);
+    CharCurrentStats.setAtk(candidateId, 1000);
     vm.stopPrank();
     vm.warp(block.timestamp + 100);
     vm.startPrank(candidate);

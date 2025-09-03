@@ -329,8 +329,8 @@ contract PvPSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
     _moveToTheLocation(20, -32);
 
     vm.startPrank(worldDeployer);
-    CharCurrentStats.setAtk(characterId_1, 10_000);
-    CharCurrentStats.setAgi(characterId_1, 10_000);
+    CharCurrentStats.setAtk(characterId_1, 1000);
+    CharCurrentStats.setAgi(characterId_1, 1000);
     TileInfo3.setKingdomId(20, -32, 1);
     vm.stopPrank();
 
@@ -360,8 +360,8 @@ contract PvPSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
 
     // update char 2 stats
     vm.startPrank(worldDeployer);
-    CharCurrentStats.setAtk(characterId_2, 20_000);
-    CharCurrentStats.setAgi(characterId_2, 20_000);
+    CharCurrentStats.setAtk(characterId_2, 2000);
+    CharCurrentStats.setAgi(characterId_2, 2000);
     vm.stopPrank();
 
     vm.warp(block.timestamp + 300);
@@ -409,8 +409,8 @@ contract PvPSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
 
     // update char 2 stats
     vm.startPrank(worldDeployer);
-    CharCurrentStats.setAtk(characterId_2, 20_000);
-    CharCurrentStats.setAgi(characterId_2, 20_000);
+    CharCurrentStats.setAtk(characterId_2, 2000);
+    CharCurrentStats.setAgi(characterId_2, 2000);
     vm.stopPrank();
 
     uint32 weightChar1 = CharCurrentStats.getWeight(characterId_1);
@@ -530,8 +530,8 @@ contract PvPSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
   function test_LootItem() external {
     // update char 2 stats
     vm.startPrank(worldDeployer);
-    CharCurrentStats.setAtk(characterId_2, 20_000);
-    CharCurrentStats.setAgi(characterId_2, 20_000);
+    CharCurrentStats.setAtk(characterId_2, 2000);
+    CharCurrentStats.setAgi(characterId_2, 2000);
 
     TileInfo3.setZoneType(21, -32, ZoneType.Black);
 

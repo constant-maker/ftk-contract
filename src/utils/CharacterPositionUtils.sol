@@ -13,9 +13,17 @@ import {
   CharSavePointData,
   TileInfo3
 } from "@codegen/index.sol";
-import { Errors } from "@common/Errors.sol";
+import { Errors, Events } from "@common/index.sol";
 
 library CharacterPositionUtils {
+  /// @dev character must be in a capital
+  function mustInCapital(uint256 characterId, uint256 capitalId) internal view {
+    if (!isInCapital(characterId, capitalId)) {
+      CharPositionData memory characterPosition = currentPosition(characterId);
+      revert Errors.MustInACapital(capitalId, characterPosition.x, characterPosition.y);
+    }
+  }
+
   /// @dev check whether character is in a capital or not
   function isInCapital(uint256 characterId, uint256 capitalId) internal view returns (bool) {
     CityData memory city = City.get(capitalId);
@@ -58,26 +66,27 @@ library CharacterPositionUtils {
     uint8 kingdomId = CharInfo.getKingdomId(characterId);
     uint256 capitalId = Kingdom.getCapitalId(kingdomId);
     // check if character have save point => move back to that point
+    CharPositionData memory currentPosition = currentPosition(characterId);
     CharSavePointData memory charSavePoint = CharSavePoint.get(characterId);
     if (charSavePoint.cityId != 0 && charSavePoint.cityId != capitalId) {
       uint8 tileKingdomId = TileInfo3.getKingdomId(charSavePoint.x, charSavePoint.y);
-      // other kingdom occupied the city
-      if (tileKingdomId == kingdomId) {
-        CharPosition.set(characterId, charSavePoint.x, charSavePoint.y);
-        CharNextPosition.set(characterId, charSavePoint.x, charSavePoint.y, block.timestamp);
+      if (tileKingdomId == kingdomId && (charSavePoint.x != currentPosition.x || charSavePoint.y != currentPosition.y))
+      {
+        moveToLocation(characterId, charSavePoint.x, charSavePoint.y);
         return;
       }
     }
     // fallback back to capital
     CityData memory city = City.get(capitalId);
-    CharPosition.set(characterId, city.x, city.y);
-    CharNextPosition.set(characterId, city.x, city.y, block.timestamp);
+    moveToLocation(characterId, city.x, city.y);
   }
 
   /// @dev move character to a specific location
   function moveToLocation(uint256 characterId, int32 x, int32 y) internal {
     CharPosition.set(characterId, x, y);
     CharNextPosition.set(characterId, x, y, block.timestamp);
+    // emit event
+    emit Events.PositionChanged(characterId, x, y, x, y, block.timestamp);
   }
 
   /// @dev get current character position

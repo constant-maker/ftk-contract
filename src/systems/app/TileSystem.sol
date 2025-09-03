@@ -35,7 +35,7 @@ struct LootItems {
 contract TileSystem is System, CharacterAccessControl {
   uint32 constant TILE_OCCUPATION_COST = 5; // gold
   uint32 constant TILE_OCCUPATION_RESOURCE_AMOUNT = 10;
-  uint32 constant TILE_LOCKED_DURATION = 3600; // 1 hour (second)
+  uint32 constant TILE_LOCKED_DURATION = 28_800; // 8 hours (second)
   uint32 constant TILE_OCCUPATION_DURATION_REQUIRE = 300; // 5 minutes (second)
 
   /// @dev Occupy a tile to expand your kingdom area

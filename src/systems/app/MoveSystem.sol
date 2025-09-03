@@ -9,7 +9,7 @@ import { MoveSystemUtils } from "@utils/MoveSystemUtils.sol";
 import { CharacterStateUtils } from "@utils/CharacterStateUtils.sol";
 import { DailyQuestUtils } from "@utils/DailyQuestUtils.sol";
 import { CharacterStateType } from "@codegen/common.sol";
-import { Errors } from "@common/index.sol";
+import { Errors, Events } from "@common/index.sol";
 import { CharacterAccessControl } from "@abstracts/CharacterAccessControl.sol";
 import { CharacterPositionUtils } from "@utils/CharacterPositionUtils.sol";
 
@@ -37,7 +37,10 @@ contract MoveSystem is CharacterAccessControl, System {
       CharPosition.set(characterId, characterPosition.x, characterPosition.y);
     }
     // update next position
-    CharNextPosition.set(characterId, destX, destY, block.timestamp + MoveSystemUtils.getMovementDuration(characterId));
+    uint256 arriveTimestamp = block.timestamp + MoveSystemUtils.getMovementDuration(characterId);
+    CharNextPosition.set(characterId, destX, destY, arriveTimestamp);
+
+    emit Events.PositionChanged(characterId, charPrevPosition.x, charPrevPosition.y, destX, destY, arriveTimestamp);
 
     // update daily quest move count
     DailyQuestUtils.updateMoveCount(characterId);

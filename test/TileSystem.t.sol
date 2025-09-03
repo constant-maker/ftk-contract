@@ -107,7 +107,7 @@ contract TileSystemTest is WorldFixture, SpawnSystemFixture, MoveSystemFixture {
     world.app__occupyTile(characterId);
     vm.stopPrank();
 
-    vm.warp(block.timestamp + 3600);
+    vm.warp(block.timestamp + 28_800);
     _goUp(player, characterId);
     _goDown(player, characterId);
     charPosition = CharacterPositionUtils.currentPosition(characterId);

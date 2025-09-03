@@ -96,11 +96,9 @@ library BattleUtils {
   {
     (uint16 attackerDmgMultiplier, uint16 defenderDmgMultiplier) =
       getDamageMultiplier(attacker.advantageType, defender.advantageType);
-    // normal attack
-    SkillV2Data memory normalAtk = SkillV2.get(Config.NORMAL_ATTACK_SKILL_ID);
     // bonus attack based on agility
     if (attacker.agi >= defender.agi + Config.BONUS_ATTACK_AGI_DIFF) {
-      handleFirstAttack(attacker, defender, normalAtk, dmgResult, attackerDmgMultiplier);
+      handleFirstAttack(attacker, defender, dmgResult, attackerDmgMultiplier, attacker.agi - defender.agi);
       if (defender.hp == 0) {
         hps[0] = attacker.hp;
         hps[1] = 0;
@@ -108,6 +106,7 @@ library BattleUtils {
       }
     }
     // main battle loop
+    SkillV2Data memory normalAtk = SkillV2.get(Config.NORMAL_ATTACK_SKILL_ID);
     uint8 index = 1;
     SkillEffectData memory attackerDebuff;
     SkillEffectData memory defenderDebuff;
@@ -170,14 +169,16 @@ library BattleUtils {
   function handleFirstAttack(
     BattleInfo memory attacker,
     BattleInfo memory defender,
-    SkillV2Data memory normalAtk,
     uint32[11] memory dmgResult,
-    uint16 attackerDmgMultiplier
+    uint16 attackerDmgMultiplier,
+    uint16 bonusDmg
   )
     public
     view
   {
     SkillEffectData memory debuff;
+    SkillV2Data memory normalAtk = SkillV2.get(Config.NORMAL_ATTACK_SKILL_ID);
+    normalAtk.damage += bonusDmg;
     doTurnFight(attacker, defender, normalAtk, dmgResult, attackerDmgMultiplier, 0, debuff, debuff);
   }
 
@@ -214,12 +215,16 @@ library BattleUtils {
     pure
     returns (uint32 rawDmg)
   {
-    rawDmg = Config.BASE_DMG + level;
-    if (atk > def) {
-      rawDmg += atk - def;
+    rawDmg = Config.BASE_DMG;
+    if (atk >= def) {
+      rawDmg += (atk - def) + level;
+    } else if (atk < def) {
+      uint32 dmgReduce = uint32(def - atk) * 30 / 100; // 30%
+      uint32 levelDmg = level > dmgReduce ? level - dmgReduce : 0;
+      rawDmg += levelDmg;
     }
-    rawDmg = (rawDmg * skillDmg * dmgMultiplier) / 10_000; // (rawDmg * skillDmg / 100) * dmgMultiplier / 100;
-    return rawDmg;
+    // (rawDmg * skillDmg / 100) * dmgMultiplier / 100;
+    return (rawDmg * uint32(skillDmg) * uint32(dmgMultiplier)) / 10_000;
   }
 
   /// @dev apply damage and update hp

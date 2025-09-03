@@ -48,6 +48,14 @@ const BATTLE_TABLES: any = {
     },
     key: ['pvpId'],
   },
+  PvPExtra2: {
+    schema: {
+      pvpId: "uint256",
+      attackerStats: "uint16[3]", // attacker atk, def, agi
+      defenderStats: "uint16[3]", // defender atk, def, agi
+    },
+    key: ['pvpId'],
+  },
   PvPBattleCounter: {
     schema: {
       counter: "uint256",
