@@ -323,11 +323,12 @@ library CharacterStatsUtils {
   }
 
   function _calculateNewStat(uint32 originStat, uint16 mul, uint8 level) private pure returns (uint32) {
-    uint32 newStat = (originStat * mul) / 100;
-    if (originStat != 0 && newStat == originStat) {
-      return originStat + (level - 1); // some equipment has very low dmg
+    if (originStat < 8) {
+      // some equipment has very low dmg, so the % will be 0
+      // max at level 3 now is 25% gain and 7 * 0.25 = 1.75 => 1 same as 7 * 0.15 = 1.05 => 1 (level 2)
+      return originStat + (level - 1);
     }
-    return newStat;
+    return (originStat * mul) / 100;
   }
 
   function _getStatBonusPercent(uint256 itemId, uint8 level) private view returns (uint16) {
