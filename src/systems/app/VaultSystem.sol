@@ -8,13 +8,13 @@ import {
   CharInfo,
   CityVault,
   CityVault2,
-  CVaultHistoryV2,
+  CVaultHistoryV3,
   HistoryCounter,
   KingElection,
   CharStats2
 } from "@codegen/index.sol";
 import { RoleType } from "@codegen/common.sol";
-import { CharacterPositionUtils, InventoryItemUtils, CharacterFundUtils } from "@utils/index.sol";
+import { CharacterPositionUtils, InventoryItemUtils, CharacterFundUtils, MapUtils } from "@utils/index.sol";
 import { Errors } from "@common/Errors.sol";
 
 contract VaultSystem is System, CharacterAccessControl {
@@ -29,6 +29,7 @@ contract VaultSystem is System, CharacterAccessControl {
   {
     CharacterPositionUtils.mustInCity(characterId, cityId);
     // check kingdom id
+    MapUtils.mustBeActiveCity(cityId);
     uint8 kingdomId = City.getKingdomId(cityId);
     if (kingdomId == 0) {
       revert Errors.InvalidCityId(cityId);
@@ -53,11 +54,9 @@ contract VaultSystem is System, CharacterAccessControl {
       }
       uint32 newVaultAmount = currentVaultAmount - amounts[i];
       CityVault.setAmount(cityId, itemIds[i], newVaultAmount);
-      CVaultHistoryV2.set(
-        cityId, _getVaultHistoryId(cityId), characterId, itemIds[i], amounts[i], 0, block.timestamp, false
-      );
     }
     InventoryItemUtils.addItems(characterId, itemIds, amounts);
+    CVaultHistoryV3.set(cityId, _getVaultHistoryId(cityId), characterId, 0, block.timestamp, false, itemIds, amounts);
   }
 
   function contributeItemToCity(
@@ -70,6 +69,7 @@ contract VaultSystem is System, CharacterAccessControl {
     public
     onlyAuthorizedWallet(characterId)
   {
+    MapUtils.mustBeActiveCity(cityId);
     if (gold > 0) {
       uint32 fame = CharStats2.getFame(characterId);
       if (fame < 1050) {
@@ -83,7 +83,6 @@ contract VaultSystem is System, CharacterAccessControl {
       revert Errors.VaultSystem_InvalidParamsLen(itemIds.length, amounts.length);
     }
     CharacterPositionUtils.mustInCity(characterId, cityId);
-    InventoryItemUtils.removeItems(characterId, itemIds, amounts);
     for (uint256 i = 0; i < itemIds.length; i++) {
       if (itemIds[i] == 0 || amounts[i] == 0) {
         revert Errors.VaultSystem_InvalidParamsValue(itemIds[i], amounts[i]);
@@ -91,10 +90,9 @@ contract VaultSystem is System, CharacterAccessControl {
       uint32 currentVaultAmount = CityVault.getAmount(cityId, itemIds[i]);
       uint32 newVaultAmount = currentVaultAmount + amounts[i];
       CityVault.setAmount(cityId, itemIds[i], newVaultAmount);
-      CVaultHistoryV2.set(
-        cityId, _getVaultHistoryId(cityId), characterId, itemIds[i], amounts[i], gold, block.timestamp, true
-      );
     }
+    InventoryItemUtils.removeItems(characterId, itemIds, amounts);
+    CVaultHistoryV3.set(cityId, _getVaultHistoryId(cityId), characterId, gold, block.timestamp, true, itemIds, amounts);
   }
 
   function _getVaultHistoryId(uint256 cityId) private returns (uint256 id) {

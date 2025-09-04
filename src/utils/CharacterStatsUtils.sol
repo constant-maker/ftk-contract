@@ -12,11 +12,16 @@ import {
   EquipmentInfoData,
   EquipmentInfo2V2,
   EquipmentInfo2V2Data,
-  CharReborn
+  CharReborn,
+  Item,
+  CharEquipStats,
+  CharEquipStatsData,
+  CharEquipStats2,
+  CharEquipStats2Data
 } from "@codegen/index.sol";
-import { CharEquipStats, CharEquipStatsData } from "@codegen/tables/CharEquipStats.sol";
 import { StatType, SlotType } from "@codegen/common.sol";
 import { Errors, Config } from "@common/index.sol";
+import { EquipmentSnapshotData } from "@common/Types.sol";
 
 library CharacterStatsUtils {
   /// @dev calculate the required exp to level up
@@ -72,6 +77,7 @@ library CharacterStatsUtils {
   }
 
   function restoreHp(uint256 characterId, uint32 gainedHp) internal {
+    if (gainedHp == 0) return;
     uint32 maxHp = CharStats.getHp(characterId);
     uint32 currentHp = CharCurrentStats.getHp(characterId);
     uint32 newHp = currentHp + gainedHp;
@@ -90,6 +96,14 @@ library CharacterStatsUtils {
       CharCurrentStats.setAgi(characterId, value);
     } else {
       revert Errors.Stats_InvalidStatType(statType);
+    }
+  }
+
+  // set new hp if it's != current hp
+  function setNewHp(uint256 characterId, uint32 newHp) internal {
+    uint32 currentHp = CharCurrentStats.getHp(characterId);
+    if (currentHp != newHp) {
+      CharCurrentStats.setHp(characterId, newHp);
     }
   }
 
@@ -152,14 +166,13 @@ library CharacterStatsUtils {
     }
 
     CharCurrentStatsData memory characterCurrentStats = CharCurrentStats.get(characterId);
-    uint32 shieldBarrier = CharCStats2.getBarrier(characterId);
-    EquipmentInfoData memory equipmentInfo = _getSnapshotEquipmentStats(characterId, slotType, itemId, isRemoved);
-    EquipmentInfo2V2Data memory equipmentInfo2V2 = EquipmentInfo2V2.get(itemId);
+    EquipmentSnapshotData memory equipmentSnapshot =
+      _getSnapshotEquipmentStats(characterId, slotType, equipmentId, isRemoved);
 
-    if (equipmentInfo.hp > 0) {
+    if (equipmentSnapshot.hp > 0) {
       uint32 maxHp = CharStats.getHp(characterId);
       uint32 currentHp = characterCurrentStats.hp;
-      maxHp = isRemoved ? maxHp - equipmentInfo.hp : maxHp + equipmentInfo.hp;
+      maxHp = isRemoved ? maxHp - equipmentSnapshot.hp : maxHp + equipmentSnapshot.hp;
       CharStats.setHp(characterId, maxHp);
       if (currentHp > maxHp) {
         // if current hp is greater than max hp, set it to max hp
@@ -167,30 +180,31 @@ library CharacterStatsUtils {
       }
     }
     if (slotType == SlotType.Mount) {
-      _updateMaxWeightWithEquipment(characterId, equipmentInfo2V2.bonusWeight, isRemoved);
+      _updateMaxWeightWithEquipment(characterId, equipmentSnapshot.weight, isRemoved);
     }
 
-    bool shouldUpdateShieldBarrier = equipmentInfo2V2.shieldBarrier > 0;
+    uint32 shieldBarrier = CharCStats2.getBarrier(characterId);
+    bool shouldUpdateShieldBarrier = equipmentSnapshot.barrier > 0;
 
     if (isRemoved) {
-      characterCurrentStats.ms -= equipmentInfo.ms;
-      characterCurrentStats.atk -= equipmentInfo.atk;
-      characterCurrentStats.def -= equipmentInfo.def;
-      characterCurrentStats.agi -= equipmentInfo.agi;
+      characterCurrentStats.ms -= equipmentSnapshot.ms;
+      characterCurrentStats.atk -= equipmentSnapshot.atk;
+      characterCurrentStats.def -= equipmentSnapshot.def;
+      characterCurrentStats.agi -= equipmentSnapshot.agi;
       if (shouldUpdateShieldBarrier) {
-        if (shieldBarrier < equipmentInfo2V2.shieldBarrier) {
+        if (shieldBarrier < equipmentSnapshot.barrier) {
           shieldBarrier = 0;
         } else {
-          shieldBarrier -= equipmentInfo2V2.shieldBarrier;
+          shieldBarrier -= equipmentSnapshot.barrier;
         }
       }
     } else {
-      characterCurrentStats.ms += equipmentInfo.ms;
-      characterCurrentStats.atk += equipmentInfo.atk;
-      characterCurrentStats.def += equipmentInfo.def;
-      characterCurrentStats.agi += equipmentInfo.agi;
+      characterCurrentStats.ms += equipmentSnapshot.ms;
+      characterCurrentStats.atk += equipmentSnapshot.atk;
+      characterCurrentStats.def += equipmentSnapshot.def;
+      characterCurrentStats.agi += equipmentSnapshot.agi;
       if (shouldUpdateShieldBarrier) {
-        shieldBarrier += equipmentInfo2V2.shieldBarrier;
+        shieldBarrier += equipmentSnapshot.barrier;
       }
     }
 
@@ -220,39 +234,119 @@ library CharacterStatsUtils {
   function _getSnapshotEquipmentStats(
     uint256 characterId,
     SlotType slotType,
-    uint256 itemId,
+    uint256 equipmentId,
     bool isRemoved
   )
     private
     view
-    returns (EquipmentInfoData memory equipmentInfo)
+    returns (EquipmentSnapshotData memory equipmentSnapshot)
   {
-    if (!isRemoved) return EquipmentInfo.get(itemId);
-    CharEquipStatsData memory charEquipStats = CharEquipStats.get(characterId, slotType);
-    equipmentInfo.hp = charEquipStats.hp;
-    equipmentInfo.atk = charEquipStats.atk;
-    equipmentInfo.def = charEquipStats.def;
-    equipmentInfo.agi = charEquipStats.agi;
-    equipmentInfo.ms = charEquipStats.ms;
-    if (
-      equipmentInfo.hp == 0 && equipmentInfo.atk == 0 && equipmentInfo.def == 0 && equipmentInfo.agi == 0
-        && equipmentInfo.ms == 0
-    ) {
-      revert Errors.EquipmentSystem_EquipmentSnapshotStatsNotFound(characterId, itemId, slotType);
+    // Get directly from EquipmentInfo if adding equipment
+    EquipmentSnapshotData memory latestEquipmentSnapshot = _getUpgradedEquipmentStats(equipmentId);
+    if (!isRemoved) return latestEquipmentSnapshot;
+    // Load equipment stats from CharEquipStats2
+    CharEquipStats2Data memory charEquipStats2 = CharEquipStats2.get(characterId, slotType);
+    equipmentSnapshot.barrier = charEquipStats2.barrier;
+    if (equipmentSnapshot.barrier == 0) {
+      equipmentSnapshot.barrier = latestEquipmentSnapshot.barrier;
     }
-    return equipmentInfo;
+    equipmentSnapshot.weight = charEquipStats2.weight;
+    if (equipmentSnapshot.weight == 0) {
+      equipmentSnapshot.weight = latestEquipmentSnapshot.weight;
+    }
+    // Load equipment stats from CharEquipStats
+    CharEquipStatsData memory charEquipStats = CharEquipStats.get(characterId, slotType);
+    equipmentSnapshot.hp = charEquipStats.hp;
+    equipmentSnapshot.atk = charEquipStats.atk;
+    equipmentSnapshot.def = charEquipStats.def;
+    equipmentSnapshot.agi = charEquipStats.agi;
+    equipmentSnapshot.ms = charEquipStats.ms;
+
+    if (
+      equipmentSnapshot.hp == 0 && equipmentSnapshot.atk == 0 && equipmentSnapshot.def == 0
+        && equipmentSnapshot.agi == 0 && equipmentSnapshot.ms == 0 && equipmentSnapshot.barrier == 0
+    ) {
+      revert Errors.EquipmentSystem_EquipmentSnapshotStatsNotFound(characterId, equipmentId, slotType);
+    }
+    return equipmentSnapshot;
   }
 
+  /// @dev Get equipment stats and snapshot them for the character.
   function _snapshotStats(uint256 characterId, uint256 equipmentId, SlotType slotType) private {
-    uint256 itemId = Equipment.getItemId(equipmentId);
-    EquipmentInfoData memory equipmentInfo = EquipmentInfo.get(itemId);
+    EquipmentSnapshotData memory equipmentSnapshot = _getUpgradedEquipmentStats(equipmentId);
     CharEquipStatsData memory charEquipStats = CharEquipStatsData({
-      hp: equipmentInfo.hp,
-      atk: equipmentInfo.atk,
-      def: equipmentInfo.def,
-      agi: equipmentInfo.agi,
-      ms: equipmentInfo.ms
+      hp: equipmentSnapshot.hp,
+      atk: equipmentSnapshot.atk,
+      def: equipmentSnapshot.def,
+      agi: equipmentSnapshot.agi,
+      ms: equipmentSnapshot.ms
     });
     CharEquipStats.set(characterId, slotType, charEquipStats);
+    CharEquipStats2Data memory charEquipStats2 =
+      CharEquipStats2Data({ barrier: equipmentSnapshot.barrier, weight: equipmentSnapshot.weight });
+    CharEquipStats2.set(characterId, slotType, charEquipStats2);
+  }
+
+  /// @dev Get the upgraded equipment stats for a given equipment ID. Higher level equipment provides better stats.
+  function _getUpgradedEquipmentStats(uint256 equipmentId) private view returns (EquipmentSnapshotData memory) {
+    uint256 itemId = Equipment.getItemId(equipmentId);
+    EquipmentInfoData memory equipmentInfo = EquipmentInfo.get(itemId);
+    EquipmentInfo2V2Data memory equipmentInfo2V2 = EquipmentInfo2V2.get(itemId);
+    uint8 level = Equipment.getLevel(equipmentId);
+    if (level == 1) {
+      EquipmentSnapshotData memory equipmentSnapshot = EquipmentSnapshotData({
+        barrier: equipmentInfo2V2.shieldBarrier,
+        hp: equipmentInfo.hp,
+        atk: equipmentInfo.atk,
+        def: equipmentInfo.def,
+        agi: equipmentInfo.agi,
+        ms: equipmentInfo.ms,
+        weight: equipmentInfo2V2.bonusWeight
+      });
+      return equipmentSnapshot;
+    }
+    // bonus stats
+    uint16 percentGain = _getStatBonusPercent(itemId, level);
+    uint16 multiplier = 100 + percentGain;
+
+    EquipmentSnapshotData memory equipmentSnapshot = EquipmentSnapshotData({
+      barrier: _calculateNewStat(equipmentInfo2V2.shieldBarrier, multiplier, level),
+      hp: _calculateNewStat(equipmentInfo.hp, multiplier, level),
+      atk: uint16(_calculateNewStat(equipmentInfo.atk, multiplier, level)),
+      def: uint16(_calculateNewStat(equipmentInfo.def, multiplier, level)),
+      agi: uint16(_calculateNewStat(equipmentInfo.agi, multiplier, level)),
+      ms: equipmentInfo.ms, // unchanged
+      weight: _calculateNewStat(equipmentInfo2V2.bonusWeight, multiplier, level)
+    });
+
+    return equipmentSnapshot;
+  }
+
+  function _calculateNewStat(uint32 originStat, uint16 mul, uint8 level) private pure returns (uint32) {
+    uint32 newStat = (originStat * mul) / 100;
+    if (originStat != 0 && newStat == originStat) {
+      return originStat + (level - 1); // some equipment has very low dmg
+    }
+    return newStat;
+  }
+
+  function _getStatBonusPercent(uint256 itemId, uint8 level) private view returns (uint16) {
+    if (level <= 1) return 0;
+
+    uint8 tier = Item.getTier(itemId);
+
+    uint16 bonusPercent = sumOfArithmeticSeries(level - 1, 5, 5);
+
+    if (tier > 7 && level >= 4) {
+      bonusPercent += (level - 3) * 5 * (tier - 7);
+    }
+
+    return bonusPercent;
+  }
+
+  function sumOfArithmeticSeries(uint16 levelChange, uint16 base, uint16 step) internal pure returns (uint16) {
+    uint16 sumBase = base * levelChange;
+    uint16 sumStep = (step * levelChange * (levelChange + 1)) / 2;
+    return sumBase + sumStep;
   }
 }

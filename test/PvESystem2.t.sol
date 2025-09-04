@@ -92,8 +92,8 @@ contract PvESystem2Test is WorldFixture, SpawnSystemFixture, WelcomeSystemFixtur
     //   console2.log("dmg index", i);
     //   console2.log("dmg value", pve.damages[i]);
     // }
-    assertEq(pve.damages[0], 170); // no bonus attack
-    assertEq(pve.damages[1], 170);
+    assertEq(pve.damages[0], 338);
+    assertEq(pve.damages[1], 0);
     assertEq(pve.damages[2], 0);
     assertEq(pve.damages[3], 0);
     assertEq(pve.damages[4], 0);

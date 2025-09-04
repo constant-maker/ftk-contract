@@ -2,7 +2,7 @@ pragma solidity >=0.8.24;
 
 import { console2 } from "forge-std/console2.sol";
 import { WorldFixture, SpawnSystemFixture, WelcomeSystemFixture } from "./fixtures/index.sol";
-import { CharacterItemUtils } from "@utils/CharacterItemUtils.sol";
+import { CharacterItemUtils, InventoryEquipmentUtils } from "@utils/index.sol";
 import {
   CharEquipment,
   CharInventory,
@@ -15,7 +15,8 @@ import {
   CharGrindSlot,
   Equipment,
   EquipmentInfo,
-  Item
+  Item,
+  CharFund
 } from "@codegen/index.sol";
 import { SlotType, ItemType } from "@codegen/common.sol";
 import { EquipData } from "@systems/app/EquipmentSystem.sol";
@@ -118,7 +119,9 @@ contract EquipmentSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemF
     vm.stopPrank();
 
     console2.log("equipment item id", Equipment.getItemId(2));
-    console2.log("equipment info", EquipmentInfo.getAtk(Equipment.getItemId(2)));
+    console2.log("item atk", EquipmentInfo.getAtk(Equipment.getItemId(2)));
+    console2.log("item def", EquipmentInfo.getDef(Equipment.getItemId(2)));
+    console2.log("item agi", EquipmentInfo.getAgi(Equipment.getItemId(2)));
 
     // gear up equipments
     equipDatas[0] = EquipData({ slotType: SlotType.Weapon, equipmentId: 2 });
@@ -213,6 +216,70 @@ contract EquipmentSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemF
     console2.log("current ms", currentStats.ms);
     console2.log("max weight", stats.weight);
     assertEq(stats.weight, 280);
+  }
+
+  function test_ShouldUpgradeEquipment() external {
+    vm.startPrank(worldDeployer);
+    // id from 2 -> 4
+    CharacterItemUtils.addNewItem(characterId, 33, 3);
+    vm.stopPrank();
+    uint256 characterId = 1;
+
+    vm.expectRevert(); // no gold
+    vm.startPrank(player);
+    world.app__upgradeEquipment(characterId, 1, 2);
+    vm.stopPrank();
+
+    vm.startPrank(worldDeployer);
+    CharFund.setGold(characterId, 10_000);
+    vm.stopPrank();
+
+    vm.startPrank(player);
+    world.app__upgradeEquipment(characterId, 1, 2);
+    vm.stopPrank();
+
+    assertEq(Equipment.getLevel(1), 2);
+
+    vm.expectRevert(); // equipment not match
+    vm.startPrank(player);
+    world.app__upgradeEquipment(characterId, 1, 4);
+    vm.stopPrank();
+
+    assertFalse(InventoryEquipmentUtils.hasEquipment(characterId, 2));
+
+    vm.startPrank(player);
+    world.app__upgradeEquipment(characterId, 3, 4);
+    world.app__upgradeEquipment(characterId, 1, 3);
+    vm.stopPrank();
+
+    assertEq(Equipment.getLevel(1), 3);
+
+    CharCurrentStatsData memory currentStats = CharCurrentStats.get(characterId);
+    console2.log("current atk", currentStats.atk);
+    console2.log("current def", currentStats.def);
+
+    EquipData[] memory equipDatas = new EquipData[](1);
+    equipDatas[0] = EquipData({ slotType: SlotType.Weapon, equipmentId: 1 });
+    vm.startPrank(player);
+    world.app__gearUpEquipments(characterId, equipDatas);
+    vm.stopPrank();
+
+    CharCurrentStatsData memory newCurrentStats = CharCurrentStats.get(characterId);
+    console2.log("current atk", newCurrentStats.atk);
+    console2.log("current def", newCurrentStats.def);
+    assertEq(newCurrentStats.atk, currentStats.atk + 4);
+    assertEq(newCurrentStats.def, currentStats.def + 3);
+
+    equipDatas[0] = EquipData({ slotType: SlotType.Weapon, equipmentId: 0 });
+    vm.startPrank(player);
+    world.app__gearUpEquipments(characterId, equipDatas);
+    vm.stopPrank();
+
+    newCurrentStats = CharCurrentStats.get(characterId);
+    console2.log("current atk", newCurrentStats.atk);
+    console2.log("current def", newCurrentStats.def);
+    assertEq(newCurrentStats.atk, currentStats.atk);
+    assertEq(newCurrentStats.def, currentStats.def);
   }
 
   function test_Revert_GearUpNonexistentEquipment() external {

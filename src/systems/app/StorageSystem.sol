@@ -2,7 +2,7 @@ pragma solidity >=0.8.24;
 
 import { System } from "@latticexyz/world/src/System.sol";
 import { CharacterAccessControl } from "@abstracts/CharacterAccessControl.sol";
-import { CharStorage } from "@codegen/index.sol";
+import { CharStorage, City } from "@codegen/index.sol";
 import { InventoryItemUtils } from "@utils/InventoryItemUtils.sol";
 import { InventoryToolUtils } from "@utils/InventoryToolUtils.sol";
 import { InventoryEquipmentUtils } from "@utils/InventoryEquipmentUtils.sol";
@@ -12,11 +12,14 @@ import { StorageItemUtils } from "@utils/StorageItemUtils.sol";
 import { CharacterFundUtils } from "@utils/CharacterFundUtils.sol";
 import { CharacterPositionUtils } from "@utils/CharacterPositionUtils.sol";
 import { ItemsActionData } from "@common/Types.sol";
-import { Config } from "@common/Config.sol";
+import { Config, Errors } from "@common/index.sol";
 
 contract StorageSystem is System, CharacterAccessControl {
   /// @dev upgrade storage to increase max weight
   function upgradeStorage(uint256 characterId, uint256 cityId) public onlyAuthorizedWallet(characterId) {
+    if (!City.getIsCapital(cityId)) {
+      revert Errors.MustBeCapitalCity(cityId);
+    }
     uint32 maxWeight = CharStorage.getMaxWeight(characterId, cityId);
     if (maxWeight == 0) maxWeight = Config.INIT_STORAGE_MAX_WEIGHT;
     uint32 multiplier = (maxWeight - Config.INIT_STORAGE_MAX_WEIGHT) / Config.STORAGE_MAX_WEIGHT_INCREMENT;
@@ -35,7 +38,7 @@ contract StorageSystem is System, CharacterAccessControl {
     public
     onlyAuthorizedWallet(characterId)
   {
-    CharacterPositionUtils.mustInCity(characterId, cityId);
+    CharacterPositionUtils.mustInCapital(characterId, cityId);
 
     // set default max weight for storage
     uint32 maxWeight = CharStorage.getMaxWeight(characterId, cityId);

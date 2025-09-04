@@ -17,7 +17,7 @@ import {
   TileInfo3
 } from "@codegen/index.sol";
 import { CharacterStateType } from "@codegen/common.sol";
-import { CharacterPositionUtils, CharacterRoleUtils, CharacterFundUtils } from "@utils/index.sol";
+import { CharacterPositionUtils, CharacterRoleUtils, CharacterFundUtils, MapUtils } from "@utils/index.sol";
 import { Errors } from "@common/Errors.sol";
 
 contract CitySystem is System, CharacterAccessControl {
@@ -31,7 +31,7 @@ contract CitySystem is System, CharacterAccessControl {
     if (charKingdomId != cityKingdomId) {
       revert Errors.CitySystem_CityIsNotYourKingdom(charKingdomId, cityKingdomId);
     }
-    _mustBeActive(cityId, cityKingdomId);
+    MapUtils.mustBeActiveCity(cityId);
     uint8 currentLevel = City.getLevel(cityId);
     if (currentLevel >= 3) {
       revert Errors.CitySystem_AlreadyMaxLevel(cityId);
@@ -121,17 +121,6 @@ contract CitySystem is System, CharacterAccessControl {
       revert Errors.CitySystem_CityLevelTooLow(cityId, cityLevel);
     }
 
-    _mustBeActive(cityId, cityKingdomId);
-  }
-
-  /// @dev Check if city kingdom id same as tile kingdom id
-  function _mustBeActive(uint256 cityId, uint8 cityKingdomId) private view {
-    // check tile ownership
-    int32 x = City.getX(cityId);
-    int32 y = City.getY(cityId);
-    uint8 tileKingdomId = TileInfo3.getKingdomId(x, y);
-    if (tileKingdomId != cityKingdomId) {
-      revert Errors.CitySystem_CityBelongsToOtherKingdom(cityKingdomId, tileKingdomId);
-    }
+    MapUtils.mustBeActiveCity(cityId);
   }
 }

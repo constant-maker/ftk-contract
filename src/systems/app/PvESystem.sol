@@ -124,7 +124,7 @@ contract PvESystem is System, CharacterAccessControl {
       }
       if (_tryToLevelUp(characterId)) return; // if level up success character hp will be recover to max hp
     }
-    CharCurrentStats.setHp(characterId, characterHp);
+    CharacterStatsUtils.setNewHp(characterId, characterHp);
   }
 
   // try to level up character to next level if exp is enough

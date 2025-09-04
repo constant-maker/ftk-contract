@@ -8,6 +8,9 @@ library Errors {
   // common errors
   error InvalidCityId(uint256 cityId);
   error MustInACity(uint256 cityId, int32 charX, int32 charY);
+  error MustInACapital(uint256 capitalId, int32 charX, int32 charY);
+  error MustBeCapitalCity(uint256 cityId);
+  error CityBelongsToOtherKingdom(uint8 originalKingdomId, uint8 currentKingdomId);
 
   /* -------------------------------------------------------------------------- */
   /*                                Spawn system                                */
@@ -83,6 +86,8 @@ library Errors {
   error EquipmentSystem_UnmatchSlotType(SlotType equipmentSlotType, SlotType paramSlotType);
   error EquipmentSystem_InvalidSlotType(SlotType paramSlotType);
   error EquipmentSystem_EquipmentSnapshotStatsNotFound(uint256 characterId, uint256 itemId, SlotType slotType);
+  error EquipmentSystem_UnmatchEquipmentId(uint256 targetEquipmentId, uint256 materialEquipmentId);
+  error EquipmentSystem_ExceedMaxLevel(uint8 maxLevel);
 
   /* -------------------------------------------------------------------------- */
   /*                                    Quest3                                   */
@@ -315,5 +320,4 @@ library Errors {
   );
   error CitySystem_InsufficientVaultGold(uint256 cityId, uint32 currentGold, uint32 vaultGold);
   error CitySystem_CityLevelTooLow(uint256 cityId, uint8 cityLevel);
-  error CitySystem_CityBelongsToOtherKingdom(uint8 originalKingdomId, uint8 currentKingdomId);
 }

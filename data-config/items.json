@@ -5485,6 +5485,216 @@
       "resourceInfo": {
         "type": 6
       }
+    },
+    "356": {
+      "id": 356,
+      "type": 7,
+      "category": 1,
+      "tier": 6,
+      "weight": 10,
+      "name": "Waraxe of the Sacred Grave",
+      "desc": "A solemn axe forged to honor the fallen, its edge whispers with the voices buried beneath the dark earth.",
+      "equipmentInfo": {
+        "slotType": 0,
+        "advantageType": 2,
+        "twoHanded": false,
+        "atk": 102,
+        "def": 39,
+        "agi": 13,
+        "hp": 0,
+        "ms": 0,
+        "weight": 0,
+        "barrier": 0
+      }
+    },
+    "357": {
+      "id": 357,
+      "type": 9,
+      "category": 1,
+      "tier": 6,
+      "weight": 17,
+      "name": "Ancestral Greatbow",
+      "desc": "This soulbound bow channels the memory of ancient hunts and the stillness before death.",
+      "equipmentInfo": {
+        "slotType": 0,
+        "advantageType": 3,
+        "twoHanded": true,
+        "atk": 163,
+        "def": 24,
+        "agi": 56,
+        "hp": 0,
+        "ms": 0,
+        "weight": 0,
+        "barrier": 0
+      }
+    },
+    "358": {
+      "id": 358,
+      "type": 6,
+      "category": 1,
+      "tier": 6,
+      "weight": 10,
+      "name": "Champion's Rapier",
+      "desc": "Elegant and deadly, this gleaming blade was used in ceremonies more than actual battle, yet its prowess is undeniable.",
+      "equipmentInfo": {
+        "slotType": 0,
+        "advantageType": 0,
+        "twoHanded": false,
+        "atk": 112,
+        "def": 25,
+        "agi": 17,
+        "hp": 0,
+        "ms": 0,
+        "weight": 0,
+        "barrier": 0
+      }
+    },
+    "359": {
+      "id": 359,
+      "type": 16,
+      "category": 1,
+      "tier": 6,
+      "weight": 7,
+      "name": "Warrior Queen's Scaled Armor",
+      "desc": "Once crafted for a forgotten monarch of battle, this armor flows like cloth but shields like legend-wrought steel.",
+      "equipmentInfo": {
+        "slotType": 2,
+        "advantageType": 0,
+        "twoHanded": false,
+        "atk": 21,
+        "def": 53,
+        "agi": 54,
+        "hp": 140,
+        "ms": 0,
+        "weight": 0,
+        "barrier": 0
+      }
+    },
+    "360": {
+      "id": 360,
+      "type": 7,
+      "category": 1,
+      "tier": 7,
+      "weight": 22,
+      "name": "Ancient Slayer's Axe",
+      "desc": "A brutal relic reborn in serpent blood, this axe was made to cleave through myths and create legends.",
+      "equipmentInfo": {
+        "slotType": 0,
+        "advantageType": 2,
+        "twoHanded": true,
+        "atk": 289,
+        "def": 25,
+        "agi": 46,
+        "hp": 0,
+        "ms": 0,
+        "weight": 0,
+        "barrier": 0
+      }
+    },
+    "361": {
+      "id": 361,
+      "type": 8,
+      "category": 1,
+      "tier": 7,
+      "weight": 22,
+      "name": "Greatspear of Doom",
+      "desc": "Heavy as fate and sharp as prophecy, this massive spear delivers ruin with every coiled thrust.",
+      "equipmentInfo": {
+        "slotType": 0,
+        "advantageType": 1,
+        "twoHanded": true,
+        "atk": 294,
+        "def": 15,
+        "agi": 52,
+        "hp": 0,
+        "ms": 0,
+        "weight": 0,
+        "barrier": 0
+      }
+    },
+    "362": {
+      "id": 362,
+      "type": 6,
+      "category": 1,
+      "tier": 7,
+      "weight": 22,
+      "name": "Blackened Sword of Agony",
+      "desc": "Forged in the shadow of Kalyndra’s death, this cursed blade feeds on suffering and sings with searing sorrow.",
+      "equipmentInfo": {
+        "slotType": 0,
+        "advantageType": 0,
+        "twoHanded": true,
+        "atk": 279,
+        "def": 35,
+        "agi": 48,
+        "hp": 0,
+        "ms": 0,
+        "weight": 0,
+        "barrier": 0
+      }
+    },
+    "363": {
+      "id": 363,
+      "type": 19,
+      "category": 1,
+      "tier": 7,
+      "weight": 9,
+      "name": "Armor of Monstrous Vitality",
+      "desc": "This forbidden armor is said to provide near-immortality if the wearer is willing to trade their sanity for it.",
+      "equipmentInfo": {
+        "slotType": 2,
+        "advantageType": 0,
+        "twoHanded": false,
+        "atk": 23,
+        "def": 145,
+        "agi": 18,
+        "hp": 500,
+        "ms": 0,
+        "weight": 0,
+        "barrier": 0
+      }
+    },
+    "364": {
+      "id": 364,
+      "type": 12,
+      "category": 1,
+      "tier": 7,
+      "weight": 8,
+      "name": "Greatshield of Domination",
+      "desc": "A towering shield carved from Kalyndra’s indomitable scales, radiating a presence so commanding it bends lesser wills on sight.",
+      "equipmentInfo": {
+        "slotType": 1,
+        "advantageType": 0,
+        "twoHanded": false,
+        "atk": 18,
+        "def": 119,
+        "agi": 25,
+        "hp": 0,
+        "ms": 0,
+        "weight": 0,
+        "barrier": 280
+      }
+    },
+    "365": {
+      "id": 365,
+      "type": 14,
+      "category": 1,
+      "tier": 7,
+      "weight": 5,
+      "name": "Hood of Sundering",
+      "desc": "Woven from the ancient serpent's eyes and fangs, this hood tears through magic, unraveling the world's most powerful truths.",
+      "equipmentInfo": {
+        "slotType": 3,
+        "advantageType": 0,
+        "twoHanded": false,
+        "atk": 45,
+        "def": 26,
+        "agi": 94,
+        "hp": 130,
+        "ms": 0,
+        "weight": 0,
+        "barrier": 0
+      }
     }
   }
 }

@@ -83,6 +83,10 @@ contract PvESystemBossTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFix
     uint32 characterHp = CharCurrentStats.getHp(characterId);
     uint256[5] memory skills = CharSkill.get(characterId);
 
+    console2.log("character agi", CharCurrentStats.getAgi(characterId));
+    console2.log("boss agi", MonsterStats.getAgi(bossId));
+    console2.log("boss def", MonsterStats.getDef(bossId));
+
     vm.warp(block.timestamp + 4320 * 24 * 60 * 60);
     vm.startPrank(player);
     world.app__battlePvE(characterId, bossId, true);
@@ -343,7 +347,7 @@ contract PvESystemBossTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFix
     //   console2.log("dmg index", i);
     //   console2.log("dmg value", pve.damages[i]);
     // }
-    assertEq(pve.damages[0], 21); // bonus attack
+    assertEq(pve.damages[0], 230); // bonus attack
     assertEq(pve.damages[1], 31);
     assertEq(pve.damages[2], 130); // level 100 + 20 (min dmg) + atk 12 (boost) - def 2 ~ boss immune to stun
 
@@ -359,7 +363,7 @@ contract PvESystemBossTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFix
 
     vm.startPrank(worldDeployer);
     BossInfo.setHp(bossId, locationX, locationY, 300);
-    CharCurrentStats.setAgi(characterId, 1000);
+    CharCurrentStats.setAgi(characterId, 2);
     uint256[5] memory customSkillIds = [uint256(12), uint256(0), uint256(0), uint256(0), uint256(0)];
     CharSkill.setSkillIds(characterId, customSkillIds);
     CharacterItemUtils.addNewItem(characterId, 72, 1);
@@ -381,6 +385,9 @@ contract PvESystemBossTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFix
 
     uint32 characterHp = CharCurrentStats.getHp(characterId);
     console2.log("character hp", characterHp);
+    console2.log("character atk", CharCurrentStats.getAtk(characterId));
+    console2.log("character def", CharCurrentStats.getDef(characterId));
+    console2.log("character agi", CharCurrentStats.getAgi(characterId));
     uint256[5] memory skills = CharSkill.get(characterId);
 
     vm.warp(block.timestamp + 24 * 60 * 60);
@@ -398,17 +405,17 @@ contract PvESystemBossTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFix
     for (uint256 i = 0; i < skills.length; i++) {
       assertEq(pve.characterSkillIds[i], skills[i]);
     }
-    // for (uint256 i = 0; i < pve.damages.length; i++) {
-    //   console2.log("dmg index", i);
-    //   console2.log("dmg value", pve.damages[i]);
-    // }
-    // assertEq(pve.damages[0], 21); // bonus attack
-    // assertEq(pve.damages[1], 31);
-    assertEq(pve.damages[2], 120); // level 100 + 20 (min dmg) + atk 12 (boost) - def 2 ~ boss immune to stun
+    for (uint256 i = 0; i < pve.damages.length; i++) {
+      console2.log("dmg index", i);
+      console2.log("dmg value", pve.damages[i]);
+    }
+    // assertEq(pve.damages[0], 0); // bonus attack
+    // assertEq(pve.damages[1], 198);
+    assertEq(pve.damages[2], 93); // level 100 + 20 (min dmg) + atk 12 (boost) - def 2 ~ boss immune to stun
 
     characterHp = CharCurrentStats.getHp(characterId);
     console2.log("character final hp", characterHp);
-    assertEq(characterHp, 10_000);
+    assertEq(characterHp, 9946);
   }
 
   function _gearUpEquipment() private {

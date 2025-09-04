@@ -23,8 +23,7 @@ import { BattleInfo, BattleUtils } from "./BattleUtils.sol";
 import { CharacterFundUtils } from "./CharacterFundUtils.sol";
 import { InventoryItemUtils } from "./InventoryItemUtils.sol";
 import { EntityType } from "@codegen/common.sol";
-import { Errors } from "@common/Errors.sol";
-import { Config } from "@common/Config.sol";
+import { Config, Errors } from "@common/index.sol";
 
 library BattlePvEUtils {
   uint8 public constant BERSERK_SP_BONUS = 5;

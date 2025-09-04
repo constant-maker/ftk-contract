@@ -245,6 +245,52 @@ contract PvPSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
     assertEq(characterPosition.y, -36);
   }
 
+  function test_BattleWithVeryHighDef() external {
+    // character atk 2 def 2
+
+    // both go to same location
+    _moveToTheLocation(locationX, locationY);
+
+    vm.startPrank(worldDeployer);
+    CharCurrentStats.setDef(characterId_2, 50);
+    vm.stopPrank();
+
+    uint32 characterHp_1 = CharCurrentStats.getHp(characterId_1);
+    console2.log("characterHp_1", characterHp_1);
+    console2.log("characterAtk_1", CharCurrentStats.getAtk(characterId_1));
+    console2.log("characterDef_1", CharCurrentStats.getDef(characterId_1));
+    uint32 characterHp_2 = CharCurrentStats.getHp(characterId_2);
+    console2.log("characterHp_2", characterHp_2);
+    console2.log("characterAtk_2", CharCurrentStats.getAtk(characterId_2));
+    console2.log("characterDef_2", CharCurrentStats.getDef(characterId_2));
+
+    vm.warp(block.timestamp + 300);
+    vm.startPrank(player_1);
+    world.app__battlePvP(characterId_1, characterId_2);
+    vm.stopPrank();
+
+    // assert last pvp id
+    uint256 lastPvpId = CharBattle.getLastPvpId(characterId_1);
+    assertEq(lastPvpId, 1);
+    lastPvpId = CharBattle.getLastPvpId(characterId_2);
+    assertEq(lastPvpId, 1);
+
+    PvPData memory pvp = PvP.get(1);
+    assertEq(pvp.attackerId, characterId_1);
+    assertEq(pvp.defenderId, characterId_2);
+    assertEq(pvp.firstAttackerId, characterId_1);
+    assertEq(pvp.hps[0], characterHp_1);
+    assertEq(pvp.hps[1], characterHp_2);
+
+    // for (uint256 i = 0; i < pvp.damages.length; i++) {
+    //   console2.log("dmg index", i);
+    //   console2.log("dmg value", pvp.damages[i]);
+    // }
+    // assert dmg
+    assertEq(pvp.damages[0], 0); // no bonus attack
+    assertEq(pvp.damages[1], 20); // def 50 => reduce all level bonus dmg max(0, 1 - (50-2) * 0.3) => only 20 min dmg left
+  }
+
   function test_BattleHasWeaponAdvantage() external {
     // character atk 2 def 2
 
@@ -329,8 +375,8 @@ contract PvPSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
     _moveToTheLocation(20, -32);
 
     vm.startPrank(worldDeployer);
-    CharCurrentStats.setAtk(characterId_1, 10_000);
-    CharCurrentStats.setAgi(characterId_1, 10_000);
+    CharCurrentStats.setAtk(characterId_1, 1000);
+    CharCurrentStats.setAgi(characterId_1, 1000);
     TileInfo3.setKingdomId(20, -32, 1);
     vm.stopPrank();
 
@@ -360,8 +406,8 @@ contract PvPSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
 
     // update char 2 stats
     vm.startPrank(worldDeployer);
-    CharCurrentStats.setAtk(characterId_2, 20_000);
-    CharCurrentStats.setAgi(characterId_2, 20_000);
+    CharCurrentStats.setAtk(characterId_2, 2000);
+    CharCurrentStats.setAgi(characterId_2, 2000);
     vm.stopPrank();
 
     vm.warp(block.timestamp + 300);
@@ -409,8 +455,8 @@ contract PvPSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
 
     // update char 2 stats
     vm.startPrank(worldDeployer);
-    CharCurrentStats.setAtk(characterId_2, 20_000);
-    CharCurrentStats.setAgi(characterId_2, 20_000);
+    CharCurrentStats.setAtk(characterId_2, 2000);
+    CharCurrentStats.setAgi(characterId_2, 2000);
     vm.stopPrank();
 
     uint32 weightChar1 = CharCurrentStats.getWeight(characterId_1);
@@ -530,8 +576,8 @@ contract PvPSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
   function test_LootItem() external {
     // update char 2 stats
     vm.startPrank(worldDeployer);
-    CharCurrentStats.setAtk(characterId_2, 20_000);
-    CharCurrentStats.setAgi(characterId_2, 20_000);
+    CharCurrentStats.setAtk(characterId_2, 2000);
+    CharCurrentStats.setAgi(characterId_2, 2000);
 
     TileInfo3.setZoneType(21, -32, ZoneType.Black);
 
