@@ -8,7 +8,7 @@ struct ItemsActionData {
   uint32[] itemAmounts;
 }
 
-struct EquipmentSnapshot {
+struct EquipmentSnapshotData {
   uint32 barrier;
   uint32 hp;
   uint16 atk;
