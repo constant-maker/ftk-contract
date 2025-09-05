@@ -16,7 +16,9 @@ import {
   Equipment,
   EquipmentInfo,
   Item,
-  CharFund
+  CharFund,
+  CharEquipStats2,
+  CharCStats2
 } from "@codegen/index.sol";
 import { SlotType, ItemType } from "@codegen/common.sol";
 import { EquipData } from "@systems/app/EquipmentSystem.sol";
@@ -255,14 +257,22 @@ contract EquipmentSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemF
     assertEq(Equipment.getLevel(1), 3);
 
     CharCurrentStatsData memory currentStats = CharCurrentStats.get(characterId);
+    uint32 currentBarrier = CharCStats2.get(characterId);
     console2.log("current atk", currentStats.atk);
     console2.log("current def", currentStats.def);
+    console2.log("current barrier", currentBarrier);
+    assertEq(currentBarrier, 0);
 
     EquipData[] memory equipDatas = new EquipData[](1);
     equipDatas[0] = EquipData({ slotType: SlotType.Weapon, equipmentId: 1 });
     vm.startPrank(player);
     world.app__gearUpEquipments(characterId, equipDatas);
     vm.stopPrank();
+
+    uint32 barrier = CharEquipStats2.getBarrier(characterId, SlotType.Weapon);
+    console2.log("barrier", barrier);
+    assertEq(barrier, 0);
+    assertEq(CharCStats2.get(characterId), 0);
 
     CharCurrentStatsData memory newCurrentStats = CharCurrentStats.get(characterId);
     console2.log("current atk", newCurrentStats.atk);
@@ -280,6 +290,7 @@ contract EquipmentSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemF
     console2.log("current def", newCurrentStats.def);
     assertEq(newCurrentStats.atk, currentStats.atk);
     assertEq(newCurrentStats.def, currentStats.def);
+    assertEq(CharCStats2.get(characterId), currentBarrier);
   }
 
   function test_Revert_GearUpNonexistentEquipment() external {
