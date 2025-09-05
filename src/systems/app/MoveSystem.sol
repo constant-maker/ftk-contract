@@ -1,17 +1,24 @@
 pragma solidity >=0.8.24;
 
 import { System } from "@latticexyz/world/src/System.sol";
-import { CharPosition, CharPositionData, CharNextPosition, CharNextPositionData } from "@codegen/index.sol";
-import { TileInfo3 } from "@codegen/tables/TileInfo3.sol";
-import { MonsterLocation } from "@codegen/tables/MonsterLocation.sol";
-import { CharStats } from "@codegen/tables/CharStats.sol";
+import { CharacterAccessControl } from "@abstracts/CharacterAccessControl.sol";
+import {
+  CharPosition,
+  CharPositionData,
+  CharNextPosition,
+  CharNextPositionData,
+  CharPositionV2,
+  CharPositionV2Data,
+  TileInfo3,
+  MonsterLocation,
+  CharStats
+} from "@codegen/index.sol";
 import { MoveSystemUtils } from "@utils/MoveSystemUtils.sol";
 import { CharacterStateUtils } from "@utils/CharacterStateUtils.sol";
 import { DailyQuestUtils } from "@utils/DailyQuestUtils.sol";
 import { CharacterStateType } from "@codegen/common.sol";
-import { Errors, Events } from "@common/index.sol";
-import { CharacterAccessControl } from "@abstracts/CharacterAccessControl.sol";
 import { CharacterPositionUtils } from "@utils/CharacterPositionUtils.sol";
+import { Errors } from "@common/index.sol";
 
 contract MoveSystem is CharacterAccessControl, System {
   /// @dev move to a new position (destX, destY)
@@ -39,9 +46,14 @@ contract MoveSystem is CharacterAccessControl, System {
     // update next position
     uint256 arriveTimestamp = block.timestamp + MoveSystemUtils.getMovementDuration(characterId);
     CharNextPosition.set(characterId, destX, destY, arriveTimestamp);
-
-    emit Events.PositionChanged(characterId, charPrevPosition.x, charPrevPosition.y, destX, destY, arriveTimestamp);
-
+    CharPositionV2Data memory posV2 = CharPositionV2Data({
+      x: charPrevPosition.x,
+      y: charPrevPosition.y,
+      nextX: destX,
+      nextY: destY,
+      arriveTimestamp: arriveTimestamp
+    });
+    CharPositionV2.set(characterId, posV2);
     // update daily quest move count
     DailyQuestUtils.updateMoveCount(characterId);
   }

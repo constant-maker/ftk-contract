@@ -11,9 +11,11 @@ import {
   CharInfo,
   CharSavePoint,
   CharSavePointData,
-  TileInfo3
+  TileInfo3,
+  CharPositionV2,
+  CharPositionV2Data
 } from "@codegen/index.sol";
-import { Errors, Events } from "@common/index.sol";
+import { Errors } from "@common/index.sol";
 
 library CharacterPositionUtils {
   /// @dev character must be in a capital
@@ -85,8 +87,9 @@ library CharacterPositionUtils {
   function moveToLocation(uint256 characterId, int32 x, int32 y) internal {
     CharPosition.set(characterId, x, y);
     CharNextPosition.set(characterId, x, y, block.timestamp);
-    // emit event
-    emit Events.PositionChanged(characterId, x, y, x, y, block.timestamp);
+    CharPositionV2Data memory posV2 =
+      CharPositionV2Data({ x: x, y: y, nextX: x, nextY: y, arriveTimestamp: block.timestamp });
+    CharPositionV2.set(characterId, posV2);
   }
 
   /// @dev get current character position

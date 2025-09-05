@@ -25,8 +25,14 @@ import {
   CVaultHistoryV3,
   CVaultHistoryV3Data,
   CharOtherItem,
+  CharFund,
+  CityVault2,
+  CharPositionV2,
+  CharPositionV2Data,
+  CharPosition,
   CharPositionData,
-  CharFund
+  CharNextPosition,
+  CharNextPositionData
 } from "@codegen/index.sol";
 import { RoleType } from "@codegen/common.sol";
 import { CharacterPositionUtils, InventoryItemUtils } from "@utils/index.sol";
@@ -226,9 +232,18 @@ contract CitySystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixtur
     assertEq(CityVault.getAmount(newCityId, 3), 3);
 
     console2.log("test teleport");
+    uint32 currentCapitalGold = CityVault2.getGold(cityId);
     vm.startPrank(worldDeployer);
     CharacterPositionUtils.moveToCapital(voterId);
     vm.stopPrank();
+    CharPositionV2Data memory posV2 = CharPositionV2.get(voterId);
+    CharPositionData memory pos = CharPosition.get(voterId);
+    CharNextPositionData memory nextPos = CharNextPosition.get(voterId);
+    assertEq(pos.x, posV2.x);
+    assertEq(pos.y, posV2.y);
+    assertEq(nextPos.x, posV2.nextX);
+    assertEq(nextPos.y, posV2.nextY);
+    assertEq(nextPos.arriveTimestamp, posV2.arriveTimestamp);
     vm.startPrank(voter);
     world.app__cityTeleport(voterId, cityId, newCityId);
     vm.stopPrank();
@@ -236,6 +251,7 @@ contract CitySystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixtur
     CharPositionData memory position = CharacterPositionUtils.currentPosition(voterId);
     assertEq(position.x, newCityX);
     assertEq(position.y, newCityY);
+    assertEq(CityVault2.getGold(cityId), currentCapitalGold + 20);
 
     console2.log("test save point");
     vm.startPrank(voter);

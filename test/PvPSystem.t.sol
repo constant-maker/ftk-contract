@@ -288,7 +288,8 @@ contract PvPSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
     // }
     // assert dmg
     assertEq(pvp.damages[0], 0); // no bonus attack
-    assertEq(pvp.damages[1], 20); // def 50 => reduce all level bonus dmg max(0, 1 - (50-2) * 0.3) => only 20 min dmg left
+    // def 50 => reduce all level bonus dmg max(0, 1 - (50-2) * 0.3) => only 20 min dmg left
+    assertEq(pvp.damages[1], 20);
   }
 
   function test_BattleHasWeaponAdvantage() external {

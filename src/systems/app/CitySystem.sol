@@ -14,7 +14,8 @@ import {
   CharCurrentStats,
   CharStats,
   CharSavePoint,
-  TileInfo3
+  TileInfo3,
+  Kingdom
 } from "@codegen/index.sol";
 import { CharacterStateType } from "@codegen/common.sol";
 import { CharacterPositionUtils, CharacterRoleUtils, CharacterFundUtils, MapUtils } from "@utils/index.sol";
@@ -75,6 +76,7 @@ contract CitySystem is System, CharacterAccessControl {
     }
     CharacterFundUtils.decreaseGold(characterId, goldCost);
     CharCurrentStats.setHp(characterId, maxHp);
+    _updateCapitalGold(CharInfo.getKingdomId(characterId), goldCost);
   }
 
   function citySavePoint(uint256 characterId, uint256 cityId) public onlyAuthorizedWallet(characterId) {
@@ -99,6 +101,7 @@ contract CitySystem is System, CharacterAccessControl {
     CityData memory toCity = City.get(toCityId);
     CharacterFundUtils.decreaseGold(characterId, TELEPORT_COST);
     CharacterPositionUtils.moveToLocation(characterId, toCity.x, toCity.y);
+    _updateCapitalGold(CharInfo.getKingdomId(characterId), TELEPORT_COST);
   }
 
   /// @dev Validate the city for the given action, ensuring it meets the required level
@@ -122,5 +125,14 @@ contract CitySystem is System, CharacterAccessControl {
     }
 
     MapUtils.mustBeActiveCity(cityId);
+  }
+
+  function _updateCapitalGold(uint8 kingdomId, uint32 gainedGold) private {
+    uint256 capitalId = Kingdom.getCapitalId(kingdomId);
+    if (capitalId == 0) {
+      revert Errors.InvalidCityId(capitalId);
+    }
+    uint32 currentGold = CityVault2.getGold(capitalId);
+    CityVault2.setGold(capitalId, currentGold + gainedGold);
   }
 }

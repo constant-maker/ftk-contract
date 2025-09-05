@@ -146,6 +146,17 @@ const CHARACTER_TABLES: any = {
     },
     key: ['characterId'],
   },
+  CharPositionV2: {
+    schema: {
+      characterId: "uint256",
+      x: "int32",
+      y: "int32",
+      nextX: "int32",
+      nextY: "int32",
+      arriveTimestamp: "uint256",
+    },
+    key: ['characterId'],
+  },
   CharFarmingState: {
     schema: {
       characterId: "uint256",
