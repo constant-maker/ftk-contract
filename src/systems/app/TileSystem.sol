@@ -136,9 +136,9 @@ contract TileSystem is System, CharacterAccessControl {
     ZoneType zoneType = TileInfo3.getZoneType(x, y);
     if ((x + y) % 2 == 0) {
       if (zoneType == ZoneType.Black) {
-        itemIds[0] = 3; // Wood tier 3
-        itemIds[1] = 78; // Stone tier 3
-        itemIds[2] = 86; // Fish tier 3
+        itemIds[0] = 73; // Wood tier 6
+        itemIds[1] = 81; // Stone tier 6
+        itemIds[2] = 89; // Fish tier 6
       } else {
         itemIds[0] = 1; // Wood tier 1
         itemIds[1] = 6; // Stone tier 1
@@ -146,9 +146,9 @@ contract TileSystem is System, CharacterAccessControl {
       }
     } else {
       if (zoneType == ZoneType.Black) {
-        itemIds[0] = 94; // Ore tier 3
-        itemIds[1] = 102; // Wheat tier 3
-        itemIds[2] = 110; // Berries tier 3
+        itemIds[0] = 97; // Ore tier 6
+        itemIds[1] = 113; // Wheat tier 6
+        itemIds[2] = 105; // Berries tier 6
       } else {
         itemIds[0] = 10; // Ore tier 1
         itemIds[1] = 12; // Wheat tier 1
