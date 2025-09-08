@@ -47,8 +47,8 @@ contract MoveSystem is CharacterAccessControl, System {
     uint256 arriveTimestamp = block.timestamp + MoveSystemUtils.getMovementDuration(characterId);
     CharNextPosition.set(characterId, destX, destY, arriveTimestamp);
     CharPositionV2Data memory posV2 = CharPositionV2Data({
-      x: charPrevPosition.x,
-      y: charPrevPosition.y,
+      x: characterPosition.x,
+      y: characterPosition.y,
       nextX: destX,
       nextY: destY,
       arriveTimestamp: arriveTimestamp
