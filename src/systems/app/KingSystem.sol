@@ -3,6 +3,7 @@ pragma solidity >=0.8.24;
 import { System } from "@latticexyz/world/src/System.sol";
 import { CharacterAccessControl } from "@abstracts/CharacterAccessControl.sol";
 import {
+  CharStats,
   CharStats2,
   KingElection,
   KingElectionData,
@@ -32,6 +33,7 @@ contract KingSystem is CharacterAccessControl, System {
   uint32 constant TERM_DURATION = 1_209_600; // 14 days in seconds
   uint32 constant OFFSET_DURATION = 172_800; // 2 days in seconds
   uint256 constant KING_ACHIEVEMENT_ID = 10;
+  uint256 constant VAULT_KEEPER_MIN_LEVEL_REQUIRED = 80;
 
   function registerKing(uint256 characterId, string memory promiseSummary) public onlyAuthorizedWallet(characterId) {
     uint8 kingdomId = CharInfo.getKingdomId(characterId);
@@ -238,10 +240,23 @@ contract KingSystem is CharacterAccessControl, System {
 
     if (role == RoleType.VaultKeeper || role == RoleType.KingGuard) {
       _checkAndUpdateRoleLimit(charKingdomId, role);
+      _checkUserEligible(citizenId, role);
       CharRole.set(citizenId, role);
       CharacterRoleUtils.updateRoleAchievement(citizenId, role, false);
     } else {
       revert Errors.KingSystem_InvalidRole(role);
+    }
+  }
+
+  /// @dev Check if the user is eligible for the role in the kingdom
+  function _checkUserEligible(uint256 citizenId, RoleType roleType) private {
+    if (roleType == RoleType.VaultKeeper) {
+      uint16 level = CharStats.getLevel(citizenId);
+      if (level < VAULT_KEEPER_MIN_LEVEL_REQUIRED) {
+        revert Errors.KingSystem_InsufficientLevelForRole(citizenId, level, roleType);
+      }
+    } else if (roleType == RoleType.KingGuard) {
+      // No specific requirement for KingGuard as of now
     }
   }
 

@@ -296,6 +296,7 @@ library Errors {
   error KingSystem_InvalidRole(RoleType roleType);
   error KingSystem_RoleLimitReached(RoleType roleType, uint32 maxLimit);
   error KingSystem_CannotSetRoleForKing();
+  error KingSystem_InsufficientLevelForRole(uint256 characterId, uint16 level, RoleType roleType);
 
   /* -------------------------------------------------------------------------- */
   /*                               VaultSystem                                  */

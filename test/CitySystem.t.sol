@@ -118,6 +118,10 @@ contract CitySystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixtur
     RoleType voterRole = CharRole.getRoleType(voterId);
     assertEq(uint8(voterRole), uint8(RoleType.None));
 
+    vm.startPrank(worldDeployer);
+    CharStats.setLevel(voterId, 80);
+    vm.stopPrank();
+
     CharCurrentStatsData memory prevVoterCurrentStats = CharCurrentStats.get(voterId);
     vm.startPrank(candidate);
     world.app__setRole(candidateId, voterId, RoleType.VaultKeeper);
