@@ -84,7 +84,7 @@ contract EquipmentSystem is System, CharacterAccessControl {
     uint32 goldMultiply = 50;
     uint8 itemTier = Item.getTier(itemId);
     if (itemTier >= 7) {
-      goldMultiply = 200;
+      goldMultiply = 100;
     }
     cost = uint32(itemTier) * uint32(level) * goldMultiply;
   }
