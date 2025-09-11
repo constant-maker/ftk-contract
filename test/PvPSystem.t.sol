@@ -24,13 +24,14 @@ import {
   DropResource,
   KingSetting,
   PvPExtraV3,
-  PvPExtraV3Data
+  PvPExtraV3Data,
+  CharInventory
 } from "@codegen/index.sol";
 import { EntityType, SlotType, ItemType, ZoneType } from "@codegen/common.sol";
 import { Errors } from "@common/Errors.sol";
 import { Config } from "@common/Config.sol";
 import {
-  CharacterPositionUtils, InventoryItemUtils, InventoryEquipmentUtils, CharAchievementUtils
+  CharacterPositionUtils, InventoryItemUtils, InventoryEquipmentUtils, CharAchievementUtils, CharacterItemUtils
 } from "@utils/index.sol";
 import { CharStats2 } from "@codegen/tables/CharStats2.sol";
 import { LootItems } from "@systems/app/TileSystem.sol";
@@ -442,9 +443,9 @@ contract PvPSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
 
     uint256[] memory dropResourceIds = DropResource.get();
     console2.log("drop resource ids length", dropResourceIds.length);
-    for (uint256 i = 0; i < dropResourceIds.length; i++) {
-      console2.log("resource id", dropResourceIds[i]);
-    }
+    // for (uint256 i = 0; i < dropResourceIds.length; i++) {
+    //   console2.log("resource id", dropResourceIds[i]);
+    // }
 
     _moveToTheLocation(20, -32);
 
@@ -499,7 +500,14 @@ contract PvPSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
     vm.warp(block.timestamp + 300);
     vm.startPrank(worldDeployer);
     TileInfo3.setZoneType(21, -32, ZoneType.Black);
+    CharacterItemUtils.addNewItem(characterId_1, 329, 1); // tier 7 // weight 11
+    CharacterItemUtils.addNewItem(characterId_1, 70, 1); // tier 6 // weight 10
     vm.stopPrank();
+
+    weightChar1 = CharCurrentStats.getWeight(characterId_1);
+    console2.log("weight char 1", weightChar1); // 140
+    console2.log("len equipment inventory", CharInventory.lengthEquipmentIds(characterId_1));
+    assertEq(CharInventory.lengthEquipmentIds(characterId_1), 3);
     console2.log("tile kingdom id", TileInfo3.getKingdomId(21, -32));
 
     vm.startPrank(player_1);
@@ -518,17 +526,20 @@ contract PvPSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
 
     newWeightChar1 = CharCurrentStats.getWeight(characterId_1);
     console2.log("new weight char 1 in black zone", newWeightChar1);
-    assertEq(newWeightChar1, weightChar1 - 100 - 5); // 100 items dropped (weight 2 each) + 5 weight for equipped weapon
+    assertEq(newWeightChar1, weightChar1 - 10 - 11); // 2 highest equipment is dropped
+    assertEq(CharInventory.lengthEquipmentIds(characterId_1), 1);
+    assertEq(CharInventory.getItemEquipmentIds(characterId_1, 0), 1);
 
     uint256[] memory tileEquipmentIds = TileInventory.getEquipmentIds(21, -32);
-    assertEq(tileEquipmentIds.length, 1);
-    assertEq(tileEquipmentIds[0], 1);
+    assertEq(tileEquipmentIds.length, 2);
+    assertEq(tileEquipmentIds[0], 4); // tier 7
+    assertEq(tileEquipmentIds[1], 5); // tier 6
 
     console2.log("done test fight in black zone");
 
     // test loot item
     uint256[] memory equipmentIds = new uint256[](1);
-    equipmentIds[0] = 1;
+    equipmentIds[0] = 4;
     uint256[] memory itemIds = new uint256[](1);
     uint32[] memory itemAmounts = new uint32[](1);
     itemIds[0] = 2;
@@ -543,16 +554,16 @@ contract PvPSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
     uint32 tileItemAmount = TileInventory.getItemOtherItemAmounts(21, -32, 0);
     assertEq(tileItemAmount, 90);
     tileEquipmentIds = TileInventory.getEquipmentIds(21, -32);
-    assertEq(tileEquipmentIds.length, 0);
+    assertEq(tileEquipmentIds.length, 1);
 
-    console2.log("has equipment", InventoryEquipmentUtils.hasEquipment(characterId_1, 1));
-    console2.log("has equipment", InventoryEquipmentUtils.hasEquipment(characterId_2, 1));
-    console2.log("char id", Equipment.getCharacterId(1));
-    assertEq(Equipment.getCharacterId(1), characterId_2);
+    console2.log("has equipment", InventoryEquipmentUtils.hasEquipment(characterId_1, 4));
+    console2.log("has equipment", InventoryEquipmentUtils.hasEquipment(characterId_2, 4));
+    console2.log("char id", Equipment.getCharacterId(4));
+    assertEq(Equipment.getCharacterId(4), characterId_2);
 
     uint32 newWeightChar2 = CharCurrentStats.getWeight(characterId_2);
     console2.log("new weight char 2 in black zone", newWeightChar2);
-    assertEq(newWeightChar2, weightChar2 + 5 + 10); // 5 for equipped weapon + 10 items (weight 1 each)
+    assertEq(newWeightChar2, weightChar2 + 11 + 10); // 11 for equipped weapon + 10 items (weight 1 each)
 
     // uint256[] memory equipmentIds = new uint256[](1);
     // equipmentIds[0] = 1;

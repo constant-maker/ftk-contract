@@ -25,6 +25,16 @@ library CharacterEquipmentUtils {
     unequipEquipmentById(characterId, slotType, currentEquipmentId);
   }
 
+  /// @dev get all equipped equipment
+  function getAllEquippedEquipment(uint256 characterId) internal view returns (uint256[] memory) {
+    uint256[] memory equipmentIds = new uint256[](uint8(SlotType.Mount) + 1);
+    for (uint8 i = 0; i <= uint8(SlotType.Mount); i++) {
+      SlotType slotType = SlotType(i);
+      equipmentIds[i] = CharEquipment.get(characterId, slotType);
+    }
+    return equipmentIds;
+  }
+
   /// @dev unequip equipment by id
   function unequipEquipmentById(uint256 characterId, SlotType slotType, uint256 currentEquipmentId) internal {
     // move current equipment back to inventory

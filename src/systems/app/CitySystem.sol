@@ -94,6 +94,7 @@ contract CitySystem is System, CharacterAccessControl {
     public
     onlyAuthorizedWallet(characterId)
     mustInState(characterId, CharacterStateType.Standby)
+    validateCurrentWeight(characterId)
   {
     _validateCity(characterId, fromCityId, 3);
     _validateCity(characterId, toCityId, 3);
