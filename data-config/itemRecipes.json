@@ -4145,11 +4145,19 @@
       "ingredients": [
         {
           "id": 353,
-          "amount": 2
+          "amount": 1
         },
         {
           "id": 354,
-          "amount": 2
+          "amount": 1
+        },
+        {
+          "id": 67,
+          "amount": 1
+        },
+        {
+          "id": 68,
+          "amount": 1
         },
         {
           "id": 90,
@@ -4189,11 +4197,19 @@
       "ingredients": [
         {
           "id": 352,
-          "amount": 2
+          "amount": 1
         },
         {
           "id": 353,
-          "amount": 2
+          "amount": 1
+        },
+        {
+          "id": 69,
+          "amount": 1
+        },
+        {
+          "id": 68,
+          "amount": 1
         },
         {
           "id": 82,
@@ -4229,11 +4245,19 @@
       "ingredients": [
         {
           "id": 355,
-          "amount": 2
+          "amount": 1
         },
         {
           "id": 354,
-          "amount": 2
+          "amount": 1
+        },
+        {
+          "id": 67,
+          "amount": 1
+        },
+        {
+          "id": 69,
+          "amount": 1
         },
         {
           "id": 114,
@@ -4268,7 +4292,7 @@
       ],
       "ingredients": [
         {
-          "id": 355,
+          "id": 68,
           "amount": 1
         },
         {
@@ -4312,7 +4336,7 @@
           "amount": 1
         },
         {
-          "id": 354,
+          "id": 68,
           "amount": 1
         },
         {
@@ -4352,7 +4376,7 @@
           "amount": 1
         },
         {
-          "id": 352,
+          "id": 69,
           "amount": 1
         },
         {
