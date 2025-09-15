@@ -9,12 +9,12 @@ library Config {
   uint8 public constant AMOUNT_RECEIVE_FROM_FARMING = 5;
   uint8 public constant DEFAULT_MARKET_FEE = 5; // 5%
 
-  uint16 public constant DEFAULT_MOVEMENT_DURATION = 10;
+  uint16 public constant DEFAULT_MOVEMENT_DURATION = 8; // seconds
   uint16 public constant DEFAULT_PLAYER_ACTION_DURATION = 10;
   uint16 public constant MAX_LEVEL = 99;
   uint16 public constant MAX_BASE_STAT = 130;
   uint16 public constant ADVANTAGE_TYPE_DAMAGE_MODIFIER = 15; // 15%
-  uint16 public constant ATTACK_COOLDOWN = 3; // seconds
+  uint16 public constant ATTACK_COOLDOWN = 2; // seconds
   uint16 public constant PVE_ATTACK_COOLDOWN = 10; // seconds
   uint16 public constant CHALLENGE_COOLDOWN = 10;
   uint16 public constant PROTECTION_DURATION = 0;
