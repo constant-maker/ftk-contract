@@ -66,6 +66,7 @@ contract PvESystem is System, CharacterAccessControl {
     public
     onlyAuthorizedWallet(characterId)
     validateCurrentWeight(characterId)
+    mustInState(characterId, CharacterStateType.Standby)
   {
     // check whether character is ready to battle
     BattlePvEUtils.checkIsReadyToBattlePvE(characterId);
