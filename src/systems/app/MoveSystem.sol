@@ -3,18 +3,9 @@ pragma solidity >=0.8.24;
 import { System } from "@latticexyz/world/src/System.sol";
 import { CharacterAccessControl } from "@abstracts/CharacterAccessControl.sol";
 import {
-  CharPosition,
-  CharPositionData,
-  CharNextPosition,
-  CharNextPositionData,
-  CharPositionV2,
-  CharPositionV2Data,
-  TileInfo3,
-  MonsterLocation,
-  CharStats
+  CharPosition, CharPositionData, CharNextPosition, CharPositionV2, CharPositionV2Data
 } from "@codegen/index.sol";
 import { MoveSystemUtils } from "@utils/MoveSystemUtils.sol";
-import { CharacterStateUtils } from "@utils/CharacterStateUtils.sol";
 import { DailyQuestUtils } from "@utils/DailyQuestUtils.sol";
 import { CharacterStateType } from "@codegen/common.sol";
 import { CharacterPositionUtils } from "@utils/CharacterPositionUtils.sol";

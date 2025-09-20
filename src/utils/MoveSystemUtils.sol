@@ -7,6 +7,7 @@ import { CharInfo } from "@codegen/tables/CharInfo.sol";
 import { CharPositionData } from "@codegen/tables/CharPosition.sol";
 import { MapUtils } from "./MapUtils.sol";
 import { CharacterPositionUtils } from "./CharacterPositionUtils.sol";
+import { CharacterBuffUtils } from "./CharacterBuffUtils.sol";
 
 library MoveSystemUtils {
   /// @dev Get character movement speed that not exceeds max movement speed and at minimum of 1
@@ -17,7 +18,7 @@ library MoveSystemUtils {
     if (characterMovementSpeed > maxMovementSpeed) {
       characterMovementSpeed = maxMovementSpeed;
     } else if (characterMovementSpeed == 0) {
-      characterMovementSpeed = 1;
+      characterMovementSpeed = 1; // failsafe to minimum 1
     }
 
     return characterMovementSpeed;
@@ -26,11 +27,26 @@ library MoveSystemUtils {
   /// @dev Get character movement duration, character movement speed should not exceed base duration
   function getMovementDuration(uint256 characterId) internal view returns (uint16) {
     uint16 baseDuration = MovementConfig.getDuration();
+    // characterMovementSpeed is the speed reduction value
     uint16 characterMovementSpeed = (getCharacterMovementSpeed(characterId) - 1);
     CharPositionData memory characterPosition = CharacterPositionUtils.currentPosition(characterId);
     uint8 tileKingdomId = TileInfo3.getKingdomId(characterPosition.x, characterPosition.y);
     if (tileKingdomId != 0 && tileKingdomId == CharInfo.getKingdomId(characterId)) {
       characterMovementSpeed += 2; // bonus speed
+    }
+
+    int16 speedBuff = CharacterBuffUtils.getBuffSpeed(characterId);
+    if (speedBuff != 0) {
+      if (speedBuff > 0) {
+        characterMovementSpeed += uint16(speedBuff);
+      } else {
+        uint16 absSpeedBuff = uint16(-speedBuff);
+        if (characterMovementSpeed > absSpeedBuff) {
+          characterMovementSpeed -= absSpeedBuff;
+        } else {
+          characterMovementSpeed = 0;
+        }
+      }
     }
 
     // extra check to make sure if the baseDuration is configured too small so that character movement speed could >

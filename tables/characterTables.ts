@@ -255,6 +255,17 @@ const CHARACTER_TABLES: any = {
     },
     key: ['characterId'],
   },
+  // This table is used to store experience amplification settings for each character
+  CharExpAmp: {
+    schema: {
+      characterId: "uint256", // these values are percentages, e.g., 20 means gain 20% more exp
+      farmingPerkAmp: "uint16",
+      pveExpAmp: "uint16",
+      pvePerkAmp: "uint16",
+      expireTime: "uint256",
+    },
+    key: ['characterId'],
+  },
 };
 
 export default CHARACTER_TABLES;

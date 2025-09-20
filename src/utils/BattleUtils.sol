@@ -16,6 +16,7 @@ import {
 import { AdvantageType, SlotType, EffectType } from "@codegen/common.sol";
 import { Config } from "@common/index.sol";
 import { CharacterEquipmentUtils } from "./CharacterEquipmentUtils.sol";
+import { CharacterBuffUtils } from "./CharacterBuffUtils.sol";
 
 struct BattleInfo {
   uint256 id;
@@ -33,6 +34,13 @@ library BattleUtils {
   /// @dev Return list of valid skills based on character SP.
   function getCharacterSkillIds(uint256 characterId) public view returns (uint256[5] memory skillIds) {
     uint8 characterSp = CharStats.getSp(characterId);
+    int8 buffSp = CharacterBuffUtils.getBuffSp(characterId);
+    if (buffSp < 0) {
+      uint8 absBuff = uint8(-buffSp);
+      characterSp = characterSp > absBuff ? characterSp - absBuff : 0;
+    } else {
+      characterSp += uint8(buffSp);
+    }
     uint256[5] memory characterSkillIds = CharSkill.getSkillIds(characterId);
 
     return reBuildSkills(characterSkillIds, characterSp);
@@ -71,14 +79,20 @@ library BattleUtils {
     view
     returns (BattleInfo memory characterBattleInfo)
   {
+    (int16 buffAtk, int16 buffDef, int16 buffAgi) = CharacterBuffUtils.getBuffStats(characterId);
     CharCurrentStatsData memory characterCurrentStats = CharCurrentStats.get(characterId);
+    // debuff always < 100%
+    // so it will not decrease atk def agi below 0, so we can safely cast to uint16
+    uint16 finalAtk = getFinalStat(characterCurrentStats.atk, buffAtk);
+    uint16 finalDef = getFinalStat(characterCurrentStats.def, buffDef);
+    uint16 finalAgi = getFinalStat(characterCurrentStats.agi, buffAgi);
     characterBattleInfo = BattleInfo({
       id: characterId,
       barrier: CharCStats2.getBarrier(characterId),
       hp: characterHp,
-      agi: characterCurrentStats.agi,
-      atk: characterCurrentStats.atk,
-      def: characterCurrentStats.def,
+      atk: finalAtk,
+      def: finalDef,
+      agi: finalAgi,
       level: CharStats.getLevel(characterId),
       skillIds: characterSkills,
       advantageType: CharacterEquipmentUtils.getCharacterAdvantageType(characterId)
@@ -249,5 +263,14 @@ library BattleUtils {
       equipmentIds[i] = CharEquipment.getEquipmentId(characterId, SlotType(i));
     }
     return equipmentIds;
+  }
+
+  function getFinalStat(uint16 baseStat, int16 buffStat) public pure returns (uint16) {
+    if (buffStat < 0) {
+      uint16 absBuff = uint16(-buffStat);
+      return baseStat > absBuff ? baseStat - absBuff : 0;
+    } else {
+      return baseStat + uint16(buffStat);
+    }
   }
 }

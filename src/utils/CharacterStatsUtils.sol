@@ -2,7 +2,6 @@ pragma solidity >=0.8.24;
 
 import {
   CharStats,
-  CharStatsData,
   CharCurrentStats,
   CharCurrentStatsData,
   CharCStats2,

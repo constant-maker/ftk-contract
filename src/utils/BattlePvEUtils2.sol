@@ -10,6 +10,8 @@ import {
   CharGrindSlot,
   ExpAmpConfig,
   ExpAmpConfigData,
+  CharExpAmp,
+  CharExpAmpData,
   PvEAfk,
   PvEAfkData,
   PvEAfkLoc,
@@ -83,10 +85,22 @@ library BattlePvEUtils2 {
 
   function updateCharacterExp(uint256 characterId, uint32 gainedExp, uint32 gainedPerkExp) public {
     ExpAmpConfigData memory expAmpConfig = ExpAmpConfig.get();
+    uint32 baseExpPercent = 100;
+    uint32 basePerkExpPercent = 100;
+    // apply global exp amp
     if (block.timestamp <= expAmpConfig.expireTime) {
-      gainedExp = (gainedExp * expAmpConfig.pveExpAmp) / 100;
-      gainedPerkExp = (gainedPerkExp * expAmpConfig.pvePerkAmp) / 100;
+      baseExpPercent += expAmpConfig.pveExpAmp;
+      basePerkExpPercent += expAmpConfig.pvePerkAmp;
     }
+    // apply character exp amp
+    CharExpAmpData memory charExpAmp = CharExpAmp.get(characterId);
+    if (block.timestamp <= charExpAmp.expireTime) {
+      baseExpPercent += charExpAmp.pveExpAmp;
+      basePerkExpPercent += charExpAmp.pvePerkAmp;
+    }
+    // calculate final exp and perk exp after applying all amps
+    gainedExp = (gainedExp * baseExpPercent) / 100;
+    gainedPerkExp = (gainedPerkExp * basePerkExpPercent) / 100;
     // update character exp and perk exp
     CharCurrentStats.setExp(characterId, CharCurrentStats.getExp(characterId) + gainedExp);
     SlotType grindSlot = CharGrindSlot.get(characterId);

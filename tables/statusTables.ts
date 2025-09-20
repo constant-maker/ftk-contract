@@ -1,42 +1,19 @@
-import exp from "constants";
-
 const STATUS_TABLES: any = {
-  CharDebuff: {
+  CharDebuff: { // deprecated, use CharBuff instead
     schema: {
       characterId: "uint256",
       debuffIds: "uint256[2]",
-      expiredTimes: "uint256[2]",
+      expireTimes: "uint256[2]",
     },
     key: ['characterId'],
   },
-  Buff: {
+  CharBuff: {
     schema: {
-      id: "uint256",
-      buffType: "BuffType",
+      characterId: "uint256",
+      buffIds: "uint256[2]", // buff item ids
+      expireTimes: "uint256[2]",
     },
-    key: ['id'],
-  },
-  StatBuff: {
-    schema: {
-      id: "uint256",
-      atk: "uint8", // percent, reduce the attack
-      def: "uint8", // percent, reduce the defense
-      agi: "uint8", // percent, reduce the agility
-      movement: "uint16", // additional time to move (seconds)
-      isGained: "bool",
-      duration: "uint32", // duration in seconds
-    },
-    key: ['id'],
-  },
-  ExpBuff: {
-    schema: {
-      id: "uint256",
-      farmingPerkAmp: "uint16",
-      pveExpAmp: "uint16", // these values are percentages, e.g., 200 means 2x
-      pvePerkAmp: "uint16",
-      duration: "uint32", // duration in seconds
-    },
-    key: ['id'],
+    key: ['characterId'],
   },
 }
 

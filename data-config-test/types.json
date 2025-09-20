@@ -43,9 +43,11 @@
     "PlateFootwear": 21,
     "Mount": 22,
     "Resource": 23,
-    "MapSkillItem": 24,
+    "SkillItem": 24,
     "HealingItem": 25,
-    "StatModifierItem": 26
+    "StatModifierItem": 26,
+    "Card": 27,
+    "BuffItem": 28
   },
   "itemCategoryTypes": {
     "Tool": 0,
@@ -85,5 +87,10 @@
     "Green": 1,
     "Blue": 2,
     "Grey": 3
+  },
+  "buffTypes": {
+    "None": 0,
+    "StatsModify": 1,
+    "ExpAmplify": 2
   }
 }

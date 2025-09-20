@@ -25,6 +25,38 @@ type Item struct {
 	EquipmentInfo *EquipmentInfo `json:"equipmentInfo,omitempty"`
 	HealingInfo   *HealingInfo   `json:"healingInfo,omitempty"`
 	CardInfo      *CardInfo      `json:"cardInfo,omitempty"`
+	SkillInfo     *SkillItemInfo `json:"skillInfo,omitempty"`
+	BuffInfo      *BuffItemInfo  `json:"buffInfo,omitempty"`
+	ExpAmplify    *ExpAmplify    `json:"expAmplify,omitempty"`
+	StatsModify   *StatsModify   `json:"statsModify,omitempty"`
+}
+
+type BuffItemInfo struct {
+	Type     int  `json:"type"`
+	Range    uint `json:"range"`
+	Duration int  `json:"duration"` // seconds
+}
+
+type ExpAmplify struct {
+	FarmingPerkAmp int `json:"farmingPerkAmp"` // percent, e.g. 120 means +20%
+	PveExpAmp      int `json:"pveExpAmp"`      // percent, e.g. 120 means +20%
+	PvePerkAmp     int `json:"pvePerkAmp"`     // percent, e.g. 120 means +20%
+}
+
+type StatsModify struct {
+	AtkPercent int  `json:"atkPercent"`
+	DefPercent int  `json:"defPercent"`
+	AgiPercent int  `json:"agiPercent"`
+	Ms         int8 `json:"ms"`       // flat value
+	Sp         int8 `json:"sp"`       // flat value
+	IsGained   bool `json:"isGained"` // true means the stats is gained, false means the stats is reduced
+}
+
+type SkillItemInfo struct {
+	Dmg       int  `json:"dmg"` // percent
+	NumTarget int  `json:"numTarget"`
+	Range     uint `json:"range"`    // range
+	IsAbsDmg  bool `json:"isAbsDmg"` // true means absolute damage, false means percentage damage
 }
 
 type CardInfo struct {

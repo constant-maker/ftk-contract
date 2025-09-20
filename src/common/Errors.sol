@@ -191,8 +191,14 @@ library Errors {
   /* -------------------------------------------------------------------------- */
   error ConsumeSystem_ItemAmountIsZero(uint256 characterId, uint256 itemId);
   error ConsumeSystem_MustBeBerry(uint256 characterId, uint256 itemId);
-  error ConsumeSystem_ItemIsNotConsumable(uint256 characterId, uint256 itemId);
+  error ConsumeSystem_ItemIsNotConsumable(uint256 itemId);
   error ConsumeSystem_Overflow(uint256 characterId, uint256 gainedHp);
+  error ConsumeSystem_BuffItemAmountMustBeOne(uint256 characterId, uint256 itemId, uint32 amount);
+  error ConsumeSystem_OutOfRange(int32 charX, int32 charY, int32 targetX, int32 targetY, uint256 itemId);
+  error ConsumeSystem_ItemIsNotSkillItem(uint256 itemId);
+  error ConsumeSystem_TargetNotInPosition(uint256 targetPlayer, int32 targetX, int32 targetY);
+  error ConsumeSystem_TooManyTargets(uint256 targetPlayer, uint16 allowedNumTarget);
+  error ConsumeSystem_CannotTargetRestrictLocation();
 
   /* -------------------------------------------------------------------------- */
   /*                               StorageSystem                                */
