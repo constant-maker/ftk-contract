@@ -89,10 +89,11 @@ contract ConsumeSystem is System, CharacterAccessControl {
     if (itemType != ItemType.SkillItem) {
       revert Errors.ConsumeSystem_ItemIsNotSkillItem(itemId);
     }
-    SkillItemInfoData memory skillItemInfo = SkillItemInfo.get(itemId);
-    if (skillItemInfo.numTarget < targetPlayers.length) {
-      revert Errors.ConsumeSystem_TooManyTargets(itemId, skillItemInfo.numTarget);
+    if (targetPlayers.length == 0) {
+      return;
     }
+    SkillItemInfoData memory skillItemInfo = SkillItemInfo.get(itemId);
+    _validateTargetPlayers(targetPlayers, skillItemInfo.numTarget);
     CharPositionData memory charPosition = CharacterPositionUtils.currentPosition(characterId);
     uint32 rangeX = _getAbsValue(charPosition.x - x);
     uint32 rangeY = _getAbsValue(charPosition.y - y);
@@ -139,6 +140,21 @@ contract ConsumeSystem is System, CharacterAccessControl {
     uint16 charAtk = CharCurrentStats.getAtk(characterId);
     uint32 calcDmg = (uint32(charAtk) * itemDmg) / 100;
     return calcDmg;
+  }
+
+  /// @dev validate that targetPlayers has no duplicates
+  function _validateTargetPlayers(uint256[] calldata targetPlayers, uint8 numTarget) private pure {
+    if (numTarget < targetPlayers.length) {
+      revert Errors.ConsumeSystem_TooManyTargets(targetPlayers.length, numTarget);
+    }
+    uint256 len = targetPlayers.length;
+    for (uint256 i = 0; i < len; i++) {
+      for (uint256 j = i + 1; j < len; j++) {
+        if (targetPlayers[i] == targetPlayers[j]) {
+          revert Errors.ConsumeSystem_DuplicateTarget();
+        }
+      }
+    }
   }
 
   function _healing(uint256 characterId, uint256 itemId, uint32 amount) private {

@@ -197,8 +197,9 @@ library Errors {
   error ConsumeSystem_OutOfRange(int32 charX, int32 charY, int32 targetX, int32 targetY, uint256 itemId);
   error ConsumeSystem_ItemIsNotSkillItem(uint256 itemId);
   error ConsumeSystem_TargetNotInPosition(uint256 targetPlayer, int32 targetX, int32 targetY);
-  error ConsumeSystem_TooManyTargets(uint256 targetPlayer, uint16 allowedNumTarget);
+  error ConsumeSystem_TooManyTargets(uint256 numInput, uint8 allowedNumTarget);
   error ConsumeSystem_CannotTargetRestrictLocation();
+  error ConsumeSystem_DuplicateTarget();
 
   /* -------------------------------------------------------------------------- */
   /*                               StorageSystem                                */

@@ -17,7 +17,7 @@ import {
   RestrictLocV2,
   CharPositionData
 } from "@codegen/index.sol";
-import { BuffType} from "@codegen/common.sol";
+import { BuffType } from "@codegen/common.sol";
 import { WorldFixture, SpawnSystemFixture } from "@fixtures/index.sol";
 import { WelcomeSystemFixture } from "@fixtures/WelcomeSystemFixture.sol";
 import { InventoryItemUtils } from "@utils/InventoryItemUtils.sol";

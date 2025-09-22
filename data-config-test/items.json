@@ -5503,7 +5503,7 @@
         "atkPercent": 10,
         "defPercent": 0,
         "agiPercent": 20,
-        "ms": 1,
+        "ms": 5,
         "sp": 1,
         "isGained": true
       }
@@ -5525,7 +5525,7 @@
         "atkPercent": 10,
         "defPercent": 0,
         "agiPercent": 20,
-        "ms": 0,
+        "ms": 3,
         "sp": 0,
         "isGained": false
       }
