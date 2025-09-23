@@ -251,6 +251,7 @@ library Errors {
   error TileSystem_NoItemInThisTile(int32 x, int32 y, uint256 lastDropTime);
   error TileSystem_TileAlreadyOccupied(int32 x, int32 y);
   error TileSystem_TileIsNotReadyToOccupy(int32 x, int32 y, uint256 arrivalTime);
+  error TileSystem_CannotOccupyThisTile(int32 x, int32 y);
 
   /* -------------------------------------------------------------------------- */
   /*                               RebornSystem                                 */
@@ -304,6 +305,10 @@ library Errors {
   error KingSystem_RoleLimitReached(RoleType roleType, uint32 maxLimit);
   error KingSystem_CannotSetRoleForKing();
   error KingSystem_InsufficientLevelForRole(uint256 characterId, uint16 level, RoleType roleType);
+  error KingSystem_CannotMoveCapitalCity();
+  error KingSystem_CityNotInYourKingdom(uint256 cityId, uint8 kingdomId);
+  error KingSystem_CityMoveOnCooldown(uint256 cityId);
+  error KingSystem_InsufficientCityGold(uint256 cityId, uint32 requiredGold);
 
   /* -------------------------------------------------------------------------- */
   /*                               VaultSystem                                  */

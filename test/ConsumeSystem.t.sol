@@ -144,7 +144,7 @@ contract ConsumeSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFix
     assertEq(buffStatData.atkPercent, 10);
     assertEq(buffStatData.defPercent, 0);
     assertEq(buffStatData.agiPercent, 20);
-    assertEq(buffStatData.ms, 1);
+    assertEq(buffStatData.ms, 5);
     assertEq(buffStatData.sp, 1);
     assertTrue(buffStatData.isGained);
   }

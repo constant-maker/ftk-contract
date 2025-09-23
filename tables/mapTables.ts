@@ -79,6 +79,14 @@ const MAP_TABLES: any = {
     },
     key: ['kingdomA', 'kingdomB'],
   },
+  NonOccupyTile: {
+    schema: {
+      x: "int32",
+      y: "int32",
+      value: "bool",
+    },
+    key: ['x', 'y'],
+  },
 };
 
 export default MAP_TABLES;

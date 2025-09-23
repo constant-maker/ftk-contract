@@ -12,7 +12,8 @@ import {
   CharPositionData,
   CharInfo,
   CharStats2,
-  KingSetting
+  KingSetting,
+  NonOccupyTile
 } from "@codegen/index.sol";
 import { ZoneType } from "@codegen/common.sol";
 import {
@@ -44,6 +45,9 @@ contract TileSystem is System, CharacterAccessControl {
     CharPositionData memory position = CharacterPositionUtils.currentPosition(characterId);
     int32 x = position.x;
     int32 y = position.y;
+    if (NonOccupyTile.get(x, y)) {
+      revert Errors.TileSystem_CannotOccupyThisTile(x, y);
+    }
     uint256 occupiedTime = TileInfo3.getOccupiedTime(x, y);
     ZoneType zoneType = TileInfo3.getZoneType(x, y);
     uint32 tileLockedDuration = TILE_LOCKED_DURATION;

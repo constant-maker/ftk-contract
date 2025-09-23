@@ -4,12 +4,17 @@ import { Vm } from "forge-std/Vm.sol";
 import { WorldFixture } from "@fixtures/WorldFixture.sol";
 import { SpawnSystemFixture } from "@fixtures/SpawnSystemFixture.sol";
 import { MoveSystemFixture } from "@fixtures/MoveSystemFixture.sol";
-import { TileInfo3, TileInfo3Data } from "@codegen/tables/TileInfo3.sol";
-import { CharPosition, CharPositionData } from "@codegen/tables/CharPosition.sol";
-import { CharInfo } from "@codegen/tables/CharInfo.sol";
-import { CharFund } from "@codegen/tables/CharFund.sol";
-import { CharStats2 } from "@codegen/tables/CharStats2.sol";
-import { CharOtherItem } from "@codegen/tables/CharOtherItem.sol";
+import {
+  NonOccupyTile,
+  CharOtherItem,
+  CharStats2,
+  CharFund,
+  CharInfo,
+  CharPosition,
+  CharPositionData,
+  TileInfo3,
+  TileInfo3Data
+} from "@codegen/index.sol";
 import { CharacterAccessControl } from "@abstracts/CharacterAccessControl.sol";
 import { CharacterPositionUtils } from "@utils/CharacterPositionUtils.sol";
 import { CharacterFundUtils } from "@utils/CharacterFundUtils.sol";
@@ -46,6 +51,8 @@ contract TileSystemTest is WorldFixture, SpawnSystemFixture, MoveSystemFixture {
     vm.warp(block.timestamp + 100_000);
     _goUp(player, characterId);
 
+    CharPositionData memory charPosition = CharacterPositionUtils.currentPosition(characterId);
+
     vm.startPrank(worldDeployer);
     InventoryItemUtils.addItem(characterId, woodTier1_Id, 20);
     InventoryItemUtils.addItem(characterId, stoneTier1_Id, 20);
@@ -56,11 +63,21 @@ contract TileSystemTest is WorldFixture, SpawnSystemFixture, MoveSystemFixture {
     InventoryItemUtils.addItem(characterId, berriesTier1_Id, 30);
 
     CharFund.setGold(characterId, 20);
-    vm.stopPrank();
 
+    NonOccupyTile.set(charPosition.x, charPosition.y, true);
+    vm.stopPrank();
+    vm.expectRevert(); // tile is not occupiable
     vm.startPrank(player);
     world.app__occupyTile(characterId);
     vm.stopPrank();
+
+    vm.startPrank(worldDeployer);
+    NonOccupyTile.set(charPosition.x, charPosition.y, false);
+    vm.stopPrank();
+    vm.startPrank(player);
+    world.app__occupyTile(characterId);
+    vm.stopPrank();
+
     assertEq(CharOtherItem.getAmount(characterId, oreTier1_Id), 20);
     assertEq(CharOtherItem.getAmount(characterId, wheatTier1_Id), 20);
     assertEq(CharOtherItem.getAmount(characterId, berriesTier1_Id), 20);
@@ -74,7 +91,7 @@ contract TileSystemTest is WorldFixture, SpawnSystemFixture, MoveSystemFixture {
     assertEq(CharOtherItem.getAmount(characterId, stoneTier1_Id), 10);
     assertEq(CharOtherItem.getAmount(characterId, fishTier1_Id), 10);
     assertEq(CharFund.getGold(characterId), 10);
-    CharPositionData memory charPosition = CharacterPositionUtils.currentPosition(characterId);
+    charPosition = CharacterPositionUtils.currentPosition(characterId);
     console2.log("position x", charPosition.x);
     console2.log("position y", charPosition.y);
 

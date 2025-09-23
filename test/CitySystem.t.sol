@@ -32,7 +32,8 @@ import {
   CharPosition,
   CharPositionData,
   CharNextPosition,
-  CharNextPositionData
+  CharNextPositionData,
+  CityMoveHistory
 } from "@codegen/index.sol";
 import { RoleType } from "@codegen/common.sol";
 import { CharacterPositionUtils, InventoryItemUtils } from "@utils/index.sol";
@@ -71,6 +72,7 @@ contract CitySystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixtur
   }
 
   function test_CitySystem() external {
+    vm.warp(10_000_000);
     // test revert set city place
     vm.expectRevert(); // must be in city
     vm.startPrank(candidate);
@@ -199,6 +201,7 @@ contract CitySystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixtur
     CharacterPositionUtils.moveToLocation(voterId, newCityX, newCityY);
     CharStats2.setFame(voterId, 1050);
     City.setLevel(cityId, 3);
+    TileInfo3.setKingdomId(newCityX, newCityY + 5, CharInfo.getKingdomId(candidateId));
     vm.stopPrank();
     vm.startPrank(voter);
     world.app__contributeItemToCity(voterId, newCityId, resourceIds, withdrawAmounts, 100_000);
@@ -208,6 +211,35 @@ contract CitySystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixtur
     assertEq(history.itemIds[0], 1);
     assertEq(history.amounts[0], 300);
     assertEq(history.gold, 100_000);
+
+    console2.log("move city");
+    vm.startPrank(candidate);
+    world.app__moveCity(candidateId, newCityX, newCityY + 5, newCityId);
+    vm.stopPrank();
+
+    console2.log("move city back old place");
+    vm.startPrank(worldDeployer);
+    CharacterPositionUtils.moveToLocation(candidateId, newCityX, newCityY + 5);
+    vm.stopPrank();
+
+    vm.expectRevert(); // must wait for cooldown
+    vm.startPrank(candidate);
+    world.app__moveCity(candidateId, newCityX, newCityY, newCityId);
+    vm.stopPrank();
+
+    vm.startPrank(worldDeployer);
+    CityMoveHistory.deleteRecord(newCityId);
+    vm.stopPrank();
+
+    vm.startPrank(candidate);
+    world.app__moveCity(candidateId, newCityX, newCityY, newCityId);
+    vm.stopPrank();
+
+    vm.startPrank(worldDeployer);
+    CharacterPositionUtils.moveToLocation(candidateId, newCityX, newCityY);
+    vm.stopPrank();
+
+    assertEq(CityVault2.getGold(newCityId), 96_000);
 
     console2.log("upgrade city to level 1");
     vm.startPrank(candidate);
