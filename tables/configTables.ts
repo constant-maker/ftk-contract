@@ -34,8 +34,8 @@ const CONFIG_TABLES: any = {
   // Usually for special occasions
   ExpAmpConfig: {
     schema: {
-      farmingPerkAmp: "uint16",
-      pveExpAmp: "uint16", // these values are percentages, e.g., 200 means 2x
+      farmingPerkAmp: "uint16", // these values are percentages, e.g., 20 means gain 20% more exp
+      pveExpAmp: "uint16",
       pvePerkAmp: "uint16",
       expireTime: "uint256",
     },

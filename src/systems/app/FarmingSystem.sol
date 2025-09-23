@@ -1,15 +1,7 @@
 pragma solidity >=0.8.24;
 
 import { System } from "@latticexyz/world/src/System.sol";
-import {
-  CharPositionData,
-  CharState,
-  Item,
-  ItemData,
-  CharFarmingState,
-  CharFarmingStateData,
-  ResourceInfo
-} from "@codegen/index.sol";
+import { CharPositionData, CharState, Item, ItemData, CharFarmingState, CharFarmingStateData } from "@codegen/index.sol";
 import {
   CharacterStateUtils,
   CharacterStatsUtils,
@@ -82,7 +74,7 @@ contract FarmingSystem is CharacterAccessControl, System {
 
     // update character perk
     CharacterPerkUtils.updateCharacterPerkExp(
-      characterId, characterFarmingState.itemType, FarmingUtils.calculateResourcePerkExp(resourceItemId)
+      characterId, characterFarmingState.itemType, FarmingUtils.calculateResourcePerkExp(characterId, resourceItemId)
     );
 
     // check and update daily quest

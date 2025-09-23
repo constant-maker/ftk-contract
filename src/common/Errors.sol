@@ -191,8 +191,15 @@ library Errors {
   /* -------------------------------------------------------------------------- */
   error ConsumeSystem_ItemAmountIsZero(uint256 characterId, uint256 itemId);
   error ConsumeSystem_MustBeBerry(uint256 characterId, uint256 itemId);
-  error ConsumeSystem_ItemIsNotConsumable(uint256 characterId, uint256 itemId);
+  error ConsumeSystem_ItemIsNotConsumable(uint256 itemId);
   error ConsumeSystem_Overflow(uint256 characterId, uint256 gainedHp);
+  error ConsumeSystem_BuffItemAmountMustBeOne(uint256 characterId, uint256 itemId, uint32 amount);
+  error ConsumeSystem_OutOfRange(int32 charX, int32 charY, int32 targetX, int32 targetY, uint256 itemId);
+  error ConsumeSystem_ItemIsNotSkillItem(uint256 itemId);
+  error ConsumeSystem_TargetNotInPosition(uint256 targetPlayer, int32 targetX, int32 targetY);
+  error ConsumeSystem_TooManyTargets(uint256 numInput, uint8 allowedNumTarget);
+  error ConsumeSystem_CannotTargetRestrictLocation();
+  error ConsumeSystem_DuplicateTarget();
 
   /* -------------------------------------------------------------------------- */
   /*                               StorageSystem                                */
@@ -244,6 +251,7 @@ library Errors {
   error TileSystem_NoItemInThisTile(int32 x, int32 y, uint256 lastDropTime);
   error TileSystem_TileAlreadyOccupied(int32 x, int32 y);
   error TileSystem_TileIsNotReadyToOccupy(int32 x, int32 y, uint256 arrivalTime);
+  error TileSystem_CannotOccupyThisTile(int32 x, int32 y);
 
   /* -------------------------------------------------------------------------- */
   /*                               RebornSystem                                 */
@@ -297,6 +305,10 @@ library Errors {
   error KingSystem_RoleLimitReached(RoleType roleType, uint32 maxLimit);
   error KingSystem_CannotSetRoleForKing();
   error KingSystem_InsufficientLevelForRole(uint256 characterId, uint16 level, RoleType roleType);
+  error KingSystem_CannotMoveCapitalCity();
+  error KingSystem_CityNotInYourKingdom(uint256 cityId, uint8 kingdomId);
+  error KingSystem_CityMoveOnCooldown(uint256 cityId);
+  error KingSystem_InsufficientCityGold(uint256 cityId, uint32 requiredGold);
 
   /* -------------------------------------------------------------------------- */
   /*                               VaultSystem                                  */

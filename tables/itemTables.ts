@@ -52,6 +52,47 @@ const ITEM_TABLES: any = {
     },
     key: ['itemId'],
   },
+  SkillItemInfo: {
+    schema: {
+      itemId: "uint256",
+      dmg: "uint32",
+      range: "uint16",
+      numTarget: "uint8",
+      isAbsDmg: "bool",
+    },
+    key: ['itemId'],
+  },
+  BuffItemInfo: {
+    schema: {
+      itemId: "uint256",
+      range: "uint16", // range to cast
+      duration: "uint32", // in seconds
+      numTarget: "uint8",
+      buffType: "BuffType",
+    },
+    key: ['itemId'],
+  },
+  BuffStat: {
+    schema: {
+      itemId: "uint256",
+      atkPercent: "uint16", 
+      defPercent: "uint16", 
+      agiPercent: "uint16",
+      sp: "uint8", // flat, modify the max sp
+      ms: "uint8", // flat, modify the movement speed
+      isGained: "bool",
+    },
+    key: ['itemId'],
+  },
+  BuffExp: {
+    schema: {
+      itemId: "uint256",
+      farmingPerkAmp: "uint16", // these values are percentages, e.g., 200 means 2x
+      pveExpAmp: "uint16",
+      pvePerkAmp: "uint16",
+    },
+    key: ['itemId'],
+  },
   Tool: {
     schema: {
       id: "uint256",

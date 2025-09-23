@@ -31,7 +31,11 @@ import { EntityType, SlotType, ItemType, ZoneType } from "@codegen/common.sol";
 import { Errors } from "@common/Errors.sol";
 import { Config } from "@common/Config.sol";
 import {
-  CharacterPositionUtils, InventoryItemUtils, InventoryEquipmentUtils, CharAchievementUtils, CharacterItemUtils
+  CharacterPositionUtils,
+  InventoryItemUtils,
+  InventoryEquipmentUtils,
+  CharAchievementUtils,
+  CharacterItemUtils
 } from "@utils/index.sol";
 import { CharStats2 } from "@codegen/tables/CharStats2.sol";
 import { LootItems } from "@systems/app/TileSystem.sol";

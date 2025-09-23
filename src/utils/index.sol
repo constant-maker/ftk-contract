@@ -35,3 +35,4 @@ import { BattleUtils2 } from "./BattleUtils2.sol";
 import { BattlePvEUtils } from "./BattlePvEUtils.sol";
 import { BattlePvEUtils2 } from "./BattlePvEUtils2.sol";
 import { CharacterRoleUtils } from "./CharacterRoleUtils.sol";
+import { KingSystemUtils } from "./KingSystemUtils.sol";

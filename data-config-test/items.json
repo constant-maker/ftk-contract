@@ -5485,6 +5485,97 @@
       "resourceInfo": {
         "type": 6
       }
+    },
+    "356": {
+      "id": 356,
+      "type": 28,
+      "category": 2,
+      "tier": 5,
+      "weight": 1,
+      "name": "Strength Cheese",
+      "desc": "Aged cheese infused with herbs from Everfrost, known to bolster physical strength.",
+      "buffInfo": {
+        "type": 1,
+        "range": 3,
+        "duration": 300
+      },
+      "statsModify": {
+        "atkPercent": 10,
+        "defPercent": 0,
+        "agiPercent": 20,
+        "ms": 5,
+        "sp": 1,
+        "isGained": true
+      }
+    },
+    "357": {
+      "id": 357,
+      "type": 28,
+      "category": 2,
+      "tier": 5,
+      "weight": 1,
+      "name": "Poison Cheese",
+      "desc": "Decrease stats of an enemy temporarily.",
+      "buffInfo": {
+        "type": 1,
+        "range": 3,
+        "duration": 300
+      },
+      "statsModify": {
+        "atkPercent": 10,
+        "defPercent": 0,
+        "agiPercent": 20,
+        "ms": 3,
+        "sp": 0,
+        "isGained": false
+      }
+    },
+    "358": {
+      "id": 358,
+      "type": 28,
+      "category": 2,
+      "tier": 5,
+      "weight": 1,
+      "name": "Exp Cheese",
+      "desc": "Increase experience gain for a limited time.",
+      "buffInfo": {
+        "type": 2,
+        "range": 0,
+        "duration": 300
+      },
+      "expAmplify": {
+        "farmingPerkAmp": 120
+      }
+    },
+    "359": {
+      "id": 359,
+      "type": 24,
+      "category": 2,
+      "tier": 7,
+      "weight": 1,
+      "name": "Destruction Meteorite",
+      "desc": "A fragment of a fallen star, said to enhance destructive powers.",
+      "skillInfo": {
+        "dmg": 200,
+        "range": 10,
+        "numTarget": 10,
+        "isAbsDmg": false
+      }
+    },
+    "360": {
+      "id": 360,
+      "type": 24,
+      "category": 2,
+      "tier": 7,
+      "weight": 1,
+      "name": "Destruction Meteorite",
+      "desc": "A fragment of a fallen star, said to enhance destructive powers.",
+      "skillInfo": {
+        "dmg": 200,
+        "range": 10,
+        "numTarget": 10,
+        "isAbsDmg": true
+      }
     }
   }
 }

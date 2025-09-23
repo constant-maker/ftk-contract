@@ -13,10 +13,12 @@ library MapUtils {
     return !Unmovable.get(x, y);
   }
 
+  /// @dev A location is valid if it is not restricted
   function isValidCityLocation(int32 x, int32 y) internal view returns (bool) {
     return !RestrictLocV2.getIsRestricted(x, y);
   }
 
+  /// @dev A city is active if it is located within its kingdom territory
   function mustBeActiveCity(uint256 cityId) internal view {
     CityData memory city = City.get(cityId);
     uint8 tileKingdomId = TileInfo3.getKingdomId(city.x, city.y);

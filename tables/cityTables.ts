@@ -108,7 +108,16 @@ const CITY_TABLES: any = {
       amounts: "uint32[]",
     },
     key: ['level'],
-  }
+  },
+  CityMoveHistory: {
+    schema: {
+      cityId: "uint256",
+      oldPositionX: "int32",
+      oldPositionY: "int32",
+      moveTimestamp: "uint256",
+    },
+    key: ['cityId'],
+  },
 };
 
 export default CITY_TABLES;

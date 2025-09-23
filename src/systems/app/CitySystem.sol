@@ -3,7 +3,6 @@ pragma solidity >=0.8.24;
 import { System } from "@latticexyz/world/src/System.sol";
 import { CharacterAccessControl } from "@abstracts/CharacterAccessControl.sol";
 import {
-  CharRole,
   City,
   CityData,
   CharInfo,
@@ -14,7 +13,6 @@ import {
   CharCurrentStats,
   CharStats,
   CharSavePoint,
-  TileInfo3,
   Kingdom
 } from "@codegen/index.sol";
 import { CharacterStateType } from "@codegen/common.sol";

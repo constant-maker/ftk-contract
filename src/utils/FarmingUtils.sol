@@ -6,12 +6,13 @@ import {
   Item,
   ItemData,
   CharPerk,
-  Tool2,
   Tool2Data,
   TileInfo3,
   TileInfo3Data,
   ResourceInfo,
-  ExpAmpConfig
+  ExpAmpConfig,
+  CharExpAmp,
+  CharExpAmpData
 } from "@codegen/index.sol";
 import { ResourceType, ItemType } from "@codegen/common.sol";
 import { Errors } from "@common/Errors.sol";
@@ -84,15 +85,20 @@ library FarmingUtils {
   }
 
   /// @dev Calculate resource perk exp
-  function calculateResourcePerkExp(uint256 resourceItemId) public view returns (uint32 perkExp) {
+  function calculateResourcePerkExp(uint256 characterId, uint256 resourceItemId) public view returns (uint32 perkExp) {
     uint32 tier = uint32(Item.getTier(resourceItemId));
     perkExp = Config.BASE_RESOURCE_PERK_EXP * tier + (tier - 1) * 2; // all tier starts from 1
+    uint32 basePercent = 100;
     uint32 farmingPerkAmp = ExpAmpConfig.getFarmingPerkAmp();
     uint256 ampExpireTime = ExpAmpConfig.getExpireTime();
     if (block.timestamp <= ampExpireTime) {
-      perkExp = (perkExp * farmingPerkAmp) / 100; // apply farming perk amp
+      basePercent += farmingPerkAmp;
     }
-    return perkExp;
+    CharExpAmpData memory charExpAmp = CharExpAmp.get(characterId);
+    if (block.timestamp <= charExpAmp.expireTime) {
+      basePercent += charExpAmp.farmingPerkAmp;
+    }
+    return (perkExp * basePercent) / 100;
   }
 
   /// @dev Validate resource and tool

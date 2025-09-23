@@ -17,6 +17,7 @@ import MARKET_TABLES from "./tables/marketTables";
 import KING_TABLES from "./tables/kingTables";
 import CITY_TABLES from "./tables/cityTables";
 import ROLE_TABLES from "./tables/roleTables";
+import STATUS_TABLES from "./tables/statusTables";
 
 export default defineWorld({
   deploy: {
@@ -32,8 +33,8 @@ export default defineWorld({
       "ClothArmor", "ClothHeadgear", "ClothFootwear",
       "LeatherArmor", "LeatherHeadgear", "LeatherFootwear",
       "PlateArmor", "PlateHeadgear", "PlateFootwear",
-      "Mount", "Resource", "MapSkillItem", "HealingItem", "StatModifierItem",
-      "Card"
+      "Mount", "Resource", "SkillItem", "HealingItem", "StatModifierItem",
+      "Card", "BuffItem"
     ],
     ItemCategoryType: ["Tool", "Equipment", "Other"],
     CharacterType: ["Male", "Female"],
@@ -50,6 +51,7 @@ export default defineWorld({
     EntityType: ["Character", "Monster"],
     EffectType: ["None", "Burn", "Poison", "Frostbite", "Stun"],
     RoleType: ["None", "VaultKeeper", "KingGuard"],
+    BuffType: ["None", "StatsModify", "ExpAmplify"],
   },
   tables: {
     Unmovable: {
@@ -78,6 +80,7 @@ export default defineWorld({
     ...KING_TABLES,
     ...CITY_TABLES,
     ...ROLE_TABLES,
+    ...STATUS_TABLES,
   },
   excludeSystems: ["SpawnSystem"],
 });
