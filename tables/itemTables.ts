@@ -67,6 +67,7 @@ const ITEM_TABLES: any = {
       itemId: "uint256",
       range: "uint16", // range to cast
       duration: "uint32", // in seconds
+      numTarget: "uint8",
       buffType: "BuffType",
     },
     key: ['itemId'],

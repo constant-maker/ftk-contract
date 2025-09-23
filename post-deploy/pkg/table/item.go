@@ -108,7 +108,7 @@ func ResourceItemInfoCallData(resourceInfo common.ResourceInfo, itemId int) ([]b
 
 func BuffItemInfoCallData(buffInfo common.BuffItemInfo, itemId int) ([]byte, error) {
 	staticData, err := encodePacked(
-		uint16(buffInfo.Range), uint32(buffInfo.Duration), uint8(buffInfo.Type),
+		uint16(buffInfo.Range), uint32(buffInfo.Duration), uint8(buffInfo.NumTarget), uint8(buffInfo.Type),
 	)
 	if err != nil {
 		return nil, err

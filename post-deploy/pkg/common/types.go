@@ -32,9 +32,10 @@ type Item struct {
 }
 
 type BuffItemInfo struct {
-	Type     int  `json:"type"`
-	Range    uint `json:"range"`
-	Duration int  `json:"duration"` // seconds
+	Type      int  `json:"type"`
+	Range     uint `json:"range"`
+	Duration  int  `json:"duration"` // seconds
+	NumTarget int  `json:"numTarget"`
 }
 
 type ExpAmplify struct {
