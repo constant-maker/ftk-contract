@@ -66,9 +66,9 @@ contract PvESystem is System, CharacterAccessControl {
     public
     onlyAuthorizedWallet(characterId)
     validateCurrentWeight(characterId)
-    mustInState(characterId, CharacterStateType.Standby)
   {
     // check whether character is ready to battle
+    CharacterStateUtils.mustInState(characterId, CharacterStateType.Standby);
     BattlePvEUtils.checkIsReadyToBattlePvE(characterId);
     CharPositionData memory characterPosition = CharacterPositionUtils.currentPosition(characterId);
     MonsterLocationData memory monsterLocation =

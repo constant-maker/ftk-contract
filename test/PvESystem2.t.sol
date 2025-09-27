@@ -123,6 +123,11 @@ contract PvESystem2Test is WorldFixture, SpawnSystemFixture, WelcomeSystemFixtur
     vm.stopPrank();
     CharacterStateUtils.mustInState(characterId, CharacterStateType.Hunting);
 
+    vm.expectRevert(); // can't pve while in afk
+    vm.startPrank(player);
+    world.app__battlePvE(characterId, monsterId, false);
+    vm.stopPrank();
+
     PvEAfkData memory afk = PvEAfk.get(characterId);
     console2.log("afk monsterId", afk.monsterId);
     console2.log("afk expPerTick", afk.expPerTick);
