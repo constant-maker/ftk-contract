@@ -12,6 +12,12 @@ import {
 import { BuffType } from "@codegen/common.sol";
 
 library CharacterBuffUtils {
+  /// @dev Remove all buffs from character (e.g. on death)
+  function dispelAllBuff(uint256 characterId) public {
+    CharBuff.deleteRecord(characterId);
+  }
+
+  /// @dev Get total buff speed (can be negative)
   function getBuffSpeed(uint256 characterId) public view returns (int16) {
     CharBuffData memory charBuff = CharBuff.get(characterId);
     int16 speedBuff = 0; // wider accumulator to prevent overflow
@@ -56,6 +62,22 @@ library CharacterBuffUtils {
     agi = _getFinalBuffStat(currentStats.agi, totalAgiPercent);
   }
 
+  /// @dev Get buff sp (can be negative)
+  function getBuffSp(uint256 characterId) public view returns (int8 sp) {
+    CharBuffData memory charBuff = CharBuff.get(characterId);
+    sp = 0; // wider accumulator to prevent overflow
+    for (uint256 i = 0; i < charBuff.buffIds.length; i++) {
+      if (charBuff.expireTimes[i] < block.timestamp) continue;
+
+      uint256 buffId = charBuff.buffIds[i];
+      if (buffId == 0) continue;
+
+      if (BuffItemInfoV2.getBuffType(buffId) != BuffType.StatsModify) continue;
+      int8 buffSp = BuffStatV2.getSp(buffId);
+      sp += buffSp;
+    }
+  }
+
   function _getFinalBuffStat(uint16 originStat, int16 percentChange) private pure returns (int16 buffStat) {
     if (percentChange == 0) return 0;
 
@@ -72,22 +94,5 @@ library CharacterBuffUtils {
     }
 
     return percentChange > 0 ? int16(change) : -int16(change);
-}
-
-
-  /// @dev Get buff sp (can be negative)
-  function getBuffSp(uint256 characterId) public view returns (int8 sp) {
-    CharBuffData memory charBuff = CharBuff.get(characterId);
-    sp = 0; // wider accumulator to prevent overflow
-    for (uint256 i = 0; i < charBuff.buffIds.length; i++) {
-      if (charBuff.expireTimes[i] < block.timestamp) continue;
-
-      uint256 buffId = charBuff.buffIds[i];
-      if (buffId == 0) continue;
-
-      if (BuffItemInfoV2.getBuffType(buffId) != BuffType.StatsModify) continue;
-      int8 buffSp = BuffStatV2.getSp(buffId);
-      sp += buffSp;
-    }
   }
 }

@@ -8,6 +8,7 @@ import { CharPositionData } from "@codegen/tables/CharPosition.sol";
 import { MapUtils } from "./MapUtils.sol";
 import { CharacterPositionUtils } from "./CharacterPositionUtils.sol";
 import { CharacterBuffUtils } from "./CharacterBuffUtils.sol";
+import { Errors } from "@common/Errors.sol";
 
 library MoveSystemUtils {
   /// @dev Get character movement speed that not exceeds max movement speed and at minimum of 1
@@ -44,7 +45,7 @@ library MoveSystemUtils {
         if (characterMovementSpeed > absSpeedBuff) {
           characterMovementSpeed -= absSpeedBuff;
         } else {
-          characterMovementSpeed = 0;
+          revert Errors.MoveSystem_RootedCannotMove(absSpeedBuff);
         }
       }
     }

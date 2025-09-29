@@ -20,12 +20,15 @@ import {
   TileInfo3,
   AllianceV2,
   CharCurrentStats,
+  CharCurrentStatsData,
   TileInventory,
   DropResource,
   KingSetting,
   PvPExtraV3,
   PvPExtraV3Data,
-  CharInventory
+  CharInventory,
+  CharBuff,
+  CharBuffData
 } from "@codegen/index.sol";
 import { EntityType, SlotType, ItemType, ZoneType } from "@codegen/common.sol";
 import { Errors } from "@common/Errors.sol";
@@ -41,6 +44,7 @@ import { CharStats2 } from "@codegen/tables/CharStats2.sol";
 import { LootItems } from "@systems/app/TileSystem.sol";
 import { EquipData } from "@systems/app/EquipmentSystem.sol";
 import { ItemsActionData } from "@common/Types.sol";
+import { TargetItemData } from "@systems/app/ConsumeSystem.sol";
 
 contract PvPSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture {
   address player_1 = makeAddr("player1");
@@ -762,6 +766,72 @@ contract PvPSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
     assertTrue(CharAchievementUtils.hasAchievement(characterId_1, 14));
     assertTrue(CharAchievementUtils.hasAchievement(characterId_1, 15));
     assertTrue(CharAchievementUtils.hasAchievement(characterId_1, 16));
+  }
+
+  function test_UsingBuffItem() external {
+    vm.startPrank(worldDeployer);
+    InventoryItemUtils.addItem(characterId_1, 356, 1); // gain 5 ms
+    InventoryItemUtils.addItem(characterId_1, 357, 1); // decrease ms by 3
+    vm.stopPrank();
+
+    CharCurrentStatsData memory currentStatsChar1 = CharCurrentStats.get(characterId_1);
+    console2.log("char 1 atk", currentStatsChar1.atk);
+    console2.log("char 1 def", currentStatsChar1.def);
+    console2.log("char 1 agi", currentStatsChar1.agi);
+    CharCurrentStatsData memory currentStatsChar2 = CharCurrentStats.get(characterId_2);
+    console2.log("char 2 atk", currentStatsChar2.atk);
+    console2.log("char 2 def", currentStatsChar2.def);
+    console2.log("char 2 agi", currentStatsChar2.agi);
+
+    _moveToTheLocation(20, -32);
+
+    TargetItemData memory targetData;
+    targetData.targetPlayers = new uint256[](1);
+    targetData.targetPlayers[0] = characterId_1;
+    targetData.x = 20;
+    targetData.y = -32;
+
+    vm.warp(block.timestamp + 300);
+    vm.startPrank(player_1);
+    world.app__consumeItem(characterId_1, 356, 1, targetData); // char 1, atk = 3 (2 + 50% of 2), def = 0 (4 - 100% of 4)
+    world.app__battlePvP(characterId_1, characterId_2);
+    vm.stopPrank();
+
+    PvPData memory pvp = PvP.get(1);
+    assertEq(pvp.attackerId, characterId_1);
+    assertEq(pvp.defenderId, characterId_2);
+    assertEq(pvp.firstAttackerId, characterId_1);
+
+    // result in normal condition
+    // assertEq(pvp.damages[0], 0); // no bonus attack
+    // assertEq(pvp.damages[1], 21); // (atk 2 - def 2 + 20 + level 1 = 21
+    // assertEq(pvp.damages[2], 21);
+    // assertEq(pvp.damages[3], 21);
+    // assertEq(pvp.damages[4], 21);
+
+    // result in buff condition
+    assertEq(pvp.damages[0], 0); // no bonus attack
+    assertEq(pvp.damages[1], 22); // atk 3 - def 2 + 20 + level 1 = 22
+    assertEq(pvp.damages[2], 23); // atk 2 - def 0 + 20 + 1 = 23
+
+
+    vm.warp(block.timestamp + 10);
+    _moveToTheLocation(20, -32);
+
+    vm.startPrank(worldDeployer);
+    CharCurrentStats.setAgi(characterId_2, 100); // increase agi to reduce more ms
+    CharCurrentStats.setAtk(characterId_2, 1000); // increase atk to deal more damage
+    vm.stopPrank();
+    vm.startPrank(player_1);
+    world.app__battlePvP(characterId_1, characterId_2);
+    vm.stopPrank();
+
+    CharPositionData memory char1Position = CharacterPositionUtils.currentPosition(characterId_1);
+    assertEq(char1Position.x, 30);
+    assertEq(char1Position.y, -36);
+    CharBuffData memory char1Buff = CharBuff.get(characterId_1);
+    assertEq(char1Buff.buffIds[0], 0); // dispel on death
+    assertEq(char1Buff.buffIds[1], 0); // dispel on death
   }
 
   function _moveToTheLocation(int32 _x, int32 _y) private {

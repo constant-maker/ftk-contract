@@ -151,7 +151,7 @@ library KingSystemUtils {
   }
 
   function moveCity(uint256 characterId, int32 x, int32 y, uint256 cityId) public {
-    CharacterPositionUtils.mustInCity(characterId, cityId);
+    // CharacterPositionUtils.mustInCity(characterId, cityId);
     MapUtils.mustBeActiveCity(cityId);
     uint8 charKingdomId = CharInfo.getKingdomId(characterId);
     CharacterRoleUtils.mustBeKing(charKingdomId, characterId);

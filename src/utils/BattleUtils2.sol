@@ -20,6 +20,7 @@ import { InventoryEquipmentUtils } from "./InventoryEquipmentUtils.sol";
 import { CharacterPositionUtils } from "./CharacterPositionUtils.sol";
 import { CharacterStateUtils } from "./CharacterStateUtils.sol";
 import { BattlePvEUtils2 } from "./BattlePvEUtils2.sol";
+import { CharacterBuffUtils } from "./CharacterBuffUtils.sol";
 
 library BattleUtils2 {
   /// @dev apply loss to character, move back to capital and reset character state
@@ -58,6 +59,8 @@ library BattleUtils2 {
     // move back to city and reset character state to standby
     CharacterPositionUtils.moveToCapital(characterId);
     CharState.setState(characterId, CharacterStateType.Standby);
+    // character is dead, remove all buffs
+    CharacterBuffUtils.dispelAllBuff(characterId);
   }
 
   /// @dev check if character is in a state that can be forced to stop AFK

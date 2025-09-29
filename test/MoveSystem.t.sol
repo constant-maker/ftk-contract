@@ -185,4 +185,55 @@ contract MoveSystemTest is WorldFixture, MoveSystemFixture, SpawnSystemFixture, 
     assertEq(position.x, 20);
     assertEq(position.y, -33);
   }
+
+  function test_Rooted() external {
+    vm.startPrank(worldDeployer);
+    CharacterPositionUtils.moveToLocation(characterId, 20, -32);
+    InventoryItemUtils.addItem(characterId, 356, 1); // gain 5 ms
+    InventoryItemUtils.addItem(characterId, 357, 1); // decrease ms by 3
+    vm.stopPrank();
+
+    vm.startPrank(player);
+    world.app__move(characterId, 20, -33);
+    vm.stopPrank();
+
+    vm.warp(block.timestamp + Config.DEFAULT_MOVEMENT_DURATION);
+
+    CharPositionData memory position = CharacterPositionUtils.currentPosition(characterId);
+    console2.log("position x", position.x);
+    console2.log("position y", position.y);
+    assertEq(position.x, 20);
+    assertEq(position.y, -33);
+
+    TargetItemData memory targetData;
+    targetData.targetPlayers = new uint256[](1);
+    targetData.targetPlayers[0] = characterId;
+    targetData.x = 20;
+    targetData.y = -33;
+
+    vm.startPrank(player);
+    world.app__consumeItem(characterId, 357, 1, targetData);
+    vm.stopPrank();
+    uint256[2] memory buffIds = CharBuff.getBuffIds(characterId);
+    assertEq(buffIds[0], 357); // old buff remained
+
+    vm.expectRevert();
+    vm.startPrank(player);
+    world.app__move(characterId, 20, -32);
+    vm.stopPrank();
+
+    vm.warp(block.timestamp + 301);
+
+    vm.startPrank(player);
+    world.app__move(characterId, 20, -32);
+    vm.stopPrank();
+
+    vm.warp(block.timestamp + Config.DEFAULT_MOVEMENT_DURATION);
+
+    position = CharacterPositionUtils.currentPosition(characterId);
+    console2.log("position x", position.x);
+    console2.log("position y", position.y);
+    assertEq(position.x, 20);
+    assertEq(position.y, -32);
+  }
 }

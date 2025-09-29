@@ -104,7 +104,7 @@ contract ConsumeSystem is System, CharacterAccessControl {
     private
   {
     BuffDmgData memory buffDmg = BuffDmg.get(itemId);
-    uint32 itemDmg = _calculateSkillItemDmg(characterId, buffDmg);
+    uint32 itemDmg = _calculateBuffDmg(characterId, buffDmg);
     if (itemDmg == 0) {
       return;
     }
@@ -112,7 +112,7 @@ contract ConsumeSystem is System, CharacterAccessControl {
       uint256 targetPlayer = targetData.targetPlayers[i];
       CharPositionData memory targetPosition = CharacterPositionUtils.currentPosition(targetPlayer);
       if (targetPosition.x != targetData.x || targetPosition.y != targetData.y) {
-        return; // skip if target player not in position
+        continue; // skip if target player not in position
       }
       _applyDmgBuff(targetPlayer, itemDmg);
     }
@@ -127,7 +127,7 @@ contract ConsumeSystem is System, CharacterAccessControl {
     }
   }
 
-  function _calculateSkillItemDmg(uint256 characterId, BuffDmgData memory buffDmg) private view returns (uint32) {
+  function _calculateBuffDmg(uint256 characterId, BuffDmgData memory buffDmg) private view returns (uint32) {
     uint32 itemDmg = buffDmg.dmg;
     bool isAbsDmg = buffDmg.isAbsDmg;
     if (isAbsDmg) {
@@ -166,6 +166,9 @@ contract ConsumeSystem is System, CharacterAccessControl {
       currentBuff.expireTimes[0] = newExpire; // refresh duration
     } else if (currentBuff.buffIds[1] == itemId && currentBuff.expireTimes[1] >= block.timestamp) {
       currentBuff.expireTimes[1] = newExpire; // refresh duration
+      // swap to first slot
+      (currentBuff.buffIds[0], currentBuff.buffIds[1]) = (currentBuff.buffIds[1], currentBuff.buffIds[0]);
+      (currentBuff.expireTimes[0], currentBuff.expireTimes[1]) = (currentBuff.expireTimes[1], currentBuff.expireTimes[0]);
     } else {
       if (
         currentBuff.buffIds[1] == 0 || currentBuff.expireTimes[1] < block.timestamp
@@ -187,7 +190,7 @@ contract ConsumeSystem is System, CharacterAccessControl {
       uint256 targetPlayer = targetData.targetPlayers[i];
       CharPositionData memory targetPosition = CharacterPositionUtils.currentPosition(targetPlayer);
       if (targetPosition.x != targetData.x || targetPosition.y != targetData.y) {
-        return; // skip if target player not in position
+        continue; // skip if target player not in position
       }
       BuffExpData memory expBuffData = BuffExp.get(itemId);
       CharExpAmpData memory expBuff = CharExpAmpData({
@@ -208,7 +211,7 @@ contract ConsumeSystem is System, CharacterAccessControl {
     BuffItemInfoV2Data memory buffItemInfo = BuffItemInfoV2.get(itemId);
     uint32 rangeX = _getAbsValue(charPosition.x - targetData.x);
     uint32 rangeY = _getAbsValue(charPosition.y - targetData.y);
-    if (rangeX > buffItemInfo.range && rangeY > buffItemInfo.range) {
+    if (rangeX > buffItemInfo.range || rangeY > buffItemInfo.range) {
       revert Errors.ConsumeSystem_OutOfRange(charPosition.x, charPosition.y, targetData.x, targetData.y, itemId);
     }
     _validateTargetPlayers(targetData.targetPlayers, buffItemInfo.numTarget);

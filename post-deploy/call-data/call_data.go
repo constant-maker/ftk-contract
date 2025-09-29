@@ -224,9 +224,6 @@ func BuildExtraItemInfoData(l *zap.SugaredLogger, dataConfig common.DataConfig, 
 			callData = append(callData, resourceItemInfoCallData)
 		case item.BuffInfo != nil:
 			l.Infow("buff info", "value", item.BuffInfo)
-			if item.BuffInfo.Duration == 0 {
-				l.Panicw("buff info duration is 0", "itemId", item.Id)
-			}
 			buffItemInfoCallData, err := table.BuffItemInfoCallData(*item.BuffInfo, item.Id)
 			if err != nil {
 				l.Errorw("cannot build Buff Item Info call data", "err", err)
@@ -234,6 +231,9 @@ func BuildExtraItemInfoData(l *zap.SugaredLogger, dataConfig common.DataConfig, 
 			}
 			callData = append(callData, buffItemInfoCallData)
 			if item.ExpAmplify != nil {
+				if item.BuffInfo.Duration == 0 {
+					l.Panicw("buff info duration is 0", "itemId", item.Id)
+				}
 				l.Infow("exp amplify info", "value", item.ExpAmplify)
 				expAmplifyCallData, err := table.BuffExpCallData(*item.ExpAmplify, item.Id)
 				if err != nil {
@@ -243,6 +243,9 @@ func BuildExtraItemInfoData(l *zap.SugaredLogger, dataConfig common.DataConfig, 
 				callData = append(callData, expAmplifyCallData)
 			}
 			if item.StatsModify != nil {
+				if item.BuffInfo.Duration == 0 {
+					l.Panicw("buff info duration is 0", "itemId", item.Id)
+				}
 				l.Infow("stats modify info", "value", item.StatsModify)
 				statsModifyCallData, err := table.BuffStatCallData(*item.StatsModify, item.Id)
 				if err != nil {
@@ -251,14 +254,15 @@ func BuildExtraItemInfoData(l *zap.SugaredLogger, dataConfig common.DataConfig, 
 				}
 				callData = append(callData, statsModifyCallData)
 			}
-		case item.SkillInfo != nil:
-			l.Infow("skill info", "value", item.SkillInfo)
-			skillItemInfoCallData, err := table.SkillItemInfoCallData(*item.SkillInfo, item.Id)
-			if err != nil {
-				l.Errorw("cannot build Skill Item Info call data", "err", err)
-				return nil, err
+			if item.DmgBuffInfo != nil {
+				l.Infow("dmg buff info", "value", item.DmgBuffInfo)
+				dmgBuffInfoCallData, err := table.BuffDmgInfoCallData(*item.DmgBuffInfo, item.Id)
+				if err != nil {
+					l.Errorw("cannot build Dmg Buff Info call data", "err", err)
+					return nil, err
+				}
+				callData = append(callData, dmgBuffInfoCallData)
 			}
-			callData = append(callData, skillItemInfoCallData)
 		default:
 			continue
 		}
