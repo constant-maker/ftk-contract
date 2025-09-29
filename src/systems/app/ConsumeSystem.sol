@@ -9,13 +9,14 @@ import {
   CharBuff,
   CharBuffData,
   CharPositionData,
-  BuffItemInfo,
+  BuffItemInfoV2,
+  BuffItemInfoV2Data,
   CharExpAmp,
   CharExpAmpData,
   BuffExp,
   BuffExpData,
-  SkillItemInfo,
-  SkillItemInfoData,
+  BuffDmg,
+  BuffDmgData,
   CharCurrentStats,
   RestrictLocV2
 } from "@codegen/index.sol";
@@ -24,6 +25,13 @@ import { InventoryItemUtils } from "@utils/InventoryItemUtils.sol";
 import { CharacterPositionUtils } from "@utils/CharacterPositionUtils.sol";
 import { Errors } from "@common/Errors.sol";
 import { ItemType, ResourceType, BuffType } from "@codegen/common.sol";
+import { TargetItemData } from "./ConsumeSystem.sol";
+
+struct TargetItemData {
+  int32 x;
+  int32 y;
+  uint256[] targetPlayers;
+}
 
 contract ConsumeSystem is System, CharacterAccessControl {
   /// @dev eat berries to heal
@@ -37,12 +45,11 @@ contract ConsumeSystem is System, CharacterAccessControl {
     CharacterStatsUtils.restoreHp(characterId, gainedHp);
   }
 
-  /// @dev consume items to restore hp, gain atk, def, ...
-  function consumeItems(
+  function consumeItem(
     uint256 characterId,
     uint256 itemId,
     uint32 amount,
-    uint256 targetPlayer
+    TargetItemData calldata targetData
   )
     public
     onlyAuthorizedWallet(characterId)
@@ -50,71 +57,68 @@ contract ConsumeSystem is System, CharacterAccessControl {
     if (amount == 0) {
       revert Errors.ConsumeSystem_ItemAmountIsZero(characterId, itemId);
     }
+    // remove item from inventory
     InventoryItemUtils.removeItem(characterId, itemId, amount);
+
+    // determine item type and apply effect
     ItemType itemType = Item.getItemType(itemId);
     if (itemType == ItemType.HealingItem) {
       _healing(characterId, itemId, amount);
       return;
     }
+
+    // target item
     if (itemType == ItemType.BuffItem) {
       if (amount != 1) {
         revert Errors.ConsumeSystem_BuffItemAmountMustBeOne(characterId, itemId, amount);
       }
-      BuffType buffType = BuffItemInfo.getBuffType(itemId);
+      if (targetData.targetPlayers.length == 0) {
+        return;
+      }
+      // ensure targetData is valid, e.g range, numTarget, duplicate target, self-cast only
+      _validateTargetItemData(characterId, itemId, targetData);
+
+      // apply buff to each target
+      BuffType buffType = BuffItemInfoV2.getBuffType(itemId);
       if (buffType == BuffType.StatsModify) {
-        _handleStatsBuffItem(characterId, itemId, targetPlayer);
+        _handleStatsBuffItem(characterId, itemId, targetData);
       } else if (buffType == BuffType.ExpAmplify) {
-        _handleExpBuffItem(characterId, itemId);
+        _handleExpBuffItem(characterId, itemId, targetData);
+      } else if (buffType == BuffType.InstantHeal) {
+        // _healing(characterId, itemId, 1);
+      } else if (buffType == BuffType.InstantDamage) {
+        _handleInstantDamageBuffItem(characterId, itemId, targetData);
+      } else {
+        revert Errors.ConsumeSystem_ItemIsNotConsumable(itemId);
       }
     } else {
       revert Errors.ConsumeSystem_ItemIsNotConsumable(itemId);
     }
   }
 
-  function castSkillItem(
+  function _handleInstantDamageBuffItem(
     uint256 characterId,
     uint256 itemId,
-    int32 x,
-    int32 y,
-    uint256[] calldata targetPlayers
+    TargetItemData calldata targetData
   )
-    public
-    onlyAuthorizedWallet(characterId)
+    private
   {
-    if (RestrictLocV2.getIsRestricted(x, y)) {
-      revert Errors.ConsumeSystem_CannotTargetRestrictLocation();
-    }
-    InventoryItemUtils.removeItem(characterId, itemId, 1);
-    ItemType itemType = Item.getItemType(itemId);
-    if (itemType != ItemType.SkillItem) {
-      revert Errors.ConsumeSystem_ItemIsNotSkillItem(itemId);
-    }
-    if (targetPlayers.length == 0) {
-      return;
-    }
-    SkillItemInfoData memory skillItemInfo = SkillItemInfo.get(itemId);
-    _validateTargetPlayers(targetPlayers, skillItemInfo.numTarget);
-    CharPositionData memory charPosition = CharacterPositionUtils.currentPosition(characterId);
-    uint32 rangeX = _getAbsValue(charPosition.x - x);
-    uint32 rangeY = _getAbsValue(charPosition.y - y);
-    if (rangeX > skillItemInfo.range && rangeY > skillItemInfo.range) {
-      revert Errors.ConsumeSystem_OutOfRange(charPosition.x, charPosition.y, x, y, itemId);
-    }
-    uint32 itemDmg = _calculateSkillItemDmg(characterId, skillItemInfo);
+    BuffDmgData memory buffDmg = BuffDmg.get(itemId);
+    uint32 itemDmg = _calculateSkillItemDmg(characterId, buffDmg);
     if (itemDmg == 0) {
       return;
     }
-    for (uint256 i = 0; i < targetPlayers.length; i++) {
-      uint256 targetPlayer = targetPlayers[i];
+    for (uint256 i = 0; i < targetData.targetPlayers.length; i++) {
+      uint256 targetPlayer = targetData.targetPlayers[i];
       CharPositionData memory targetPosition = CharacterPositionUtils.currentPosition(targetPlayer);
-      if (targetPosition.x != x || targetPosition.y != y) {
-        revert Errors.ConsumeSystem_TargetNotInPosition(targetPlayer, targetPosition.x, targetPosition.y);
+      if (targetPosition.x != targetData.x || targetPosition.y != targetData.y) {
+        return; // skip if target player not in position
       }
-      _applySkillItemDmg(targetPlayer, itemDmg);
+      _applyDmgBuff(targetPlayer, itemDmg);
     }
   }
 
-  function _applySkillItemDmg(uint256 characterId, uint32 itemDmg) private {
+  function _applyDmgBuff(uint256 characterId, uint32 itemDmg) private {
     uint32 charHp = CharCurrentStats.getHp(characterId);
     if (itemDmg >= charHp) {
       CharCurrentStats.setHp(characterId, 1); // min 1 hp
@@ -123,16 +127,9 @@ contract ConsumeSystem is System, CharacterAccessControl {
     }
   }
 
-  function _calculateSkillItemDmg(
-    uint256 characterId,
-    SkillItemInfoData memory skillItemInfo
-  )
-    private
-    view
-    returns (uint32)
-  {
-    uint32 itemDmg = skillItemInfo.dmg;
-    bool isAbsDmg = skillItemInfo.isAbsDmg;
+  function _calculateSkillItemDmg(uint256 characterId, BuffDmgData memory buffDmg) private view returns (uint32) {
+    uint32 itemDmg = buffDmg.dmg;
+    bool isAbsDmg = buffDmg.isAbsDmg;
     if (isAbsDmg) {
       return itemDmg;
     }
@@ -140,21 +137,6 @@ contract ConsumeSystem is System, CharacterAccessControl {
     uint16 charAtk = CharCurrentStats.getAtk(characterId);
     uint32 calcDmg = (uint32(charAtk) * itemDmg) / 100;
     return calcDmg;
-  }
-
-  /// @dev validate that targetPlayers has no duplicates
-  function _validateTargetPlayers(uint256[] calldata targetPlayers, uint8 numTarget) private pure {
-    if (numTarget < targetPlayers.length) {
-      revert Errors.ConsumeSystem_TooManyTargets(targetPlayers.length, numTarget);
-    }
-    uint256 len = targetPlayers.length;
-    for (uint256 i = 0; i < len; i++) {
-      for (uint256 j = i + 1; j < len; j++) {
-        if (targetPlayers[i] == targetPlayers[j]) {
-          revert Errors.ConsumeSystem_DuplicateTarget();
-        }
-      }
-    }
   }
 
   function _healing(uint256 characterId, uint256 itemId, uint32 amount) private {
@@ -166,17 +148,20 @@ contract ConsumeSystem is System, CharacterAccessControl {
     CharacterStatsUtils.restoreHp(characterId, uint32(gainedHp));
   }
 
-  function _handleStatsBuffItem(uint256 characterId, uint256 itemId, uint256 targetPlayer) private {
-    CharBuffData memory currentBuff = CharBuff.get(targetPlayer);
-    CharPositionData memory charPosition = CharacterPositionUtils.currentPosition(characterId);
-    CharPositionData memory targetPosition = CharacterPositionUtils.currentPosition(targetPlayer);
-    uint32 rangeX = _getAbsValue(charPosition.x - targetPosition.x);
-    uint32 rangeY = _getAbsValue(charPosition.y - targetPosition.y);
-    uint16 itemRange = BuffItemInfo.getRange(itemId);
-    if (rangeX > itemRange && rangeY > itemRange) {
-      revert Errors.ConsumeSystem_OutOfRange(charPosition.x, charPosition.y, targetPosition.x, targetPosition.y, itemId);
+  function _handleStatsBuffItem(uint256 characterId, uint256 itemId, TargetItemData memory targetData) private {
+    for (uint256 i = 0; i < targetData.targetPlayers.length; i++) {
+      uint256 targetPlayer = targetData.targetPlayers[i];
+      _applyStatsBuff(characterId, itemId, targetPlayer, targetData.x, targetData.y);
     }
-    uint256 newExpire = block.timestamp + BuffItemInfo.getDuration(itemId);
+  }
+
+  function _applyStatsBuff(uint256 characterId, uint256 itemId, uint256 targetPlayer, int32 x, int32 y) private {
+    CharBuffData memory currentBuff = CharBuff.get(targetPlayer);
+    CharPositionData memory targetPosition = CharacterPositionUtils.currentPosition(targetPlayer);
+    if (targetPosition.x != x || targetPosition.y != y) {
+      return; // skip if target player not in position
+    }
+    uint256 newExpire = block.timestamp + BuffItemInfoV2.getDuration(itemId);
     if (currentBuff.buffIds[0] == itemId && currentBuff.expireTimes[0] >= block.timestamp) {
       currentBuff.expireTimes[0] = newExpire; // refresh duration
     } else if (currentBuff.buffIds[1] == itemId && currentBuff.expireTimes[1] >= block.timestamp) {
@@ -197,15 +182,56 @@ contract ConsumeSystem is System, CharacterAccessControl {
     CharBuff.set(targetPlayer, currentBuff);
   }
 
-  function _handleExpBuffItem(uint256 characterId, uint256 itemId) private {
-    BuffExpData memory expBuffData = BuffExp.get(itemId);
-    CharExpAmpData memory expBuff = CharExpAmpData({
-      farmingPerkAmp: expBuffData.farmingPerkAmp,
-      pveExpAmp: expBuffData.pveExpAmp,
-      pvePerkAmp: expBuffData.pvePerkAmp,
-      expireTime: block.timestamp + BuffItemInfo.getDuration(itemId)
-    });
-    CharExpAmp.set(characterId, expBuff);
+  function _handleExpBuffItem(uint256 characterId, uint256 itemId, TargetItemData memory targetData) private {
+    for (uint256 i = 0; i < targetData.targetPlayers.length; i++) {
+      uint256 targetPlayer = targetData.targetPlayers[i];
+      CharPositionData memory targetPosition = CharacterPositionUtils.currentPosition(targetPlayer);
+      if (targetPosition.x != targetData.x || targetPosition.y != targetData.y) {
+        return; // skip if target player not in position
+      }
+      BuffExpData memory expBuffData = BuffExp.get(itemId);
+      CharExpAmpData memory expBuff = CharExpAmpData({
+        farmingPerkAmp: expBuffData.farmingPerkAmp,
+        pveExpAmp: expBuffData.pveExpAmp,
+        pvePerkAmp: expBuffData.pvePerkAmp,
+        expireTime: block.timestamp + BuffItemInfoV2.getDuration(itemId)
+      });
+      CharExpAmp.set(targetPlayer, expBuff);
+    }
+  }
+
+  function _validateTargetItemData(uint256 characterId, uint256 itemId, TargetItemData memory targetData) private view {
+    if (RestrictLocV2.getIsRestricted(targetData.x, targetData.y)) {
+      revert Errors.ConsumeSystem_CannotTargetRestrictLocation();
+    }
+    CharPositionData memory charPosition = CharacterPositionUtils.currentPosition(characterId);
+    BuffItemInfoV2Data memory buffItemInfo = BuffItemInfoV2.get(itemId);
+    uint32 rangeX = _getAbsValue(charPosition.x - targetData.x);
+    uint32 rangeY = _getAbsValue(charPosition.y - targetData.y);
+    if (rangeX > buffItemInfo.range && rangeY > buffItemInfo.range) {
+      revert Errors.ConsumeSystem_OutOfRange(charPosition.x, charPosition.y, targetData.x, targetData.y, itemId);
+    }
+    _validateTargetPlayers(targetData.targetPlayers, buffItemInfo.numTarget);
+    if (buffItemInfo.selfCastOnly) {
+      if (targetData.targetPlayers.length != 1 || targetData.targetPlayers[0] != characterId) {
+        revert Errors.ConsumeSystem_SelfCastOnly(itemId);
+      }
+    }
+  }
+
+  /// @dev validate that targetPlayers has no duplicates
+  function _validateTargetPlayers(uint256[] memory targetPlayers, uint8 maxNumTarget) private pure {
+    if (maxNumTarget < targetPlayers.length) {
+      revert Errors.ConsumeSystem_TooManyTargets(targetPlayers.length, maxNumTarget);
+    }
+    uint256 len = targetPlayers.length;
+    for (uint256 i = 0; i < len; i++) {
+      for (uint256 j = i + 1; j < len; j++) {
+        if (targetPlayers[i] == targetPlayers[j]) {
+          revert Errors.ConsumeSystem_DuplicateTarget();
+        }
+      }
+    }
   }
 
   function _getAbsValue(int32 value) private pure returns (uint32) {

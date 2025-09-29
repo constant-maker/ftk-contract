@@ -3,9 +3,9 @@ pragma solidity >=0.8.24;
 import {
   CharBuff,
   CharBuffData,
-  BuffStat,
-  BuffStatData,
-  BuffItemInfo,
+  BuffStatV2,
+  BuffStatV2Data,
+  BuffItemInfoV2,
   CharCurrentStats,
   CharCurrentStatsData
 } from "@codegen/index.sol";
@@ -22,11 +22,10 @@ library CharacterBuffUtils {
       uint256 buffId = charBuff.buffIds[i];
       if (buffId == 0) continue;
 
-      if (BuffItemInfo.getBuffType(buffId) != BuffType.StatsModify) continue;
+      if (BuffItemInfoV2.getBuffType(buffId) != BuffType.StatsModify) continue;
 
-      uint16 buffSpeed = BuffStat.getMs(buffId);
-      bool isGained = BuffStat.getIsGained(buffId);
-      speedBuff += isGained ? int16(buffSpeed) : -int16(buffSpeed);
+      int16 buffSpeed = BuffStatV2.getMs(buffId);
+      speedBuff += buffSpeed;
     }
 
     return speedBuff;
@@ -34,36 +33,47 @@ library CharacterBuffUtils {
 
   /// @dev Get total buff stats (can be negative)
   function getBuffStats(uint256 characterId) public view returns (int16 atk, int16 def, int16 agi) {
-    CharCurrentStatsData memory currentStats = CharCurrentStats.get(characterId);
     CharBuffData memory charBuff = CharBuff.get(characterId);
-    atk = 0; // wider accumulator to prevent overflow
-    def = 0;
-    agi = 0;
+    // percent like -120 => minus 120%
+    int16 totalAtkPercent = 0;
+    int16 totalDefPercent = 0;
+    int16 totalAgiPercent = 0;
     for (uint256 i = 0; i < charBuff.buffIds.length; i++) {
       if (charBuff.expireTimes[i] < block.timestamp) continue;
 
       uint256 buffId = charBuff.buffIds[i];
       if (buffId == 0) continue;
 
-      if (BuffItemInfo.getBuffType(buffId) != BuffType.StatsModify) continue;
-      BuffStatData memory statBuff = BuffStat.get(buffId);
-      // if currentStats.atk/def/agi > 0, and buff percent > 0, the change will be at least 1 unit
-      // so we ensure that the buff will have some effect and final stat will not be negative
-      // e.g. current atk = 1, buff atkPercent = 10%, final atk = 1 + 1 = 2
-      // e.g. current atk = 1, debuff atkPercent = 10%, final atk = 1 - 1 = 0
-      uint16 atkChange = uint16((uint32(currentStats.atk) * uint32(statBuff.atkPercent)) / 100);
-      uint16 buffAtk = currentStats.atk > 0 && atkChange == 0 ? 1 : atkChange; // ensure at least 1 unit change
-      uint16 defChange = uint16((uint32(currentStats.def) * uint32(statBuff.defPercent)) / 100);
-      uint16 buffDef = currentStats.def > 0 && defChange == 0 ? 1 : defChange; // ensure at least 1 unit change
-      uint16 agiChange = uint16((uint32(currentStats.agi) * uint32(statBuff.agiPercent)) / 100);
-      uint16 buffAgi = currentStats.agi > 0 && agiChange == 0 ? 1 : agiChange; // ensure at least 1 unit change
-
-      bool isGained = BuffStat.getIsGained(buffId);
-      atk += isGained ? int16(buffAtk) : -int16(buffAtk);
-      def += isGained ? int16(buffDef) : -int16(buffDef);
-      agi += isGained ? int16(buffAgi) : -int16(buffAgi);
+      if (BuffItemInfoV2.getBuffType(buffId) != BuffType.StatsModify) continue;
+      BuffStatV2Data memory statBuff = BuffStatV2.get(buffId);
+      totalAtkPercent += statBuff.atkPercent;
+      totalDefPercent += statBuff.defPercent;
+      totalAgiPercent += statBuff.agiPercent;
     }
+    CharCurrentStatsData memory currentStats = CharCurrentStats.get(characterId);
+    atk = _getFinalBuffStat(currentStats.atk, totalAtkPercent);
+    def = _getFinalBuffStat(currentStats.def, totalDefPercent);
+    agi = _getFinalBuffStat(currentStats.agi, totalAgiPercent);
   }
+
+  function _getFinalBuffStat(uint16 originStat, int16 percentChange) private pure returns (int16 buffStat) {
+    if (percentChange == 0) return 0;
+
+    uint16 calPercent = percentChange > 0 ? uint16(percentChange) : uint16(-percentChange);
+    uint16 change = uint16(uint32(originStat) * uint32(calPercent) / 100);
+
+    // if currentStats.atk/def/agi > 0, and buff percent > 0, the change will be at least 1 unit
+    // so we ensure that the buff will have some effect and final stat will not be negative
+    // e.g. current atk = 1, buff atkPercent = 10%, final atk = 1 + 1 = 2
+    // e.g. current atk = 1, debuff atkPercent = 10%, final atk = 1 - 1 = 0
+
+    if (originStat > 0 && change == 0) {
+      change = 1; // ensure at least 1 unit change
+    }
+
+    return percentChange > 0 ? int16(change) : -int16(change);
+}
+
 
   /// @dev Get buff sp (can be negative)
   function getBuffSp(uint256 characterId) public view returns (int8 sp) {
@@ -75,10 +85,9 @@ library CharacterBuffUtils {
       uint256 buffId = charBuff.buffIds[i];
       if (buffId == 0) continue;
 
-      if (BuffItemInfo.getBuffType(buffId) != BuffType.StatsModify) continue;
-      uint8 buffSp = BuffStat.getSp(buffId);
-      bool isGained = BuffStat.getIsGained(buffId);
-      sp += isGained ? int8(buffSp) : -int8(buffSp);
+      if (BuffItemInfoV2.getBuffType(buffId) != BuffType.StatsModify) continue;
+      int8 buffSp = BuffStatV2.getSp(buffId);
+      sp += buffSp;
     }
   }
 }

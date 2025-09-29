@@ -200,6 +200,7 @@ library Errors {
   error ConsumeSystem_TooManyTargets(uint256 numInput, uint8 allowedNumTarget);
   error ConsumeSystem_CannotTargetRestrictLocation();
   error ConsumeSystem_DuplicateTarget();
+  error ConsumeSystem_SelfCastOnly(uint256 itemId);
 
   /* -------------------------------------------------------------------------- */
   /*                               StorageSystem                                */
