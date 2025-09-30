@@ -7,6 +7,7 @@ import { ItemType } from "@codegen/common.sol";
 import { WorldFixture, SpawnSystemFixture, MoveSystemFixture } from "@fixtures/index.sol";
 import { InventoryItemUtils } from "@utils/InventoryItemUtils.sol";
 import { console2 } from "forge-std/console2.sol";
+import { TargetItemData } from "@systems/app/ConsumeSystem.sol";
 
 abstract contract CraftSystemFixture is WorldFixture, SpawnSystemFixture, MoveSystemFixture {
   function setUp() public virtual override(WorldFixture, SpawnSystemFixture, MoveSystemFixture) {
@@ -115,6 +116,40 @@ contract CraftSystemTest is CraftSystemFixture {
     vm.startPrank(worldDeployer);
     CharPerk.setLevel(characterId, ItemType.StoneHammer, 5);
     CharPerk.setLevel(characterId, ItemType.FishingRod, 6);
+    vm.stopPrank();
+
+    vm.startPrank(player);
+    world.app__craftItem(characterId, 1, itemRecipeID, 1);
+    vm.stopPrank();
+  }
+
+  function test_CraftBuffItem() external {
+    uint256 itemRecipeID = 356;
+
+    // give player enough resources
+    vm.startPrank(worldDeployer);
+    InventoryItemUtils.addItem(characterId, 1, 30);
+    InventoryItemUtils.addItem(characterId, 2, 30);
+    CharFund.setGold(characterId, 10);
+    vm.stopPrank();
+
+    vm.expectRevert(); // exceed max buff item
+    vm.startPrank(player);
+    world.app__craftItem(characterId, 1, itemRecipeID, 5);
+    vm.stopPrank();
+
+    vm.startPrank(player);
+    world.app__craftItem(characterId, 1, itemRecipeID, 3);
+    vm.stopPrank();
+
+    TargetItemData memory targetData;
+    targetData.targetPlayers = new uint256[](1);
+    targetData.targetPlayers[0] = characterId;
+    targetData.x = 30;
+    targetData.y = -36;
+
+    vm.startPrank(player);
+    world.app__consumeItem(characterId, itemRecipeID, 1, targetData);
     vm.stopPrank();
 
     vm.startPrank(player);

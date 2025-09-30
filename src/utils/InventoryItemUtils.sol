@@ -1,7 +1,8 @@
 pragma solidity >=0.8.24;
 
-import { CharOtherItem } from "@codegen/index.sol";
-import { CharacterWeightUtils } from "@utils/CharacterWeightUtils.sol";
+import { CharOtherItem, BuffItemInfoV2, CharBuffCounter, Item } from "@codegen/index.sol";
+import { ItemType, BuffType } from "@codegen/common.sol";
+import { CharacterWeightUtils } from "./CharacterWeightUtils.sol";
 import { Errors } from "@common/Errors.sol";
 
 library InventoryItemUtils {
@@ -71,6 +72,7 @@ library InventoryItemUtils {
 
   function _updateItem(uint256 characterId, uint256 itemId, uint32 changeAmount, bool isReduce) private {
     if (changeAmount == 0) return;
+    _checkAndUpdateBuffItemCount(characterId, itemId, changeAmount, isReduce);
     uint32 currentAmount = CharOtherItem.getAmount(characterId, itemId);
     uint32 newAmount;
     if (isReduce) {
@@ -87,5 +89,30 @@ library InventoryItemUtils {
     } else {
       CharOtherItem.setAmount(characterId, itemId, newAmount);
     }
+  }
+
+  function _checkAndUpdateBuffItemCount(uint256 characterId, uint256 itemId, uint32 changeAmount, bool isReduce) private {
+    if (Item.getItemType(itemId) != ItemType.BuffItem) {
+      return;
+    }
+    BuffType buffType = BuffItemInfoV2.getBuffType(itemId);
+    if (buffType == BuffType.ExpAmplify) { // we don't limit exp amplify buff item
+      return;
+    }
+    uint32 count = CharBuffCounter.getCount(itemId, buffType);
+    uint32 newCount;
+    if (isReduce) {
+      if (changeAmount > count) {
+        newCount = 0;
+      } else {
+        newCount = count - changeAmount;
+      }
+    } else {
+      newCount = count + changeAmount;
+    }
+    if (newCount > 3) {
+      revert Errors.Inventory_ExceedMaxBuffItem(characterId, itemId, newCount);
+    }
+    CharBuffCounter.setCount(itemId, buffType, newCount);
   }
 }

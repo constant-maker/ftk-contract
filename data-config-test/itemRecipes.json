@@ -4029,6 +4029,20 @@
         }
       ],
       "goldCost": 280
+    },
+    "356": {
+      "itemId": 356,
+      "ingredients": [
+        {
+          "amount": 1,
+          "id": 1
+        },
+        {
+          "amount": 2,
+          "id": 2
+        }
+      ],
+      "goldCost": 1
     }
   }
 }

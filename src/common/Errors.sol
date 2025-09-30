@@ -223,6 +223,7 @@ library Errors {
   /*                               Inventory                                    */
   /* -------------------------------------------------------------------------- */
   error Inventory_ExceedItemBalance(uint256 characterId, uint256 itemId, uint32 currentAmount, uint32 requireAmount);
+  error Inventory_ExceedMaxBuffItem(uint256 characterId, uint256 itemId, uint32 currentAmount);
 
   /* -------------------------------------------------------------------------- */
   /*                               NpcShopSystem                                */
