@@ -91,6 +91,8 @@
   "buffTypes": {
     "None": 0,
     "StatsModify": 1,
-    "ExpAmplify": 2
+    "ExpAmplify": 2,
+    "InstantDamage": 3,
+    "InstantHeal": 4
   }
 }

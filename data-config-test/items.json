@@ -5497,15 +5497,15 @@
       "buffInfo": {
         "type": 1,
         "range": 3,
+        "numTarget": 1,
         "duration": 300
       },
       "statsModify": {
-        "atkPercent": 10,
-        "defPercent": 0,
-        "agiPercent": 20,
+        "atkPercent": 50,
+        "defPercent": -100,
+        "agiPercent": 0,
         "ms": 5,
-        "sp": 1,
-        "isGained": true
+        "sp": 1
       }
     },
     "357": {
@@ -5519,15 +5519,15 @@
       "buffInfo": {
         "type": 1,
         "range": 3,
+        "numTarget": 1,
         "duration": 300
       },
       "statsModify": {
         "atkPercent": 10,
         "defPercent": 0,
         "agiPercent": 20,
-        "ms": 3,
-        "sp": 0,
-        "isGained": false
+        "ms": -3,
+        "sp": 0
       }
     },
     "358": {
@@ -5541,6 +5541,8 @@
       "buffInfo": {
         "type": 2,
         "range": 0,
+        "numTarget": 1,
+        "selfCastOnly": true,
         "duration": 300
       },
       "expAmplify": {
@@ -5549,31 +5551,41 @@
     },
     "359": {
       "id": 359,
-      "type": 24,
+      "type": 28,
       "category": 2,
       "tier": 7,
       "weight": 1,
       "name": "Destruction Meteorite",
       "desc": "A fragment of a fallen star, said to enhance destructive powers.",
-      "skillInfo": {
-        "dmg": 200,
+      "buffInfo": {
+        "type": 3,
         "range": 10,
         "numTarget": 10,
+        "selfCastOnly": false,
+        "duration": 0
+      },
+      "dmgBuffInfo": {
+        "dmg": 200,
         "isAbsDmg": false
       }
     },
     "360": {
       "id": 360,
-      "type": 24,
+      "type": 28,
       "category": 2,
       "tier": 7,
       "weight": 1,
       "name": "Destruction Meteorite",
       "desc": "A fragment of a fallen star, said to enhance destructive powers.",
-      "skillInfo": {
-        "dmg": 200,
+      "buffInfo": {
+        "type": 3,
         "range": 10,
         "numTarget": 10,
+        "selfCastOnly": false,
+        "duration": 0
+      },
+      "dmgBuffInfo": {
+        "dmg": 200,
         "isAbsDmg": true
       }
     }

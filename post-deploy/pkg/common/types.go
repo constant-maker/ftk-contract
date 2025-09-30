@@ -25,17 +25,21 @@ type Item struct {
 	EquipmentInfo *EquipmentInfo `json:"equipmentInfo,omitempty"`
 	HealingInfo   *HealingInfo   `json:"healingInfo,omitempty"`
 	CardInfo      *CardInfo      `json:"cardInfo,omitempty"`
-	SkillInfo     *SkillItemInfo `json:"skillInfo,omitempty"`
-	BuffInfo      *BuffItemInfo  `json:"buffInfo,omitempty"`
-	ExpAmplify    *ExpAmplify    `json:"expAmplify,omitempty"`
-	StatsModify   *StatsModify   `json:"statsModify,omitempty"`
+	BuffInfo      *BuffItemInfo  `json:"buffInfo,omitempty"` // all general buff info
+	// specific buff info based on buff type
+	// only one of the following can be set
+	// if none is set, it means it's a general buff with no specific effect
+	DmgBuffInfo *DmgBuffInfo `json:"dmgBuffInfo,omitempty"`
+	ExpAmplify  *ExpAmplify  `json:"expAmplify,omitempty"`
+	StatsModify *StatsModify `json:"statsModify,omitempty"`
 }
 
 type BuffItemInfo struct {
-	Type      int  `json:"type"`
-	Range     uint `json:"range"`
-	Duration  int  `json:"duration"` // seconds
-	NumTarget int  `json:"numTarget"`
+	Type         int  `json:"type"`
+	Range        uint `json:"range"`
+	Duration     int  `json:"duration"` // seconds
+	SelfCastOnly bool `json:"selfCastOnly"`
+	NumTarget    int  `json:"numTarget"`
 }
 
 type ExpAmplify struct {
@@ -45,19 +49,16 @@ type ExpAmplify struct {
 }
 
 type StatsModify struct {
-	AtkPercent int  `json:"atkPercent"`
-	DefPercent int  `json:"defPercent"`
-	AgiPercent int  `json:"agiPercent"`
-	Ms         int8 `json:"ms"`       // flat value
-	Sp         int8 `json:"sp"`       // flat value
-	IsGained   bool `json:"isGained"` // true means the stats is gained, false means the stats is reduced
+	AtkPercent int16 `json:"atkPercent"`
+	DefPercent int16 `json:"defPercent"`
+	AgiPercent int16 `json:"agiPercent"`
+	Ms         int8  `json:"ms"` // flat value
+	Sp         int8  `json:"sp"` // flat value
 }
 
-type SkillItemInfo struct {
-	Dmg       int  `json:"dmg"` // percent
-	NumTarget int  `json:"numTarget"`
-	Range     uint `json:"range"`    // range
-	IsAbsDmg  bool `json:"isAbsDmg"` // true means absolute damage, false means percentage damage
+type DmgBuffInfo struct {
+	Dmg      int  `json:"dmg"`      // percent
+	IsAbsDmg bool `json:"isAbsDmg"` // true means absolute damage, false means percentage damage
 }
 
 type CardInfo struct {

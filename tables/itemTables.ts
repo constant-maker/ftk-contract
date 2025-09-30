@@ -52,35 +52,25 @@ const ITEM_TABLES: any = {
     },
     key: ['itemId'],
   },
-  SkillItemInfo: {
+  BuffItemInfoV2: {
     schema: {
       itemId: "uint256",
-      dmg: "uint32",
-      range: "uint16",
-      numTarget: "uint8",
-      isAbsDmg: "bool",
-    },
-    key: ['itemId'],
-  },
-  BuffItemInfo: {
-    schema: {
-      itemId: "uint256",
-      range: "uint16", // range to cast
+      range: "uint16", // range to cast in tile units
       duration: "uint32", // in seconds
       numTarget: "uint8",
+      selfCastOnly: "bool",
       buffType: "BuffType",
     },
     key: ['itemId'],
   },
-  BuffStat: {
+  BuffStatV2: {
     schema: {
       itemId: "uint256",
-      atkPercent: "uint16", 
-      defPercent: "uint16", 
-      agiPercent: "uint16",
-      sp: "uint8", // flat, modify the max sp
-      ms: "uint8", // flat, modify the movement speed
-      isGained: "bool",
+      atkPercent: "int16", 
+      defPercent: "int16", 
+      agiPercent: "int16",
+      sp: "int8", // flat, modify the max sp
+      ms: "int8", // flat, modify the movement speed
     },
     key: ['itemId'],
   },
@@ -90,6 +80,14 @@ const ITEM_TABLES: any = {
       farmingPerkAmp: "uint16", // these values are percentages, e.g., 200 means 2x
       pveExpAmp: "uint16",
       pvePerkAmp: "uint16",
+    },
+    key: ['itemId'],
+  },
+  BuffDmg: {
+    schema: {
+      itemId: "uint256",
+      dmg: "uint32",
+      isAbsDmg: "bool",
     },
     key: ['itemId'],
   },

@@ -60,6 +60,7 @@ library Errors {
   error MoveSystem_CannotConfirmMove();
   error MoveSystem_NeedConfirmMove();
   error MoveSystem_MovePositionError(int32 x, int32 y, int32 newX, int32 newY);
+  error MoveSystem_RootedCannotMove(uint16 absSpeedBuff);
 
   /* -------------------------------------------------------------------------- */
   /*                               Farming system                               */
@@ -200,6 +201,7 @@ library Errors {
   error ConsumeSystem_TooManyTargets(uint256 numInput, uint8 allowedNumTarget);
   error ConsumeSystem_CannotTargetRestrictLocation();
   error ConsumeSystem_DuplicateTarget();
+  error ConsumeSystem_SelfCastOnly(uint256 itemId);
 
   /* -------------------------------------------------------------------------- */
   /*                               StorageSystem                                */
@@ -221,6 +223,7 @@ library Errors {
   /*                               Inventory                                    */
   /* -------------------------------------------------------------------------- */
   error Inventory_ExceedItemBalance(uint256 characterId, uint256 itemId, uint32 currentAmount, uint32 requireAmount);
+  error Inventory_ExceedMaxBuffItem(uint256 characterId, uint256 itemId, uint32 currentAmount);
 
   /* -------------------------------------------------------------------------- */
   /*                               NpcShopSystem                                */

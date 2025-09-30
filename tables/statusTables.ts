@@ -1,3 +1,5 @@
+import { count } from "console";
+
 const STATUS_TABLES: any = {
   CharDebuff: { // deprecated, use CharBuff instead
     schema: {
@@ -14,6 +16,14 @@ const STATUS_TABLES: any = {
       expireTimes: "uint256[2]",
     },
     key: ['characterId'],
+  },
+  CharBuffCounter: { // count the number of buff item in inventory
+    schema: {
+      characterId: "uint256",
+      buffType: "BuffType",
+      count: "uint32",
+    },
+    key: ['characterId', 'buffType'],
   },
 }
 

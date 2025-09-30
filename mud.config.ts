@@ -51,7 +51,7 @@ export default defineWorld({
     EntityType: ["Character", "Monster"],
     EffectType: ["None", "Burn", "Poison", "Frostbite", "Stun"],
     RoleType: ["None", "VaultKeeper", "KingGuard"],
-    BuffType: ["None", "StatsModify", "ExpAmplify"],
+    BuffType: ["None", "StatsModify", "ExpAmplify", "InstantDamage", "InstantHeal"],
   },
   tables: {
     Unmovable: {

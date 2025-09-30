@@ -6,14 +6,14 @@ import {
   CharStats,
   Item,
   ItemData,
-  BuffItemInfo,
-  BuffItemInfoData,
+  BuffItemInfoV2,
+  BuffItemInfoV2Data,
   BuffExp,
   BuffExpData,
-  BuffStat,
-  BuffStatData,
-  SkillItemInfo,
-  SkillItemInfoData,
+  BuffStatV2,
+  BuffStatV2Data,
+  BuffDmg,
+  BuffDmgData,
   RestrictLocV2,
   CharPositionData
 } from "@codegen/index.sol";
@@ -23,6 +23,7 @@ import { WelcomeSystemFixture } from "@fixtures/WelcomeSystemFixture.sol";
 import { InventoryItemUtils } from "@utils/InventoryItemUtils.sol";
 import { CharacterPositionUtils } from "@utils/CharacterPositionUtils.sol";
 import { console2 } from "forge-std/console2.sol";
+import { TargetItemData } from "@systems/app/ConsumeSystem.sol";
 
 contract ConsumeSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture {
   address player = makeAddr("player");
@@ -84,8 +85,10 @@ contract ConsumeSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFix
     CharCurrentStats.setHp(characterId, 1);
     vm.stopPrank();
 
+    TargetItemData memory targetData;
+
     vm.startPrank(player);
-    world.app__consumeItems(characterId, healPotionId, 1, 0);
+    world.app__consumeItem(characterId, healPotionId, 1, targetData);
     vm.stopPrank();
 
     uint32 currentHp = CharCurrentStats.getHp(characterId);
@@ -103,7 +106,7 @@ contract ConsumeSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFix
     vm.stopPrank();
 
     vm.startPrank(player);
-    world.app__consumeItems(characterId, healPotionId, 1, 0);
+    world.app__consumeItem(characterId, healPotionId, 1, targetData);
     vm.stopPrank();
 
     currentHp = CharCurrentStats.getHp(characterId);
@@ -118,35 +121,45 @@ contract ConsumeSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFix
     world.app__eatBerries(characterId, berryId, 10);
     vm.stopPrank();
 
+    TargetItemData memory targetData;
+
     vm.expectRevert();
     vm.startPrank(player);
-    world.app__consumeItems(characterId, healPotionId, 2, 0);
+    world.app__consumeItem(characterId, healPotionId, 2, targetData);
     vm.stopPrank();
   }
 
   // test buff and skill item
 
   function test_ShouldHaveData() external {
-    SkillItemInfoData memory skillItemInfo = SkillItemInfo.get(360); // skill item
-    assertEq(skillItemInfo.dmg, 200);
-    assertEq(skillItemInfo.range, 10);
-    assertEq(skillItemInfo.numTarget, 10);
-    assertTrue(skillItemInfo.isAbsDmg);
 
-    BuffItemInfoData memory buffItemInfo = BuffItemInfo.get(358); // exp buff
+    BuffItemInfoV2Data memory buffItemInfo = BuffItemInfoV2.get(360); // instant dmg buff
+
+    assertEq(uint8(buffItemInfo.buffType), uint8(BuffType.InstantDamage));
+    assertEq(buffItemInfo.range, 10);
+    assertEq(buffItemInfo.numTarget, 10);
+    assertFalse(buffItemInfo.selfCastOnly);
+
+
+    BuffDmgData memory buffDmg = BuffDmg.get(360); // skill item
+    assertEq(buffDmg.dmg, 200);
+    assertTrue(buffDmg.isAbsDmg);
+
+    buffItemInfo = BuffItemInfoV2.get(358); // exp buff
     assertEq(uint8(buffItemInfo.buffType), uint8(BuffType.ExpAmplify));
     assertEq(buffItemInfo.range, 0);
     assertEq(buffItemInfo.duration, 300);
+    assertEq(buffItemInfo.selfCastOnly, true);
+
     BuffExpData memory buffExpData = BuffExp.get(358);
     assertEq(buffExpData.farmingPerkAmp, 120);
 
-    BuffStatData memory buffStatData = BuffStat.get(356); // stat buff
-    assertEq(buffStatData.atkPercent, 10);
-    assertEq(buffStatData.defPercent, 0);
-    assertEq(buffStatData.agiPercent, 20);
+    BuffStatV2Data memory buffStatData = BuffStatV2.get(356); // stat buff
+    assertEq(buffStatData.atkPercent, 50);
+    assertEq(buffStatData.defPercent, -100);
+    assertEq(buffStatData.agiPercent, 0);
     assertEq(buffStatData.ms, 5);
     assertEq(buffStatData.sp, 1);
-    assertTrue(buffStatData.isGained);
   }
 
   function test_ActiveSkillItem() external {
@@ -155,8 +168,8 @@ contract ConsumeSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFix
     console2.log("char position y", charPosition.y);
     vm.startPrank(worldDeployer);
     RestrictLocV2.set(charPosition.x, charPosition.y, 1, true);
-    InventoryItemUtils.addItem(characterId, 360, 1); // skill item with abs dmg
-    InventoryItemUtils.addItem(characterId, 359, 1); // skill item with percentage dmg
+    InventoryItemUtils.addItem(characterId, 360, 2); // instant dmg item with abs dmg
+    InventoryItemUtils.addItem(characterId, 359, 1); // instant dmg item with percentage dmg
     CharacterPositionUtils.moveToLocation(characterId2, charPosition.x, charPosition.y + 1);
     CharCurrentStats.setHp(characterId2, 150);
     CharCurrentStats.setAtk(characterId, 30);
@@ -165,18 +178,32 @@ contract ConsumeSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFix
     uint256[] memory targetPlayers = new uint256[](1);
     targetPlayers[0] = characterId2;
 
+    TargetItemData memory targetData;
+    targetData.targetPlayers = targetPlayers;
+    targetData.x = charPosition.x;
+    targetData.y = charPosition.y;
+
+    vm.expectRevert(); // amount must be 1
+    vm.startPrank(player);
+    world.app__consumeItem(characterId, 360, 2, targetData);
+    vm.stopPrank();
+
     vm.expectRevert(); // restrict location
     vm.startPrank(player);
-    world.app__castSkillItem(characterId, 360, charPosition.x, charPosition.y, targetPlayers);
+    world.app__consumeItem(characterId, 360, 1, targetData);
     vm.stopPrank();
 
-    vm.expectRevert(); // char2 is not in this position
+    uint32 char2Hp = CharCurrentStats.getHp(characterId2);
+    targetData.y = charPosition.y - 1;
     vm.startPrank(player);
-    world.app__castSkillItem(characterId, 360, charPosition.x, charPosition.y - 1, targetPlayers);
+    world.app__consumeItem(characterId, 360, 1, targetData);
     vm.stopPrank();
+    assertEq(CharOtherItem.getAmount(characterId, 360), 1);
+    assertEq(CharCurrentStats.getHp(characterId2), char2Hp); // char 2 is not in that position
 
+    targetData.y = charPosition.y + 1;
     vm.startPrank(player);
-    world.app__castSkillItem(characterId, 360, charPosition.x, charPosition.y + 1, targetPlayers);
+    world.app__consumeItem(characterId, 360, 1, targetData);
     vm.stopPrank();
 
     assertEq(CharOtherItem.getAmount(characterId, 360), 0);
