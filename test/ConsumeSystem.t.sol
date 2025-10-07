@@ -132,14 +132,12 @@ contract ConsumeSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFix
   // test buff and skill item
 
   function test_ShouldHaveData() external {
-
     BuffItemInfoV2Data memory buffItemInfo = BuffItemInfoV2.get(360); // instant dmg buff
 
     assertEq(uint8(buffItemInfo.buffType), uint8(BuffType.InstantDamage));
     assertEq(buffItemInfo.range, 10);
     assertEq(buffItemInfo.numTarget, 10);
     assertFalse(buffItemInfo.selfCastOnly);
-
 
     BuffDmgData memory buffDmg = BuffDmg.get(360); // skill item
     assertEq(buffDmg.dmg, 200);

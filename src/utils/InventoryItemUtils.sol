@@ -72,7 +72,7 @@ library InventoryItemUtils {
 
   function _updateItem(uint256 characterId, uint256 itemId, uint32 changeAmount, bool isReduce) private {
     if (changeAmount == 0) return;
-    _checkAndUpdateBuffItemCount(characterId, itemId, changeAmount, isReduce);
+    _checkItemLimit(characterId, itemId, changeAmount, isReduce);
     uint32 currentAmount = CharOtherItem.getAmount(characterId, itemId);
     uint32 newAmount;
     if (isReduce) {
@@ -91,28 +91,23 @@ library InventoryItemUtils {
     }
   }
 
-  function _checkAndUpdateBuffItemCount(uint256 characterId, uint256 itemId, uint32 changeAmount, bool isReduce) private {
-    if (Item.getItemType(itemId) != ItemType.BuffItem) {
-      return;
-    }
-    BuffType buffType = BuffItemInfoV2.getBuffType(itemId);
-    if (buffType == BuffType.ExpAmplify) { // we don't limit exp amplify buff item
-      return;
-    }
-    uint32 count = CharBuffCounter.getCount(itemId, buffType);
-    uint32 newCount;
-    if (isReduce) {
-      if (changeAmount > count) {
-        newCount = 0;
-      } else {
-        newCount = count - changeAmount;
-      }
-    } else {
-      newCount = count + changeAmount;
-    }
-    if (newCount > 3) {
+  function _checkItemLimit(uint256 characterId, uint256 itemId, uint32 changeAmount, bool isReduce) private {
+    ItemType itemType = Item.getItemType(itemId);
+    if (itemType != ItemType.BuffItem && itemType != ItemType.HealingItem) return;
+
+    BuffType buffType = itemType == ItemType.HealingItem ? BuffType.HealingPotion : BuffItemInfoV2.getBuffType(itemId);
+
+    if (buffType == BuffType.ExpAmplify) return;
+
+    uint32 count = CharBuffCounter.getCount(characterId, buffType);
+    uint32 newCount = isReduce ? (changeAmount > count ? 0 : count - changeAmount) : count + changeAmount;
+
+    if (buffType == BuffType.HealingPotion) {
+      if (newCount > 20) revert Errors.Inventory_ExceedMaxHealingItem(characterId, newCount);
+    } else if (newCount > 3) {
       revert Errors.Inventory_ExceedMaxBuffItem(characterId, itemId, newCount);
     }
-    CharBuffCounter.setCount(itemId, buffType, newCount);
+
+    CharBuffCounter.setCount(characterId, buffType, newCount);
   }
 }

@@ -10,12 +10,12 @@ import {
   CharBattle,
   PvP,
   PvPData,
-  PvPChallenge,
-  PvPChallengeData,
+  PvPChallengeV2,
+  PvPChallengeV2Data,
   PvPExtraV3,
   PvPExtraV3Data,
-  PvPExtra2,
-  PvPExtra2Data,
+  PvPExtra2V2,
+  PvPExtra2V2Data,
   PvPBattleCounter,
   TileInfo3,
   CharStats2,
@@ -254,15 +254,19 @@ contract PvPSystem is System, CharacterAccessControl {
   )
     private
   {
-    PvPChallengeData memory pvpChallenge = PvPChallengeData({
+    uint32[2] memory barriers;
+    barriers[0] = CharCStats2.getBarrier(attackerId);
+    barriers[1] = CharCStats2.getBarrier(defenderId);
+    PvPChallengeV2Data memory pvpChallenge = PvPChallengeV2Data({
       defenderId: defenderId,
       firstAttackerId: firstAttackerId,
       timestamp: block.timestamp,
       skillIds: skillIds,
       damages: damages,
-      hps: hps
+      hps: hps,
+      barriers: barriers
     });
-    PvPChallenge.set(attackerId, pvpChallenge);
+    PvPChallengeV2.set(attackerId, pvpChallenge);
   }
 
   function _storePvPExtraData(uint256 pvpId, uint256 attackerId, uint256 defenderId) private {
@@ -280,9 +284,14 @@ contract PvPSystem is System, CharacterAccessControl {
       equipmentIds: _mergeEquipmentIds(attackerEquipmentIds, defenderEquipmentIds)
     });
     PvPExtraV3.set(pvpId, pvpExtra);
-    PvPExtra2Data memory pvpExtra2 =
-      PvPExtra2Data({ attackerStats: _buildCharStats(attackerId), defenderStats: _buildCharStats(defenderId) });
-    PvPExtra2.set(pvpId, pvpExtra2);
+    CharPositionData memory attackerPosition = CharacterPositionUtils.currentPosition(attackerId);
+    PvPExtra2V2Data memory pvpExtra2 = PvPExtra2V2Data({
+      x: attackerPosition.x,
+      y: attackerPosition.y,
+      attackerStats: _buildCharStats(attackerId),
+      defenderStats: _buildCharStats(defenderId)
+    });
+    PvPExtra2V2.set(pvpId, pvpExtra2);
   }
 
   function _buildCharStats(uint256 characterId) private view returns (uint16[3] memory stats) {

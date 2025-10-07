@@ -112,7 +112,7 @@ library BattleUtils {
       getDamageMultiplier(attacker.advantageType, defender.advantageType);
     // bonus attack based on agility
     if (attacker.agi >= defender.agi + Config.BONUS_ATTACK_AGI_DIFF) {
-      handleFirstAttack(attacker, defender, dmgResult, attackerDmgMultiplier, attacker.agi - defender.agi);
+      handleFirstAttack(attacker, defender, dmgResult, attackerDmgMultiplier);
       if (defender.hp == 0) {
         hps[0] = attacker.hp;
         hps[1] = 0;
@@ -184,16 +184,21 @@ library BattleUtils {
     BattleInfo memory attacker,
     BattleInfo memory defender,
     uint32[11] memory dmgResult,
-    uint16 attackerDmgMultiplier,
-    uint16 bonusDmg
+    uint16 attackerDmgMultiplier
   )
     public
     view
   {
     SkillEffectData memory debuff;
     SkillV2Data memory normalAtk = SkillV2.get(Config.NORMAL_ATTACK_SKILL_ID);
+    uint16 agiDiff = attacker.agi - defender.agi;
+    uint16 bonusDmg = agiDiff * 2;
     normalAtk.damage += bonusDmg;
+    uint16 currentDef = defender.def;
+    // agi difference will reduce defender's defense for this turn only
+    defender.def = defender.def > agiDiff ? defender.def - agiDiff : 0;
     doTurnFight(attacker, defender, normalAtk, dmgResult, attackerDmgMultiplier, 0, debuff, debuff);
+    defender.def = currentDef;
   }
 
   /// @dev calculate damage multiplier (%) based on advantage type

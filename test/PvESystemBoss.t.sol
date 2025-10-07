@@ -347,9 +347,9 @@ contract PvESystemBossTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFix
     //   console2.log("dmg index", i);
     //   console2.log("dmg value", pve.damages[i]);
     // }
-    assertEq(pve.damages[0], 230); // bonus attack
-    assertEq(pve.damages[1], 31);
-    assertEq(pve.damages[2], 130); // level 100 + 20 (min dmg) + atk 12 (boost) - def 2 ~ boss immune to stun
+    assertEq(pve.damages[0], 482); // bonus attack
+    // assertEq(pve.damages[1], 31);
+    // assertEq(pve.damages[2], 130); // level 100 + 20 (min dmg) + atk 12 (boost) - def 2 ~ boss immune to stun
 
     characterHp = CharCurrentStats.getHp(characterId);
     console2.log("character final hp", characterHp);

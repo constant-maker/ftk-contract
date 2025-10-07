@@ -168,7 +168,8 @@ contract ConsumeSystem is System, CharacterAccessControl {
       currentBuff.expireTimes[1] = newExpire; // refresh duration
       // swap to first slot
       (currentBuff.buffIds[0], currentBuff.buffIds[1]) = (currentBuff.buffIds[1], currentBuff.buffIds[0]);
-      (currentBuff.expireTimes[0], currentBuff.expireTimes[1]) = (currentBuff.expireTimes[1], currentBuff.expireTimes[0]);
+      (currentBuff.expireTimes[0], currentBuff.expireTimes[1]) =
+        (currentBuff.expireTimes[1], currentBuff.expireTimes[0]);
     } else {
       if (
         currentBuff.buffIds[1] == 0 || currentBuff.expireTimes[1] < block.timestamp

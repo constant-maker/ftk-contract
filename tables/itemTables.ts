@@ -125,6 +125,13 @@ const ITEM_TABLES: any = {
     },
     key: ['id'],
   },
+  Equipment2: {
+    schema: {
+      id: "uint256",
+      authorId: "uint256", // the original creator of the equipment
+    },
+    key: ['id'],
+  },
   EquipmentSupply: {
     schema: {
       totalSupply: "uint256",
