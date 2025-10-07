@@ -71,17 +71,25 @@ contract EquipmentSystem is System, CharacterAccessControl {
       revert Errors.EquipmentSystem_UnmatchEquipmentId(targetEquipmentId, materialEquipmentId);
     }
     uint8 nextLevel = targetEquipmentData.level + 1;
-    if (nextLevel > 3) {
-      revert Errors.EquipmentSystem_ExceedMaxLevel(3);
-    }
+    _validateUpgradeLevel(nextLevel, targetEquipmentData.itemId);
     uint32 upgradeCost = _getUpgradeCost(targetEquipmentData.level, targetEquipmentData.itemId);
     CharacterFundUtils.decreaseGold(characterId, upgradeCost);
     InventoryEquipmentUtils.removeEquipment(characterId, materialEquipmentId, true);
     Equipment.setLevel(targetEquipmentId, nextLevel);
   }
 
+  function _validateUpgradeLevel(uint8 nextLevel, uint256 itemId) private view {
+    uint8 itemTier = Item.getTier(itemId);
+    if (itemTier < 7 && nextLevel > 4) {
+      revert Errors.EquipmentSystem_ExceedMaxLevel(4);
+    }
+    if (itemTier >= 7 && nextLevel > 3) {
+      revert Errors.EquipmentSystem_ExceedMaxLevel(3);
+    }
+  }
+
   function _getUpgradeCost(uint8 level, uint256 itemId) private view returns (uint32 cost) {
-    uint32 goldMultiply = 50;
+    uint32 goldMultiply = 20;
     uint8 itemTier = Item.getTier(itemId);
     if (itemTier >= 7) {
       goldMultiply = 100;

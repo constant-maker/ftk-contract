@@ -14,8 +14,8 @@ import {
   CharBattle,
   PvP,
   PvPData,
-  PvPChallenge,
-  PvPChallengeData,
+  PvPChallengeV2,
+  PvPChallengeV2Data,
   Equipment,
   TileInfo3,
   AllianceV2,
@@ -92,14 +92,14 @@ contract PvPSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
     assertEq(lastPvpId, 0);
 
     // char 2
-    PvPChallengeData memory pvpChallenge = PvPChallenge.get(characterId_2);
+    PvPChallengeV2Data memory pvpChallenge = PvPChallengeV2.get(characterId_2);
     assertEq(pvpChallenge.defenderId, 0);
     assertEq(pvpChallenge.firstAttackerId, 0);
     assertEq(pvpChallenge.hps[0], 0);
     assertEq(pvpChallenge.hps[1], 0);
 
     // char 1
-    pvpChallenge = PvPChallenge.get(characterId_1);
+    pvpChallenge = PvPChallengeV2.get(characterId_1);
     assertEq(pvpChallenge.defenderId, characterId_2);
     assertEq(pvpChallenge.firstAttackerId, characterId_1);
     assertEq(pvpChallenge.hps[0], characterHp_1);
@@ -672,7 +672,7 @@ contract PvPSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
     // update char 2 stats
     vm.startPrank(worldDeployer);
     CharCurrentStats.setAtk(characterId_1, 5000);
-    CharCurrentStats.setAgi(characterId_1, 5000);
+    CharCurrentStats.setAgi(characterId_1, 200);
 
     TileInfo3.setZoneType(20, -32, ZoneType.Green);
     TileInfo3.setKingdomId(20, -32, 1);
@@ -692,7 +692,7 @@ contract PvPSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
     TileInfo3.setKingdomId(20, -32, 2);
 
     CharCurrentStats.setAtk(characterId_3, 9000);
-    CharCurrentStats.setAgi(characterId_3, 9000);
+    CharCurrentStats.setAgi(characterId_3, 500);
     vm.stopPrank();
     // fight in ally safe zone, no king setting
     vm.warp(block.timestamp + 3);
@@ -793,7 +793,8 @@ contract PvPSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
 
     vm.warp(block.timestamp + 300);
     vm.startPrank(player_1);
-    world.app__consumeItem(characterId_1, 356, 1, targetData); // char 1, atk = 3 (2 + 50% of 2), def = 0 (4 - 100% of 4)
+    world.app__consumeItem(characterId_1, 356, 1, targetData); // char 1, atk = 3 (2 + 50% of 2), def = 0 (4 - 100% of
+      // 4)
     world.app__battlePvP(characterId_1, characterId_2);
     vm.stopPrank();
 
@@ -813,7 +814,6 @@ contract PvPSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
     assertEq(pvp.damages[0], 0); // no bonus attack
     assertEq(pvp.damages[1], 22); // atk 3 - def 2 + 20 + level 1 = 22
     assertEq(pvp.damages[2], 23); // atk 2 - def 0 + 20 + 1 = 23
-
 
     vm.warp(block.timestamp + 10);
     _moveToTheLocation(20, -32);

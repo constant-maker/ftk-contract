@@ -151,6 +151,7 @@ contract PvESystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
 
     vm.startPrank(worldDeployer);
     CharCurrentStats.setAgi(characterId, 100);
+    MonsterStats.setHp(monsterId, 1000);
     vm.stopPrank();
 
     uint32 characterHp = CharCurrentStats.getHp(characterId);
@@ -170,13 +171,13 @@ contract PvESystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
     for (uint256 i = 0; i < skills.length; i++) {
       assertEq(pve.characterSkillIds[i], skills[i]);
     }
-    assertEq(pve.damages[0], 43); // (atk 2 - def 1) + 20 + level 1 = 22
+    assertEq(pve.damages[0], 68); // (atk 2 - def 0) + 20 + level 1 = 23 * (100 + 99 * 2) / 100
     assertEq(pve.damages[1], 22); // (atk 2 - def 1) + 20 + level 1 = 22
     assertEq(pve.damages[2], 24); // (atk 5 - def 2) + 20 + level 1 = 24
-    assertEq(pve.damages[6], 0); // monster died
+    assertEq(pve.damages[6], 24); // monster died
 
     uint32 characterCurrentHp = CharCurrentStats.getHp(characterId);
-    assertEq(characterCurrentHp, 76);
+    assertEq(characterCurrentHp, 100); // died
   }
 
   function test_BattleCharacterWinWithEquipment() external {
