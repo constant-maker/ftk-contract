@@ -193,8 +193,8 @@
       "stats": {
         "hp": 20000,
         "atk": 225,
-        "def": 100,
-        "agi": 180,
+        "def": 90,
+        "agi": 150,
         "sp": 5
       },
       "bossInfo": {
@@ -962,15 +962,15 @@
       "exp": 30000,
       "perkExp": 15000,
       "stats": {
-        "hp": 30000,
+        "hp": 35000,
         "atk": 300,
-        "def": 150,
-        "agi": 250,
+        "def": 120,
+        "agi": 210,
         "sp": 5
       },
       "bossInfo": {
         "barrier": 1000,
-        "hp": 30000,
+        "hp": 35000,
         "crystal": 1000,
         "respawnDuration": 64800,
         "berserkHpThreshold": 33,
