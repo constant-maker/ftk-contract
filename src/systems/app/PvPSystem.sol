@@ -122,10 +122,10 @@ contract PvPSystem is System, CharacterAccessControl {
     }
 
     uint32 defenderFame = CharStats2.getFame(defenderId);
-    if (attackerHp == 0 && attackerFame >= 1020) {
+    if (attackerHp == 0 && attackerFame >= 1070) {
       _setFame(attackerId, defenderId, -20, 10); // fame transfer from attacker to defender
       _checkAndGiveAchievement(defenderId, zoneInfo);
-    } else if (defenderHp == 0 && defenderFame >= 1020 && zoneType != ZoneType.Green) {
+    } else if (defenderHp == 0 && defenderFame >= 1070 && zoneType != ZoneType.Green) {
       _setFame(attackerId, defenderId, 10, -20); // fame transfer from defender to attacker
       _checkAndGiveAchievement(attackerId, zoneInfo);
     }

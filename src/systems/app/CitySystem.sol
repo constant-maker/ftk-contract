@@ -20,7 +20,7 @@ import { CharacterPositionUtils, CharacterRoleUtils, CharacterFundUtils, MapUtil
 import { Errors } from "@common/Errors.sol";
 
 contract CitySystem is System, CharacterAccessControl {
-  uint32 constant TELEPORT_COST = 20;
+  uint32 constant TELEPORT_COST = 15;
   uint32 constant UPGRADE_GOLD_COST = 5000;
 
   function upgradeCity(uint256 characterId, uint256 cityId) public onlyAuthorizedWallet(characterId) {

@@ -38,39 +38,23 @@ contract TileSystem is System, CharacterAccessControl {
   uint32 constant TILE_OCCUPATION_RESOURCE_AMOUNT = 10;
   uint32 constant DZ_TILE_LOCKED_DURATION = 28_800; // 8 hours (second)
   uint32 constant TILE_LOCKED_DURATION = 7200; // 2 hours (second)
-  uint32 constant TILE_OCCUPATION_DURATION_REQUIRE = 300; // 5 minutes (second)
+  uint32 constant DZ_TILE_OCCUPATION_DURATION_REQUIRE = 300; // 5 minutes (second)
+  uint32 constant TILE_OCCUPATION_DURATION_REQUIRE = 120; // 2 minutes (second)
 
   /// @dev Occupy a tile to expand your kingdom area
   function occupyTile(uint256 characterId) public onlyAuthorizedWallet(characterId) {
     CharPositionData memory position = CharacterPositionUtils.currentPosition(characterId);
     int32 x = position.x;
     int32 y = position.y;
-    if (NonOccupyTile.get(x, y)) {
-      revert Errors.TileSystem_CannotOccupyThisTile(x, y);
-    }
-    uint256 occupiedTime = TileInfo3.getOccupiedTime(x, y);
-    ZoneType zoneType = TileInfo3.getZoneType(x, y);
-    uint32 tileLockedDuration = TILE_LOCKED_DURATION;
-    if (zoneType == ZoneType.Black) {
-      tileLockedDuration = DZ_TILE_LOCKED_DURATION;
-    }
-    if (block.timestamp < occupiedTime + tileLockedDuration) {
-      revert Errors.TileSystem_TileIsLocked(x, y, occupiedTime);
-    }
     uint8 kingdomId = CharInfo.getKingdomId(characterId);
     uint8 tileKingdomId = TileInfo3.getKingdomId(x, y);
     if (tileKingdomId == kingdomId) {
       revert Errors.TileSystem_TileAlreadyOccupied(x, y);
     }
-    if (tileKingdomId != 0 && tileKingdomId != kingdomId) {
-      uint256 arriveTimestamp = CharNextPosition.getArriveTimestamp(characterId);
-      if (arriveTimestamp + TILE_OCCUPATION_DURATION_REQUIRE >= block.timestamp) {
-        revert Errors.TileSystem_TileIsNotReadyToOccupy(x, y, arriveTimestamp);
-      }
-    }
-    _checkTileNearBy(x, y, kingdomId);
+    ZoneType zoneType = TileInfo3.getZoneType(x, y);
+    _validateOccupation(characterId, tileKingdomId, kingdomId, position, zoneType);
     CharacterFundUtils.decreaseGold(characterId, TILE_OCCUPATION_COST);
-    uint256[] memory itemIds = _getRequiredItemIds(x, y, zoneType);
+    uint256[] memory itemIds = _getRequiredItemIds(position, zoneType);
     uint32[] memory amounts = new uint32[](itemIds.length);
     for (uint256 i = 0; i < itemIds.length; i++) {
       amounts[i] = TILE_OCCUPATION_RESOURCE_AMOUNT;
@@ -125,7 +109,45 @@ contract TileSystem is System, CharacterAccessControl {
     }
   }
 
-  function _checkTileNearBy(int32 x, int32 y, uint8 kingdomId) private view {
+  function _validateOccupation(
+    uint256 characterId,
+    uint8 tileKingdomId,
+    uint8 kingdomId,
+    CharPositionData memory position,
+    ZoneType zoneType
+  )
+    private
+    view
+  {
+    int32 x = position.x;
+    int32 y = position.y;
+    if (NonOccupyTile.get(x, y)) {
+      revert Errors.TileSystem_CannotOccupyThisTile(x, y);
+    }
+    uint256 occupiedTime = TileInfo3.getOccupiedTime(x, y);
+    uint32 tileLockedDuration = TILE_LOCKED_DURATION;
+    if (zoneType == ZoneType.Black) {
+      tileLockedDuration = DZ_TILE_LOCKED_DURATION;
+    }
+    if (block.timestamp < occupiedTime + tileLockedDuration) {
+      revert Errors.TileSystem_TileIsLocked(x, y, occupiedTime);
+    }
+    if (tileKingdomId != 0 && tileKingdomId != kingdomId) {
+      uint256 arriveTimestamp = CharNextPosition.getArriveTimestamp(characterId);
+      uint32 requireDuration = TILE_OCCUPATION_DURATION_REQUIRE;
+      if (zoneType == ZoneType.Black) {
+        requireDuration = DZ_TILE_OCCUPATION_DURATION_REQUIRE;
+      }
+      if (arriveTimestamp + requireDuration >= block.timestamp) {
+        revert Errors.TileSystem_TileIsNotReadyToOccupy(x, y, arriveTimestamp);
+      }
+    }
+    _checkTileNearBy(kingdomId, position);
+  }
+
+  function _checkTileNearBy(uint8 kingdomId, CharPositionData memory position) private view {
+    int32 x = position.x;
+    int32 y = position.y;
     if (TileInfo3.getKingdomId(x - 1, y) == kingdomId) {
       return;
     }
@@ -141,9 +163,9 @@ contract TileSystem is System, CharacterAccessControl {
     revert Errors.TileSystem_NoValidTileNearBy(x, y);
   }
 
-  function _getRequiredItemIds(int32 x, int32 y, ZoneType zoneType) private view returns (uint256[] memory) {
+  function _getRequiredItemIds(CharPositionData memory position, ZoneType zoneType) private view returns (uint256[] memory) {
     uint256[] memory itemIds = new uint256[](3);
-    if ((x + y) % 2 == 0) {
+    if ((position.x + position.y) % 2 == 0) {
       if (zoneType == ZoneType.Black) {
         itemIds[0] = 73; // Wood tier 6
         itemIds[1] = 81; // Stone tier 6
