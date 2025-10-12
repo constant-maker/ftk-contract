@@ -163,7 +163,14 @@ contract TileSystem is System, CharacterAccessControl {
     revert Errors.TileSystem_NoValidTileNearBy(x, y);
   }
 
-  function _getRequiredItemIds(CharPositionData memory position, ZoneType zoneType) private view returns (uint256[] memory) {
+  function _getRequiredItemIds(
+    CharPositionData memory position,
+    ZoneType zoneType
+  )
+    private
+    view
+    returns (uint256[] memory)
+  {
     uint256[] memory itemIds = new uint256[](3);
     if ((position.x + position.y) % 2 == 0) {
       if (zoneType == ZoneType.Black) {

@@ -261,6 +261,7 @@ library Errors {
   /*                               RebornSystem                                 */
   /* -------------------------------------------------------------------------- */
   error RebornSystem_MustBeMaxLevel(uint256 characterId);
+  error RebornSystem_ExceedMaxReborn(uint16 toReborn);
 
   /* -------------------------------------------------------------------------- */
   /*                               MarketSystem                                 */

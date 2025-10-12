@@ -157,6 +157,7 @@ library MarketSystemUtils {
   }
 
   function updateCityVault(uint256 cityId, uint32 gainedGold) public {
+    if (gainedGold == 0) return;
     uint32 currentGold = CityVault2.getGold(cityId);
     CityVault2.setGold(cityId, currentGold + gainedGold);
   }
@@ -170,8 +171,7 @@ library MarketSystemUtils {
     }
     uint8 fee = MarketFee.getFee(marketKingdomId, characterKingdomId);
     if (fee == 0) {
-      // default fee
-      fee = Config.DEFAULT_MARKET_FEE;
+      return 0;
     }
     return value * uint32(fee) / 100;
   }

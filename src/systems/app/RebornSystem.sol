@@ -22,6 +22,9 @@ import { SlotType } from "@codegen/common.sol";
 import { Errors, Config } from "@common/index.sol";
 
 contract RebornSystem is System, CharacterAccessControl {
+  uint16 constant MAX_REBORN = 10; // Current reborn limit
+
+  /// @dev reborn character to level 1 with extra stat points
   function reborn(uint256 characterId) public onlyAuthorizedWallet(characterId) {
     // require character level 99
     uint16 currentLevel = CharStats.getLevel(characterId);
@@ -29,6 +32,9 @@ contract RebornSystem is System, CharacterAccessControl {
       revert Errors.RebornSystem_MustBeMaxLevel(characterId);
     }
     uint16 rebornNum = CharReborn.get(characterId) + 1;
+    if (rebornNum > MAX_REBORN) {
+      revert Errors.RebornSystem_ExceedMaxReborn(rebornNum);
+    }
     (uint256[] memory itemIds, uint32[] memory amounts) = _requiredResources(rebornNum);
     InventoryItemUtils.removeItems(characterId, itemIds, amounts);
     // unequip all equipment
