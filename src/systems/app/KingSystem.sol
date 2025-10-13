@@ -60,9 +60,21 @@ contract KingSystem is CharacterAccessControl, System {
     if (kingElection.candidateIds.length == 0) {
       uint256 nextElectionTimestamp = KingElection.getTimestamp(kingdomId) + KingSystemUtils.TERM_DURATION;
       KingElection.setTimestamp(kingdomId, nextElectionTimestamp);
+      return;
     }
 
     uint256 topCandidateId = KingSystemUtils.findTopCandidate(kingElection.candidateIds, kingElection.votesReceived);
+    // remove new king from previous role if any
+    RoleType currentRole = CharRole.get(topCandidateId);
+    if (currentRole != RoleType.None) {
+      CharRole.deleteRecord(topCandidateId);
+      CharacterRoleUtils.updateRoleAchievement(topCandidateId, currentRole, true);
+      uint32 currentCount = CharRoleCounter.getCount(kingdomId, currentRole);
+      if (currentCount > 0) {
+        CharRoleCounter.setCount(kingdomId, currentRole, currentCount - 1);
+      }
+    }
+    // assign new king
     KingSystemUtils.assignKing(kingdomId, kingElection.kingId, topCandidateId);
   }
 

@@ -166,9 +166,6 @@ library MarketSystemUtils {
   function calculateOrderFee(uint256 character, uint256 cityId, uint32 value) public view returns (uint32) {
     uint8 characterKingdomId = CharInfo.getKingdomId(character);
     uint8 marketKingdomId = City.getKingdomId(cityId);
-    if (characterKingdomId == marketKingdomId) {
-      return value * uint32(Config.DEFAULT_MARKET_FEE) / 100;
-    }
     uint8 fee = MarketFee.getFee(marketKingdomId, characterKingdomId);
     if (fee == 0) {
       return 0;
