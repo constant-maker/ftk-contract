@@ -121,6 +121,8 @@ contract PvPSystem is System, CharacterAccessControl {
       return;
     }
 
+    if (zoneInfo.attackerKingdomId == zoneInfo.defenderKingdomId) return; // same kingdom, no fame change
+
     uint32 defenderFame = CharStats2.getFame(defenderId);
     if (attackerHp == 0 && attackerFame >= 1070) {
       _setFame(attackerId, defenderId, -20, 10); // fame transfer from attacker to defender
