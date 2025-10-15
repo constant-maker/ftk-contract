@@ -202,6 +202,18 @@
         "agi": 3
       },
       "color": "#e0c000"
+    },
+    "19": {
+      "id": 19,
+      "name": "Champion of the Realm",
+      "content": "You've earned the title of Champion, and can claim yourself to be the strongest. No one in the realm will dare challenge your authority, until the next tournament begins.",
+      "instruction": "Be the last one standing in FTK's PvP Tournament on our discord.",
+      "stats": {
+        "atk": 0,
+        "def": 0,
+        "agi": 0
+      },
+      "color": "#e0c000"
     }
   }
 }
