@@ -21,6 +21,7 @@ import {
   City,
   MarketFee,
   FillOrder,
+  FillOrder2,
   FillCounter,
   CityVault2,
   Kingdom
@@ -139,7 +140,7 @@ library MarketSystemUtils {
     }
   }
 
-  function storeFillOrder(OrderData memory order, uint256 takerId, uint32 fillAmount) public {
+  function storeFillOrder(OrderData memory order, uint256 takerId, TakeOrderParams memory top) public {
     uint256 newFillOrderId = FillCounter.get() + 1;
     FillCounter.set(newFillOrderId);
     bool isBuy = order.isBuy ? false : true; // reverse isBuy for fill order
@@ -149,11 +150,12 @@ library MarketSystemUtils {
       takerId,
       order.equipmentId,
       order.itemId,
-      fillAmount,
+      top.amount,
       order.unitPrice,
       isBuy,
       block.timestamp
     );
+    FillOrder2.set(newFillOrderId, top.orderId, order.characterId, top.equipmentIds);
   }
 
   function updateCityVault(uint256 cityId, uint32 gainedGold) public {

@@ -1,4 +1,4 @@
-import { i } from "@latticexyz/store/dist/store-CDoWdOke";
+import { e, i } from "@latticexyz/store/dist/store-CDoWdOke";
 import exp from "constants";
 
 const MARKET_TABLES: any = {
@@ -46,6 +46,15 @@ const MARKET_TABLES: any = {
       filledAt: "uint256",
     },
     key: ['id'],
+  },
+  FillOrder2: {
+    schema: {
+      fillOrderId: "uint256",
+      makerOrderId: "uint256",
+      makerId: "uint256",
+      equipmentIds: "uint256[]",
+    },
+    key: ['fillOrderId'],
   },
   MarketFee: {
     schema: {

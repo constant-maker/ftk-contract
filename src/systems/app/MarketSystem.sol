@@ -78,7 +78,7 @@ contract MarketSystem is System, CharacterAccessControl {
       }
       Order2.setUpdateTime(top.orderId, block.timestamp);
       // store fill order
-      MarketSystemUtils.storeFillOrder(order, characterId, top.amount);
+      MarketSystemUtils.storeFillOrder(order, characterId, top);
     }
   }
 
