@@ -158,7 +158,6 @@ library Errors {
   error PvP_NotReadyToBeAttacked(uint256 nextTimeToBeAttacked);
   error PvP_NotSamePosition(int32 attackerX, int32 attackerY, int32 defenderX, int32 defenderY);
   error PvP_CannotBattleInCapitalCity();
-  error PvP_CannotBattleInCity();
 
   /* -------------------------------------------------------------------------- */
   /*                                DropSystem                                  */

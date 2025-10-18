@@ -408,10 +408,5 @@ contract PvPSystem is System, CharacterAccessControl {
     uint8 cityKingdomId = City.getKingdomId(cityId);
     uint8 attackerKingdomId = CharInfo.getKingdomId(attackerId);
     uint8 defenderKingdomId = CharInfo.getKingdomId(defenderId);
-
-    // Block only when both players share a kingdom AND that kingdom owns the city
-    if (attackerKingdomId == defenderKingdomId && attackerKingdomId == cityKingdomId) {
-      revert Errors.PvP_CannotBattleInCity();
-    }
   }
 }
