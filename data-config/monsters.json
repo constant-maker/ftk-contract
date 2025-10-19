@@ -1034,7 +1034,7 @@
         "barrier": 100,
         "hp": 5000,
         "crystal": 200,
-        "respawnDuration": 1800,
+        "respawnDuration": 3600,
         "berserkHpThreshold": 25,
         "boostPercent": 25,
         "lastDefeatedTime": 0
@@ -1065,7 +1065,7 @@
         "barrier": 100,
         "hp": 5000,
         "crystal": 200,
-        "respawnDuration": 1800,
+        "respawnDuration": 3600,
         "berserkHpThreshold": 25,
         "boostPercent": 25,
         "lastDefeatedTime": 0
@@ -1096,7 +1096,7 @@
         "barrier": 100,
         "hp": 5000,
         "crystal": 200,
-        "respawnDuration": 1800,
+        "respawnDuration": 3600,
         "berserkHpThreshold": 25,
         "boostPercent": 25,
         "lastDefeatedTime": 0
@@ -1127,7 +1127,7 @@
         "barrier": 100,
         "hp": 5000,
         "crystal": 200,
-        "respawnDuration": 1800,
+        "respawnDuration": 3600,
         "berserkHpThreshold": 25,
         "boostPercent": 25,
         "lastDefeatedTime": 0
