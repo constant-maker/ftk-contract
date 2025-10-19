@@ -1160,7 +1160,7 @@
         "atk": 20,
         "def": 47,
         "agi": 13,
-        "hp": 320,
+        "hp": 380,
         "ms": 0,
         "weight": 0,
         "barrier": 45
@@ -3450,7 +3450,7 @@
         "atk": 21,
         "def": 7,
         "agi": 39,
-        "hp": 90,
+        "hp": 105,
         "ms": 0,
         "weight": 0,
         "barrier": 0
@@ -3538,7 +3538,7 @@
         "atk": 24,
         "def": 11,
         "agi": 58,
-        "hp": 130,
+        "hp": 150,
         "ms": 0,
         "weight": 0,
         "barrier": 0
@@ -3582,7 +3582,7 @@
         "atk": 15,
         "def": 21,
         "agi": 29,
-        "hp": 110,
+        "hp": 130,
         "ms": 0,
         "weight": 0,
         "barrier": 0
@@ -3670,7 +3670,7 @@
         "atk": 17,
         "def": 33,
         "agi": 42,
-        "hp": 145,
+        "hp": 170,
         "ms": 0,
         "weight": 0,
         "barrier": 0
@@ -3714,7 +3714,7 @@
         "atk": 12,
         "def": 37,
         "agi": 9,
-        "hp": 160,
+        "hp": 190,
         "ms": 0,
         "weight": 0,
         "barrier": 0
@@ -3758,7 +3758,7 @@
         "atk": 6,
         "def": 39,
         "agi": 11,
-        "hp": 190,
+        "hp": 230,
         "ms": 0,
         "weight": 0,
         "barrier": 0
@@ -3802,7 +3802,7 @@
         "atk": 17,
         "def": 40,
         "agi": 16,
-        "hp": 255,
+        "hp": 305,
         "ms": 0,
         "weight": 0,
         "barrier": 30
@@ -5084,7 +5084,7 @@
         "atk": 47,
         "def": 16,
         "agi": 81,
-        "hp": 175,
+        "hp": 210,
         "ms": 0,
         "weight": 0,
         "barrier": 0
@@ -5126,7 +5126,7 @@
         "atk": 35,
         "def": 8,
         "agi": 59,
-        "hp": 120,
+        "hp": 140,
         "ms": 0,
         "weight": 0,
         "barrier": 0
@@ -5147,7 +5147,7 @@
         "atk": 31,
         "def": 51,
         "agi": 58,
-        "hp": 225,
+        "hp": 250,
         "ms": 0,
         "weight": 0,
         "barrier": 0
@@ -5189,7 +5189,7 @@
         "atk": 20,
         "def": 38,
         "agi": 39,
-        "hp": 190,
+        "hp": 230,
         "ms": 0,
         "weight": 0,
         "barrier": 0
@@ -5210,7 +5210,7 @@
         "atk": 19,
         "def": 75,
         "agi": 17,
-        "hp": 370,
+        "hp": 440,
         "ms": 0,
         "weight": 0,
         "barrier": 60
@@ -5231,7 +5231,7 @@
         "atk": 15,
         "def": 62,
         "agi": 12,
-        "hp": 255,
+        "hp": 305,
         "ms": 0,
         "weight": 0,
         "barrier": 0
@@ -5252,7 +5252,7 @@
         "atk": 12,
         "def": 64,
         "agi": 15,
-        "hp": 225,
+        "hp": 265,
         "ms": 0,
         "weight": 0,
         "barrier": 0
@@ -5294,7 +5294,7 @@
         "atk": 33,
         "def": 64,
         "agi": 67,
-        "hp": 255,
+        "hp": 305,
         "ms": 0,
         "weight": 0,
         "barrier": 0
@@ -5336,7 +5336,7 @@
         "atk": 23,
         "def": 50,
         "agi": 44,
-        "hp": 190,
+        "hp": 230,
         "ms": 0,
         "weight": 0,
         "barrier": 0
@@ -5564,7 +5564,7 @@
         "atk": 15,
         "def": 44,
         "agi": 45,
-        "hp": 190,
+        "hp": 230,
         "ms": 0,
         "weight": 0,
         "barrier": 0
@@ -5648,7 +5648,7 @@
         "atk": 21,
         "def": 86,
         "agi": 17,
-        "hp": 480,
+        "hp": 570,
         "ms": 0,
         "weight": 0,
         "barrier": 75
@@ -5690,7 +5690,445 @@
         "atk": 35,
         "def": 15,
         "agi": 65,
-        "hp": 210,
+        "hp": 250,
+        "ms": 0,
+        "weight": 0,
+        "barrier": 0
+      }
+    },
+    "366": {
+      "id": 366,
+      "type": 13,
+      "category": 1,
+      "tier": 7,
+      "weight": 7,
+      "name": "Mantle of the Frosthowler",
+      "desc": "Crafted from ice-slick fur and spirit-bound threads, this mantle cloaks its wearer in the breath of frozen forests and the silence before a kill.",
+      "equipmentInfo": {
+        "slotType": 2,
+        "advantageType": 0,
+        "twoHanded": false,
+        "atk": 53,
+        "def": 21,
+        "agi": 93,
+        "hp": 240,
+        "ms": 0,
+        "weight": 0,
+        "barrier": 0
+      }
+    },
+    "367": {
+      "id": 367,
+      "type": 11,
+      "category": 1,
+      "tier": 7,
+      "weight": 22,
+      "name": "Frostmaw's Scimitars",
+      "desc": "Twin scimitars forged from the chilled remains of the Frostmaw's fangs. These blades are swift, silent, and cold enough to still a heartbeat mid-breath.",
+      "equipmentInfo": {
+        "slotType": 0,
+        "advantageType": 3,
+        "twoHanded": true,
+        "atk": 305,
+        "def": 22,
+        "agi": 76,
+        "hp": 0,
+        "ms": 0,
+        "weight": 0,
+        "barrier": 0
+      }
+    },
+    "368": {
+      "id": 368,
+      "type": 20,
+      "category": 1,
+      "tier": 7,
+      "weight": 7,
+      "name": "Crown of the Iron Reign",
+      "desc": "This regal helm bears the scars of countless wars and the presence of one born to conquer them all.",
+      "equipmentInfo": {
+        "slotType": 3,
+        "advantageType": 0,
+        "twoHanded": false,
+        "atk": 15,
+        "def": 76,
+        "agi": 15,
+        "hp": 285,
+        "ms": 0,
+        "weight": 0,
+        "barrier": 0
+      }
+    },
+    "369": {
+      "id": 369,
+      "type": 21,
+      "category": 1,
+      "tier": 7,
+      "weight": 7,
+      "name": "Warfiend's Tread",
+      "desc": "Every step in these boots echoes like a war drum, and no terrain dares to resist their path.",
+      "equipmentInfo": {
+        "slotType": 4,
+        "advantageType": 0,
+        "twoHanded": false,
+        "atk": 15,
+        "def": 75,
+        "agi": 15,
+        "hp": 305,
+        "ms": 0,
+        "weight": 0,
+        "barrier": 0
+      }
+    },
+    "370": {
+      "id": 370,
+      "type": 15,
+      "category": 1,
+      "tier": 7,
+      "weight": 6,
+      "name": "Zephyr Boots",
+      "desc": "Light as mist and twice as swift, it rides the wind with every step.",
+      "equipmentInfo": {
+        "slotType": 4,
+        "advantageType": 0,
+        "twoHanded": false,
+        "atk": 31,
+        "def": 13,
+        "agi": 64,
+        "hp": 0,
+        "ms": 1,
+        "weight": 0,
+        "barrier": 0
+      }
+    },
+    "371": {
+      "id": 371,
+      "type": 8,
+      "category": 1,
+      "tier": 7,
+      "weight": 11,
+      "name": "Gloompiercer",
+      "desc": "A long, obsidian-tipped spear built to pierce through shadow and silence alike. A weapon of unyielding intent.",
+      "equipmentInfo": {
+        "slotType": 0,
+        "advantageType": 1,
+        "twoHanded": false,
+        "atk": 191,
+        "def": 9,
+        "agi": 32,
+        "hp": 0,
+        "ms": 0,
+        "weight": 0,
+        "barrier": 0
+      }
+    },
+    "372": {
+      "id": 372,
+      "type": 9,
+      "category": 1,
+      "tier": 7,
+      "weight": 22,
+      "name": "Stormstring Recurve",
+      "desc": "This elegant warbow bends like lightning and sings each arrow with the fury of the skies.",
+      "equipmentInfo": {
+        "slotType": 0,
+        "advantageType": 3,
+        "twoHanded": true,
+        "atk": 302,
+        "def": 42,
+        "agi": 59,
+        "hp": 0,
+        "ms": 0,
+        "weight": 0,
+        "barrier": 0
+      }
+    },
+    "373": {
+      "id": 373,
+      "type": 7,
+      "category": 1,
+      "tier": 7,
+      "weight": 11,
+      "name": "Cleaver of Souls",
+      "desc": "An axe rumored to drink the strength of its victims, leaving only silence where fury once roared.",
+      "equipmentInfo": {
+        "slotType": 0,
+        "advantageType": 2,
+        "twoHanded": false,
+        "atk": 175,
+        "def": 38,
+        "agi": 19,
+        "hp": 0,
+        "ms": 0,
+        "weight": 0,
+        "barrier": 0
+      }
+    },
+    "374": {
+      "id": 374,
+      "type": 6,
+      "category": 1,
+      "tier": 7,
+      "weight": 11,
+      "name": "Blade of the Banished",
+      "desc": "A finely tempered blade that slices not only flesh but the will to fight, left behind by its enigmatic wielder.",
+      "equipmentInfo": {
+        "slotType": 0,
+        "advantageType": 0,
+        "twoHanded": false,
+        "atk": 172,
+        "def": 30,
+        "agi": 30,
+        "hp": 0,
+        "ms": 0,
+        "weight": 0,
+        "barrier": 0
+      }
+    },
+    "375": {
+      "id": 375,
+      "type": 10,
+      "category": 1,
+      "tier": 6,
+      "weight": 10,
+      "name": "Staff of the Starfallen",
+      "desc": "Carved from a sky-touched tree, this staff hums with celestial energy drawn from beyond the mortal veil.",
+      "equipmentInfo": {
+        "slotType": 0,
+        "advantageType": 3,
+        "twoHanded": false,
+        "atk": 98,
+        "def": 25,
+        "agi": 7,
+        "hp": 0,
+        "ms": 0,
+        "weight": 0,
+        "barrier": 0
+      }
+    },
+    "376": {
+      "id": 376,
+      "type": 11,
+      "category": 1,
+      "tier": 6,
+      "weight": 17,
+      "name": "Blades of the Howling Veil",
+      "desc": "Twin fangs that blur in motion, whispering winds of death before the blood has time to fall.",
+      "equipmentInfo": {
+        "slotType": 0,
+        "advantageType": 3,
+        "twoHanded": true,
+        "atk": 165,
+        "def": 16,
+        "agi": 79,
+        "hp": 0,
+        "ms": 0,
+        "weight": 0,
+        "barrier": 0
+      }
+    },
+    "377": {
+      "id": 377,
+      "type": 21,
+      "category": 1,
+      "tier": 6,
+      "weight": 6,
+      "name": "Master Siege Greaves",
+      "desc": "Forged for siege champions, these boots carry the weight of war and leave cracks in stone where they tread.",
+      "equipmentInfo": {
+        "slotType": 4,
+        "advantageType": 0,
+        "twoHanded": false,
+        "atk": 10,
+        "def": 43,
+        "agi": 12,
+        "hp": 250,
+        "ms": 0,
+        "weight": 0,
+        "barrier": 0
+      }
+    },
+    "378": {
+      "id": 378,
+      "type": 18,
+      "category": 1,
+      "tier": 6,
+      "weight": 5,
+      "name": "Shadowrunner Boots",
+      "desc": "These supple boots grip the ground like a cat's paws, perfect for silent steps and sudden kills.",
+      "equipmentInfo": {
+        "slotType": 4,
+        "advantageType": 0,
+        "twoHanded": false,
+        "atk": 15,
+        "def": 27,
+        "agi": 27,
+        "hp": 0,
+        "ms": 1,
+        "weight": 0,
+        "barrier": 0
+      }
+    },
+    "379": {
+      "id": 379,
+      "type": 13,
+      "category": 1,
+      "tier": 6,
+      "weight": 6,
+      "name": "Mantle of Whispers",
+      "desc": "Stitched with ethereal thread, this robe amplifies unseen forces and dampens the sound of breath and blade.",
+      "equipmentInfo": {
+        "slotType": 2,
+        "advantageType": 0,
+        "twoHanded": false,
+        "atk": 27,
+        "def": 13,
+        "agi": 66,
+        "hp": 190,
+        "ms": 0,
+        "weight": 0,
+        "barrier": 0
+      }
+    },
+    "380": {
+      "id": 380,
+      "type": 23,
+      "category": 2,
+      "tier": 7,
+      "weight": 2,
+      "name": "Eternal Frozen Cube",
+      "desc": "A swirling core of icy breath, this essence carries the primal spirit of Beowulf. Frozen in fury, eternal in will.",
+      "resourceInfo": {
+        "type": 6
+      }
+    },
+    "381": {
+      "id": 381,
+      "type": 23,
+      "category": 2,
+      "tier": 3,
+      "weight": 1,
+      "name": "Stolen Gold Bar",
+      "desc": "A warped gold bar etched with goblin runes, prized by the Hoardmaster. A relic of theft and unrelenting greed.",
+      "resourceInfo": {
+        "type": 6
+      }
+    },
+    "382": {
+      "id": 382,
+      "type": 23,
+      "category": 2,
+      "tier": 3,
+      "weight": 1,
+      "name": "Iceformed Gem",
+      "desc": "A shimmering ice crystal pulsing with wild winter energy, said to form only when a snow rabbit leaps between storms.",
+      "resourceInfo": {
+        "type": 6
+      }
+    },
+    "383": {
+      "id": 383,
+      "type": 23,
+      "category": 2,
+      "tier": 3,
+      "weight": 1,
+      "name": "Veiled Essense",
+      "desc": "A fragment of pure shadow drawn from Nyxwing’s chest, weightless and whispering echoes of the past.",
+      "resourceInfo": {
+        "type": 6
+      }
+    },
+    "384": {
+      "id": 384,
+      "type": 23,
+      "category": 2,
+      "tier": 3,
+      "weight": 1,
+      "name": "Foxfire Ember",
+      "desc": "A dancing flame trapped in a translucent pearl, left behind when Kitsindra vanishes in a trail of scorched laughter.",
+      "resourceInfo": {
+        "type": 6
+      }
+    },
+    "385": {
+      "id": 385,
+      "type": 6,
+      "category": 1,
+      "tier": 3,
+      "weight": 15,
+      "name": "Goldcleaver",
+      "desc": "A jagged blade forged from melted greed and stolen steel, said to hum when near treasure or betrayal.",
+      "equipmentInfo": {
+        "slotType": 0,
+        "advantageType": 0,
+        "twoHanded": true,
+        "atk": 42,
+        "def": 13,
+        "agi": 12,
+        "hp": 0,
+        "ms": 0,
+        "weight": 0,
+        "barrier": 0
+      }
+    },
+    "386": {
+      "id": 386,
+      "type": 7,
+      "category": 1,
+      "tier": 3,
+      "weight": 15,
+      "name": "Wintermaw",
+      "desc": "An axe kissed by blizzards, its edge biting colder and deeper the swifter the swing.",
+      "equipmentInfo": {
+        "slotType": 0,
+        "advantageType": 2,
+        "twoHanded": true,
+        "atk": 43,
+        "def": 18,
+        "agi": 6,
+        "hp": 0,
+        "ms": 0,
+        "weight": 0,
+        "barrier": 0
+      }
+    },
+    "387": {
+      "id": 387,
+      "type": 8,
+      "category": 1,
+      "tier": 3,
+      "weight": 15,
+      "name": "Embered Pike",
+      "desc": "A blazing spear that leaves trails of flame in its thrust, forged in the echo of Kitsindra’s final spark.",
+      "equipmentInfo": {
+        "slotType": 0,
+        "advantageType": 1,
+        "twoHanded": true,
+        "atk": 42,
+        "def": 5,
+        "agi": 20,
+        "hp": 0,
+        "ms": 0,
+        "weight": 0,
+        "barrier": 0
+      }
+    },
+    "388": {
+      "id": 388,
+      "type": 16,
+      "category": 1,
+      "tier": 3,
+      "weight": 6,
+      "name": "Shadowglide Harness",
+      "desc": "This dark, supple armor bends light and sound around its wearer.",
+      "equipmentInfo": {
+        "slotType": 2,
+        "advantageType": 0,
+        "twoHanded": false,
+        "atk": 2,
+        "def": 21,
+        "agi": 21,
+        "hp": 50,
         "ms": 0,
         "weight": 0,
         "barrier": 0

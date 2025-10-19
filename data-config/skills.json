@@ -1114,6 +1114,133 @@
         20
       ],
       "hasEffect": false
+    },
+    "68": {
+      "id": 68,
+      "name": "Skullsplitter Drop",
+      "desc": "Leaps into the air and crashes down with crushing force, dealing heavy damage and stunning enemies at the impact point.",
+      "damage": 150,
+      "sp": 1,
+      "perkItemTypes": [
+        0
+      ],
+      "requiredPerkLevels": [
+        20
+      ],
+      "hasEffect": false
+    },
+    "69": {
+      "id": 69,
+      "name": "Wildwheel Cleave",
+      "desc": "Spins violently with bladed limbs, cleaving through enemies in a wide arc and leaving deep, bleeding wounds.",
+      "damage": 200,
+      "sp": 2,
+      "perkItemTypes": [
+        0
+      ],
+      "requiredPerkLevels": [
+        20
+      ],
+      "hasEffect": false
+    },
+    "70": {
+      "id": 70,
+      "name": "Snowburst Shards",
+      "desc": "Unleashes a burst of razor-sharp ice shards, dealing damage and slowing all nearby enemies.",
+      "damage": 150,
+      "sp": 1,
+      "perkItemTypes": [
+        0
+      ],
+      "requiredPerkLevels": [
+        20
+      ],
+      "hasEffect": false
+    },
+    "71": {
+      "id": 71,
+      "name": "Nocturne Pulse",
+      "desc": "Releases a wave of dark energy that ripples through enemies, dealing magic damage and briefly silencing their abilities.",
+      "damage": 150,
+      "sp": 3,
+      "perkItemTypes": [
+        0
+      ],
+      "requiredPerkLevels": [
+        20
+      ],
+      "hasEffect": true,
+      "effect": {
+        "damage": 100,
+        "effectType": 2,
+        "turns": 3
+      }
+    },
+    "72": {
+      "id": 72,
+      "name": "Ravaging Slashes",
+      "desc": "The beast unleashes a relentless flurry of bladed strikes, tearing through enemies with brutal speed.",
+      "damage": 350,
+      "sp": 2,
+      "perkItemTypes": [
+        0
+      ],
+      "requiredPerkLevels": [
+        20
+      ],
+      "hasEffect": false
+    },
+    "73": {
+      "id": 73,
+      "name": "Absolute Zero",
+      "desc": "Unleashes a freezing burst that drops all heat to nothing, dealing massive damage and freezing enemies in place.",
+      "damage": 200,
+      "sp": 5,
+      "perkItemTypes": [
+        0
+      ],
+      "requiredPerkLevels": [
+        20
+      ],
+      "hasEffect": true,
+      "effect": {
+        "damage": 500,
+        "effectType": 3,
+        "turns": 1
+      }
+    },
+    "74": {
+      "id": 74,
+      "name": "Shatterfang Rush",
+      "desc": "The wolf launches into a rapid assault, slashing with freezing fangs that tear through enemies and leave them chilled and bleeding.",
+      "damage": 400,
+      "sp": 3,
+      "perkItemTypes": [
+        0
+      ],
+      "requiredPerkLevels": [
+        20
+      ],
+      "hasEffect": true,
+      "effect": {
+        "damage": 100,
+        "effectType": 3,
+        "turns": 1
+      }
+    },
+    "75": {
+      "id": 75,
+      "name": "Arctic Frenzy",
+      "desc": "Enters a savage flurry, delivering rapid, frost-laced strikes that shred enemies and may inflict freeze.",
+      "damage": 200,
+      "sp": 2,
+      "perkItemTypes": [
+        0
+      ],
+      "requiredPerkLevels": [
+        20
+      ],
+      "hasEffect": false
     }
   }
 }

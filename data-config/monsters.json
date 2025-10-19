@@ -977,6 +977,161 @@
         "boostPercent": 40,
         "lastDefeatedTime": 1752257662
       }
+    },
+    "43": {
+      "id": 43,
+      "name": "Beowulf, the Frostmaw",
+      "desc": "One of the four legendary beastman warlords. Beowulf, the Frostmaw rules the tundra wastes with frozen wrath and fangs sharper than the mountain chill.",
+      "kingdom": 0,
+      "tier": 7,
+      "isBoss": true,
+      "levels": [90, 90],
+      "grow": 0,
+      "skillIds": [72, 73, 0, 74, 0],
+      "itemIds": [380, 74, 82, 90, 98, 106, 114],
+      "itemAmounts": [1, 50, 50, 50, 50, 50, 50],
+      "exp": 60000,
+      "perkExp": 30000,
+      "stats": {
+        "hp": 100000,
+        "atk": 350,
+        "def": 150,
+        "agi": 250,
+        "sp": 5
+      },
+      "bossInfo": {
+        "barrier": 1500,
+        "hp": 100000,
+        "crystal": 20000,
+        "respawnDuration": 360000,
+        "berserkHpThreshold": 30,
+        "boostPercent": 50,
+        "lastDefeatedTime": 0
+      }
+    },
+    "44": {
+      "id": 44,
+      "name": "Grimknuckle the Hoardmaster",
+      "desc": "Twisted by greed, Grimknuckle lords over his stolen treasures with a cackling fury and hidden traps.",
+      "kingdom": 0,
+      "tier": 3,
+      "isBoss": true,
+      "levels": [30, 30],
+      "grow": 0,
+      "skillIds": [68, 0, 69, 0, 0],
+      "itemIds": [381],
+      "itemAmounts": [1],
+      "exp": 300,
+      "perkExp": 150,
+      "stats": {
+        "hp": 5000,
+        "atk": 70,
+        "def": 20,
+        "agi": 35,
+        "sp": 5
+      },
+      "bossInfo": {
+        "barrier": 100,
+        "hp": 5000,
+        "crystal": 200,
+        "respawnDuration": 1800,
+        "berserkHpThreshold": 25,
+        "boostPercent": 25,
+        "lastDefeatedTime": 0
+      }
+    },
+    "45": {
+      "id": 45,
+      "name": "Eira the Frostbound",
+      "desc": "Don’t be fooled by her looks, Eira darts like a blizzard and strikes with ice-laced fury drawn from the heart of winter itself.",
+      "kingdom": 0,
+      "tier": 3,
+      "isBoss": true,
+      "levels": [30, 30],
+      "grow": 0,
+      "skillIds": [0, 70, 0, 75, 0],
+      "itemIds": [382],
+      "itemAmounts": [1],
+      "exp": 300,
+      "perkExp": 150,
+      "stats": {
+        "hp": 5000,
+        "atk": 42,
+        "def": 42,
+        "agi": 42,
+        "sp": 5
+      },
+      "bossInfo": {
+        "barrier": 100,
+        "hp": 5000,
+        "crystal": 200,
+        "respawnDuration": 1800,
+        "berserkHpThreshold": 25,
+        "boostPercent": 25,
+        "lastDefeatedTime": 0
+      }
+    },
+    "46": {
+      "id": 46,
+      "name": "Nyxwing, Herald of the Hollow",
+      "desc": "Nyxwing glides through darkness unseen, its shrieks unraveling courage and sound alike.",
+      "kingdom": 0,
+      "tier": 3,
+      "isBoss": true,
+      "levels": [30, 30],
+      "grow": 0,
+      "skillIds": [71, 0, 0, 0, 0],
+      "itemIds": [383],
+      "itemAmounts": [1],
+      "exp": 300,
+      "perkExp": 150,
+      "stats": {
+        "hp": 5000,
+        "atk": 60,
+        "def": 20,
+        "agi": 45,
+        "sp": 5
+      },
+      "bossInfo": {
+        "barrier": 100,
+        "hp": 5000,
+        "crystal": 200,
+        "respawnDuration": 1800,
+        "berserkHpThreshold": 25,
+        "boostPercent": 25,
+        "lastDefeatedTime": 0
+      }
+    },
+    "47": {
+      "id": 47,
+      "name": "Kitsindra, Flamebound Trickster",
+      "desc": "Wreathed in fire and illusion, Kitsindra dances through battle with emberstep grace and tails that blaze like falling stars.",
+      "kingdom": 0,
+      "tier": 3,
+      "isBoss": true,
+      "levels": [30, 30],
+      "grow": 0,
+      "skillIds": [45, 0, 0, 17, 0],
+      "itemIds": [384],
+      "itemAmounts": [1],
+      "exp": 300,
+      "perkExp": 150,
+      "stats": {
+        "hp": 5000,
+        "atk": 60,
+        "def": 35,
+        "agi": 35,
+        "sp": 5
+      },
+      "bossInfo": {
+        "barrier": 100,
+        "hp": 5000,
+        "crystal": 200,
+        "respawnDuration": 1800,
+        "berserkHpThreshold": 25,
+        "boostPercent": 25,
+        "lastDefeatedTime": 0
+      }
     }
   }
 }

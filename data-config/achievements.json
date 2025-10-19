@@ -214,6 +214,18 @@
         "agi": 0
       },
       "color": "#e0c000"
+    },
+    "20": {
+      "id": 20,
+      "name": "Moonblood Silencer",
+      "content": "You stood beneath the wild moon and spilled the blood of its champion.",
+      "instruction": "Defeat Beowulf the Frostmaw.",
+      "stats": {
+        "atk": 1,
+        "def": 1,
+        "agi": 1
+      },
+      "color": "#e0c000"
     }
   }
 }
