@@ -84,14 +84,14 @@ contract QuestSystem is System, CharacterAccessControl {
     if (lenResourceIds != lenAmounts) {
       revert Errors.QuestSystem_InvalidContributeQuest(lenResourceIds, lenAmounts);
     }
-    uint256 cityId = Npc.getCityId(npcId);
+    // uint256 cityId = Npc.getCityId(npcId);
     for (uint256 i; i < questContribute.itemIds.length; i++) {
       uint256 itemId = questContribute.itemIds[i];
       uint32 amount = questContribute.amounts[i];
       InventoryItemUtils.removeItem(characterId, itemId, amount);
       // update city vault
-      uint32 currentResourceAmount = CityVault.getAmount(cityId, itemId);
-      CityVault.setAmount(cityId, itemId, currentResourceAmount + amount);
+      // uint32 currentResourceAmount = CityVault.getAmount(cityId, itemId);
+      // CityVault.setAmount(cityId, itemId, currentResourceAmount + amount);
     }
     CharQuestStatus.set(characterId, questId, QuestStatusType.Done);
     _claimReward(characterId, questId);

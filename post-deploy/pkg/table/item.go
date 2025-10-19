@@ -71,6 +71,7 @@ func EquipmentItemInfo2V2CallData(equipmentInfo common.EquipmentInfo, itemId int
 	encodedLength := mud.PackedCounter{}
 	dynamicData := []byte{}
 	mt := mud.NewMudTable("EquipmentInfo2V2", "app", "")
+	// zap.S().Infow("equipment info v2", "itemId", itemId, "equipmentInfo", equipmentInfo)
 	return mt.SetRecordRawCalldata(keyTuple, staticData, encodedLength, dynamicData)
 }
 

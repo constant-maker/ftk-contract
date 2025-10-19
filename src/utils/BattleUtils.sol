@@ -192,7 +192,7 @@ library BattleUtils {
     SkillEffectData memory debuff;
     SkillV2Data memory normalAtk = SkillV2.get(Config.NORMAL_ATTACK_SKILL_ID);
     uint16 agiDiff = attacker.agi - defender.agi;
-    uint16 bonusDmg = uint16(uint32(agiDiff) * 125 / 100); // 1.25 agiDiff
+    uint16 bonusDmg = uint16(uint32(agiDiff) * 115 / 100); // 1.15 agiDiff
     normalAtk.damage += bonusDmg;
     uint16 currentDef = defender.def;
     // agi difference will reduce defender's defense for this turn only

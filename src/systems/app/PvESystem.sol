@@ -121,6 +121,8 @@ contract PvESystem is System, CharacterAccessControl {
           CharAchievementUtils.addAchievement(characterId, 4); // defeated the Ignis
         } else if (monsterId == 42) {
           CharAchievementUtils.addAchievement(characterId, 11); // defeated Kalyndra the Great Serpent
+        } else if (monsterId == 43) {
+          CharAchievementUtils.addAchievement(characterId, 20); // defeated Beowulf the Frostmaw
         }
       }
       if (_tryToLevelUp(characterId)) return; // if level up success character hp will be recover to max hp

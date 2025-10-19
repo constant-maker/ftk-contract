@@ -4109,11 +4109,6 @@
         "advantageType": 0
       },
       {
-        "monsterId": 38,
-        "level": 113,
-        "advantageType": 1
-      },
-      {
         "monsterId": 41,
         "level": 113,
         "advantageType": 3
@@ -5774,11 +5769,6 @@
         "advantageType": 0
       },
       {
-        "monsterId": 38,
-        "level": 113,
-        "advantageType": 2
-      },
-      {
         "monsterId": 41,
         "level": 112,
         "advantageType": 2
@@ -7351,11 +7341,6 @@
       {
         "monsterId": 27,
         "level": 79,
-        "advantageType": 3
-      },
-      {
-        "monsterId": 38,
-        "level": 110,
         "advantageType": 3
       },
       {
@@ -8957,11 +8942,6 @@
         "monsterId": 27,
         "level": 81,
         "advantageType": 2
-      },
-      {
-        "monsterId": 38,
-        "level": 112,
-        "advantageType": 0
       },
       {
         "monsterId": 41,
@@ -12227,11 +12207,6 @@
         "advantageType": 3
       },
       {
-        "monsterId": 38,
-        "level": 105,
-        "advantageType": 0
-      },
-      {
         "monsterId": 41,
         "level": 109,
         "advantageType": 0
@@ -13844,11 +13819,6 @@
       {
         "monsterId": 27,
         "level": 80,
-        "advantageType": 0
-      },
-      {
-        "monsterId": 38,
-        "level": 109,
         "advantageType": 0
       },
       {
@@ -15483,11 +15453,6 @@
         "advantageType": 1
       },
       {
-        "monsterId": 38,
-        "level": 106,
-        "advantageType": 0
-      },
-      {
         "monsterId": 41,
         "level": 109,
         "advantageType": 3
@@ -17046,11 +17011,6 @@
         "monsterId": 33,
         "level": 78,
         "advantageType": 1
-      },
-      {
-        "monsterId": 39,
-        "level": 118,
-        "advantageType": 2
       },
       {
         "monsterId": 41,
@@ -18737,11 +18697,6 @@
         "monsterId": 16,
         "level": 53,
         "advantageType": 1
-      },
-      {
-        "monsterId": 38,
-        "level": 103,
-        "advantageType": 0
       },
       {
         "monsterId": 41,
@@ -41052,11 +41007,6 @@
         "advantageType": 1
       },
       {
-        "monsterId": 39,
-        "level": 119,
-        "advantageType": 2
-      },
-      {
         "monsterId": 40,
         "level": 115,
         "advantageType": 3
@@ -53354,11 +53304,6 @@
         "advantageType": 3
       },
       {
-        "monsterId": 39,
-        "level": 116,
-        "advantageType": 0
-      },
-      {
         "monsterId": 40,
         "level": 120,
         "advantageType": 3
@@ -64686,11 +64631,6 @@
       },
       {
         "monsterId": 41,
-        "level": 120,
-        "advantageType": 3
-      },
-      {
-        "monsterId": 41,
         "level": 116,
         "advantageType": 2
       },
@@ -64709,11 +64649,6 @@
       {
         "monsterId": 38,
         "level": 117,
-        "advantageType": 2
-      },
-      {
-        "monsterId": 41,
-        "level": 120,
         "advantageType": 2
       },
       {
@@ -64745,11 +64680,6 @@
       },
       {
         "monsterId": 41,
-        "level": 115,
-        "advantageType": 2
-      },
-      {
-        "monsterId": 41,
         "level": 119,
         "advantageType": 3
       }
@@ -64764,11 +64694,6 @@
         "monsterId": 38,
         "level": 119,
         "advantageType": 3
-      },
-      {
-        "monsterId": 41,
-        "level": 117,
-        "advantageType": 2
       },
       {
         "monsterId": 41,
@@ -64799,11 +64724,6 @@
       },
       {
         "monsterId": 41,
-        "level": 119,
-        "advantageType": 2
-      },
-      {
-        "monsterId": 41,
         "level": 118,
         "advantageType": 1
       },
@@ -64826,11 +64746,6 @@
       },
       {
         "monsterId": 41,
-        "level": 120,
-        "advantageType": 2
-      },
-      {
-        "monsterId": 41,
         "level": 116,
         "advantageType": 3
       },
@@ -64844,11 +64759,6 @@
       {
         "monsterId": 27,
         "level": 79,
-        "advantageType": 2
-      },
-      {
-        "monsterId": 41,
-        "level": 119,
         "advantageType": 2
       },
       {
@@ -64872,11 +64782,6 @@
         "monsterId": 38,
         "level": 119,
         "advantageType": 2
-      },
-      {
-        "monsterId": 41,
-        "level": 118,
-        "advantageType": 3
       },
       {
         "monsterId": 41,
@@ -64907,11 +64812,6 @@
       },
       {
         "monsterId": 41,
-        "level": 119,
-        "advantageType": 1
-      },
-      {
-        "monsterId": 41,
         "level": 117,
         "advantageType": 2
       },
@@ -64934,11 +64834,6 @@
       },
       {
         "monsterId": 41,
-        "level": 119,
-        "advantageType": 2
-      },
-      {
-        "monsterId": 41,
         "level": 110,
         "advantageType": 3
       },
@@ -64957,11 +64852,6 @@
       {
         "monsterId": 27,
         "level": 85,
-        "advantageType": 2
-      },
-      {
-        "monsterId": 41,
-        "level": 116,
         "advantageType": 2
       },
       {
@@ -64993,11 +64883,6 @@
       },
       {
         "monsterId": 41,
-        "level": 116,
-        "advantageType": 2
-      },
-      {
-        "monsterId": 41,
         "level": 118,
         "advantageType": 3
       },
@@ -65016,11 +64901,6 @@
       {
         "monsterId": 27,
         "level": 86,
-        "advantageType": 0
-      },
-      {
-        "monsterId": 41,
-        "level": 116,
         "advantageType": 0
       },
       {
@@ -65052,11 +64932,6 @@
       },
       {
         "monsterId": 41,
-        "level": 117,
-        "advantageType": 0
-      },
-      {
-        "monsterId": 41,
         "level": 112,
         "advantageType": 0
       },
@@ -65084,11 +64959,6 @@
       },
       {
         "monsterId": 41,
-        "level": 118,
-        "advantageType": 0
-      },
-      {
-        "monsterId": 41,
         "level": 113,
         "advantageType": 3
       },
@@ -65108,11 +64978,6 @@
         "monsterId": 38,
         "level": 116,
         "advantageType": 1
-      },
-      {
-        "monsterId": 41,
-        "level": 117,
-        "advantageType": 0
       },
       {
         "monsterId": 41,
@@ -65165,11 +65030,6 @@
       },
       {
         "monsterId": 41,
-        "level": 116,
-        "advantageType": 1
-      },
-      {
-        "monsterId": 41,
         "level": 113,
         "advantageType": 0
       },
@@ -65201,11 +65061,6 @@
         "monsterId": 38,
         "level": 119,
         "advantageType": 3
-      },
-      {
-        "monsterId": 41,
-        "level": 117,
-        "advantageType": 2
       },
       {
         "monsterId": 41,
@@ -65323,11 +65178,6 @@
         "monsterId": 38,
         "level": 119,
         "advantageType": 3
-      },
-      {
-        "monsterId": 41,
-        "level": 120,
-        "advantageType": 0
       },
       {
         "monsterId": 41,
@@ -65459,11 +65309,6 @@
       {
         "monsterId": 38,
         "level": 120,
-        "advantageType": 0
-      },
-      {
-        "monsterId": 41,
-        "level": 118,
         "advantageType": 0
       },
       {
@@ -65605,11 +65450,6 @@
       },
       {
         "monsterId": 41,
-        "level": 118,
-        "advantageType": 1
-      },
-      {
-        "monsterId": 41,
         "level": 119,
         "advantageType": 3
       },
@@ -65649,11 +65489,6 @@
       },
       {
         "monsterId": 41,
-        "level": 120,
-        "advantageType": 3
-      },
-      {
-        "monsterId": 41,
         "level": 116,
         "advantageType": 3
       },
@@ -65681,11 +65516,6 @@
       },
       {
         "monsterId": 41,
-        "level": 120,
-        "advantageType": 3
-      },
-      {
-        "monsterId": 41,
         "level": 118,
         "advantageType": 0
       },
@@ -65705,21 +65535,6 @@
         "monsterId": 27,
         "level": 76,
         "advantageType": 0
-      },
-      {
-        "monsterId": 38,
-        "level": 119,
-        "advantageType": 0
-      },
-      {
-        "monsterId": 41,
-        "level": 116,
-        "advantageType": 3
-      },
-      {
-        "monsterId": 40,
-        "level": 116,
-        "advantageType": 3
       },
       {
         "monsterId": 40,
@@ -65757,11 +65572,6 @@
       },
       {
         "monsterId": 40,
-        "level": 116,
-        "advantageType": 2
-      },
-      {
-        "monsterId": 40,
         "level": 113,
         "advantageType": 0
       },
@@ -65786,11 +65596,6 @@
         "monsterId": 39,
         "level": 118,
         "advantageType": 2
-      },
-      {
-        "monsterId": 40,
-        "level": 116,
-        "advantageType": 3
       },
       {
         "monsterId": 40,
@@ -65843,11 +65648,6 @@
       },
       {
         "monsterId": 40,
-        "level": 118,
-        "advantageType": 3
-      },
-      {
-        "monsterId": 40,
         "level": 114,
         "advantageType": 3
       },
@@ -65870,11 +65670,6 @@
       },
       {
         "monsterId": 39,
-        "level": 120,
-        "advantageType": 1
-      },
-      {
-        "monsterId": 40,
         "level": 120,
         "advantageType": 1
       },
@@ -65907,11 +65702,6 @@
       },
       {
         "monsterId": 40,
-        "level": 119,
-        "advantageType": 2
-      },
-      {
-        "monsterId": 40,
         "level": 108,
         "advantageType": 3
       },
@@ -65939,11 +65729,6 @@
       },
       {
         "monsterId": 40,
-        "level": 117,
-        "advantageType": 2
-      },
-      {
-        "monsterId": 40,
         "level": 106,
         "advantageType": 3
       },
@@ -65968,11 +65753,6 @@
         "monsterId": 39,
         "level": 117,
         "advantageType": 2
-      },
-      {
-        "monsterId": 40,
-        "level": 117,
-        "advantageType": 0
       },
       {
         "monsterId": 40,
@@ -66020,11 +65800,6 @@
       },
       {
         "monsterId": 40,
-        "level": 119,
-        "advantageType": 1
-      },
-      {
-        "monsterId": 40,
         "level": 104,
         "advantageType": 1
       },
@@ -66052,11 +65827,6 @@
       },
       {
         "monsterId": 40,
-        "level": 120,
-        "advantageType": 3
-      },
-      {
-        "monsterId": 40,
         "level": 118,
         "advantageType": 3
       },
@@ -66081,11 +65851,6 @@
         "monsterId": 39,
         "level": 115,
         "advantageType": 3
-      },
-      {
-        "monsterId": 40,
-        "level": 118,
-        "advantageType": 2
       },
       {
         "monsterId": 40,
@@ -66138,11 +65903,6 @@
       },
       {
         "monsterId": 40,
-        "level": 118,
-        "advantageType": 0
-      },
-      {
-        "monsterId": 40,
         "level": 104,
         "advantageType": 0
       },
@@ -66160,11 +65920,6 @@
       },
       {
         "monsterId": 40,
-        "level": 120,
-        "advantageType": 2
-      },
-      {
-        "monsterId": 40,
         "level": 100,
         "advantageType": 3
       },
@@ -66179,11 +65934,6 @@
         "monsterId": 39,
         "level": 116,
         "advantageType": 1
-      },
-      {
-        "monsterId": 40,
-        "level": 118,
-        "advantageType": 3
       },
       {
         "monsterId": 40,
@@ -66246,11 +65996,6 @@
       {
         "monsterId": 39,
         "level": 120,
-        "advantageType": 2
-      },
-      {
-        "monsterId": 40,
-        "level": 116,
         "advantageType": 2
       },
       {
@@ -66379,11 +66124,6 @@
         "monsterId": 39,
         "level": 120,
         "advantageType": 2
-      },
-      {
-        "monsterId": 40,
-        "level": 118,
-        "advantageType": 3
       },
       {
         "monsterId": 40,
@@ -66519,11 +66259,6 @@
       },
       {
         "monsterId": 40,
-        "level": 119,
-        "advantageType": 3
-      },
-      {
-        "monsterId": 40,
         "level": 115,
         "advantageType": 3
       },
@@ -66613,11 +66348,6 @@
       },
       {
         "monsterId": 40,
-        "level": 117,
-        "advantageType": 1
-      },
-      {
-        "monsterId": 40,
         "level": 118,
         "advantageType": 0
       },
@@ -66645,11 +66375,6 @@
       },
       {
         "monsterId": 40,
-        "level": 120,
-        "advantageType": 1
-      },
-      {
-        "monsterId": 40,
         "level": 115,
         "advantageType": 1
       },
@@ -66674,11 +66399,6 @@
         "monsterId": 39,
         "level": 117,
         "advantageType": 1
-      },
-      {
-        "monsterId": 40,
-        "level": 120,
-        "advantageType": 3
       },
       {
         "monsterId": 40,
@@ -75992,11 +75712,6 @@
         "advantageType": 0
       },
       {
-        "monsterId": 38,
-        "level": 117,
-        "advantageType": 2
-      },
-      {
         "monsterId": 41,
         "level": 120,
         "advantageType": 3
@@ -78542,11 +78257,6 @@
       {
         "monsterId": 27,
         "level": 76,
-        "advantageType": 1
-      },
-      {
-        "monsterId": 38,
-        "level": 120,
         "advantageType": 1
       },
       {
@@ -81780,11 +81490,6 @@
         "advantageType": 0
       },
       {
-        "monsterId": 38,
-        "level": 119,
-        "advantageType": 1
-      },
-      {
         "monsterId": 40,
         "level": 117,
         "advantageType": 1
@@ -83395,11 +83100,6 @@
         "advantageType": 0
       },
       {
-        "monsterId": 39,
-        "level": 119,
-        "advantageType": 1
-      },
-      {
         "monsterId": 40,
         "level": 119,
         "advantageType": 2
@@ -84967,11 +84667,6 @@
       {
         "monsterId": 19,
         "level": 52,
-        "advantageType": 0
-      },
-      {
-        "monsterId": 39,
-        "level": 108,
         "advantageType": 0
       },
       {
@@ -95638,11 +95333,6 @@
         "monsterId": 33,
         "level": 78,
         "advantageType": 0
-      },
-      {
-        "monsterId": 39,
-        "level": 119,
-        "advantageType": 3
       },
       {
         "monsterId": 40,
@@ -108810,11 +108500,6 @@
         "advantageType": 1
       },
       {
-        "monsterId": 39,
-        "level": 120,
-        "advantageType": 3
-      },
-      {
         "monsterId": 40,
         "level": 120,
         "advantageType": 3
@@ -120582,11 +120267,6 @@
         "monsterId": 32,
         "level": 62,
         "advantageType": 3
-      },
-      {
-        "monsterId": 39,
-        "level": 119,
-        "advantageType": 2
       },
       {
         "monsterId": 40,
@@ -133329,11 +133009,6 @@
         "advantageType": 1
       },
       {
-        "monsterId": 39,
-        "level": 114,
-        "advantageType": 3
-      },
-      {
         "monsterId": 40,
         "level": 114,
         "advantageType": 2
@@ -145306,11 +144981,6 @@
         "advantageType": 2
       },
       {
-        "monsterId": 39,
-        "level": 114,
-        "advantageType": 3
-      },
-      {
         "monsterId": 40,
         "level": 115,
         "advantageType": 2
@@ -149663,11 +149333,6 @@
       },
       {
         "monsterId": 39,
-        "level": 111,
-        "advantageType": 3
-      },
-      {
-        "monsterId": 39,
         "level": 120,
         "advantageType": 2
       }
@@ -151061,11 +150726,6 @@
       }
     ],
     "7_0": [
-      {
-        "monsterId": 39,
-        "level": 112,
-        "advantageType": 2
-      },
       {
         "monsterId": 40,
         "level": 112,
