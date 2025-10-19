@@ -1161,8 +1161,8 @@
       "id": 71,
       "name": "Nocturne Pulse",
       "desc": "Releases a wave of dark energy that ripples through enemies, dealing magic damage and briefly silencing their abilities.",
-      "damage": 150,
-      "sp": 3,
+      "damage": 100,
+      "sp": 2,
       "perkItemTypes": [
         0
       ],
