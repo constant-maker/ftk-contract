@@ -1228,6 +1228,382 @@
           "amount": 1
         }
       ]
+    },
+    "61": {
+      "id": 61,
+      "questType": 0,
+      "name": "A Harvest Gone Hollow",
+      "description": "Local wheat fields near Lumindale are failing mysteriously. Liliana sends me to investigate. What I find isn’t drought. It’s theft. Forest critters are hoarding grain, drawn by an unnatural compulsion.",
+      "fromNpcId": 1,
+      "exp": 3000,
+      "gold": 400,
+      "requiredDoneQuestIds": [
+        5
+      ],
+      "contributeDetails": [
+        {
+          "id": 110,
+          "amount": 50
+        }
+      ]
+    },
+    "62": {
+      "id": 62,
+      "questType": 0,
+      "name": "Iron Roots Run Deep",
+      "description": "Strange tree scars near the edge of the forest reveal something digging deep tunnels beneath the Ironbark groves. Haines suspects it’s not natural, and he’s rarely wrong.",
+      "fromNpcId": 5,
+      "exp": 5000,
+      "gold": 600,
+      "requiredDoneQuestIds": [
+        61
+      ],
+      "contributeDetails": [
+        {
+          "id": 3,
+          "amount": 60
+        }
+      ]
+    },
+    "63": {
+      "id": 63,
+      "questType": 0,
+      "name": "Beneath the Bloom",
+      "description": "Sylvia senses a twisting in the forest’s harmony. Petalflare and Leafdrakes are unusually aggressive, as if defending something buried. I’ll need to face them to uncover the truth.",
+      "fromNpcId": 12,
+      "exp": 6200,
+      "gold": 800,
+      "requiredDoneQuestIds": [
+        62
+      ],
+      "contributeDetails": [
+        {
+          "id": 121,
+          "amount": 30
+        },
+        {
+          "id": 120,
+          "amount": 30
+        }
+      ]
+    },
+    "64": {
+      "id": 64,
+      "questType": 0,
+      "name": "Shells of the Silent",
+      "description": "Crabarks near the old stone ruins are acting as living vaults, fusing hardwood and gold. Something is using them to protect its stash. Haines prepares for war.",
+      "fromNpcId": 5,
+      "exp": 8000,
+      "gold": 1100,
+      "requiredDoneQuestIds": [
+        63
+      ],
+      "contributeDetails": [
+        {
+          "id": 119,
+          "amount": 30
+        }
+      ]
+    },
+    "65": {
+      "id": 65,
+      "questType": 0,
+      "name": "The Hoardmaster Below",
+      "description": "I’ve found the tunnels, the signs, the hoards. And now, the monster behind it all: Grimknuckle. He hoards not only gold but power, draining the forest for greed. It’s time to end this.",
+      "fromNpcId": 5,
+      "exp": 12000,
+      "gold": 2000,
+      "requiredDoneQuestIds": [
+        64
+      ],
+      "contributeDetails": [
+        {
+          "id": 381,
+          "amount": 1
+        }
+      ]
+    },
+    "66": {
+      "id": 66,
+      "questType": 0,
+      "name": "The Stillwater Silence",
+      "description": "Fisherfolk report entire stretches of river falling silent. No frogs, no birds, no fish. Hazel suspects a magical disturbance. I am sent to gather Bluegill samples for testing.",
+      "fromNpcId": 13,
+      "exp": 3000,
+      "gold": 400,
+      "requiredDoneQuestIds": [
+        10
+      ],
+      "contributeDetails": [
+        {
+          "id": 86,
+          "amount": 50
+        }
+      ]
+    },
+    "67": {
+      "id": 67,
+      "questType": 0,
+      "name": "Ore and Echoes",
+      "description": "Strange pulses have been felt through Misthaven's mining tunnels: tools humming, walls whispering. Duval leads an expedition for Nickel Ore samples, hoping to trace the distortion underground.",
+      "fromNpcId": 7,
+      "exp": 5000,
+      "gold": 600,
+      "requiredDoneQuestIds": [
+        66
+      ],
+      "contributeDetails": [
+        {
+          "id": 94,
+          "amount": 60
+        }
+      ]
+    },
+    "68": {
+      "id": 68,
+      "questType": 0,
+      "name": "Rot Beneath the Fog",
+      "description": "Spore-laden creatures and corrupted wyverns stalk the forest edges. Hazel believes something is awakening them from beneath the mist. I must face both to bring back essential clues.",
+      "fromNpcId": 13,
+      "exp": 6200,
+      "gold": 800,
+      "requiredDoneQuestIds": [
+        67
+      ],
+      "contributeDetails": [
+        {
+          "id": 123,
+          "amount": 30
+        },
+        {
+          "id": 124,
+          "amount": 30
+        }
+      ]
+    },
+    "69": {
+      "id": 69,
+      "questType": 0,
+      "name": "Eyes of the Hollowborn",
+      "description": "Duval uncovers ancient serpent glyphs carved into rock. Basilisks with glowing eyes now guard fog-shrouded ruins, as if following a buried instinct. Their gaze must be studied, and survived.",
+      "fromNpcId": 7,
+      "exp": 8000,
+      "gold": 1100,
+      "requiredDoneQuestIds": [
+        68
+      ],
+      "contributeDetails": [
+        {
+          "id": 176,
+          "amount": 30
+        }
+      ]
+    },
+    "70": {
+      "id": 70,
+      "questType": 0,
+      "name": "Nyxwing’s Eclipse",
+      "description": "The veil is torn. Mist coalesces into wings, and a chilling screech echoes across the land. Nyxwing has awoken in the Hollow. It is time to enter the mist, and end what it began.",
+      "fromNpcId": 7,
+      "exp": 12000,
+      "gold": 2000,
+      "requiredDoneQuestIds": [
+        69
+      ],
+      "contributeDetails": [
+        {
+          "id": 383,
+          "amount": 1
+        }
+      ]
+    },
+    "71": {
+      "id": 71,
+      "questType": 0,
+      "name": "The Sweetness That Vanished",
+      "description": "Strawberry patches across Everfrost are producing fewer berries, and those that remain seem frostbitten from within. Marina suspects something ancient has disturbed the growing season.",
+      "fromNpcId": 3,
+      "exp": 3000,
+      "gold": 400,
+      "requiredDoneQuestIds": [
+        15
+      ],
+      "contributeDetails": [
+        {
+          "id": 102,
+          "amount": 50
+        }
+      ]
+    },
+    "72": {
+      "id": 72,
+      "questType": 0,
+      "name": "Roots in the Permafrost",
+      "description": "An unusual pattern of tree collapse near Ironbark growth sites draws concern. Raena believes there’s frost magic beneath the surface that's feeding on the forest’s warmth.",
+      "fromNpcId": 14,
+      "exp": 5000,
+      "gold": 600,
+      "requiredDoneQuestIds": [
+        72
+      ],
+      "contributeDetails": [
+        {
+          "id": 3,
+          "amount": 60
+        }
+      ]
+    },
+    "73": {
+      "id": 73,
+      "questType": 0,
+      "name": "Tails and Wings in the Storm",
+      "description": "Snowzards have begun hunting in coordinated packs, and Glaciewyrms are descending from the cliffs. Marina believes they're being drawn to something... or following a call.",
+      "fromNpcId": 3,
+      "exp": 6200,
+      "gold": 800,
+      "requiredDoneQuestIds": [
+        72
+      ],
+      "contributeDetails": [
+        {
+          "id": 125,
+          "amount": 30
+        },
+        {
+          "id": 126,
+          "amount": 30
+        }
+      ]
+    },
+    "74": {
+      "id": 74,
+      "questType": 0,
+      "name": "The Hollow Howl",
+      "description": "Frost Gralochs are disappearing into the higher peaks, and those that return are scarred and silent. Raena believes they’re being claimed by something older than the mountain.",
+      "fromNpcId": 14,
+      "exp": 8000,
+      "gold": 1100,
+      "requiredDoneQuestIds": [
+        73
+      ],
+      "contributeDetails": [
+        {
+          "id": 127,
+          "amount": 30
+        }
+      ]
+    },
+    "75": {
+      "id": 75,
+      "questType": 0,
+      "name": "Eira the Frostbound",
+      "description": "Atop the glacial plateau, silence reigns. The snow does not fall. The wind does not move. Eira waits, watchful, still, and ready to bury the world in eternal frost.",
+      "fromNpcId": 14,
+      "exp": 12000,
+      "gold": 2000,
+      "requiredDoneQuestIds": [
+        74
+      ],
+      "contributeDetails": [
+        {
+          "id": 382,
+          "amount": 1
+        }
+      ]
+    },
+    "76": {
+      "id": 76,
+      "questType": 0,
+      "name": "Cracks in the Stone",
+      "description": "The dunes are shifting. Sacred landmarks once buried are now exposed, and earthquakes have unearthed deposits of volatile Flintrock. Hilathe believes it’s not natural, but triggered.",
+      "fromNpcId": 10,
+      "exp": 3000,
+      "gold": 400,
+      "requiredDoneQuestIds": [
+        20
+      ],
+      "contributeDetails": [
+        {
+          "id": 78,
+          "amount": 50
+        }
+      ]
+    },
+    "77": {
+      "id": 77,
+      "questType": 0,
+      "name": "Ash in the Veins",
+      "description": "Nickel ore from the central Sunscar mines is glowing faintly with heat, even when untouched. Kestrel suspects an underground fault line has awakened... or been tampered with.",
+      "fromNpcId": 15,
+      "exp": 5000,
+      "gold": 600,
+      "requiredDoneQuestIds": [
+        76
+      ],
+      "contributeDetails": [
+        {
+          "id": 94,
+          "amount": 60
+        }
+      ]
+    },
+    "78": {
+      "id": 78,
+      "questType": 0,
+      "name": "Scorched Wings and Horns",
+      "description": "Cinderwings are swarming in unnatural numbers, and Calderatops bulls have become hyper-aggressive. The desert’s apex predators are being stirred by something unseen, and it’s growing stronger.",
+      "fromNpcId": 10,
+      "exp": 6200,
+      "gold": 800,
+      "requiredDoneQuestIds": [
+        77
+      ],
+      "contributeDetails": [
+        {
+          "id": 128,
+          "amount": 30
+        },
+        {
+          "id": 129,
+          "amount": 30
+        }
+      ]
+    },
+    "79": {
+      "id": 79,
+      "questType": 0,
+      "name": "The Ember-Bound Pact",
+      "description": "Dymryn Warriors speak in hushed tones of “the Flamebound.” Their raids have become more precise, as if guided by an unseen flame. Hilathe believes someone, or something, is offering them power.",
+      "fromNpcId": 15,
+      "exp": 8000,
+      "gold": 1100,
+      "requiredDoneQuestIds": [
+        78
+      ],
+      "contributeDetails": [
+        {
+          "id": 130,
+          "amount": 30
+        }
+      ]
+    },
+    "80": {
+      "id": 80,
+      "questType": 0,
+      "name": "Kitsindra’s Final Jest",
+      "description": "The mirages have stopped shifting. The dunes point toward one name: Kitsindra. She burns not with rage, but with joy, and behind every illusion lies something worse: truth.",
+      "fromNpcId": 15,
+      "exp": 12000,
+      "gold": 2000,
+      "requiredDoneQuestIds": [
+        79
+      ],
+      "contributeDetails": [
+        {
+          "id": 384,
+          "amount": 1
+        }
+      ]
     }
   }
 }
