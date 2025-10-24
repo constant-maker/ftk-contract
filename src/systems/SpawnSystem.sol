@@ -7,7 +7,7 @@ import { CharStats2 } from "@codegen/tables/CharStats2.sol";
 import { CharacterStateType } from "@codegen/common.sol";
 import { CharacterPositionUtils } from "@utils/CharacterPositionUtils.sol";
 import { CharacterUtils } from "@utils/CharacterUtils.sol";
-import { Errors, Events } from "@common/index.sol";
+import { Errors, Events, Config } from "@common/index.sol";
 
 contract SpawnSystem is System {
   /// @dev User call this function to create character, expect to be called once
@@ -31,7 +31,7 @@ contract SpawnSystem is System {
 
     // init character stats
     CharacterUtils.initCharacterStatsWithTraits(characterId, data.traits);
-    CharStats2.setFame(characterId, 1000); // default 1000 points
+    CharStats2.setFame(characterId, Config.DEFAULT_FAME);
 
     emit Events.CharacterCreated(characterId, wallet, block.timestamp);
   }

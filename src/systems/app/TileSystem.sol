@@ -66,7 +66,7 @@ contract TileSystem is System, CharacterAccessControl {
     // increase fame
     uint32 currentFame = CharStats2.getFame(characterId);
     if (currentFame == 0) {
-      currentFame = 1000; // default
+      currentFame = Config.DEFAULT_FAME;
     }
     if (isAlliance) {
       uint16 captureTilePenalty = KingSetting.getCaptureTilePenalty(kingdomId);

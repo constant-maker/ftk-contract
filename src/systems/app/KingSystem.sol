@@ -23,7 +23,7 @@ import {
   KingdomCityCounter
 } from "@codegen/index.sol";
 import { CharAchievementUtils, MapUtils, CharacterRoleUtils, KingSystemUtils } from "@utils/index.sol";
-import { Errors } from "@common/index.sol";
+import { Errors, Config } from "@common/index.sol";
 import { ZoneType, RoleType } from "@codegen/common.sol";
 
 contract KingSystem is CharacterAccessControl, System {
@@ -111,7 +111,7 @@ contract KingSystem is CharacterAccessControl, System {
     if (candidateIndex == type(uint256).max) {
       revert Errors.KingSystem_InvalidCandidate(candidateId);
     }
-    uint32 votePower = fame - 1000; // 1000 fame is the base vote power
+    uint32 votePower = fame - Config.DEFAULT_FAME;
     KingElection.updateVotesReceived(kingdomId, candidateIndex, kingElection.votesReceived[candidateIndex] + votePower);
     CharVote.set(characterId, candidateId, votePower, block.timestamp);
   }

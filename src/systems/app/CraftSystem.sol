@@ -9,6 +9,7 @@ import { CharacterFundUtils } from "@utils/CharacterFundUtils.sol";
 import { CharacterItemUtils } from "@utils/CharacterItemUtils.sol";
 import { Errors } from "@common/Errors.sol";
 import { ItemCategoryType, ItemType } from "@codegen/common.sol";
+import { Config } from "@common/index.sol";
 
 contract CraftSystem is System, CharacterAccessControl {
   /// @dev Craft item when character has enough resources
@@ -52,7 +53,7 @@ contract CraftSystem is System, CharacterAccessControl {
       return;
     }
     uint32 charFame = CharStats2.getFame(characterId);
-    if (charFame < fameCost) {
+    if (charFame < fameCost + Config.DEFAULT_FAME) {
       revert Errors.CraftSystem_NotEnoughFame(characterId, charFame, fameCost);
     }
     CharStats2.setFame(characterId, charFame - fameCost);

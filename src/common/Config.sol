@@ -22,6 +22,7 @@ library Config {
   uint32 public constant DEFAULT_HP = 100;
   uint32 public constant DEFAULT_WEIGHT = 200;
   uint32 public constant BONUS_ATTACK_AGI_DIFF = 10;
+  uint32 public constant DEFAULT_FAME = 1000;
 
   uint32 public constant BASE_RESOURCE_PERK_EXP = 15;
   uint32 public constant UPGRADE_STORAGE_COST = 50; // golds
