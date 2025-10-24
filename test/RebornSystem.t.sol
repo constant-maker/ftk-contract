@@ -8,7 +8,9 @@ import { console2 } from "forge-std/console2.sol";
 import { CharStats, CharStatsData } from "@codegen/tables/CharStats.sol";
 import { CharCurrentStats, CharCurrentStatsData } from "@codegen/tables/CharCurrentStats.sol";
 import { CharBaseStats, CharBaseStatsData } from "@codegen/tables/CharBaseStats.sol";
-import { CharReborn, CharInfo, Item, CharInventory, CharEquipment, CharEquipStats, Equipment } from "@codegen/index.sol";
+import {
+  CharReborn, CharInfo, ItemV2, CharInventory, CharEquipment, CharEquipStats, Equipment
+} from "@codegen/index.sol";
 import { EquipData } from "@systems/app/EquipmentSystem.sol";
 import { SlotType } from "@codegen/common.sol";
 import { Config } from "@common/Config.sol";
@@ -136,7 +138,7 @@ contract RebornSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixt
     assertEq(equipmentIds[0], 1);
 
     vm.startPrank(worldDeployer);
-    Item.setTier(33, 2);
+    ItemV2.setTier(33, 2);
     vm.stopPrank();
 
     vm.expectRevert();
@@ -145,7 +147,7 @@ contract RebornSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixt
     vm.stopPrank();
 
     vm.startPrank(worldDeployer);
-    Item.setTier(33, 1);
+    ItemV2.setTier(33, 1);
     vm.stopPrank();
     vm.startPrank(player);
     world.app__gearUpEquipments(characterId, equipDatas);

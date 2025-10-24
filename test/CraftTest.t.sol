@@ -2,7 +2,7 @@ pragma solidity >=0.8.24;
 
 import { CharInventory, CharInventoryData } from "@codegen/index.sol";
 import { CharOtherItem } from "@codegen/tables/CharOtherItem.sol";
-import { Tool2, Tool2Data, Item, ItemData, CharFund, CharStats, CharPerk } from "@codegen/index.sol";
+import { Tool2, Tool2Data, ItemV2, ItemV2Data, CharFund, CharStats, CharPerk } from "@codegen/index.sol";
 import { ItemType } from "@codegen/common.sol";
 import { WorldFixture, SpawnSystemFixture, MoveSystemFixture } from "@fixtures/index.sol";
 import { InventoryItemUtils } from "@utils/InventoryItemUtils.sol";

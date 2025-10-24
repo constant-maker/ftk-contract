@@ -1,6 +1,6 @@
 pragma solidity >=0.8.24;
 
-import { Equipment, Tool2, Item, CharCurrentStats, CharMigration, ItemWeightCache } from "@codegen/index.sol";
+import { Equipment, Tool2, ItemV2, CharCurrentStats, CharMigration, ItemWeightCache } from "@codegen/index.sol";
 import { CommonUtils } from "./CommonUtils.sol";
 import { EquipmentUtils } from "./EquipmentUtils.sol";
 import { Errors } from "@common/Errors.sol";
@@ -81,7 +81,7 @@ library CharacterWeightUtils {
 
     uint32 weightChange = 0;
     for (uint256 i = 0; i < length; i++) {
-      uint32 itemWeight = Item.getWeight(itemIds[i]) * amounts[i];
+      uint32 itemWeight = ItemV2.getWeight(itemIds[i]) * amounts[i];
       weightChange += itemWeight;
     }
 
@@ -101,7 +101,7 @@ library CharacterWeightUtils {
       if (itemId == 0) {
         revert Errors.Tool_NotExisted(toolIds[i]);
       }
-      weightChange += Item.getWeight(itemId);
+      weightChange += ItemV2.getWeight(itemId);
     }
 
     // Update the character's weight

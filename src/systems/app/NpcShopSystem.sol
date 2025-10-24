@@ -7,8 +7,8 @@ import {
   CharNextPosition,
   CharNextPositionData,
   NpcShop,
-  Item,
-  ItemData,
+  ItemV2,
+  ItemV2Data,
   NpcShopInventory
 } from "@codegen/index.sol";
 import { Errors } from "@common/Errors.sol";
@@ -30,7 +30,7 @@ struct TradeData {
 
 contract NpcShopSystem is CharacterAccessControl, System {
   uint32 constant INIT_SHOP_BALANCE = 100_000; // golds
-  uint32 constant TOOL_PRICE = 25;
+  uint32 constant TOOL_PRICE = 10;
   uint32 constant BUY_BACK_MULTIPLY = 3;
   uint32 constant CARD_PRICE_MULTIPLIER = 1000;
   uint32 constant NPC_ITEM_BALANCE_CAP = 200; // max amount of each item in npc shop
@@ -66,14 +66,14 @@ contract NpcShopSystem is CharacterAccessControl, System {
     for (uint256 i; i < data.length; i++) {
       uint256 itemId = data[i].itemId;
       uint32 amount = data[i].amount;
-      ItemData memory itemData = Item.get(itemId);
+      ItemV2Data memory itemData = ItemV2.get(itemId);
       if (itemData.category == ItemCategoryType.Tool) {
         if (itemData.tier != 1) revert Errors.NpcShopSystem_OnlySellTierOneTool(itemId);
         goldCost += TOOL_PRICE * amount;
         CharacterItemUtils.addNewItem(characterId, itemId, amount);
       } else if (itemData.category == ItemCategoryType.Other) {
         uint32 unitPrice = _getNpcSellUnitPrice(itemData.tier);
-        if (Item.getItemType(itemId) == ItemType.Card) {
+        if (ItemV2.getItemType(itemId) == ItemType.Card) {
           unitPrice = CARD_PRICE_MULTIPLIER * itemData.tier;
         }
         // apply tax
@@ -93,7 +93,7 @@ contract NpcShopSystem is CharacterAccessControl, System {
     for (uint256 i = 0; i < data.length; i++) {
       uint256 itemId = data[i].itemId;
       uint32 amount = data[i].amount;
-      if (Item.getCategory(itemId) != ItemCategoryType.Other) {
+      if (ItemV2.getCategory(itemId) != ItemCategoryType.Other) {
         revert Errors.NpcShopSystem_OnlyAcceptOtherItem(itemId);
       }
       uint32 npcItemBalance = NpcShopInventory.getAmount(cityId, itemId);
@@ -101,7 +101,7 @@ contract NpcShopSystem is CharacterAccessControl, System {
         revert Errors.NpcShopSystem_ExceedItemBalanceCap(cityId, itemId, npcItemBalance, amount);
       }
       InventoryItemUtils.removeItem(characterId, itemId, amount);
-      uint32 unitPrice = uint32(Item.getTier(itemId));
+      uint32 unitPrice = uint32(ItemV2.getTier(itemId));
       unitPrice -= MarketSystemUtils.calculateOrderFee(characterId, cityId, unitPrice);
       uint32 earn = unitPrice * amount;
       if (earn > npcBalance) {

@@ -95,26 +95,6 @@ func UpdateDataConfig(dataConfig *DataConfig, basePath string) {
 		dataConfig.Items[intToString(equipment.Id)] = equipment // add
 	}
 
-	listFameShopEquipmentUpdate, err := getListFameShopEquipmentUpdate(*dataConfig)
-	if err != nil {
-		l.Errorw("cannot get list fame shop equipment update", "err", err)
-		panic(err)
-	}
-	for _, equipment := range listFameShopEquipmentUpdate {
-		currentEquipment, ok := dataConfig.Items[intToString(equipment.Id)]
-		if reflect.DeepEqual(equipment, currentEquipment) {
-			// l.Infow("equipment data unchanged")
-			continue
-		}
-		if !ok {
-			l.Infow("detect new equipment", "data", equipment)
-		} else {
-			l.Infow("detect equipment update", "data", equipment)
-		}
-		shouldRewriteFile = true
-		dataConfig.Items[intToString(equipment.Id)] = equipment // add
-	}
-
 	// update list healing item
 	l.Infow("GET LIST HEALING ITEM")
 	listHealingItemUpdate, listHealingItemRecipeUpdate, err := getListHealingItemUpdate(*dataConfig)
@@ -435,7 +415,7 @@ func getListEquipmentUpdate(dataConfig DataConfig) ([]Item, []ItemRecipe, error)
 	var (
 		idIndex, tierIndex, weightIndex, nameIndex, descIndex, typeIndex, slotTypeIndex, advantageTypeIndex, twoHandedIndex,
 		atkIndex, defIndex, agiIndex, hpIndex, msIndex, goldCostIndex, recipeIndex, oldWeightIndex, bonusWeightIndex, shieldBarrierIndex,
-		perkRequireToCraftIndex int
+		perkRequireToCraftIndex, fameCostIndex, untradableIndex int
 	)
 	for {
 		record, err := reader.Read()
@@ -474,6 +454,9 @@ func getListEquipmentUpdate(dataConfig DataConfig) ([]Item, []ItemRecipe, error)
 			descIndex = findIndex(record, "desc")
 			shieldBarrierIndex = findIndex(record, "shieldBarrier")
 			perkRequireToCraftIndex = findIndex(record, "perkRequireToCraft")
+			fameCostIndex = findIndex(record, "fame_spent")
+			untradableIndex = findIndex(record, "untradable")
+
 			l.Infow(
 				"list index",
 				"idIndex", idIndex,
@@ -494,6 +477,8 @@ func getListEquipmentUpdate(dataConfig DataConfig) ([]Item, []ItemRecipe, error)
 				"descIndex", descIndex,
 				"shieldBarrierIndex", shieldBarrierIndex,
 				"perkRequireToCraftIndex", perkRequireToCraftIndex,
+				"fameCostIndex", fameCostIndex,
+				"untradableIndex", untradableIndex,
 			)
 			continue
 		}
@@ -508,6 +493,10 @@ func getListEquipmentUpdate(dataConfig DataConfig) ([]Item, []ItemRecipe, error)
 		agi := mustStringToInt(record[agiIndex], agiIndex)
 		hp := mustStringToInt(record[hpIndex], hpIndex)
 		ms := mustStringToInt(record[msIndex], msIndex)
+		untradable := false
+		if strings.EqualFold(record[untradableIndex], "TRUE") {
+			untradable = true
+		}
 		shieldBarrierIndex := mustStringToInt(record[shieldBarrierIndex], shieldBarrierIndex)
 		rawPerkRequireToCraft := record[perkRequireToCraftIndex]
 		perkItemTypes := make([]int, 0)
@@ -534,14 +523,15 @@ func getListEquipmentUpdate(dataConfig DataConfig) ([]Item, []ItemRecipe, error)
 			advantageType = getSpecialNum(record[advantageTypeIndex], record)
 		}
 		item := Item{
-			Id:        id,
-			Type:      equipmentType,
-			Category:  1,
-			Tier:      tier,
-			Weight:    weight,
-			OldWeight: oldWeigh,
-			Name:      removeRedundantText(record[nameIndex]),
-			Desc:      removeRedundantText(record[descIndex]),
+			Id:         id,
+			Type:       equipmentType,
+			Category:   1,
+			Tier:       tier,
+			Weight:     weight,
+			OldWeight:  oldWeigh,
+			Untradable: untradable,
+			Name:       removeRedundantText(record[nameIndex]),
+			Desc:       removeRedundantText(record[descIndex]),
 			EquipmentInfo: &EquipmentInfo{
 				SlotType:      slotType,
 				AdvantageType: advantageType,
@@ -560,6 +550,7 @@ func getListEquipmentUpdate(dataConfig DataConfig) ([]Item, []ItemRecipe, error)
 			ItemId:      id,
 			Ingredients: getMaterialList(record, record[recipeIndex], dataConfig),
 			GoldCost:    mustStringToInt(record[goldCostIndex], goldCostIndex),
+			FameCost:    mustStringToInt(record[fameCostIndex], fameCostIndex),
 		}
 		if len(perkItemTypes) > 0 {
 			equipmentRecipe.PerkItemTypes = perkItemTypes
@@ -568,144 +559,6 @@ func getListEquipmentUpdate(dataConfig DataConfig) ([]Item, []ItemRecipe, error)
 		recipes = append(recipes, equipmentRecipe)
 	}
 	return equipments, recipes, nil
-}
-
-func getListFameShopEquipmentUpdate(dataConfig DataConfig) ([]Item, error) {
-	l := zap.S().With("func", "getListFameShopEquipmentUpdate")
-	reader, err := getRawCsvReader(listFameEquipmentUpdate)
-	if err != nil {
-		l.Errorw("cannot csv reader", "err", err)
-		return nil, err
-	}
-	equipments := make([]Item, 0)
-	var (
-		idIndex, tierIndex, weightIndex, nameIndex, descIndex, typeIndex, slotTypeIndex, advantageTypeIndex, twoHandedIndex,
-		atkIndex, defIndex, agiIndex, hpIndex, msIndex, goldCostIndex, recipeIndex, oldWeightIndex, bonusWeightIndex, shieldBarrierIndex,
-		perkRequireToCraftIndex int
-	)
-	for {
-		record, err := reader.Read()
-		if err == io.EOF {
-			break
-		} else if err != nil {
-			l.Errorw("cannot read data", "err", err)
-			return nil, err
-		}
-		if record[0] == "" || record[1] == "" || record[2] == "" { // empty row
-			l.Warnw("invalid equipment data format", "data", record)
-			continue
-		}
-		// l.Infow("record", "value", record)
-		if strings.EqualFold(record[0], "id") { // header
-			if tierIndex != 0 && nameIndex != 0 {
-				l.Panicw("detect header more than one time", "value", record)
-			}
-			idIndex = findIndex(record, "id")
-			nameIndex = findIndex(record, "name")
-			typeIndex = findIndex(record, "type")
-			slotTypeIndex = findIndex(record, "slotType")
-			advantageTypeIndex = findIndex(record, "advantageType")
-			twoHandedIndex = findIndex(record, "twoHanded")
-			tierIndex = findIndex(record, "tier")
-			weightIndex = findIndex(record, "new_weight")
-			oldWeightIndex = findIndex(record, "old_weight")
-			bonusWeightIndex = findIndex(record, "bonus_weight")
-			atkIndex = findIndex(record, "atk")
-			defIndex = findIndex(record, "def")
-			agiIndex = findIndex(record, "agi")
-			hpIndex = findIndex(record, "hp")
-			msIndex = findIndex(record, "ms")
-			goldCostIndex = findIndex(record, "goldCost")
-			recipeIndex = findIndex(record, "recipe")
-			descIndex = findIndex(record, "desc")
-			shieldBarrierIndex = findIndex(record, "shieldBarrier")
-			perkRequireToCraftIndex = findIndex(record, "perkRequireToCraft")
-			l.Infow(
-				"list index",
-				"idIndex", idIndex,
-				"nameIndex", nameIndex,
-				"typeIndex", typeIndex,
-				"slotTypeIndex", slotTypeIndex,
-				"advantageTypeIndex", advantageTypeIndex,
-				"twoHandedIndex", twoHandedIndex,
-				"tierIndex", tierIndex,
-				"weightIndex", weightIndex,
-				"atkIndex", atkIndex,
-				"defIndex", defIndex,
-				"agiIndex", agiIndex,
-				"hpIndex", hpIndex,
-				"msIndex", msIndex,
-				"goldCostIndex", goldCostIndex,
-				"recipeIndex", recipeIndex,
-				"descIndex", descIndex,
-				"shieldBarrierIndex", shieldBarrierIndex,
-				"perkRequireToCraftIndex", perkRequireToCraftIndex,
-			)
-			continue
-		}
-
-		id := mustStringToInt(record[idIndex], idIndex)
-		tier := mustStringToInt(record[tierIndex], tierIndex)
-		weight := mustStringToInt(record[weightIndex], weightIndex)
-		oldWeigh := mustStringToInt(record[oldWeightIndex], oldWeightIndex)
-		bonusWeight := mustStringToInt(record[bonusWeightIndex], bonusWeightIndex)
-		atk := mustStringToInt(record[atkIndex], atkIndex)
-		def := mustStringToInt(record[defIndex], defIndex)
-		agi := mustStringToInt(record[agiIndex], agiIndex)
-		hp := mustStringToInt(record[hpIndex], hpIndex)
-		ms := mustStringToInt(record[msIndex], msIndex)
-		shieldBarrierIndex := mustStringToInt(record[shieldBarrierIndex], shieldBarrierIndex)
-		rawPerkRequireToCraft := record[perkRequireToCraftIndex]
-		perkItemTypes := make([]int, 0)
-		requiredPerkLevels := make([]int, 0)
-		if rawPerkRequireToCraft != "" {
-			perkRequireToCraft := strings.Split(rawPerkRequireToCraft, " - ")
-			if len(perkRequireToCraft) != 2 {
-				l.Panicw("Invalid perk require to craft", "data", record, "perkRequireToCraft", rawPerkRequireToCraft)
-			}
-			perkType := getItemType(removeRedundantText(perkRequireToCraft[0]))
-			perkItemTypes = append(perkItemTypes, perkType)
-			perkLevel := mustStringToInt(removeRedundantText(perkRequireToCraft[1]), 1)
-			requiredPerkLevels = append(requiredPerkLevels, perkLevel)
-		}
-
-		twoHanded := false
-		if strings.EqualFold(record[twoHandedIndex], "TRUE") {
-			twoHanded = true
-		}
-		equipmentType := getSpecialNum(record[typeIndex], record)
-		slotType := getSpecialNum(record[slotTypeIndex], record)
-		advantageType := 0
-		if slotType == 0 {
-			advantageType = getSpecialNum(record[advantageTypeIndex], record)
-		}
-		item := Item{
-			Id:        id,
-			Type:      equipmentType,
-			Category:  1,
-			Tier:      tier,
-			Weight:    weight,
-			OldWeight: oldWeigh,
-			Name:      removeRedundantText(record[nameIndex]),
-			Desc:      removeRedundantText(record[descIndex]),
-			EquipmentInfo: &EquipmentInfo{
-				SlotType:      slotType,
-				AdvantageType: advantageType,
-				TwoHanded:     twoHanded,
-				Atk:           atk,
-				Def:           def,
-				Agi:           agi,
-				Hp:            hp,
-				Ms:            ms,
-				BonusWeight:   bonusWeight,
-				ShieldBarrier: shieldBarrierIndex,
-			},
-		}
-		equipments = append(equipments, item)
-		// no recipe for fame shop equipment
-		// need to migrate perk requirement to item data
-	}
-	return equipments, nil
 }
 
 func getListHealingItemUpdate(dataConfig DataConfig) ([]Item, []ItemRecipe, error) {
@@ -984,6 +837,9 @@ func getListSkillUpdate() ([]Skill, error) {
 
 func getMaterialList(rawRecord []string, rawS string, dataConfig DataConfig) []Ingredient {
 	l := zap.S().With("func", "getMaterialList", "raw record", rawRecord)
+	if rawS == "" {
+		return nil
+	}
 	arr := strings.Split(rawS, "\n")
 	if len(arr) < 2 {
 		panic("invalid recipe data enter")

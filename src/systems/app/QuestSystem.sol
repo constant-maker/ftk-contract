@@ -11,7 +11,7 @@ import {
   QuestLocateTracking2,
   Npc,
   CityVault,
-  Item,
+  ItemV2,
   Quest3Data
 } from "@codegen/index.sol";
 import { Quest3 } from "@codegen/tables/Quest3.sol";

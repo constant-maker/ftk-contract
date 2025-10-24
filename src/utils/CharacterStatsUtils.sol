@@ -12,7 +12,7 @@ import {
   EquipmentInfo2V2,
   EquipmentInfo2V2Data,
   CharReborn,
-  Item,
+  ItemV2,
   CharEquipStats,
   CharEquipStatsData,
   CharEquipStats2,
@@ -334,7 +334,7 @@ library CharacterStatsUtils {
   function _getStatBonusPercent(uint256 itemId, uint8 level) private view returns (uint16) {
     if (level <= 1) return 0;
 
-    uint8 tier = Item.getTier(itemId);
+    uint8 tier = ItemV2.getTier(itemId);
 
     uint16 bonusPercent = sumOfArithmeticSeries(level - 1, 5, 5);
 

@@ -44,7 +44,7 @@ contract NpcShopSystem is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
     world.app__tradeWithNpc(characterId, cityId, buyData, sellData);
     vm.stopPrank();
     assertEq(CharInventory.lengthToolIds(characterId), prevLen + 1);
-    assertEq(CharFund.getGold(characterId), 50);
+    assertEq(CharFund.getGold(characterId), 65);
 
     buyData[0].amount = 2;
     vm.startPrank(player);
@@ -52,7 +52,7 @@ contract NpcShopSystem is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
     vm.stopPrank();
 
     assertEq(CharInventory.lengthToolIds(characterId), prevLen + 3);
-    assertEq(CharFund.getGold(characterId), 0);
+    assertEq(CharFund.getGold(characterId), 45);
 
     vm.startPrank(worldDeployer);
     CharFund.setGold(characterId, 10);
@@ -242,7 +242,7 @@ contract NpcShopSystem is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
     world.app__tradeWithNpc(characterId, cityId, buyData, sellData);
     vm.stopPrank();
 
-    assertEq(CharFund.getGold(characterId), 8950);
+    assertEq(CharFund.getGold(characterId), 9000);
     assertEq(CharOtherItem.getAmount(characterId, 268), 1);
     assertEq(NpcShopInventory.getAmount(cityId, 268), 1);
 

@@ -10,6 +10,9 @@ library CharacterFundUtils {
   }
 
   function decreaseGold(uint256 characterId, uint32 amount) internal {
+    if (amount == 0) {
+      return;
+    }
     uint32 _balance = CharFund.getGold(characterId);
     if (_balance < amount) {
       revert Errors.CharacterFund_NotEnoughGold(_balance, amount);

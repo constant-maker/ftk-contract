@@ -283,11 +283,11 @@ contract CitySystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixtur
     vm.startPrank(voter);
     world.app__cityTeleport(voterId, cityId, newCityId);
     vm.stopPrank();
-    assertEq(CharFund.getGold(voterId), 177);
+    assertEq(CharFund.getGold(voterId), 182);
     CharPositionData memory position = CharacterPositionUtils.currentPosition(voterId);
     assertEq(position.x, newCityX);
     assertEq(position.y, newCityY);
-    assertEq(CityVault2.getGold(cityId), currentCapitalGold + 20);
+    assertEq(CityVault2.getGold(cityId), currentCapitalGold + 15);
 
     console2.log("test save point");
     vm.startPrank(voter);

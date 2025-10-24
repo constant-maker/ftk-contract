@@ -1,6 +1,6 @@
 pragma solidity >=0.8.24;
 
-import { Equipment, EquipmentInfo, Item, CharCurrentStats, CharEquipment } from "@codegen/index.sol";
+import { Equipment, EquipmentInfo, ItemV2, CharCurrentStats, CharEquipment } from "@codegen/index.sol";
 import { AdvantageType, SlotType } from "@codegen/common.sol";
 import { Errors } from "@common/Errors.sol";
 import { InventoryEquipmentUtils } from "./InventoryEquipmentUtils.sol";

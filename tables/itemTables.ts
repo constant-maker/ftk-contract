@@ -1,11 +1,12 @@
 const ITEM_TABLES: any = {
-  Item: {
+  ItemV2: {
     schema: {
       id: "uint256",
       category: "ItemCategoryType",
       itemType: "ItemType",
       weight: "uint32",
       tier: "uint8",
+      isUntradeable: "bool",
       name: "string",
     },
     key: ['id'],

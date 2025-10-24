@@ -9,7 +9,7 @@ import {
   CharState,
   PvEAfk,
   PvEAfkData,
-  Item,
+  ItemV2,
   Equipment
 } from "@codegen/index.sol";
 import { ZoneType, CharacterStateType } from "@codegen/common.sol";
@@ -98,7 +98,7 @@ library BattleUtils2 {
     second = 0;
 
     for (uint256 i = 0; i < len; i++) {
-      uint8 tier = Item.getTier(Equipment.getItemId(equipmentIds[i]));
+      uint8 tier = ItemV2.getTier(Equipment.getItemId(equipmentIds[i]));
       tiers[i] = tier;
       if (tier > highest) {
         second = highest;

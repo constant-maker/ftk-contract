@@ -11,7 +11,7 @@ import {
   CharacterFundUtils
 } from "@utils/index.sol";
 import {
-  CharEquipment, CharGrindSlot, Equipment, EquipmentData, EquipmentInfo, Item, CharStats
+  CharEquipment, CharGrindSlot, Equipment, EquipmentData, EquipmentInfo, ItemV2, CharStats
 } from "@codegen/index.sol";
 import { SlotType, CharacterStateType } from "@codegen/common.sol";
 import { Errors } from "@common/index.sol";
@@ -79,7 +79,7 @@ contract EquipmentSystem is System, CharacterAccessControl {
   }
 
   function _validateUpgradeLevel(uint8 nextLevel, uint256 itemId) private view {
-    uint8 itemTier = Item.getTier(itemId);
+    uint8 itemTier = ItemV2.getTier(itemId);
     if (itemTier < 7 && nextLevel > 4) {
       revert Errors.EquipmentSystem_ExceedMaxLevel(4);
     }
@@ -90,7 +90,7 @@ contract EquipmentSystem is System, CharacterAccessControl {
 
   function _getUpgradeCost(uint8 level, uint256 itemId) private view returns (uint32 cost) {
     uint32 goldMultiply = 20;
-    uint8 itemTier = Item.getTier(itemId);
+    uint8 itemTier = ItemV2.getTier(itemId);
     if (itemTier >= 7) {
       goldMultiply = 100;
     }
@@ -142,7 +142,7 @@ contract EquipmentSystem is System, CharacterAccessControl {
 
   function _checkCharacterLevel(uint256 characterId, uint256 itemId) private view {
     uint16 level = CharStats.getLevel(characterId);
-    uint8 itemTier = Item.getTier(itemId);
+    uint8 itemTier = ItemV2.getTier(itemId);
     if (level + 10 < uint16(itemTier) * 10) {
       revert Errors.EquipmentSystem_CharacterLevelTooLow(characterId, level, itemTier);
     }

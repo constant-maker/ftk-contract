@@ -3,7 +3,7 @@ pragma solidity >=0.8.24;
 import { ResourceId } from "@latticexyz/store/src/ResourceId.sol";
 import { WorldResourceIdLib } from "@latticexyz/world/src/WorldResourceId.sol";
 import { RESOURCE_SYSTEM } from "@latticexyz/world/src/worldResourceTypes.sol";
-import { CharState, CharStateData, CharNextPosition, Item, CharFarmingState } from "@codegen/index.sol";
+import { CharState, CharStateData, CharNextPosition, ItemV2, CharFarmingState } from "@codegen/index.sol";
 import { CharacterStateType } from "@codegen/common.sol";
 import { MoveSystemUtils } from "./MoveSystemUtils.sol";
 import { Errors, Config } from "@common/index.sol";
@@ -18,7 +18,7 @@ library CharacterStateUtils {
     }
     if (state == CharacterStateType.Farming) {
       uint256 itemId = CharFarmingState.getItemId(characterId);
-      uint8 tier = Item.getTier(itemId);
+      uint8 tier = ItemV2.getTier(itemId);
       if (tier > 0) {
         return Config.DEFAULT_PLAYER_ACTION_DURATION * uint16(tier);
       }

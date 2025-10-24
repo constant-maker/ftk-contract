@@ -749,8 +749,7 @@
           "id": 12,
           "amount": 10
         }
-      ],
-      "goldCost": 0
+      ]
     },
     "70": {
       "itemId": 70,
@@ -4489,6 +4488,126 @@
         }
       ],
       "goldCost": 500
+    },
+    "368": {
+      "itemId": 368,
+      "perkTypes": [
+        2
+      ],
+      "perkLevels": [
+        7
+      ],
+      "fameCost": 7500
+    },
+    "369": {
+      "itemId": 369,
+      "perkTypes": [
+        1
+      ],
+      "perkLevels": [
+        7
+      ],
+      "fameCost": 7500
+    },
+    "370": {
+      "itemId": 370,
+      "perkTypes": [
+        4
+      ],
+      "perkLevels": [
+        7
+      ],
+      "fameCost": 7500
+    },
+    "371": {
+      "itemId": 371,
+      "perkTypes": [
+        1
+      ],
+      "perkLevels": [
+        7
+      ],
+      "fameCost": 7500
+    },
+    "372": {
+      "itemId": 372,
+      "perkTypes": [
+        0
+      ],
+      "perkLevels": [
+        7
+      ],
+      "fameCost": 15000
+    },
+    "373": {
+      "itemId": 373,
+      "perkTypes": [
+        2
+      ],
+      "perkLevels": [
+        7
+      ],
+      "fameCost": 7500
+    },
+    "374": {
+      "itemId": 374,
+      "perkTypes": [
+        4
+      ],
+      "perkLevels": [
+        7
+      ],
+      "fameCost": 7500
+    },
+    "375": {
+      "itemId": 375,
+      "perkTypes": [
+        5
+      ],
+      "perkLevels": [
+        6
+      ],
+      "fameCost": 2000
+    },
+    "376": {
+      "itemId": 376,
+      "perkTypes": [
+        3
+      ],
+      "perkLevels": [
+        6
+      ],
+      "fameCost": 4000
+    },
+    "377": {
+      "itemId": 377,
+      "perkTypes": [
+        1
+      ],
+      "perkLevels": [
+        6
+      ],
+      "fameCost": 2000
+    },
+    "378": {
+      "itemId": 378,
+      "perkTypes": [
+        2
+      ],
+      "perkLevels": [
+        6
+      ],
+      "fameCost": 2000
+    },
+    "379": {
+      "itemId": 379,
+      "perkTypes": [
+        0
+      ],
+      "perkLevels": [
+        6
+      ],
+      "fameCost": 2000
     },
     "385": {
       "itemId": 385,

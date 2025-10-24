@@ -1,7 +1,14 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.8.24;
 
-import { TileInventory, TileInventoryData, TileOtherItemIndex, TileEquipmentIndex } from "@codegen/index.sol";
+import {
+  TileInventory,
+  TileInventoryData,
+  TileOtherItemIndex,
+  TileEquipmentIndex,
+  ItemV2,
+  Equipment
+} from "@codegen/index.sol";
 import { Errors, Config } from "@common/index.sol";
 
 library TileInventoryUtils {
@@ -14,9 +21,9 @@ library TileInventoryUtils {
     }
   }
 
-  /// @dev Add one item to tile inventory
+  /// @dev Add one item to tile inventory, this func WILL NOT RESET DATA
   function addItem(int32 x, int32 y, uint256 itemId, uint32 amount) public {
-    _checkToResetData(x, y);
+    // _checkToResetData(x, y);
     _addItem(x, y, itemId, amount);
   }
 
@@ -76,9 +83,9 @@ library TileInventoryUtils {
     TileInventory.updateOtherItemAmounts(x, y, valueIndex, newAmount);
   }
 
-  /// @dev Add equipment to tile inventory
+  /// @dev Add equipment to tile inventory, this func WILL NOT RESET DATA
   function addEquipment(int32 x, int32 y, uint256 equipmentId) public {
-    _checkToResetData(x, y);
+    // _checkToResetData(x, y);
     if (hasEquipment(x, y, equipmentId)) return;
     TileInventory.pushEquipmentIds(x, y, equipmentId);
     uint256 newIndex = TileInventory.lengthEquipmentIds(x, y);
@@ -90,6 +97,10 @@ library TileInventoryUtils {
   function addEquipments(int32 x, int32 y, uint256[] memory equipmentIds) public {
     _checkToResetData(x, y);
     for (uint256 i = 0; i < equipmentIds.length; i++) {
+      if (ItemV2.getIsUntradeable(Equipment.getItemId(equipmentIds[i]))) {
+        // skip non-tradable equipment, this will be lost forever
+        continue;
+      }
       addEquipment(x, y, equipmentIds[i]);
     }
   }
