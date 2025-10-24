@@ -15,7 +15,7 @@ import {
   CharGrindSlot,
   Equipment,
   EquipmentInfo,
-  Item,
+  ItemV2,
   CharFund,
   CharEquipStats2,
   CharCStats2
@@ -166,7 +166,7 @@ contract EquipmentSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemF
     // console2.log("equipment id", equipmentIds[i]);
     // uint256 itemId = Equipment.getItemId(equipmentIds[i]);
     // console2.log("item id", itemId);
-    // console2.log("item name", Item.getName(itemId));
+    // console2.log("item name", ItemV2.getName(itemId));
     // }
     CharCurrentStatsData memory currentStats = CharCurrentStats.get(characterId);
     CharStatsData memory stats = CharStats.get(characterId);

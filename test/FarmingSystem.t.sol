@@ -14,7 +14,7 @@ import {
   CharPerk
 } from "@codegen/index.sol";
 import { CharInventory } from "@codegen/tables/CharInventory.sol";
-import { Tool2, Tool2Data, Item, ItemData } from "@codegen/index.sol";
+import { Tool2, Tool2Data, ItemV2, ItemV2Data } from "@codegen/index.sol";
 import { CharacterStateType, ItemType } from "@codegen/common.sol";
 import { SpawnSystemFixture, MoveSystemFixture, WelcomeSystemFixture } from "@fixtures/index.sol";
 import { FarmingSystemFixture } from "@fixtures/FarmingSystemFixture.sol";
@@ -82,7 +82,7 @@ contract FarmingSystemTest is FarmingSystemFixture, SpawnSystemFixture, MoveSyst
 
       assertTrue(itemId > 0);
 
-      if (Item.getItemType(itemId) == ItemType.WoodAxe) {
+      if (ItemV2.getItemType(itemId) == ItemType.WoodAxe) {
         _startFarming(player, characterId, woodTier1, toolId);
       } else {
         _expectStartFarmingReverted(player, characterId, woodTier1, toolId);

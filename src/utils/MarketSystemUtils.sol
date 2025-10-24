@@ -16,7 +16,7 @@ import {
   CharMarketWeight,
   CharOtherItem,
   CharFund,
-  Item,
+  ItemV2,
   CharInfo,
   City,
   MarketFee,
@@ -53,7 +53,7 @@ library MarketSystemUtils {
     if (order.amount < top.amount) {
       revert Errors.MarketSystem_InvalidTakerAmount(top.orderId, order.amount, top.amount);
     }
-    if (Item.getCategory(order.itemId) == ItemCategoryType.Equipment) {
+    if (ItemV2.getCategory(order.itemId) == ItemCategoryType.Equipment) {
       // equipment order
       if (top.equipmentIds.length != top.amount) {
         revert Errors.MarketSystem_InvalidTakerOrderEquipmentData(top.orderId, top.amount, top.equipmentIds.length);
@@ -184,8 +184,11 @@ library MarketSystemUtils {
     if (order.itemId == 0) {
       revert Errors.MarketSystem_ZeroItemId();
     }
+    if (ItemV2.getIsUntradeable(order.itemId)) {
+      revert Errors.MarketSystem_UntradeableItem(order.itemId);
+    }
     // sell order has zero equipmentId, it must be an other item
-    if (!order.isBuy && order.equipmentId == 0 && Item.getCategory(order.itemId) != ItemCategoryType.Other) {
+    if (!order.isBuy && order.equipmentId == 0 && ItemV2.getCategory(order.itemId) != ItemCategoryType.Other) {
       revert Errors.MarketSystem_InvalidItemType(order.itemId);
     }
   }
@@ -256,7 +259,7 @@ library MarketSystemUtils {
     uint256 cityId = order.cityId;
     uint32 currentWeight = CharMarketWeight.getWeight(characterId, cityId);
     uint32 maxWeight = CharMarketWeight.getMaxWeight(characterId, cityId);
-    uint32 itemWeight = Item.getWeight(order.itemId);
+    uint32 itemWeight = ItemV2.getWeight(order.itemId);
     uint32 totalWeight = currentWeight + (itemWeight * order.amount);
     if (totalWeight > maxWeight) {
       revert Errors.MarketSystem_ExceedMaxWeight(characterId, order.cityId, totalWeight, maxWeight);

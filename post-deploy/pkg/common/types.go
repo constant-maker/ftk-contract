@@ -21,6 +21,7 @@ type Item struct {
 	Weight        int            `json:"weight"`
 	Name          string         `json:"name"`
 	Desc          string         `json:"desc"`
+	Untradable    bool           `json:"untradable"`
 	ResourceInfo  *ResourceInfo  `json:"resourceInfo,omitempty"`
 	EquipmentInfo *EquipmentInfo `json:"equipmentInfo,omitempty"`
 	HealingInfo   *HealingInfo   `json:"healingInfo,omitempty"`
@@ -153,8 +154,9 @@ type ItemRecipe struct {
 	ItemId             int          `json:"itemId"`
 	PerkItemTypes      []int        `json:"perkTypes,omitempty"`
 	RequiredPerkLevels []int        `json:"perkLevels,omitempty"`
-	Ingredients        []Ingredient `json:"ingredients"`
-	GoldCost           int          `json:"goldCost"`
+	Ingredients        []Ingredient `json:"ingredients,omitempty"`
+	GoldCost           int          `json:"goldCost,omitempty"`
+	FameCost           int          `json:"fameCost,omitempty"`
 }
 
 type Npc struct {

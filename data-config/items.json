@@ -8,6 +8,7 @@
       "weight": 1,
       "name": "Sylvan Wood",
       "desc": "The most basic type of wood which can be found everywhere across all kingdoms. Used for crafting simple and makeshift tools.",
+      "untradable": false,
       "resourceInfo": {
         "type": 0
       }
@@ -20,6 +21,7 @@
       "weight": 1,
       "name": "Birch Wood",
       "desc": "Known for its durability and natural resistance to decay. Used for crafting items that require a bit more resilience.",
+      "untradable": false,
       "resourceInfo": {
         "type": 0
       }
@@ -32,6 +34,7 @@
       "weight": 1,
       "name": "Ironbark Wood",
       "desc": "Among the toughest hardwoods, it is extremely dense and impervious, with a nearly unbreakable outer bark.",
+      "untradable": false,
       "resourceInfo": {
         "type": 0
       }
@@ -44,6 +47,7 @@
       "weight": 1,
       "name": "Heartcore Wood",
       "desc": "The mystical essence derived from the most ancient of treants.",
+      "untradable": false,
       "resourceInfo": {
         "type": 0
       }
@@ -56,6 +60,7 @@
       "weight": 1,
       "name": "Enchanted Wood",
       "desc": "Almost forgotten mythical wood from the Elder Tree that predate civilization.",
+      "untradable": false,
       "resourceInfo": {
         "type": 0
       }
@@ -68,6 +73,7 @@
       "weight": 1,
       "name": "Rough Stone",
       "desc": "Small stone pieces commonly found along riverbanks and paths.",
+      "untradable": false,
       "resourceInfo": {
         "type": 1
       }
@@ -80,6 +86,7 @@
       "weight": 1,
       "name": "Marker Stone",
       "desc": "Upright stones marking paths and boundaries since ancient times.",
+      "untradable": false,
       "resourceInfo": {
         "type": 1
       }
@@ -92,6 +99,7 @@
       "weight": 1,
       "name": "Stream Fish",
       "desc": "Small, bountiful fish teeming in babbling streams and rivers.",
+      "untradable": false,
       "resourceInfo": {
         "type": 2
       }
@@ -104,6 +112,7 @@
       "weight": 1,
       "name": "Marsh Fish",
       "desc": "Robust, hardy fish scavenged from stagnant marsh waters.",
+      "untradable": false,
       "resourceInfo": {
         "type": 2
       }
@@ -116,6 +125,7 @@
       "weight": 1,
       "name": "Iron Ore",
       "desc": "A common ferrous ore that can be smelted into useful iron metals.",
+      "untradable": false,
       "resourceInfo": {
         "type": 3
       }
@@ -128,6 +138,7 @@
       "weight": 1,
       "name": "Copper Ore",
       "desc": "Reddish-brown ore that yields a soft, conductive copper metal.",
+      "untradable": false,
       "resourceInfo": {
         "type": 3
       }
@@ -140,6 +151,7 @@
       "weight": 1,
       "name": "Common Wheat",
       "desc": "Common wheat varieties grown on farms and in fields.",
+      "untradable": false,
       "resourceInfo": {
         "type": 4
       }
@@ -152,6 +164,7 @@
       "weight": 1,
       "name": "Hearty Wheat",
       "desc": "Extra healthy, disease-resistant wheat with a slightly nutty flavor.",
+      "untradable": false,
       "resourceInfo": {
         "type": 4
       }
@@ -164,6 +177,7 @@
       "weight": 1,
       "name": "Wild Berries",
       "desc": "Basic, tangled handfuls of assorted common berries from the wild.",
+      "untradable": false,
       "resourceInfo": {
         "type": 5
       }
@@ -176,6 +190,7 @@
       "weight": 1,
       "name": "Bramble Berries",
       "desc": "Larger hauls of berries plucked from thick brambles.",
+      "untradable": false,
       "resourceInfo": {
         "type": 5
       }
@@ -188,6 +203,7 @@
       "weight": 1,
       "name": "Snow Fur",
       "desc": "Prized for its natural warmth and durability.",
+      "untradable": false,
       "resourceInfo": {
         "type": 6
       }
@@ -200,6 +216,7 @@
       "weight": 1,
       "name": "Sharp Claw",
       "desc": "The natural weapon of natural predators.",
+      "untradable": false,
       "resourceInfo": {
         "type": 6
       }
@@ -212,6 +229,7 @@
       "weight": 1,
       "name": "Sticky Mucus",
       "desc": "A valuable crafting material. Use it to create various items and enhance your abilities in the game.",
+      "untradable": false,
       "resourceInfo": {
         "type": 6
       }
@@ -224,6 +242,7 @@
       "weight": 1,
       "name": "Bat Wings",
       "desc": "The black wings of night creatures, but this is the small variant from a small creature.",
+      "untradable": false,
       "resourceInfo": {
         "type": 6
       }
@@ -236,6 +255,7 @@
       "weight": 1,
       "name": "Tattered Cloth",
       "desc": "Scraps of fabric that can be used for crafting or repairs.",
+      "untradable": false,
       "resourceInfo": {
         "type": 6
       }
@@ -247,7 +267,8 @@
       "tier": 1,
       "weight": 2,
       "name": "Beginner Wood Axe",
-      "desc": "A small and old wood axe used for chopping some common logs."
+      "desc": "A small and old wood axe used for chopping some common logs.",
+      "untradable": false
     },
     "22": {
       "id": 22,
@@ -256,7 +277,8 @@
       "tier": 2,
       "weight": 4,
       "name": "Novice Wood Axe",
-      "desc": "A heavy wood axe, but prone to break."
+      "desc": "A heavy wood axe, but prone to break.",
+      "untradable": false
     },
     "23": {
       "id": 23,
@@ -265,7 +287,8 @@
       "tier": 1,
       "weight": 2,
       "name": "Beginner Hammer",
-      "desc": "Starter stone hammer with a balanced, light head for easy handling."
+      "desc": "Starter stone hammer with a balanced, light head for easy handling.",
+      "untradable": false
     },
     "24": {
       "id": 24,
@@ -274,7 +297,8 @@
       "tier": 2,
       "weight": 4,
       "name": "Novice Hammer",
-      "desc": "Enhanced stone hammer which is designed for longer use with less fatigue."
+      "desc": "Enhanced stone hammer which is designed for longer use with less fatigue.",
+      "untradable": false
     },
     "25": {
       "id": 25,
@@ -283,7 +307,8 @@
       "tier": 1,
       "weight": 2,
       "name": "Beginner Fishing Rod",
-      "desc": "Simple design, perfect for catching small fish."
+      "desc": "Simple design, perfect for catching small fish.",
+      "untradable": false
     },
     "26": {
       "id": 26,
@@ -292,7 +317,8 @@
       "tier": 2,
       "weight": 4,
       "name": "Novice Fishing Rod",
-      "desc": "A balanced blend of durability and flexibility, made for catching small-to-medium fish."
+      "desc": "A balanced blend of durability and flexibility, made for catching small-to-medium fish.",
+      "untradable": false
     },
     "27": {
       "id": 27,
@@ -301,7 +327,8 @@
       "tier": 1,
       "weight": 2,
       "name": "Beginner Pickaxe",
-      "desc": "A dull and old pickaxe for common ores and minerals."
+      "desc": "A dull and old pickaxe for common ores and minerals.",
+      "untradable": false
     },
     "28": {
       "id": 28,
@@ -310,7 +337,8 @@
       "tier": 2,
       "weight": 4,
       "name": "Novice Pickaxe",
-      "desc": "A standard pickaxe used by miners throughout the four Kingdoms."
+      "desc": "A standard pickaxe used by miners throughout the four Kingdoms.",
+      "untradable": false
     },
     "29": {
       "id": 29,
@@ -319,7 +347,8 @@
       "tier": 1,
       "weight": 2,
       "name": "Beginner Sickle",
-      "desc": "A rusty sickle, only capable of harvesting the most basic wheat."
+      "desc": "A rusty sickle, only capable of harvesting the most basic wheat.",
+      "untradable": false
     },
     "30": {
       "id": 30,
@@ -328,7 +357,8 @@
       "tier": 2,
       "weight": 4,
       "name": "Novice Sickle",
-      "desc": "Balanced and lightweight with better grip for efficient wheat cutting."
+      "desc": "Balanced and lightweight with better grip for efficient wheat cutting.",
+      "untradable": false
     },
     "31": {
       "id": 31,
@@ -337,7 +367,8 @@
       "tier": 1,
       "weight": 2,
       "name": "Beginner Berry Shears",
-      "desc": "Gentle on berries, ideal for beginners learning to forage."
+      "desc": "Gentle on berries, ideal for beginners learning to forage.",
+      "untradable": false
     },
     "32": {
       "id": 32,
@@ -346,7 +377,8 @@
       "tier": 2,
       "weight": 4,
       "name": "Novice Berry Shears",
-      "desc": "Improved design for quick and easy collection of medium-sized berries."
+      "desc": "Improved design for quick and easy collection of medium-sized berries.",
+      "untradable": false
     },
     "33": {
       "id": 33,
@@ -357,6 +389,7 @@
       "weight": 5,
       "name": "Rusty Sword",
       "desc": "An old sword that was left to rust. It's visibly deteriorating, but it's still better than your fists.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 0,
         "advantageType": 0,
@@ -379,6 +412,7 @@
       "weight": 8,
       "name": "Iron Sword",
       "desc": "Balanced for quick strikes, with an iron composition for durability.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 0,
         "advantageType": 0,
@@ -401,6 +435,7 @@
       "weight": 8,
       "name": "Composite Bow",
       "desc": "An old and dusty bow that's only good at hitting small creatures.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 0,
         "advantageType": 3,
@@ -423,6 +458,7 @@
       "weight": 8,
       "name": "Hunting Bow",
       "desc": "A basic hunting bow - plain, yet versatile.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 0,
         "advantageType": 3,
@@ -445,6 +481,7 @@
       "weight": 8,
       "name": "Warrior's Longsword",
       "desc": "A finely-crafted longsword wielded by warriors. Its razor-sharp edge and balanced weight make it a reliable weapon against moderately powerful foes.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 0,
         "advantageType": 0,
@@ -467,6 +504,7 @@
       "weight": 8,
       "name": "Hand Axe",
       "desc": "A simple one-handed axe, favored by woodcutters, but can be used as a weapon in dire need.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 0,
         "advantageType": 2,
@@ -489,6 +527,7 @@
       "weight": 8,
       "name": "War Axe",
       "desc": "A brutal axe designed for combat.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 0,
         "advantageType": 2,
@@ -511,6 +550,7 @@
       "weight": 8,
       "name": "Footman's Spear\n",
       "desc": "A basic spear issued to foot soldiers. Its sturdy sylvan wood shaft and leaf-shaped spearhead are surprisingly reliable.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 0,
         "advantageType": 1,
@@ -533,6 +573,7 @@
       "weight": 8,
       "name": "Honed Longspear",
       "desc": "A well-crafted longspear with a sharp steel head. Its extended reach make it formidable against any type of enemies.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 0,
         "advantageType": 1,
@@ -555,6 +596,7 @@
       "weight": 8,
       "name": "Sylvan Branch",
       "desc": "A very simple staff carved from Sylvanwood, hence the namesake.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 0,
         "advantageType": 3,
@@ -577,6 +619,7 @@
       "weight": 8,
       "name": "Greatstaff",
       "desc": "An imposing staff no shorter than the height of an elephant.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 0,
         "advantageType": 3,
@@ -599,6 +642,7 @@
       "weight": 5,
       "name": "Bandit's Shank",
       "desc": "A crudely-fashioned dagger, favored by highway bandits and cutpurses.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 0,
         "advantageType": 3,
@@ -621,6 +665,7 @@
       "weight": 6,
       "name": "Sharp Dagger",
       "desc": "A fine dagger with a slender, razor blade. Lightweight and easily concealed.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 0,
         "advantageType": 3,
@@ -643,6 +688,7 @@
       "weight": 5,
       "name": "Poor Man's Shield",
       "desc": "A busted old shield that seems to come from a far away place, beyond the Outer World.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 1,
         "advantageType": 0,
@@ -665,6 +711,7 @@
       "weight": 5,
       "name": "Buckler",
       "desc": "A sturdy steel shield, reinforced with additional metal braces along the edges.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 1,
         "advantageType": 0,
@@ -687,6 +734,7 @@
       "weight": 4,
       "name": "Wool Robes",
       "desc": "A simple robe fashioned from thick wool.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 2,
         "advantageType": 0,
@@ -709,6 +757,7 @@
       "weight": 4,
       "name": "Padded Coat",
       "desc": "A long, quilted coat with internal padding. Deceptively lightweight.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 2,
         "advantageType": 0,
@@ -731,6 +780,7 @@
       "weight": 2,
       "name": "Peasant's Cap",
       "desc": "A simple, shapeless cap made of rough fabric.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 3,
         "advantageType": 0,
@@ -753,6 +803,7 @@
       "weight": 2,
       "name": "Knitted Cowl",
       "desc": "A close-fitting cowl knitted from sturdy wool yarn.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 3,
         "advantageType": 0,
@@ -775,6 +826,7 @@
       "weight": 2,
       "name": "Worn Sandals",
       "desc": "Crude everyday sandals, the straps frayed from much use.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 4,
         "advantageType": 0,
@@ -797,6 +849,7 @@
       "weight": 2,
       "name": "Common Travelling Boots",
       "desc": "Sturdy boots with thick soles, designed for long journeys on foot.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 4,
         "advantageType": 0,
@@ -819,6 +872,7 @@
       "weight": 5,
       "name": "Leather Cloak",
       "desc": "A cloak fashioned from layers of toughened leather and fabrics.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 2,
         "advantageType": 0,
@@ -841,6 +895,7 @@
       "weight": 5,
       "name": "Hardened Cloak",
       "desc": "A full cloak of boiled and hardened leather.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 2,
         "advantageType": 0,
@@ -863,6 +918,7 @@
       "weight": 3,
       "name": "Basic Hide Hat",
       "desc": "A simple hat crafted from a single piece of cured leather.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 3,
         "advantageType": 0,
@@ -885,6 +941,7 @@
       "weight": 3,
       "name": "Leather Helmet",
       "desc": "A sturdy helmet covered in overlapping rows of leather.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 3,
         "advantageType": 0,
@@ -907,6 +964,7 @@
       "weight": 3,
       "name": "Old Boots",
       "desc": "Well-worn leather boots, the material cracked and scuffed from years of use.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 4,
         "advantageType": 0,
@@ -929,6 +987,7 @@
       "weight": 3,
       "name": "Leather Shoes",
       "desc": "Ankle-high shoes crafted from boiled and hardened leather.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 4,
         "advantageType": 0,
@@ -951,6 +1010,7 @@
       "weight": 6,
       "name": "Crude Chest Armor",
       "desc": "A simple sleeveless plate vest crafted from iron. This crude armor offers decent protection against blows.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 2,
         "advantageType": 0,
@@ -973,6 +1033,7 @@
       "weight": 6,
       "name": "Basic Plate Armor",
       "desc": "A full suit of sturdy iron plates, solidly riveted together.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 2,
         "advantageType": 0,
@@ -995,6 +1056,7 @@
       "weight": 4,
       "name": "Iron Helm",
       "desc": "A simple iron helmet with a face guard for extra protection.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 3,
         "advantageType": 0,
@@ -1017,6 +1079,7 @@
       "weight": 4,
       "name": "Great Helm",
       "desc": "A heavy iron helmet with a cylindrical visor and hinged ventail. The fully enclosed design offers good protection.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 3,
         "advantageType": 0,
@@ -1039,6 +1102,7 @@
       "weight": 4,
       "name": "Crude Iron Boots",
       "desc": "Basic iron plate coverings for the feet.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 4,
         "advantageType": 0,
@@ -1061,6 +1125,7 @@
       "weight": 4,
       "name": "Fluted Greaves",
       "desc": "Ornately fluted and articulated iron plates that cover the entire lower leg.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 4,
         "advantageType": 0,
@@ -1082,6 +1147,7 @@
       "weight": 2,
       "name": "Small Healing Potion",
       "desc": "A small potion that restores a small amount of health. Ideal for quick recovery during early adventures.",
+      "untradable": false,
       "healingInfo": {
         "hpRestore": 50
       }
@@ -1094,6 +1160,7 @@
       "weight": 1,
       "name": "Draconic Heart",
       "desc": "It is said that a dragon's soul persists in its heart after death. The heart is still pulsing, albeit faintly.",
+      "untradable": false,
       "resourceInfo": {
         "type": 6
       }
@@ -1106,6 +1173,7 @@
       "weight": 1,
       "name": "Red Scales",
       "desc": "Crimson dragon scales, said to be nigh-indestructible, and of course, incredibly valuable.",
+      "untradable": false,
       "resourceInfo": {
         "type": 6
       }
@@ -1118,6 +1186,7 @@
       "weight": 1,
       "name": "Dragon Fang",
       "desc": "A massive and sharp fang, imbued with the dragon's ferocity.",
+      "untradable": false,
       "resourceInfo": {
         "type": 6
       }
@@ -1131,6 +1200,7 @@
       "weight": 10,
       "name": "Beast Piercer",
       "desc": "A vicious piercing spear edged with a dragon's lethal fang.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 0,
         "advantageType": 1,
@@ -1153,6 +1223,7 @@
       "weight": 8,
       "name": "Blood Armor",
       "desc": "An imposing armor, made with the essence of a dragon's ethereal heart. The heart's power turns the iron plate blood red, hence the namesake.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 2,
         "advantageType": 0,
@@ -1175,6 +1246,7 @@
       "weight": 7,
       "name": "Scaled Greatshield",
       "desc": "A towering shield adorned with dragon scales, providing effective defense.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 1,
         "advantageType": 0,
@@ -1196,6 +1268,7 @@
       "weight": 2,
       "name": "Stormwood",
       "desc": "A sturdy, tempest-touched wood that grows in regions of constant lightning and thunder.",
+      "untradable": false,
       "resourceInfo": {
         "type": 0
       }
@@ -1208,6 +1281,7 @@
       "weight": 2,
       "name": "Bloodoak",
       "desc": "Named for its dark red sap, which flows like blood when the tree is cut.",
+      "untradable": false,
       "resourceInfo": {
         "type": 0
       }
@@ -1220,6 +1294,7 @@
       "weight": 2,
       "name": "Starwood",
       "desc": "A pale and luminous wood that glows softly in the dark, as if imbued with the light of distant stars.",
+      "untradable": false,
       "resourceInfo": {
         "type": 0
       }
@@ -1232,6 +1307,7 @@
       "weight": 2,
       "name": "Phoenix Wood",
       "desc": "Extremely lightweight yet almost unbreakable. Even after being severely damaged, Phoenix Wood will gradually restore itself, much like the mythical phoenix rising from its ashes.",
+      "untradable": false,
       "resourceInfo": {
         "type": 0
       }
@@ -1244,6 +1320,7 @@
       "weight": 3,
       "name": "Yggdrasil Wood",
       "desc": "This wood is said to be connected to the life force of all living things, making it extremely rare and powerful.",
+      "untradable": false,
       "resourceInfo": {
         "type": 0
       }
@@ -1256,6 +1333,7 @@
       "weight": 1,
       "name": "Flintrock",
       "desc": "A sharp-edged stone favored for crafting primitive tools and weapons with a rugged appearance.",
+      "untradable": false,
       "resourceInfo": {
         "type": 1
       }
@@ -1268,6 +1346,7 @@
       "weight": 1,
       "name": "Ironstone",
       "desc": "A dense, metallic stone often used for basic armor and weapon crafting. Its durability makes it ideal for medium-level smiths.",
+      "untradable": false,
       "resourceInfo": {
         "type": 1
       }
@@ -1280,6 +1359,7 @@
       "weight": 1,
       "name": "Graniteheart",
       "desc": "A tough stone known for its resilience, used in fortifying structures and crafting sturdy equipment.",
+      "untradable": false,
       "resourceInfo": {
         "type": 1
       }
@@ -1292,6 +1372,7 @@
       "weight": 2,
       "name": "Basaltcore",
       "desc": "Formed in volcanic regions, this stone has excellent heat-resistant properties.",
+      "untradable": false,
       "resourceInfo": {
         "type": 1
       }
@@ -1304,6 +1385,7 @@
       "weight": 2,
       "name": "Thunderstone",
       "desc": "A vibrating stone that holds traces of thunderous energy.",
+      "untradable": false,
       "resourceInfo": {
         "type": 1
       }
@@ -1316,6 +1398,7 @@
       "weight": 2,
       "name": "Mythrilstone",
       "desc": "A lightweight, shimmering stone with extraordinary strength, ideal for crafting high-tier, agile armor and weapons.",
+      "untradable": false,
       "resourceInfo": {
         "type": 1
       }
@@ -1328,6 +1411,7 @@
       "weight": 2,
       "name": "Lavaheart",
       "desc": "This stone emanates the intense energy of volcanic eruptions, and its core can unleash a burst of flame to ignite nearby beings.",
+      "untradable": false,
       "resourceInfo": {
         "type": 1
       }
@@ -1340,6 +1424,7 @@
       "weight": 3,
       "name": "Celestialite",
       "desc": "An ultra-rare stone found only in the deepest parts of the universe, its energy is said to warp time and space.",
+      "untradable": false,
       "resourceInfo": {
         "type": 1
       }
@@ -1352,6 +1437,7 @@
       "weight": 1,
       "name": "Bluegill",
       "desc": "A modest-sized fish with a blue tint. It is known for its mild flavor and is often used in simple cooking recipes.",
+      "untradable": false,
       "resourceInfo": {
         "type": 2
       }
@@ -1364,6 +1450,7 @@
       "weight": 1,
       "name": "Golden Fish",
       "desc": "A rare variant of the trout with golden scales. It’s sought after for its unique flavor and is often used in special dishes and potions.",
+      "untradable": false,
       "resourceInfo": {
         "type": 2
       }
@@ -1376,6 +1463,7 @@
       "weight": 1,
       "name": "Piranha",
       "desc": "Fearsome predator known for its razor-sharp teeth and aggressive feeding behavior.",
+      "untradable": false,
       "resourceInfo": {
         "type": 2
       }
@@ -1388,6 +1476,7 @@
       "weight": 2,
       "name": "Demon Catfish",
       "desc": "Known for its eerie silence and stealthy movements, making it a formidable predator.",
+      "untradable": false,
       "resourceInfo": {
         "type": 2
       }
@@ -1400,6 +1489,7 @@
       "weight": 2,
       "name": "Moonlit Fish",
       "desc": "Has a shimmering, silver-blue body that reflects moonlight with an otherworldly glow.",
+      "untradable": false,
       "resourceInfo": {
         "type": 2
       }
@@ -1412,6 +1502,7 @@
       "weight": 2,
       "name": "Dragonfish",
       "desc": "Known for its formidable strength and fiery temperament, the Dragonfish can harness elemental fire and magical energies.",
+      "untradable": false,
       "resourceInfo": {
         "type": 2
       }
@@ -1424,6 +1515,7 @@
       "weight": 2,
       "name": "Void Octofish",
       "desc": "Possesses remarkable control over void and darkness. Its tentacles can manipulate shadows and create areas of darkness, making it difficult to approach.",
+      "untradable": false,
       "resourceInfo": {
         "type": 2
       }
@@ -1436,6 +1528,7 @@
       "weight": 3,
       "name": "Starlight Serpent",
       "desc": "A mythical fish that glows with starlight. It’s used in crafting legendary items that have the power to turn the tide of battle.",
+      "untradable": false,
       "resourceInfo": {
         "type": 2
       }
@@ -1448,6 +1541,7 @@
       "weight": 1,
       "name": "Nickel Ore",
       "desc": "A lustrous, silvery metal with a hint of gold. It is used in crafting stronger weapons and tools.",
+      "untradable": false,
       "resourceInfo": {
         "type": 3
       }
@@ -1460,6 +1554,7 @@
       "weight": 1,
       "name": "Emerald Ore",
       "desc": "A rare and valuable green gem that is used in crafting items with enhanced magical properties and higher durability.",
+      "untradable": false,
       "resourceInfo": {
         "type": 3
       }
@@ -1472,6 +1567,7 @@
       "weight": 1,
       "name": "Adamantite Ore",
       "desc": "An incredibly tough and rare metal, known for its durability and sharpness. Ideal for creating high-tier weapons and armor with exceptional qualities.",
+      "untradable": false,
       "resourceInfo": {
         "type": 3
       }
@@ -1484,6 +1580,7 @@
       "weight": 2,
       "name": "Mithril Ore",
       "desc": "A rare, lightweight metal highly sought after for its strength and magical conductivity.",
+      "untradable": false,
       "resourceInfo": {
         "type": 3
       }
@@ -1496,6 +1593,7 @@
       "weight": 2,
       "name": "Dark Ore",
       "desc": "A deep, glossy black mineral with subtle metallic flecks. Valued for its durability and strength.",
+      "untradable": false,
       "resourceInfo": {
         "type": 3
       }
@@ -1508,6 +1606,7 @@
       "weight": 2,
       "name": "Meteorite Ore",
       "desc": "Forged from the remnants of meteors, this dark, metallic ore boasts a rough texture and scattered celestial flecks.",
+      "untradable": false,
       "resourceInfo": {
         "type": 3
       }
@@ -1520,6 +1619,7 @@
       "weight": 2,
       "name": "Infinity Ore",
       "desc": "A mysterious mineral with an otherworldly radiance, derived from ancient stellar phenomena. Provides limitless potential for crafting powerful and unique magical items.",
+      "untradable": false,
       "resourceInfo": {
         "type": 3
       }
@@ -1532,6 +1632,7 @@
       "weight": 3,
       "name": "Celestial Ore",
       "desc": "A mythical ore with an exquisite lotus-shaped glow. Imbued with ancient cosmic energy.",
+      "untradable": false,
       "resourceInfo": {
         "type": 3
       }
@@ -1544,6 +1645,7 @@
       "weight": 1,
       "name": "Strawberry",
       "desc": "A juicy, sweet fruit with vibrant red skin and tiny seeds.",
+      "untradable": false,
       "resourceInfo": {
         "type": 5
       }
@@ -1556,6 +1658,7 @@
       "weight": 1,
       "name": "Mulberry",
       "desc": "A sweet, dark purple fruit with a delicate, juicy texture.",
+      "untradable": false,
       "resourceInfo": {
         "type": 5
       }
@@ -1568,6 +1671,7 @@
       "weight": 1,
       "name": "Verdant Grape",
       "desc": "A fresh green grape with a crisp texture, thriving in lush, sunlit vineyards.",
+      "untradable": false,
       "resourceInfo": {
         "type": 5
       }
@@ -1580,6 +1684,7 @@
       "weight": 2,
       "name": "Fireberry",
       "desc": "A bright, fiery red fruit with a flame-like appearance, thriving in warm, sunlit environments.",
+      "untradable": false,
       "resourceInfo": {
         "type": 5
       }
@@ -1592,6 +1697,7 @@
       "weight": 2,
       "name": "Radiant Goldberry",
       "desc": "Known for its dazzling golden color and glowing appearance, this berry flourishes in warm, sunny locales.",
+      "untradable": false,
       "resourceInfo": {
         "type": 5
       }
@@ -1604,6 +1710,7 @@
       "weight": 2,
       "name": "Stormberry",
       "desc": "A vibrant, stormy-colored fruit with a rugged texture, growing in tempestuous, storm-prone areas.",
+      "untradable": false,
       "resourceInfo": {
         "type": 5
       }
@@ -1616,6 +1723,7 @@
       "weight": 2,
       "name": "Permafrost Berry",
       "desc": "A striking, icy blue fruit with a chilled surface, growing in extreme cold climates.",
+      "untradable": false,
       "resourceInfo": {
         "type": 5
       }
@@ -1628,6 +1736,7 @@
       "weight": 3,
       "name": "Solar Berry",
       "desc": "A fiery red fruit with a smooth, radiant surface that thrives in extreme environments.",
+      "untradable": false,
       "resourceInfo": {
         "type": 5
       }
@@ -1640,6 +1749,7 @@
       "weight": 1,
       "name": "Robust Wheat",
       "desc": "Able to thrive in poor soil conditions, this hardy wheat produces plump, protein-rich kernels.",
+      "untradable": false,
       "resourceInfo": {
         "type": 4
       }
@@ -1652,6 +1762,7 @@
       "weight": 1,
       "name": "Golden Wheat",
       "desc": "Prized for its vibrant golden hue and sweet, buttery taste when milled into flour.",
+      "untradable": false,
       "resourceInfo": {
         "type": 4
       }
@@ -1664,6 +1775,7 @@
       "weight": 1,
       "name": "Rubyfield Wheat",
       "desc": "Deep ruby-red kernels give this rare wheat an earthy, almost wine-like essence when baked or brewed.",
+      "untradable": false,
       "resourceInfo": {
         "type": 4
       }
@@ -1676,6 +1788,7 @@
       "weight": 2,
       "name": "Amberwave Wheat",
       "desc": "Golden amber kernels imbue baked goods with a rich, honeyed aroma and flavor.",
+      "untradable": false,
       "resourceInfo": {
         "type": 4
       }
@@ -1688,6 +1801,7 @@
       "weight": 2,
       "name": "Wildbloom Wheat",
       "desc": "This delicately floral wheat variety adds subtle sweet notes of meadow blossoms.",
+      "untradable": false,
       "resourceInfo": {
         "type": 4
       }
@@ -1700,6 +1814,7 @@
       "weight": 2,
       "name": "Dewkissed Wheat",
       "desc": "Grown only in misty groves, the morning dew gives this wheat a crisp, rejuvenating freshness.",
+      "untradable": false,
       "resourceInfo": {
         "type": 4
       }
@@ -1712,6 +1827,7 @@
       "weight": 2,
       "name": "Seabathed Wheat",
       "desc": "Kernels that are ocean-cured to perfection impart a warm, refreshing sweet and salty flavour.",
+      "untradable": false,
       "resourceInfo": {
         "type": 4
       }
@@ -1724,6 +1840,7 @@
       "weight": 3,
       "name": "Starblossom Wheat",
       "desc": "The ultra-rare cosmic wheat reveals hints of far-off galaxies in its delicate, ethereal essence.",
+      "untradable": false,
       "resourceInfo": {
         "type": 4
       }
@@ -1736,6 +1853,7 @@
       "weight": 2,
       "name": "Common Healing Potion",
       "desc": "A reliable remedy that restores moderate health, found in most village apothecaries.",
+      "untradable": false,
       "healingInfo": {
         "hpRestore": 100
       }
@@ -1748,6 +1866,7 @@
       "weight": 1,
       "name": "Hardwood Shell",
       "desc": "A piece of the Crabark's exoskeleton, made from a mixture of woods found in Sylvanreach.",
+      "untradable": false,
       "resourceInfo": {
         "type": 6
       }
@@ -1760,6 +1879,7 @@
       "weight": 1,
       "name": "Budding Horn",
       "desc": "This horn began to sprout from inside of a leafdrake, which typically bears no horn. Some kind of evolution?",
+      "untradable": false,
       "resourceInfo": {
         "type": 6
       }
@@ -1772,6 +1892,7 @@
       "weight": 1,
       "name": "Blue Leaf",
       "desc": "Petalflare's green leaves sometime turn blue in rare and unknown occasions.",
+      "untradable": false,
       "resourceInfo": {
         "type": 6
       }
@@ -1784,6 +1905,7 @@
       "weight": 1,
       "name": "Poisonous Fang",
       "desc": "The Basilisk has two types of fangs, this is the smaller, yet sharper and more dangerous one.",
+      "untradable": false,
       "resourceInfo": {
         "type": 6
       }
@@ -1796,6 +1918,7 @@
       "weight": 1,
       "name": "Overgrown Mushroom Cap",
       "desc": "This huge mushroom cap is strangely hot to the touch.",
+      "untradable": false,
       "resourceInfo": {
         "type": 6
       }
@@ -1808,6 +1931,7 @@
       "weight": 1,
       "name": "Frozen Claw",
       "desc": "The cold, icy claw of a predator in the mist. It's heavier than it looks.",
+      "untradable": false,
       "resourceInfo": {
         "type": 6
       }
@@ -1820,6 +1944,7 @@
       "weight": 1,
       "name": "Lizard Tail",
       "desc": "The blue tail of Snowzards can move independently from its main body after it's been chopped off.",
+      "untradable": false,
       "resourceInfo": {
         "type": 6
       }
@@ -1832,6 +1957,7 @@
       "weight": 1,
       "name": "Ghost Wings",
       "desc": "The transparent and ghost-like wings of a Glaciewyrm. They're cold to the touch, and melt into misty water if not properly kept.",
+      "untradable": false,
       "resourceInfo": {
         "type": 6
       }
@@ -1844,6 +1970,7 @@
       "weight": 1,
       "name": "Warm Fur",
       "desc": "The white fur of magnificent snow creatures roaming in the wilds of Everfrost.",
+      "untradable": false,
       "resourceInfo": {
         "type": 6
       }
@@ -1856,6 +1983,7 @@
       "weight": 1,
       "name": "Stinger",
       "desc": "The sharp and long sting of a huge insect. It can pierce cleanly through armor and shield with enough force.",
+      "untradable": false,
       "resourceInfo": {
         "type": 6
       }
@@ -1868,6 +1996,7 @@
       "weight": 1,
       "name": "Brimstone Horn",
       "desc": "A large horn burning with inner heat. Highly prized among blacksmiths across the Outer World.",
+      "untradable": false,
       "resourceInfo": {
         "type": 6
       }
@@ -1880,6 +2009,7 @@
       "weight": 1,
       "name": "Beastmen's Metal Piece",
       "desc": "The unusual metal of beastmen origin, blended from iron, copper, and other unknown types of ores.",
+      "untradable": false,
       "resourceInfo": {
         "type": 6
       }
@@ -1893,6 +2023,7 @@
       "weight": 7,
       "name": "Ritual Dagger",
       "desc": "Elegant dagger made of ancient ingredients, used primarily in sacrifices.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 0,
         "advantageType": 3,
@@ -1915,6 +2046,7 @@
       "weight": 8,
       "name": "Assassin Dagger",
       "desc": "Lightweight yet lethal. The size of the sword does not matter when death is certain.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 0,
         "advantageType": 3,
@@ -1937,6 +2069,7 @@
       "weight": 6,
       "name": "Steel Shield",
       "desc": "A well-made round shield on the smaller side, but very effective at deflecting attacks.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 1,
         "advantageType": 0,
@@ -1959,6 +2092,7 @@
       "weight": 7,
       "name": "Knight's Greatshield",
       "desc": "Huge metal shield that's two times heavier than most standard weapons.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 1,
         "advantageType": 0,
@@ -1981,6 +2115,7 @@
       "weight": 3,
       "name": "Ranger's Hood",
       "desc": "Typical adventurer's hood, unremarkable but very versatile.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 3,
         "advantageType": 0,
@@ -2003,6 +2138,7 @@
       "weight": 3,
       "name": "Hood of the Astrologer",
       "desc": "Hood tailored from high quality fabrics. Worn by those who look to the great above.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 3,
         "advantageType": 0,
@@ -2025,6 +2161,7 @@
       "weight": 3,
       "name": "Flower Sandals",
       "desc": "Light sandal made of natural leaves and vines that seem to elevate your every step.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 4,
         "advantageType": 0,
@@ -2047,6 +2184,7 @@
       "weight": 3,
       "name": "Boots of the Pilgrim",
       "desc": "Very well made shoes without any exceptional features, crafted for travelling long distances. It's very good at what it does.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 4,
         "advantageType": 0,
@@ -2069,6 +2207,7 @@
       "weight": 5,
       "name": "Noble's Robe",
       "desc": "Lightweight robe made from natural blue leaves that seems to elevate your every move.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 2,
         "advantageType": 0,
@@ -2091,6 +2230,7 @@
       "weight": 5,
       "name": "Mist Monk's Robe",
       "desc": "Robe worn by a secret sect hidden deep in Misthaven, but has since spread across kingdoms.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 2,
         "advantageType": 0,
@@ -2113,6 +2253,7 @@
       "weight": 15,
       "name": "Claymore",
       "desc": "A large sword with a long, straight blade. Surprisingly balanced and versatile for its size, this weapon is the golden standard in weapon smithing.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 0,
         "advantageType": 0,
@@ -2135,6 +2276,7 @@
       "weight": 10,
       "name": "Sunforged Blade",
       "desc": "The Sun has many faces, and this sword was used in prayers long ago to see one.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 0,
         "advantageType": 0,
@@ -2157,6 +2299,7 @@
       "weight": 9,
       "name": "Warchief's Axe",
       "desc": "Large axe commissioned for only the best of warriors. Misthaven's blacksmiths are very peculiar about the axes they make.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 0,
         "advantageType": 2,
@@ -2179,6 +2322,7 @@
       "weight": 10,
       "name": "Mist Cleaver",
       "desc": "A sharp axe with long blades that're as sharp as a razor. It is said that this axe can cut through the mist of Misthaven itself.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 0,
         "advantageType": 2,
@@ -2201,6 +2345,7 @@
       "weight": 9,
       "name": "The Needle",
       "desc": "A very light and thin spear, with a sharp black spearhead that can penetrate standard armor pieces.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 0,
         "advantageType": 1,
@@ -2223,6 +2368,7 @@
       "weight": 17,
       "name": "Rocksplitter Lance",
       "desc": "This ultra long spear does not bend at all even under hard pressure, and thus very effective in combating huge beasts.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 0,
         "advantageType": 1,
@@ -2245,6 +2391,7 @@
       "weight": 15,
       "name": "The Violet",
       "desc": "This elegant bow is unusually light and easy to handle, mainly because of the ethereal materials used in its creation. Used regularly by noblewomen.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 0,
         "advantageType": 3,
@@ -2267,6 +2414,7 @@
       "weight": 17,
       "name": "Brimstone Bow",
       "desc": "A bow that's always warm to the touch. In the right situation it can even enflame the arrows.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 0,
         "advantageType": 3,
@@ -2289,6 +2437,7 @@
       "weight": 9,
       "name": "Staff of Ice",
       "desc": "Covered in lizard scales on both ends, this cold staff can act both as a medium for sorceries and as an effective blunt weapon.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 0,
         "advantageType": 3,
@@ -2311,6 +2460,7 @@
       "weight": 10,
       "name": "Scepter of the Frost Giants",
       "desc": "A very long staff with magical properties. Legends say the frost giants are the master of winter, and it is their primordial magic that keep Everfrost in an everlasting winter.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 0,
         "advantageType": 3,
@@ -2333,6 +2483,7 @@
       "weight": 6,
       "name": "Foot Soldier's Tabard",
       "desc": "Leather padded cloth armor, worn by a kingdom's foot soldiers.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 2,
         "advantageType": 0,
@@ -2355,6 +2506,7 @@
       "weight": 6,
       "name": "Coat of the White",
       "desc": "Huge coat of white fur that both insulate the wearer from Everfrost's cold nights, and thick enough to protect against slash strikes.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 2,
         "advantageType": 0,
@@ -2377,6 +2529,7 @@
       "weight": 4,
       "name": "Fur Hood",
       "desc": "Hood of fur that covers the ears. Can be worn inside a plate helmet, if you need to fight in the dead of winter.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 3,
         "advantageType": 0,
@@ -2399,6 +2552,7 @@
       "weight": 4,
       "name": "Howler Hood",
       "desc": "The hood helps hunters blend into the environment, ideal for tracking prey in the wild.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 3,
         "advantageType": 0,
@@ -2421,6 +2575,7 @@
       "weight": 4,
       "name": "Warrior's Battle Boots",
       "desc": "High-quality leather boots, preferred by soldiers in a lord's army. Surprisingly durable and can withstand harsh weather with ease.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 4,
         "advantageType": 0,
@@ -2443,6 +2598,7 @@
       "weight": 4,
       "name": "Boots of Strife",
       "desc": "Good quality shoes typically worn by elite warriors in long marches. A bit on the heavier side, but very very durable.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 4,
         "advantageType": 0,
@@ -2465,6 +2621,7 @@
       "weight": 7,
       "name": "Heavy Plate Armor",
       "desc": "A huge piece of plate armor that usually signifies the wearer's knighthood.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 2,
         "advantageType": 0,
@@ -2487,6 +2644,7 @@
       "weight": 7,
       "name": "Gladiator's Heavy Armor",
       "desc": "Heavy plate armor with engravings, adorned only to the best of gladiators.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 2,
         "advantageType": 0,
@@ -2509,6 +2667,7 @@
       "weight": 5,
       "name": "Squire's Metal Helmet",
       "desc": "Helmet made for young aspiring knights in the making. The road ahead is hard, but scars are always the best teacher.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 3,
         "advantageType": 0,
@@ -2531,6 +2690,7 @@
       "weight": 5,
       "name": "Field Knight Helm",
       "desc": "Metal battle helm made for mounted knights of an ambitious kingdom. This helm has accompanied knights to countless battles.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 3,
         "advantageType": 0,
@@ -2553,6 +2713,7 @@
       "weight": 5,
       "name": "Greaves of the Exiled",
       "desc": "Plated foot armor of the ancient knights, who've been exiled far before the four kingdoms come into being.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 4,
         "advantageType": 0,
@@ -2575,6 +2736,7 @@
       "weight": 5,
       "name": "Gladiator's Greaves",
       "desc": "Brass greaves adorned to renowned gladiators in times old.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 4,
         "advantageType": 0,
@@ -2595,7 +2757,8 @@
       "tier": 3,
       "weight": 6,
       "name": "Standard Wood Axe",
-      "desc": "The well-balanced woodcutter's axe for harvesting various types of timber."
+      "desc": "The well-balanced woodcutter's axe for harvesting various types of timber.",
+      "untradable": false
     },
     "164": {
       "id": 164,
@@ -2604,7 +2767,8 @@
       "tier": 3,
       "weight": 6,
       "name": "Standard Hammer",
-      "desc": "The quintessential tool for quarriers and stoneworkers."
+      "desc": "The quintessential tool for quarriers and stoneworkers.",
+      "untradable": false
     },
     "165": {
       "id": 165,
@@ -2613,7 +2777,8 @@
       "tier": 3,
       "weight": 6,
       "name": "Standard Fishing Rod",
-      "desc": "The well-crafted standard tool of seasoned fishermen."
+      "desc": "The well-crafted standard tool of seasoned fishermen.",
+      "untradable": false
     },
     "166": {
       "id": 166,
@@ -2622,7 +2787,8 @@
       "tier": 3,
       "weight": 6,
       "name": "Standard Pickaxe",
-      "desc": "This standard mining pick excavates typical underground resources."
+      "desc": "This standard mining pick excavates typical underground resources.",
+      "untradable": false
     },
     "167": {
       "id": 167,
@@ -2631,7 +2797,8 @@
       "tier": 3,
       "weight": 6,
       "name": "Standard Sickle",
-      "desc": "The well-crafted standard tool for reaping any cultivated crops."
+      "desc": "The well-crafted standard tool for reaping any cultivated crops.",
+      "untradable": false
     },
     "168": {
       "id": 168,
@@ -2640,7 +2807,8 @@
       "tier": 3,
       "weight": 6,
       "name": "Standard Berry Shears",
-      "desc": "The standard bramble shears used by seasoned berry gatherers."
+      "desc": "The standard bramble shears used by seasoned berry gatherers.",
+      "untradable": false
     },
     "169": {
       "id": 169,
@@ -2649,7 +2817,8 @@
       "tier": 4,
       "weight": 8,
       "name": "Veteran Wood Axe",
-      "desc": "Good quality veteran axe built for prolonged woodcutting."
+      "desc": "Good quality veteran axe built for prolonged woodcutting.",
+      "untradable": false
     },
     "170": {
       "id": 170,
@@ -2658,7 +2827,8 @@
       "tier": 4,
       "weight": 8,
       "name": "Veteran Hammer",
-      "desc": "This heavy and all-rounded hammer shatters boulders with ease."
+      "desc": "This heavy and all-rounded hammer shatters boulders with ease.",
+      "untradable": false
     },
     "171": {
       "id": 171,
@@ -2667,7 +2837,8 @@
       "tier": 4,
       "weight": 8,
       "name": "Veteran Fishing Rod",
-      "desc": "A hardy fishing rod for battling bigger freshwater prizes."
+      "desc": "A hardy fishing rod for battling bigger freshwater prizes.",
+      "untradable": false
     },
     "172": {
       "id": 172,
@@ -2676,7 +2847,8 @@
       "tier": 4,
       "weight": 8,
       "name": "Veteran Pickaxe",
-      "desc": "A sturdy pickaxe tempered for prolonged mineral extraction."
+      "desc": "A sturdy pickaxe tempered for prolonged mineral extraction.",
+      "untradable": false
     },
     "173": {
       "id": 173,
@@ -2685,7 +2857,8 @@
       "tier": 4,
       "weight": 8,
       "name": "Veteran Sickle",
-      "desc": "This sturdy veteran sickle deftly slices through dense mature wheat stalks."
+      "desc": "This sturdy veteran sickle deftly slices through dense mature wheat stalks.",
+      "untradable": false
     },
     "174": {
       "id": 174,
@@ -2694,7 +2867,8 @@
       "tier": 4,
       "weight": 8,
       "name": "Veteran Berry Shears",
-      "desc": "Elegantly-patterned shears that's preferred by experience gatherers."
+      "desc": "Elegantly-patterned shears that's preferred by experience gatherers.",
+      "untradable": false
     },
     "175": {
       "id": 175,
@@ -2704,6 +2878,7 @@
       "weight": 1,
       "name": "Fungus Growth",
       "desc": "Beneath the hard exoskeleton of Crabark hides a number of parasitic fungus.",
+      "untradable": false,
       "resourceInfo": {
         "type": 6
       }
@@ -2716,6 +2891,7 @@
       "weight": 1,
       "name": "Serpent Eye",
       "desc": "The golden eye of a great ancient predator.",
+      "untradable": false,
       "resourceInfo": {
         "type": 6
       }
@@ -2728,6 +2904,7 @@
       "weight": 1,
       "name": "Crystal Horn",
       "desc": "The large horn of giants and their ascendants. Originally made of ice, through ages it became so dense under pressure it crystallized.",
+      "untradable": false,
       "resourceInfo": {
         "type": 6
       }
@@ -2740,6 +2917,7 @@
       "weight": 1,
       "name": "Beastmen's Banner",
       "desc": "Honored war banner of beastmen origin. Crude, but a great symbol of power.",
+      "untradable": false,
       "resourceInfo": {
         "type": 6
       }
@@ -2752,6 +2930,7 @@
       "weight": 2,
       "name": "Greater Healing Potion",
       "desc": "An enhanced mixture that provides substantial healing power, favored by experienced adventurers.",
+      "untradable": false,
       "healingInfo": {
         "hpRestore": 200
       }
@@ -2764,6 +2943,7 @@
       "weight": 2,
       "name": "Grand Healing Potion",
       "desc": "A potent blend that rapidly restores significant health, crafted by skilled alchemists.",
+      "untradable": false,
       "healingInfo": {
         "hpRestore": 300
       }
@@ -2776,6 +2956,7 @@
       "weight": 2,
       "name": "Master Healing Potion",
       "desc": "An expertly crafted elixir that provides powerful healing.",
+      "untradable": false,
       "healingInfo": {
         "hpRestore": 400
       }
@@ -2787,7 +2968,8 @@
       "tier": 5,
       "weight": 10,
       "name": "Expert Wood Axe",
-      "desc": "A precision-crafted axe that makes quick work of timber, reflecting years of woodcutting expertise."
+      "desc": "A precision-crafted axe that makes quick work of timber, reflecting years of woodcutting expertise.",
+      "untradable": false
     },
     "183": {
       "id": 183,
@@ -2796,7 +2978,8 @@
       "tier": 6,
       "weight": 12,
       "name": "Adept Wood Axe",
-      "desc": "An advanced axe incorporating superior techniques that dramatically improves woodcutting efficiency."
+      "desc": "An advanced axe incorporating superior techniques that dramatically improves woodcutting efficiency.",
+      "untradable": false
     },
     "184": {
       "id": 184,
@@ -2805,7 +2988,8 @@
       "tier": 7,
       "weight": 14,
       "name": "Elite Wood Axe",
-      "desc": "An exceptional axe that channels raw power into every swing, making short work of any timber."
+      "desc": "An exceptional axe that channels raw power into every swing, making short work of any timber.",
+      "untradable": false
     },
     "185": {
       "id": 185,
@@ -2814,7 +2998,8 @@
       "tier": 8,
       "weight": 16,
       "name": "Master Wood Axe",
-      "desc": "A masterpiece of craftsmanship that turns felling trees into an art form."
+      "desc": "A masterpiece of craftsmanship that turns felling trees into an art form.",
+      "untradable": false
     },
     "186": {
       "id": 186,
@@ -2823,7 +3008,8 @@
       "tier": 9,
       "weight": 18,
       "name": "Legendary Wood Axe",
-      "desc": "A mythical axe whose origins are shrouded in mystery, capable of felling ancient trees with a single stroke."
+      "desc": "A mythical axe whose origins are shrouded in mystery, capable of felling ancient trees with a single stroke.",
+      "untradable": false
     },
     "187": {
       "id": 187,
@@ -2832,7 +3018,8 @@
       "tier": 10,
       "weight": 20,
       "name": "Divine Wood Axe",
-      "desc": "A sacred axe blessed by the forest gods, capable of harvesting wood with supernatural precision and power."
+      "desc": "A sacred axe blessed by the forest gods, capable of harvesting wood with supernatural precision and power.",
+      "untradable": false
     },
     "188": {
       "id": 188,
@@ -2841,7 +3028,8 @@
       "tier": 5,
       "weight": 10,
       "name": "Expert Hammer",
-      "desc": "A perfectly balanced hammer that efficiently breaks down stone with minimal effort."
+      "desc": "A perfectly balanced hammer that efficiently breaks down stone with minimal effort.",
+      "untradable": false
     },
     "189": {
       "id": 189,
@@ -2850,7 +3038,8 @@
       "tier": 6,
       "weight": 12,
       "name": "Adept Hammer",
-      "desc": "A sophisticated hammer design that breaks stone with remarkable precision and power."
+      "desc": "A sophisticated hammer design that breaks stone with remarkable precision and power.",
+      "untradable": false
     },
     "190": {
       "id": 190,
@@ -2859,7 +3048,8 @@
       "tier": 7,
       "weight": 14,
       "name": "Elite Hammer",
-      "desc": "A premium hammer that pulverizes stone with astonishing efficiency and control."
+      "desc": "A premium hammer that pulverizes stone with astonishing efficiency and control.",
+      "untradable": false
     },
     "191": {
       "id": 191,
@@ -2868,7 +3058,8 @@
       "tier": 8,
       "weight": 16,
       "name": "Master Hammer",
-      "desc": "A hammer of unparalleled quality that makes stone quarrying feel effortless."
+      "desc": "A hammer of unparalleled quality that makes stone quarrying feel effortless.",
+      "untradable": false
     },
     "192": {
       "id": 192,
@@ -2877,7 +3068,8 @@
       "tier": 9,
       "weight": 18,
       "name": "Legendary Hammer",
-      "desc": "A hammer of legend that can reshape entire quarries with thunderous power."
+      "desc": "A hammer of legend that can reshape entire quarries with thunderous power.",
+      "untradable": false
     },
     "193": {
       "id": 193,
@@ -2886,7 +3078,8 @@
       "tier": 10,
       "weight": 20,
       "name": "Divine Hammer",
-      "desc": "A holy hammer that shapes stone with godlike authority and grace."
+      "desc": "A holy hammer that shapes stone with godlike authority and grace.",
+      "untradable": false
     },
     "194": {
       "id": 194,
@@ -2895,7 +3088,8 @@
       "tier": 5,
       "weight": 10,
       "name": "Expert Fishing Rod",
-      "desc": "A professional-grade rod with enhanced sensitivity to detect even the subtlest nibbles."
+      "desc": "A professional-grade rod with enhanced sensitivity to detect even the subtlest nibbles.",
+      "untradable": false
     },
     "195": {
       "id": 195,
@@ -2904,7 +3098,8 @@
       "tier": 6,
       "weight": 12,
       "name": "Adept Fishing Rod",
-      "desc": "A superior rod with specialized mechanics that increases successful catch rates significantly."
+      "desc": "A superior rod with specialized mechanics that increases successful catch rates significantly.",
+      "untradable": false
     },
     "196": {
       "id": 196,
@@ -2913,7 +3108,8 @@
       "tier": 7,
       "weight": 14,
       "name": "Elite Fishing Rod",
-      "desc": "A top-tier rod that seems to attract fish with an almost magical efficiency."
+      "desc": "A top-tier rod that seems to attract fish with an almost magical efficiency.",
+      "untradable": false
     },
     "197": {
       "id": 197,
@@ -2922,7 +3118,8 @@
       "tier": 8,
       "weight": 16,
       "name": "Master Fishing Rod",
-      "desc": "An extraordinary rod that seems to be lighter than water itself."
+      "desc": "An extraordinary rod that seems to be lighter than water itself.",
+      "untradable": false
     },
     "198": {
       "id": 198,
@@ -2931,7 +3128,8 @@
       "tier": 9,
       "weight": 18,
       "name": "Legendary Fishing Rod",
-      "desc": "A fabled rod that attracts the most elusive catches with mysterious power."
+      "desc": "A fabled rod that attracts the most elusive catches with mysterious power.",
+      "untradable": false
     },
     "199": {
       "id": 199,
@@ -2940,7 +3138,8 @@
       "tier": 10,
       "weight": 20,
       "name": "Divine Fishing Rod",
-      "desc": "A blessed rod that commands the respect of the ocean's mightiest inhabitants."
+      "desc": "A blessed rod that commands the respect of the ocean's mightiest inhabitants.",
+      "untradable": false
     },
     "200": {
       "id": 200,
@@ -2949,7 +3148,8 @@
       "tier": 5,
       "weight": 10,
       "name": "Expert Pickaxe",
-      "desc": "A refined mining tool that extracts ore with increased precision and yield."
+      "desc": "A refined mining tool that extracts ore with increased precision and yield.",
+      "untradable": false
     },
     "201": {
       "id": 201,
@@ -2958,7 +3158,8 @@
       "tier": 6,
       "weight": 12,
       "name": "Adept Pickaxe",
-      "desc": "A highly efficient mining tool that extracts ore with minimal waste and maximum yield."
+      "desc": "A highly efficient mining tool that extracts ore with minimal waste and maximum yield.",
+      "untradable": false
     },
     "202": {
       "id": 202,
@@ -2967,7 +3168,8 @@
       "tier": 7,
       "weight": 14,
       "name": "Elite Pickaxe",
-      "desc": "A superior mining tool that extracts precious ores with unprecedented precision."
+      "desc": "A superior mining tool that extracts precious ores with unprecedented precision.",
+      "untradable": false
     },
     "203": {
       "id": 203,
@@ -2976,7 +3178,8 @@
       "tier": 8,
       "weight": 16,
       "name": "Master Pickaxe",
-      "desc": "A pinnacle of mining technology that extracts ore with supernatural efficiency."
+      "desc": "A pinnacle of mining technology that extracts ore with supernatural efficiency.",
+      "untradable": false
     },
     "204": {
       "id": 204,
@@ -2985,7 +3188,8 @@
       "tier": 9,
       "weight": 18,
       "name": "Legendary Pickaxe",
-      "desc": "A storied mining tool said to have unearthed the realm's greatest treasures."
+      "desc": "A storied mining tool said to have unearthed the realm's greatest treasures.",
+      "untradable": false
     },
     "205": {
       "id": 205,
@@ -2994,7 +3198,8 @@
       "tier": 10,
       "weight": 20,
       "name": "Divine Pickaxe",
-      "desc": "A sacred mining tool that extracts ore with divine precision and boundless power."
+      "desc": "A sacred mining tool that extracts ore with divine precision and boundless power.",
+      "untradable": false
     },
     "206": {
       "id": 206,
@@ -3003,7 +3208,8 @@
       "tier": 5,
       "weight": 10,
       "name": "Expert Sickle",
-      "desc": "A masterfully crafted blade that swiftly harvests crops with exceptional accuracy."
+      "desc": "A masterfully crafted blade that swiftly harvests crops with exceptional accuracy.",
+      "untradable": false
     },
     "207": {
       "id": 207,
@@ -3012,7 +3218,8 @@
       "tier": 6,
       "weight": 12,
       "name": "Adept Sickle",
-      "desc": "A refined harvesting blade that significantly reduces the time needed to gather crops."
+      "desc": "A refined harvesting blade that significantly reduces the time needed to gather crops.",
+      "untradable": false
     },
     "208": {
       "id": 208,
@@ -3021,7 +3228,8 @@
       "tier": 7,
       "weight": 14,
       "name": "Elite Sickle",
-      "desc": "An outstanding harvesting tool that sweeps through fields with remarkable speed and grace."
+      "desc": "An outstanding harvesting tool that sweeps through fields with remarkable speed and grace.",
+      "untradable": false
     },
     "209": {
       "id": 209,
@@ -3030,7 +3238,8 @@
       "tier": 8,
       "weight": 16,
       "name": "Master Sickle",
-      "desc": "A harvesting tool of such quality that entire fields bow before its blade."
+      "desc": "A harvesting tool of such quality that entire fields bow before its blade.",
+      "untradable": false
     },
     "210": {
       "id": 210,
@@ -3039,7 +3248,8 @@
       "tier": 9,
       "weight": 18,
       "name": "Legendary Sickle",
-      "desc": "A legendary blade that harvests with such speed it appears to bend time itself."
+      "desc": "A legendary blade that harvests with such speed it appears to bend time itself.",
+      "untradable": false
     },
     "211": {
       "id": 211,
@@ -3048,7 +3258,8 @@
       "tier": 10,
       "weight": 20,
       "name": "Divine Sickle",
-      "desc": "A blessed harvesting blade that turns fields of crops into bountiful offerings."
+      "desc": "A blessed harvesting blade that turns fields of crops into bountiful offerings.",
+      "untradable": false
     },
     "212": {
       "id": 212,
@@ -3057,7 +3268,8 @@
       "tier": 5,
       "weight": 10,
       "name": "Expert Berry Shears",
-      "desc": "Finely-tuned shears that carefully select and harvest only the ripest berries."
+      "desc": "Finely-tuned shears that carefully select and harvest only the ripest berries.",
+      "untradable": false
     },
     "213": {
       "id": 213,
@@ -3066,7 +3278,8 @@
       "tier": 6,
       "weight": 12,
       "name": "Adept Berry Shears",
-      "desc": "Precision-engineered shears that expertly harvest berries while preserving the bush's vitality."
+      "desc": "Precision-engineered shears that expertly harvest berries while preserving the bush's vitality.",
+      "untradable": false
     },
     "214": {
       "id": 214,
@@ -3075,7 +3288,8 @@
       "tier": 7,
       "weight": 14,
       "name": "Elite Berry Shears",
-      "desc": "Superior shears that harvest berries with perfect precision and exceptional speed."
+      "desc": "Superior shears that harvest berries with perfect precision and exceptional speed.",
+      "untradable": false
     },
     "215": {
       "id": 215,
@@ -3084,7 +3298,8 @@
       "tier": 8,
       "weight": 16,
       "name": "Master Berry Shears",
-      "desc": "Shears of such precision they can harvest the most delicate berries without disturbing a single leaf."
+      "desc": "Shears of such precision they can harvest the most delicate berries without disturbing a single leaf.",
+      "untradable": false
     },
     "216": {
       "id": 216,
@@ -3093,7 +3308,8 @@
       "tier": 9,
       "weight": 18,
       "name": "Legendary Berry Shears",
-      "desc": "Mythical shears whose harvests are said to yield berries of extraordinary quality."
+      "desc": "Mythical shears whose harvests are said to yield berries of extraordinary quality.",
+      "untradable": false
     },
     "217": {
       "id": 217,
@@ -3102,7 +3318,8 @@
       "tier": 10,
       "weight": 20,
       "name": "Divine Berry Shears",
-      "desc": "Sacred shears that harvest with divine grace, blessing each berry with otherworldly perfection."
+      "desc": "Sacred shears that harvest with divine grace, blessing each berry with otherworldly perfection.",
+      "untradable": false
     },
     "218": {
       "id": 218,
@@ -3113,6 +3330,7 @@
       "weight": 10,
       "name": "Gravekeeper's Axe",
       "desc": "This runed axe glows in the night, once used by gravekeepers to grant peace by severing souls from remains.\n",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 0,
         "advantageType": 2,
@@ -3135,6 +3353,7 @@
       "weight": 17,
       "name": "Greataxe of Night",
       "desc": "Massive axe from the twilit realm of Misthaven, its umbral blade cleaving both flesh and shadow with each catastrophic strike.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 0,
         "advantageType": 2,
@@ -3157,6 +3376,7 @@
       "weight": 17,
       "name": "Paladin's Crossbow",
       "desc": "Sacred crossbow blessed to strike true, repelling evil as bolt meets unholy flesh.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 0,
         "advantageType": 3,
@@ -3179,6 +3399,7 @@
       "weight": 17,
       "name": "Phantom's String",
       "desc": "Ethereal bowstring from the realm beyond, granting supernatural accuracy and distance.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 0,
         "advantageType": 3,
@@ -3201,6 +3422,7 @@
       "weight": 8,
       "name": "Ashfang Twins",
       "desc": "Each wicked edge leaving a scorched trail of holy retribution.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 0,
         "advantageType": 3,
@@ -3223,6 +3445,7 @@
       "weight": 8,
       "name": "Azurefang Daggers",
       "desc": "Tapping into forbidden magics, shredding armor and unraveling reality itself.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 0,
         "advantageType": 3,
@@ -3245,6 +3468,7 @@
       "weight": 17,
       "name": "Pyreborn Lance",
       "desc": "Fearsome longspear used by Sunscar's elite desert warriors to sweep aside any who stand in their path.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 0,
         "advantageType": 1,
@@ -3267,6 +3491,7 @@
       "weight": 10,
       "name": "Voidflame Pike",
       "desc": "Massive lance of the wild beastmasters, channeling the ferocity of nature's mightiest beasts.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 0,
         "advantageType": 1,
@@ -3289,6 +3514,7 @@
       "weight": 10,
       "name": "Nightbloom Scepter",
       "desc": "Staff resonating with innate magical energies, enhancing a wizard's arcane precision and focus.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 0,
         "advantageType": 3,
@@ -3311,6 +3537,7 @@
       "weight": 10,
       "name": "Glacial Warden",
       "desc": "Frostbitten staff from Everfrost's glacial mages, its frozen spiral matrix amplifying their icy incantations.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 0,
         "advantageType": 3,
@@ -3333,6 +3560,7 @@
       "weight": 10,
       "name": "Solarbane Edge",
       "desc": "Elegant yet deadly sword favored by Sylvanreach's deadliest warriors, each cleave puncturing even the toughest plate.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 0,
         "advantageType": 0,
@@ -3355,6 +3583,7 @@
       "weight": 17,
       "name": "Greatsword of Elphmar",
       "desc": "Legendary warblade named for the elven hero Elphmar, keen enough to part a drake's scales.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 0,
         "advantageType": 0,
@@ -3377,6 +3606,7 @@
       "weight": 7,
       "name": "Paladin's Shield",
       "desc": "Radiant holy shield bearing the sacred oath, warded against corruption and turning aside mortal blows.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 1,
         "advantageType": 0,
@@ -3399,6 +3629,7 @@
       "weight": 7,
       "name": "Serpent's Round Shield",
       "desc": "Serpentine shield with hypnotic coils deflecting both blades and hostile magics with each sinuous curve.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 1,
         "advantageType": 0,
@@ -3421,6 +3652,7 @@
       "weight": 4,
       "name": "Pilgrim's Hood",
       "desc": "Simple yet durable cloth cowl granting resilience and stealth on the open road to those of faith.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 3,
         "advantageType": 0,
@@ -3443,14 +3675,15 @@
       "weight": 4,
       "name": "Vagabond's Hood",
       "desc": "Weathered adventurer's hood concealing the hardened features of those who have walked the loneliest paths.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 3,
         "advantageType": 0,
         "twoHanded": false,
-        "atk": 21,
+        "atk": 22,
         "def": 7,
         "agi": 39,
-        "hp": 105,
+        "hp": 75,
         "ms": 0,
         "weight": 0,
         "barrier": 0
@@ -3465,6 +3698,7 @@
       "weight": 4,
       "name": "Elite Tracker's Sandals",
       "desc": "Silent sandals, leaving no trail while swiftly tracking even the wariest quarry.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 4,
         "advantageType": 0,
@@ -3487,6 +3721,7 @@
       "weight": 4,
       "name": "Boots of the Noble",
       "desc": "Polished cloth boots adorned with rank and status, projecting an aura of leadership and command.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 4,
         "advantageType": 0,
@@ -3509,6 +3744,7 @@
       "weight": 6,
       "name": "Robe of the Ranger",
       "desc": "Lightweight arborweave robe granting agility and attunement with nature's secluded woodlands.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 2,
         "advantageType": 0,
@@ -3531,14 +3767,15 @@
       "weight": 6,
       "name": "Astrologer's Attire",
       "desc": "Robes imbued with celestial portents. Traditionally it enhances divination and aid cosmic attunement.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 2,
         "advantageType": 0,
         "twoHanded": false,
-        "atk": 24,
+        "atk": 25,
         "def": 11,
         "agi": 58,
-        "hp": 150,
+        "hp": 130,
         "ms": 0,
         "weight": 0,
         "barrier": 0
@@ -3553,6 +3790,7 @@
       "weight": 5,
       "name": "Hunter's Leather Hood",
       "desc": "Supple hood drawn over the face, aiding in stealth and shielding against foul aromas of the hunt.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 3,
         "advantageType": 0,
@@ -3575,6 +3813,7 @@
       "weight": 5,
       "name": "Warrior's Winter Helm",
       "desc": "Fur helmet for fending off winter's chill and sharpened blades in equal measure.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 3,
         "advantageType": 0,
@@ -3597,6 +3836,7 @@
       "weight": 5,
       "name": "Reinforced Winter Boots",
       "desc": "Insulated boots reinforced with steel plates and fur lining, protecting the wearer from both deadly blows and bitter cold.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 4,
         "advantageType": 0,
@@ -3619,6 +3859,7 @@
       "weight": 5,
       "name": "Merchant's Prized Boots",
       "desc": "Impeccably maintained boots lined with soft and premium leather, found on the corpse of an unknown merchant.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 4,
         "advantageType": 0,
@@ -3641,6 +3882,7 @@
       "weight": 7,
       "name": "Fallen Beast Armor",
       "desc": "Armor adorned to warriors that have felled beastmen. It enchants the wearer with bestial vigor.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 2,
         "advantageType": 0,
@@ -3663,14 +3905,15 @@
       "weight": 7,
       "name": "Ancient Sentinel Armor",
       "desc": "Enchanted armor of an ancient order in Sylvanreach, allowing attunement with nature's primal forces.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 2,
         "advantageType": 0,
         "twoHanded": false,
         "atk": 17,
-        "def": 33,
-        "agi": 42,
-        "hp": 170,
+        "def": 32,
+        "agi": 41,
+        "hp": 210,
         "ms": 0,
         "weight": 0,
         "barrier": 0
@@ -3685,6 +3928,7 @@
       "weight": 6,
       "name": "Gladiator's Battle Helm",
       "desc": "Fearsome gladiator's helm of gleaming steel, designed to intimidate before the killing blow.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 3,
         "advantageType": 0,
@@ -3707,6 +3951,7 @@
       "weight": 6,
       "name": "Paladin's Helmet",
       "desc": "Ornate reinforced helmet inlaid with holy wards and blessings of the Platinum Order.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 3,
         "advantageType": 0,
@@ -3729,6 +3974,7 @@
       "weight": 6,
       "name": "Deserted Knight's Boots",
       "desc": "Footplates from the armor of a long-dead knight, abandoned and now claimed as bounty.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 4,
         "advantageType": 0,
@@ -3751,6 +3997,7 @@
       "weight": 6,
       "name": "Metal Boots of Valor",
       "desc": "Burnished steel sabatons emblazoned with the crest of heroism and bravery unmatched.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 4,
         "advantageType": 0,
@@ -3773,6 +4020,7 @@
       "weight": 8,
       "name": "Blue Steel Armor",
       "desc": "Masterfully crafted full plate of swirling blue steel, deflecting blows as deftly as any mage's deflection ward.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 2,
         "advantageType": 0,
@@ -3795,6 +4043,7 @@
       "weight": 8,
       "name": "Armor of Glory",
       "desc": "Gleaming gold-inlaid plate armor of a legendary champion, a mantle of inspiration to any who wear it.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 2,
         "advantageType": 0,
@@ -3816,6 +4065,7 @@
       "weight": 1,
       "name": "Green Tongue",
       "desc": "A vibrant, fleshy organ pulsating with nature's energy.",
+      "untradable": false,
       "resourceInfo": {
         "type": 6
       }
@@ -3828,6 +4078,7 @@
       "weight": 2,
       "name": "Auroral Gem",
       "desc": "Formed within the Prismdeer's majestic antlers, these radiant gemstones capture the essence of celestial auroras.",
+      "untradable": false,
       "resourceInfo": {
         "type": 6
       }
@@ -3840,6 +4091,7 @@
       "weight": 1,
       "name": "Darkbloom",
       "desc": "A deadly black flower growing out of Misthaven's toxic creatures, with even a single petal containing potent venom.",
+      "untradable": false,
       "resourceInfo": {
         "type": 6
       }
@@ -3852,6 +4104,7 @@
       "weight": 2,
       "name": "Ancient Core",
       "desc": "A pulsing source of raw magic and power, this primordial energy core once powered ancient golem guardians.",
+      "untradable": false,
       "resourceInfo": {
         "type": 6
       }
@@ -3864,6 +4117,7 @@
       "weight": 1,
       "name": "Cold Bone",
       "desc": "Infused with intense frost from surviving brutal winters, these perpetually frozen bones are as hard as steel.",
+      "untradable": false,
       "resourceInfo": {
         "type": 6
       }
@@ -3876,6 +4130,7 @@
       "weight": 2,
       "name": "Oracle Shard",
       "desc": "Ethereal crystalline fragments attuned to the flow of fate and time.",
+      "untradable": false,
       "resourceInfo": {
         "type": 6
       }
@@ -3888,6 +4143,7 @@
       "weight": 1,
       "name": "Storm Wool",
       "desc": "Electrified strands of wool conducting raw lightning energy.",
+      "untradable": false,
       "resourceInfo": {
         "type": 6
       }
@@ -3900,6 +4156,7 @@
       "weight": 2,
       "name": "Primitive Claws",
       "desc": "Honed into blade-like spikes, these claws are meant to combat much bigger enemies. Just who are the Ravagers fighting?",
+      "untradable": false,
       "resourceInfo": {
         "type": 6
       }
@@ -3912,6 +4169,7 @@
       "weight": 1,
       "name": "Orb of the Forest Soul",
       "desc": "The Forest had a soul once, and a name. These are the nature's fragments of that long-gone era.",
+      "untradable": false,
       "resourceInfo": {
         "type": 6
       }
@@ -3924,6 +4182,7 @@
       "weight": 1,
       "name": "Orb of the Deep",
       "desc": "The Formless One drowned deep below, yet never died. These are the dark fragments of the long-gone era.",
+      "untradable": false,
       "resourceInfo": {
         "type": 6
       }
@@ -3936,6 +4195,7 @@
       "weight": 1,
       "name": "Orb of Unending Frost",
       "desc": "Each fracture is an opening. Ice in Everfrost rarely fractures, yet they melt. These are the cold fragments of that long-gone era.",
+      "untradable": false,
       "resourceInfo": {
         "type": 6
       }
@@ -3948,6 +4208,7 @@
       "weight": 1,
       "name": "Orb of Cataclysm",
       "desc": "Fire changes. Lands shift. Yet Sunscar remain. These are the fiery fragments of that long-gone era.",
+      "untradable": false,
       "resourceInfo": {
         "type": 6
       }
@@ -3961,6 +4222,7 @@
       "weight": 10,
       "name": "Dawnbringer",
       "desc": "An ancient sword so old it is said to have witnessed the dawn of human history. Who could have forged this though, if it existed before the age of man?",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 0,
         "advantageType": 0,
@@ -3983,6 +4245,7 @@
       "weight": 10,
       "name": "Wolf Song",
       "desc": "A magical staff that does not resonate with normal incantations in the human tongue.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 0,
         "advantageType": 3,
@@ -4005,6 +4268,7 @@
       "weight": 10,
       "name": "The Key of Night",
       "desc": "This ancient weapon was never intended to be used in combat, but nevertheless deadly. It's as dark as the night sky.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 0,
         "advantageType": 2,
@@ -4027,6 +4291,7 @@
       "weight": 10,
       "name": "Spear of Omen",
       "desc": "A spear so dense in rare metals that it does not melt in human-made forges, no matter the heat. Said to be usable only in the direst of times.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 0,
         "advantageType": 1,
@@ -4048,6 +4313,7 @@
       "weight": 0,
       "name": "Work Horse",
       "desc": "A friendly and loyal companion that will stay with you through thick and thin in this adventure.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 5,
         "advantageType": 0,
@@ -4069,6 +4335,7 @@
       "weight": 0,
       "name": "Capybara",
       "desc": "A guardian spirit of gentle strength, the Ancient Capybara carries the memory of the four kingdoms and walks with the calm of a thousand seasons.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 5,
         "advantageType": 0,
@@ -4090,6 +4357,7 @@
       "weight": 0,
       "name": "Moripuru",
       "desc": "This green slime is commonly found in lush jungles.",
+      "untradable": false,
       "cardInfo": {
         "top": 4,
         "bottom": 3,
@@ -4105,6 +4373,7 @@
       "weight": 0,
       "name": "Poipuru",
       "desc": "This poisonous slime naturally feeds on toxic matter.",
+      "untradable": false,
       "cardInfo": {
         "top": 2,
         "bottom": 7,
@@ -4120,6 +4389,7 @@
       "weight": 0,
       "name": "Fuyupuru",
       "desc": "This ice-cold slime can freeze attackers with its exterior.",
+      "untradable": false,
       "cardInfo": {
         "top": 4,
         "bottom": 3,
@@ -4135,6 +4405,7 @@
       "weight": 0,
       "name": "Pyropuru",
       "desc": "This slime radiates heat intense enough to melt steel.",
+      "untradable": false,
       "cardInfo": {
         "top": 2,
         "bottom": 4,
@@ -4150,6 +4421,7 @@
       "weight": 0,
       "name": "Gobblekin",
       "desc": "A small, mischievous jungle goblin that's fast and nimble.",
+      "untradable": false,
       "cardInfo": {
         "top": 2,
         "bottom": 3,
@@ -4165,6 +4437,7 @@
       "weight": 0,
       "name": "Screechit",
       "desc": "A swift, bat-winged squirrel that delivers quick, precise attacks.",
+      "untradable": false,
       "cardInfo": {
         "top": 3,
         "bottom": 3,
@@ -4180,6 +4453,7 @@
       "weight": 0,
       "name": "Snow Rabbit",
       "desc": "This white-furred creature is extremely quick.",
+      "untradable": false,
       "cardInfo": {
         "top": 4,
         "bottom": 5,
@@ -4195,6 +4469,7 @@
       "weight": 0,
       "name": "Flaming Fox",
       "desc": "The red fox breaths fire hot enough to burn any village down.",
+      "untradable": false,
       "cardInfo": {
         "top": 3,
         "bottom": 3,
@@ -4210,6 +4485,7 @@
       "weight": 0,
       "name": "Ignis",
       "desc": "One of the mightiest dragons to ever existed. Ignis is the name.",
+      "untradable": false,
       "cardInfo": {
         "top": 9,
         "bottom": 9,
@@ -4225,6 +4501,7 @@
       "weight": 0,
       "name": "Togepuru",
       "desc": "This slime creature had consumed thorny vines.",
+      "untradable": false,
       "cardInfo": {
         "top": 3,
         "bottom": 7,
@@ -4240,6 +4517,7 @@
       "weight": 0,
       "name": "Kiripuru",
       "desc": "This slime creature is both more toxic, and harder to spot.",
+      "untradable": false,
       "cardInfo": {
         "top": 2,
         "bottom": 6,
@@ -4255,6 +4533,7 @@
       "weight": 0,
       "name": "Koripuru",
       "desc": "This slime creature can conjure large ice spikes from its exterior.",
+      "untradable": false,
       "cardInfo": {
         "top": 6,
         "bottom": 2,
@@ -4270,6 +4549,7 @@
       "weight": 0,
       "name": "Kazanpuru",
       "desc": "This slime creature can burst volcanic matter far from where it stands.",
+      "untradable": false,
       "cardInfo": {
         "top": 7,
         "bottom": 3,
@@ -4285,6 +4565,7 @@
       "weight": 0,
       "name": "Petalflare",
       "desc": "This plant can use its colorful petals to release noxious powder.",
+      "untradable": false,
       "cardInfo": {
         "top": 7,
         "bottom": 2,
@@ -4300,6 +4581,7 @@
       "weight": 0,
       "name": "Leafdrake",
       "desc": "A gentle dinosaur that secretes toxic poison to ward off predators.",
+      "untradable": false,
       "cardInfo": {
         "top": 7,
         "bottom": 4,
@@ -4315,6 +4597,7 @@
       "weight": 0,
       "name": "Crabark",
       "desc": "A tree-crab hybrid with enormous claws and crushing strength.",
+      "untradable": false,
       "cardInfo": {
         "top": 8,
         "bottom": 7,
@@ -4330,6 +4613,7 @@
       "weight": 0,
       "name": "Mycofiend",
       "desc": "A hulking fungal horror with a massive crimson mushroom cap.",
+      "untradable": false,
       "cardInfo": {
         "top": 2,
         "bottom": 7,
@@ -4345,6 +4629,7 @@
       "weight": 0,
       "name": "Basilisk",
       "desc": "A massive, sinuous basilisk with venomous fangs and armored scales.",
+      "untradable": false,
       "cardInfo": {
         "top": 7,
         "bottom": 6,
@@ -4360,6 +4645,7 @@
       "weight": 0,
       "name": "Mist Wyvern",
       "desc": "A wyvern that can seamlessly materialize from coastal fogs.",
+      "untradable": false,
       "cardInfo": {
         "top": 1,
         "bottom": 7,
@@ -4375,6 +4661,7 @@
       "weight": 0,
       "name": "Snowzard",
       "desc": "A reptilian warrior with crystalline icy frills and a massive frozen spear.",
+      "untradable": false,
       "cardInfo": {
         "top": 6,
         "bottom": 2,
@@ -4390,6 +4677,7 @@
       "weight": 0,
       "name": "Glaciewyrm",
       "desc": "A small-sized frost dragon soaring on crystalline wings.",
+      "untradable": false,
       "cardInfo": {
         "top": 7,
         "bottom": 1,
@@ -4405,6 +4693,7 @@
       "weight": 0,
       "name": "Frost Graloch",
       "desc": "An ancient, towering behemoth cloaked in shaggy white fur.",
+      "untradable": false,
       "cardInfo": {
         "top": 7,
         "bottom": 7,
@@ -4420,6 +4709,7 @@
       "weight": 0,
       "name": "Cinderwing",
       "desc": "A blazing, ruby-winged moth wreathed in sharp horns.",
+      "untradable": false,
       "cardInfo": {
         "top": 7,
         "bottom": 5,
@@ -4435,6 +4725,7 @@
       "weight": 0,
       "name": "Calderatops",
       "desc": "A huge bull of molten rock and brimstone.",
+      "untradable": false,
       "cardInfo": {
         "top": 5,
         "bottom": 6,
@@ -4450,6 +4741,7 @@
       "weight": 0,
       "name": "Dymryn Warrior",
       "desc": "The Dymryn warriors are among the most ferocious in the wilds.",
+      "untradable": false,
       "cardInfo": {
         "top": 6,
         "bottom": 5,
@@ -4465,6 +4757,7 @@
       "weight": 0,
       "name": "Verdant Drake",
       "desc": "This creature's keen predatory instincts makes it a fearsome hunter.",
+      "untradable": false,
       "cardInfo": {
         "top": 2,
         "bottom": 8,
@@ -4480,6 +4773,7 @@
       "weight": 0,
       "name": "Prismdeer",
       "desc": "A mystical deer whose majestic antlers shimmer with auroral colors.",
+      "untradable": false,
       "cardInfo": {
         "top": 4,
         "bottom": 8,
@@ -4495,6 +4789,7 @@
       "weight": 0,
       "name": "Murklurker",
       "desc": "This feral beast stalks through the fog banks with surprising stealth.",
+      "untradable": false,
       "cardInfo": {
         "top": 3,
         "bottom": 8,
@@ -4510,6 +4805,7 @@
       "weight": 0,
       "name": "Ancient Golem",
       "desc": "A mysterious stone construct from a forgotten age.",
+      "untradable": false,
       "cardInfo": {
         "top": 7,
         "bottom": 1,
@@ -4525,6 +4821,7 @@
       "weight": 0,
       "name": "Lizard Champion",
       "desc": "A battle-hardened commander of the Snowzards.",
+      "untradable": false,
       "cardInfo": {
         "top": 7,
         "bottom": 9,
@@ -4540,6 +4837,7 @@
       "weight": 0,
       "name": "Crystal Oracle",
       "desc": "An enigmatic being of pure frost magic that glides through Everfrost.",
+      "untradable": false,
       "cardInfo": {
         "top": 8,
         "bottom": 1,
@@ -4555,6 +4853,7 @@
       "weight": 0,
       "name": "Voltex",
       "desc": "This sheep wanders the deserts, trailing electricity through its wool.",
+      "untradable": false,
       "cardInfo": {
         "top": 8,
         "bottom": 8,
@@ -4570,6 +4869,7 @@
       "weight": 0,
       "name": "Ravager",
       "desc": "A fearsome predator that's fast, cunning and deadly.",
+      "untradable": false,
       "cardInfo": {
         "top": 8,
         "bottom": 8,
@@ -4585,6 +4885,7 @@
       "weight": 0,
       "name": "Elder Behemoth",
       "desc": "An ancient beast encrusted in jagged shards of everlasting ice.",
+      "untradable": false,
       "cardInfo": {
         "top": 8,
         "bottom": 4,
@@ -4600,6 +4901,7 @@
       "weight": 0,
       "name": "Vinethorn Drake",
       "desc": "A stealthy, serpentine predator covered in razor-sharp thorns.",
+      "untradable": false,
       "cardInfo": {
         "top": 5,
         "bottom": 7,
@@ -4615,6 +4917,7 @@
       "weight": 0,
       "name": "Faylinn",
       "desc": "Your sweet and trustworthy partner in any adventure.",
+      "untradable": false,
       "cardInfo": {
         "top": 1,
         "bottom": 8,
@@ -4630,6 +4933,7 @@
       "weight": 0,
       "name": "Liliana",
       "desc": "A young villager that tries her best to help everyone in need.",
+      "untradable": false,
       "cardInfo": {
         "top": 3,
         "bottom": 5,
@@ -4645,6 +4949,7 @@
       "weight": 0,
       "name": "Maeve",
       "desc": "The classy and kind citizen of the misty kingdom. She knows everyone.",
+      "untradable": false,
       "cardInfo": {
         "top": 5,
         "bottom": 3,
@@ -4660,6 +4965,7 @@
       "weight": 0,
       "name": "Marina",
       "desc": "Don't be fooled by her kind looks, she's one of Everfrost's best trackers.",
+      "untradable": false,
       "cardInfo": {
         "top": 3,
         "bottom": 7,
@@ -4675,6 +4981,7 @@
       "weight": 0,
       "name": "Ayesha",
       "desc": "Ayesha is highly intelligent and caring, despite her rough upbringing.",
+      "untradable": false,
       "cardInfo": {
         "top": 7,
         "bottom": 3,
@@ -4690,6 +4997,7 @@
       "weight": 0,
       "name": "Haines",
       "desc": "A veteran hunter and soldier, Haines is incredibly resourceful.",
+      "untradable": false,
       "cardInfo": {
         "top": 8,
         "bottom": 2,
@@ -4705,6 +5013,7 @@
       "weight": 0,
       "name": "Lara",
       "desc": "Liliana's little sister has tremendous hidden potential as a sorcerer.",
+      "untradable": false,
       "cardInfo": {
         "top": 5,
         "bottom": 7,
@@ -4720,6 +5029,7 @@
       "weight": 0,
       "name": "Duval",
       "desc": "Despite being a little weird, Duval is the mightiest knight in Misthaven.",
+      "untradable": false,
       "cardInfo": {
         "top": 1,
         "bottom": 10,
@@ -4735,6 +5045,7 @@
       "weight": 0,
       "name": "Chione",
       "desc": "A genius and the youngest member of Everfrost's court sorcerers.",
+      "untradable": false,
       "cardInfo": {
         "top": 8,
         "bottom": 3,
@@ -4750,6 +5061,7 @@
       "weight": 0,
       "name": "Hilathe",
       "desc": "A smart and quick-witted treasure hunter and adventurer.",
+      "untradable": false,
       "cardInfo": {
         "top": 1,
         "bottom": 3,
@@ -4765,6 +5077,7 @@
       "weight": 0,
       "name": "Fiery Hellion",
       "desc": "An amorphous conflagration of blazing fire and smoldering rock.",
+      "untradable": false,
       "cardInfo": {
         "top": 4,
         "bottom": 8,
@@ -4780,6 +5093,7 @@
       "weight": 0,
       "name": "Fathomspawn",
       "desc": "An otherworldly elemental of tentacles and bioluminescent ichor.",
+      "untradable": false,
       "cardInfo": {
         "top": 1,
         "bottom": 8,
@@ -4795,6 +5109,7 @@
       "weight": 0,
       "name": "Storm Wraith",
       "desc": "A sentient maelstrom of swirling shadow and twisting storm.",
+      "untradable": false,
       "cardInfo": {
         "top": 1,
         "bottom": 8,
@@ -4810,6 +5125,7 @@
       "weight": 0,
       "name": "Sylvia",
       "desc": "The ancient elven sorcerer that's renowned across the realm.",
+      "untradable": false,
       "cardInfo": {
         "top": 10,
         "bottom": 4,
@@ -4825,6 +5141,7 @@
       "weight": 0,
       "name": "Hazel",
       "desc": "Hazel Thornweaver is a witch that has mastered magical harmonics.",
+      "untradable": false,
       "cardInfo": {
         "top": 9,
         "bottom": 3,
@@ -4840,6 +5157,7 @@
       "weight": 0,
       "name": "Raena",
       "desc": "Chione's close friend and a talented magic user.",
+      "untradable": false,
       "cardInfo": {
         "top": 8,
         "bottom": 8,
@@ -4855,6 +5173,7 @@
       "weight": 0,
       "name": "Kestrel",
       "desc": "A trusted member of the Cartographer's Guild in Sunscar.",
+      "untradable": false,
       "cardInfo": {
         "top": 4,
         "bottom": 4,
@@ -4870,6 +5189,7 @@
       "weight": 0,
       "name": "Goopie Puru",
       "desc": "This virulent mass of acidic sludge corrodes anything in its path.",
+      "untradable": false,
       "cardInfo": {
         "top": 5,
         "bottom": 9,
@@ -4885,6 +5205,7 @@
       "weight": 0,
       "name": "Jiggly Puru",
       "desc": "This rare species of slime emanates dangerously noxious fumes.",
+      "untradable": false,
       "cardInfo": {
         "top": 9,
         "bottom": 3,
@@ -4900,6 +5221,7 @@
       "weight": 0,
       "name": "Slushy Puru",
       "desc": "A semi-frozen slime that managed to live for a hundred years.",
+      "untradable": false,
       "cardInfo": {
         "top": 9,
         "bottom": 9,
@@ -4915,6 +5237,7 @@
       "weight": 0,
       "name": "Yippee Puru",
       "desc": "Nothing dares to touch this molten menace of a slime.",
+      "untradable": false,
       "cardInfo": {
         "top": 1,
         "bottom": 9,
@@ -4930,6 +5253,7 @@
       "weight": 11,
       "name": "Waraxe of Frenzy",
       "desc": "A brutal axe that pulses with chaotic energy, driving its wielder into a whirlwind of unstoppable carnage.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 0,
         "advantageType": 2,
@@ -4951,6 +5275,7 @@
       "weight": 22,
       "name": "Lionsnare",
       "desc": "A bow strung with the sinew of ancient beasts, said to bring down even the fiercest prey with a single shot.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 0,
         "advantageType": 3,
@@ -4972,6 +5297,7 @@
       "weight": 22,
       "name": "Ruptured Twins",
       "desc": "A pair of daggers cursed and bound by blood, feeding off the fury of battle and striking with eerie precision.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 0,
         "advantageType": 3,
@@ -4993,6 +5319,7 @@
       "weight": 11,
       "name": "Spear of Blazing Fury",
       "desc": "Forged in the heart of a fallen star, this spear blazes with searing wrath, leaving scorched trails in its wake.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 0,
         "advantageType": 1,
@@ -5014,6 +5341,7 @@
       "weight": 11,
       "name": "Staff of Adoration",
       "desc": "An elegant staff imbued with celestial charm, weaving spells that enthrall as much as they destroy.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 0,
         "advantageType": 3,
@@ -5035,6 +5363,7 @@
       "weight": 11,
       "name": "Meteoric Katana",
       "desc": "This blade, born of the heavens, cuts through armor and air alike with meteoric grace and lethal clarity.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 0,
         "advantageType": 0,
@@ -5056,6 +5385,7 @@
       "weight": 8,
       "name": "Mirror Shield",
       "desc": "Forged from polished aetherglass, this shield reflects not only blows but the dark intent behind them.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 1,
         "advantageType": 0,
@@ -5077,12 +5407,13 @@
       "weight": 7,
       "name": "Robe of the Royal Assassin",
       "desc": "Woven from shadows and silken betrayal, this robe grants its wearer an almost spectral presence.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 2,
         "advantageType": 0,
         "twoHanded": false,
         "atk": 47,
-        "def": 16,
+        "def": 17,
         "agi": 81,
         "hp": 210,
         "ms": 0,
@@ -5098,11 +5429,12 @@
       "weight": 5,
       "name": "Boots of the Royal Assassin",
       "desc": "Silent as midnight wind, these boots carry their master across rooftops and through bloodied halls unseen.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 4,
         "advantageType": 0,
         "twoHanded": false,
-        "atk": 30,
+        "atk": 31,
         "def": 8,
         "agi": 55,
         "hp": 0,
@@ -5119,6 +5451,7 @@
       "weight": 5,
       "name": "Mask of the Royal Assassin",
       "desc": "Veiled in mystery, this mask conceals all emotion and reveals nothing but the intent to kill.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 3,
         "advantageType": 0,
@@ -5126,7 +5459,7 @@
         "atk": 35,
         "def": 8,
         "agi": 59,
-        "hp": 140,
+        "hp": 170,
         "ms": 0,
         "weight": 0,
         "barrier": 0
@@ -5140,6 +5473,7 @@
       "weight": 8,
       "name": "Mistborn's Leather Armor",
       "desc": "Crafted in the fog-cloaked wilds, this armor slips through the senses like a phantom mist.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 2,
         "advantageType": 0,
@@ -5147,7 +5481,7 @@
         "atk": 31,
         "def": 51,
         "agi": 58,
-        "hp": 250,
+        "hp": 305,
         "ms": 0,
         "weight": 0,
         "barrier": 0
@@ -5161,6 +5495,7 @@
       "weight": 6,
       "name": "Mistborn's Boots",
       "desc": "These boots leave no trace, stepping as if upon fog, favored by those who walk where no trail dares linger.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 4,
         "advantageType": 0,
@@ -5182,6 +5517,7 @@
       "weight": 6,
       "name": "Mistborn's Helm",
       "desc": "A helm etched with runes of silence, worn by those who vanish before the echo of battle fades.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 3,
         "advantageType": 0,
@@ -5189,7 +5525,7 @@
         "atk": 20,
         "def": 38,
         "agi": 39,
-        "hp": 230,
+        "hp": 265,
         "ms": 0,
         "weight": 0,
         "barrier": 0
@@ -5203,6 +5539,7 @@
       "weight": 9,
       "name": "Kingsguard's Heavy Armor",
       "desc": "A suit of valor-steeped steel, once donned by the royal vanguard who stood against a thousand foes.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 2,
         "advantageType": 0,
@@ -5224,6 +5561,7 @@
       "weight": 7,
       "name": "Kingsguard's Metal Boots",
       "desc": "Each step in these iron-forged boots resounds with duty, echoing the march of kings' most loyal defenders.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 4,
         "advantageType": 0,
@@ -5245,14 +5583,15 @@
       "weight": 7,
       "name": "Kingsguard's War Helmet",
       "desc": "This crowned helm bears the scars of war and the gaze of unwavering honor beneath its steel brow.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 3,
         "advantageType": 0,
         "twoHanded": false,
-        "atk": 12,
+        "atk": 11,
         "def": 64,
-        "agi": 15,
-        "hp": 265,
+        "agi": 14,
+        "hp": 310,
         "ms": 0,
         "weight": 0,
         "barrier": 0
@@ -5266,6 +5605,7 @@
       "weight": 11,
       "name": "The Beholder",
       "desc": "A crimson staff crowned with a serpent’s eye, said to pierce illusions and channel forgotten arcane fury.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 0,
         "advantageType": 3,
@@ -5287,14 +5627,15 @@
       "weight": 8,
       "name": "Scaled Armor of Kalyndra",
       "desc": "Forged from the Great Serpent’s back, this armor bends like leather but deflects blades like steel.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 2,
         "advantageType": 0,
         "twoHanded": false,
         "atk": 33,
         "def": 64,
-        "agi": 67,
-        "hp": 305,
+        "agi": 65,
+        "hp": 340,
         "ms": 0,
         "weight": 0,
         "barrier": 0
@@ -5308,6 +5649,7 @@
       "weight": 6,
       "name": "Boots of the Great Serpent",
       "desc": "Lined with scaled hide and silent as a stalking serpent, these boots carry their wearer with eerie grace.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 4,
         "advantageType": 0,
@@ -5329,14 +5671,15 @@
       "weight": 6,
       "name": "Helm of the Great Serpent",
       "desc": "Shaped from Kalyndra’s crown, this helm sharpens the senses and imbues its bearer with an aura of primal dread.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 3,
         "advantageType": 0,
         "twoHanded": false,
-        "atk": 23,
-        "def": 50,
+        "atk": 21,
+        "def": 47,
         "agi": 44,
-        "hp": 230,
+        "hp": 325,
         "ms": 0,
         "weight": 0,
         "barrier": 0
@@ -5350,6 +5693,7 @@
       "weight": 1,
       "name": "Essence of Stillness",
       "desc": "A glowing orb, pulsing like a heartbeat in the snow. It holds the Capybara’s patience and watchfulness.",
+      "untradable": false,
       "resourceInfo": {
         "type": 6
       }
@@ -5362,6 +5706,7 @@
       "weight": 1,
       "name": "Essence of Flow",
       "desc": "A wisp of energy that dances and swirls. It holds the Capybara’s adaptability and inner strength.",
+      "untradable": false,
       "resourceInfo": {
         "type": 6
       }
@@ -5374,6 +5719,7 @@
       "weight": 1,
       "name": "Essence of Flame",
       "desc": "A burning core of golden-red light. It holds the Capybara’s courage and unwavering will.",
+      "untradable": false,
       "resourceInfo": {
         "type": 6
       }
@@ -5386,6 +5732,7 @@
       "weight": 1,
       "name": "Essence of Harmony",
       "desc": "A green core infused with natural energy. It holds the Capybara’s bond with the world and its tranquil wisdom.",
+      "untradable": false,
       "resourceInfo": {
         "type": 6
       }
@@ -5398,6 +5745,7 @@
       "weight": 1,
       "name": "Venombloom Petal",
       "desc": "A rare, thorned petal infused with corrosive nectar, used in potent poisons and nature-based enchantments.",
+      "untradable": false,
       "resourceInfo": {
         "type": 6
       }
@@ -5410,6 +5758,7 @@
       "weight": 1,
       "name": "Phantom Waterglide",
       "desc": "A ribbon of living water that never dries. This material is prized by alchemists for elemental rituals.",
+      "untradable": false,
       "resourceInfo": {
         "type": 6
       }
@@ -5422,6 +5771,7 @@
       "weight": 1,
       "name": "Fractured Heartshard",
       "desc": "This frozen and pulsating crystal is said to be the frozen heartbeat of the mountain itself.",
+      "untradable": false,
       "resourceInfo": {
         "type": 6
       }
@@ -5434,6 +5784,7 @@
       "weight": 1,
       "name": "Molten Core",
       "desc": "A searing-hot ember encased in obsidian that burns and gnaws forever, unless sealed in enchanted stone.",
+      "untradable": false,
       "resourceInfo": {
         "type": 6
       }
@@ -5446,6 +5797,7 @@
       "weight": 1,
       "name": "Eye of Kalyndra",
       "desc": "A glowing, slit-pupiled gem, said to grant visions of truths best left unseen.",
+      "untradable": false,
       "resourceInfo": {
         "type": 6
       }
@@ -5458,6 +5810,7 @@
       "weight": 1,
       "name": "Kalyndra's Ridgeplate",
       "desc": "A thick, flexible scale-plated fragment from the serpent’s back. Tougher than tempered steel, but much lighter.",
+      "untradable": false,
       "resourceInfo": {
         "type": 6
       }
@@ -5470,6 +5823,7 @@
       "weight": 1,
       "name": "Fangroot",
       "desc": "A long, dark fang with faint green veins running along its edge.",
+      "untradable": false,
       "resourceInfo": {
         "type": 6
       }
@@ -5482,6 +5836,7 @@
       "weight": 1,
       "name": "Heart of Venom",
       "desc": "A pulsing core-like fragment, tinted deep purple and green.",
+      "untradable": false,
       "resourceInfo": {
         "type": 6
       }
@@ -5494,6 +5849,7 @@
       "weight": 10,
       "name": "Waraxe of the Sacred Grave",
       "desc": "A solemn axe forged to honor the fallen, its edge whispers with the voices buried beneath the dark earth.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 0,
         "advantageType": 2,
@@ -5515,6 +5871,7 @@
       "weight": 17,
       "name": "Ancestral Greatbow",
       "desc": "This soulbound bow channels the memory of ancient hunts and the stillness before death.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 0,
         "advantageType": 3,
@@ -5536,6 +5893,7 @@
       "weight": 10,
       "name": "Champion's Rapier",
       "desc": "Elegant and deadly, this gleaming blade was used in ceremonies more than actual battle, yet its prowess is undeniable.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 0,
         "advantageType": 0,
@@ -5557,14 +5915,15 @@
       "weight": 7,
       "name": "Warrior Queen's Scaled Armor",
       "desc": "Once crafted for a forgotten monarch of battle, this armor flows like cloth but shields like legend-wrought steel.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 2,
         "advantageType": 0,
         "twoHanded": false,
         "atk": 15,
-        "def": 44,
-        "agi": 45,
-        "hp": 230,
+        "def": 43,
+        "agi": 44,
+        "hp": 265,
         "ms": 0,
         "weight": 0,
         "barrier": 0
@@ -5578,6 +5937,7 @@
       "weight": 22,
       "name": "Ancient Slayer's Axe",
       "desc": "A brutal relic reborn in serpent blood, this axe was made to cleave through myths and create legends.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 0,
         "advantageType": 2,
@@ -5599,6 +5959,7 @@
       "weight": 22,
       "name": "Greatspear of Doom",
       "desc": "Heavy as fate and sharp as prophecy, this massive spear delivers ruin with every coiled thrust.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 0,
         "advantageType": 1,
@@ -5620,6 +5981,7 @@
       "weight": 22,
       "name": "Blackened Sword of Agony",
       "desc": "Forged in the shadow of Kalyndra’s death, this cursed blade feeds on suffering and sings with searing sorrow.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 0,
         "advantageType": 0,
@@ -5641,6 +6003,7 @@
       "weight": 9,
       "name": "Armor of Monstrous Vitality",
       "desc": "This forbidden armor is said to provide near-immortality if the wearer is willing to trade their sanity for it.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 2,
         "advantageType": 0,
@@ -5662,6 +6025,7 @@
       "weight": 8,
       "name": "Greatshield of Domination",
       "desc": "A towering shield carved from Kalyndra’s indomitable scales, radiating a presence so commanding it bends lesser wills on sight.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 1,
         "advantageType": 0,
@@ -5683,14 +6047,15 @@
       "weight": 5,
       "name": "Hood of Sundering",
       "desc": "Woven from the ancient serpent's eyes and fangs, this hood tears through magic, unraveling the world's most powerful truths.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 3,
         "advantageType": 0,
         "twoHanded": false,
         "atk": 35,
-        "def": 15,
+        "def": 17,
         "agi": 65,
-        "hp": 250,
+        "hp": 225,
         "ms": 0,
         "weight": 0,
         "barrier": 0
@@ -5704,14 +6069,15 @@
       "weight": 7,
       "name": "Mantle of the Frosthowler",
       "desc": "Crafted from ice-slick fur and spirit-bound threads, this mantle cloaks its wearer in the breath of frozen forests and the silence before a kill.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 2,
         "advantageType": 0,
         "twoHanded": false,
-        "atk": 53,
+        "atk": 52,
         "def": 21,
         "agi": 93,
-        "hp": 240,
+        "hp": 265,
         "ms": 0,
         "weight": 0,
         "barrier": 0
@@ -5725,6 +6091,7 @@
       "weight": 22,
       "name": "Frostmaw's Scimitars",
       "desc": "Twin scimitars forged from the chilled remains of the Frostmaw's fangs. These blades are swift, silent, and cold enough to still a heartbeat mid-breath.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 0,
         "advantageType": 3,
@@ -5746,14 +6113,15 @@
       "weight": 7,
       "name": "Crown of the Iron Reign",
       "desc": "This regal helm bears the scars of countless wars and the presence of one born to conquer them all.",
+      "untradable": true,
       "equipmentInfo": {
         "slotType": 3,
         "advantageType": 0,
         "twoHanded": false,
-        "atk": 15,
-        "def": 76,
-        "agi": 15,
-        "hp": 285,
+        "atk": 13,
+        "def": 75,
+        "agi": 13,
+        "hp": 380,
         "ms": 0,
         "weight": 0,
         "barrier": 0
@@ -5767,14 +6135,15 @@
       "weight": 7,
       "name": "Warfiend's Tread",
       "desc": "Every step in these boots echoes like a war drum, and no terrain dares to resist their path.",
+      "untradable": true,
       "equipmentInfo": {
         "slotType": 4,
         "advantageType": 0,
         "twoHanded": false,
         "atk": 15,
         "def": 75,
-        "agi": 15,
-        "hp": 305,
+        "agi": 13,
+        "hp": 340,
         "ms": 0,
         "weight": 0,
         "barrier": 0
@@ -5788,6 +6157,7 @@
       "weight": 6,
       "name": "Zephyr Boots",
       "desc": "Light as mist and twice as swift, it rides the wind with every step.",
+      "untradable": true,
       "equipmentInfo": {
         "slotType": 4,
         "advantageType": 0,
@@ -5809,6 +6179,7 @@
       "weight": 11,
       "name": "Gloompiercer",
       "desc": "A long, obsidian-tipped spear built to pierce through shadow and silence alike. A weapon of unyielding intent.",
+      "untradable": true,
       "equipmentInfo": {
         "slotType": 0,
         "advantageType": 1,
@@ -5830,6 +6201,7 @@
       "weight": 22,
       "name": "Stormstring Recurve",
       "desc": "This elegant warbow bends like lightning and sings each arrow with the fury of the skies.",
+      "untradable": true,
       "equipmentInfo": {
         "slotType": 0,
         "advantageType": 3,
@@ -5851,6 +6223,7 @@
       "weight": 11,
       "name": "Cleaver of Souls",
       "desc": "An axe rumored to drink the strength of its victims, leaving only silence where fury once roared.",
+      "untradable": true,
       "equipmentInfo": {
         "slotType": 0,
         "advantageType": 2,
@@ -5872,6 +6245,7 @@
       "weight": 11,
       "name": "Blade of the Banished",
       "desc": "A finely tempered blade that slices not only flesh but the will to fight, left behind by its enigmatic wielder.",
+      "untradable": true,
       "equipmentInfo": {
         "slotType": 0,
         "advantageType": 0,
@@ -5893,6 +6267,7 @@
       "weight": 10,
       "name": "Staff of the Starfallen",
       "desc": "Carved from a sky-touched tree, this staff hums with celestial energy drawn from beyond the mortal veil.",
+      "untradable": true,
       "equipmentInfo": {
         "slotType": 0,
         "advantageType": 3,
@@ -5914,6 +6289,7 @@
       "weight": 17,
       "name": "Blades of the Howling Veil",
       "desc": "Twin fangs that blur in motion, whispering winds of death before the blood has time to fall.",
+      "untradable": true,
       "equipmentInfo": {
         "slotType": 0,
         "advantageType": 3,
@@ -5935,6 +6311,7 @@
       "weight": 6,
       "name": "Master Siege Greaves",
       "desc": "Forged for siege champions, these boots carry the weight of war and leave cracks in stone where they tread.",
+      "untradable": true,
       "equipmentInfo": {
         "slotType": 4,
         "advantageType": 0,
@@ -5942,7 +6319,7 @@
         "atk": 10,
         "def": 43,
         "agi": 12,
-        "hp": 250,
+        "hp": 245,
         "ms": 0,
         "weight": 0,
         "barrier": 0
@@ -5956,6 +6333,7 @@
       "weight": 5,
       "name": "Shadowrunner Boots",
       "desc": "These supple boots grip the ground like a cat's paws, perfect for silent steps and sudden kills.",
+      "untradable": true,
       "equipmentInfo": {
         "slotType": 4,
         "advantageType": 0,
@@ -5977,14 +6355,15 @@
       "weight": 6,
       "name": "Mantle of Whispers",
       "desc": "Stitched with ethereal thread, this robe amplifies unseen forces and dampens the sound of breath and blade.",
+      "untradable": true,
       "equipmentInfo": {
         "slotType": 2,
         "advantageType": 0,
         "twoHanded": false,
-        "atk": 27,
+        "atk": 28,
         "def": 13,
         "agi": 66,
-        "hp": 190,
+        "hp": 170,
         "ms": 0,
         "weight": 0,
         "barrier": 0
@@ -5998,6 +6377,7 @@
       "weight": 2,
       "name": "Eternal Frozen Cube",
       "desc": "A swirling core of icy breath, this essence carries the primal spirit of Beowulf. Frozen in fury, eternal in will.",
+      "untradable": false,
       "resourceInfo": {
         "type": 6
       }
@@ -6010,6 +6390,7 @@
       "weight": 1,
       "name": "Stolen Gold Bar",
       "desc": "A warped gold bar etched with goblin runes, prized by the Hoardmaster. A relic of theft and unrelenting greed.",
+      "untradable": false,
       "resourceInfo": {
         "type": 6
       }
@@ -6022,6 +6403,7 @@
       "weight": 1,
       "name": "Iceformed Gem",
       "desc": "A shimmering ice crystal pulsing with wild winter energy, said to form only when a snow rabbit leaps between storms.",
+      "untradable": false,
       "resourceInfo": {
         "type": 6
       }
@@ -6034,6 +6416,7 @@
       "weight": 1,
       "name": "Veiled Essense",
       "desc": "A fragment of pure shadow drawn from Nyxwing’s chest, weightless and whispering echoes of the past.",
+      "untradable": false,
       "resourceInfo": {
         "type": 6
       }
@@ -6046,6 +6429,7 @@
       "weight": 1,
       "name": "Foxfire Ember",
       "desc": "A dancing flame trapped in a translucent pearl, left behind when Kitsindra vanishes in a trail of scorched laughter.",
+      "untradable": false,
       "resourceInfo": {
         "type": 6
       }
@@ -6058,6 +6442,7 @@
       "weight": 15,
       "name": "Goldcleaver",
       "desc": "A jagged blade forged from melted greed and stolen steel, said to hum when near treasure or betrayal.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 0,
         "advantageType": 0,
@@ -6079,6 +6464,7 @@
       "weight": 15,
       "name": "Wintermaw",
       "desc": "An axe kissed by blizzards, its edge biting colder and deeper the swifter the swing.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 0,
         "advantageType": 2,
@@ -6100,6 +6486,7 @@
       "weight": 15,
       "name": "Embered Pike",
       "desc": "A blazing spear that leaves trails of flame in its thrust, forged in the echo of Kitsindra’s final spark.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 0,
         "advantageType": 1,
@@ -6121,6 +6508,7 @@
       "weight": 6,
       "name": "Shadowglide Harness",
       "desc": "This dark, supple armor bends light and sound around its wearer.",
+      "untradable": false,
       "equipmentInfo": {
         "slotType": 2,
         "advantageType": 0,

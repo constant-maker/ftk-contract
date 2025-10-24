@@ -1,8 +1,8 @@
 pragma solidity >=0.8.24;
 
 import {
-  Item,
-  ItemData,
+  ItemV2,
+  ItemV2Data,
   Tool2,
   Tool2Data,
   ToolSupply,
@@ -23,7 +23,7 @@ library CharacterItemUtils {
 
   /// @dev Check whether character perk level is enough to equip item
   function checkCharacterPerkLevelByItemId(uint256 characterId, uint256 itemId) internal view {
-    ItemData memory item = Item.get(itemId);
+    ItemV2Data memory item = ItemV2.get(itemId);
     if (item.itemType == ItemType.Mount) {
       // Mounts do not require perk level check
       return;
@@ -32,7 +32,7 @@ library CharacterItemUtils {
   }
 
   /// @dev Check whether character perk level is enough to equip item
-  function checkCharacterPerkLevel(uint256 characterId, ItemData memory item) internal view {
+  function checkCharacterPerkLevel(uint256 characterId, ItemV2Data memory item) internal view {
     uint8 perkLevel = CharPerk.getLevel(characterId, item.itemType);
     // plus 1 to perkLevel because it started from zero
     if (perkLevel + 1 < item.tier) {
@@ -42,7 +42,7 @@ library CharacterItemUtils {
 
   /// @dev add new item to character inventory, with tool and equipment, hook will add them to inventory
   function addNewItem(uint256 characterId, uint256 itemId, uint32 amount) internal {
-    ItemData memory item = Item.get(itemId);
+    ItemV2Data memory item = ItemV2.get(itemId);
     if (item.category == ItemCategoryType.Other) {
       InventoryItemUtils.addItem(characterId, itemId, amount);
       return;

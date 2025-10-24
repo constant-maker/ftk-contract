@@ -18,6 +18,7 @@ func ItemCallData(item common.Item) ([]byte, error) {
 		uint8(item.Type),
 		uint32(item.Weight),
 		uint8(item.Tier),
+		item.Untradable,
 	)
 	if err != nil {
 		return nil, err
@@ -27,7 +28,7 @@ func ItemCallData(item common.Item) ([]byte, error) {
 	}
 	encodedLength := mud.EncodeLengths([]int{len(stringToBytes(item.Name))})
 	dynamicData := simpleEncodePacked(stringToBytes(item.Name))
-	mt := mud.NewMudTable("Item", "app", "")
+	mt := mud.NewMudTable("ItemV2", "app", "")
 	return mt.SetRecordRawCalldata(keyTuple, staticData, encodedLength, dynamicData)
 }
 

@@ -1,6 +1,6 @@
 pragma solidity >=0.8.24;
 
-import { CharMarketWeight, OrderData, Item } from "@codegen/index.sol";
+import { CharMarketWeight, OrderData, ItemV2 } from "@codegen/index.sol";
 import { Errors, Config } from "@common/index.sol";
 
 library MarketWeightUtils {
@@ -15,7 +15,7 @@ library MarketWeightUtils {
   function updateWeight(uint256 characterId, uint256 cityId, uint256 itemId, uint32 amount, bool isReduce) public {
     uint32 weight = CharMarketWeight.getWeight(characterId, cityId);
     uint32 maxWeight = CharMarketWeight.getMaxWeight(characterId, cityId);
-    uint32 weightChange = Item.getWeight(itemId) * amount;
+    uint32 weightChange = ItemV2.getWeight(itemId) * amount;
     if (isReduce) {
       weight -= weightChange;
     } else {

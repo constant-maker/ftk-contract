@@ -10,7 +10,7 @@ import {
   CharCurrentStats,
   CharFund,
   ItemWeightCache,
-  Item,
+  ItemV2,
   CharMigration,
   CharStorageMigration
 } from "@codegen/index.sol";

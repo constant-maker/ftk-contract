@@ -1,6 +1,6 @@
 pragma solidity >=0.8.24;
 
-import { CharOtherItem, BuffItemInfoV2, CharBuffCounter, Item } from "@codegen/index.sol";
+import { CharOtherItem, BuffItemInfoV2, CharBuffCounter, ItemV2 } from "@codegen/index.sol";
 import { ItemType, BuffType } from "@codegen/common.sol";
 import { CharacterWeightUtils } from "./CharacterWeightUtils.sol";
 import { Errors } from "@common/Errors.sol";
@@ -92,7 +92,7 @@ library InventoryItemUtils {
   }
 
   function _checkItemLimit(uint256 characterId, uint256 itemId, uint32 changeAmount, bool isReduce) private {
-    ItemType itemType = Item.getItemType(itemId);
+    ItemType itemType = ItemV2.getItemType(itemId);
     if (itemType != ItemType.BuffItem && itemType != ItemType.HealingItem) return;
 
     BuffType buffType = itemType == ItemType.HealingItem ? BuffType.HealingPotion : BuffItemInfoV2.getBuffType(itemId);

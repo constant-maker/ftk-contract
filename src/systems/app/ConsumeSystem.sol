@@ -3,7 +3,7 @@ pragma solidity >=0.8.24;
 import { System } from "@latticexyz/world/src/System.sol";
 import { CharacterAccessControl } from "@abstracts/CharacterAccessControl.sol";
 import {
-  Item,
+  ItemV2,
   ResourceInfo,
   HealingItemInfo,
   CharBuff,
@@ -41,7 +41,7 @@ contract ConsumeSystem is System, CharacterAccessControl {
     }
     InventoryItemUtils.removeItem(characterId, itemId, amount);
     // berry can heal equal with its tier (e.g tier 1 ~ 1 hp)
-    uint32 gainedHp = uint32(Item.getTier(itemId)) * amount;
+    uint32 gainedHp = uint32(ItemV2.getTier(itemId)) * amount;
     CharacterStatsUtils.restoreHp(characterId, gainedHp);
   }
 
@@ -61,7 +61,7 @@ contract ConsumeSystem is System, CharacterAccessControl {
     InventoryItemUtils.removeItem(characterId, itemId, amount);
 
     // determine item type and apply effect
-    ItemType itemType = Item.getItemType(itemId);
+    ItemType itemType = ItemV2.getItemType(itemId);
     if (itemType == ItemType.HealingItem) {
       _healing(characterId, itemId, amount);
       return;

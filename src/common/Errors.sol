@@ -75,7 +75,7 @@ library Errors {
   error FarmingSystem_ExceedFarmingQuota(int32 x, int32 y, uint256 itemId);
 
   /* -------------------------------------------------------------------------- */
-  /*                                    Item                                    */
+  /*                                    ItemV2                                    */
   /* -------------------------------------------------------------------------- */
   error Item_AddItemExisted(uint256 itemId);
   error Item_NotExisted(uint256 itemId);
@@ -185,6 +185,7 @@ library Errors {
   error CraftSystem_CraftAmountIsZero();
   error CraftSystem_InvalidRecipeData(uint256 itemId);
   error CraftSystem_PerkLevelIsNotEnough(uint256 characterId, uint256 itemId);
+  error CraftSystem_NotEnoughFame(uint256 characterId, uint32 charFame, uint32 requiredFame);
 
   /* -------------------------------------------------------------------------- */
   /*                               ConsumeSystem                                */
@@ -237,6 +238,12 @@ library Errors {
   error NpcShopSystem_CardDataMismatch(uint256 cityId);
   error NpcShopSystem_CardIndexOutOfBounds(uint256 cityId, uint256 cardIndex);
   error NpcShopSystem_ExceedCardAmount(uint256 cityId, uint256 cardId, uint8 amount);
+  error NpcShopSystem_ItemNotForFamePurchase(uint256 itemId);
+  error NpcShopSystem_InvalidFameItemConfig(uint256 itemId);
+  error NpcShopSystem_PerkLevelTooLow(
+    uint256 characterId, uint8 perkType, uint8 currentPerkLevel, uint8 requiredPerkLevel
+  );
+  error NpcShopSystem_NotEnoughFame(uint256 characterId, uint32 charFame, uint32 requiredFame);
 
   /* -------------------------------------------------------------------------- */
   /*                               ChatSystem                                */
@@ -270,6 +277,7 @@ library Errors {
   error MarketSystem_ZeroAmount();
   error MarketSystem_TakerOrderZeroAmount();
   error MarketSystem_ZeroItemId();
+  error MarketSystem_UntradeableItem(uint256 itemId);
   error MarketSystem_ExceedMaxWeight(uint256 characterId, uint256 cityId, uint32 totalWeight, uint32 maxWeight);
   error MarketSystem_InsufficientGold(uint256 characterId, uint32 charGold, uint32 requiredGold);
   error MarketSystem_InsufficientItem(uint256 characterId, uint256 itemId, uint32 requiredAmount);

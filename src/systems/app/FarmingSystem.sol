@@ -1,7 +1,9 @@
 pragma solidity >=0.8.24;
 
 import { System } from "@latticexyz/world/src/System.sol";
-import { CharPositionData, CharState, Item, ItemData, CharFarmingState, CharFarmingStateData } from "@codegen/index.sol";
+import {
+  CharPositionData, CharState, ItemV2, ItemV2Data, CharFarmingState, CharFarmingStateData
+} from "@codegen/index.sol";
 import {
   CharacterStateUtils,
   CharacterStatsUtils,
@@ -62,7 +64,7 @@ contract FarmingSystem is CharacterAccessControl, System {
     // increase the character resource amount in inventory
     uint256 timestamp = block.timestamp;
     if (claimResource) {
-      uint32 receiveAmount = _calculateFarmingAmount(Item.getTier(resourceItemId));
+      uint32 receiveAmount = _calculateFarmingAmount(ItemV2.getTier(resourceItemId));
       InventoryItemUtils.addItem(characterId, resourceItemId, receiveAmount);
     }
 
@@ -94,7 +96,7 @@ contract FarmingSystem is CharacterAccessControl, System {
   )
     private
   {
-    (ItemData memory resourceItem, ResourceType resourceType) =
+    (ItemV2Data memory resourceItem, ResourceType resourceType) =
       FarmingUtils.getResourceItemAndResourceType(resourceItemId);
 
     Tool2Data memory tool = ToolUtils.mustGetToolData(toolId);

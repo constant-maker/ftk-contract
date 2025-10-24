@@ -17,7 +17,7 @@ import {
   PvEAfkLoc,
   CharState,
   CharBattle,
-  Item,
+  ItemV2,
   Equipment,
   CharCurrentStats,
   CharStats
@@ -107,7 +107,7 @@ library BattlePvEUtils2 {
     uint256 grindEquipmentId = CharEquipment.getEquipmentId(characterId, grindSlot);
     if (grindEquipmentId != 0) {
       uint256 itemId = Equipment.getItemId(grindEquipmentId);
-      CharacterPerkUtils.updateCharacterPerkExp(characterId, Item.getItemType(itemId), gainedPerkExp);
+      CharacterPerkUtils.updateCharacterPerkExp(characterId, ItemV2.getItemType(itemId), gainedPerkExp);
     }
   }
 

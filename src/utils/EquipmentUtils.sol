@@ -1,6 +1,6 @@
 pragma solidity >=0.8.24;
 
-import { Equipment, EquipmentData, Item } from "@codegen/index.sol";
+import { Equipment, EquipmentData, ItemV2 } from "@codegen/index.sol";
 import { Errors } from "@common/Errors.sol";
 
 library EquipmentUtils {
@@ -19,6 +19,6 @@ library EquipmentUtils {
     if (itemId == 0) {
       revert Errors.Equipment_NotExisted(equipmentId);
     }
-    return Item.getWeight(itemId);
+    return ItemV2.getWeight(itemId);
   }
 }

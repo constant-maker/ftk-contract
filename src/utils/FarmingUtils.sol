@@ -3,8 +3,8 @@ pragma solidity >=0.8.24;
 import {
   CharPositionData,
   TileInfo3,
-  Item,
-  ItemData,
+  ItemV2,
+  ItemV2Data,
   CharPerk,
   Tool2Data,
   TileInfo3,
@@ -53,7 +53,7 @@ library FarmingUtils {
 
       for (uint256 i = 0; i < lenItem; i++) {
         uint256 itemId = itemIds[i];
-        uint16 tier = Item.getTier(itemId);
+        uint16 tier = ItemV2.getTier(itemId);
         uint16 quota;
         if (tier <= 5) {
           quota = 20 - (tier - 1) * 2;
@@ -86,7 +86,7 @@ library FarmingUtils {
 
   /// @dev Calculate resource perk exp
   function calculateResourcePerkExp(uint256 characterId, uint256 resourceItemId) public view returns (uint32 perkExp) {
-    uint32 tier = uint32(Item.getTier(resourceItemId));
+    uint32 tier = uint32(ItemV2.getTier(resourceItemId));
     perkExp = Config.BASE_RESOURCE_PERK_EXP * tier + (tier - 1) * 2; // all tier starts from 1
     uint32 basePercent = 100;
     uint32 farmingPerkAmp = ExpAmpConfig.getFarmingPerkAmp();
@@ -113,7 +113,7 @@ library FarmingUtils {
     view
     returns (ItemType itemType, uint16 requireDurability)
   {
-    ItemData memory item = Item.get(tool.itemId);
+    ItemV2Data memory item = ItemV2.get(tool.itemId);
     requireDurability = uint16(resourceItemTier);
     uint8 perkLevel = CharPerk.getLevel(characterId, item.itemType);
     if (perkLevel + 1 < resourceItemTier) {
@@ -152,9 +152,9 @@ library FarmingUtils {
 
   function getResourceItemAndResourceType(uint256 resourceItemId)
     public
-    returns (ItemData memory resourceItem, ResourceType resourceType)
+    returns (ItemV2Data memory resourceItem, ResourceType resourceType)
   {
-    resourceItem = Item.get(resourceItemId);
+    resourceItem = ItemV2.get(resourceItemId);
     if (resourceItem.itemType != ItemType.Resource) {
       revert Errors.FarmingSystem_MustFarmAResource(resourceItemId);
     }

@@ -9,7 +9,7 @@ import (
 )
 
 func ItemRecipeCallData(recipe common.ItemRecipe) ([]byte, error) {
-	staticData, err := encodePacked(uint32(recipe.GoldCost))
+	staticData, err := encodePacked(uint32(recipe.GoldCost), uint32(recipe.FameCost))
 	if err != nil {
 		return nil, err
 	}
@@ -42,6 +42,6 @@ func ItemRecipeCallData(recipe common.ItemRecipe) ([]byte, error) {
 		return nil, err
 	}
 
-	mt := mud.NewMudTable("ItemRecipeV2", "app", "")
+	mt := mud.NewMudTable("ItemRecipeV3", "app", "")
 	return mt.SetRecordRawCalldata(keyTuple, staticData, encodedLength, dynamicData)
 }

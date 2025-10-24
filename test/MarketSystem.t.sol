@@ -156,8 +156,8 @@ contract MarketSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixt
     assertEq(CharMarketWeight.getWeight(characterId2, city1), 0); // market weight decrease because of taking order
     assertEq(CharCurrentStats.getWeight(characterId1), prevCurrentWeight + 5); // weight increase because of taking
       // order
-    assertEq(CharFund.getGold(characterId2), 195); // 100 + 100 - 5% fee
-    assertEq(CharFund.getGold(characterId1), 0); // already spent to take order
+    assertEq(CharFund.getGold(characterId2), 200); // 100 + 100 - 0% fee
+    assertEq(CharFund.getGold(characterId1), 5); // already spent to take order
     assertEq(Equipment.getCharacterId(2), characterId1); // transfer equipment to player1
     assertTrue(InventoryEquipmentUtils.hasEquipment(characterId1, 2));
   }
@@ -243,8 +243,8 @@ contract MarketSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixt
     assertEq(CharCurrentStats.getWeight(characterId2), prevChar2CurrentWeight + 50); // weight increase because of
       // taking order
     assertEq(CharOtherItem.getAmount(characterId2, 1), 50);
-    assertEq(CharFund.getGold(characterId2), 148); // 200 - 50 - 2 (fee)
-    assertEq(CharFund.getGold(characterId1), 248); // 200 + 50 - 5% fee
+    assertEq(CharFund.getGold(characterId2), 150); // 200 - 50 - 0 (fee)
+    assertEq(CharFund.getGold(characterId1), 250); // 200 + 50 - 0 (fee)
     assertEq(Order.getAmount(1), 50); // 100 - 50
     assertFalse(Order.getIsDone(1));
 
@@ -310,8 +310,8 @@ contract MarketSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixt
     assertEq(CharCurrentStats.getWeight(characterId2), prevChar2CurrentWeight + 100); // weight increase because of
       // taking order
     assertEq(CharOtherItem.getAmount(characterId2, 1), 100);
-    assertEq(CharFund.getGold(characterId2), 43); // 148 - 100 - 5 (fee) (unit price changed to 2)
-    assertEq(CharFund.getGold(characterId1), 248 + 95); // 248 + 100 - 5% fee
+    assertEq(CharFund.getGold(characterId2), 50); // 150 - 100 - 0 (fee) (unit price changed to 2)
+    assertEq(CharFund.getGold(characterId1), 350); // 200 + 100 - 0 (fee)
     assertTrue(Order.getIsDone(1));
     console2.log("orderParams", orderParams.orderId);
     vm.expectRevert(); // order already done
@@ -338,8 +338,8 @@ contract MarketSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixt
     world.app__takeOrder(characterId2, takeOrderParamsArray);
     vm.stopPrank();
     assertEq(CharMarketWeight.getWeight(characterId1, city2), 0);
-    assertEq(CharFund.getGold(characterId1), 248 + 95); // nothing changed because of kingdom fee
-    assertEq(CharFund.getGold(characterId2), 22); // 43 - (10 * 2) - 1 (fee)
+    assertEq(CharFund.getGold(characterId1), 250 + 100); // nothing changed because of kingdom fee
+    assertEq(CharFund.getGold(characterId2), 30); // 50 - (10 * 2) - 0 (fee)
   }
 
   function test_BuyOtherItemOrder() public {
@@ -419,7 +419,7 @@ contract MarketSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixt
 
     assertEq(CharCurrentStats.getWeight(characterId2), prevChar2CurrentWeight - 50); // selling order decrease weight
     assertEq(CharOtherItem.getAmount(characterId2, 1), 50);
-    assertEq(CharFund.getGold(characterId2), 248); // 200 + 50 - 5% fee
+    assertEq(CharFund.getGold(characterId2), 250); // 200 + 50 - 0% fee
     assertEq(CharOtherItemStorage.getAmount(characterId1, 1, 1), 50); // + 50
     assertEq(Order.getAmount(1), 50); // 100 - 50
     assertFalse(Order.getIsDone(1));
@@ -459,7 +459,7 @@ contract MarketSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixt
     world.app__takeOrder(characterId2, takeOrderParamsArray);
     vm.stopPrank();
     assertTrue(Order.getIsDone(1));
-    assertEq(CharFund.getGold(characterId2), 248); // nothing changed because of kingdom fee is 100%
+    assertEq(CharFund.getGold(characterId2), 250); // nothing changed because of kingdom fee is 100%
     assertEq(CharOtherItemStorage.getAmount(characterId1, 1, 1), 100); // 50 + 50
   }
 
@@ -513,7 +513,7 @@ contract MarketSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixt
     console2.log("character 2 take order success");
 
     assertEq(CharCurrentStats.getWeight(characterId2), prevChar2CurrentWeight - 5); // transfer equipment to player1
-    assertEq(CharFund.getGold(characterId2), prevChar2Fund + 95); // 200 + 100 - 5% fee
+    assertEq(CharFund.getGold(characterId2), prevChar2Fund + 100); // 200 + 100 - 0% fee
     assertEq(Order.getAmount(1), 1); // 2 - 1
     assertFalse(Order.getIsDone(1));
 
@@ -528,7 +528,7 @@ contract MarketSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixt
     vm.stopPrank();
     console2.log("character 2 take order success 2");
     assertTrue(Order.getIsDone(1));
-    assertEq(CharFund.getGold(characterId2), prevChar2Fund + 95 + 95); // 200 + 100 - 5% fee + 100 - 5% fee
+    assertEq(CharFund.getGold(characterId2), prevChar2Fund + 100 + 100); // 200 + 100 - 0% fee + 100 - 0% fee
     assertTrue(StorageEquipmentUtils.hasEquipment(characterId1, 1, 3));
     assertTrue(StorageEquipmentUtils.hasEquipment(characterId1, 1, 2));
     assertEq(Equipment.getCharacterId(2), characterId1);

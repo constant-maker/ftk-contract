@@ -16,7 +16,7 @@ import {
   MonsterStatsData,
   CharCurrentStats,
   CharStats,
-  Item,
+  ItemV2,
   CharCStats2
 } from "@codegen/index.sol";
 import { BattleInfo, BattleUtils } from "./BattleUtils.sol";
@@ -151,8 +151,15 @@ library BattlePvEUtils {
   }
 
   function switchBossLocation(
-    int32 x1, int32 y1, int32 x2, int32 y2, uint256 monsterId, 
-    CharPositionData memory charPosition) public {
+    int32 x1,
+    int32 y1,
+    int32 x2,
+    int32 y2,
+    uint256 monsterId,
+    CharPositionData memory charPosition
+  )
+    public
+  {
     int32 x = charPosition.x;
     int32 y = charPosition.y;
     int32 newX = x == x1 ? x2 : x1;
@@ -254,7 +261,7 @@ library BattlePvEUtils {
     }
     uint256 itemId = itemIds[index];
     uint32 amount = itemAmounts[index];
-    uint32 itemWeight = Item.getWeight(itemId);
+    uint32 itemWeight = ItemV2.getWeight(itemId);
     uint32 newWeight = CharCurrentStats.getWeight(characterId) + itemWeight * amount;
     uint32 maxWeight = CharStats.getWeight(characterId);
     if (newWeight > maxWeight) {
