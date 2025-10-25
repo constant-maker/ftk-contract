@@ -1011,7 +1011,7 @@
     },
     "44": {
       "id": 44,
-      "name": "Grimknuckle the Hoardmaster",
+      "name": "Grimknuckle",
       "desc": "Twisted by greed, Grimknuckle lords over his stolen treasures with a cackling fury and hidden traps.",
       "kingdom": 0,
       "tier": 3,
@@ -1042,7 +1042,7 @@
     },
     "45": {
       "id": 45,
-      "name": "Eira the Frostbound",
+      "name": "Eira",
       "desc": "Don’t be fooled by her looks, Eira darts like a blizzard and strikes with ice-laced fury drawn from the heart of winter itself.",
       "kingdom": 0,
       "tier": 3,
@@ -1073,7 +1073,7 @@
     },
     "46": {
       "id": 46,
-      "name": "Nyxwing, Herald of the Hollow",
+      "name": "Nyxwing",
       "desc": "Nyxwing glides through darkness unseen, its shrieks unraveling courage and sound alike.",
       "kingdom": 0,
       "tier": 3,
@@ -1104,7 +1104,7 @@
     },
     "47": {
       "id": 47,
-      "name": "Kitsindra, Flamebound Trickster",
+      "name": "Kitsindra",
       "desc": "Wreathed in fire and illusion, Kitsindra dances through battle with emberstep grace and tails that blaze like falling stars.",
       "kingdom": 0,
       "tier": 3,
