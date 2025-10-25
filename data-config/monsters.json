@@ -949,8 +949,8 @@
     },
     "42": {
       "id": 42,
-      "name": "Kalyndra the Great Serpent",
-      "desc": "Kalyndra the Great Serpent coils beneath scorched earth and deep oceans, her crimson scales blazing with ancient wrath and her venom strong enough to burn even gods.",
+      "name": "Kalyndra",
+      "desc": "Kalyndra coils beneath scorched earth and deep oceans, her crimson scales blazing with ancient wrath and her venom strong enough to burn even gods.",
       "kingdom": 0,
       "tier": 7,
       "isBoss": true,
@@ -980,8 +980,8 @@
     },
     "43": {
       "id": 43,
-      "name": "Beowulf, the Frostmaw",
-      "desc": "One of the four legendary beastman warlords. Beowulf, the Frostmaw rules the tundra wastes with frozen wrath and fangs sharper than the mountain chill.",
+      "name": "Beowulf",
+      "desc": "One of the four legendary beastman warlords. Beowulf rules the tundra wastes with frozen wrath and fangs sharper than the mountain chill.",
       "kingdom": 0,
       "tier": 7,
       "isBoss": true,
@@ -1003,7 +1003,7 @@
         "barrier": 1500,
         "hp": 100000,
         "crystal": 2000,
-        "respawnDuration": 360000,
+        "respawnDuration": 432000,
         "berserkHpThreshold": 30,
         "boostPercent": 50,
         "lastDefeatedTime": 0
