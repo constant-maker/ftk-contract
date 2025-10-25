@@ -12,7 +12,8 @@ import {
   Monster,
   PvEExtraV2,
   PvEAfk,
-  PvEAfkData
+  PvEAfkData,
+  CharCStats2
 } from "@codegen/index.sol";
 import {
   CharacterPositionUtils,
@@ -99,15 +100,13 @@ contract PvESystem is System, CharacterAccessControl {
       BattleUtils2.applyLoss(characterId, characterPosition);
       characterHp = CharStats.getHp(characterId); // set character hp to max hp
       CharCurrentStats.setExp(characterId, CharCurrentStats.getExp(characterId) * 75 / 100); // penalty 25% current exp
-      if (PvEExtraV2.getItemId(characterId) != 0) {
-        PvEExtraV2.deleteRecord(characterId); // reset extra data
-      }
+      PvEExtraV2.set(characterId, 0, 0, CharCStats2.getBarrier(characterId));
     } else if (monsterHp == 0) {
       // character won
       (uint32 gainedExp, uint32 gainedPerkExp) =
         BattlePvEUtils.getExpAndPerkExpReward(monsterId, isBoss, monsterLevel, CharStats.getLevel(characterId));
       if (claimItem) {
-        // claim reward
+        // claim reward, and set extra data
         BattlePvEUtils.claimReward(characterId, monsterId);
       }
       BattlePvEUtils2.updateCharacterExp(characterId, gainedExp, gainedPerkExp);
