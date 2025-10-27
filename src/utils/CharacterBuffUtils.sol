@@ -3,8 +3,8 @@ pragma solidity >=0.8.24;
 import {
   CharBuff,
   CharBuffData,
-  BuffStatV2,
-  BuffStatV2Data,
+  BuffStatV3,
+  BuffStatV3Data,
   BuffItemInfoV2,
   CharCurrentStats,
   CharCurrentStatsData
@@ -30,7 +30,7 @@ library CharacterBuffUtils {
 
       if (BuffItemInfoV2.getBuffType(buffId) != BuffType.StatsModify) continue;
 
-      int16 buffSpeed = BuffStatV2.getMs(buffId);
+      int16 buffSpeed = BuffStatV3.getMs(buffId);
       speedBuff += buffSpeed;
     }
 
@@ -51,7 +51,7 @@ library CharacterBuffUtils {
       if (buffId == 0) continue;
 
       if (BuffItemInfoV2.getBuffType(buffId) != BuffType.StatsModify) continue;
-      BuffStatV2Data memory statBuff = BuffStatV2.get(buffId);
+      BuffStatV3Data memory statBuff = BuffStatV3.get(buffId);
       totalAtkPercent += statBuff.atkPercent;
       totalDefPercent += statBuff.defPercent;
       totalAgiPercent += statBuff.agiPercent;
@@ -73,7 +73,7 @@ library CharacterBuffUtils {
       if (buffId == 0) continue;
 
       if (BuffItemInfoV2.getBuffType(buffId) != BuffType.StatsModify) continue;
-      int8 buffSp = BuffStatV2.getSp(buffId);
+      int8 buffSp = BuffStatV3.getSp(buffId);
       sp += buffSp;
     }
   }
