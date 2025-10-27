@@ -30,9 +30,9 @@ type Item struct {
 	// specific buff info based on buff type
 	// only one of the following can be set
 	// if none is set, it means it's a general buff with no specific effect
-	DmgBuffInfo *DmgBuffInfo `json:"dmgBuffInfo,omitempty"`
-	ExpAmplify  *ExpAmplify  `json:"expAmplify,omitempty"`
-	StatsModify *StatsModify `json:"statsModify,omitempty"`
+	InstantDamage *InstantDamage `json:"instantDmg,omitempty"`
+	ExpAmplify    *ExpAmplify    `json:"expAmplify,omitempty"`
+	StatsModify   *StatsModify   `json:"statsModify,omitempty"`
 }
 
 type BuffItemInfo struct {
@@ -53,12 +53,14 @@ type StatsModify struct {
 	AtkPercent int16 `json:"atkPercent"`
 	DefPercent int16 `json:"defPercent"`
 	AgiPercent int16 `json:"agiPercent"`
-	Ms         int8  `json:"ms"` // flat value
-	Sp         int8  `json:"sp"` // flat value
+	Ms         int8  `json:"ms"`  // flat value
+	Sp         int8  `json:"sp"`  // flat value
+	Dmg        int   `json:"dmg"` // percent or flat
+	IsAbsDmg   bool  `json:"isAbsDmg"`
 }
 
-type DmgBuffInfo struct {
-	Dmg      int  `json:"dmg"`      // percent
+type InstantDamage struct {
+	Dmg      int  `json:"dmg"`      // percent or flat
 	IsAbsDmg bool `json:"isAbsDmg"` // true means absolute damage, false means percentage damage
 }
 

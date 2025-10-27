@@ -256,11 +256,11 @@ func BuildExtraItemInfoData(l *zap.SugaredLogger, dataConfig common.DataConfig, 
 				}
 				callData = append(callData, statsModifyCallData)
 			}
-			if item.DmgBuffInfo != nil {
-				l.Infow("dmg buff info", "value", item.DmgBuffInfo)
-				dmgBuffInfoCallData, err := table.BuffDmgInfoCallData(*item.DmgBuffInfo, item.Id)
+			if item.InstantDamage != nil {
+				l.Infow("instant damage info", "value", item.InstantDamage)
+				dmgBuffInfoCallData, err := table.BuffDmgInfoCallData(*item.InstantDamage, item.Id)
 				if err != nil {
-					l.Errorw("cannot build Dmg Buff Info call data", "err", err)
+					l.Errorw("cannot build Instant Damage call data", "err", err)
 					return nil, err
 				}
 				callData = append(callData, dmgBuffInfoCallData)
@@ -486,7 +486,7 @@ func BuildMonsterData(l *zap.SugaredLogger, dataConfig common.DataConfig, fromMo
 			for _, ml := range dataConfig.MonsterLocationsBoss {
 				if ml.MonsterId == monster.Id {
 					for _, location := range ml.Locations {
-						l.Infow("data", "value", location, "monster", monster.BossInfo)
+						// l.Infow("data", "value", location, "monster", monster.BossInfo)
 						bossInfosCallData, err := table.BossInfosCallData(monster.Id, *monster.BossInfo, location.X, location.Y)
 						if err != nil {
 							l.Errorw("cannot build BossInfo call data", "err", err)

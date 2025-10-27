@@ -6521,6 +6521,620 @@
         "weight": 0,
         "barrier": 0
       }
+    },
+    "389": {
+      "id": 389,
+      "type": 28,
+      "category": 2,
+      "tier": 3,
+      "weight": 1,
+      "name": "Scroll of Strength I",
+      "desc": "Grants a minor boost to your attack power for a short duration.",
+      "untradable": false,
+      "buffInfo": {
+        "type": 1,
+        "range": 0,
+        "duration": 1800,
+        "selfCastOnly": true,
+        "numTarget": 1
+      },
+      "statsModify": {
+        "atkPercent": 5,
+        "defPercent": 0,
+        "agiPercent": 0,
+        "ms": 0,
+        "sp": 0,
+        "dmg": 0,
+        "isAbsDmg": false
+      }
+    },
+    "390": {
+      "id": 390,
+      "type": 28,
+      "category": 2,
+      "tier": 3,
+      "weight": 1,
+      "name": "Scroll of Endurance I",
+      "desc": "Increases your defense slightly, helping you endure incoming damage.",
+      "untradable": false,
+      "buffInfo": {
+        "type": 1,
+        "range": 0,
+        "duration": 1800,
+        "selfCastOnly": true,
+        "numTarget": 1
+      },
+      "statsModify": {
+        "atkPercent": 0,
+        "defPercent": 5,
+        "agiPercent": 0,
+        "ms": 0,
+        "sp": 0,
+        "dmg": 0,
+        "isAbsDmg": false
+      }
+    },
+    "391": {
+      "id": 391,
+      "type": 28,
+      "category": 2,
+      "tier": 3,
+      "weight": 1,
+      "name": "Scroll of Swiftness I",
+      "desc": "Grants a small agility boost, enhancing your dodge and attack speed.",
+      "untradable": false,
+      "buffInfo": {
+        "type": 1,
+        "range": 0,
+        "duration": 1800,
+        "selfCastOnly": true,
+        "numTarget": 1
+      },
+      "statsModify": {
+        "atkPercent": 0,
+        "defPercent": 0,
+        "agiPercent": 5,
+        "ms": 0,
+        "sp": 0,
+        "dmg": 0,
+        "isAbsDmg": false
+      }
+    },
+    "392": {
+      "id": 392,
+      "type": 28,
+      "category": 2,
+      "tier": 6,
+      "weight": 1,
+      "name": "Scroll of Mobility I",
+      "desc": "Boosts your movement speed slightly, allowing quicker repositioning.",
+      "untradable": false,
+      "buffInfo": {
+        "type": 1,
+        "range": 0,
+        "duration": 180,
+        "selfCastOnly": true,
+        "numTarget": 1
+      },
+      "statsModify": {
+        "atkPercent": 0,
+        "defPercent": 0,
+        "agiPercent": 0,
+        "ms": 1,
+        "sp": 0,
+        "dmg": 0,
+        "isAbsDmg": false
+      }
+    },
+    "393": {
+      "id": 393,
+      "type": 28,
+      "category": 2,
+      "tier": 6,
+      "weight": 1,
+      "name": "Scroll of Strength II",
+      "desc": "Greatly increases your attack power, turning your blows more deadly.",
+      "untradable": false,
+      "buffInfo": {
+        "type": 1,
+        "range": 0,
+        "duration": 1800,
+        "selfCastOnly": true,
+        "numTarget": 1
+      },
+      "statsModify": {
+        "atkPercent": 10,
+        "defPercent": 0,
+        "agiPercent": 0,
+        "ms": 0,
+        "sp": 0,
+        "dmg": 0,
+        "isAbsDmg": false
+      }
+    },
+    "394": {
+      "id": 394,
+      "type": 28,
+      "category": 2,
+      "tier": 6,
+      "weight": 1,
+      "name": "Scroll of Endurance II",
+      "desc": "Significantly boosts your defense, shielding you against heavy hits.",
+      "untradable": false,
+      "buffInfo": {
+        "type": 1,
+        "range": 0,
+        "duration": 1800,
+        "selfCastOnly": true,
+        "numTarget": 1
+      },
+      "statsModify": {
+        "atkPercent": 0,
+        "defPercent": 10,
+        "agiPercent": 0,
+        "ms": 0,
+        "sp": 0,
+        "dmg": 0,
+        "isAbsDmg": false
+      }
+    },
+    "395": {
+      "id": 395,
+      "type": 28,
+      "category": 2,
+      "tier": 6,
+      "weight": 1,
+      "name": "Scroll of Swiftness II",
+      "desc": "Sharply increases your agility for rapid strikes and evasive movement.",
+      "untradable": false,
+      "buffInfo": {
+        "type": 1,
+        "range": 0,
+        "duration": 1800,
+        "selfCastOnly": true,
+        "numTarget": 1
+      },
+      "statsModify": {
+        "atkPercent": 0,
+        "defPercent": 0,
+        "agiPercent": 10,
+        "ms": 0,
+        "sp": 0,
+        "dmg": 0,
+        "isAbsDmg": false
+      }
+    },
+    "396": {
+      "id": 396,
+      "type": 28,
+      "category": 2,
+      "tier": 3,
+      "weight": 1,
+      "name": "Scroll of Cowardice I",
+      "desc": "Reduces an enemy’s attack slightly, dulling their offensive power.",
+      "untradable": false,
+      "buffInfo": {
+        "type": 1,
+        "range": 3,
+        "duration": 1800,
+        "selfCastOnly": false,
+        "numTarget": 1
+      },
+      "statsModify": {
+        "atkPercent": -5,
+        "defPercent": 0,
+        "agiPercent": 0,
+        "ms": 0,
+        "sp": 0,
+        "dmg": 0,
+        "isAbsDmg": false
+      }
+    },
+    "397": {
+      "id": 397,
+      "type": 28,
+      "category": 2,
+      "tier": 6,
+      "weight": 1,
+      "name": "Scroll of Cowardice II",
+      "desc": "Greatly weakens an enemy’s attack, making their strikes less threatening.",
+      "untradable": false,
+      "buffInfo": {
+        "type": 1,
+        "range": 3,
+        "duration": 1800,
+        "selfCastOnly": false,
+        "numTarget": 1
+      },
+      "statsModify": {
+        "atkPercent": -10,
+        "defPercent": 0,
+        "agiPercent": 0,
+        "ms": 0,
+        "sp": 0,
+        "dmg": 0,
+        "isAbsDmg": false
+      }
+    },
+    "398": {
+      "id": 398,
+      "type": 28,
+      "category": 2,
+      "tier": 3,
+      "weight": 1,
+      "name": "Scroll of Fatigue I",
+      "desc": "Lowers an enemy’s defense slightly, making them easier to damage.",
+      "untradable": false,
+      "buffInfo": {
+        "type": 1,
+        "range": 3,
+        "duration": 1800,
+        "selfCastOnly": false,
+        "numTarget": 1
+      },
+      "statsModify": {
+        "atkPercent": 0,
+        "defPercent": -5,
+        "agiPercent": 0,
+        "ms": 0,
+        "sp": 0,
+        "dmg": 0,
+        "isAbsDmg": false
+      }
+    },
+    "399": {
+      "id": 399,
+      "type": 28,
+      "category": 2,
+      "tier": 6,
+      "weight": 1,
+      "name": "Scroll of Fatigue II",
+      "desc": "Significantly reduces an enemy’s defense, exposing them to harder hits.",
+      "untradable": false,
+      "buffInfo": {
+        "type": 1,
+        "range": 3,
+        "duration": 1800,
+        "selfCastOnly": false,
+        "numTarget": 1
+      },
+      "statsModify": {
+        "atkPercent": 0,
+        "defPercent": -10,
+        "agiPercent": 0,
+        "ms": 0,
+        "sp": 0,
+        "dmg": 0,
+        "isAbsDmg": false
+      }
+    },
+    "400": {
+      "id": 400,
+      "type": 28,
+      "category": 2,
+      "tier": 3,
+      "weight": 1,
+      "name": "Scroll of Clumsiness I",
+      "desc": "Slightly decreases an enemy’s agility.",
+      "untradable": false,
+      "buffInfo": {
+        "type": 1,
+        "range": 3,
+        "duration": 1800,
+        "selfCastOnly": false,
+        "numTarget": 1
+      },
+      "statsModify": {
+        "atkPercent": 0,
+        "defPercent": 0,
+        "agiPercent": -5,
+        "ms": 0,
+        "sp": 0,
+        "dmg": 0,
+        "isAbsDmg": false
+      }
+    },
+    "401": {
+      "id": 401,
+      "type": 28,
+      "category": 2,
+      "tier": 6,
+      "weight": 1,
+      "name": "Scroll of Clumsiness II",
+      "desc": "Greatly hampers an enemy’s agility, making them slow and easier to strike.",
+      "untradable": false,
+      "buffInfo": {
+        "type": 1,
+        "range": 3,
+        "duration": 1800,
+        "selfCastOnly": false,
+        "numTarget": 1
+      },
+      "statsModify": {
+        "atkPercent": 0,
+        "defPercent": 0,
+        "agiPercent": -10,
+        "ms": 0,
+        "sp": 0,
+        "dmg": 0,
+        "isAbsDmg": false
+      }
+    },
+    "402": {
+      "id": 402,
+      "type": 28,
+      "category": 2,
+      "tier": 6,
+      "weight": 1,
+      "name": "Scroll of Entrapment I",
+      "desc": "Slows down an enemy’s movement speed slightly.",
+      "untradable": false,
+      "buffInfo": {
+        "type": 1,
+        "range": 3,
+        "duration": 180,
+        "selfCastOnly": false,
+        "numTarget": 1
+      },
+      "statsModify": {
+        "atkPercent": 0,
+        "defPercent": 0,
+        "agiPercent": 0,
+        "ms": -1,
+        "sp": 0,
+        "dmg": 0,
+        "isAbsDmg": false
+      }
+    },
+    "403": {
+      "id": 403,
+      "type": 28,
+      "category": 2,
+      "tier": 7,
+      "weight": 1,
+      "name": "Scroll of Entrapment II",
+      "desc": "Greatly reduces an enemy’s movement speed, making it harder for them to escape.",
+      "untradable": false,
+      "buffInfo": {
+        "type": 1,
+        "range": 3,
+        "duration": 180,
+        "selfCastOnly": false,
+        "numTarget": 1
+      },
+      "statsModify": {
+        "atkPercent": 0,
+        "defPercent": 0,
+        "agiPercent": 0,
+        "ms": -2,
+        "sp": 0,
+        "dmg": 0,
+        "isAbsDmg": false
+      }
+    },
+    "404": {
+      "id": 404,
+      "type": 28,
+      "category": 2,
+      "tier": 7,
+      "weight": 1,
+      "name": "Scroll of Paralysis",
+      "desc": "Roots an enemy in place briefly, preventing them from moving.",
+      "untradable": false,
+      "buffInfo": {
+        "type": 1,
+        "range": 3,
+        "duration": 30,
+        "selfCastOnly": false,
+        "numTarget": 1
+      },
+      "statsModify": {
+        "atkPercent": 0,
+        "defPercent": 0,
+        "agiPercent": 0,
+        "ms": -8,
+        "sp": 0,
+        "dmg": 0,
+        "isAbsDmg": false
+      }
+    },
+    "405": {
+      "id": 405,
+      "type": 28,
+      "category": 2,
+      "tier": 7,
+      "weight": 1,
+      "name": "Scroll of Berserk I",
+      "desc": "Surges your attack to deadly levels, but leaves you with much lower defense.",
+      "untradable": false,
+      "buffInfo": {
+        "type": 1,
+        "range": 3,
+        "duration": 1800,
+        "selfCastOnly": true,
+        "numTarget": 1
+      },
+      "statsModify": {
+        "atkPercent": 20,
+        "defPercent": -30,
+        "agiPercent": 0,
+        "ms": 0,
+        "sp": 0,
+        "dmg": 0,
+        "isAbsDmg": false
+      }
+    },
+    "406": {
+      "id": 406,
+      "type": 28,
+      "category": 2,
+      "tier": 4,
+      "weight": 1,
+      "name": "Scroll of Hunting Knowledge I",
+      "desc": "Grants increased EXP gain from fighting monsters and weapon mastery.",
+      "untradable": false,
+      "buffInfo": {
+        "type": 2,
+        "range": 0,
+        "duration": 43200,
+        "selfCastOnly": true,
+        "numTarget": 1
+      },
+      "expAmplify": {
+        "farmingPerkAmp": 0,
+        "pveExpAmp": 50,
+        "pvePerkAmp": 50
+      }
+    },
+    "407": {
+      "id": 407,
+      "type": 28,
+      "category": 2,
+      "tier": 4,
+      "weight": 1,
+      "name": "Scroll of Farming Knowledge I",
+      "desc": "Boosts the EXP you gain from collecting and harvesting resources.",
+      "untradable": false,
+      "buffInfo": {
+        "type": 2,
+        "range": 0,
+        "duration": 43200,
+        "selfCastOnly": true,
+        "numTarget": 1
+      },
+      "expAmplify": {
+        "farmingPerkAmp": 50,
+        "pveExpAmp": 0,
+        "pvePerkAmp": 0
+      }
+    },
+    "408": {
+      "id": 408,
+      "type": 28,
+      "category": 2,
+      "tier": 7,
+      "weight": 1,
+      "name": "Scroll of Hunting Knowledge II",
+      "desc": "Significantly increases EXP and weapon mastery gained from defeating monsters.",
+      "untradable": false,
+      "buffInfo": {
+        "type": 2,
+        "range": 0,
+        "duration": 43200,
+        "selfCastOnly": true,
+        "numTarget": 1
+      },
+      "expAmplify": {
+        "farmingPerkAmp": 0,
+        "pveExpAmp": 100,
+        "pvePerkAmp": 100
+      }
+    },
+    "409": {
+      "id": 409,
+      "type": 28,
+      "category": 2,
+      "tier": 7,
+      "weight": 1,
+      "name": "Scroll of Farming Knowledge II",
+      "desc": "Greatly boosts your farming perk EXP from gathering in the Outer World.",
+      "untradable": false,
+      "buffInfo": {
+        "type": 2,
+        "range": 0,
+        "duration": 43200,
+        "selfCastOnly": true,
+        "numTarget": 1
+      },
+      "expAmplify": {
+        "farmingPerkAmp": 100,
+        "pveExpAmp": 0,
+        "pvePerkAmp": 0
+      }
+    },
+    "410": {
+      "id": 410,
+      "type": 28,
+      "category": 2,
+      "tier": 4,
+      "weight": 1,
+      "name": "Fireball",
+      "desc": "Hurls a fiery projectile that deals moderate damage to a single distant enemy.",
+      "untradable": false,
+      "buffInfo": {
+        "type": 3,
+        "range": 3,
+        "duration": 0,
+        "selfCastOnly": false,
+        "numTarget": 1
+      },
+      "instantDmg": {
+        "dmg": 300,
+        "isAbsDmg": true
+      }
+    },
+    "411": {
+      "id": 411,
+      "type": 28,
+      "category": 2,
+      "tier": 6,
+      "weight": 1,
+      "name": "Flame Combustion",
+      "desc": "Unleashes an intense flame burst on a single enemy.",
+      "untradable": false,
+      "buffInfo": {
+        "type": 3,
+        "range": 3,
+        "duration": 0,
+        "selfCastOnly": false,
+        "numTarget": 1
+      },
+      "instantDmg": {
+        "dmg": 500,
+        "isAbsDmg": true
+      }
+    },
+    "412": {
+      "id": 412,
+      "type": 28,
+      "category": 2,
+      "tier": 4,
+      "weight": 1,
+      "name": "Barrage of Arrows",
+      "desc": "Fires a rain of arrows that damages multiple enemies a short distance away.",
+      "untradable": false,
+      "buffInfo": {
+        "type": 3,
+        "range": 4,
+        "duration": 0,
+        "selfCastOnly": false,
+        "numTarget": 10
+      },
+      "instantDmg": {
+        "dmg": 200,
+        "isAbsDmg": true
+      }
+    },
+    "413": {
+      "id": 413,
+      "type": 28,
+      "category": 2,
+      "tier": 6,
+      "weight": 1,
+      "name": "Meteorite Strike",
+      "desc": "Calls down a blazing meteor to crush nearby enemies, dealing heavy area damage.",
+      "untradable": false,
+      "buffInfo": {
+        "type": 3,
+        "range": 2,
+        "duration": 0,
+        "selfCastOnly": false,
+        "numTarget": 10
+      },
+      "instantDmg": {
+        "dmg": 500,
+        "isAbsDmg": true
+      }
     }
   }
 }

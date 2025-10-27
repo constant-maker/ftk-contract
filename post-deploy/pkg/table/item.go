@@ -125,7 +125,7 @@ func BuffItemInfoCallData(buffInfo common.BuffItemInfo, itemId int) ([]byte, err
 	return mt.SetRecordRawCalldata(keyTuple, staticData, encodedLength, dynamicData)
 }
 
-func BuffDmgInfoCallData(skillInfo common.DmgBuffInfo, itemId int) ([]byte, error) {
+func BuffDmgInfoCallData(skillInfo common.InstantDamage, itemId int) ([]byte, error) {
 	staticData, err := encodePacked(
 		uint32(skillInfo.Dmg), skillInfo.IsAbsDmg,
 	)
@@ -144,7 +144,7 @@ func BuffDmgInfoCallData(skillInfo common.DmgBuffInfo, itemId int) ([]byte, erro
 func BuffStatCallData(statBuff common.StatsModify, itemId int) ([]byte, error) {
 	staticData, err := encodePacked(
 		statBuff.AtkPercent, statBuff.DefPercent, statBuff.AgiPercent,
-		int8(statBuff.Sp), int8(statBuff.Ms),
+		int8(statBuff.Sp), int8(statBuff.Ms), uint32(statBuff.Dmg), statBuff.IsAbsDmg,
 	)
 	if err != nil {
 		return nil, err
@@ -154,7 +154,7 @@ func BuffStatCallData(statBuff common.StatsModify, itemId int) ([]byte, error) {
 	}
 	encodedLength := mud.PackedCounter{}
 	dynamicData := []byte{}
-	mt := mud.NewMudTable("BuffStatV2", "app", "")
+	mt := mud.NewMudTable("BuffStatV3", "app", "")
 	return mt.SetRecordRawCalldata(keyTuple, staticData, encodedLength, dynamicData)
 }
 

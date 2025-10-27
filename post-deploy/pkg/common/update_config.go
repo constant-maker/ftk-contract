@@ -14,14 +14,13 @@ import (
 )
 
 const (
-	listDropResourceUpdate  = "https://docs.google.com/spreadsheets/d/1re4m7CvzE2UYzBCgIgM4mTCNzWE0Yf1g66IfzbSk-xY/export?format=csv&gid=507192015#gid=507192015"
-	listResourceUpdate      = "https://docs.google.com/spreadsheets/d/1re4m7CvzE2UYzBCgIgM4mTCNzWE0Yf1g66IfzbSk-xY/export?format=csv&gid=1713114657#gid=1713114657"
-	listEquipmentUpdate     = "https://docs.google.com/spreadsheets/d/1re4m7CvzE2UYzBCgIgM4mTCNzWE0Yf1g66IfzbSk-xY/export?format=csv&gid=2048021285#gid=2048021285"
-	listFameEquipmentUpdate = "https://docs.google.com/spreadsheets/d/1re4m7CvzE2UYzBCgIgM4mTCNzWE0Yf1g66IfzbSk-xY/export?format=csv&gid=70279616#gid=70279616"
-	listToolUpdate          = "https://docs.google.com/spreadsheets/d/1re4m7CvzE2UYzBCgIgM4mTCNzWE0Yf1g66IfzbSk-xY/export?format=csv&gid=1372566467#gid=1372566467"
-	listCardUpdate          = "https://docs.google.com/spreadsheets/d/1re4m7CvzE2UYzBCgIgM4mTCNzWE0Yf1g66IfzbSk-xY/export?format=csv&gid=604813635#gid=604813635"
-	listHealingItemUpdate   = "https://docs.google.com/spreadsheets/d/1re4m7CvzE2UYzBCgIgM4mTCNzWE0Yf1g66IfzbSk-xY/export?format=csv&gid=1307646345#gid=1307646345"
-	listSkillUpdate         = "https://docs.google.com/spreadsheets/d/1re4m7CvzE2UYzBCgIgM4mTCNzWE0Yf1g66IfzbSk-xY/export?format=csv&gid=1359260272#gid=1359260272"
+	listDropResourceUpdate = "https://docs.google.com/spreadsheets/d/1re4m7CvzE2UYzBCgIgM4mTCNzWE0Yf1g66IfzbSk-xY/export?format=csv&gid=507192015#gid=507192015"
+	listResourceUpdate     = "https://docs.google.com/spreadsheets/d/1re4m7CvzE2UYzBCgIgM4mTCNzWE0Yf1g66IfzbSk-xY/export?format=csv&gid=1713114657#gid=1713114657"
+	listEquipmentUpdate    = "https://docs.google.com/spreadsheets/d/1re4m7CvzE2UYzBCgIgM4mTCNzWE0Yf1g66IfzbSk-xY/export?format=csv&gid=2048021285#gid=2048021285"
+	listToolUpdate         = "https://docs.google.com/spreadsheets/d/1re4m7CvzE2UYzBCgIgM4mTCNzWE0Yf1g66IfzbSk-xY/export?format=csv&gid=1372566467#gid=1372566467"
+	listCardUpdate         = "https://docs.google.com/spreadsheets/d/1re4m7CvzE2UYzBCgIgM4mTCNzWE0Yf1g66IfzbSk-xY/export?format=csv&gid=604813635#gid=604813635"
+	listHealingItemUpdate  = "https://docs.google.com/spreadsheets/d/1re4m7CvzE2UYzBCgIgM4mTCNzWE0Yf1g66IfzbSk-xY/export?format=csv&gid=1307646345#gid=1307646345"
+	listSkillUpdate        = "https://docs.google.com/spreadsheets/d/1re4m7CvzE2UYzBCgIgM4mTCNzWE0Yf1g66IfzbSk-xY/export?format=csv&gid=1359260272#gid=1359260272"
 
 	healingItemType int = 25
 )
@@ -115,6 +114,28 @@ func UpdateDataConfig(dataConfig *DataConfig, basePath string) {
 		}
 		shouldRewriteFile = true
 		dataConfig.Items[intToString(healingItem.Id)] = healingItem // add
+	}
+
+	// update list scroll item
+	l.Infow("GET LIST SCROLL ITEM")
+	listScrollItemUpdate, listScrollItemRecipeUpdate, err := getListScrollUpdate(*dataConfig)
+	if err != nil {
+		l.Errorw("cannot get list scroll item update", "err", err)
+		panic(err)
+	}
+	for _, scrollItem := range listScrollItemUpdate {
+		currentItem, ok := dataConfig.Items[intToString(scrollItem.Id)]
+		if reflect.DeepEqual(scrollItem, currentItem) {
+			l.Infow("scrollItem data unchanged")
+			continue
+		}
+		if !ok {
+			l.Infow("detect new scrollItem", "data", scrollItem)
+		} else {
+			l.Infow("detect scrollItem update", "data", scrollItem)
+		}
+		shouldRewriteFile = true
+		dataConfig.Items[intToString(scrollItem.Id)] = scrollItem // add
 	}
 
 	// update list tool
@@ -237,6 +258,20 @@ func UpdateDataConfig(dataConfig *DataConfig, basePath string) {
 		dataConfig.ItemRecipes[intToString(recipe.ItemId)] = recipe // add
 	}
 	for _, recipe := range listHealingItemRecipeUpdate {
+		currentRecipe, ok := dataConfig.ItemRecipes[intToString(recipe.ItemId)]
+		if reflect.DeepEqual(recipe, currentRecipe) {
+			// l.Infow("recipe data unchanged")
+			continue
+		}
+		if !ok {
+			l.Infow("detect new recipe", "data", recipe)
+		} else {
+			l.Infow("detect recipe update", "data", recipe)
+		}
+		shouldRewriteFile = true
+		dataConfig.ItemRecipes[intToString(recipe.ItemId)] = recipe // add
+	}
+	for _, recipe := range listScrollItemRecipeUpdate {
 		currentRecipe, ok := dataConfig.ItemRecipes[intToString(recipe.ItemId)]
 		if reflect.DeepEqual(recipe, currentRecipe) {
 			// l.Infow("recipe data unchanged")
@@ -728,7 +763,7 @@ func getListCardUpdate(dataConfig DataConfig) ([]Item, error) {
 			continue
 		}
 		id := mustStringToInt(record[idIndex], idIndex)
-		fmt.Println("ID", id, record)
+		// fmt.Println("ID", id, record)
 		rarity := getRarity(record[rarityIndex])
 		weight := 0
 		cards = append(cards, Item{

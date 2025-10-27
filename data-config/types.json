@@ -42,7 +42,8 @@
     "MapSkillItem": 24,
     "HealingItem": 25,
     "StatModifierItem": 26,
-    "Card": 27
+    "Card": 27,
+    "BuffItem": 28
   },
   "itemCategoryTypes": {
     "Tool": 0,

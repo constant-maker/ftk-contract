@@ -64,7 +64,7 @@ const ITEM_TABLES: any = {
     },
     key: ['itemId'],
   },
-  BuffStatV2: {
+  BuffStatV3: {
     schema: {
       itemId: "uint256",
       atkPercent: "int16", 
@@ -72,6 +72,8 @@ const ITEM_TABLES: any = {
       agiPercent: "int16",
       sp: "int8", // flat, modify the max sp
       ms: "int8", // flat, modify the movement speed
+      dmg: "uint32",
+      isAbsDmg: "bool",
     },
     key: ['itemId'],
   },
