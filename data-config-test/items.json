@@ -5564,7 +5564,7 @@
         "selfCastOnly": false,
         "duration": 0
       },
-      "dmgBuffInfo": {
+      "instantDmg": {
         "dmg": 200,
         "isAbsDmg": false
       }
@@ -5584,7 +5584,7 @@
         "selfCastOnly": false,
         "duration": 0
       },
-      "dmgBuffInfo": {
+      "instantDmg": {
         "dmg": 200,
         "isAbsDmg": true
       }
