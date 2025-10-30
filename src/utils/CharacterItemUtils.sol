@@ -8,6 +8,7 @@ import {
   ToolSupply,
   Equipment,
   EquipmentData,
+  Equipment2,
   EquipmentSupply,
   CharPerk,
   CharMigration,
@@ -65,6 +66,7 @@ library CharacterItemUtils {
         EquipmentData memory equipmentData =
           EquipmentData({ itemId: itemId, characterId: characterId, level: 1, counter: 0 });
         Equipment.set(newEquipmentId, equipmentData);
+        Equipment2.setAuthorId(newEquipmentId, characterId);
         EquipmentSupply.set(newEquipmentId);
         if (newEquipmentId < Config.MAX_EQUIPMENT_ID_TO_CHECK_CACHE_WEIGHT) {
           // This is only for the migration, we will remove this in the future
