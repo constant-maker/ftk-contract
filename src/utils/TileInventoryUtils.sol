@@ -28,11 +28,16 @@ library TileInventoryUtils {
   }
 
   function _addItem(int32 x, int32 y, uint256 itemId, uint32 amount) private {
-    uint256 index = TileOtherItemIndex.get(x, y, itemId);
-    if (index != 0) {
-      bool indexOutOfBounds = index >= TileInventory.lengthOtherItemIds(x, y);
-      bool itemMismatch = TileInventory.getItemOtherItemIds(x, y, index - 1) != itemId;
-      if (indexOutOfBounds || itemMismatch) {
+    uint256 index = TileOtherItemIndex.get(x, y, itemId); // 1-based index
+    if (index > 0) {
+      uint256 lenItemIds = TileInventory.lengthOtherItemIds(x, y);
+      bool shouldResetIndexValue = index > lenItemIds; // out of bounds
+      if (!shouldResetIndexValue) {
+        // check if the itemId at the index matches the itemId we are adding
+        shouldResetIndexValue =
+          TileInventory.getItemOtherItemIds(x, y, index - 1) != itemId;
+      }
+      if (shouldResetIndexValue) {
         // If index is out of bounds or the itemId at that index does not match,
         // we need to reset the index for this itemId.
         // This can happen if items were removed or the inventory was modified.
