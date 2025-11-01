@@ -7135,6 +7135,19 @@
         "dmg": 500,
         "isAbsDmg": true
       }
+    },
+    "414": {
+      "id": 414,
+      "type": 23,
+      "category": 2,
+      "tier": 5,
+      "weight": 1,
+      "name": "Hidden Chest",
+      "desc": "A hidden treasure chest! The first person to obtain it can get hefty rewards, but the chest becomes useless after that.",
+      "untradable": true,
+      "resourceInfo": {
+        "type": 6
+      }
     }
   }
 }
