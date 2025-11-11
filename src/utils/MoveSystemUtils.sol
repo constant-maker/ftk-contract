@@ -29,7 +29,7 @@ library MoveSystemUtils {
   function getMovementDuration(uint256 characterId) internal view returns (uint16) {
     uint16 baseDuration = MovementConfig.getDuration();
     // characterMovementSpeed is the speed reduction value
-    uint16 characterMovementSpeed = (getCharacterMovementSpeed(characterId) - 1);
+    uint16 characterMovementSpeed = (getCharacterMovementSpeed(characterId) - 1); // ms 1 => characterMovementSpeed = 0
     CharPositionData memory characterPosition = CharacterPositionUtils.currentPosition(characterId);
     uint8 tileKingdomId = TileInfo3.getKingdomId(characterPosition.x, characterPosition.y);
     if (tileKingdomId != 0 && tileKingdomId == CharInfo.getKingdomId(characterId)) {
@@ -42,7 +42,7 @@ library MoveSystemUtils {
         characterMovementSpeed += uint16(speedBuff);
       } else {
         uint16 absSpeedBuff = uint16(-speedBuff);
-        if (characterMovementSpeed > absSpeedBuff) {
+        if (characterMovementSpeed >= absSpeedBuff) {
           characterMovementSpeed -= absSpeedBuff;
         } else {
           revert Errors.MoveSystem_RootedCannotMove(absSpeedBuff);

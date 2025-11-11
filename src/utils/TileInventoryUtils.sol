@@ -34,8 +34,7 @@ library TileInventoryUtils {
       bool shouldResetIndexValue = index > lenItemIds; // out of bounds
       if (!shouldResetIndexValue) {
         // check if the itemId at the index matches the itemId we are adding
-        shouldResetIndexValue =
-          TileInventory.getItemOtherItemIds(x, y, index - 1) != itemId;
+        shouldResetIndexValue = TileInventory.getItemOtherItemIds(x, y, index - 1) != itemId;
       }
       if (shouldResetIndexValue) {
         // If index is out of bounds or the itemId at that index does not match,

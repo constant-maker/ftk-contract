@@ -345,4 +345,13 @@ library Errors {
   );
   error CitySystem_InsufficientVaultGold(uint256 cityId, uint32 currentGold, uint32 vaultGold);
   error CitySystem_CityLevelTooLow(uint256 cityId, uint8 cityLevel);
+
+  /* -------------------------------------------------------------------------- */
+  /*                               GuildSystem                                   */
+  /* -------------------------------------------------------------------------- */
+  error GuildSystem_CharacterAlreadyInGuild(uint256 characterId);
+  error GuildSystem_GuildNameExisted(string name);
+  error GuildSystem_CharacterNotInGuild(uint256 characterId, uint256 guildId);
+  error GuildSystem_NotGuildOwner(uint256 characterId, uint256 guildId);
+  error GuildSystem_OwnerCannotLeaveGuild(uint256 characterId, uint256 guildId);
 }

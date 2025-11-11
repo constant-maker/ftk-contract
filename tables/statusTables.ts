@@ -1,10 +1,10 @@
 import { count } from "console";
 
 const STATUS_TABLES: any = {
-  CharDebuff: { // deprecated, use CharBuff instead
+  CharDebuff: {
     schema: {
       characterId: "uint256",
-      debuffIds: "uint256[2]",
+      debuffIds: "uint256[2]", // debuff item ids
       expireTimes: "uint256[2]",
     },
     key: ['characterId'],

@@ -64,6 +64,18 @@ const ITEM_TABLES: any = {
     },
     key: ['itemId'],
   },
+  BuffItemInfoV3: {
+    schema: {
+      itemId: "uint256",
+      range: "uint16", // range to cast in tile units
+      duration: "uint32", // in seconds
+      numTarget: "uint8",
+      selfCastOnly: "bool",
+      buffType: "BuffType",
+      isBuff: "bool",
+    },
+    key: ['itemId'],
+  },
   BuffStatV3: {
     schema: {
       itemId: "uint256",
