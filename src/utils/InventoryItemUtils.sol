@@ -1,6 +1,6 @@
 pragma solidity >=0.8.24;
 
-import { CharOtherItem, BuffItemInfoV2, CharBuffCounter, ItemV2 } from "@codegen/index.sol";
+import { CharOtherItem, BuffItemInfoV3, CharBuffCounter, ItemV2 } from "@codegen/index.sol";
 import { ItemType, BuffType } from "@codegen/common.sol";
 import { CharacterWeightUtils } from "./CharacterWeightUtils.sol";
 import { Errors } from "@common/Errors.sol";
@@ -95,7 +95,7 @@ library InventoryItemUtils {
     ItemType itemType = ItemV2.getItemType(itemId);
     if (itemType != ItemType.BuffItem && itemType != ItemType.HealingItem) return;
 
-    BuffType buffType = itemType == ItemType.HealingItem ? BuffType.HealingPotion : BuffItemInfoV2.getBuffType(itemId);
+    BuffType buffType = itemType == ItemType.HealingItem ? BuffType.HealingPotion : BuffItemInfoV3.getBuffType(itemId);
 
     if (buffType == BuffType.ExpAmplify) return;
 

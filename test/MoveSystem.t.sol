@@ -9,7 +9,10 @@ import {
   CharNextPosition,
   CharNextPositionData,
   TileInfo3,
-  CharBuff
+  CharBuff,
+  CharBuffData,
+  CharDebuff,
+  CharDebuffData
 } from "@codegen/index.sol";
 import { CharacterStateType } from "@codegen/common.sol";
 import { CharacterStateUtils } from "@utils/CharacterStateUtils.sol";
@@ -174,8 +177,15 @@ contract MoveSystemTest is WorldFixture, MoveSystemFixture, SpawnSystemFixture, 
     vm.stopPrank();
 
     uint256[2] memory buffIds = CharBuff.getBuffIds(characterId);
-    assertEq(buffIds[0], 357); // new buff override old buff
-    assertEq(buffIds[1], 356); // old buff remained
+    for (uint256 i = 0; i < buffIds.length; i++) {
+      console2.log("buff id", buffIds[i]);
+    }
+    assertEq(buffIds[0], 356);
+    uint256[2] memory debuffIds = CharDebuff.getDebuffIds(characterId);
+    for (uint256 i = 0; i < debuffIds.length; i++) {
+      console2.log("debuff id", debuffIds[i]);
+    }
+    assertEq(debuffIds[0], 357);
 
     vm.warp(block.timestamp + Config.DEFAULT_MOVEMENT_DURATION - 5 + 3);
 
@@ -214,8 +224,11 @@ contract MoveSystemTest is WorldFixture, MoveSystemFixture, SpawnSystemFixture, 
     vm.startPrank(player);
     world.app__consumeItem(characterId, 357, 1, targetData);
     vm.stopPrank();
-    uint256[2] memory buffIds = CharBuff.getBuffIds(characterId);
-    assertEq(buffIds[0], 357); // old buff remained
+    uint256[2] memory debuffIds = CharDebuff.getDebuffIds(characterId);
+    for (uint256 i = 0; i < debuffIds.length; i++) {
+      console2.log("debuff id", debuffIds[i]);
+    }
+    assertEq(debuffIds[0], 357); // old buff remained
 
     vm.expectRevert();
     vm.startPrank(player);

@@ -43,7 +43,7 @@ contract DailyQuestSystemTest is
 
     characterId = _createDefaultCharacter(player);
     _claimWelcomePackages(player, characterId);
-    characterId_2 = _createCharacterWithName(player_2, "character 2");
+    characterId_2 = _createCharacterWithName(player_2, "character2");
     _claimWelcomePackages(player_2, characterId_2);
   }
 

@@ -8,9 +8,11 @@ import {
   HealingItemInfo,
   CharBuff,
   CharBuffData,
+  CharDebuff,
+  CharDebuffData,
   CharPositionData,
-  BuffItemInfoV2,
-  BuffItemInfoV2Data,
+  BuffItemInfoV3,
+  BuffItemInfoV3Data,
   CharExpAmp,
   CharExpAmpData,
   BuffExp,
@@ -79,7 +81,7 @@ contract ConsumeSystem is System, CharacterAccessControl {
       _validateTargetItemData(characterId, itemId, targetData);
 
       // apply buff to each target
-      BuffType buffType = BuffItemInfoV2.getBuffType(itemId);
+      BuffType buffType = BuffItemInfoV3.getBuffType(itemId);
       if (buffType == BuffType.StatsModify) {
         _handleStatsBuffItem(characterId, itemId, targetData);
       } else if (buffType == BuffType.ExpAmplify) {
@@ -156,12 +158,22 @@ contract ConsumeSystem is System, CharacterAccessControl {
   }
 
   function _applyStatsBuff(uint256 characterId, uint256 itemId, uint256 targetPlayer, int32 x, int32 y) private {
-    CharBuffData memory currentBuff = CharBuff.get(targetPlayer);
     CharPositionData memory targetPosition = CharacterPositionUtils.currentPosition(targetPlayer);
     if (targetPosition.x != x || targetPosition.y != y) {
       return; // skip if target player not in position
     }
-    uint256 newExpire = block.timestamp + BuffItemInfoV2.getDuration(itemId);
+    bool isGoodBuff = BuffItemInfoV3.getIsBuff(itemId);
+    if (isGoodBuff) {
+      CharBuffData memory currentBuff = CharBuff.get(targetPlayer);
+      _applyStatsGoodBuff(currentBuff, itemId, targetPlayer);
+    } else {
+      CharDebuffData memory currentDebuff = CharDebuff.get(targetPlayer);
+      _applyStatsBadBuff(currentDebuff, itemId, targetPlayer);
+    }
+  }
+
+  function _applyStatsGoodBuff(CharBuffData memory currentBuff, uint256 itemId, uint256 targetPlayer) private {
+    uint256 newExpire = block.timestamp + BuffItemInfoV3.getDuration(itemId);
     if (currentBuff.buffIds[0] == itemId && currentBuff.expireTimes[0] >= block.timestamp) {
       currentBuff.expireTimes[0] = newExpire; // refresh duration
     } else if (currentBuff.buffIds[1] == itemId && currentBuff.expireTimes[1] >= block.timestamp) {
@@ -186,6 +198,33 @@ contract ConsumeSystem is System, CharacterAccessControl {
     CharBuff.set(targetPlayer, currentBuff);
   }
 
+  function _applyStatsBadBuff(CharDebuffData memory currentDebuff, uint256 itemId, uint256 targetPlayer) private {
+    uint256 newExpire = block.timestamp + BuffItemInfoV3.getDuration(itemId);
+    if (currentDebuff.debuffIds[0] == itemId && currentDebuff.expireTimes[0] >= block.timestamp) {
+      currentDebuff.expireTimes[0] = newExpire; // refresh duration
+    } else if (currentDebuff.debuffIds[1] == itemId && currentDebuff.expireTimes[1] >= block.timestamp) {
+      currentDebuff.expireTimes[1] = newExpire; // refresh duration
+      // swap to first slot
+      (currentDebuff.debuffIds[0], currentDebuff.debuffIds[1]) =
+        (currentDebuff.debuffIds[1], currentDebuff.debuffIds[0]);
+      (currentDebuff.expireTimes[0], currentDebuff.expireTimes[1]) =
+        (currentDebuff.expireTimes[1], currentDebuff.expireTimes[0]);
+    } else {
+      if (
+        currentDebuff.debuffIds[1] == 0 || currentDebuff.expireTimes[1] < block.timestamp
+          || currentDebuff.expireTimes[0] >= block.timestamp
+      ) {
+        currentDebuff.debuffIds[1] = currentDebuff.debuffIds[0];
+        currentDebuff.expireTimes[1] = currentDebuff.expireTimes[0];
+      }
+
+      currentDebuff.debuffIds[0] = uint32(itemId);
+      currentDebuff.expireTimes[0] = newExpire;
+    }
+    // set new buff data
+    CharDebuff.set(targetPlayer, currentDebuff);
+  }
+
   function _handleExpBuffItem(uint256 characterId, uint256 itemId, TargetItemData memory targetData) private {
     for (uint256 i = 0; i < targetData.targetPlayers.length; i++) {
       uint256 targetPlayer = targetData.targetPlayers[i];
@@ -197,8 +236,8 @@ contract ConsumeSystem is System, CharacterAccessControl {
       CharExpAmpData memory expBuff = CharExpAmpData({
         farmingPerkAmp: expBuffData.farmingPerkAmp,
         pveExpAmp: expBuffData.pveExpAmp,
-        pvePerkAmp: expBuffData.pvePerkAmp,
-        expireTime: block.timestamp + BuffItemInfoV2.getDuration(itemId)
+        pvePerkAmp: expBuffData.pveExpAmp,
+        expireTime: block.timestamp + BuffItemInfoV3.getDuration(itemId)
       });
       CharExpAmp.set(targetPlayer, expBuff);
     }
@@ -208,14 +247,19 @@ contract ConsumeSystem is System, CharacterAccessControl {
     if (RestrictLocV2.getIsRestricted(targetData.x, targetData.y)) {
       revert Errors.ConsumeSystem_CannotTargetRestrictLocation();
     }
+
     CharPositionData memory charPosition = CharacterPositionUtils.currentPosition(characterId);
-    BuffItemInfoV2Data memory buffItemInfo = BuffItemInfoV2.get(itemId);
-    uint32 rangeX = _getAbsValue(charPosition.x - targetData.x);
-    uint32 rangeY = _getAbsValue(charPosition.y - targetData.y);
-    if (rangeX > buffItemInfo.range || rangeY > buffItemInfo.range) {
+    BuffItemInfoV3Data memory buffItemInfo = BuffItemInfoV3.get(itemId);
+
+    uint32 dx = _getAbsValue(charPosition.x - targetData.x);
+    uint32 dy = _getAbsValue(charPosition.y - targetData.y);
+
+    if (dx + dy > buffItemInfo.range) {
       revert Errors.ConsumeSystem_OutOfRange(charPosition.x, charPosition.y, targetData.x, targetData.y, itemId);
     }
+
     _validateTargetPlayers(targetData.targetPlayers, buffItemInfo.numTarget);
+
     if (buffItemInfo.selfCastOnly) {
       if (targetData.targetPlayers.length != 1 || targetData.targetPlayers[0] != characterId) {
         revert Errors.ConsumeSystem_SelfCastOnly(itemId);

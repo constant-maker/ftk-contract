@@ -18,6 +18,7 @@ import KING_TABLES from "./tables/kingTables";
 import CITY_TABLES from "./tables/cityTables";
 import ROLE_TABLES from "./tables/roleTables";
 import STATUS_TABLES from "./tables/statusTables";
+import GUILD_TABLES from "./tables/guildTables";
 
 export default defineWorld({
   deploy: {
@@ -41,6 +42,9 @@ export default defineWorld({
     StatType: ["ATK", "DEF", "AGI"],
     SlotType: [
       "Weapon", "SubWeapon", "Armor", "Headgear", "Footwear", "Mount"
+    ],
+    SkinSlotType: [
+      "Weapon", "SubWeapon", "Armor", "Headgear", "Footwear", "Mount", "Pet", "Aura", "Ring"
     ],
     QuestType: ["Contribute", "Locate"],
     QuestStatusType: ["NotReceived", "InProgress", "Done"],
@@ -83,6 +87,7 @@ export default defineWorld({
     ...CITY_TABLES,
     ...ROLE_TABLES,
     ...STATUS_TABLES,
+    ...GUILD_TABLES,
   },
   excludeSystems: ["SpawnSystem"],
 });

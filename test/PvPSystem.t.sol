@@ -64,9 +64,9 @@ contract PvPSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
     WorldFixture.setUp();
     characterId_1 = _createDefaultCharacter(player_1);
     _claimWelcomePackages(player_1, characterId_1);
-    characterId_2 = _createCharacterWithName(player_2, "character 2");
+    characterId_2 = _createCharacterWithName(player_2, "character2");
     _claimWelcomePackages(player_2, characterId_2);
-    characterId_3 = _createCharacterWithNameAndKingdomId(player_3, "char 3", 2);
+    characterId_3 = _createCharacterWithNameAndKingdomId(player_3, "char3", 2);
     _claimWelcomePackages(player_3, characterId_3);
   }
 
@@ -248,7 +248,7 @@ contract PvPSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
     assertEq(currentCharacterHp_1, 34);
     assertEq(currentCharacterHp_2, characterHp_2); // reset hp
 
-    // character 2 lost => move back to city
+    // character2 lost => move back to city
     CharPositionData memory characterPosition = CharacterPositionUtils.currentPosition(characterId_2);
     assertEq(characterPosition.x, 30);
     assertEq(characterPosition.y, -36);
@@ -318,7 +318,7 @@ contract PvPSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
     _gearUpWeapon(characterId_1, 1); // Rusty Sword - Red
 
     console2.log("character 1 atk", CharCurrentStats.getAtk(characterId_1));
-    console2.log("character 2 def", CharCurrentStats.getDef(characterId_2));
+    console2.log("character2 def", CharCurrentStats.getDef(characterId_2));
 
     // vm.startPrank(worldDeployer);
     // vm.stopPrank();

@@ -6,8 +6,8 @@ import {
   CharStats,
   ItemV2,
   ItemV2Data,
-  BuffItemInfoV2,
-  BuffItemInfoV2Data,
+  BuffItemInfoV3,
+  BuffItemInfoV3Data,
   BuffExp,
   BuffExpData,
   BuffStatV3,
@@ -132,7 +132,7 @@ contract ConsumeSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFix
   // test buff and skill item
 
   function test_ShouldHaveData() external {
-    BuffItemInfoV2Data memory buffItemInfo = BuffItemInfoV2.get(360); // instant dmg buff
+    BuffItemInfoV3Data memory buffItemInfo = BuffItemInfoV3.get(360); // instant dmg buff
 
     assertEq(uint8(buffItemInfo.buffType), uint8(BuffType.InstantDamage));
     assertEq(buffItemInfo.range, 10);
@@ -143,7 +143,7 @@ contract ConsumeSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFix
     assertEq(buffDmg.dmg, 200);
     assertTrue(buffDmg.isAbsDmg);
 
-    buffItemInfo = BuffItemInfoV2.get(358); // exp buff
+    buffItemInfo = BuffItemInfoV3.get(358); // exp buff
     assertEq(uint8(buffItemInfo.buffType), uint8(BuffType.ExpAmplify));
     assertEq(buffItemInfo.range, 0);
     assertEq(buffItemInfo.duration, 300);

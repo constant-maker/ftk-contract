@@ -66,6 +66,15 @@ const INDEXING_TABLES: any = {
     },
     key: ['x', 'y', 'equipmentId'],
   },
+
+  GuildMemberIndex: {
+    schema: {
+      guildId: "uint256",
+      memberId: "uint256",
+      index: "uint256",
+    },
+    key: ['guildId', 'memberId'],
+  },
 };
 
 export default INDEXING_TABLES;

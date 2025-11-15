@@ -211,7 +211,7 @@ contract MarketSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixt
     assertEq(CharCurrentStats.getWeight(characterId1), prevCurrentWeight - 100);
     assertEq(CharOtherItem.getAmount(characterId1, 1), 0); // locked in market
 
-    console2.log("move character 2 to city1");
+    console2.log("move character2 to city1");
     _moveToCity(characterId2, city1);
 
     TakeOrderParams memory takeOrderParams = TakeOrderParams({ orderId: 1, amount: 50, equipmentIds: new uint256[](0) });
@@ -238,7 +238,7 @@ contract MarketSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixt
     assertEq(fillOrder.unitPrice, 1);
     assertEq(fillOrder.isBuy, true);
 
-    console2.log("character 2 take order success");
+    console2.log("character2 take order success");
     assertEq(CharMarketWeight.getWeight(characterId1, city1), 50); // from 100 to 50 (50 is taken)
     assertEq(CharCurrentStats.getWeight(characterId2), prevChar2CurrentWeight + 50); // weight increase because of
       // taking order
@@ -281,12 +281,12 @@ contract MarketSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixt
     vm.startPrank(player2);
     world.app__takeOrder(characterId2, takeOrderParamsArray);
     vm.stopPrank();
-    console2.log("character 2 take order part 2");
+    console2.log("character2 take order part 2");
     takeOrderParamsArray[0].amount = 50;
     vm.startPrank(player2);
     world.app__takeOrder(characterId2, takeOrderParamsArray);
     vm.stopPrank();
-    console2.log("character 2 take order part 2 success");
+    console2.log("character2 take order part 2 success");
 
     fillOrder = FillOrder.get(2);
     console2.log("fill order city id", fillOrder.cityId);
@@ -415,7 +415,7 @@ contract MarketSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixt
     assertEq(fillOrder.unitPrice, 1);
     assertEq(fillOrder.isBuy, false);
 
-    console2.log("character 2 take order success");
+    console2.log("character2 take order success");
 
     assertEq(CharCurrentStats.getWeight(characterId2), prevChar2CurrentWeight - 50); // selling order decrease weight
     assertEq(CharOtherItem.getAmount(characterId2, 1), 50);
@@ -501,7 +501,7 @@ contract MarketSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixt
     console2.log("new character1 fund", newFund);
     assertEq(newFund, prevFund - 200); // locked in order
 
-    console2.log("move character 2 to city1 to take order");
+    console2.log("move character2 to city1 to take order");
     _moveToCity(characterId2, city1);
     TakeOrderParams memory takeOrderParams = TakeOrderParams({ orderId: 1, amount: 1, equipmentIds: new uint256[](1) });
     takeOrderParams.equipmentIds[0] = 2; // equipment owned by player2
@@ -510,7 +510,7 @@ contract MarketSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixt
     vm.startPrank(player2);
     world.app__takeOrder(characterId2, takeOrderParamsArray);
     vm.stopPrank();
-    console2.log("character 2 take order success");
+    console2.log("character2 take order success");
 
     assertEq(CharCurrentStats.getWeight(characterId2), prevChar2CurrentWeight - 5); // transfer equipment to player1
     assertEq(CharFund.getGold(characterId2), prevChar2Fund + 100); // 200 + 100 - 0% fee
@@ -526,7 +526,7 @@ contract MarketSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixt
     vm.startPrank(player2);
     world.app__takeOrder(characterId2, takeOrderParamsArray);
     vm.stopPrank();
-    console2.log("character 2 take order success 2");
+    console2.log("character2 take order success 2");
     assertTrue(Order.getIsDone(1));
     assertEq(CharFund.getGold(characterId2), prevChar2Fund + 100 + 100); // 200 + 100 - 0% fee + 100 - 0% fee
     assertTrue(StorageEquipmentUtils.hasEquipment(characterId1, 1, 3));

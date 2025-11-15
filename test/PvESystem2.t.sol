@@ -50,7 +50,7 @@ contract PvESystem2Test is WorldFixture, SpawnSystemFixture, WelcomeSystemFixtur
     characterId = _createDefaultCharacter(player);
     _claimWelcomePackages(player, characterId);
 
-    characterId2 = _createCharacterWithName(player2, "Character 2");
+    characterId2 = _createCharacterWithName(player2, "character2");
     _claimWelcomePackages(player2, characterId2);
   }
 
@@ -171,7 +171,7 @@ contract PvESystem2Test is WorldFixture, SpawnSystemFixture, WelcomeSystemFixtur
 
     vm.warp(block.timestamp + 2000); // 200 ticks
 
-    console2.log("character 2 pve afk");
+    console2.log("character2 pve afk");
 
     vm.expectRevert(); // other character already in pve afk
     vm.startPrank(player2);

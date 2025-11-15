@@ -111,7 +111,7 @@ func ResourceItemInfoCallData(resourceInfo common.ResourceInfo, itemId int) ([]b
 func BuffItemInfoCallData(buffInfo common.BuffItemInfo, itemId int) ([]byte, error) {
 	staticData, err := encodePacked(
 		uint16(buffInfo.Range), uint32(buffInfo.Duration), uint8(buffInfo.NumTarget),
-		buffInfo.SelfCastOnly, uint8(buffInfo.Type),
+		buffInfo.SelfCastOnly, uint8(buffInfo.Type), buffInfo.IsBuff,
 	)
 	if err != nil {
 		return nil, err
@@ -121,7 +121,7 @@ func BuffItemInfoCallData(buffInfo common.BuffItemInfo, itemId int) ([]byte, err
 	}
 	encodedLength := mud.PackedCounter{}
 	dynamicData := []byte{}
-	mt := mud.NewMudTable("BuffItemInfoV2", "app", "")
+	mt := mud.NewMudTable("BuffItemInfoV3", "app", "")
 	return mt.SetRecordRawCalldata(keyTuple, staticData, encodedLength, dynamicData)
 }
 
@@ -160,7 +160,7 @@ func BuffStatCallData(statBuff common.StatsModify, itemId int) ([]byte, error) {
 
 func BuffExpCallData(statBuff common.ExpAmplify, itemId int) ([]byte, error) {
 	staticData, err := encodePacked(
-		uint16(statBuff.FarmingPerkAmp), uint16(statBuff.PveExpAmp), uint16(statBuff.PvePerkAmp),
+		uint16(statBuff.FarmingPerkAmp), uint16(statBuff.PveExpAmp), uint16(statBuff.PveExpAmp),
 	)
 	if err != nil {
 		return nil, err

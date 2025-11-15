@@ -20,7 +20,7 @@ contract WelcomePackagesTest is WorldFixture, SpawnSystemFixture, WelcomeSystemF
     console2.log("world set up done");
     characterId_1 = _createDefaultCharacter(player1);
     _claimWelcomePackages(player1, characterId_1);
-    characterId_2 = _createCharacterWithName(player2, "character 2");
+    characterId_2 = _createCharacterWithName(player2, "character2");
     _claimWelcomePackages(player2, characterId_2);
   }
 
