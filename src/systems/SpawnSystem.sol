@@ -56,37 +56,21 @@ contract SpawnSystem is System {
   function _isValidName(string memory name) private pure returns (bool) {
     bytes memory b = bytes(name);
 
+    // Length check
     if (b.length < 3 || b.length > 25) {
       return false;
     }
 
-    // No leading or trailing space check — not needed anymore
-    // No continuous space check — not needed anymore
-
-    bool hasOpenBracket = false;
-    bool hasCloseBracket = false;
-
     for (uint256 i = 0; i < b.length; i++) {
       bytes1 char = b[i];
 
-      // Check for invalid characters
+      // Allowed: 0-9, A-Z, a-z only
       if (
-        !(char >= 0x30 && char <= 0x39) // 0-9
+        !(char >= 0x30 && char <= 0x39) // digits
           && !(char >= 0x41 && char <= 0x5A) // A-Z
           && !(char >= 0x61 && char <= 0x7A) // a-z
-          && !(char == 0x5B) // [
-          && !(char == 0x5D) // ]
       ) {
         return false;
-      }
-
-      // Track presence of brackets
-      if (char == 0x5B) {
-        if (hasOpenBracket) return false;
-        hasOpenBracket = true;
-      } else if (char == 0x5D) {
-        if (hasCloseBracket) return false;
-        hasCloseBracket = true;
       }
     }
 
