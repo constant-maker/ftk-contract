@@ -99,6 +99,11 @@ library InventoryItemUtils {
 
     if (buffType == BuffType.ExpAmplify) return;
 
+    if (buffType != BuffType.HealingPotion) {
+      // treat other buff types as StatsModify, so we can ensure total buff items limit, not per type
+      buffType = BuffType.StatsModify;
+    }
+
     uint32 count = CharBuffCounter.getCount(characterId, buffType);
     uint32 newCount = isReduce ? (changeAmount > count ? 0 : count - changeAmount) : count + changeAmount;
 
