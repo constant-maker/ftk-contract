@@ -240,8 +240,7 @@ contract CreateCharacter is SpawnSystemFixture {
   }
 
   function test_CreateCharacter_WithDirectCallToWorld() external {
-    CharInfoData memory testData =
-      CharInfoData(1, CharacterType.Male, [uint16(1), uint16(1), uint16(3)], "[MY GUILD] my name here 1");
+    CharInfoData memory testData = CharInfoData(1, CharacterType.Male, [uint16(1), uint16(1), uint16(3)], "123");
 
     bytes memory data = abi.encodeWithSignature("createCharacter((uint8,uint8,uint16[3],string))", testData);
 

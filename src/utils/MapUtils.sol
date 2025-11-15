@@ -22,7 +22,8 @@ library MapUtils {
   function mustBeActiveCity(uint256 cityId) internal view {
     CityData memory city = City.get(cityId);
     uint8 tileKingdomId = TileInfo3.getKingdomId(city.x, city.y);
-    if (tileKingdomId != city.kingdomId) {
+    if (!city.isCapital && tileKingdomId != city.kingdomId) {
+      // capitals are always ready to get resources
       revert Errors.CityBelongsToOtherKingdom(city.kingdomId, tileKingdomId);
     }
   }

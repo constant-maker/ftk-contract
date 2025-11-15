@@ -97,6 +97,14 @@ const CHARACTER_TABLES: any = {
     },
     key: ['characterId', 'slotType'],
   },
+  CharSkinEquipment: {
+    schema: {
+      characterId: "uint256",
+      slotType: "SkinSlotType",
+      equipmentId: "uint256",
+    },
+    key: ['characterId', 'slotType'],
+  },
   CharGrindSlot: { // for equipment only, default is weapon
     schema: {
       characterId: "uint256",

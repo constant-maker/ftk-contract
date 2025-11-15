@@ -6536,7 +6536,8 @@
         "range": 0,
         "duration": 1800,
         "selfCastOnly": true,
-        "numTarget": 1
+        "numTarget": 1,
+        "isBuff": true
       },
       "statsModify": {
         "atkPercent": 5,
@@ -6562,7 +6563,8 @@
         "range": 0,
         "duration": 1800,
         "selfCastOnly": true,
-        "numTarget": 1
+        "numTarget": 1,
+        "isBuff": true
       },
       "statsModify": {
         "atkPercent": 0,
@@ -6588,7 +6590,8 @@
         "range": 0,
         "duration": 1800,
         "selfCastOnly": true,
-        "numTarget": 1
+        "numTarget": 1,
+        "isBuff": true
       },
       "statsModify": {
         "atkPercent": 0,
@@ -6614,7 +6617,8 @@
         "range": 0,
         "duration": 180,
         "selfCastOnly": true,
-        "numTarget": 1
+        "numTarget": 1,
+        "isBuff": true
       },
       "statsModify": {
         "atkPercent": 0,
@@ -6640,7 +6644,8 @@
         "range": 0,
         "duration": 1800,
         "selfCastOnly": true,
-        "numTarget": 1
+        "numTarget": 1,
+        "isBuff": true
       },
       "statsModify": {
         "atkPercent": 10,
@@ -6666,7 +6671,8 @@
         "range": 0,
         "duration": 1800,
         "selfCastOnly": true,
-        "numTarget": 1
+        "numTarget": 1,
+        "isBuff": true
       },
       "statsModify": {
         "atkPercent": 0,
@@ -6692,7 +6698,8 @@
         "range": 0,
         "duration": 1800,
         "selfCastOnly": true,
-        "numTarget": 1
+        "numTarget": 1,
+        "isBuff": true
       },
       "statsModify": {
         "atkPercent": 0,
@@ -6718,7 +6725,8 @@
         "range": 3,
         "duration": 1800,
         "selfCastOnly": false,
-        "numTarget": 1
+        "numTarget": 1,
+        "isBuff": false
       },
       "statsModify": {
         "atkPercent": -5,
@@ -6744,7 +6752,8 @@
         "range": 3,
         "duration": 1800,
         "selfCastOnly": false,
-        "numTarget": 1
+        "numTarget": 1,
+        "isBuff": false
       },
       "statsModify": {
         "atkPercent": -10,
@@ -6770,7 +6779,8 @@
         "range": 3,
         "duration": 1800,
         "selfCastOnly": false,
-        "numTarget": 1
+        "numTarget": 1,
+        "isBuff": false
       },
       "statsModify": {
         "atkPercent": 0,
@@ -6796,7 +6806,8 @@
         "range": 3,
         "duration": 1800,
         "selfCastOnly": false,
-        "numTarget": 1
+        "numTarget": 1,
+        "isBuff": false
       },
       "statsModify": {
         "atkPercent": 0,
@@ -6822,7 +6833,8 @@
         "range": 3,
         "duration": 1800,
         "selfCastOnly": false,
-        "numTarget": 1
+        "numTarget": 1,
+        "isBuff": false
       },
       "statsModify": {
         "atkPercent": 0,
@@ -6848,7 +6860,8 @@
         "range": 3,
         "duration": 1800,
         "selfCastOnly": false,
-        "numTarget": 1
+        "numTarget": 1,
+        "isBuff": false
       },
       "statsModify": {
         "atkPercent": 0,
@@ -6874,7 +6887,8 @@
         "range": 3,
         "duration": 180,
         "selfCastOnly": false,
-        "numTarget": 1
+        "numTarget": 1,
+        "isBuff": false
       },
       "statsModify": {
         "atkPercent": 0,
@@ -6900,7 +6914,8 @@
         "range": 3,
         "duration": 180,
         "selfCastOnly": false,
-        "numTarget": 1
+        "numTarget": 1,
+        "isBuff": false
       },
       "statsModify": {
         "atkPercent": 0,
@@ -6926,7 +6941,8 @@
         "range": 3,
         "duration": 30,
         "selfCastOnly": false,
-        "numTarget": 1
+        "numTarget": 1,
+        "isBuff": false
       },
       "statsModify": {
         "atkPercent": 0,
@@ -6949,14 +6965,15 @@
       "untradable": false,
       "buffInfo": {
         "type": 1,
-        "range": 3,
+        "range": 0,
         "duration": 1800,
         "selfCastOnly": true,
-        "numTarget": 1
+        "numTarget": 1,
+        "isBuff": true
       },
       "statsModify": {
         "atkPercent": 20,
-        "defPercent": -30,
+        "defPercent": -40,
         "agiPercent": 0,
         "ms": 0,
         "sp": 0,
@@ -6978,7 +6995,8 @@
         "range": 0,
         "duration": 43200,
         "selfCastOnly": true,
-        "numTarget": 1
+        "numTarget": 1,
+        "isBuff": true
       },
       "expAmplify": {
         "farmingPerkAmp": 0,
@@ -7000,7 +7018,8 @@
         "range": 0,
         "duration": 43200,
         "selfCastOnly": true,
-        "numTarget": 1
+        "numTarget": 1,
+        "isBuff": true
       },
       "expAmplify": {
         "farmingPerkAmp": 50,
@@ -7022,7 +7041,8 @@
         "range": 0,
         "duration": 43200,
         "selfCastOnly": true,
-        "numTarget": 1
+        "numTarget": 1,
+        "isBuff": true
       },
       "expAmplify": {
         "farmingPerkAmp": 0,
@@ -7044,7 +7064,8 @@
         "range": 0,
         "duration": 43200,
         "selfCastOnly": true,
-        "numTarget": 1
+        "numTarget": 1,
+        "isBuff": true
       },
       "expAmplify": {
         "farmingPerkAmp": 100,
@@ -7058,7 +7079,7 @@
       "category": 2,
       "tier": 4,
       "weight": 1,
-      "name": "Fireball",
+      "name": "Flaming Bolt",
       "desc": "Hurls a fiery projectile that deals moderate damage to a single distant enemy.",
       "untradable": false,
       "buffInfo": {
@@ -7066,7 +7087,8 @@
         "range": 3,
         "duration": 0,
         "selfCastOnly": false,
-        "numTarget": 1
+        "numTarget": 1,
+        "isBuff": false
       },
       "instantDmg": {
         "dmg": 300,
@@ -7087,7 +7109,8 @@
         "range": 3,
         "duration": 0,
         "selfCastOnly": false,
-        "numTarget": 1
+        "numTarget": 1,
+        "isBuff": false
       },
       "instantDmg": {
         "dmg": 500,
@@ -7100,15 +7123,16 @@
       "category": 2,
       "tier": 4,
       "weight": 1,
-      "name": "Barrage of Arrows",
-      "desc": "Fires a rain of arrows that damages multiple enemies a short distance away.",
+      "name": "Rain of Fire",
+      "desc": "A fiery barrage rains down on multiple enemies, scorching all caught in its path.",
       "untradable": false,
       "buffInfo": {
         "type": 3,
         "range": 4,
         "duration": 0,
         "selfCastOnly": false,
-        "numTarget": 10
+        "numTarget": 10,
+        "isBuff": false
       },
       "instantDmg": {
         "dmg": 200,
@@ -7121,15 +7145,16 @@
       "category": 2,
       "tier": 6,
       "weight": 1,
-      "name": "Meteorite Strike",
-      "desc": "Calls down a blazing meteor to crush nearby enemies, dealing heavy area damage.",
+      "name": "Inferno",
+      "desc": "Calls down a blazing inferno to crush nearby enemies, dealing heavy area damage.",
       "untradable": false,
       "buffInfo": {
         "type": 3,
         "range": 2,
         "duration": 0,
         "selfCastOnly": false,
-        "numTarget": 10
+        "numTarget": 10,
+        "isBuff": false
       },
       "instantDmg": {
         "dmg": 500,
@@ -7144,7 +7169,7 @@
       "weight": 1,
       "name": "Hidden Chest",
       "desc": "A hidden treasure chest! The first person to obtain it can get hefty rewards, but the chest becomes useless after that.",
-      "untradable": true,
+      "untradable": false,
       "resourceInfo": {
         "type": 6
       }

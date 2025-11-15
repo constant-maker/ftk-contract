@@ -21,8 +21,8 @@ func getListScrollUpdate(dataConfig DataConfig) ([]Item, []ItemRecipe, error) {
 	scrolls := make([]Item, 0)
 	// recipes := make([]ItemRecipe, 0)
 	var (
-		idIndex, nameIndex, tierIndex, scrollTypeIndex, rangeIndex, durationIndex, numTargetIndex, selfCastOnlyIndex, atkPercentIndex,
-		defPercentIndex, agiPercentIndex, msIndex, spIndex, farmingPerkAmpIndex, pveExpAmpIndex, pvePerkAmpIndex,
+		idIndex, nameIndex, tierIndex, scrollTypeIndex, rangeIndex, durationIndex, numTargetIndex, isBuffIndex, selfCastOnlyIndex, atkPercentIndex,
+		defPercentIndex, agiPercentIndex, msIndex, spIndex, farmingPerkAmpIndex, pveExpAmpIndex, // pvePerkAmpIndex,
 		dmgIndex, isAbsDmgIndex, goldCostIndex, weightIndex, recipeIndex, descIndex int
 	)
 	for {
@@ -49,6 +49,7 @@ func getListScrollUpdate(dataConfig DataConfig) ([]Item, []ItemRecipe, error) {
 			rangeIndex = findIndex(record, "range")
 			durationIndex = findIndex(record, "duration")
 			numTargetIndex = findIndex(record, "numTarget")
+			isBuffIndex = findIndex(record, "isBuff")
 			selfCastOnlyIndex = findIndex(record, "selfCastOnly")
 			atkPercentIndex = findIndex(record, "atkPercent")
 			defPercentIndex = findIndex(record, "defPercent")
@@ -57,7 +58,7 @@ func getListScrollUpdate(dataConfig DataConfig) ([]Item, []ItemRecipe, error) {
 			spIndex = findIndex(record, "sp")
 			farmingPerkAmpIndex = findIndex(record, "farmingPerkAmp")
 			pveExpAmpIndex = findIndex(record, "pveExpAmp")
-			pvePerkAmpIndex = findIndex(record, "pvePerkAmp")
+			// pvePerkAmpIndex = findIndex(record, "pvePerkAmp")
 			dmgIndex = findIndex(record, "dmg")
 			isAbsDmgIndex = findIndex(record, "isAbsDmg")
 			goldCostIndex = findIndex(record, "goldCost")
@@ -74,6 +75,7 @@ func getListScrollUpdate(dataConfig DataConfig) ([]Item, []ItemRecipe, error) {
 				"rangeIndex", rangeIndex,
 				"durationIndex", durationIndex,
 				"numTargetIndex", numTargetIndex,
+				"isBuffIndex", isBuffIndex,
 				"selfCastOnlyIndex", selfCastOnlyIndex,
 				"atkPercentIndex", atkPercentIndex,
 				"defPercentIndex", defPercentIndex,
@@ -82,7 +84,7 @@ func getListScrollUpdate(dataConfig DataConfig) ([]Item, []ItemRecipe, error) {
 				"spIndex", spIndex,
 				"farmingPerkAmpIndex", farmingPerkAmpIndex,
 				"pveExpAmpIndex", pveExpAmpIndex,
-				"pvePerkAmpIndex", pvePerkAmpIndex,
+				// "pvePerkAmpIndex", pvePerkAmpIndex,
 				"dmgIndex", dmgIndex,
 				"isAbsDmgIndex", isAbsDmgIndex,
 				"goldCostIndex", goldCostIndex,
@@ -100,6 +102,10 @@ func getListScrollUpdate(dataConfig DataConfig) ([]Item, []ItemRecipe, error) {
 		scrollRange := mustStringToInt(record[rangeIndex], rangeIndex)
 		numTarget := mustStringToInt(record[numTargetIndex], numTargetIndex)
 		duration := mustStringToInt(record[durationIndex], durationIndex)
+		isBuff := false
+		if strings.EqualFold(record[isBuffIndex], "true") {
+			isBuff = true
+		}
 		selfCastOnly := false
 		if strings.EqualFold(record[selfCastOnlyIndex], "true") {
 			selfCastOnly = true
@@ -111,7 +117,7 @@ func getListScrollUpdate(dataConfig DataConfig) ([]Item, []ItemRecipe, error) {
 		sp := int8(mustStringToInt(record[spIndex], spIndex))
 		farmingPerkAmp := mustStringToInt(record[farmingPerkAmpIndex], farmingPerkAmpIndex)
 		pveExpAmp := mustStringToInt(record[pveExpAmpIndex], pveExpAmpIndex)
-		pvePerkAmp := mustStringToInt(record[pvePerkAmpIndex], pvePerkAmpIndex)
+		pvePerkAmp := pveExpAmp // same value now
 		dmg := mustStringToInt(record[dmgIndex], dmgIndex)
 		isAbsDmg := false
 		if strings.EqualFold(record[isAbsDmgIndex], "true") {
@@ -137,6 +143,7 @@ func getListScrollUpdate(dataConfig DataConfig) ([]Item, []ItemRecipe, error) {
 			Duration:     duration,
 			SelfCastOnly: selfCastOnly,
 			NumTarget:    int(numTarget),
+			IsBuff:       isBuff,
 		}
 		switch scrollType {
 		case 1: // StatsModify

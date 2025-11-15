@@ -349,9 +349,14 @@ library Errors {
   /* -------------------------------------------------------------------------- */
   /*                               GuildSystem                                   */
   /* -------------------------------------------------------------------------- */
+  error GuildSystem_InvalidGuildName(string name);
   error GuildSystem_CharacterAlreadyInGuild(uint256 characterId);
   error GuildSystem_GuildNameExisted(string name);
   error GuildSystem_CharacterNotInGuild(uint256 characterId, uint256 guildId);
   error GuildSystem_NotGuildOwner(uint256 characterId, uint256 guildId);
   error GuildSystem_OwnerCannotLeaveGuild(uint256 characterId, uint256 guildId);
+  error GuildSystem_JoinRequestDoesNotExist(uint256 characterId);
+  error GuildSystem_JoinRequestAlreadyExists(uint256 characterId);
+  error GuildSystem_GuildMemberLimitReached(uint256 guildId);
+  error GuildSystem_OwnerCannotKickSelf(uint256 characterId, uint256 guildId);
 }

@@ -90,13 +90,13 @@ library BattlePvEUtils2 {
     // apply global exp amp
     if (block.timestamp <= expAmpConfig.expireTime) {
       baseExpPercent += expAmpConfig.pveExpAmp;
-      basePerkExpPercent += expAmpConfig.pvePerkAmp;
+      basePerkExpPercent += expAmpConfig.pveExpAmp;
     }
     // apply character exp amp
     CharExpAmpData memory charExpAmp = CharExpAmp.get(characterId);
     if (block.timestamp <= charExpAmp.expireTime) {
       baseExpPercent += charExpAmp.pveExpAmp;
-      basePerkExpPercent += charExpAmp.pvePerkAmp;
+      basePerkExpPercent += charExpAmp.pveExpAmp;
     }
     // calculate final exp and perk exp after applying all amps
     gainedExp = (gainedExp * baseExpPercent) / 100;

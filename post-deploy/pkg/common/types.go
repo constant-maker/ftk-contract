@@ -41,6 +41,7 @@ type BuffItemInfo struct {
 	Duration     int  `json:"duration"` // seconds
 	SelfCastOnly bool `json:"selfCastOnly"`
 	NumTarget    int  `json:"numTarget"`
+	IsBuff       bool `json:"isBuff"`
 }
 
 type ExpAmplify struct {

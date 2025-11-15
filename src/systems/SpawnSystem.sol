@@ -53,7 +53,6 @@ contract SpawnSystem is System {
     }
   }
 
-  /// @dev Validate character name
   function _isValidName(string memory name) private pure returns (bool) {
     bytes memory b = bytes(name);
 
@@ -61,8 +60,8 @@ contract SpawnSystem is System {
       return false;
     }
 
-    // No leading space or trailing space
-    if (b[0] == 0x20 || b[b.length - 1] == 0x20) return false;
+    // No leading or trailing space check — not needed anymore
+    // No continuous space check — not needed anymore
 
     bool hasOpenBracket = false;
     bool hasCloseBracket = false;
@@ -70,25 +69,23 @@ contract SpawnSystem is System {
     for (uint256 i = 0; i < b.length; i++) {
       bytes1 char = b[i];
 
-      // Check for invalid characters and continuous spaces
+      // Check for invalid characters
       if (
-        (char == 0x20 && i > 0 && b[i - 1] == 0x20) // continuous spaces
-          || !(char >= 0x30 && char <= 0x39) // 0-9
-            && !(char >= 0x41 && char <= 0x5A) // A-Z
-            && !(char >= 0x61 && char <= 0x7A) // a-z
-            && !(char == 0x20) // space
-            && !(char == 0x5B) // [
-            && !(char == 0x5D) // ]
+        !(char >= 0x30 && char <= 0x39) // 0-9
+          && !(char >= 0x41 && char <= 0x5A) // A-Z
+          && !(char >= 0x61 && char <= 0x7A) // a-z
+          && !(char == 0x5B) // [
+          && !(char == 0x5D) // ]
       ) {
         return false;
       }
 
-      // Track the presence of brackets
+      // Track presence of brackets
       if (char == 0x5B) {
-        if (hasOpenBracket) return false; // More than one [
+        if (hasOpenBracket) return false;
         hasOpenBracket = true;
       } else if (char == 0x5D) {
-        if (hasCloseBracket) return false; // More than one ]
+        if (hasCloseBracket) return false;
         hasCloseBracket = true;
       }
     }

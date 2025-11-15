@@ -53,17 +53,6 @@ const ITEM_TABLES: any = {
     },
     key: ['itemId'],
   },
-  BuffItemInfoV2: {
-    schema: {
-      itemId: "uint256",
-      range: "uint16", // range to cast in tile units
-      duration: "uint32", // in seconds
-      numTarget: "uint8",
-      selfCastOnly: "bool",
-      buffType: "BuffType",
-    },
-    key: ['itemId'],
-  },
   BuffItemInfoV3: {
     schema: {
       itemId: "uint256",
@@ -105,15 +94,6 @@ const ITEM_TABLES: any = {
       isAbsDmg: "bool",
     },
     key: ['itemId'],
-  },
-  Tool: {
-    schema: {
-      id: "uint256",
-      itemId: "uint256",
-      characterId: "uint256",
-      durability: "uint8",
-    },
-    key: ['id'],
   },
   Tool2: {
     schema: {

@@ -43,6 +43,9 @@ export default defineWorld({
     SlotType: [
       "Weapon", "SubWeapon", "Armor", "Headgear", "Footwear", "Mount"
     ],
+    SkinSlotType: [
+      "Weapon", "SubWeapon", "Armor", "Headgear", "Footwear", "Mount", "Pet", "Aura", "Ring"
+    ],
     QuestType: ["Contribute", "Locate"],
     QuestStatusType: ["NotReceived", "InProgress", "Done"],
     SocialType: ["Twitter", "Telegram", "Discord"],

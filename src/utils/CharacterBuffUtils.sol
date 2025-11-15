@@ -3,9 +3,11 @@ pragma solidity >=0.8.24;
 import {
   CharBuff,
   CharBuffData,
+  CharDebuff,
+  CharDebuffData,
   BuffStatV3,
   BuffStatV3Data,
-  BuffItemInfoV2,
+  BuffItemInfoV3,
   CharCurrentStats,
   CharCurrentStatsData
 } from "@codegen/index.sol";
@@ -28,10 +30,22 @@ library CharacterBuffUtils {
       uint256 buffId = charBuff.buffIds[i];
       if (buffId == 0) continue;
 
-      if (BuffItemInfoV2.getBuffType(buffId) != BuffType.StatsModify) continue;
+      if (BuffItemInfoV3.getBuffType(buffId) != BuffType.StatsModify) continue;
 
       int16 buffSpeed = BuffStatV3.getMs(buffId);
       speedBuff += buffSpeed;
+    }
+
+    CharDebuffData memory charDebuff = CharDebuff.get(characterId);
+    for (uint256 i = 0; i < charDebuff.debuffIds.length; i++) {
+      if (charDebuff.expireTimes[i] < block.timestamp) continue;
+
+      uint256 debuffId = charDebuff.debuffIds[i];
+      if (debuffId == 0) continue;
+
+      if (BuffItemInfoV3.getBuffType(debuffId) != BuffType.StatsModify) continue;
+      int16 debuffSpeed = BuffStatV3.getMs(debuffId);
+      speedBuff += debuffSpeed;
     }
 
     return speedBuff;
@@ -50,11 +64,26 @@ library CharacterBuffUtils {
       uint256 buffId = charBuff.buffIds[i];
       if (buffId == 0) continue;
 
-      if (BuffItemInfoV2.getBuffType(buffId) != BuffType.StatsModify) continue;
+      if (BuffItemInfoV3.getBuffType(buffId) != BuffType.StatsModify) continue;
       BuffStatV3Data memory statBuff = BuffStatV3.get(buffId);
       totalAtkPercent += statBuff.atkPercent;
       totalDefPercent += statBuff.defPercent;
       totalAgiPercent += statBuff.agiPercent;
+    }
+    CharDebuffData memory charDebuff = CharDebuff.get(characterId);
+    for (uint256 i = 0; i < charDebuff.debuffIds.length; i++) {
+      if (charDebuff.expireTimes[i] < block.timestamp) continue;
+
+      uint256 debuffId = charDebuff.debuffIds[i];
+      if (debuffId == 0) continue;
+
+      if (BuffItemInfoV3.getBuffType(debuffId) != BuffType.StatsModify) continue;
+      BuffStatV3Data memory statDebuff = BuffStatV3.get(debuffId);
+      // buff or debuff, just accumulate, final calculation will handle positive/negative
+      // we have both buff and debuff loop to separate the two effects so they will not be replace each other
+      totalAtkPercent += statDebuff.atkPercent;
+      totalDefPercent += statDebuff.defPercent;
+      totalAgiPercent += statDebuff.agiPercent;
     }
     CharCurrentStatsData memory currentStats = CharCurrentStats.get(characterId);
     atk = _getFinalBuffStat(currentStats.atk, totalAtkPercent);
@@ -72,7 +101,7 @@ library CharacterBuffUtils {
       uint256 buffId = charBuff.buffIds[i];
       if (buffId == 0) continue;
 
-      if (BuffItemInfoV2.getBuffType(buffId) != BuffType.StatsModify) continue;
+      if (BuffItemInfoV3.getBuffType(buffId) != BuffType.StatsModify) continue;
       int8 buffSp = BuffStatV3.getSp(buffId);
       sp += buffSp;
     }

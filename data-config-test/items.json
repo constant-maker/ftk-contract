@@ -5498,7 +5498,8 @@
         "type": 1,
         "range": 3,
         "numTarget": 1,
-        "duration": 300
+        "duration": 300,
+        "isBuff": true
       },
       "statsModify": {
         "atkPercent": 50,
@@ -5520,7 +5521,8 @@
         "type": 1,
         "range": 3,
         "numTarget": 1,
-        "duration": 300
+        "duration": 300,
+        "isBuff": false
       },
       "statsModify": {
         "atkPercent": 10,
@@ -5562,7 +5564,8 @@
         "range": 10,
         "numTarget": 10,
         "selfCastOnly": false,
-        "duration": 0
+        "duration": 0,
+        "isBuff": false
       },
       "instantDmg": {
         "dmg": 200,

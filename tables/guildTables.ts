@@ -17,14 +17,6 @@ const GUILD_TABLES: any = {
     },
     key: [],
   },
-  GuildPoint: {
-    schema: {
-      memberId: "uint256",
-      point: "uint32",
-      resetTime: "uint256",
-    },
-    key: ['memberId'],
-  },
   GuildOwnerMapping: {
     schema: {
       guildId: "uint256",
@@ -45,6 +37,14 @@ const GUILD_TABLES: any = {
       guildId: "uint256",
     },
     key: ['nameHash'],
+  },
+  GuildRequest: {
+    schema: {
+      characterId: "uint256",
+      guildId: "uint256",
+      requestedAt: "uint256",
+    },
+    key: ['characterId'],
   },
 };
 
