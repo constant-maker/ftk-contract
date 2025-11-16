@@ -244,12 +244,13 @@ contract ConsumeSystem is System, CharacterAccessControl {
   }
 
   function _validateTargetItemData(uint256 characterId, uint256 itemId, TargetItemData memory targetData) private view {
-    if (RestrictLocV2.getIsRestricted(targetData.x, targetData.y)) {
+    BuffItemInfoV3Data memory buffItemInfo = BuffItemInfoV3.get(itemId);
+
+    if (RestrictLocV2.getIsRestricted(targetData.x, targetData.y) && !buffItemInfo.selfCastOnly) {
       revert Errors.ConsumeSystem_CannotTargetRestrictLocation();
     }
 
     CharPositionData memory charPosition = CharacterPositionUtils.currentPosition(characterId);
-    BuffItemInfoV3Data memory buffItemInfo = BuffItemInfoV3.get(itemId);
 
     uint32 dx = _getAbsValue(charPosition.x - targetData.x);
     uint32 dy = _getAbsValue(charPosition.y - targetData.y);
