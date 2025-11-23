@@ -157,6 +157,7 @@ contract GuildSystem is CharacterAccessControl, System {
         !(char >= 0x30 && char <= 0x39) // digits
           && !(char >= 0x41 && char <= 0x5A) // A-Z
           && !(char >= 0x61 && char <= 0x7A) // a-z
+          && !(char == 0x20) // space
       ) {
         return false;
       }

@@ -35,14 +35,14 @@ contract GuildSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixtu
 
   function test_GuildSystem() external {
     // create guild
-    vm.expectRevert(); // invalid name
-    vm.startPrank(player1);
-    world.app__createGuild(characterId1, "Guild 1");
-    vm.stopPrank();
+    // vm.expectRevert(); // invalid name
+    // vm.startPrank(player1);
+    // world.app__createGuild(characterId1, "Guild 1");
+    // vm.stopPrank();
 
     vm.expectRevert(); // not enough gold
     vm.startPrank(player1);
-    world.app__createGuild(characterId1, "Guild1");
+    world.app__createGuild(characterId1, "Guild 1");
     vm.stopPrank();
 
     vm.startPrank(worldDeployer);
@@ -51,14 +51,14 @@ contract GuildSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixtu
     vm.stopPrank();
 
     vm.startPrank(player1);
-    world.app__createGuild(characterId1, "Guild1");
+    world.app__createGuild(characterId1, "Guild 1");
     vm.stopPrank();
 
     assertEq(CharFund.getGold(characterId1), 10_000);
 
     vm.expectRevert(); // name existed
     vm.startPrank(player2);
-    world.app__createGuild(characterId2, "Guild1");
+    world.app__createGuild(characterId2, "Guild 1");
     vm.stopPrank();
 
     vm.startPrank(player2);

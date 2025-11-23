@@ -173,16 +173,38 @@ contract ConsumeSystem is System, CharacterAccessControl {
   }
 
   function _applyStatsGoodBuff(CharBuffData memory currentBuff, uint256 itemId, uint256 targetPlayer) private {
+    uint8 newTier = ItemV2.getTier(itemId);
     uint256 newExpire = block.timestamp + BuffItemInfoV3.getDuration(itemId);
+    // Refresh existing buff duration
     if (currentBuff.buffIds[0] == itemId && currentBuff.expireTimes[0] >= block.timestamp) {
-      currentBuff.expireTimes[0] = newExpire; // refresh duration
+      currentBuff.expireTimes[0] = newExpire;
     } else if (currentBuff.buffIds[1] == itemId && currentBuff.expireTimes[1] >= block.timestamp) {
-      currentBuff.expireTimes[1] = newExpire; // refresh duration
+      currentBuff.expireTimes[1] = newExpire;
       // swap to first slot
       (currentBuff.buffIds[0], currentBuff.buffIds[1]) = (currentBuff.buffIds[1], currentBuff.buffIds[0]);
       (currentBuff.expireTimes[0], currentBuff.expireTimes[1]) =
         (currentBuff.expireTimes[1], currentBuff.expireTimes[0]);
     } else {
+      // Tier check before replacing any active buff
+      bool canReplace = true;
+
+      // check slot 0
+      if (currentBuff.expireTimes[0] >= block.timestamp) {
+        uint8 tier0 = ItemV2.getTier(currentBuff.buffIds[0]);
+        if (newTier < tier0) canReplace = false;
+      }
+      // check slot 1
+      if (canReplace && currentBuff.expireTimes[1] >= block.timestamp) {
+        uint8 tier1 = ItemV2.getTier(currentBuff.buffIds[1]);
+        if (newTier < tier1) canReplace = false;
+      }
+
+      if (!canReplace) {
+        // lower-tier buff ignored
+        return;
+      }
+
+      // Normal shifting logic
       if (
         currentBuff.buffIds[1] == 0 || currentBuff.expireTimes[1] < block.timestamp
           || currentBuff.expireTimes[0] >= block.timestamp
@@ -199,17 +221,40 @@ contract ConsumeSystem is System, CharacterAccessControl {
   }
 
   function _applyStatsBadBuff(CharDebuffData memory currentDebuff, uint256 itemId, uint256 targetPlayer) private {
+    uint8 newTier = ItemV2.getTier(itemId);
     uint256 newExpire = block.timestamp + BuffItemInfoV3.getDuration(itemId);
+
+    // Refresh existing debuff duration
     if (currentDebuff.debuffIds[0] == itemId && currentDebuff.expireTimes[0] >= block.timestamp) {
-      currentDebuff.expireTimes[0] = newExpire; // refresh duration
+      currentDebuff.expireTimes[0] = newExpire;
     } else if (currentDebuff.debuffIds[1] == itemId && currentDebuff.expireTimes[1] >= block.timestamp) {
-      currentDebuff.expireTimes[1] = newExpire; // refresh duration
+      currentDebuff.expireTimes[1] = newExpire;
       // swap to first slot
       (currentDebuff.debuffIds[0], currentDebuff.debuffIds[1]) =
         (currentDebuff.debuffIds[1], currentDebuff.debuffIds[0]);
       (currentDebuff.expireTimes[0], currentDebuff.expireTimes[1]) =
         (currentDebuff.expireTimes[1], currentDebuff.expireTimes[0]);
     } else {
+      // Tier check before replacing any active debuff
+      bool canReplace = true;
+
+      // check slot 0
+      if (currentDebuff.expireTimes[0] >= block.timestamp && currentDebuff.debuffIds[0] != 0) {
+        uint8 tier0 = ItemV2.getTier(currentDebuff.debuffIds[0]);
+        if (newTier < tier0) canReplace = false;
+      }
+      // check slot 1
+      if (canReplace && currentDebuff.expireTimes[1] >= block.timestamp && currentDebuff.debuffIds[1] != 0) {
+        uint8 tier1 = ItemV2.getTier(currentDebuff.debuffIds[1]);
+        if (newTier < tier1) canReplace = false;
+      }
+
+      if (!canReplace) {
+        // lower-tier debuff ignored
+        return;
+      }
+
+      // Normal shifting logic
       if (
         currentDebuff.debuffIds[1] == 0 || currentDebuff.expireTimes[1] < block.timestamp
           || currentDebuff.expireTimes[0] >= block.timestamp
@@ -221,7 +266,7 @@ contract ConsumeSystem is System, CharacterAccessControl {
       currentDebuff.debuffIds[0] = uint32(itemId);
       currentDebuff.expireTimes[0] = newExpire;
     }
-    // set new buff data
+    // set new debuff data
     CharDebuff.set(targetPlayer, currentDebuff);
   }
 
