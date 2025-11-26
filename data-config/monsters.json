@@ -750,7 +750,7 @@
       "exp": 500,
       "perkExp": 300,
       "stats": {
-        "hp": 7500,
+        "hp": 15000,
         "atk": 115,
         "def": 32,
         "agi": 68,
@@ -758,7 +758,7 @@
       },
       "bossInfo": {
         "barrier": 100,
-        "hp": 7500,
+        "hp": 15000,
         "crystal": 500,
         "respawnDuration": 21600,
         "berserkHpThreshold": 30,
@@ -781,7 +781,7 @@
       "exp": 500,
       "perkExp": 300,
       "stats": {
-        "hp": 7500,
+        "hp": 15000,
         "atk": 110,
         "def": 30,
         "agi": 68,
@@ -789,7 +789,7 @@
       },
       "bossInfo": {
         "barrier": 100,
-        "hp": 7500,
+        "hp": 15000,
         "crystal": 500,
         "respawnDuration": 21600,
         "berserkHpThreshold": 30,
@@ -812,7 +812,7 @@
       "exp": 500,
       "perkExp": 300,
       "stats": {
-        "hp": 7500,
+        "hp": 15000,
         "atk": 110,
         "def": 38,
         "agi": 60,
@@ -820,7 +820,7 @@
       },
       "bossInfo": {
         "barrier": 100,
-        "hp": 7500,
+        "hp": 15000,
         "crystal": 500,
         "respawnDuration": 21600,
         "berserkHpThreshold": 30,
@@ -843,7 +843,7 @@
       "exp": 500,
       "perkExp": 300,
       "stats": {
-        "hp": 7500,
+        "hp": 15000,
         "atk": 115,
         "def": 25,
         "agi": 80,
@@ -851,7 +851,7 @@
       },
       "bossInfo": {
         "barrier": 100,
-        "hp": 7500,
+        "hp": 15000,
         "crystal": 500,
         "respawnDuration": 21600,
         "berserkHpThreshold": 30,
