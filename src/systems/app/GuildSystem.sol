@@ -79,7 +79,7 @@ contract GuildSystem is CharacterAccessControl, System {
   }
 
   /// @dev Kick member from guild
-  function kickMember(uint256 characterId, uint256 memberId) public onlyAuthorizedWallet(characterId) {
+  function kickMember(uint256 characterId, uint256[] calldata memberIds) public onlyAuthorizedWallet(characterId) {
     uint256 guildId = GuildMemberMapping.getGuildId(characterId);
     if (guildId == 0) {
       revert Errors.GuildSystem_CharacterNotInGuild(characterId, guildId);
@@ -88,11 +88,13 @@ contract GuildSystem is CharacterAccessControl, System {
       revert Errors.GuildSystem_NotGuildOwner(characterId, guildId);
     }
 
-    if (characterId == memberId) {
-      revert Errors.GuildSystem_OwnerCannotKickSelf(characterId, guildId);
+    for (uint256 i = 0; i < memberIds.length; i++) {
+      uint256 memberId = memberIds[i];
+      if (characterId == memberId) {
+        revert Errors.GuildSystem_OwnerCannotKickSelf(characterId, guildId);
+      }
+      _removeMember(guildId, memberId);
     }
-
-    _removeMember(guildId, memberId);
   }
 
   /// @dev Request to join guild
@@ -118,7 +120,7 @@ contract GuildSystem is CharacterAccessControl, System {
   }
 
   /// @dev Approve join guild request
-  function approveJoinGuildRequest(uint256 characterId, uint256 memberId) public onlyAuthorizedWallet(characterId) {
+  function approveJoinGuildRequest(uint256 characterId, uint256[] calldata memberIds) public onlyAuthorizedWallet(characterId) {
     uint256 guildId = GuildMemberMapping.getGuildId(characterId);
     if (guildId == 0) {
       revert Errors.GuildSystem_CharacterNotInGuild(characterId, guildId);
@@ -126,15 +128,36 @@ contract GuildSystem is CharacterAccessControl, System {
     if (GuildOwnerMapping.getOwnerId(guildId) != characterId) {
       revert Errors.GuildSystem_NotGuildOwner(characterId, guildId);
     }
-    GuildRequestData memory request = GuildRequest.get(memberId);
-    if (request.requestedAt == 0 || request.guildId != guildId) {
-      revert Errors.GuildSystem_JoinRequestDoesNotExist(memberId);
+    for (uint256 i = 0; i < memberIds.length; i++) {
+      uint256 memberId = memberIds[i];
+      GuildRequestData memory request = GuildRequest.get(memberId);
+      if (request.requestedAt == 0 || request.guildId != guildId) {
+        revert Errors.GuildSystem_JoinRequestDoesNotExist(memberId);
+      }
+      if (Guild.lengthMemberIds(guildId) >= MAX_GUILD_MEMBERS) {
+        revert Errors.GuildSystem_GuildMemberLimitReached(guildId);
+      }
+      GuildRequest.deleteRecord(memberId);
+      GuildUtils.addMember(guildId, memberId);
     }
-    if (Guild.lengthMemberIds(guildId) >= MAX_GUILD_MEMBERS) {
-      revert Errors.GuildSystem_GuildMemberLimitReached(guildId);
+  }
+
+  /// @dev Reject join guild request
+  function rejectJoinGuildRequest(uint256 characterId, uint256[] calldata memberIds) public onlyAuthorizedWallet(characterId) {
+    uint256 guildId = GuildMemberMapping.getGuildId(characterId);
+    if (guildId == 0) {
+      revert Errors.GuildSystem_CharacterNotInGuild(characterId, guildId);
     }
-    GuildRequest.deleteRecord(memberId);
-    GuildUtils.addMember(guildId, memberId);
+    if (GuildOwnerMapping.getOwnerId(guildId) != characterId) {
+      revert Errors.GuildSystem_NotGuildOwner(characterId, guildId);
+    }
+    for (uint256 i = 0; i < memberIds.length; i++) {
+      uint256 memberId = memberIds[i];
+      if (GuildRequest.getGuildId(memberId) != guildId) {
+        revert Errors.GuildSystem_JoinRequestDoesNotExist(memberId);
+      }
+      GuildRequest.deleteRecord(memberId);
+    }
   }
 
   function _removeMember(uint256 guildId, uint256 memberId) private {

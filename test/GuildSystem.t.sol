@@ -119,9 +119,12 @@ contract GuildSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixtu
     world.app__requestToJoinGuild(characterId2, 1);
     vm.stopPrank();
 
+    uint256[] memory characterIds = new uint256[](1);
+    characterIds[0] = characterId2;
+
     // owner approve join request
     vm.startPrank(player1);
-    world.app__approveJoinGuildRequest(characterId1, characterId2);
+    world.app__approveJoinGuildRequest(characterId1, characterIds);
     vm.stopPrank();
 
     assertEq(GuildMemberMapping.getGuildId(characterId2), 1);
@@ -139,13 +142,15 @@ contract GuildSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixtu
     vm.stopPrank();
 
     // kick member
+    characterIds[0] = characterId2;
     vm.expectRevert(); // not owner
     vm.startPrank(player1);
-    world.app__kickMember(characterId1, characterId2);
+    world.app__kickMember(characterId1, characterIds);
     vm.stopPrank();
 
+    characterIds[0] = characterId1;
     vm.startPrank(player2);
-    world.app__kickMember(characterId2, characterId1);
+    world.app__kickMember(characterId2, characterIds);
     vm.stopPrank();
 
     assertEq(GuildMemberMapping.getGuildId(characterId1), 0);
