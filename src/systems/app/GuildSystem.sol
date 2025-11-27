@@ -102,9 +102,6 @@ contract GuildSystem is CharacterAccessControl, System {
     if (GuildMemberMapping.getGuildId(characterId) != 0) {
       revert Errors.GuildSystem_CharacterAlreadyInGuild(characterId);
     }
-    if (GuildRequest.getRequestedAt(characterId) != 0) {
-      revert Errors.GuildSystem_JoinRequestAlreadyExists(characterId);
-    }
     if (Guild.lengthMemberIds(guildId) >= MAX_GUILD_MEMBERS) {
       revert Errors.GuildSystem_GuildMemberLimitReached(guildId);
     }
