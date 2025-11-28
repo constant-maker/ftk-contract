@@ -19,7 +19,7 @@ func getListScrollUpdate(dataConfig DataConfig) ([]Item, []ItemRecipe, error) {
 		return nil, nil, err
 	}
 	scrolls := make([]Item, 0)
-	// recipes := make([]ItemRecipe, 0)
+	recipes := make([]ItemRecipe, 0)
 	var (
 		idIndex, nameIndex, tierIndex, scrollTypeIndex, rangeIndex, durationIndex, numTargetIndex, isBuffIndex, selfCastOnlyIndex, atkPercentIndex,
 		defPercentIndex, agiPercentIndex, msIndex, spIndex, farmingPerkAmpIndex, pveExpAmpIndex, // pvePerkAmpIndex,
@@ -124,8 +124,8 @@ func getListScrollUpdate(dataConfig DataConfig) ([]Item, []ItemRecipe, error) {
 			isAbsDmg = true
 		}
 		untradable := false
-		// perkItemTypes := make([]int, 0)
-		// requiredPerkLevels := make([]int, 0)
+		perkItemTypes := make([]int, 0)
+		requiredPerkLevels := make([]int, 0)
 
 		item := Item{
 			Id:         id,
@@ -168,12 +168,18 @@ func getListScrollUpdate(dataConfig DataConfig) ([]Item, []ItemRecipe, error) {
 				IsAbsDmg: isAbsDmg,
 			}
 		}
-		// if len(perkItemTypes) > 0 {
-		// 	equipmentRecipe.PerkItemTypes = perkItemTypes
-		// 	equipmentRecipe.RequiredPerkLevels = requiredPerkLevels
-		// }
-		// recipes = append(recipes, equipmentRecipe)
 		scrolls = append(scrolls, item)
+		scrollRecipe := ItemRecipe{
+			ItemId:      id,
+			Ingredients: getMaterialList(record, record[recipeIndex], dataConfig),
+			GoldCost:    mustStringToInt(record[goldCostIndex], goldCostIndex),
+			// FameCost:    mustStringToInt(record[fameCostIndex], fameCostIndex),
+		}
+		if len(perkItemTypes) > 0 {
+			scrollRecipe.PerkItemTypes = perkItemTypes
+			scrollRecipe.RequiredPerkLevels = requiredPerkLevels
+		}
+		recipes = append(recipes, scrollRecipe)
 	}
-	return scrolls, nil, nil
+	return scrolls, recipes, nil
 }
