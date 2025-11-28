@@ -6877,7 +6877,7 @@
       "id": 402,
       "type": 28,
       "category": 2,
-      "tier": 6,
+      "tier": 5,
       "weight": 1,
       "name": "Scroll of Entrapment I",
       "desc": "Slows down an enemy’s movement speed slightly.",
@@ -6904,7 +6904,7 @@
       "id": 403,
       "type": 28,
       "category": 2,
-      "tier": 7,
+      "tier": 6,
       "weight": 1,
       "name": "Scroll of Entrapment II",
       "desc": "Greatly reduces an enemy’s movement speed, making it harder for them to escape.",
@@ -6948,7 +6948,7 @@
         "atkPercent": 0,
         "defPercent": 0,
         "agiPercent": 0,
-        "ms": -8,
+        "ms": -10,
         "sp": 0,
         "dmg": 0,
         "isAbsDmg": false
@@ -7079,7 +7079,7 @@
       "category": 2,
       "tier": 4,
       "weight": 1,
-      "name": "Flaming Bolt",
+      "name": "Flame Combustion I",
       "desc": "Hurls a fiery projectile that deals moderate damage to a single distant enemy.",
       "untradable": false,
       "buffInfo": {
@@ -7101,7 +7101,7 @@
       "category": 2,
       "tier": 6,
       "weight": 1,
-      "name": "Flame Combustion",
+      "name": "Flame Combustion II",
       "desc": "Unleashes an intense flame burst on a single enemy.",
       "untradable": false,
       "buffInfo": {
@@ -7123,7 +7123,7 @@
       "category": 2,
       "tier": 4,
       "weight": 1,
-      "name": "Rain of Fire",
+      "name": "Ghostflame Eruption I",
       "desc": "A fiery barrage rains down on multiple enemies, scorching all caught in its path.",
       "untradable": false,
       "buffInfo": {
@@ -7145,7 +7145,7 @@
       "category": 2,
       "tier": 6,
       "weight": 1,
-      "name": "Inferno",
+      "name": "Ghostflame Eruption II",
       "desc": "Calls down a blazing inferno to crush nearby enemies, dealing heavy area damage.",
       "untradable": false,
       "buffInfo": {
@@ -7169,7 +7169,7 @@
       "weight": 1,
       "name": "Hidden Chest",
       "desc": "A hidden treasure chest! The first person to obtain it can get hefty rewards, but the chest becomes useless after that.",
-      "untradable": true,
+      "untradable": false,
       "resourceInfo": {
         "type": 6
       }
