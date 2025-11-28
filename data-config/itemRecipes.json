@@ -5127,22 +5127,6 @@
       ],
       "goldCost": 50
     },
-    "406": {
-      "itemId": 406,
-      "goldCost": 30
-    },
-    "407": {
-      "itemId": 407,
-      "goldCost": 30
-    },
-    "408": {
-      "itemId": 408,
-      "goldCost": 50
-    },
-    "409": {
-      "itemId": 409,
-      "goldCost": 50
-    },
     "410": {
       "itemId": 410,
       "ingredients": [

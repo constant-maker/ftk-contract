@@ -179,7 +179,9 @@ func getListScrollUpdate(dataConfig DataConfig) ([]Item, []ItemRecipe, error) {
 			scrollRecipe.PerkItemTypes = perkItemTypes
 			scrollRecipe.RequiredPerkLevels = requiredPerkLevels
 		}
-		recipes = append(recipes, scrollRecipe)
+		if len(scrollRecipe.Ingredients) > 0 {
+			recipes = append(recipes, scrollRecipe)
+		}
 	}
 	return scrolls, recipes, nil
 }
