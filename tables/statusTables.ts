@@ -9,6 +9,13 @@ const STATUS_TABLES: any = {
     },
     key: ['characterId'],
   },
+  CharDebuff2: {
+    schema: {
+      characterId: "uint256",
+      lastCastTime: "uint256",
+    },
+    key: ['characterId'],
+  },
   CharBuff: {
     schema: {
       characterId: "uint256",

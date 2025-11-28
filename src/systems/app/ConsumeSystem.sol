@@ -10,6 +10,7 @@ import {
   CharBuffData,
   CharDebuff,
   CharDebuffData,
+  CharDebuff2,
   CharPositionData,
   BuffItemInfoV3,
   BuffItemInfoV3Data,
@@ -36,6 +37,8 @@ struct TargetItemData {
 }
 
 contract ConsumeSystem is System, CharacterAccessControl {
+  uint16 constant DEBUFF_COOLDOWN = 10; // seconds
+
   /// @dev eat berries to heal
   function eatBerries(uint256 characterId, uint256 itemId, uint32 amount) public onlyAuthorizedWallet(characterId) {
     if (ResourceInfo.getResourceType(itemId) != ResourceType.Berry) {
@@ -89,6 +92,7 @@ contract ConsumeSystem is System, CharacterAccessControl {
       } else if (buffType == BuffType.InstantHeal) {
         // _healing(characterId, itemId, 1);
       } else if (buffType == BuffType.InstantDamage) {
+        _checkIsReadyToCast(characterId);
         _handleInstantDamageBuffItem(characterId, itemId, targetData);
       } else {
         revert Errors.ConsumeSystem_ItemIsNotConsumable(itemId);
@@ -118,6 +122,7 @@ contract ConsumeSystem is System, CharacterAccessControl {
       }
       _applyDmgBuff(targetPlayer, itemDmg);
     }
+    CharDebuff2.setLastCastTime(characterId, block.timestamp);
   }
 
   function _applyDmgBuff(uint256 characterId, uint32 itemDmg) private {
@@ -167,107 +172,136 @@ contract ConsumeSystem is System, CharacterAccessControl {
       CharBuffData memory currentBuff = CharBuff.get(targetPlayer);
       _applyStatsGoodBuff(currentBuff, itemId, targetPlayer);
     } else {
+      _checkIsReadyToCast(characterId);
       CharDebuffData memory currentDebuff = CharDebuff.get(targetPlayer);
       _applyStatsBadBuff(currentDebuff, itemId, targetPlayer);
+      CharDebuff2.setLastCastTime(characterId, block.timestamp);
     }
   }
 
   function _applyStatsGoodBuff(CharBuffData memory currentBuff, uint256 itemId, uint256 targetPlayer) private {
+    uint256 nowTs = block.timestamp;
+    uint256 newExpire = nowTs + BuffItemInfoV3.getDuration(itemId);
     uint8 newTier = ItemV2.getTier(itemId);
-    uint256 newExpire = block.timestamp + BuffItemInfoV3.getDuration(itemId);
-    // Refresh existing buff duration
-    if (currentBuff.buffIds[0] == itemId && currentBuff.expireTimes[0] >= block.timestamp) {
+
+    // 0. Refresh existing buff if same ID is already active
+    if (currentBuff.buffIds[0] == itemId && currentBuff.expireTimes[0] >= nowTs) {
       currentBuff.expireTimes[0] = newExpire;
-    } else if (currentBuff.buffIds[1] == itemId && currentBuff.expireTimes[1] >= block.timestamp) {
+      CharBuff.set(targetPlayer, currentBuff);
+      return;
+    } 
+    
+    if (currentBuff.buffIds[1] == itemId && currentBuff.expireTimes[1] >= nowTs) {
+      // refresh and move to slot 0
       currentBuff.expireTimes[1] = newExpire;
-      // swap to first slot
       (currentBuff.buffIds[0], currentBuff.buffIds[1]) = (currentBuff.buffIds[1], currentBuff.buffIds[0]);
       (currentBuff.expireTimes[0], currentBuff.expireTimes[1]) =
         (currentBuff.expireTimes[1], currentBuff.expireTimes[0]);
-    } else {
-      // Tier check before replacing any active buff
-      bool canReplace = true;
-
-      // check slot 0
-      if (currentBuff.expireTimes[0] >= block.timestamp) {
-        uint8 tier0 = ItemV2.getTier(currentBuff.buffIds[0]);
-        if (newTier < tier0) canReplace = false;
-      }
-      // check slot 1
-      if (canReplace && currentBuff.expireTimes[1] >= block.timestamp) {
-        uint8 tier1 = ItemV2.getTier(currentBuff.buffIds[1]);
-        if (newTier < tier1) canReplace = false;
-      }
-
-      if (!canReplace) {
-        // lower-tier buff ignored
-        return;
-      }
-
-      // Normal shifting logic
-      if (
-        currentBuff.buffIds[1] == 0 || currentBuff.expireTimes[1] < block.timestamp
-          || currentBuff.expireTimes[0] >= block.timestamp
-      ) {
-        currentBuff.buffIds[1] = currentBuff.buffIds[0];
-        currentBuff.expireTimes[1] = currentBuff.expireTimes[0];
-      }
-
-      currentBuff.buffIds[0] = uint32(itemId);
-      currentBuff.expireTimes[0] = newExpire;
+      CharBuff.set(targetPlayer, currentBuff);
+      return;
     }
-    // set new buff data
-    CharBuff.set(targetPlayer, currentBuff);
+
+    // 1. Try to use empty or expired slot
+    if (currentBuff.buffIds[0] == 0 || currentBuff.expireTimes[0] < nowTs) {
+      currentBuff.buffIds[0] = itemId;
+      currentBuff.expireTimes[0] = newExpire;
+      CharBuff.set(targetPlayer, currentBuff);
+      return;
+    }
+    if (currentBuff.buffIds[1] == 0 || currentBuff.expireTimes[1] < nowTs) {
+      currentBuff.buffIds[1] = itemId;
+      currentBuff.expireTimes[1] = newExpire;
+      // swap to keep new buff in slot 0
+      (currentBuff.buffIds[0], currentBuff.buffIds[1]) = (currentBuff.buffIds[1], currentBuff.buffIds[0]);
+      (currentBuff.expireTimes[0], currentBuff.expireTimes[1]) =
+        (currentBuff.expireTimes[1], currentBuff.expireTimes[0]);
+      CharBuff.set(targetPlayer, currentBuff);
+      return;
+    }
+
+    // 2. No free slot → try to replace a lower-tier buff
+    if (ItemV2.getTier(currentBuff.buffIds[0]) < newTier) {
+      // replace slot 0
+      currentBuff.buffIds[0] = itemId;
+      currentBuff.expireTimes[0] = newExpire;
+      CharBuff.set(targetPlayer, currentBuff);
+      return;
+    }
+
+    if (ItemV2.getTier(currentBuff.buffIds[1]) < newTier) {
+      // replace slot 1 and swap to keep new buff in slot 0
+      currentBuff.buffIds[1] = itemId;
+      currentBuff.expireTimes[1] = newExpire;
+      (currentBuff.buffIds[0], currentBuff.buffIds[1]) = (currentBuff.buffIds[1], currentBuff.buffIds[0]);
+      (currentBuff.expireTimes[0], currentBuff.expireTimes[1]) =
+        (currentBuff.expireTimes[1], currentBuff.expireTimes[0]);
+      CharBuff.set(targetPlayer, currentBuff);
+      return;
+    }
   }
 
   function _applyStatsBadBuff(CharDebuffData memory currentDebuff, uint256 itemId, uint256 targetPlayer) private {
+    uint256 nowTs = block.timestamp;
+    uint256 newExpire = nowTs + BuffItemInfoV3.getDuration(itemId);
     uint8 newTier = ItemV2.getTier(itemId);
-    uint256 newExpire = block.timestamp + BuffItemInfoV3.getDuration(itemId);
 
-    // Refresh existing debuff duration
-    if (currentDebuff.debuffIds[0] == itemId && currentDebuff.expireTimes[0] >= block.timestamp) {
+    // 0. Refresh existing debuff if same ID is already active
+    if (currentDebuff.debuffIds[0] == itemId && currentDebuff.expireTimes[0] >= nowTs) {
       currentDebuff.expireTimes[0] = newExpire;
-    } else if (currentDebuff.debuffIds[1] == itemId && currentDebuff.expireTimes[1] >= block.timestamp) {
+      CharDebuff.set(targetPlayer, currentDebuff);
+      return;
+    } 
+    
+    if (currentDebuff.debuffIds[1] == itemId && currentDebuff.expireTimes[1] >= nowTs) {
+      // refresh and move to slot 0
       currentDebuff.expireTimes[1] = newExpire;
-      // swap to first slot
       (currentDebuff.debuffIds[0], currentDebuff.debuffIds[1]) =
         (currentDebuff.debuffIds[1], currentDebuff.debuffIds[0]);
       (currentDebuff.expireTimes[0], currentDebuff.expireTimes[1]) =
         (currentDebuff.expireTimes[1], currentDebuff.expireTimes[0]);
-    } else {
-      // Tier check before replacing any active debuff
-      bool canReplace = true;
+      CharDebuff.set(targetPlayer, currentDebuff);
+      return;
+    }
 
-      // check slot 0
-      if (currentDebuff.expireTimes[0] >= block.timestamp && currentDebuff.debuffIds[0] != 0) {
-        uint8 tier0 = ItemV2.getTier(currentDebuff.debuffIds[0]);
-        if (newTier < tier0) canReplace = false;
-      }
-      // check slot 1
-      if (canReplace && currentDebuff.expireTimes[1] >= block.timestamp && currentDebuff.debuffIds[1] != 0) {
-        uint8 tier1 = ItemV2.getTier(currentDebuff.debuffIds[1]);
-        if (newTier < tier1) canReplace = false;
-      }
-
-      if (!canReplace) {
-        // lower-tier debuff ignored
-        return;
-      }
-
-      // Normal shifting logic
-      if (
-        currentDebuff.debuffIds[1] == 0 || currentDebuff.expireTimes[1] < block.timestamp
-          || currentDebuff.expireTimes[0] >= block.timestamp
-      ) {
-        currentDebuff.debuffIds[1] = currentDebuff.debuffIds[0];
-        currentDebuff.expireTimes[1] = currentDebuff.expireTimes[0];
-      }
-
+    // 1. Try to use empty or expired slot
+    if (currentDebuff.debuffIds[0] == 0 || currentDebuff.expireTimes[0] < nowTs) {
       currentDebuff.debuffIds[0] = uint32(itemId);
       currentDebuff.expireTimes[0] = newExpire;
+      CharDebuff.set(targetPlayer, currentDebuff);
+      return;
     }
-    // set new debuff data
-    CharDebuff.set(targetPlayer, currentDebuff);
+    if (currentDebuff.debuffIds[1] == 0 || currentDebuff.expireTimes[1] < nowTs) {
+      currentDebuff.debuffIds[1] = uint32(itemId);
+      currentDebuff.expireTimes[1] = newExpire;
+      // swap to keep new debuff in slot 0
+      (currentDebuff.debuffIds[0], currentDebuff.debuffIds[1]) =
+        (currentDebuff.debuffIds[1], currentDebuff.debuffIds[0]);
+      (currentDebuff.expireTimes[0], currentDebuff.expireTimes[1]) =
+        (currentDebuff.expireTimes[1], currentDebuff.expireTimes[0]);
+      CharDebuff.set(targetPlayer, currentDebuff);
+      return;
+    }
+
+    // 2. No free slot → try to replace a lower-tier debuff
+    if (ItemV2.getTier(currentDebuff.debuffIds[0]) < newTier) {
+      // replace slot 0
+      currentDebuff.debuffIds[0] = uint32(itemId);
+      currentDebuff.expireTimes[0] = newExpire;
+      CharDebuff.set(targetPlayer, currentDebuff);
+      return;
+    }
+
+    if (ItemV2.getTier(currentDebuff.debuffIds[1]) < newTier) {
+      // replace slot 1 and swap to keep new debuff in slot 0
+      currentDebuff.debuffIds[1] = uint32(itemId);
+      currentDebuff.expireTimes[1] = newExpire;
+      (currentDebuff.debuffIds[0], currentDebuff.debuffIds[1]) =
+        (currentDebuff.debuffIds[1], currentDebuff.debuffIds[0]);
+      (currentDebuff.expireTimes[0], currentDebuff.expireTimes[1]) =
+        (currentDebuff.expireTimes[1], currentDebuff.expireTimes[0]);
+      CharDebuff.set(targetPlayer, currentDebuff);
+      return;
+    }
   }
 
   function _handleExpBuffItem(uint256 characterId, uint256 itemId, TargetItemData memory targetData) private {
@@ -325,6 +359,14 @@ contract ConsumeSystem is System, CharacterAccessControl {
           revert Errors.ConsumeSystem_DuplicateTarget();
         }
       }
+    }
+  }
+
+  function _checkIsReadyToCast(uint256 characterId) private view {
+    uint256 lastCastTime = CharDebuff2.getLastCastTime(characterId);
+    uint256 nextCastTime = lastCastTime + DEBUFF_COOLDOWN;
+    if (block.timestamp < nextCastTime) {
+      revert Errors.ConsumeSystem_DebuffOnCooldown(characterId, nextCastTime);
     }
   }
 

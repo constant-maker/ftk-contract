@@ -117,7 +117,13 @@ contract GuildSystem is CharacterAccessControl, System {
   }
 
   /// @dev Approve join guild request
-  function approveJoinGuildRequest(uint256 characterId, uint256[] calldata memberIds) public onlyAuthorizedWallet(characterId) {
+  function approveJoinGuildRequest(
+    uint256 characterId,
+    uint256[] calldata memberIds
+  )
+    public
+    onlyAuthorizedWallet(characterId)
+  {
     uint256 guildId = GuildMemberMapping.getGuildId(characterId);
     if (guildId == 0) {
       revert Errors.GuildSystem_CharacterNotInGuild(characterId, guildId);
@@ -140,7 +146,13 @@ contract GuildSystem is CharacterAccessControl, System {
   }
 
   /// @dev Reject join guild request
-  function rejectJoinGuildRequest(uint256 characterId, uint256[] calldata memberIds) public onlyAuthorizedWallet(characterId) {
+  function rejectJoinGuildRequest(
+    uint256 characterId,
+    uint256[] calldata memberIds
+  )
+    public
+    onlyAuthorizedWallet(characterId)
+  {
     uint256 guildId = GuildMemberMapping.getGuildId(characterId);
     if (guildId == 0) {
       revert Errors.GuildSystem_CharacterNotInGuild(characterId, guildId);

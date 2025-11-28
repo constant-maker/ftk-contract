@@ -181,6 +181,8 @@ contract ConsumeSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFix
     targetData.x = charPosition.x;
     targetData.y = charPosition.y;
 
+    vm.warp(block.timestamp + 10);
+
     vm.expectRevert(); // amount must be 1
     vm.startPrank(player);
     world.app__consumeItem(characterId, 360, 2, targetData);
@@ -200,6 +202,13 @@ contract ConsumeSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFix
     assertEq(CharCurrentStats.getHp(characterId2), char2Hp); // char 2 is not in that position
 
     targetData.y = charPosition.y + 1;
+    vm.expectRevert(); // cooldown
+    vm.startPrank(player);
+    world.app__consumeItem(characterId, 360, 1, targetData);
+    vm.stopPrank();
+
+    vm.warp(block.timestamp + 10); // wait for cooldown
+
     vm.startPrank(player);
     world.app__consumeItem(characterId, 360, 1, targetData);
     vm.stopPrank();

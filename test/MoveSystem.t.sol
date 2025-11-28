@@ -221,6 +221,8 @@ contract MoveSystemTest is WorldFixture, MoveSystemFixture, SpawnSystemFixture, 
     targetData.x = 20;
     targetData.y = -33;
 
+    vm.warp(block.timestamp + 10);
+
     vm.startPrank(player);
     world.app__consumeItem(characterId, 357, 1, targetData);
     vm.stopPrank();

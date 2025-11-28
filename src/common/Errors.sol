@@ -202,6 +202,7 @@ library Errors {
   error ConsumeSystem_CannotTargetRestrictLocation();
   error ConsumeSystem_DuplicateTarget();
   error ConsumeSystem_SelfCastOnly(uint256 itemId);
+  error ConsumeSystem_DebuffOnCooldown(uint256 characterId, uint256 nextCastTime);
 
   /* -------------------------------------------------------------------------- */
   /*                               StorageSystem                                */
