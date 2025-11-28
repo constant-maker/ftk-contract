@@ -226,6 +226,18 @@
         "agi": 1
       },
       "color": "#e0c000"
+    },
+    "21": {
+      "id": 21,
+      "name": "Guild Member",
+      "content": "You're now a part of a bigger fellowship. Fight until your last breath beside your companions, as no adventurer should face calamities alone.",
+      "instruction": "Join a Guild.",
+      "stats": {
+        "atk": 0,
+        "def": 1,
+        "agi": 1
+      },
+      "color": "#e0c000"
     }
   }
 }

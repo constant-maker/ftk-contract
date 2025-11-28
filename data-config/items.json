@@ -7123,7 +7123,7 @@
       "category": 2,
       "tier": 4,
       "weight": 1,
-      "name": "Ghostflame Eruption I",
+      "name": "Witchflame Fall I",
       "desc": "A fiery barrage rains down on multiple enemies, scorching all caught in its path.",
       "untradable": false,
       "buffInfo": {
@@ -7145,7 +7145,7 @@
       "category": 2,
       "tier": 6,
       "weight": 1,
-      "name": "Ghostflame Eruption II",
+      "name": "Witchflame Fall II",
       "desc": "Calls down a blazing inferno to crush nearby enemies, dealing heavy area damage.",
       "untradable": false,
       "buffInfo": {
@@ -7157,7 +7157,7 @@
         "isBuff": false
       },
       "instantDmg": {
-        "dmg": 500,
+        "dmg": 400,
         "isAbsDmg": true
       }
     },
