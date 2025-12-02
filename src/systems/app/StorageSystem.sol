@@ -44,8 +44,11 @@ contract StorageSystem is System, CharacterAccessControl {
     uint32 maxWeight = CharStorage.getMaxWeight(characterId, cityId);
     if (maxWeight == 0) CharStorage.setMaxWeight(characterId, cityId, Config.INIT_STORAGE_MAX_WEIGHT);
 
-    _withdrawItemsFromStorage(characterId, cityId, transferOut);
     _depositItemsToStorage(characterId, cityId, transferIn);
+    _withdrawItemsFromStorage(characterId, cityId, transferOut);
+
+    // final check storage weight
+    _validateStorageMaxWeight(characterId, cityId);
   }
 
   /// @dev deposit items from inventory into storage
@@ -53,14 +56,18 @@ contract StorageSystem is System, CharacterAccessControl {
     // transfer in equipments
     uint256[] memory equipmentIds = data.equipmentIds;
     if (equipmentIds.length > 0) {
-      StorageEquipmentUtils.addEquipments(characterId, cityId, equipmentIds, true);
+      // transfer equipments to storage, no check storage max weight to prevent revert
+      // we will check storage max weight after transfer
+      StorageEquipmentUtils.addEquipments(characterId, cityId, equipmentIds, false);
       InventoryEquipmentUtils.removeEquipments(characterId, equipmentIds, true);
     }
 
     // transfer in tools
     uint256[] memory toolIds = data.toolIds;
     if (toolIds.length > 0) {
-      StorageToolUtils.addTools(characterId, cityId, toolIds);
+      // transfer equipments to storage, no check storage max weight to prevent revert
+      // we will check storage max weight after transfer
+      StorageToolUtils.addTools(characterId, cityId, toolIds, false);
       InventoryToolUtils.removeTools(characterId, toolIds);
     }
 
@@ -68,12 +75,15 @@ contract StorageSystem is System, CharacterAccessControl {
     uint256[] memory itemIds = data.itemIds;
     uint32[] memory itemAmounts = data.itemAmounts;
     if (itemIds.length > 0 && itemAmounts.length > 0) {
-      StorageItemUtils.addItems(characterId, cityId, itemIds, itemAmounts, true);
+      // transfer equipments to storage, no check storage max weight to prevent revert
+      // we will check storage max weight after transfer
+      StorageItemUtils.addItems(characterId, cityId, itemIds, itemAmounts, false);
       InventoryItemUtils.removeItems(characterId, itemIds, itemAmounts);
     }
   }
 
   /// @dev withdraw items from storage into inventory
+  /// no need to check storage max weight after withdraw, because weight only decreases
   function _withdrawItemsFromStorage(uint256 characterId, uint256 cityId, ItemsActionData calldata data) private {
     // transfer out equipments
     uint256[] memory equipmentIds = data.equipmentIds;
@@ -95,6 +105,14 @@ contract StorageSystem is System, CharacterAccessControl {
     if (itemIds.length > 0 && itemAmounts.length > 0) {
       StorageItemUtils.removeItems(characterId, cityId, itemIds, itemAmounts);
       InventoryItemUtils.addItems(characterId, itemIds, itemAmounts);
+    }
+  }
+
+  function _validateStorageMaxWeight(uint256 characterId, uint256 cityId) internal {
+    uint32 storageWeight = CharStorage.getWeight(characterId, cityId);
+    uint32 maxWeight = CharStorage.getMaxWeight(characterId, cityId);
+    if (storageWeight > maxWeight) {
+      revert Errors.Storage_ExceedMaxWeight(maxWeight, storageWeight);
     }
   }
 }

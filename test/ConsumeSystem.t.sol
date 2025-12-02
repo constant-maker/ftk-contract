@@ -188,10 +188,10 @@ contract ConsumeSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFix
     world.app__consumeItem(characterId, 360, 2, targetData);
     vm.stopPrank();
 
-    vm.expectRevert(); // restrict location
-    vm.startPrank(player);
-    world.app__consumeItem(characterId, 360, 1, targetData);
-    vm.stopPrank();
+    // vm.expectRevert(); // restrict location
+    // vm.startPrank(player);
+    // world.app__consumeItem(characterId, 360, 1, targetData);
+    // vm.stopPrank();
 
     uint32 char2Hp = CharCurrentStats.getHp(characterId2);
     targetData.y = charPosition.y - 1;

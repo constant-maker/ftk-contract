@@ -189,8 +189,8 @@ contract ConsumeSystem is System, CharacterAccessControl {
       currentBuff.expireTimes[0] = newExpire;
       CharBuff.set(targetPlayer, currentBuff);
       return;
-    } 
-    
+    }
+
     if (currentBuff.buffIds[1] == itemId && currentBuff.expireTimes[1] >= nowTs) {
       // refresh and move to slot 0
       currentBuff.expireTimes[1] = newExpire;
@@ -250,8 +250,8 @@ contract ConsumeSystem is System, CharacterAccessControl {
       currentDebuff.expireTimes[0] = newExpire;
       CharDebuff.set(targetPlayer, currentDebuff);
       return;
-    } 
-    
+    }
+
     if (currentDebuff.debuffIds[1] == itemId && currentDebuff.expireTimes[1] >= nowTs) {
       // refresh and move to slot 0
       currentDebuff.expireTimes[1] = newExpire;
@@ -325,9 +325,9 @@ contract ConsumeSystem is System, CharacterAccessControl {
   function _validateTargetItemData(uint256 characterId, uint256 itemId, TargetItemData memory targetData) private view {
     BuffItemInfoV3Data memory buffItemInfo = BuffItemInfoV3.get(itemId);
 
-    if (RestrictLocV2.getIsRestricted(targetData.x, targetData.y) && !buffItemInfo.selfCastOnly) {
-      revert Errors.ConsumeSystem_CannotTargetRestrictLocation();
-    }
+    // if (RestrictLocV2.getIsRestricted(targetData.x, targetData.y) && !buffItemInfo.selfCastOnly) {
+    //   revert Errors.ConsumeSystem_CannotTargetRestrictLocation();
+    // }
 
     CharPositionData memory charPosition = CharacterPositionUtils.currentPosition(characterId);
 

@@ -6,17 +6,17 @@ import { Errors } from "@common/Errors.sol";
 
 library StorageToolUtils {
   /// @dev Add tools to storage
-  function addTools(uint256 characterId, uint256 cityId, uint256[] memory toolIds) public {
+  function addTools(uint256 characterId, uint256 cityId, uint256[] memory toolIds, bool checkMaxWeight) public {
     for (uint256 i = 0; i < toolIds.length; i++) {
       _addTool(characterId, cityId, toolIds[i]);
     }
-    StorageWeightUtils.addTools(characterId, cityId, toolIds);
+    StorageWeightUtils.addTools(characterId, cityId, toolIds, checkMaxWeight);
   }
 
   /// @dev Add tool to storage
-  function addTool(uint256 characterId, uint256 cityId, uint256 toolId) public {
+  function addTool(uint256 characterId, uint256 cityId, uint256 toolId, bool checkMaxWeight) public {
     _addTool(characterId, cityId, toolId);
-    StorageWeightUtils.addTool(characterId, cityId, toolId);
+    StorageWeightUtils.addTool(characterId, cityId, toolId, checkMaxWeight);
   }
 
   function _addTool(uint256 characterId, uint256 cityId, uint256 toolId) private {

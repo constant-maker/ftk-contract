@@ -43,13 +43,13 @@ library StorageWeightUtils {
     _updateToolsWeight(characterId, cityId, toolIds, true, false);
   }
 
-  function addTools(uint256 characterId, uint256 cityId, uint256[] memory toolIds) internal {
-    _updateToolsWeight(characterId, cityId, toolIds, false, true);
+  function addTools(uint256 characterId, uint256 cityId, uint256[] memory toolIds, bool checkMaxWeight) internal {
+    _updateToolsWeight(characterId, cityId, toolIds, false, checkMaxWeight);
   }
 
-  function addTool(uint256 characterId, uint256 cityId, uint256 toolId) internal {
+  function addTool(uint256 characterId, uint256 cityId, uint256 toolId, bool checkMaxWeight) internal {
     uint256[] memory toolIds = CommonUtils.wrapUint256(toolId);
-    _updateToolsWeight(characterId, cityId, toolIds, false, true);
+    _updateToolsWeight(characterId, cityId, toolIds, false, checkMaxWeight);
   }
 
   /*    Update item weight    */

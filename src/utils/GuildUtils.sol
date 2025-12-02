@@ -2,8 +2,11 @@ pragma solidity >=0.8.24;
 
 import { GuildMemberIndex, Guild, GuildData, GuildMemberMapping } from "@codegen/index.sol";
 import { Errors } from "@common/Errors.sol";
+import { CharAchievementUtils } from "./CharAchievementUtils.sol";
 
 library GuildUtils {
+  uint256 constant GUILD_ACHIEVEMENT_ID = 21;
+
   /// @dev Add members to guild
   function addMembers(uint256 guildId, uint256[] memory memberIds) public {
     for (uint256 i = 0; i < memberIds.length; i++) {
@@ -21,6 +24,7 @@ library GuildUtils {
     // and use 0 as a sentinel value
     uint256 index = Guild.lengthMemberIds(guildId);
     GuildMemberIndex.set(guildId, memberId, index);
+    CharAchievementUtils.addAchievement(memberId, GUILD_ACHIEVEMENT_ID);
   }
 
   /// @dev Remove members from guild
@@ -47,6 +51,7 @@ library GuildUtils {
     Guild.popMemberIds(guildId);
     GuildMemberIndex.deleteRecord(guildId, memberId);
     GuildMemberMapping.deleteRecord(memberId);
+    CharAchievementUtils.removeAchievement(memberId, GUILD_ACHIEVEMENT_ID);
   }
 
   /// @dev Return whether the character has the equipment in inventory

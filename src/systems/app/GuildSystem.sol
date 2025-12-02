@@ -68,14 +68,14 @@ contract GuildSystem is CharacterAccessControl, System {
         revert Errors.GuildSystem_OwnerCannotLeaveGuild(characterId, guildId);
       } else {
         // If owner is the last member, disband the guild
-        _removeMember(guildId, characterId);
+        GuildUtils.removeMember(guildId, characterId);
         GuildNameMapping.deleteRecord(LibString.packOne(LibString.lower(Guild.getName(guildId))));
         GuildOwnerMapping.deleteRecord(guildId);
         Guild.deleteRecord(guildId);
         return;
       }
     }
-    _removeMember(guildId, characterId);
+    GuildUtils.removeMember(guildId, characterId);
   }
 
   /// @dev Kick member from guild
@@ -93,7 +93,7 @@ contract GuildSystem is CharacterAccessControl, System {
       if (characterId == memberId) {
         revert Errors.GuildSystem_OwnerCannotKickSelf(characterId, guildId);
       }
-      _removeMember(guildId, memberId);
+      GuildUtils.removeMember(guildId, memberId);
     }
   }
 
@@ -167,10 +167,6 @@ contract GuildSystem is CharacterAccessControl, System {
       }
       GuildRequest.deleteRecord(memberId);
     }
-  }
-
-  function _removeMember(uint256 guildId, uint256 memberId) private {
-    GuildUtils.removeMember(guildId, memberId);
   }
 
   function _isValidName(string memory name) private pure returns (bool) {
