@@ -17,6 +17,7 @@ library CharacterBuffUtils {
   /// @dev Remove all buffs from character (e.g. on death)
   function dispelAllBuff(uint256 characterId) public {
     CharBuff.deleteRecord(characterId);
+    CharDebuff.deleteRecord(characterId);
   }
 
   /// @dev Get total buff speed (can be negative)
