@@ -124,7 +124,7 @@ const CHARACTER_TABLES: any = {
     schema: {
       characterId: "uint256",
       itemId: "uint256",
-      charId: "uint256", // help to query data
+      charId: "uint256", // help to query data: REMOVE LATER
       amount: "uint32",
     },
     key: ['characterId', 'itemId'],
@@ -205,7 +205,7 @@ const CHARACTER_TABLES: any = {
       characterId: "uint256",
       cityId: "uint256",
       itemId: "uint256",
-      charId: "uint256", // help to query data
+      charId: "uint256", // help to query data, REMOVE LATER
       amount: "uint32",
     },
     key: ['characterId', 'cityId', 'itemId'],
