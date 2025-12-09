@@ -44,9 +44,7 @@ contract RescueSystem is System, CharacterAccessControl {
     PvEAfkData memory pveAfk = PvEAfk.get(characterId);
     PvEAfk.set(characterId, pveAfk);
     uint256 monsterId = PvEAfkLoc.get(nextPosition.x, nextPosition.y);
-    if (monsterId != 0) {
-      PvEAfkLoc.set(nextPosition.x, nextPosition.y, monsterId);
-    }
+    PvEAfkLoc.set(nextPosition.x, nextPosition.y, monsterId);
 
     // Stats
     CharStatsData memory stats = CharStats.get(characterId);
@@ -76,9 +74,6 @@ contract RescueSystem is System, CharacterAccessControl {
   function _rescueEquipment(uint256 characterId) private {
     for (uint8 i = 0; i <= uint8(SlotType.Mount); i++) {
       uint256 equipmentId = CharEquipment.getEquipmentId(characterId, SlotType(i));
-      if (equipmentId == 0) {
-        continue;
-      }
       CharEquipment.setEquipmentId(characterId, SlotType(i), equipmentId);
     }
   }
