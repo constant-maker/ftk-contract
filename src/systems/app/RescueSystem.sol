@@ -22,7 +22,9 @@ import {
   CharCurrentStats,
   CharCurrentStatsData,
   CharCStats2,
-  CharEquipment
+  CharEquipment,
+  CharOtherItem,
+  CharOtherItemData
 } from "@codegen/index.sol";
 import { SlotType } from "@codegen/common.sol";
 import { CharacterAccessControl } from "@abstracts/CharacterAccessControl.sol";
@@ -30,7 +32,7 @@ import { Errors } from "@common/Errors.sol";
 
 contract RescueSystem is System, CharacterAccessControl {
   /// @dev re-update data to update indexer
-  function rescue(uint256 characterId, uint256[] calldata cityIds) public {
+  function rescue(uint256 characterId, uint256[] calldata cityIds, uint256[] calldata inventoryOtherItemIds) public {
     // Position
     CharPositionData memory position = CharPosition.get(characterId);
     CharPosition.set(characterId, position);
@@ -38,23 +40,13 @@ contract RescueSystem is System, CharacterAccessControl {
     CharNextPosition.set(characterId, nextPosition);
 
     // State
-    CharState.setState(characterId, CharState.getState(characterId));
-    CharFarmingStateData memory farmingState = CharFarmingState.get(characterId);
-    CharFarmingState.set(characterId, farmingState);
-    PvEAfkData memory pveAfk = PvEAfk.get(characterId);
-    PvEAfk.set(characterId, pveAfk);
-    uint256 monsterId = PvEAfkLoc.get(nextPosition.x, nextPosition.y);
-    PvEAfkLoc.set(nextPosition.x, nextPosition.y, monsterId);
+    _rescueState(characterId, nextPosition);
 
     // Stats
-    CharStatsData memory stats = CharStats.get(characterId);
-    CharStats.set(characterId, stats);
-    CharStats2.set(characterId, CharStats2.get(characterId));
+    _rescueStats(characterId);
 
     // Current Stats
-    CharCurrentStatsData memory currentStats = CharCurrentStats.get(characterId);
-    CharCurrentStats.set(characterId, currentStats);
-    CharCStats2.set(characterId, CharCStats2.get(characterId));
+    _rescueCurrentStats(characterId);
 
     // Inventory
     CharInventoryData memory inventory = CharInventory.get(characterId);
@@ -63,7 +55,14 @@ contract RescueSystem is System, CharacterAccessControl {
     // Equipped Equipment
     _rescueEquipment(characterId);
 
+    // Inventory Other Items
+    _rescueInventoryOtherItem(characterId, inventoryOtherItemIds);
+
     // Storage
+    _rescueStorage(characterId, cityIds);
+  }
+
+  function _rescueStorage(uint256 characterId, uint256[] calldata cityIds) private {
     for (uint256 i = 0; i < cityIds.length; i++) {
       uint256 cityId = cityIds[i];
       CharStorageData memory storageData = CharStorage.get(characterId, cityId);
@@ -75,6 +74,36 @@ contract RescueSystem is System, CharacterAccessControl {
     for (uint8 i = 0; i <= uint8(SlotType.Mount); i++) {
       uint256 equipmentId = CharEquipment.getEquipmentId(characterId, SlotType(i));
       CharEquipment.setEquipmentId(characterId, SlotType(i), equipmentId);
+    }
+  }
+
+  function _rescueState(uint256 characterId, CharNextPositionData memory nextPosition) private {
+    CharState.setState(characterId, CharState.getState(characterId));
+    CharFarmingStateData memory farmingState = CharFarmingState.get(characterId);
+    CharFarmingState.set(characterId, farmingState);
+    PvEAfkData memory pveAfk = PvEAfk.get(characterId);
+    PvEAfk.set(characterId, pveAfk);
+    uint256 monsterId = PvEAfkLoc.get(nextPosition.x, nextPosition.y);
+    PvEAfkLoc.set(nextPosition.x, nextPosition.y, monsterId);
+  }
+
+  function _rescueStats(uint256 characterId) private {
+    CharStatsData memory stats = CharStats.get(characterId);
+    CharStats.set(characterId, stats);
+    CharStats2.set(characterId, CharStats2.get(characterId));
+  }
+
+  function _rescueCurrentStats(uint256 characterId) private {
+    CharCurrentStatsData memory currentStats = CharCurrentStats.get(characterId);
+    CharCurrentStats.set(characterId, currentStats);
+    CharCStats2.set(characterId, CharCStats2.get(characterId));
+  }
+
+  function _rescueInventoryOtherItem(uint256 characterId, uint256[] calldata inventoryOtherItemIds) private {
+    for (uint256 i = 0; i < inventoryOtherItemIds.length; i++) {
+      uint256 otherItemId = inventoryOtherItemIds[i];
+      CharOtherItemData memory otherItemData = CharOtherItem.get(characterId, otherItemId);
+      CharOtherItem.set(characterId, otherItemId, otherItemData);
     }
   }
 }
