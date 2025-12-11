@@ -169,7 +169,7 @@ func BuildEquipmentItemData(l *zap.SugaredLogger, dataConfig common.DataConfig, 
 }
 
 // BuildExtraItemInfoData includes equipment, healing, and resource item info
-func BuildExtraItemInfoData(l *zap.SugaredLogger, dataConfig common.DataConfig, fromItemID int) ([][]byte, error) {
+func BuildExtraItemInfoData(l *zap.SugaredLogger, dataConfig common.DataConfig, fromItemID int, equipmentOnly bool) ([][]byte, error) {
 	callData := make([][]byte, 0)
 	// l.Infow("len Items", "value", len(dataConfig.Items))
 	// make array and sort by itemId so the call data in post-deploy will be ordered by itemId
@@ -192,6 +192,9 @@ func BuildExtraItemInfoData(l *zap.SugaredLogger, dataConfig common.DataConfig, 
 		once.Do(func() {
 			l.Infow("Extra Item Info starts from ID", "value", fromItemID)
 		})
+		if equipmentOnly && item.Category != 1 {
+			continue
+		}
 		switch {
 		case item.EquipmentInfo != nil:
 			equipmentItemInfoCallData, err := table.EquipmentItemInfoCallData(*item.EquipmentInfo, item.Id)

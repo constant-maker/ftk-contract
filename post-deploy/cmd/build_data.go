@@ -151,7 +151,7 @@ func buildCallData(
 	callData = append(callData, itemCallData...)
 
 	// extra item info (equipment info, consumable info)
-	itemExtraInfoData, err := calldata.BuildExtraItemInfoData(l, dataConfig, 0)
+	itemExtraInfoData, err := calldata.BuildExtraItemInfoData(l, dataConfig, 0, false)
 	if err != nil {
 		l.Errorw("cannot build itemExtraInfoData", "err", err)
 		return nil, err
