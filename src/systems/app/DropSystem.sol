@@ -23,6 +23,7 @@ contract DropSystem is System, CharacterAccessControl {
       if (!InventoryToolUtils.hasTool(characterId, toolId)) {
         revert Errors.Tool_NotOwned(characterId, toolId);
       }
+      // Hook will handle inventory update
       Tool2.deleteRecord(toolId);
     }
   }
@@ -34,6 +35,8 @@ contract DropSystem is System, CharacterAccessControl {
       if (!InventoryEquipmentUtils.hasEquipment(characterId, equipmentId)) {
         revert Errors.Equipment_NotOwned(characterId, equipmentId);
       }
+      // must update weight before deleting equipment record
+      InventoryEquipmentUtils.removeEquipment(characterId, equipmentId, true);
       Equipment.deleteRecord(equipmentId);
     }
   }

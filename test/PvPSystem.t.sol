@@ -38,7 +38,8 @@ import {
   InventoryItemUtils,
   InventoryEquipmentUtils,
   CharAchievementUtils,
-  CharacterItemUtils
+  CharacterItemUtils,
+  CharacterEquipmentUtils
 } from "@utils/index.sol";
 import { CharStats2 } from "@codegen/tables/CharStats2.sol";
 import { LootItems } from "@systems/app/TileSystem.sol";
@@ -350,19 +351,19 @@ contract PvPSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
     }
     // assert dmg
     assertEq(pvp.damages[0], 0); // no bonus attack
-    assertEq(pvp.damages[1], 48); // (atk 2 - def 2 + 20 + level 1 = 21 ~ skill 200% dmg ~ plus 15% advantage
-    assertEq(pvp.damages[2], 20); // skill 115% dmg ~ minus 15% advantage
-    assertEq(pvp.damages[3], 24);
-    assertEq(pvp.damages[4], 17);
-    assertEq(pvp.damages[5], 24);
-    assertEq(pvp.damages[6], 17);
-    assertEq(pvp.damages[7], 24);
+    assertEq(pvp.damages[1], 45); // (atk 2 - def 2 + 20 + level 1 = 21 ~ skill 200% dmg ~ plus 8% advantage
+    assertEq(pvp.damages[2], 22); // skill 115% dmg ~ minus 15% advantage
+    assertEq(pvp.damages[3], 22);
+    assertEq(pvp.damages[4], 19);
+    assertEq(pvp.damages[5], 22);
+    assertEq(pvp.damages[6], 19);
+    assertEq(pvp.damages[7], 22);
     assertEq(pvp.damages[8], 0); // character 1 already win from prev turn
 
     uint32 currentCharacterHp_1 = CharCurrentStats.getHp(characterId_1);
     uint32 currentCharacterHp_2 = CharCurrentStats.getHp(characterId_2);
 
-    assertEq(currentCharacterHp_1, 46);
+    assertEq(currentCharacterHp_1, 40);
     assertEq(currentCharacterHp_2, characterHp_2); // reset hp
   }
 

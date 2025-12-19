@@ -30,9 +30,10 @@ contract EquipmentHook is StoreHook {
     InventoryEquipmentUtils.addEquipment(characterId, equipmentId, true);
   }
 
-  function onBeforeDeleteRecord(ResourceId tableId, bytes32[] memory keyTuple, FieldLayout fieldLayout) public override {
-    uint256 equipmentId = uint256(keyTuple[0]);
-    EquipmentData memory equipment = Equipment.get(equipmentId);
-    InventoryEquipmentUtils.removeEquipment(equipment.characterId, equipmentId, true);
-  }
+  // function onBeforeDeleteRecord(ResourceId tableId, bytes32[] memory keyTuple, FieldLayout fieldLayout) public
+  // override {
+  //   uint256 equipmentId = uint256(keyTuple[0]);
+  //   EquipmentData memory equipment = Equipment.get(equipmentId);
+  //   InventoryEquipmentUtils.removeEquipment(equipment.characterId, equipmentId, true);
+  // }
 }

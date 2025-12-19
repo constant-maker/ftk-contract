@@ -74,7 +74,11 @@ contract EquipmentSystem is System, CharacterAccessControl {
     _validateUpgradeLevel(nextLevel, targetEquipmentData.itemId);
     uint32 upgradeCost = _getUpgradeCost(targetEquipmentData.level, targetEquipmentData.itemId);
     CharacterFundUtils.decreaseGold(characterId, upgradeCost);
+
+    // must update weight before deleting equipment record
     InventoryEquipmentUtils.removeEquipment(characterId, materialEquipmentId, true);
+    Equipment.deleteRecord(materialEquipmentId);
+
     Equipment.setLevel(targetEquipmentId, nextLevel);
   }
 

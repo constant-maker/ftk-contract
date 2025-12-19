@@ -35,7 +35,7 @@ library HookDeployment {
     world.registerStoreHook({
       tableId: Equipment._tableId,
       hookAddress: equipmentHook,
-      enabledHooksBitmap: AFTER_SET_RECORD | BEFORE_DELETE_RECORD
+      enabledHooksBitmap: AFTER_SET_RECORD
     });
     world.grantAccess(WorldResourceIdLib.encodeNamespace("app"), address(equipmentHook));
 

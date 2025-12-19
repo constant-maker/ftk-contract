@@ -151,6 +151,7 @@ library TileInventoryUtils {
       uint256[] memory equipmentIds = TileInventory.getEquipmentIds(x, y);
       for (uint256 i = 0; i < equipmentIds.length; i++) {
         uint256 equipmentId = equipmentIds[i];
+        Equipment.deleteRecord(equipmentId);
         TileEquipmentIndex.deleteRecord(x, y, equipmentId);
       }
       // reset other items index

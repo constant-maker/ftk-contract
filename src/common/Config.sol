@@ -13,7 +13,8 @@ library Config {
   uint16 public constant DEFAULT_PLAYER_ACTION_DURATION = 10;
   uint16 public constant MAX_LEVEL = 99;
   uint16 public constant MAX_BASE_STAT = 130;
-  uint16 public constant ADVANTAGE_TYPE_DAMAGE_MODIFIER = 15; // 15%
+  uint16 public constant ONE_HAND_ADVANTAGE_TYPE_DAMAGE_MODIFIER = 8; // 8%
+  uint16 public constant TWO_HAND_ADVANTAGE_TYPE_DAMAGE_MODIFIER = 15; // 15%
   uint16 public constant ATTACK_COOLDOWN = 2; // seconds
   uint16 public constant PVE_ATTACK_COOLDOWN = 10; // seconds
   uint16 public constant CHALLENGE_COOLDOWN = 10;

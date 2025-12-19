@@ -11,7 +11,9 @@ import {
   CharSkill,
   CharEquipment,
   SkillEffect,
-  SkillEffectData
+  SkillEffectData,
+  Equipment,
+  EquipmentInfo
 } from "@codegen/index.sol";
 import { AdvantageType, SlotType, EffectType } from "@codegen/common.sol";
 import { Config } from "@common/index.sol";
@@ -108,8 +110,7 @@ library BattleUtils {
     view
     returns (uint32[2] memory hps, uint32[11] memory dmgResult)
   {
-    (uint16 attackerDmgMultiplier, uint16 defenderDmgMultiplier) =
-      getDamageMultiplier(attacker.advantageType, defender.advantageType);
+    (uint16 attackerDmgMultiplier, uint16 defenderDmgMultiplier) = getDamageMultiplier(attacker.id, defender.id);
     // bonus attack based on agility
     if (attacker.agi >= defender.agi + Config.BONUS_ATTACK_AGI_DIFF) {
       handleFirstAttack(attacker, defender, dmgResult, attackerDmgMultiplier);
@@ -203,24 +204,45 @@ library BattleUtils {
   }
 
   /// @dev calculate damage multiplier (%) based on advantage type
-  function getDamageMultiplier(AdvantageType entity1, AdvantageType entity2) public pure returns (uint16, uint16) {
-    uint16 advantageMultiplier = 100 + Config.ADVANTAGE_TYPE_DAMAGE_MODIFIER;
-    uint16 disadvantageMultiplier = 100 - Config.ADVANTAGE_TYPE_DAMAGE_MODIFIER;
-    if (
-      (entity1 == AdvantageType.Red && entity2 == AdvantageType.Green)
-        || (entity1 == AdvantageType.Green && entity2 == AdvantageType.Blue)
-        || (entity1 == AdvantageType.Blue && entity2 == AdvantageType.Red)
-    ) {
-      return (advantageMultiplier, disadvantageMultiplier);
+  function getDamageMultiplier(uint256 characterId1, uint256 characterId2) public view returns (uint16, uint16) {
+    uint256 weaponId1 = CharEquipment.getEquipmentId(characterId1, SlotType.Weapon);
+    uint256 weaponId2 = CharEquipment.getEquipmentId(characterId2, SlotType.Weapon);
+
+    uint16 m1 = 100;
+    uint16 m2 = 100;
+
+    if (weaponId1 == 0 || weaponId2 == 0) {
+      return (m1, m2);
     }
-    if (
-      (entity1 == AdvantageType.Green && entity2 == AdvantageType.Red)
-        || (entity1 == AdvantageType.Blue && entity2 == AdvantageType.Green)
-        || (entity1 == AdvantageType.Red && entity2 == AdvantageType.Blue)
-    ) {
-      return (disadvantageMultiplier, advantageMultiplier);
+
+    AdvantageType t1 = EquipmentInfo.getAdvantageType(Equipment.getItemId(weaponId1));
+    AdvantageType t2 = EquipmentInfo.getAdvantageType(Equipment.getItemId(weaponId2));
+
+    bool w1Upper = (t1 == AdvantageType.Red && t2 == AdvantageType.Green)
+      || (t1 == AdvantageType.Green && t2 == AdvantageType.Blue) || (t1 == AdvantageType.Blue && t2 == AdvantageType.Red);
+
+    bool w2Upper = (t2 == AdvantageType.Red && t1 == AdvantageType.Green)
+      || (t2 == AdvantageType.Green && t1 == AdvantageType.Blue) || (t2 == AdvantageType.Blue && t1 == AdvantageType.Red);
+
+    if (!w1Upper && !w2Upper) {
+      return (m1, m2);
     }
-    return (100, 100);
+
+    uint256 upperWeaponId = w1Upper ? weaponId1 : weaponId2;
+    bool isTwoHanded = EquipmentInfo.getTwoHanded(Equipment.getItemId(upperWeaponId));
+
+    uint16 modifiedValue =
+      isTwoHanded ? Config.TWO_HAND_ADVANTAGE_TYPE_DAMAGE_MODIFIER : Config.ONE_HAND_ADVANTAGE_TYPE_DAMAGE_MODIFIER;
+
+    if (w1Upper) {
+      m1 += modifiedValue;
+      m2 -= modifiedValue;
+    } else {
+      m1 -= modifiedValue;
+      m2 += modifiedValue;
+    }
+
+    return (m1, m2);
   }
 
   /// @dev calculate damage with skill multiplier, skillDmg is percent of atk dmg

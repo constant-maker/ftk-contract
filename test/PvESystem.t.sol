@@ -211,12 +211,12 @@ contract PvESystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
       assertEq(pve.characterSkillIds[i], skills[i]);
     }
     assertEq(pve.damages[0], 0);
-    assertEq(pve.damages[1], 56); // +15% advantage
-    assertEq(pve.damages[2], 23); // -15% advantage
+    assertEq(pve.damages[1], 49); // +8% advantage
+    assertEq(pve.damages[2], 28); // -8% advantage
     assertEq(pve.damages[4], 0); // monster dead
 
     uint32 characterCurrentHp = CharCurrentStats.getHp(characterId);
-    assertEq(characterCurrentHp, 77);
+    assertEq(characterCurrentHp, 72);
 
     assertEq(CharCurrentStats.getExp(characterId), 12);
     assertEq(CharPerk.getExp(characterId, ItemType.Sword), 6);
@@ -272,8 +272,8 @@ contract PvESystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
       assertEq(pve.characterSkillIds[i], skills[i]);
     }
     assertEq(pve.damages[0], 0);
-    assertEq(pve.damages[1], 56); // +15% advantage
-    assertEq(pve.damages[2], 23); // -15% advantage
+    assertEq(pve.damages[1], 49); // +8% advantage
+    assertEq(pve.damages[2], 28); // -8% advantage
     assertEq(pve.damages[4], 0); // monster dead
 
     uint32 characterCurrentHp = CharCurrentStats.getHp(characterId);
@@ -337,13 +337,12 @@ contract PvESystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
       assertEq(pve.characterSkillIds[i], skills[i]);
     }
     assertEq(pve.damages[0], 0);
-    assertEq(pve.damages[1], 72); // +15% advantage
-    assertEq(pve.damages[2], 23); // -15% advantage
+    assertEq(pve.damages[1], 63); // +8% advantage
+    assertEq(pve.damages[2], 28); // -8% advantage
     assertEq(pve.damages[4], 0); // monster dead
 
     uint32 characterCurrentHp = CharCurrentStats.getHp(characterId);
-    assertEq(characterCurrentHp, 77);
-
+    assertEq(characterCurrentHp, 72);
     assertEq(CharCurrentStats.getExp(characterId), 6);
     assertEq(CharPerk.getExp(characterId, ItemType.Sword), 6);
 
@@ -391,12 +390,12 @@ contract PvESystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
       assertEq(pve.characterSkillIds[i], skills[i]);
     }
     assertEq(pve.damages[0], 0);
-    assertEq(pve.damages[1], 89); // +15% advantage
-    assertEq(pve.damages[2], 23); // -15% advantage
+    assertEq(pve.damages[1], 78); // +8% advantage
+    assertEq(pve.damages[2], 28); // -8% advantage
     assertEq(pve.damages[4], 0); // monster dead
 
     uint32 characterCurrentHp = CharCurrentStats.getHp(characterId);
-    assertEq(characterCurrentHp, 77);
+    assertEq(characterCurrentHp, 72);
 
     PvEExtraV2Data memory pvpExtra = PvEExtraV2.get(characterId);
 
@@ -453,12 +452,12 @@ contract PvESystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
       assertEq(pve.characterSkillIds[i], skills[i]);
     }
     assertEq(pve.damages[0], 0);
-    assertEq(pve.damages[1], 56); // +15% advantage
-    assertEq(pve.damages[2], 23); // -15% advantage
+    assertEq(pve.damages[1], 49); // +8% advantage
+    assertEq(pve.damages[2], 28); // -8% advantage
     assertEq(pve.damages[4], 0); // monster dead
 
     uint32 characterCurrentHp = CharCurrentStats.getHp(characterId);
-    assertEq(characterCurrentHp, 77);
+    assertEq(characterCurrentHp, 72);
 
     assertEq(CharCurrentStats.getExp(characterId), 12);
     assertEq(CharPerk.getExp(characterId, ItemType.Sword), 0);
