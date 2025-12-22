@@ -13,12 +13,18 @@ import {
   SkillEffect,
   SkillEffectData,
   Equipment,
-  EquipmentInfo
+  EquipmentInfo,
+  EquipmentInfoData
 } from "@codegen/index.sol";
 import { AdvantageType, SlotType, EffectType } from "@codegen/common.sol";
 import { Config } from "@common/index.sol";
 import { CharacterEquipmentUtils } from "./CharacterEquipmentUtils.sol";
 import { CharacterBuffUtils } from "./CharacterBuffUtils.sol";
+
+struct WeaponInfo {
+  AdvantageType advantageType;
+  bool isTwoHanded;
+}
 
 struct BattleInfo {
   uint256 id;
@@ -28,8 +34,8 @@ struct BattleInfo {
   uint16 def;
   uint16 agi;
   uint16 level;
-  AdvantageType advantageType;
   uint256[5] skillIds;
+  WeaponInfo weaponInfo;
 }
 
 library BattleUtils {
@@ -88,6 +94,17 @@ library BattleUtils {
     uint16 finalAtk = getFinalStat(characterCurrentStats.atk, buffAtk);
     uint16 finalDef = getFinalStat(characterCurrentStats.def, buffDef);
     uint16 finalAgi = getFinalStat(characterCurrentStats.agi, buffAgi);
+
+    WeaponInfo memory weaponInfo = WeaponInfo({ advantageType: AdvantageType.Grey, isTwoHanded: false });
+
+    uint256 weaponId = CharEquipment.getEquipmentId(characterId, SlotType.Weapon);
+    if (weaponId != 0) {
+      uint256 itemId = Equipment.getItemId(weaponId);
+      EquipmentInfoData memory equipmentInfo = EquipmentInfo.get(itemId);
+      weaponInfo.advantageType = equipmentInfo.advantageType;
+      weaponInfo.isTwoHanded = equipmentInfo.twoHanded;
+    }
+
     characterBattleInfo = BattleInfo({
       id: characterId,
       barrier: CharCStats2.getBarrier(characterId),
@@ -97,7 +114,7 @@ library BattleUtils {
       agi: finalAgi,
       level: CharStats.getLevel(characterId),
       skillIds: characterSkills,
-      advantageType: CharacterEquipmentUtils.getCharacterAdvantageType(characterId)
+      weaponInfo: weaponInfo
     });
   }
 
@@ -110,7 +127,7 @@ library BattleUtils {
     view
     returns (uint32[2] memory hps, uint32[11] memory dmgResult)
   {
-    (uint16 attackerDmgMultiplier, uint16 defenderDmgMultiplier) = getDamageMultiplier(attacker.id, defender.id);
+    (uint16 attackerDmgMultiplier, uint16 defenderDmgMultiplier) = getDamageMultiplier(attacker.weaponInfo, defender.weaponInfo);
     // bonus attack based on agility
     if (attacker.agi >= defender.agi + Config.BONUS_ATTACK_AGI_DIFF) {
       handleFirstAttack(attacker, defender, dmgResult, attackerDmgMultiplier);
@@ -204,19 +221,24 @@ library BattleUtils {
   }
 
   /// @dev calculate damage multiplier (%) based on advantage type
-  function getDamageMultiplier(uint256 characterId1, uint256 characterId2) public view returns (uint16, uint16) {
-    uint256 weaponId1 = CharEquipment.getEquipmentId(characterId1, SlotType.Weapon);
-    uint256 weaponId2 = CharEquipment.getEquipmentId(characterId2, SlotType.Weapon);
-
+  function getDamageMultiplier(
+    WeaponInfo memory weaponInfo1,
+    WeaponInfo memory weaponInfo2
+  )
+    public
+    pure
+    returns (uint16, uint16)
+  {
     uint16 m1 = 100;
     uint16 m2 = 100;
 
-    if (weaponId1 == 0 || weaponId2 == 0) {
+    // grey cancels advantage
+    if (weaponInfo1.advantageType == AdvantageType.Grey || weaponInfo2.advantageType == AdvantageType.Grey) {
       return (m1, m2);
     }
 
-    AdvantageType t1 = EquipmentInfo.getAdvantageType(Equipment.getItemId(weaponId1));
-    AdvantageType t2 = EquipmentInfo.getAdvantageType(Equipment.getItemId(weaponId2));
+    AdvantageType t1 = weaponInfo1.advantageType;
+    AdvantageType t2 = weaponInfo2.advantageType;
 
     bool w1Upper = (t1 == AdvantageType.Red && t2 == AdvantageType.Green)
       || (t1 == AdvantageType.Green && t2 == AdvantageType.Blue) || (t1 == AdvantageType.Blue && t2 == AdvantageType.Red);
@@ -228,18 +250,17 @@ library BattleUtils {
       return (m1, m2);
     }
 
-    uint256 upperWeaponId = w1Upper ? weaponId1 : weaponId2;
-    bool isTwoHanded = EquipmentInfo.getTwoHanded(Equipment.getItemId(upperWeaponId));
+    bool isTwoHanded = w1Upper ? weaponInfo1.isTwoHanded : weaponInfo2.isTwoHanded;
 
-    uint16 modifiedValue =
+    uint16 advantageValue =
       isTwoHanded ? Config.TWO_HAND_ADVANTAGE_TYPE_DAMAGE_MODIFIER : Config.ONE_HAND_ADVANTAGE_TYPE_DAMAGE_MODIFIER;
 
     if (w1Upper) {
-      m1 += modifiedValue;
-      m2 -= modifiedValue;
+      m1 += advantageValue;
+      m2 -= advantageValue;
     } else {
-      m1 -= modifiedValue;
-      m2 += modifiedValue;
+      m1 -= advantageValue;
+      m2 += advantageValue;
     }
 
     return (m1, m2);

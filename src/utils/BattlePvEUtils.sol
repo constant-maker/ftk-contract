@@ -19,7 +19,7 @@ import {
   ItemV2,
   CharCStats2
 } from "@codegen/index.sol";
-import { BattleInfo, BattleUtils } from "./BattleUtils.sol";
+import { BattleInfo, WeaponInfo, BattleUtils } from "./BattleUtils.sol";
 import { CharacterFundUtils } from "./CharacterFundUtils.sol";
 import { InventoryItemUtils } from "./InventoryItemUtils.sol";
 import { EntityType } from "@codegen/common.sol";
@@ -204,6 +204,8 @@ library BattlePvEUtils {
     returns (BattleInfo memory monsterBattleInfo)
   {
     monsterBattleInfo.id = monsterId;
+    // set two handed true for monster so the advantage value is always applied with the biggest value
+    WeaponInfo memory weaponInfo = WeaponInfo({ advantageType: monsterLocation.advantageType, isTwoHanded: true });
     MonsterStatsData memory monsterStats = MonsterStats.get(monsterId);
     uint8 monsterSp = monsterStats.sp;
     if (!Monster.getIsBoss(monsterId)) {
@@ -225,8 +227,8 @@ library BattlePvEUtils {
     monsterBattleInfo.def = monsterStats.def;
     monsterBattleInfo.agi = monsterStats.agi;
     monsterBattleInfo.level = monsterLocation.level;
-    monsterBattleInfo.advantageType = monsterLocation.advantageType;
     monsterBattleInfo.skillIds = getMonsterSkillIds(monsterId, monsterSp);
+    monsterBattleInfo.weaponInfo = weaponInfo;
 
     return monsterBattleInfo;
   }
