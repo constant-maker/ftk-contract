@@ -127,7 +127,8 @@ library BattleUtils {
     view
     returns (uint32[2] memory hps, uint32[11] memory dmgResult)
   {
-    (uint16 attackerDmgMultiplier, uint16 defenderDmgMultiplier) = getDamageMultiplier(attacker.weaponInfo, defender.weaponInfo);
+    (uint16 attackerDmgMultiplier, uint16 defenderDmgMultiplier) =
+      getDamageMultiplier(attacker.weaponInfo, defender.weaponInfo);
     // bonus attack based on agility
     if (attacker.agi >= defender.agi + Config.BONUS_ATTACK_AGI_DIFF) {
       handleFirstAttack(attacker, defender, dmgResult, attackerDmgMultiplier);

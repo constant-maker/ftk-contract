@@ -19,6 +19,7 @@ import CITY_TABLES from "./tables/cityTables";
 import ROLE_TABLES from "./tables/roleTables";
 import STATUS_TABLES from "./tables/statusTables";
 import GUILD_TABLES from "./tables/guildTables";
+import GACHA_TABLES from "./tables/gachaTables";
 
 export default defineWorld({
   deploy: {
@@ -58,6 +59,7 @@ export default defineWorld({
     // Note: Healing potion represents for ItemType HealingItem
     // To save gas, limit contract size purpose only
     BuffType: ["None", "StatsModify", "ExpAmplify", "InstantDamage", "InstantHeal", "HealingPotion"],
+    GachaType: ["Pet", "Scroll"],
   },
   tables: {
     Unmovable: {
@@ -88,6 +90,7 @@ export default defineWorld({
     ...ROLE_TABLES,
     ...STATUS_TABLES,
     ...GUILD_TABLES,
+    ...GACHA_TABLES,
   },
   excludeSystems: ["SpawnSystem"],
 });

@@ -40,12 +40,19 @@ contract TileSystem is System, CharacterAccessControl {
   uint32 constant TILE_LOCKED_DURATION = 7200; // 2 hours (second)
   uint32 constant DZ_TILE_OCCUPATION_DURATION_REQUIRE = 300; // 5 minutes (second)
   uint32 constant TILE_OCCUPATION_DURATION_REQUIRE = 120; // 2 minutes (second)
+  int32 constant X_LEFT = -73;
+  int32 constant X_RIGHT = 73;
+  int32 constant Y_TOP = 59;
+  int32 constant Y_BOTTOM = -59;
 
   /// @dev Occupy a tile to expand your kingdom area
   function occupyTile(uint256 characterId) public onlyAuthorizedWallet(characterId) {
     CharPositionData memory position = CharacterPositionUtils.currentPosition(characterId);
     int32 x = position.x;
     int32 y = position.y;
+    if (x < X_LEFT || x > X_RIGHT || y < Y_BOTTOM || y > Y_TOP) {
+      revert Errors.TileSystem_InvalidTilePosition(x, y);
+    }
     uint8 kingdomId = CharInfo.getKingdomId(characterId);
     uint8 tileKingdomId = TileInfo3.getKingdomId(x, y);
     if (tileKingdomId == kingdomId) {

@@ -263,6 +263,7 @@ library Errors {
   error TileSystem_TileAlreadyOccupied(int32 x, int32 y);
   error TileSystem_TileIsNotReadyToOccupy(int32 x, int32 y, uint256 arrivalTime);
   error TileSystem_CannotOccupyThisTile(int32 x, int32 y);
+  error TileSystem_InvalidTilePosition(int32 x, int32 y);
 
   /* -------------------------------------------------------------------------- */
   /*                               RebornSystem                                 */
@@ -360,4 +361,14 @@ library Errors {
   error GuildSystem_JoinRequestAlreadyExists(uint256 characterId);
   error GuildSystem_GuildMemberLimitReached(uint256 guildId);
   error GuildSystem_OwnerCannotKickSelf(uint256 characterId, uint256 guildId);
+
+  /* -------------------------------------------------------------------------- */
+  /*                               GachaSystem                                  */
+  /* -------------------------------------------------------------------------- */
+  error GachaSystem_RequestAlreadyFulfilled(uint256 requestId);
+  error Gacha_AlreadyHad(uint256 gachaId, uint256 itemId);
+  error Gacha_NoItem(uint256 gachaId, uint256 itemId);
+  error Gacha_NoItemLeft(uint256 gachaId);
+  error Gacha_InactiveGacha(uint256 gachaId);
+  error GachaSystem_InvalidRequestId(uint256 requestId);
 }
