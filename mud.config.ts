@@ -92,5 +92,5 @@ export default defineWorld({
     ...GUILD_TABLES,
     ...GACHA_TABLES,
   },
-  excludeSystems: ["SpawnSystem"],
+  excludeSystems: ["SpawnSystem", "GachaSystem"], // registered as root systems
 });
