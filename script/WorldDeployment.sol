@@ -17,6 +17,7 @@ import { AFTER_CALL_SYSTEM } from "@latticexyz/world/src/systemHookTypes.sol";
 import { IWorld } from "@codegen/world/IWorld.sol";
 // import { RESOURCE_SYSTEM } from "@latticexyz/world/src/worldResourceTypes.sol";
 import { SpawnSystem } from "@src/systems/SpawnSystem.sol";
+import { GachaSystem } from "@src/systems/GachaSystem.sol";
 import { SystemUtils } from "@utils/SystemUtils.sol";
 import { Script } from "forge-std/Script.sol";
 
@@ -32,6 +33,9 @@ contract WorldDeployment is Script {
 
     // register SpawnSystem as root system
     _registerSpawnSystem(world);
+
+    // register GachaSystem as root system
+    _registerGachaSystem(world);
 
     // register Hooks
     HookDeployment.registerHooks(worldAddress);
@@ -71,6 +75,17 @@ contract WorldDeployment is Script {
     world.registerSystem(systemId, spawnSystem, true);
     world.registerRootFunctionSelector(
       systemId, "createCharacter((uint8,uint8,uint16[3],string))", "createCharacter((uint8,uint8,uint16[3],string))"
+    );
+  }
+
+  function _registerGachaSystem(IWorld world) private {
+    ResourceId systemId = SystemUtils.getRootSystemId("GachaSystem");
+    GachaSystem gachaSystem = new GachaSystem();
+
+    world.registerSystem(systemId, gachaSystem, true);
+    world.registerRootFunctionSelector(systemId, "requestGacha(uint256,uint256)", "requestGacha(uint256,uint256)");
+    world.registerRootFunctionSelector(
+      systemId, "rawFulfillRandomNumbers(uint256,uint256[])", "rawFulfillRandomNumbers(uint256,uint256[])"
     );
   }
 

@@ -37,3 +37,4 @@ import { BattlePvEUtils2 } from "./BattlePvEUtils2.sol";
 import { CharacterRoleUtils } from "./CharacterRoleUtils.sol";
 import { KingSystemUtils } from "./KingSystemUtils.sol";
 import { GuildUtils } from "./GuildUtils.sol";
+import { GachaUtils } from "./GachaUtils.sol";
