@@ -49,13 +49,15 @@ const BATTLE_TABLES: any = {
     },
     key: ['pvpId'],
   },
-  PvPExtra2V2: {
+  PvPExtra2V3: {
     schema: {
       pvpId: "uint256",
       x: "int32",
       y: "int32",
       attackerStats: "uint16[3]", // attacker atk, def, agi
       defenderStats: "uint16[3]", // defender atk, def, agi
+      attackerBuffs: "uint256[4]", // attacker buffs by buff (first 2 ) and debuff ids (last 2)
+      defenderBuffs: "uint256[4]", // defender buffs by buff (first 2 ) and debuff ids (last 2)
     },
     key: ['pvpId'],
   },

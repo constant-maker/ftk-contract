@@ -14,8 +14,8 @@ import {
   PvPChallengeV2Data,
   PvPExtraV3,
   PvPExtraV3Data,
-  PvPExtra2V2,
-  PvPExtra2V2Data,
+  PvPExtra2V3,
+  PvPExtra2V3Data,
   PvPBattleCounter,
   TileInfo3,
   CharStats2,
@@ -24,7 +24,11 @@ import {
   PvPEnemyCounter,
   RestrictLocV2,
   City,
-  CharInfo
+  CharInfo,
+  CharBuff,
+  CharBuffData,
+  CharDebuff,
+  CharDebuffData
 } from "@codegen/index.sol";
 import { BattleInfo, BattleUtils } from "@utils/BattleUtils.sol";
 import {
@@ -287,13 +291,15 @@ contract PvPSystem is System, CharacterAccessControl {
     });
     PvPExtraV3.set(pvpId, pvpExtra);
     CharPositionData memory attackerPosition = CharacterPositionUtils.currentPosition(attackerId);
-    PvPExtra2V2Data memory pvpExtra2 = PvPExtra2V2Data({
+    PvPExtra2V3Data memory pvpExtra2 = PvPExtra2V3Data({
       x: attackerPosition.x,
       y: attackerPosition.y,
       attackerStats: _buildCharStats(attackerId),
-      defenderStats: _buildCharStats(defenderId)
+      defenderStats: _buildCharStats(defenderId),
+      attackerBuffs: _getCharBuff(attackerId),
+      defenderBuffs: _getCharBuff(defenderId)
     });
-    PvPExtra2V2.set(pvpId, pvpExtra2);
+    PvPExtra2V3.set(pvpId, pvpExtra2);
   }
 
   function _buildCharStats(uint256 characterId) private view returns (uint16[3] memory stats) {
@@ -301,6 +307,17 @@ contract PvPSystem is System, CharacterAccessControl {
     stats[0] = currentStats.atk;
     stats[1] = currentStats.def;
     stats[2] = currentStats.agi;
+  }
+
+  /// @dev get character buff ids, first 2 are buff ids, last 2 are debuff ids
+  function _getCharBuff(uint256 characterId) private view returns (uint256[4] memory buffIds) {
+    CharBuffData memory buffData = CharBuff.get(characterId);
+    CharDebuffData memory debuffData = CharDebuff.get(characterId);
+    buffIds[0] = buffData.expireTimes[0] > block.timestamp ? buffData.buffIds[0] : 0;
+    buffIds[1] = buffData.expireTimes[1] > block.timestamp ? buffData.buffIds[1] : 0;
+    buffIds[2] = debuffData.expireTimes[0] > block.timestamp ? debuffData.debuffIds[0] : 0;
+    buffIds[3] = debuffData.expireTimes[1] > block.timestamp ? debuffData.debuffIds[1] : 0;
+    return buffIds;
   }
 
   function _mergeEquipmentIds(
