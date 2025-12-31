@@ -28,7 +28,8 @@ import {
   PvPExtraV3Data,
   CharInventory,
   CharBuff,
-  CharBuffData
+  CharBuffData,
+  EquipmentInfo
 } from "@codegen/index.sol";
 import { EntityType, SlotType, ItemType, ZoneType } from "@codegen/common.sol";
 import { Errors } from "@common/Errors.sol";
@@ -352,7 +353,7 @@ contract PvPSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
     // assert dmg
     assertEq(pvp.damages[0], 0); // no bonus attack
     assertEq(pvp.damages[1], 45); // (atk 2 - def 2 + 20 + level 1 = 21 ~ skill 200% dmg ~ plus 8% advantage
-    assertEq(pvp.damages[2], 22); // skill 115% dmg ~ minus 15% advantage
+    assertEq(pvp.damages[2], 22); // skill 115% dmg ~ minus 8% advantage
     assertEq(pvp.damages[3], 22);
     assertEq(pvp.damages[4], 19);
     assertEq(pvp.damages[5], 22);
@@ -833,6 +834,76 @@ contract PvPSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
     CharBuffData memory char1Buff = CharBuff.get(characterId_1);
     assertEq(char1Buff.buffIds[0], 0); // dispel on death
     assertEq(char1Buff.buffIds[1], 0); // dispel on death
+  }
+
+  function test_2HandAdvantage() external {
+
+    console2.log("item 361 2handed", EquipmentInfo.getTwoHanded(361));
+    console2.log("item 362 2handed", EquipmentInfo.getTwoHanded(362));
+
+    vm.startPrank(worldDeployer);
+    CharacterItemUtils.addNewItem(characterId_1, 361, 1); // 2 hand axe - blue
+    CharacterItemUtils.addNewItem(characterId_2, 362, 1); // 2 hand spear - green
+    CharCurrentStats.setAgi(characterId_2, 5); // attack first
+    vm.stopPrank();
+
+    for (uint256 i = 1; i <= 5; i++) {
+      console2.log("item id", Equipment.getItemId(i));
+    }
+
+    assertEq(Equipment.getItemId(4), 361);
+    assertEq(Equipment.getItemId(5), 362);
+
+    _gearUpWeapon(characterId_1, 4);
+    _gearUpWeapon(characterId_2, 5);
+
+    CharCurrentStatsData memory currentStatsChar1 = CharCurrentStats.get(characterId_1);
+    console2.log("char 1 atk", currentStatsChar1.atk);
+    console2.log("char 1 def", currentStatsChar1.def);
+    console2.log("char 1 agi", currentStatsChar1.agi);
+    CharCurrentStatsData memory currentStatsChar2 = CharCurrentStats.get(characterId_2);
+    console2.log("char 2 atk", currentStatsChar2.atk);
+    console2.log("char 2 def", currentStatsChar2.def);
+    console2.log("char 2 agi", currentStatsChar2.agi);
+
+    _moveToTheLocation(20, -32);
+
+    vm.warp(block.timestamp + 3);
+
+    vm.startPrank(player_1);
+    world.app__battlePvP(characterId_1, characterId_2);
+    vm.stopPrank();
+
+    PvPData memory pvp = PvP.get(1);
+    assertEq(pvp.attackerId, characterId_1);
+    assertEq(pvp.defenderId, characterId_2);
+    assertEq(pvp.firstAttackerId, characterId_2);
+
+    for (uint256 i = 0; i < pvp.damages.length; i++) {
+      console2.log("dmg index", i);
+      console2.log("dmg value", pvp.damages[i]);
+    }
+
+    // assert dmg
+    assertEq(pvp.damages[0], 0); // no bonus attack
+    assertEq(pvp.damages[1], 24); // atk 2 - def 2 + 20 + level 1 = 21 ~ plus 15% advantage
+
+
+    vm.startPrank(worldDeployer);
+    EquipmentInfo.setTwoHanded(362, false); // remove 2 handed property
+    vm.stopPrank();
+
+    _moveToTheLocation(20, -32);
+
+    vm.warp(block.timestamp + 3);
+
+    vm.startPrank(player_1);
+    world.app__battlePvP(characterId_1, characterId_2);
+    vm.stopPrank();
+
+    pvp = PvP.get(2);
+    assertEq(pvp.damages[0], 0); // no bonus attack
+    assertEq(pvp.damages[1], 22); // atk 2 - def 2 + 20 + level 1 = 21 ~ plus 8% advantage // 1 handed now
   }
 
   function _moveToTheLocation(int32 _x, int32 _y) private {

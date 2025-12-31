@@ -5591,6 +5591,50 @@
         "dmg": 200,
         "isAbsDmg": true
       }
+    },
+    "361": {
+      "id": 361,
+      "type": 7,
+      "category": 1,
+      "tier": 7,
+      "weight": 22,
+      "name": "Ancient Slayer's Axe",
+      "desc": "A brutal relic reborn in serpent blood, this axe was made to cleave through myths and create legends.",
+      "untradable": false,
+      "equipmentInfo": {
+        "slotType": 0,
+        "advantageType": 2,
+        "twoHanded": true,
+        "atk": 354,
+        "def": 51,
+        "agi": 43,
+        "hp": 200,
+        "ms": 0,
+        "weight": 0,
+        "barrier": 0
+      }
+    },
+    "362": {
+      "id": 362,
+      "type": 8,
+      "category": 1,
+      "tier": 7,
+      "weight": 22,
+      "name": "Greatspear of Doom",
+      "desc": "Heavy as fate and sharp as prophecy, this massive spear delivers ruin with every coiled thrust.",
+      "untradable": false,
+      "equipmentInfo": {
+        "slotType": 0,
+        "advantageType": 1,
+        "twoHanded": true,
+        "atk": 344,
+        "def": 46,
+        "agi": 82,
+        "hp": 0,
+        "ms": 0,
+        "weight": 0,
+        "barrier": 0
+      }
     }
   }
 }
