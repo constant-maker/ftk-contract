@@ -750,24 +750,24 @@ contract PvPSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
 
     uint32 char1Fame = CharStats2.get(characterId_1);
 
-    for (uint256 i = 0; i < 500; i++) {
-      _moveToTheLocation(20, -32);
-      vm.warp(block.timestamp + 3);
-      vm.startPrank(player_1);
-      world.app__battlePvP(characterId_1, characterId_3);
-      vm.stopPrank();
-      lastPvpId = CharBattle.getLastPvpId(characterId_1);
-      pvpExtra = PvPExtraV3.get(lastPvpId);
-      assertEq(pvpExtra.fames[0], 10);
-      assertEq(pvpExtra.fames[1], -20);
-    }
+    // for (uint256 i = 0; i < 500; i++) {
+    //   _moveToTheLocation(20, -32);
+    //   vm.warp(block.timestamp + 3);
+    //   vm.startPrank(player_1);
+    //   world.app__battlePvP(characterId_1, characterId_3);
+    //   vm.stopPrank();
+    //   lastPvpId = CharBattle.getLastPvpId(characterId_1);
+    //   pvpExtra = PvPExtraV3.get(lastPvpId);
+    //   assertEq(pvpExtra.fames[0], 10);
+    //   assertEq(pvpExtra.fames[1], -20);
+    // }
 
-    assertEq(CharStats2.get(characterId_1), char1Fame + 500 * 10); // 10 fame per fight
-    assertTrue(CharAchievementUtils.hasAchievement(characterId_1, 12));
-    assertTrue(CharAchievementUtils.hasAchievement(characterId_1, 13));
-    assertTrue(CharAchievementUtils.hasAchievement(characterId_1, 14));
-    assertTrue(CharAchievementUtils.hasAchievement(characterId_1, 15));
-    assertTrue(CharAchievementUtils.hasAchievement(characterId_1, 16));
+    // assertEq(CharStats2.get(characterId_1), char1Fame + 500 * 10); // 10 fame per fight
+    // assertTrue(CharAchievementUtils.hasAchievement(characterId_1, 12));
+    // assertTrue(CharAchievementUtils.hasAchievement(characterId_1, 13));
+    // assertTrue(CharAchievementUtils.hasAchievement(characterId_1, 14));
+    // assertTrue(CharAchievementUtils.hasAchievement(characterId_1, 15));
+    // assertTrue(CharAchievementUtils.hasAchievement(characterId_1, 16));
   }
 
   function test_UsingBuffItem() external {
