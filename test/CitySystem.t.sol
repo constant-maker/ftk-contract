@@ -33,7 +33,9 @@ import {
   CharPositionData,
   CharNextPosition,
   CharNextPositionData,
-  CityMoveHistory
+  CityMoveHistory,
+  CharVaultWithdraw,
+  CharVaultWithdrawData
 } from "@codegen/index.sol";
 import { RoleType } from "@codegen/common.sol";
 import { CharacterPositionUtils, InventoryItemUtils } from "@utils/index.sol";
@@ -332,5 +334,68 @@ contract CitySystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixtur
     position = CharacterPositionUtils.currentPosition(voterId);
     assertEq(position.x, city.x);
     assertEq(position.y, city.y);
+  }
+
+  function test_WithdrawLimit() external {
+    uint256[] memory candidateIds;
+    uint32[] memory votesReceived;
+
+    vm.startPrank(worldDeployer);
+    KingElection.set(1, candidateId, block.timestamp + 10_000, candidateIds, votesReceived);
+    CityVault.setAmount(cityId, 1, 1000);
+    CityVault.setAmount(cityId, 2, 1000);
+    CityVault.setAmount(cityId, 3, 1000);
+    CharStats.setLevel(voterId, 80);
+    vm.stopPrank();
+
+    vm.startPrank(candidate);
+    world.app__setRole(candidateId, voterId, RoleType.VaultKeeper);
+    vm.stopPrank();
+
+    uint256[] memory resourceIds = new uint256[](3);
+    resourceIds[0] = 1;
+    resourceIds[1] = 2;
+    resourceIds[2] = 3;
+  
+    uint32[] memory withdrawAmounts = new uint32[](3);
+    withdrawAmounts[0] = 1000;
+    withdrawAmounts[1] = 1000;
+    withdrawAmounts[2] = 1000;
+    
+    vm.expectRevert(); // exceed daily withdraw limit
+    vm.startPrank(voter);
+    world.app__withdrawItemFromCity(voterId, cityId, resourceIds, withdrawAmounts);
+    vm.stopPrank();
+
+    withdrawAmounts[0] = 100;
+    withdrawAmounts[1] = 100;
+    withdrawAmounts[2] = 100;
+
+    vm.startPrank(voter);
+    world.app__withdrawItemFromCity(voterId, cityId, resourceIds, withdrawAmounts);
+    vm.stopPrank();
+
+    CharVaultWithdrawData memory cvw = CharVaultWithdraw.get(voterId);
+    assertEq(cvw.weightQuota,  1700); // 2000 - (100*1 + 100*1 + 100*1) = 1700
+    uint256 ts = cvw.markTimestamp;
+
+    vm.warp(ts + 1 days + 1);
+    withdrawAmounts[0] = 10;
+    withdrawAmounts[1] = 10;
+    withdrawAmounts[2] = 10;
+    vm.startPrank(voter);
+    world.app__withdrawItemFromCity(voterId, cityId, resourceIds, withdrawAmounts);
+    vm.stopPrank();
+    cvw = CharVaultWithdraw.get(voterId);
+    assertEq(cvw.weightQuota,  1970); // reset to 2000 - (10*1 + 10*1 + 10*1) = 1970
+    assertEq(cvw.markTimestamp, ts + 1 days + 1);
+
+    vm.warp(ts + 1);
+    vm.startPrank(voter);
+    world.app__withdrawItemFromCity(voterId, cityId, resourceIds, withdrawAmounts);
+    vm.stopPrank();
+    cvw = CharVaultWithdraw.get(voterId);
+    assertEq(cvw.weightQuota,  1940); // 1970 - (10*1 + 10*1 + 10*1) = 1940
+    assertEq(cvw.markTimestamp, ts + 1 days + 1); // no change
   }
 }

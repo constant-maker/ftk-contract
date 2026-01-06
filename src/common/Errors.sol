@@ -335,6 +335,7 @@ library Errors {
   error VaultSystem_InsufficientVaultAmount(
     uint256 cityId, uint256 itemId, uint32 currentVaultAmount, uint32 withdrawAmount
   );
+  error VaultSystem_ExceedDailyWithdrawLimit(uint256 characterId, uint32 currentQuota, uint32 withdrawWeight);
 
   /* -------------------------------------------------------------------------- */
   /*                               CitySystem                                   */

@@ -837,7 +837,6 @@ contract PvPSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
   }
 
   function test_2HandAdvantage() external {
-
     console2.log("item 361 2handed", EquipmentInfo.getTwoHanded(361));
     console2.log("item 362 2handed", EquipmentInfo.getTwoHanded(362));
 
@@ -887,7 +886,6 @@ contract PvPSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
     // assert dmg
     assertEq(pvp.damages[0], 0); // no bonus attack
     assertEq(pvp.damages[1], 24); // atk 2 - def 2 + 20 + level 1 = 21 ~ plus 15% advantage
-
 
     vm.startPrank(worldDeployer);
     EquipmentInfo.setTwoHanded(362, false); // remove 2 handed property

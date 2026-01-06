@@ -73,7 +73,7 @@ contract GachaSystem is System, CharacterAccessControl, IVRFConsumer {
     if (characterId == 0) {
       revert Errors.GachaSystem_InvalidRequestId(requestId);
     }
-    
+
     // Get the CharGacha record
     CharGachaData memory charGacha = CharGacha.get(characterId, requestId);
     if (!charGacha.isPending) {

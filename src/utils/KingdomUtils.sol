@@ -7,7 +7,8 @@ struct ZoneInfo {
   uint8 tileKingdomId;
   uint8 attackerKingdomId;
   uint8 defenderKingdomId;
-  ZoneType zoneType;
+  ZoneType attackerZoneType;
+  ZoneType defenderZoneType;
 }
 
 library KingdomUtils {
@@ -34,17 +35,25 @@ library KingdomUtils {
     uint8 attackerKingdomId = CharInfo.getKingdomId(attackerId);
     uint8 defenderKingdomId = CharInfo.getKingdomId(defenderId);
     uint8 tileKingdomId = TileInfo3.getKingdomId(x, y);
-    ZoneType zoneType = TileInfo3.getZoneType(x, y); // for defender
-    if (zoneType == ZoneType.Black && defenderKingdomId == tileKingdomId) {
-      zoneType = ZoneType.Red;
-    } else if (zoneType != ZoneType.Black) {
-      zoneType = (defenderKingdomId == tileKingdomId) ? ZoneType.Green : ZoneType.Red;
+    bool isBlackTile = TileInfo3.getZoneType(x, y) == ZoneType.Black;
+    ZoneType defenderZoneType;
+    ZoneType attackerZoneType;
+    if (isBlackTile && defenderKingdomId == tileKingdomId) {
+      defenderZoneType = ZoneType.Red;
+    } else if (defenderZoneType != ZoneType.Black) {
+      defenderZoneType = (defenderKingdomId == tileKingdomId) ? ZoneType.Green : ZoneType.Red;
+    }
+    if (isBlackTile && attackerKingdomId == tileKingdomId) {
+      attackerZoneType = ZoneType.Red;
+    } else if (attackerZoneType != ZoneType.Black) {
+      attackerZoneType = (attackerKingdomId == tileKingdomId) ? ZoneType.Green : ZoneType.Red;
     }
     return ZoneInfo({
       tileKingdomId: tileKingdomId,
       attackerKingdomId: attackerKingdomId,
       defenderKingdomId: defenderKingdomId,
-      zoneType: zoneType
+      attackerZoneType: attackerZoneType,
+      defenderZoneType: defenderZoneType
     });
   }
 
