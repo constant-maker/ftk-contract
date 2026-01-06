@@ -64,6 +64,14 @@ const CITY_TABLES: any = {
     },
     key: ['cityId', 'id'],
   },
+  CharVaultWithdraw: {
+    schema: {
+      characterId: "uint256",
+      weightQuota: "uint32",
+      markTimestamp: "uint256",
+    },
+    key: ['characterId'],
+  },
   HistoryCounter: {
     schema: {
       cityId: "uint256",

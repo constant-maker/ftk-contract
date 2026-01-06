@@ -11,13 +11,18 @@ import {
   CVaultHistoryV3,
   HistoryCounter,
   KingElection,
-  CharStats2
+  CharStats2,
+  ItemV2,
+  CharVaultWithdraw,
+  CharVaultWithdrawData
 } from "@codegen/index.sol";
 import { RoleType } from "@codegen/common.sol";
 import { CharacterPositionUtils, InventoryItemUtils, CharacterFundUtils, MapUtils } from "@utils/index.sol";
 import { Errors } from "@common/Errors.sol";
 
 contract VaultSystem is System, CharacterAccessControl {
+  uint32 constant DAILY_WITHDRAW_LIMIT = 2000; // weight
+
   function withdrawItemFromCity(
     uint256 characterId,
     uint256 cityId,
@@ -27,13 +32,9 @@ contract VaultSystem is System, CharacterAccessControl {
     public
     onlyAuthorizedWallet(characterId)
   {
-    CharacterPositionUtils.mustInCity(characterId, cityId);
-    // check kingdom id
-    MapUtils.mustBeActiveCity(cityId);
+    _validateInput(characterId, cityId, itemIds, amounts);
+
     uint8 kingdomId = City.getKingdomId(cityId);
-    if (kingdomId == 0) {
-      revert Errors.InvalidCityId(cityId);
-    }
     uint8 charKingdomId = CharInfo.getKingdomId(characterId);
     if (kingdomId != charKingdomId) {
       revert Errors.VaultSystem_CharacterNotInSameKingdom(characterId, cityId);
@@ -41,9 +42,7 @@ contract VaultSystem is System, CharacterAccessControl {
     if (KingElection.getKingId(kingdomId) != characterId && CharRole.get(characterId) != RoleType.VaultKeeper) {
       revert Errors.VaultSystem_MustBeVaultKeeper(characterId);
     }
-    if (itemIds.length != amounts.length) {
-      revert Errors.VaultSystem_InvalidParamsLen(itemIds.length, amounts.length);
-    }
+    uint32 totalWithdrawWeight;
     for (uint256 i = 0; i < itemIds.length; i++) {
       if (itemIds[i] == 0 || amounts[i] == 0) {
         revert Errors.VaultSystem_InvalidParamsValue(itemIds[i], amounts[i]);
@@ -52,9 +51,22 @@ contract VaultSystem is System, CharacterAccessControl {
       if (currentVaultAmount < amounts[i]) {
         revert Errors.VaultSystem_InsufficientVaultAmount(cityId, itemIds[i], currentVaultAmount, amounts[i]);
       }
+      uint32 itemWeight = ItemV2.getWeight(itemIds[i]) * amounts[i];
+      totalWithdrawWeight += itemWeight;
       uint32 newVaultAmount = currentVaultAmount - amounts[i];
       CityVault.setAmount(cityId, itemIds[i], newVaultAmount);
     }
+    // check daily withdraw limit
+    CharVaultWithdrawData memory cvw = CharVaultWithdraw.get(characterId);
+    if (cvw.markTimestamp == 0 || (cvw.markTimestamp + 1 days) < block.timestamp) {
+      cvw.weightQuota = DAILY_WITHDRAW_LIMIT; // reset daily limit
+      CharVaultWithdraw.setMarkTimestamp(characterId, block.timestamp);
+    }
+    if (cvw.weightQuota < totalWithdrawWeight) {
+      revert Errors.VaultSystem_ExceedDailyWithdrawLimit(characterId, cvw.weightQuota, totalWithdrawWeight);
+    }
+    cvw.weightQuota -= totalWithdrawWeight;
+    CharVaultWithdraw.setWeightQuota(characterId, cvw.weightQuota);
     InventoryItemUtils.addItems(characterId, itemIds, amounts);
     CVaultHistoryV3.set(cityId, _getVaultHistoryId(cityId), characterId, 0, block.timestamp, false, itemIds, amounts);
   }
@@ -69,7 +81,8 @@ contract VaultSystem is System, CharacterAccessControl {
     public
     onlyAuthorizedWallet(characterId)
   {
-    MapUtils.mustBeActiveCity(cityId);
+    _validateInput(characterId, cityId, itemIds, amounts);
+
     if (gold > 0) {
       uint32 fame = CharStats2.getFame(characterId);
       if (fame < 1050) {
@@ -79,10 +92,6 @@ contract VaultSystem is System, CharacterAccessControl {
       CityVault2.setGold(cityId, CityVault2.getGold(cityId) + gold);
     }
     // no need check character and city kingdom id, because it's free to contribute to any city
-    if (itemIds.length != amounts.length) {
-      revert Errors.VaultSystem_InvalidParamsLen(itemIds.length, amounts.length);
-    }
-    CharacterPositionUtils.mustInCity(characterId, cityId);
     for (uint256 i = 0; i < itemIds.length; i++) {
       if (itemIds[i] == 0 || amounts[i] == 0) {
         revert Errors.VaultSystem_InvalidParamsValue(itemIds[i], amounts[i]);
@@ -100,5 +109,24 @@ contract VaultSystem is System, CharacterAccessControl {
     uint256 newCounter = currentCounter + 1;
     HistoryCounter.setCounter(cityId, newCounter);
     return newCounter % 100; // wrap around after 100 entries
+  }
+
+  function _validateInput(
+    uint256 characterId,
+    uint256 cityId,
+    uint256[] memory itemIds,
+    uint32[] memory amounts
+  )
+    private
+  {
+    CharacterPositionUtils.mustInCity(characterId, cityId);
+    MapUtils.mustBeActiveCity(cityId);
+    uint8 kingdomId = City.getKingdomId(cityId);
+    if (kingdomId == 0) {
+      revert Errors.InvalidCityId(cityId);
+    }
+    if (itemIds.length != amounts.length) {
+      revert Errors.VaultSystem_InvalidParamsLen(itemIds.length, amounts.length);
+    }
   }
 }

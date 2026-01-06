@@ -95,21 +95,13 @@ contract PvPSystem is System, CharacterAccessControl {
     ZoneInfo memory zoneInfo = KingdomUtils.getZoneTypeFull(position.x, position.y, attackerId, defenderId);
     bool isAlliance = KingdomUtils.getIsAlliance(zoneInfo.attackerKingdomId, zoneInfo.defenderKingdomId);
 
-    ZoneType zoneType = zoneInfo.zoneType;
-
     // Apply alliance adjustment to zoneType (only if attacker owns tile)
-    if (
-      TileInfo3.getZoneType(position.x, position.y) != ZoneType.Black && isAlliance
-        && zoneInfo.attackerKingdomId == zoneInfo.tileKingdomId
-    ) {
-      zoneType = ZoneType.Green;
-    }
     bool isSameSide = (
       zoneInfo.attackerKingdomId == zoneInfo.defenderKingdomId && zoneInfo.tileKingdomId == zoneInfo.attackerKingdomId
     ) || isAlliance;
 
     if (isSameSide && defenderHp == 0) {
-      if (zoneType == ZoneType.Green) {
+      if (zoneInfo.attackerZoneType == ZoneType.Green || zoneInfo.defenderZoneType == ZoneType.Green) {
         attackerFame = attackerFame > 50 ? attackerFame - 50 : 1; // min fame is 1
         CharStats2.set(attackerId, attackerFame);
         attackerFameChange = -50;
@@ -128,10 +120,10 @@ contract PvPSystem is System, CharacterAccessControl {
     if (zoneInfo.attackerKingdomId == zoneInfo.defenderKingdomId) return; // same kingdom, no fame change
 
     uint32 defenderFame = CharStats2.getFame(defenderId);
-    if (attackerHp == 0 && attackerFame >= 1070) {
+    if (attackerHp == 0 && attackerFame >= 1070 && zoneInfo.attackerZoneType != ZoneType.Green) {
       _setFame(attackerId, defenderId, -20, 10); // fame transfer from attacker to defender
       _checkAndGiveAchievement(defenderId, zoneInfo);
-    } else if (defenderHp == 0 && defenderFame >= 1070 && zoneType != ZoneType.Green) {
+    } else if (defenderHp == 0 && defenderFame >= 1070 && zoneInfo.defenderZoneType != ZoneType.Green) {
       _setFame(attackerId, defenderId, 10, -20); // fame transfer from defender to attacker
       _checkAndGiveAchievement(attackerId, zoneInfo);
     }
