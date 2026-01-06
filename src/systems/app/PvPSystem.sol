@@ -101,7 +101,7 @@ contract PvPSystem is System, CharacterAccessControl {
     ) || isAlliance;
 
     if (isSameSide && defenderHp == 0) {
-      if (zoneInfo.tileZoneType != ZoneType.Black) {
+      if (zoneInfo.attackerZoneType == ZoneType.Green || zoneInfo.defenderZoneType == ZoneType.Green) {
         attackerFame = attackerFame > 50 ? attackerFame - 50 : 1; // min fame is 1
         CharStats2.set(attackerId, attackerFame);
         attackerFameChange = -50;
