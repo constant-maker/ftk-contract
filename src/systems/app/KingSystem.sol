@@ -13,6 +13,7 @@ import {
   AllianceV2,
   AllianceV2Data,
   KingSetting,
+  KingSetting2,
   TileInfo3,
   City,
   RestrictLocV2,
@@ -236,5 +237,11 @@ contract KingSystem is CharacterAccessControl, System {
     } else {
       revert Errors.KingSystem_InvalidRole(role);
     }
+  }
+
+  function setWithdrawWeightLimit(uint256 characterId, uint32 weightLimit) public onlyAuthorizedWallet(characterId) {
+    uint8 charKingdomId = CharInfo.getKingdomId(characterId);
+    CharacterRoleUtils.mustBeKing(charKingdomId, characterId);
+    KingSetting2.setWithdrawWeightLimit(charKingdomId, weightLimit);
   }
 }

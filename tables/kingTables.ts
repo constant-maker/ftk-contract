@@ -34,6 +34,13 @@ const KING_TABLES: any = {
     },
     key: ['kingdomId'],
   },
+  KingSetting2: {
+    schema: {
+      kingdomId: 'uint8',
+      withdrawWeightLimit: 'uint32', // daily weight limit for withdrawing resources from kingdom treasury
+    },
+    key: ['kingdomId'],
+  },
 }
 
 export default KING_TABLES;

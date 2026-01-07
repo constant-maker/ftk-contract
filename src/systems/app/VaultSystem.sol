@@ -14,15 +14,15 @@ import {
   CharStats2,
   ItemV2,
   CharVaultWithdraw,
-  CharVaultWithdrawData
+  CharVaultWithdrawData,
+  KingSetting2
 } from "@codegen/index.sol";
 import { RoleType } from "@codegen/common.sol";
 import { CharacterPositionUtils, InventoryItemUtils, CharacterFundUtils, MapUtils } from "@utils/index.sol";
 import { Errors } from "@common/Errors.sol";
 
 contract VaultSystem is System, CharacterAccessControl {
-  uint32 constant DAILY_WITHDRAW_LIMIT = 2000; // weight
-
+  
   function withdrawItemFromCity(
     uint256 characterId,
     uint256 cityId,
@@ -56,17 +56,20 @@ contract VaultSystem is System, CharacterAccessControl {
       uint32 newVaultAmount = currentVaultAmount - amounts[i];
       CityVault.setAmount(cityId, itemIds[i], newVaultAmount);
     }
-    // check daily withdraw limit
-    CharVaultWithdrawData memory cvw = CharVaultWithdraw.get(characterId);
-    if (cvw.markTimestamp == 0 || (cvw.markTimestamp + 1 days) < block.timestamp) {
-      cvw.weightQuota = DAILY_WITHDRAW_LIMIT; // reset daily limit
-      CharVaultWithdraw.setMarkTimestamp(characterId, block.timestamp);
+    uint32 withdrawWeightLimit = KingSetting2.getWithdrawWeightLimit(kingdomId);
+    if (withdrawWeightLimit > 0) {
+      // check daily withdraw limit
+      CharVaultWithdrawData memory cvw = CharVaultWithdraw.get(characterId);
+      if (cvw.markTimestamp == 0 || (cvw.markTimestamp + 1 days) < block.timestamp) {
+        cvw.weightQuota = withdrawWeightLimit; // reset daily limit
+        CharVaultWithdraw.setMarkTimestamp(characterId, block.timestamp);
+      }
+      if (cvw.weightQuota < totalWithdrawWeight) {
+        revert Errors.VaultSystem_ExceedDailyWithdrawLimit(characterId, cvw.weightQuota, totalWithdrawWeight);
+      }
+      cvw.weightQuota -= totalWithdrawWeight;
+      CharVaultWithdraw.setWeightQuota(characterId, cvw.weightQuota);
     }
-    if (cvw.weightQuota < totalWithdrawWeight) {
-      revert Errors.VaultSystem_ExceedDailyWithdrawLimit(characterId, cvw.weightQuota, totalWithdrawWeight);
-    }
-    cvw.weightQuota -= totalWithdrawWeight;
-    CharVaultWithdraw.setWeightQuota(characterId, cvw.weightQuota);
     InventoryItemUtils.addItems(characterId, itemIds, amounts);
     CVaultHistoryV3.set(cityId, _getVaultHistoryId(cityId), characterId, 0, block.timestamp, false, itemIds, amounts);
   }

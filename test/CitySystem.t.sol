@@ -35,7 +35,8 @@ import {
   CharNextPositionData,
   CityMoveHistory,
   CharVaultWithdraw,
-  CharVaultWithdrawData
+  CharVaultWithdrawData,
+  KingSetting2
 } from "@codegen/index.sol";
 import { RoleType } from "@codegen/common.sol";
 import { CharacterPositionUtils, InventoryItemUtils } from "@utils/index.sol";
@@ -346,6 +347,7 @@ contract CitySystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixtur
     CityVault.setAmount(cityId, 2, 1000);
     CityVault.setAmount(cityId, 3, 1000);
     CharStats.setLevel(voterId, 80);
+    KingSetting2.setWithdrawWeightLimit(1, 2000);
     vm.stopPrank();
 
     vm.startPrank(candidate);
