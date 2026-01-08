@@ -358,12 +358,12 @@ contract CitySystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixtur
     resourceIds[0] = 1;
     resourceIds[1] = 2;
     resourceIds[2] = 3;
-  
+
     uint32[] memory withdrawAmounts = new uint32[](3);
     withdrawAmounts[0] = 1000;
     withdrawAmounts[1] = 1000;
     withdrawAmounts[2] = 1000;
-    
+
     vm.expectRevert(); // exceed daily withdraw limit
     vm.startPrank(voter);
     world.app__withdrawItemFromCity(voterId, cityId, resourceIds, withdrawAmounts);
@@ -378,7 +378,7 @@ contract CitySystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixtur
     vm.stopPrank();
 
     CharVaultWithdrawData memory cvw = CharVaultWithdraw.get(voterId);
-    assertEq(cvw.weightQuota,  1700); // 2000 - (100*1 + 100*1 + 100*1) = 1700
+    assertEq(cvw.weightQuota, 1700); // 2000 - (100*1 + 100*1 + 100*1) = 1700
     uint256 ts = cvw.markTimestamp;
 
     vm.warp(ts + 1 days + 1);
@@ -389,7 +389,7 @@ contract CitySystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixtur
     world.app__withdrawItemFromCity(voterId, cityId, resourceIds, withdrawAmounts);
     vm.stopPrank();
     cvw = CharVaultWithdraw.get(voterId);
-    assertEq(cvw.weightQuota,  1970); // reset to 2000 - (10*1 + 10*1 + 10*1) = 1970
+    assertEq(cvw.weightQuota, 1970); // reset to 2000 - (10*1 + 10*1 + 10*1) = 1970
     assertEq(cvw.markTimestamp, ts + 1 days + 1);
 
     vm.warp(ts + 1);
@@ -397,7 +397,7 @@ contract CitySystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixtur
     world.app__withdrawItemFromCity(voterId, cityId, resourceIds, withdrawAmounts);
     vm.stopPrank();
     cvw = CharVaultWithdraw.get(voterId);
-    assertEq(cvw.weightQuota,  1940); // 1970 - (10*1 + 10*1 + 10*1) = 1940
+    assertEq(cvw.weightQuota, 1940); // 1970 - (10*1 + 10*1 + 10*1) = 1940
     assertEq(cvw.markTimestamp, ts + 1 days + 1); // no change
   }
 }

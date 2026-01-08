@@ -22,7 +22,6 @@ import { CharacterPositionUtils, InventoryItemUtils, CharacterFundUtils, MapUtil
 import { Errors } from "@common/Errors.sol";
 
 contract VaultSystem is System, CharacterAccessControl {
-  
   function withdrawItemFromCity(
     uint256 characterId,
     uint256 cityId,
@@ -60,12 +59,15 @@ contract VaultSystem is System, CharacterAccessControl {
     if (withdrawWeightLimit > 0) {
       // check daily withdraw limit
       CharVaultWithdrawData memory cvw = CharVaultWithdraw.get(characterId);
-      if (cvw.markTimestamp == 0 || (cvw.markTimestamp + 1 days) < block.timestamp) {
+      uint256 nextResetTime = cvw.markTimestamp + 1 days;
+      if (cvw.markTimestamp == 0 || nextResetTime < block.timestamp) {
         cvw.weightQuota = withdrawWeightLimit; // reset daily limit
         CharVaultWithdraw.setMarkTimestamp(characterId, block.timestamp);
       }
       if (cvw.weightQuota < totalWithdrawWeight) {
-        revert Errors.VaultSystem_ExceedDailyWithdrawLimit(characterId, cvw.weightQuota, totalWithdrawWeight);
+        revert Errors.VaultSystem_ExceedDailyWithdrawLimit(
+          characterId, cvw.weightQuota, totalWithdrawWeight, nextResetTime
+        );
       }
       cvw.weightQuota -= totalWithdrawWeight;
       CharVaultWithdraw.setWeightQuota(characterId, cvw.weightQuota);
