@@ -75,7 +75,7 @@ contract KingSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixtur
 
     KingElectionData memory k1Election = KingElection.get(candidateKingdomId);
     assertEq(k1Election.candidateIds[0], candidateId);
-    assertEq(k1Election.votesReceived[0], 0);
+    assertEq(k1Election.votesReceived[0], 500);
     assertEq(k1Election.timestamp, 1 + OFFSET_DURATION);
 
     KingElectionData memory k2Election = KingElection.get(2);
@@ -110,7 +110,7 @@ contract KingSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixtur
     world.app__voteKing(voterId, candidateId);
     vm.stopPrank();
     k1Election = KingElection.get(candidateKingdomId);
-    assertEq(k1Election.votesReceived[0], 50);
+    assertEq(k1Election.votesReceived[0], 550);
     CharVoteData memory charVote = CharVote.get(voterId);
     assertEq(charVote.votePower, 50);
     assertEq(charVote.candidateId, candidateId);
@@ -179,7 +179,7 @@ contract KingSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixtur
     assertEq(k2Election.candidateIds.length, 1);
     assertEq(k2Election.candidateIds[0], voter2Id);
     assertEq(k2Election.votesReceived.length, 1);
-    assertEq(k2Election.votesReceived[0], 0);
+    assertEq(k2Election.votesReceived[0], 550);
     assertEq(k2Election.timestamp, block.timestamp + OFFSET_DURATION);
     uint256 kingdom2ElectionTimestamp = k2Election.timestamp;
     vm.warp(block.timestamp + OFFSET_DURATION + 1);

@@ -27,6 +27,8 @@ import { SpawnSystem } from "@systems/index.sol";
 import { CharacterInfoMock } from "@mocks/CharacterInfoMock.sol";
 import { SystemUtils } from "@utils/SystemUtils.sol";
 import { CharacterStateUtils } from "@utils/CharacterStateUtils.sol";
+import { Balances } from "@latticexyz/world/src/codegen/tables/Balances.sol";
+import { WorldResourceIdLib, WorldResourceIdInstance } from "@latticexyz/world/src/WorldResourceId.sol";
 
 abstract contract SpawnSystemFixture is WorldFixture {
   address player = makeAddr("player1");
@@ -50,13 +52,15 @@ abstract contract SpawnSystemFixture is WorldFixture {
     internal
     returns (uint256 _characterId)
   {
+    vm.deal(_player, 1 ether);
+
     vm.startPrank(_player);
 
     ResourceId spawnSystemResourceId = SystemUtils.getRootSystemId("SpawnSystem");
     bytes memory data = abi.encodeCall(SpawnSystem.createCharacter, characterInfoData);
 
     vm.recordLogs();
-    world.call(spawnSystemResourceId, data);
+    world.call{ value: 0.0001 ether }(spawnSystemResourceId, data);
 
     Vm.Log[] memory logs = vm.getRecordedLogs();
     bool gotCharacterCreated;
@@ -245,13 +249,65 @@ contract CreateCharacter is SpawnSystemFixture {
     bytes memory data = abi.encodeWithSignature("createCharacter((uint8,uint8,uint16[3],string))", testData);
 
     address player = makeAddr("player");
+    vm.deal(player, 1 ether);
 
     vm.startPrank(player);
 
     // (bool success, bytes memory result) = address(mockTest).call(data);
-    (bool success, bytes memory result) = address(world).call(data);
+    (bool success, bytes memory result) = address(world).call{ value: 0.0001 ether }(data);
     assertTrue(success);
 
     vm.stopPrank();
+  }
+
+  function test_TransferNFT() external {
+    uint256 characterId = _createCharacter(player, CharacterInfoMock.getCharacterInfoData());
+
+    // expect character nft is minted
+    _expectCharacterNftOwner(characterId, player);
+
+    address bob = makeAddr("bob");
+
+    // transfer NFT to bob
+    IERC721Mintable token = IERC721Mintable(Contracts.getErc721Token());
+
+    vm.startPrank(player);
+    token.safeTransferFrom(player, bob, characterId);
+    vm.stopPrank();
+
+    // expect character nft is owned by bob
+    _expectCharacterNftOwner(characterId, bob);
+
+    // expect active char is updated
+    ActiveCharData memory activeCharData = ActiveChar.get(characterId);
+    assertEq(activeCharData.wallet, bob);
+    assertEq(activeCharData.sessionWallet, address(0));
+  }
+
+  function test_TransferNFTWithData() external {
+    uint256 characterId = _createCharacter(player, CharacterInfoMock.getCharacterInfoData());
+
+    // expect character nft is minted
+    _expectCharacterNftOwner(characterId, player);
+
+    uint256 balance = Balances.getBalance(WorldResourceIdLib.encodeNamespace("")); // root space
+    assertEq(balance, 0.0001 ether);
+
+    address bob = makeAddr("bob");
+
+    // transfer NFT to bob
+    IERC721Mintable token = IERC721Mintable(Contracts.getErc721Token());
+    bytes memory data = abi.encodePacked("some data");
+    vm.startPrank(player);
+    token.safeTransferFrom(player, bob, characterId, data);
+    vm.stopPrank();
+
+    // expect character nft is owned by bob
+    _expectCharacterNftOwner(characterId, bob);
+
+    // expect active char is updated
+    ActiveCharData memory activeCharData = ActiveChar.get(characterId);
+    assertEq(activeCharData.wallet, bob);
+    assertEq(activeCharData.sessionWallet, address(0));
   }
 }

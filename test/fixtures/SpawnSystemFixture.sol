@@ -43,13 +43,14 @@ abstract contract SpawnSystemFixture is WorldFixture {
     internal
     returns (uint256 _characterId)
   {
+    vm.deal(_player, 1 ether);
     vm.startPrank(_player);
 
     ResourceId spawnSystemResourceId = SystemUtils.getRootSystemId("SpawnSystem");
     bytes memory data = abi.encodeCall(SpawnSystem.createCharacter, characterInfoData);
 
     vm.recordLogs();
-    world.call(spawnSystemResourceId, data);
+    world.call{ value: 0.0001 ether }(spawnSystemResourceId, data);
 
     Vm.Log[] memory logs = vm.getRecordedLogs();
     bool gotCharacterCreated;

@@ -49,7 +49,8 @@ contract KingSystem is CharacterAccessControl, System {
       }
     }
     KingElection.pushCandidateIds(kingdomId, characterId);
-    KingElection.pushVotesReceived(kingdomId, 0);
+    uint32 initVote = (fame - Config.DEFAULT_FAME) / 2;
+    KingElection.pushVotesReceived(kingdomId, initVote);
     CandidatePromise.set(characterId, block.timestamp, promiseSummary);
   }
 

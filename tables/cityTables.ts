@@ -72,6 +72,13 @@ const CITY_TABLES: any = {
     },
     key: ['characterId'],
   },
+  WithdrawRestriction: {
+    schema: {
+      itemId: "uint256",
+      isRestricted: "bool",
+    },
+    key: ['itemId'],
+  },
   HistoryCounter: {
     schema: {
       cityId: "uint256",

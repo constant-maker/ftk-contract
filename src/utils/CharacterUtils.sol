@@ -18,7 +18,7 @@ import { Errors } from "@common/Errors.sol";
 import { Config } from "@common/Config.sol";
 
 library CharacterUtils {
-  /// @dev Mint character ERC721. Caller must have permission to call ERC721Sytem
+  /// @dev Mint character ERC721. Caller must have permission to call ERC721System
   function mintERC721(address owner) internal returns (uint256 characterId) {
     uint256 newSupply = CharSupply.get() + 1;
     IERC721Mintable token = IERC721Mintable(Contracts.getErc721Token());

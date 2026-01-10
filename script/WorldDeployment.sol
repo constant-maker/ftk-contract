@@ -2,6 +2,7 @@ pragma solidity >=0.8.24;
 
 import { console2 } from "forge-std/console2.sol";
 import { ResourceId } from "@latticexyz/store/src/ResourceId.sol";
+import { NamespaceOwner } from "@latticexyz/world/src/codegen/tables/NamespaceOwner.sol";
 import { WorldResourceIdLib, WorldResourceIdInstance } from "@latticexyz/world/src/WorldResourceId.sol";
 import { PuppetModule } from "@latticexyz/world-modules/src/modules/puppet/PuppetModule.sol";
 import { ERC721MetadataData } from "@latticexyz/world-modules/src/modules/erc721-puppet/tables/ERC721Metadata.sol";
@@ -103,6 +104,7 @@ contract WorldDeployment is Script {
     // register hook
     NFTTransferHook nftTransferHook = new NFTTransferHook();
     world.registerSystemHook(_erc721SystemId(characterNFT), nftTransferHook, AFTER_CALL_SYSTEM);
+    world.grantAccess(WorldResourceIdLib.encodeNamespace("app"), address(nftTransferHook)); // allow to update store
 
     // transfer ownership to world
     world.transferOwnership(WorldResourceIdLib.encodeNamespace(characterNFT), worldAddress);

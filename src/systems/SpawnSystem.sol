@@ -11,7 +11,10 @@ import { Errors, Events, Config } from "@common/index.sol";
 
 contract SpawnSystem is System {
   /// @dev User call this function to create character, expect to be called once
-  function createCharacter(CharInfoData memory data) public {
+  function createCharacter(CharInfoData memory data) public payable {
+    if (_msgValue() != 0.0001 ether) {
+      revert Errors.SpawnSystem_InsufficientCreateCharacterFee(_msgValue());
+    }
     address wallet = _msgSender();
     // Validate inputs
     _validateCreateCharacterData(data);
