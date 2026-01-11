@@ -21,11 +21,18 @@ import {
   Kingdom,
   CharRole,
   CharRoleCounter,
-  KingdomCityCounter
+  KingdomCityCounter,
+  VaultRestriction
 } from "@codegen/index.sol";
 import { CharAchievementUtils, MapUtils, CharacterRoleUtils, KingSystemUtils } from "@utils/index.sol";
 import { Errors, Config } from "@common/index.sol";
 import { ZoneType, RoleType } from "@codegen/common.sol";
+import { VaultRestrictionParam } from "./KingSystem.sol";
+
+struct VaultRestrictionParam {
+  uint256 itemId;
+  bool isRestricted;
+}
 
 contract KingSystem is CharacterAccessControl, System {
   uint32 constant KING_MIN_FAME_REQUIRE = 2000;
@@ -244,5 +251,18 @@ contract KingSystem is CharacterAccessControl, System {
     uint8 charKingdomId = CharInfo.getKingdomId(characterId);
     CharacterRoleUtils.mustBeKing(charKingdomId, characterId);
     KingSetting2.setWithdrawWeightLimit(charKingdomId, weightLimit);
+  }
+
+  function setWithdrawRestriction(uint256 characterId, VaultRestrictionParam[] calldata data) public onlyAuthorizedWallet(characterId) {
+    uint8 charKingdomId = CharInfo.getKingdomId(characterId);
+    CharacterRoleUtils.mustBeKing(charKingdomId, characterId);
+    for (uint256 i = 0; i < data.length; i++) {
+      uint256 itemId = data[i].itemId;
+      if (!data[i].isRestricted) {
+        VaultRestriction.deleteRecord(charKingdomId, itemId);
+        continue;
+      }
+      VaultRestriction.setIsRestricted(charKingdomId, itemId, data[i].isRestricted);
+    }
   }
 }

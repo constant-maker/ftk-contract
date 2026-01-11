@@ -16,7 +16,7 @@ import {
   CharVaultWithdraw,
   CharVaultWithdrawData,
   KingSetting2,
-  WithdrawRestriction
+  VaultRestriction
 } from "@codegen/index.sol";
 import { RoleType } from "@codegen/common.sol";
 import { CharacterPositionUtils, InventoryItemUtils, CharacterFundUtils, MapUtils } from "@utils/index.sol";
@@ -35,7 +35,7 @@ contract VaultSystem is System, CharacterAccessControl {
     uint8 kingdomId = City.getKingdomId(cityId);
     bool isKing = KingElection.getKingId(kingdomId) == characterId;
 
-    _validateWithdrawInput(characterId, cityId, itemIds, amounts, isKing);
+    _validateWithdrawInput(characterId, cityId, itemIds, amounts, isKing, kingdomId);
 
     uint8 charKingdomId = CharInfo.getKingdomId(characterId);
     if (kingdomId != charKingdomId) {
@@ -125,7 +125,8 @@ contract VaultSystem is System, CharacterAccessControl {
     uint256 cityId,
     uint256[] memory itemIds,
     uint32[] memory amounts,
-    bool isKing
+    bool isKing,
+    uint8 kingdomId
   )
     private
     view
@@ -135,12 +136,8 @@ contract VaultSystem is System, CharacterAccessControl {
     if (isKing) return;
 
     for (uint256 i = 0; i < itemIds.length; i++) {
-      if (WithdrawRestriction.getIsRestricted(itemIds[i])) {
-        revert Errors.VaultSystem_KingOnlyItemTier(characterId, itemIds[i]);
-      }
-      uint8 itemTier = ItemV2.getTier(itemIds[i]);
-      if (itemTier >= 7) {
-        revert Errors.VaultSystem_KingOnlyItemTier(characterId, itemIds[i]);
+      if (VaultRestriction.getIsRestricted(kingdomId, itemIds[i])) {
+        revert Errors.VaultSystem_WithdrawalRestricted(characterId, kingdomId, itemIds[i]);
       }
     }
   }
