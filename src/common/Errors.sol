@@ -19,6 +19,7 @@ library Errors {
   error SpawnSystem_InvalidCharacterName(string name);
   error SpawnSystem_InvalidKingdomId(uint8 kingdomId);
   error SpawnSystem_InvalidTraitStats(uint16 traitStats);
+  error SpawnSystem_InsufficientCreateCharacterFee(uint256 msgValue);
 
   /* -------------------------------------------------------------------------- */
   /*                                  Character                                 */
@@ -338,6 +339,7 @@ library Errors {
   error VaultSystem_ExceedDailyWithdrawLimit(
     uint256 characterId, uint32 currentQuota, uint32 withdrawWeight, uint256 nextResetTime
   );
+  error VaultSystem_WithdrawalRestricted(uint256 characterId, uint8 kingdomId, uint256 itemId);
 
   /* -------------------------------------------------------------------------- */
   /*                               CitySystem                                   */

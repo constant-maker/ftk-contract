@@ -72,6 +72,14 @@ const CITY_TABLES: any = {
     },
     key: ['characterId'],
   },
+  VaultRestriction: { // restrict withdraw by kingdom
+    schema: {
+      kingdomId: "uint8",
+      itemId: "uint256",
+      isRestricted: "bool",
+    },
+    key: ['kingdomId', 'itemId'],
+  },
   HistoryCounter: {
     schema: {
       cityId: "uint256",

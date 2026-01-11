@@ -15,7 +15,8 @@ import {
   ItemV2,
   CharVaultWithdraw,
   CharVaultWithdrawData,
-  KingSetting2
+  KingSetting2,
+  VaultRestriction
 } from "@codegen/index.sol";
 import { RoleType } from "@codegen/common.sol";
 import { CharacterPositionUtils, InventoryItemUtils, CharacterFundUtils, MapUtils } from "@utils/index.sol";
@@ -31,14 +32,16 @@ contract VaultSystem is System, CharacterAccessControl {
     public
     onlyAuthorizedWallet(characterId)
   {
-    _validateInput(characterId, cityId, itemIds, amounts);
-
     uint8 kingdomId = City.getKingdomId(cityId);
+    bool isKing = KingElection.getKingId(kingdomId) == characterId;
+
+    _validateWithdrawInput(characterId, cityId, itemIds, amounts, isKing, kingdomId);
+
     uint8 charKingdomId = CharInfo.getKingdomId(characterId);
     if (kingdomId != charKingdomId) {
       revert Errors.VaultSystem_CharacterNotInSameKingdom(characterId, cityId);
     }
-    if (KingElection.getKingId(kingdomId) != characterId && CharRole.get(characterId) != RoleType.VaultKeeper) {
+    if (!isKing && CharRole.get(characterId) != RoleType.VaultKeeper) {
       revert Errors.VaultSystem_MustBeVaultKeeper(characterId);
     }
     uint32 totalWithdrawWeight;
@@ -56,7 +59,8 @@ contract VaultSystem is System, CharacterAccessControl {
       CityVault.setAmount(cityId, itemIds[i], newVaultAmount);
     }
     uint32 withdrawWeightLimit = KingSetting2.getWithdrawWeightLimit(kingdomId);
-    if (withdrawWeightLimit > 0) {
+    if (withdrawWeightLimit > 0 && !isKing) {
+      // King has no limit
       // check daily withdraw limit
       CharVaultWithdrawData memory cvw = CharVaultWithdraw.get(characterId);
       uint256 nextResetTime = cvw.markTimestamp + 1 days;
@@ -116,6 +120,28 @@ contract VaultSystem is System, CharacterAccessControl {
     return newCounter % 100; // wrap around after 100 entries
   }
 
+  function _validateWithdrawInput(
+    uint256 characterId,
+    uint256 cityId,
+    uint256[] memory itemIds,
+    uint32[] memory amounts,
+    bool isKing,
+    uint8 kingdomId
+  )
+    private
+    view
+  {
+    _validateInput(characterId, cityId, itemIds, amounts);
+
+    if (isKing) return;
+
+    for (uint256 i = 0; i < itemIds.length; i++) {
+      if (VaultRestriction.getIsRestricted(kingdomId, itemIds[i])) {
+        revert Errors.VaultSystem_WithdrawalRestricted(characterId, kingdomId, itemIds[i]);
+      }
+    }
+  }
+
   function _validateInput(
     uint256 characterId,
     uint256 cityId,
@@ -123,6 +149,7 @@ contract VaultSystem is System, CharacterAccessControl {
     uint32[] memory amounts
   )
     private
+    view
   {
     CharacterPositionUtils.mustInCity(characterId, cityId);
     MapUtils.mustBeActiveCity(cityId);
