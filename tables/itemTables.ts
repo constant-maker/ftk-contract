@@ -140,6 +140,14 @@ const ITEM_TABLES: any = {
     },
     key: ['itemId'],
   },
+  CollectionExchange: {
+    schema: {
+      inputItemId: "uint256",
+      outputItemId: "uint256",
+      inputAmount: "uint32",
+    },
+    key: ['inputItemId', 'outputItemId'],
+  }
 };
 
 export default ITEM_TABLES;

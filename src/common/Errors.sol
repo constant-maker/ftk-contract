@@ -376,4 +376,14 @@ library Errors {
   error Gacha_NoItemLeft(uint256 gachaId);
   error Gacha_InactiveGacha(uint256 gachaId);
   error GachaSystem_InvalidRequestId(uint256 requestId);
+
+  /* -------------------------------------------------------------------------- */
+  /*                               CollectionSystem                                  */
+  /* -------------------------------------------------------------------------- */
+  error CollectionSystem_InvalidParams(uint256 lenItemIds, uint256 lenAmounts);
+  error CollectionSystem_ExchangeNotExist(uint256 inputItemId, uint256 outputItemId);
+  error CollectionSystem_InsufficientItemAmount(
+    uint256 characterId, uint256 inputItemId, uint256 outputItemId, uint32 requiredAmount, uint32 currentAmount
+  );
+  error CollectionSystem_ExceedMaxAmount(uint256 characterId, uint256 itemId);
 }

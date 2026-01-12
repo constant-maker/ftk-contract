@@ -274,6 +274,14 @@ const CHARACTER_TABLES: any = {
     },
     key: ['characterId'],
   },
+  CharCollection: {
+    schema: {
+      characterId: "uint256",
+      itemId: "uint256",
+      amount: "uint32",
+    },
+    key: ['characterId', 'itemId'],
+  },
 };
 
 export default CHARACTER_TABLES;

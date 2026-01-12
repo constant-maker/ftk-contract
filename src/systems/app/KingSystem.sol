@@ -253,7 +253,13 @@ contract KingSystem is CharacterAccessControl, System {
     KingSetting2.setWithdrawWeightLimit(charKingdomId, weightLimit);
   }
 
-  function setWithdrawRestriction(uint256 characterId, VaultRestrictionParam[] calldata data) public onlyAuthorizedWallet(characterId) {
+  function setWithdrawRestriction(
+    uint256 characterId,
+    VaultRestrictionParam[] calldata data
+  )
+    public
+    onlyAuthorizedWallet(characterId)
+  {
     uint8 charKingdomId = CharInfo.getKingdomId(characterId);
     CharacterRoleUtils.mustBeKing(charKingdomId, characterId);
     for (uint256 i = 0; i < data.length; i++) {
