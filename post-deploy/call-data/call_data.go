@@ -592,3 +592,16 @@ func BuildResourceDropData(l *zap.SugaredLogger, dataConfig common.DataConfig) (
 	}
 	return [][]byte{data}, nil
 }
+
+func BuildCollectionExcData(l *zap.SugaredLogger, dataConfig common.DataConfig) ([][]byte, error) {
+	callData := make([][]byte, 0)
+	for _, itemEx := range dataConfig.ItemExchanges {
+		itemExCallData, err := table.CollectionExcCallData(itemEx)
+		if err != nil {
+			l.Errorw("cannot build ItemExchange call data", "err", err)
+			return nil, err
+		}
+		callData = append(callData, itemExCallData)
+	}
+	return callData, nil
+}

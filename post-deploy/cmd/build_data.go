@@ -166,6 +166,14 @@ func buildCallData(
 	}
 	callData = append(callData, itemRecipeCallData...)
 
+	// item exchange - collection exc
+	itemExchangeCallData, err := calldata.BuildCollectionExcData(l, dataConfig)
+	if err != nil {
+		l.Errorw("cannot build itemExchangeCallData", "err", err)
+		return nil, err
+	}
+	callData = append(callData, itemExchangeCallData...)
+
 	// welcome config
 	l.Infow("welcomeConfig", "value", dataConfig.WelcomeConfig)
 	welcomeConfigCallData, err := table.WelcomeConfigCallData(dataConfig.WelcomeConfig)
