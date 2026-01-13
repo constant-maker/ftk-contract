@@ -615,6 +615,10 @@ func getListEquipmentUpdate(dataConfig DataConfig) ([]Item, []ItemRecipe, error)
 			GoldCost:    mustStringToInt(record[goldCostIndex], goldCostIndex),
 			FameCost:    mustStringToInt(record[fameCostIndex], fameCostIndex),
 		}
+		if equipmentRecipe.FameCost == 0 && equipmentRecipe.GoldCost == 0 && len(equipmentRecipe.Ingredients) == 0 {
+			l.Warnw("equipment recipe is empty, skip", "data", record)
+			continue
+		}
 		if len(perkItemTypes) > 0 {
 			equipmentRecipe.PerkItemTypes = perkItemTypes
 			equipmentRecipe.RequiredPerkLevels = requiredPerkLevels

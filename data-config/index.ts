@@ -10,6 +10,7 @@ import monsters from './monsters.json';
 import monsterLocations from './monsterLocations.json';
 import monsterLocationsBoss from './monsterLocationsBoss.json';
 import achievements from './achievements.json';
+import itemExchanges from './itemExchanges.json';
 
 const dataConfig = {
   ...types,
@@ -23,7 +24,8 @@ const dataConfig = {
   ...monsters,
   ...monsterLocations,
   ...monsterLocationsBoss,
-  ...achievements
+  ...achievements,
+  ...itemExchanges,
 };
 
 export default dataConfig;
