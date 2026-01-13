@@ -4,7 +4,7 @@ import { System } from "@latticexyz/world/src/System.sol";
 import { CharacterAccessControl } from "@abstracts/CharacterAccessControl.sol";
 import { Errors } from "@common/Errors.sol";
 import { CharacterPositionUtils, CharacterItemUtils, InventoryItemUtils } from "@utils/index.sol";
-import { City, CharCollection, CollectionExchange, ItemV2 } from "@codegen/index.sol";
+import { City, CharCollection, CollectionExcV2, CollectionExcV2Data, ItemV2 } from "@codegen/index.sol";
 import { ItemCategoryType } from "@codegen/common.sol";
 
 contract CollectionSystem is System, CharacterAccessControl {
@@ -43,30 +43,24 @@ contract CollectionSystem is System, CharacterAccessControl {
     }
   }
 
-  function exchangeItem(
-    uint256 characterId,
-    uint256 inputItemId,
-    uint256 outputItemId,
-    uint32 outputItemAmount
-  )
-    public
-    onlyCharacterOwner(characterId)
-  {
-    uint32 inputAmountRequire = CollectionExchange.get(inputItemId, outputItemId);
-    if (inputAmountRequire == 0) {
-      revert Errors.CollectionSystem_ExchangeNotExist(inputItemId, outputItemId);
-    }
-    // total input amount required
-    uint32 totalAmountRequire = inputAmountRequire * outputItemAmount;
-    uint32 currentAmount = CharCollection.get(characterId, inputItemId);
-    if (currentAmount < totalAmountRequire) {
-      revert Errors.CollectionSystem_InsufficientItemAmount(
-        characterId, inputItemId, outputItemId, totalAmountRequire, currentAmount
-      );
+  function exchangeItem(uint256 characterId, uint256 itemId, uint32 amount) public onlyCharacterOwner(characterId) {
+    CollectionExcV2Data memory exchangeData = CollectionExcV2.get(itemId);
+    if (exchangeData.inputItemIds.length == 0) {
+      revert Errors.CollectionSystem_ExchangeNotExist(itemId);
     }
     // deduct input items
-    CharCollection.set(characterId, inputItemId, currentAmount - totalAmountRequire);
+    for (uint256 i = 0; i < exchangeData.inputItemAmounts.length; i++) {
+      uint256 inputItemId = exchangeData.inputItemIds[i];
+      uint32 amountRequire = exchangeData.inputItemAmounts[i] * uint32(amount);
+      uint32 currentAmount = CharCollection.get(characterId, inputItemId);
+      if (currentAmount < amountRequire) {
+        revert Errors.CollectionSystem_InsufficientItemAmount(
+          characterId, inputItemId, itemId, amountRequire, currentAmount
+        );
+      }
+      CharCollection.set(characterId, inputItemId, currentAmount - amountRequire);
+    }
     // add output items
-    CharacterItemUtils.addNewItem(characterId, outputItemId, outputItemAmount); // add to inventory
+    CharacterItemUtils.addNewItem(characterId, itemId, amount); // add to inventory
   }
 }

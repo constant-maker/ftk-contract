@@ -140,13 +140,13 @@ const ITEM_TABLES: any = {
     },
     key: ['itemId'],
   },
-  CollectionExchange: {
+  CollectionExcV2: {
     schema: {
-      inputItemId: "uint256",
-      outputItemId: "uint256",
-      inputAmount: "uint32",
+      itemId: "uint256",
+      inputItemIds: "uint256[]",
+      inputItemAmounts: "uint32[]",
     },
-    key: ['inputItemId', 'outputItemId'],
+    key: ['itemId',],
   }
 };
 

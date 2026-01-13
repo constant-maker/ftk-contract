@@ -4,7 +4,7 @@ import { Vm } from "forge-std/Vm.sol";
 import { WorldFixture } from "@fixtures/WorldFixture.sol";
 import { SpawnSystemFixture } from "@fixtures/SpawnSystemFixture.sol";
 import { MoveSystemFixture } from "@fixtures/MoveSystemFixture.sol";
-import { CharCollection, CollectionExchange, CharOtherItem } from "@codegen/index.sol";
+import { CharCollection, CollectionExcV2, CharOtherItem } from "@codegen/index.sol";
 import { CharacterAccessControl } from "@abstracts/CharacterAccessControl.sol";
 import { CharacterPositionUtils, InventoryItemUtils } from "@utils/index.sol";
 import { CharacterFundUtils } from "@utils/CharacterFundUtils.sol";
@@ -23,7 +23,11 @@ contract CollectionSystemTest is WorldFixture, SpawnSystemFixture, MoveSystemFix
 
   function test_CollectionSystem() external {
     vm.startPrank(worldDeployer);
-    CollectionExchange.set(1, 2, 100);
+    uint256[] memory inputItemIds = new uint256[](1);
+    inputItemIds[0] = 1;
+    uint32[] memory inputItemAmounts = new uint32[](1);
+    inputItemAmounts[0] = 100;
+    CollectionExcV2.set(2, inputItemIds, inputItemAmounts);
 
     InventoryItemUtils.addItem(characterId, 1, 100);
 
@@ -47,7 +51,7 @@ contract CollectionSystemTest is WorldFixture, SpawnSystemFixture, MoveSystemFix
 
     vm.expectRevert(); // insufficient item amount
     vm.prank(player);
-    world.app__exchangeItem(characterId, 1, 2, 1);
+    world.app__exchangeItem(characterId, 2, 1);
     vm.stopPrank();
 
     amounts[0] = 99;
@@ -62,7 +66,7 @@ contract CollectionSystemTest is WorldFixture, SpawnSystemFixture, MoveSystemFix
 
     vm.expectRevert(); // insufficient item amount
     vm.prank(player);
-    world.app__exchangeItem(characterId, 1, 2, 1);
+    world.app__exchangeItem(characterId, 2, 1);
     vm.stopPrank();
 
     amounts[0] = 1;
@@ -76,7 +80,7 @@ contract CollectionSystemTest is WorldFixture, SpawnSystemFixture, MoveSystemFix
     assertEq(amountInCollection, 100);
 
     vm.prank(player);
-    world.app__exchangeItem(characterId, 1, 2, 1);
+    world.app__exchangeItem(characterId, 2, 1);
     vm.stopPrank();
 
     remainingAmountInInventory = CharOtherItem.getAmount(characterId, 2);

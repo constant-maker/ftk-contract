@@ -381,7 +381,7 @@ library Errors {
   /*                               CollectionSystem                                  */
   /* -------------------------------------------------------------------------- */
   error CollectionSystem_InvalidParams(uint256 lenItemIds, uint256 lenAmounts);
-  error CollectionSystem_ExchangeNotExist(uint256 inputItemId, uint256 outputItemId);
+  error CollectionSystem_ExchangeNotExist(uint256 itemId);
   error CollectionSystem_InsufficientItemAmount(
     uint256 characterId, uint256 inputItemId, uint256 outputItemId, uint32 requiredAmount, uint32 currentAmount
   );
