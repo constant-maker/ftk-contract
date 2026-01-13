@@ -5216,6 +5216,45 @@
         }
       ],
       "goldCost": 50
+    },
+    "415": {
+      "itemId": 415,
+      "perkTypes": [
+        2
+      ],
+      "perkLevels": [
+        7
+      ]
+    },
+    "416": {
+      "itemId": 416,
+      "perkTypes": [
+        1
+      ],
+      "perkLevels": [
+        7
+      ]
+    },
+    "417": {
+      "itemId": 417,
+      "perkTypes": [
+        5
+      ],
+      "perkLevels": [
+        7
+      ]
+    },
+    "418": {
+      "itemId": 418,
+      "perkTypes": [
+        4
+      ],
+      "perkLevels": [
+        7
+      ]
+    },
+    "419": {
+      "itemId": 419
     }
   }
 }

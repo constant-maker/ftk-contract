@@ -162,6 +162,11 @@ type ItemRecipe struct {
 	FameCost           int          `json:"fameCost,omitempty"`
 }
 
+type ItemExchange struct {
+	ItemId      int          `json:"itemId"`
+	Ingredients []Ingredient `json:"ingredients,omitempty"`
+}
+
 type Npc struct {
 	Id     int64     `json:"id"`
 	CityId int64     `json:"cityId"`
@@ -325,22 +330,23 @@ type DailyQuestConfig struct {
 type RarityType string
 
 type DataConfig struct {
-	Achievements             map[string]Achievement `json:"achievements"` // map id => Achievement
-	Items                    map[string]Item        `json:"items"`        // map itemId => Item
-	WelcomeConfig            WelcomeConfig          `json:"welcomeConfig"`
-	CharacterQuestions       []CharacterQuestion    `json:"characterQuestions"`
-	Cities                   map[string]City        `json:"cities"`
-	Kingdoms                 map[string]Kingdom     `json:"kingdoms"`
-	Npcs                     map[string]Npc         `json:"npcs"`
-	TileInfos                []TileInfo             `json:"tileInfos"`
-	ItemRecipes              map[string]ItemRecipe  `json:"itemRecipes"`
-	DailyQuestConfig         DailyQuestConfig       `json:"dailyQuestConfig"`
-	Quests                   map[string]Quest3      `json:"quests"`
-	Skills                   map[string]Skill       `json:"skills"`
-	Monsters                 map[string]Monster     `json:"monsters"`
-	MonsterLocationsCache    []MonsterLocation      `json:"monsterLocationsCache"`
-	MonsterLocationsOverride []MonsterLocation      `json:"monsterLocationsOverride"`
-	MonsterLocationsBoss     []MonsterLocation      `json:"monsterLocationsBoss"`
+	Achievements             map[string]Achievement  `json:"achievements"` // map id => Achievement
+	Items                    map[string]Item         `json:"items"`        // map itemId => Item
+	WelcomeConfig            WelcomeConfig           `json:"welcomeConfig"`
+	CharacterQuestions       []CharacterQuestion     `json:"characterQuestions"`
+	Cities                   map[string]City         `json:"cities"`
+	Kingdoms                 map[string]Kingdom      `json:"kingdoms"`
+	Npcs                     map[string]Npc          `json:"npcs"`
+	TileInfos                []TileInfo              `json:"tileInfos"`
+	ItemRecipes              map[string]ItemRecipe   `json:"itemRecipes"`
+	DailyQuestConfig         DailyQuestConfig        `json:"dailyQuestConfig"`
+	Quests                   map[string]Quest3       `json:"quests"`
+	Skills                   map[string]Skill        `json:"skills"`
+	Monsters                 map[string]Monster      `json:"monsters"`
+	MonsterLocationsCache    []MonsterLocation       `json:"monsterLocationsCache"`
+	MonsterLocationsOverride []MonsterLocation       `json:"monsterLocationsOverride"`
+	MonsterLocationsBoss     []MonsterLocation       `json:"monsterLocationsBoss"`
+	ItemExchanges            map[string]ItemExchange `json:"itemExchanges"`
 
 	// enum type
 	ResourceTypes      map[ResourceType]int       `json:"resourceTypes"`      // enums

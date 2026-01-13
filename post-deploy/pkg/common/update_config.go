@@ -181,6 +181,13 @@ func UpdateDataConfig(dataConfig *DataConfig, basePath string) {
 		shouldRewriteFile = true
 		dataConfig.Items[intToString(card.Id)] = card // add
 	}
+	// update list item exchange
+	l.Infow("GET LIST ITEM EXCHANGE")
+	listItemExUpdate, err := getItemExUpdate(*dataConfig)
+	if err != nil {
+		l.Errorw("cannot get list item exchange update", "err", err)
+		panic(err)
+	}
 
 	// update list skill
 	shouldRewriteSkillFile := false
@@ -315,6 +322,27 @@ func UpdateDataConfig(dataConfig *DataConfig, basePath string) {
 		} else {
 			l.Infow("update itemRecipes.json successfully")
 		}
+	}
+
+	// reset shouldRewriteFile to check item exchange
+	for _, itemEx := range listItemExUpdate {
+		currentItemEx, ok := dataConfig.ItemExchanges[intToString(itemEx.ItemId)]
+		if reflect.DeepEqual(itemEx, currentItemEx) {
+			l.Infow("item exchange data unchanged")
+			continue
+		}
+		if !ok {
+			l.Infow("detect new item exchange", "data", itemEx)
+		} else {
+			l.Infow("detect item exchange update", "data", itemEx)
+		}
+		shouldRewriteFile = true
+		dataConfig.ItemExchanges[intToString(itemEx.ItemId)] = itemEx // add
+	}
+	if err := WriteSortedJsonFile(basePath+"/data-config/itemExchanges.json", "itemExchanges", dataConfig.ItemExchanges); err != nil {
+		l.Errorw("cannot update itemExchanges.json file", "err", err)
+	} else {
+		l.Infow("update itemExchanges.json successfully")
 	}
 }
 
@@ -876,7 +904,7 @@ func getMaterialList(rawRecord []string, rawS string, dataConfig DataConfig) []I
 		return nil
 	}
 	arr := strings.Split(rawS, "\n")
-	if len(arr) < 2 {
+	if len(arr) == 0 {
 		panic("invalid recipe data enter")
 	}
 	result := make([]Ingredient, 0)
@@ -1150,4 +1178,14 @@ func getRarity(rawText string) int {
 		zap.S().Panicw("invalid rarity", "rarity", rawText)
 	}
 	return -1
+}
+
+func findItemIDByName(name string, dataConfig DataConfig) int {
+	for _, item := range dataConfig.Items {
+		if item.Name == name {
+			return item.Id
+		}
+	}
+	zap.S().Panicw("cannot find item by name", "name", name)
+	return 0
 }

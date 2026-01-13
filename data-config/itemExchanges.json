@@ -1,0 +1,647 @@
+{
+  "itemExchanges": {
+    "74": {
+      "itemId": 74,
+      "ingredients": [
+        {
+          "id": 73,
+          "amount": 5000
+        }
+      ]
+    },
+    "82": {
+      "itemId": 82,
+      "ingredients": [
+        {
+          "id": 81,
+          "amount": 5000
+        }
+      ]
+    },
+    "90": {
+      "itemId": 90,
+      "ingredients": [
+        {
+          "id": 89,
+          "amount": 5000
+        }
+      ]
+    },
+    "98": {
+      "itemId": 98,
+      "ingredients": [
+        {
+          "id": 97,
+          "amount": 5000
+        }
+      ]
+    },
+    "106": {
+      "itemId": 106,
+      "ingredients": [
+        {
+          "id": 105,
+          "amount": 5000
+        }
+      ]
+    },
+    "114": {
+      "itemId": 114,
+      "ingredients": [
+        {
+          "id": 113,
+          "amount": 5000
+        }
+      ]
+    },
+    "268": {
+      "itemId": 268,
+      "ingredients": [
+        {
+          "id": 18,
+          "amount": 5000
+        }
+      ]
+    },
+    "269": {
+      "itemId": 269,
+      "ingredients": [
+        {
+          "id": 18,
+          "amount": 5000
+        }
+      ]
+    },
+    "270": {
+      "itemId": 270,
+      "ingredients": [
+        {
+          "id": 18,
+          "amount": 5000
+        }
+      ]
+    },
+    "271": {
+      "itemId": 271,
+      "ingredients": [
+        {
+          "id": 18,
+          "amount": 5000
+        }
+      ]
+    },
+    "272": {
+      "itemId": 272,
+      "ingredients": [
+        {
+          "id": 20,
+          "amount": 5000
+        }
+      ]
+    },
+    "273": {
+      "itemId": 273,
+      "ingredients": [
+        {
+          "id": 19,
+          "amount": 5000
+        }
+      ]
+    },
+    "274": {
+      "itemId": 274,
+      "ingredients": [
+        {
+          "id": 16,
+          "amount": 5000
+        }
+      ]
+    },
+    "275": {
+      "itemId": 275,
+      "ingredients": [
+        {
+          "id": 17,
+          "amount": 5000
+        }
+      ]
+    },
+    "276": {
+      "itemId": 276,
+      "ingredients": [
+        {
+          "id": 67,
+          "amount": 30
+        },
+        {
+          "id": 68,
+          "amount": 30
+        },
+        {
+          "id": 69,
+          "amount": 30
+        }
+      ]
+    },
+    "277": {
+      "itemId": 277,
+      "ingredients": [
+        {
+          "id": 18,
+          "amount": 5000
+        }
+      ]
+    },
+    "278": {
+      "itemId": 278,
+      "ingredients": [
+        {
+          "id": 18,
+          "amount": 5000
+        }
+      ]
+    },
+    "279": {
+      "itemId": 279,
+      "ingredients": [
+        {
+          "id": 18,
+          "amount": 5000
+        }
+      ]
+    },
+    "280": {
+      "itemId": 280,
+      "ingredients": [
+        {
+          "id": 18,
+          "amount": 5000
+        }
+      ]
+    },
+    "281": {
+      "itemId": 281,
+      "ingredients": [
+        {
+          "id": 121,
+          "amount": 5000
+        }
+      ]
+    },
+    "282": {
+      "itemId": 282,
+      "ingredients": [
+        {
+          "id": 120,
+          "amount": 10000
+        }
+      ]
+    },
+    "283": {
+      "itemId": 283,
+      "ingredients": [
+        {
+          "id": 119,
+          "amount": 5000
+        },
+        {
+          "id": 175,
+          "amount": 5000
+        }
+      ]
+    },
+    "284": {
+      "itemId": 284,
+      "ingredients": [
+        {
+          "id": 123,
+          "amount": 5000
+        }
+      ]
+    },
+    "285": {
+      "itemId": 285,
+      "ingredients": [
+        {
+          "id": 122,
+          "amount": 5000
+        },
+        {
+          "id": 176,
+          "amount": 5000
+        }
+      ]
+    },
+    "286": {
+      "itemId": 286,
+      "ingredients": [
+        {
+          "id": 124,
+          "amount": 10000
+        }
+      ]
+    },
+    "287": {
+      "itemId": 287,
+      "ingredients": [
+        {
+          "id": 125,
+          "amount": 5000
+        }
+      ]
+    },
+    "288": {
+      "itemId": 288,
+      "ingredients": [
+        {
+          "id": 126,
+          "amount": 10000
+        }
+      ]
+    },
+    "289": {
+      "itemId": 289,
+      "ingredients": [
+        {
+          "id": 127,
+          "amount": 5000
+        },
+        {
+          "id": 177,
+          "amount": 5000
+        }
+      ]
+    },
+    "290": {
+      "itemId": 290,
+      "ingredients": [
+        {
+          "id": 128,
+          "amount": 5000
+        }
+      ]
+    },
+    "291": {
+      "itemId": 291,
+      "ingredients": [
+        {
+          "id": 129,
+          "amount": 10000
+        }
+      ]
+    },
+    "292": {
+      "itemId": 292,
+      "ingredients": [
+        {
+          "id": 130,
+          "amount": 5000
+        },
+        {
+          "id": 178,
+          "amount": 5000
+        }
+      ]
+    },
+    "293": {
+      "itemId": 293,
+      "ingredients": [
+        {
+          "id": 250,
+          "amount": 10000
+        }
+      ]
+    },
+    "294": {
+      "itemId": 294,
+      "ingredients": [
+        {
+          "id": 251,
+          "amount": 10000
+        }
+      ]
+    },
+    "295": {
+      "itemId": 295,
+      "ingredients": [
+        {
+          "id": 252,
+          "amount": 10000
+        }
+      ]
+    },
+    "296": {
+      "itemId": 296,
+      "ingredients": [
+        {
+          "id": 253,
+          "amount": 10000
+        }
+      ]
+    },
+    "297": {
+      "itemId": 297,
+      "ingredients": [
+        {
+          "id": 254,
+          "amount": 10000
+        }
+      ]
+    },
+    "298": {
+      "itemId": 298,
+      "ingredients": [
+        {
+          "id": 255,
+          "amount": 10000
+        }
+      ]
+    },
+    "299": {
+      "itemId": 299,
+      "ingredients": [
+        {
+          "id": 256,
+          "amount": 10000
+        }
+      ]
+    },
+    "300": {
+      "itemId": 300,
+      "ingredients": [
+        {
+          "id": 257,
+          "amount": 10000
+        }
+      ]
+    },
+    "301": {
+      "itemId": 301,
+      "ingredients": [
+        {
+          "id": 350,
+          "amount": 10000
+        }
+      ]
+    },
+    "302": {
+      "itemId": 302,
+      "ingredients": [
+        {
+          "id": 348,
+          "amount": 10000
+        }
+      ]
+    },
+    "303": {
+      "itemId": 303,
+      "ingredients": [
+        {
+          "id": 4,
+          "amount": 2000
+        },
+        {
+          "id": 95,
+          "amount": 2000
+        }
+      ]
+    },
+    "304": {
+      "itemId": 304,
+      "ingredients": [
+        {
+          "id": 110,
+          "amount": 3000
+        }
+      ]
+    },
+    "305": {
+      "itemId": 305,
+      "ingredients": [
+        {
+          "id": 86,
+          "amount": 3000
+        }
+      ]
+    },
+    "306": {
+      "itemId": 306,
+      "ingredients": [
+        {
+          "id": 102,
+          "amount": 3000
+        }
+      ]
+    },
+    "307": {
+      "itemId": 307,
+      "ingredients": [
+        {
+          "id": 78,
+          "amount": 3000
+        }
+      ]
+    },
+    "308": {
+      "itemId": 308,
+      "ingredients": [
+        {
+          "id": 111,
+          "amount": 3000
+        }
+      ]
+    },
+    "309": {
+      "itemId": 309,
+      "ingredients": [
+        {
+          "id": 3,
+          "amount": 5000
+        }
+      ]
+    },
+    "310": {
+      "itemId": 310,
+      "ingredients": [
+        {
+          "id": 97,
+          "amount": 5000
+        }
+      ]
+    },
+    "311": {
+      "itemId": 311,
+      "ingredients": [
+        {
+          "id": 73,
+          "amount": 5000
+        }
+      ]
+    },
+    "312": {
+      "itemId": 312,
+      "ingredients": [
+        {
+          "id": 94,
+          "amount": 5000
+        }
+      ]
+    },
+    "313": {
+      "itemId": 313,
+      "ingredients": [
+        {
+          "id": 351,
+          "amount": 10000
+        }
+      ]
+    },
+    "314": {
+      "itemId": 314,
+      "ingredients": [
+        {
+          "id": 349,
+          "amount": 10000
+        }
+      ]
+    },
+    "316": {
+      "itemId": 316,
+      "ingredients": [
+        {
+          "id": 113,
+          "amount": 5000
+        }
+      ]
+    },
+    "317": {
+      "itemId": 317,
+      "ingredients": [
+        {
+          "id": 89,
+          "amount": 5000
+        }
+      ]
+    },
+    "318": {
+      "itemId": 318,
+      "ingredients": [
+        {
+          "id": 87,
+          "amount": 3000
+        }
+      ]
+    },
+    "319": {
+      "itemId": 319,
+      "ingredients": [
+        {
+          "id": 81,
+          "amount": 5000
+        }
+      ]
+    },
+    "320": {
+      "itemId": 320,
+      "ingredients": [
+        {
+          "id": 258,
+          "amount": 50
+        }
+      ]
+    },
+    "321": {
+      "itemId": 321,
+      "ingredients": [
+        {
+          "id": 259,
+          "amount": 50
+        }
+      ]
+    },
+    "322": {
+      "itemId": 322,
+      "ingredients": [
+        {
+          "id": 260,
+          "amount": 50
+        }
+      ]
+    },
+    "323": {
+      "itemId": 323,
+      "ingredients": [
+        {
+          "id": 261,
+          "amount": 50
+        }
+      ]
+    },
+    "420": {
+      "itemId": 420,
+      "ingredients": [
+        {
+          "id": 352,
+          "amount": 25
+        },
+        {
+          "id": 353,
+          "amount": 25
+        },
+        {
+          "id": 354,
+          "amount": 25
+        },
+        {
+          "id": 355,
+          "amount": 25
+        }
+      ]
+    },
+    "421": {
+      "itemId": 421,
+      "ingredients": [
+        {
+          "id": 380,
+          "amount": 50
+        }
+      ]
+    },
+    "422": {
+      "itemId": 422,
+      "ingredients": [
+        {
+          "id": 381,
+          "amount": 100
+        }
+      ]
+    },
+    "423": {
+      "itemId": 423,
+      "ingredients": [
+        {
+          "id": 382,
+          "amount": 100
+        }
+      ]
+    },
+    "424": {
+      "itemId": 424,
+      "ingredients": [
+        {
+          "id": 383,
+          "amount": 100
+        }
+      ]
+    },
+    "425": {
+      "itemId": 425,
+      "ingredients": [
+        {
+          "id": 384,
+          "amount": 100
+        }
+      ]
+    }
+  }
+}

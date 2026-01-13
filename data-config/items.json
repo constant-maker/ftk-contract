@@ -4355,7 +4355,7 @@
       "category": 2,
       "tier": 1,
       "weight": 0,
-      "name": "Moripuru",
+      "name": "Moripuru Card",
       "desc": "This green slime is commonly found in lush jungles.",
       "untradable": false,
       "cardInfo": {
@@ -4371,7 +4371,7 @@
       "category": 2,
       "tier": 1,
       "weight": 0,
-      "name": "Poipuru",
+      "name": "Poipuru Card",
       "desc": "This poisonous slime naturally feeds on toxic matter.",
       "untradable": false,
       "cardInfo": {
@@ -4387,7 +4387,7 @@
       "category": 2,
       "tier": 1,
       "weight": 0,
-      "name": "Fuyupuru",
+      "name": "Fuyupuru Card",
       "desc": "This ice-cold slime can freeze attackers with its exterior.",
       "untradable": false,
       "cardInfo": {
@@ -4403,7 +4403,7 @@
       "category": 2,
       "tier": 1,
       "weight": 0,
-      "name": "Pyropuru",
+      "name": "Pyropuru Card",
       "desc": "This slime radiates heat intense enough to melt steel.",
       "untradable": false,
       "cardInfo": {
@@ -4419,7 +4419,7 @@
       "category": 2,
       "tier": 1,
       "weight": 0,
-      "name": "Gobblekin",
+      "name": "Gobblekin Card",
       "desc": "A small, mischievous jungle goblin that's fast and nimble.",
       "untradable": false,
       "cardInfo": {
@@ -4435,7 +4435,7 @@
       "category": 2,
       "tier": 1,
       "weight": 0,
-      "name": "Screechit",
+      "name": "Screechit Card",
       "desc": "A swift, bat-winged squirrel that delivers quick, precise attacks.",
       "untradable": false,
       "cardInfo": {
@@ -4451,7 +4451,7 @@
       "category": 2,
       "tier": 1,
       "weight": 0,
-      "name": "Snow Rabbit",
+      "name": "Snow Rabbit Card",
       "desc": "This white-furred creature is extremely quick.",
       "untradable": false,
       "cardInfo": {
@@ -4467,7 +4467,7 @@
       "category": 2,
       "tier": 1,
       "weight": 0,
-      "name": "Flaming Fox",
+      "name": "Flaming Fox Card",
       "desc": "The red fox breaths fire hot enough to burn any village down.",
       "untradable": false,
       "cardInfo": {
@@ -4483,7 +4483,7 @@
       "category": 2,
       "tier": 5,
       "weight": 0,
-      "name": "Ignis",
+      "name": "Ignis Card",
       "desc": "One of the mightiest dragons to ever existed. Ignis is the name.",
       "untradable": false,
       "cardInfo": {
@@ -4497,10 +4497,90 @@
       "id": 277,
       "type": 27,
       "category": 2,
+      "tier": 1,
+      "weight": 0,
+      "name": "Togepuru Card",
+      "desc": "This slime creature had consumed thorny vines.",
+      "untradable": false,
+      "cardInfo": {
+        "top": 5,
+        "bottom": 5,
+        "left": 2,
+        "right": 2
+      }
+    },
+    "278": {
+      "id": 278,
+      "type": 27,
+      "category": 2,
+      "tier": 1,
+      "weight": 0,
+      "name": "Kiripuru Card",
+      "desc": "This slime creature is both more toxic, and harder to spot.",
+      "untradable": false,
+      "cardInfo": {
+        "top": 2,
+        "bottom": 2,
+        "left": 5,
+        "right": 5
+      }
+    },
+    "279": {
+      "id": 279,
+      "type": 27,
+      "category": 2,
+      "tier": 1,
+      "weight": 0,
+      "name": "Koripuru Card",
+      "desc": "This slime creature can conjure large ice spikes from its exterior.",
+      "untradable": false,
+      "cardInfo": {
+        "top": 5,
+        "bottom": 2,
+        "left": 2,
+        "right": 5
+      }
+    },
+    "280": {
+      "id": 280,
+      "type": 27,
+      "category": 2,
+      "tier": 1,
+      "weight": 0,
+      "name": "Kazanpuru Card",
+      "desc": "This slime creature can burst volcanic matter far from where it stands.",
+      "untradable": false,
+      "cardInfo": {
+        "top": 2,
+        "bottom": 5,
+        "left": 2,
+        "right": 5
+      }
+    },
+    "281": {
+      "id": 281,
+      "type": 27,
+      "category": 2,
+      "tier": 1,
+      "weight": 0,
+      "name": "Petalflare Card",
+      "desc": "This plant can use its colorful petals to release noxious powder.",
+      "untradable": false,
+      "cardInfo": {
+        "top": 3,
+        "bottom": 2,
+        "left": 1,
+        "right": 7
+      }
+    },
+    "282": {
+      "id": 282,
+      "type": 27,
+      "category": 2,
       "tier": 2,
       "weight": 0,
-      "name": "Togepuru",
-      "desc": "This slime creature had consumed thorny vines.",
+      "name": "Leafdrake Card",
+      "desc": "A gentle dinosaur that secretes toxic poison to ward off predators.",
       "untradable": false,
       "cardInfo": {
         "top": 3,
@@ -4509,14 +4589,14 @@
         "right": 6
       }
     },
-    "278": {
-      "id": 278,
+    "283": {
+      "id": 283,
       "type": 27,
       "category": 2,
       "tier": 2,
       "weight": 0,
-      "name": "Kiripuru",
-      "desc": "This slime creature is both more toxic, and harder to spot.",
+      "name": "Crabark Card",
+      "desc": "A tree-crab hybrid with enormous claws and crushing strength.",
       "untradable": false,
       "cardInfo": {
         "top": 2,
@@ -4525,14 +4605,30 @@
         "right": 3
       }
     },
-    "279": {
-      "id": 279,
+    "284": {
+      "id": 284,
+      "type": 27,
+      "category": 2,
+      "tier": 1,
+      "weight": 0,
+      "name": "Mycofiend Card",
+      "desc": "A hulking fungal horror with a massive crimson mushroom cap.",
+      "untradable": false,
+      "cardInfo": {
+        "top": 1,
+        "bottom": 7,
+        "left": 1,
+        "right": 4
+      }
+    },
+    "285": {
+      "id": 285,
       "type": 27,
       "category": 2,
       "tier": 2,
       "weight": 0,
-      "name": "Koripuru",
-      "desc": "This slime creature can conjure large ice spikes from its exterior.",
+      "name": "Basilisk Card",
+      "desc": "A massive, sinuous basilisk with venomous fangs and armored scales.",
       "untradable": false,
       "cardInfo": {
         "top": 6,
@@ -4541,14 +4637,14 @@
         "right": 7
       }
     },
-    "280": {
-      "id": 280,
+    "286": {
+      "id": 286,
       "type": 27,
       "category": 2,
       "tier": 2,
       "weight": 0,
-      "name": "Kazanpuru",
-      "desc": "This slime creature can burst volcanic matter far from where it stands.",
+      "name": "Mist Wyvern Card",
+      "desc": "A wyvern that can seamlessly materialize from coastal fogs.",
       "untradable": false,
       "cardInfo": {
         "top": 7,
@@ -4557,14 +4653,30 @@
         "right": 2
       }
     },
-    "281": {
-      "id": 281,
+    "287": {
+      "id": 287,
+      "type": 27,
+      "category": 2,
+      "tier": 1,
+      "weight": 0,
+      "name": "Snowzard Card",
+      "desc": "A reptilian warrior with crystalline icy frills and a massive frozen spear.",
+      "untradable": false,
+      "cardInfo": {
+        "top": 6,
+        "bottom": 3,
+        "left": 4,
+        "right": 1
+      }
+    },
+    "288": {
+      "id": 288,
       "type": 27,
       "category": 2,
       "tier": 2,
       "weight": 0,
-      "name": "Petalflare",
-      "desc": "This plant can use its colorful petals to release noxious powder.",
+      "name": "Glaciewyrm Card",
+      "desc": "A small-sized frost dragon soaring on crystalline wings.",
       "untradable": false,
       "cardInfo": {
         "top": 7,
@@ -4573,46 +4685,14 @@
         "right": 7
       }
     },
-    "282": {
-      "id": 282,
-      "type": 27,
-      "category": 2,
-      "tier": 3,
-      "weight": 0,
-      "name": "Leafdrake",
-      "desc": "A gentle dinosaur that secretes toxic poison to ward off predators.",
-      "untradable": false,
-      "cardInfo": {
-        "top": 7,
-        "bottom": 4,
-        "left": 2,
-        "right": 8
-      }
-    },
-    "283": {
-      "id": 283,
-      "type": 27,
-      "category": 2,
-      "tier": 3,
-      "weight": 0,
-      "name": "Crabark",
-      "desc": "A tree-crab hybrid with enormous claws and crushing strength.",
-      "untradable": false,
-      "cardInfo": {
-        "top": 8,
-        "bottom": 7,
-        "left": 3,
-        "right": 3
-      }
-    },
-    "284": {
-      "id": 284,
+    "289": {
+      "id": 289,
       "type": 27,
       "category": 2,
       "tier": 2,
       "weight": 0,
-      "name": "Mycofiend",
-      "desc": "A hulking fungal horror with a massive crimson mushroom cap.",
+      "name": "Frost Graloch Card",
+      "desc": "An ancient, towering behemoth cloaked in shaggy white fur.",
       "untradable": false,
       "cardInfo": {
         "top": 2,
@@ -4621,46 +4701,30 @@
         "right": 2
       }
     },
-    "285": {
-      "id": 285,
+    "290": {
+      "id": 290,
       "type": 27,
       "category": 2,
-      "tier": 3,
+      "tier": 1,
       "weight": 0,
-      "name": "Basilisk",
-      "desc": "A massive, sinuous basilisk with venomous fangs and armored scales.",
+      "name": "Cinderwing Card",
+      "desc": "A blazing, ruby-winged moth wreathed in sharp horns.",
       "untradable": false,
       "cardInfo": {
-        "top": 7,
-        "bottom": 6,
-        "left": 7,
-        "right": 1
+        "top": 2,
+        "bottom": 5,
+        "left": 4,
+        "right": 4
       }
     },
-    "286": {
-      "id": 286,
-      "type": 27,
-      "category": 2,
-      "tier": 3,
-      "weight": 0,
-      "name": "Mist Wyvern",
-      "desc": "A wyvern that can seamlessly materialize from coastal fogs.",
-      "untradable": false,
-      "cardInfo": {
-        "top": 1,
-        "bottom": 7,
-        "left": 6,
-        "right": 7
-      }
-    },
-    "287": {
-      "id": 287,
+    "291": {
+      "id": 291,
       "type": 27,
       "category": 2,
       "tier": 2,
       "weight": 0,
-      "name": "Snowzard",
-      "desc": "A reptilian warrior with crystalline icy frills and a massive frozen spear.",
+      "name": "Calderatops Card",
+      "desc": "A huge bull of molten rock and brimstone.",
       "untradable": false,
       "cardInfo": {
         "top": 6,
@@ -4669,46 +4733,14 @@
         "right": 6
       }
     },
-    "288": {
-      "id": 288,
-      "type": 27,
-      "category": 2,
-      "tier": 3,
-      "weight": 0,
-      "name": "Glaciewyrm",
-      "desc": "A small-sized frost dragon soaring on crystalline wings.",
-      "untradable": false,
-      "cardInfo": {
-        "top": 7,
-        "bottom": 1,
-        "left": 7,
-        "right": 6
-      }
-    },
-    "289": {
-      "id": 289,
-      "type": 27,
-      "category": 2,
-      "tier": 3,
-      "weight": 0,
-      "name": "Frost Graloch",
-      "desc": "An ancient, towering behemoth cloaked in shaggy white fur.",
-      "untradable": false,
-      "cardInfo": {
-        "top": 7,
-        "bottom": 7,
-        "left": 1,
-        "right": 6
-      }
-    },
-    "290": {
-      "id": 290,
+    "292": {
+      "id": 292,
       "type": 27,
       "category": 2,
       "tier": 2,
       "weight": 0,
-      "name": "Cinderwing",
-      "desc": "A blazing, ruby-winged moth wreathed in sharp horns.",
+      "name": "Dymryn Warrior Card",
+      "desc": "The Dymryn warriors are among the most ferocious in the wilds.",
       "untradable": false,
       "cardInfo": {
         "top": 7,
@@ -4717,52 +4749,20 @@
         "right": 5
       }
     },
-    "291": {
-      "id": 291,
-      "type": 27,
-      "category": 2,
-      "tier": 3,
-      "weight": 0,
-      "name": "Calderatops",
-      "desc": "A huge bull of molten rock and brimstone.",
-      "untradable": false,
-      "cardInfo": {
-        "top": 5,
-        "bottom": 6,
-        "left": 6,
-        "right": 6
-      }
-    },
-    "292": {
-      "id": 292,
-      "type": 27,
-      "category": 2,
-      "tier": 3,
-      "weight": 0,
-      "name": "Dymryn Warrior",
-      "desc": "The Dymryn warriors are among the most ferocious in the wilds.",
-      "untradable": false,
-      "cardInfo": {
-        "top": 6,
-        "bottom": 5,
-        "left": 6,
-        "right": 6
-      }
-    },
     "293": {
       "id": 293,
       "type": 27,
       "category": 2,
       "tier": 3,
       "weight": 0,
-      "name": "Verdant Drake",
+      "name": "Verdant Drake Card",
       "desc": "This creature's keen predatory instincts makes it a fearsome hunter.",
       "untradable": false,
       "cardInfo": {
-        "top": 2,
-        "bottom": 8,
-        "left": 7,
-        "right": 3
+        "top": 7,
+        "bottom": 4,
+        "left": 2,
+        "right": 8
       }
     },
     "294": {
@@ -4771,14 +4771,14 @@
       "category": 2,
       "tier": 3,
       "weight": 0,
-      "name": "Prismdeer",
+      "name": "Prismdeer Card",
       "desc": "A mystical deer whose majestic antlers shimmer with auroral colors.",
       "untradable": false,
       "cardInfo": {
-        "top": 4,
-        "bottom": 8,
-        "left": 7,
-        "right": 1
+        "top": 8,
+        "bottom": 7,
+        "left": 3,
+        "right": 3
       }
     },
     "295": {
@@ -4787,14 +4787,14 @@
       "category": 2,
       "tier": 3,
       "weight": 0,
-      "name": "Murklurker",
+      "name": "Murklurker Card",
       "desc": "This feral beast stalks through the fog banks with surprising stealth.",
       "untradable": false,
       "cardInfo": {
-        "top": 3,
-        "bottom": 8,
-        "left": 2,
-        "right": 7
+        "top": 7,
+        "bottom": 6,
+        "left": 7,
+        "right": 1
       }
     },
     "296": {
@@ -4803,24 +4803,88 @@
       "category": 2,
       "tier": 3,
       "weight": 0,
-      "name": "Ancient Golem",
+      "name": "Ancient Golem Card",
       "desc": "A mysterious stone construct from a forgotten age.",
       "untradable": false,
       "cardInfo": {
-        "top": 7,
-        "bottom": 1,
-        "left": 4,
-        "right": 8
+        "top": 1,
+        "bottom": 7,
+        "left": 6,
+        "right": 7
       }
     },
     "297": {
       "id": 297,
       "type": 27,
       "category": 2,
+      "tier": 3,
+      "weight": 0,
+      "name": "Lizard Champion Card",
+      "desc": "A battle-hardened commander of the Snowzards.",
+      "untradable": false,
+      "cardInfo": {
+        "top": 7,
+        "bottom": 1,
+        "left": 7,
+        "right": 6
+      }
+    },
+    "298": {
+      "id": 298,
+      "type": 27,
+      "category": 2,
+      "tier": 3,
+      "weight": 0,
+      "name": "Crystal Oracle Card",
+      "desc": "An enigmatic being of pure frost magic that glides through Everfrost.",
+      "untradable": false,
+      "cardInfo": {
+        "top": 7,
+        "bottom": 7,
+        "left": 1,
+        "right": 6
+      }
+    },
+    "299": {
+      "id": 299,
+      "type": 27,
+      "category": 2,
+      "tier": 3,
+      "weight": 0,
+      "name": "Voltex Card",
+      "desc": "This sheep wanders the deserts, trailing electricity through its wool.",
+      "untradable": false,
+      "cardInfo": {
+        "top": 5,
+        "bottom": 6,
+        "left": 6,
+        "right": 6
+      }
+    },
+    "300": {
+      "id": 300,
+      "type": 27,
+      "category": 2,
+      "tier": 3,
+      "weight": 0,
+      "name": "Ravager Card",
+      "desc": "A fearsome predator that's fast, cunning and deadly.",
+      "untradable": false,
+      "cardInfo": {
+        "top": 6,
+        "bottom": 5,
+        "left": 6,
+        "right": 6
+      }
+    },
+    "301": {
+      "id": 301,
+      "type": 27,
+      "category": 2,
       "tier": 4,
       "weight": 0,
-      "name": "Lizard Champion",
-      "desc": "A battle-hardened commander of the Snowzards.",
+      "name": "Shardback Card",
+      "desc": "An ancient beast encrusted in jagged shards of everlasting ice.",
       "untradable": false,
       "cardInfo": {
         "top": 7,
@@ -4829,14 +4893,14 @@
         "right": 8
       }
     },
-    "298": {
-      "id": 298,
+    "302": {
+      "id": 302,
       "type": 27,
       "category": 2,
       "tier": 4,
       "weight": 0,
-      "name": "Crystal Oracle",
-      "desc": "An enigmatic being of pure frost magic that glides through Everfrost.",
+      "name": "Virelantis Card",
+      "desc": "A stealthy, serpentine predator covered in razor-sharp thorns.",
       "untradable": false,
       "cardInfo": {
         "top": 8,
@@ -4845,84 +4909,20 @@
         "right": 8
       }
     },
-    "299": {
-      "id": 299,
-      "type": 27,
-      "category": 2,
-      "tier": 4,
-      "weight": 0,
-      "name": "Voltex",
-      "desc": "This sheep wanders the deserts, trailing electricity through its wool.",
-      "untradable": false,
-      "cardInfo": {
-        "top": 8,
-        "bottom": 8,
-        "left": 8,
-        "right": 1
-      }
-    },
-    "300": {
-      "id": 300,
-      "type": 27,
-      "category": 2,
-      "tier": 4,
-      "weight": 0,
-      "name": "Ravager",
-      "desc": "A fearsome predator that's fast, cunning and deadly.",
-      "untradable": false,
-      "cardInfo": {
-        "top": 8,
-        "bottom": 8,
-        "left": 1,
-        "right": 8
-      }
-    },
-    "301": {
-      "id": 301,
-      "type": 27,
-      "category": 2,
-      "tier": 3,
-      "weight": 0,
-      "name": "Elder Behemoth",
-      "desc": "An ancient beast encrusted in jagged shards of everlasting ice.",
-      "untradable": false,
-      "cardInfo": {
-        "top": 8,
-        "bottom": 4,
-        "left": 7,
-        "right": 1
-      }
-    },
-    "302": {
-      "id": 302,
-      "type": 27,
-      "category": 2,
-      "tier": 3,
-      "weight": 0,
-      "name": "Vinethorn Drake",
-      "desc": "A stealthy, serpentine predator covered in razor-sharp thorns.",
-      "untradable": false,
-      "cardInfo": {
-        "top": 5,
-        "bottom": 7,
-        "left": 8,
-        "right": 1
-      }
-    },
     "303": {
       "id": 303,
       "type": 27,
       "category": 2,
       "tier": 3,
       "weight": 0,
-      "name": "Faylinn",
+      "name": "Faylinn Card",
       "desc": "Your sweet and trustworthy partner in any adventure.",
       "untradable": false,
       "cardInfo": {
-        "top": 1,
+        "top": 2,
         "bottom": 8,
         "left": 7,
-        "right": 5
+        "right": 3
       }
     },
     "304": {
@@ -4931,7 +4931,7 @@
       "category": 2,
       "tier": 2,
       "weight": 0,
-      "name": "Liliana",
+      "name": "Liliana Card",
       "desc": "A young villager that tries her best to help everyone in need.",
       "untradable": false,
       "cardInfo": {
@@ -4947,7 +4947,7 @@
       "category": 2,
       "tier": 2,
       "weight": 0,
-      "name": "Maeve",
+      "name": "Maeve Card",
       "desc": "The classy and kind citizen of the misty kingdom. She knows everyone.",
       "untradable": false,
       "cardInfo": {
@@ -4963,7 +4963,7 @@
       "category": 2,
       "tier": 2,
       "weight": 0,
-      "name": "Marina",
+      "name": "Marina Card",
       "desc": "Don't be fooled by her kind looks, she's one of Everfrost's best trackers.",
       "untradable": false,
       "cardInfo": {
@@ -4979,7 +4979,7 @@
       "category": 2,
       "tier": 2,
       "weight": 0,
-      "name": "Ayesha",
+      "name": "Ayesha Card",
       "desc": "Ayesha is highly intelligent and caring, despite her rough upbringing.",
       "untradable": false,
       "cardInfo": {
@@ -4995,14 +4995,14 @@
       "category": 2,
       "tier": 3,
       "weight": 0,
-      "name": "Haines",
+      "name": "Haines Card",
       "desc": "A veteran hunter and soldier, Haines is incredibly resourceful.",
       "untradable": false,
       "cardInfo": {
-        "top": 8,
-        "bottom": 2,
-        "left": 3,
-        "right": 8
+        "top": 4,
+        "bottom": 8,
+        "left": 7,
+        "right": 1
       }
     },
     "309": {
@@ -5011,7 +5011,7 @@
       "category": 2,
       "tier": 2,
       "weight": 0,
-      "name": "Lara",
+      "name": "Lara Card",
       "desc": "Liliana's little sister has tremendous hidden potential as a sorcerer.",
       "untradable": false,
       "cardInfo": {
@@ -5025,32 +5025,32 @@
       "id": 310,
       "type": 27,
       "category": 2,
-      "tier": 5,
+      "tier": 4,
       "weight": 0,
-      "name": "Duval",
+      "name": "Duval Card",
       "desc": "Despite being a little weird, Duval is the mightiest knight in Misthaven.",
       "untradable": false,
       "cardInfo": {
         "top": 1,
-        "bottom": 10,
+        "bottom": 7,
         "left": 8,
-        "right": 8
+        "right": 9
       }
     },
     "311": {
       "id": 311,
       "type": 27,
       "category": 2,
-      "tier": 3,
+      "tier": 4,
       "weight": 0,
-      "name": "Chione",
+      "name": "Chione Card",
       "desc": "A genius and the youngest member of Everfrost's court sorcerers.",
       "untradable": false,
       "cardInfo": {
-        "top": 8,
-        "bottom": 3,
-        "left": 8,
-        "right": 2
+        "top": 9,
+        "bottom": 8,
+        "left": 1,
+        "right": 7
       }
     },
     "312": {
@@ -5059,7 +5059,7 @@
       "category": 2,
       "tier": 2,
       "weight": 0,
-      "name": "Hilathe",
+      "name": "Hilathe Card",
       "desc": "A smart and quick-witted treasure hunter and adventurer.",
       "untradable": false,
       "cardInfo": {
@@ -5073,32 +5073,32 @@
       "id": 313,
       "type": 27,
       "category": 2,
-      "tier": 3,
+      "tier": 4,
       "weight": 0,
-      "name": "Fiery Hellion",
+      "name": "Ignarok Card",
       "desc": "An amorphous conflagration of blazing fire and smoldering rock.",
       "untradable": false,
       "cardInfo": {
-        "top": 4,
+        "top": 8,
         "bottom": 8,
-        "left": 1,
-        "right": 8
+        "left": 8,
+        "right": 1
       }
     },
     "314": {
       "id": 314,
       "type": 27,
       "category": 2,
-      "tier": 3,
+      "tier": 4,
       "weight": 0,
-      "name": "Fathomspawn",
+      "name": "Tidelure Card",
       "desc": "An otherworldly elemental of tentacles and bioluminescent ichor.",
       "untradable": false,
       "cardInfo": {
-        "top": 1,
+        "top": 8,
         "bottom": 8,
-        "left": 8,
-        "right": 4
+        "left": 1,
+        "right": 8
       }
     },
     "315": {
@@ -5107,7 +5107,7 @@
       "category": 2,
       "tier": 4,
       "weight": 0,
-      "name": "Storm Wraith",
+      "name": "Vorthalion Card",
       "desc": "A sentient maelstrom of swirling shadow and twisting storm.",
       "untradable": false,
       "cardInfo": {
@@ -5121,16 +5121,16 @@
       "id": 316,
       "type": 27,
       "category": 2,
-      "tier": 5,
+      "tier": 4,
       "weight": 0,
-      "name": "Sylvia",
+      "name": "Sylvia Card",
       "desc": "The ancient elven sorcerer that's renowned across the realm.",
       "untradable": false,
       "cardInfo": {
-        "top": 10,
-        "bottom": 4,
-        "left": 8,
-        "right": 6
+        "top": 9,
+        "bottom": 7,
+        "left": 6,
+        "right": 5
       }
     },
     "317": {
@@ -5139,7 +5139,7 @@
       "category": 2,
       "tier": 4,
       "weight": 0,
-      "name": "Hazel",
+      "name": "Hazel Card",
       "desc": "Hazel Thornweaver is a witch that has mastered magical harmonics.",
       "untradable": false,
       "cardInfo": {
@@ -5155,14 +5155,14 @@
       "category": 2,
       "tier": 3,
       "weight": 0,
-      "name": "Raena",
+      "name": "Raena Card",
       "desc": "Chione's close friend and a talented magic user.",
       "untradable": false,
       "cardInfo": {
-        "top": 8,
-        "bottom": 8,
-        "left": 1,
-        "right": 3
+        "top": 7,
+        "bottom": 1,
+        "left": 4,
+        "right": 8
       }
     },
     "319": {
@@ -5171,7 +5171,7 @@
       "category": 2,
       "tier": 4,
       "weight": 0,
-      "name": "Kestrel",
+      "name": "Kestrel Card",
       "desc": "A trusted member of the Cartographer's Guild in Sunscar.",
       "untradable": false,
       "cardInfo": {
@@ -5187,7 +5187,7 @@
       "category": 2,
       "tier": 4,
       "weight": 0,
-      "name": "Goopie Puru",
+      "name": "Goopie Puru Card",
       "desc": "This virulent mass of acidic sludge corrodes anything in its path.",
       "untradable": false,
       "cardInfo": {
@@ -5203,7 +5203,7 @@
       "category": 2,
       "tier": 4,
       "weight": 0,
-      "name": "Jiggly Puru",
+      "name": "Jiggly Puru Card",
       "desc": "This rare species of slime emanates dangerously noxious fumes.",
       "untradable": false,
       "cardInfo": {
@@ -5219,7 +5219,7 @@
       "category": 2,
       "tier": 4,
       "weight": 0,
-      "name": "Slushy Puru",
+      "name": "Slushy Puru Card",
       "desc": "A semi-frozen slime that managed to live for a hundred years.",
       "untradable": false,
       "cardInfo": {
@@ -5235,7 +5235,7 @@
       "category": 2,
       "tier": 4,
       "weight": 0,
-      "name": "Yippee Puru",
+      "name": "Yippee Puru Card",
       "desc": "Nothing dares to touch this molten menace of a slime.",
       "untradable": false,
       "cardInfo": {
@@ -7172,6 +7172,212 @@
       "untradable": false,
       "resourceInfo": {
         "type": 6
+      }
+    },
+    "415": {
+      "id": 415,
+      "type": 7,
+      "category": 1,
+      "tier": 7,
+      "weight": 11,
+      "name": "Reinforced Waraxe of Frenzy",
+      "desc": "A brutal axe that pulses with chaotic energy. It's been reinforced by FayLinn's magic for even more devastating damage.",
+      "untradable": true,
+      "equipmentInfo": {
+        "slotType": 0,
+        "advantageType": 2,
+        "twoHanded": false,
+        "atk": 160,
+        "def": 31,
+        "agi": 19,
+        "hp": 0,
+        "ms": 0,
+        "weight": 0,
+        "barrier": 0
+      }
+    },
+    "416": {
+      "id": 416,
+      "type": 8,
+      "category": 1,
+      "tier": 7,
+      "weight": 11,
+      "name": "Exalted Spear of Fury",
+      "desc": "The scorching spear blazes with searing wrath, now even more dangerous as it's been buffed by FayLinn's magic.",
+      "untradable": true,
+      "equipmentInfo": {
+        "slotType": 0,
+        "advantageType": 1,
+        "twoHanded": false,
+        "atk": 176,
+        "def": 12,
+        "agi": 25,
+        "hp": 0,
+        "ms": 0,
+        "weight": 0,
+        "barrier": 0
+      }
+    },
+    "417": {
+      "id": 417,
+      "type": 10,
+      "category": 1,
+      "tier": 7,
+      "weight": 11,
+      "name": "Blessed Staff of Adoration",
+      "desc": "An elegant staff imbued with celestial charm. Blessed by FayLinn, t's enthralling magic is even more powerful now.",
+      "untradable": true,
+      "equipmentInfo": {
+        "slotType": 0,
+        "advantageType": 3,
+        "twoHanded": false,
+        "atk": 140,
+        "def": 31,
+        "agi": 11,
+        "hp": 0,
+        "ms": 0,
+        "weight": 0,
+        "barrier": 0
+      }
+    },
+    "418": {
+      "id": 418,
+      "type": 6,
+      "category": 1,
+      "tier": 7,
+      "weight": 11,
+      "name": "Embered Meteoric Katana",
+      "desc": "This alien blade, now forever burning thanks to FayLinn's magic, cuts through armor and air alike with meteoric grace.",
+      "untradable": true,
+      "equipmentInfo": {
+        "slotType": 0,
+        "advantageType": 0,
+        "twoHanded": false,
+        "atk": 167,
+        "def": 25,
+        "agi": 19,
+        "hp": 0,
+        "ms": 0,
+        "weight": 0,
+        "barrier": 0
+      }
+    },
+    "419": {
+      "id": 419,
+      "type": 22,
+      "category": 1,
+      "tier": 5,
+      "weight": 0,
+      "name": "Unicorn",
+      "desc": "A radiant, myth-born beast said to appear only in the eyes of the chosen ones. Its presence turns storms to starlight.",
+      "untradable": false,
+      "equipmentInfo": {
+        "slotType": 5,
+        "advantageType": 0,
+        "twoHanded": false,
+        "atk": 0,
+        "def": 0,
+        "agi": 0,
+        "hp": 0,
+        "ms": 2,
+        "weight": 0,
+        "barrier": 0
+      }
+    },
+    "420": {
+      "id": 420,
+      "type": 27,
+      "category": 2,
+      "tier": 5,
+      "weight": 0,
+      "name": "Kalyndra Card",
+      "desc": "Kalyndra coils beneath scorched earth, awaiting her next prey.",
+      "untradable": false,
+      "cardInfo": {
+        "top": 4,
+        "bottom": 5,
+        "left": 9,
+        "right": 10
+      }
+    },
+    "421": {
+      "id": 421,
+      "type": 27,
+      "category": 2,
+      "tier": 5,
+      "weight": 0,
+      "name": "Beowulf Card",
+      "desc": "Beowulf rules the tundra wastes with frozen wrath and fangs bloody.",
+      "untradable": false,
+      "cardInfo": {
+        "top": 5,
+        "bottom": 10,
+        "left": 3,
+        "right": 9
+      }
+    },
+    "422": {
+      "id": 422,
+      "type": 27,
+      "category": 2,
+      "tier": 3,
+      "weight": 0,
+      "name": "Grimknuckle Card",
+      "desc": "Grimknuckle lords over his stolen treasures with a cackling fury.",
+      "untradable": false,
+      "cardInfo": {
+        "top": 8,
+        "bottom": 4,
+        "left": 7,
+        "right": 1
+      }
+    },
+    "423": {
+      "id": 423,
+      "type": 27,
+      "category": 2,
+      "tier": 3,
+      "weight": 0,
+      "name": "Eira Card",
+      "desc": "Eira darts like a blizzard and strikes with ice-laced fury.",
+      "untradable": false,
+      "cardInfo": {
+        "top": 5,
+        "bottom": 7,
+        "left": 8,
+        "right": 1
+      }
+    },
+    "424": {
+      "id": 424,
+      "type": 27,
+      "category": 2,
+      "tier": 3,
+      "weight": 0,
+      "name": "Nyxwing Card",
+      "desc": "Nyxwing glides through darkness unseen, eager to catch any prey.",
+      "untradable": false,
+      "cardInfo": {
+        "top": 1,
+        "bottom": 8,
+        "left": 7,
+        "right": 5
+      }
+    },
+    "425": {
+      "id": 425,
+      "type": 27,
+      "category": 2,
+      "tier": 3,
+      "weight": 0,
+      "name": "Kitsindra Card",
+      "desc": "Kitsindra dances through battle with emberstep grace.",
+      "untradable": false,
+      "cardInfo": {
+        "top": 8,
+        "bottom": 2,
+        "left": 3,
+        "right": 8
       }
     }
   }
