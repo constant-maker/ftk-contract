@@ -398,11 +398,11 @@
       "ingredients": [
         {
           "id": 4,
-          "amount": 2000
+          "amount": 5000
         },
         {
           "id": 95,
-          "amount": 2000
+          "amount": 5000
         }
       ]
     },
@@ -411,7 +411,7 @@
       "ingredients": [
         {
           "id": 110,
-          "amount": 3000
+          "amount": 10000
         }
       ]
     },
@@ -420,7 +420,7 @@
       "ingredients": [
         {
           "id": 86,
-          "amount": 3000
+          "amount": 10000
         }
       ]
     },
@@ -429,7 +429,7 @@
       "ingredients": [
         {
           "id": 102,
-          "amount": 3000
+          "amount": 10000
         }
       ]
     },
@@ -438,7 +438,7 @@
       "ingredients": [
         {
           "id": 78,
-          "amount": 3000
+          "amount": 10000
         }
       ]
     },
@@ -447,7 +447,7 @@
       "ingredients": [
         {
           "id": 111,
-          "amount": 3000
+          "amount": 10000
         }
       ]
     },
@@ -456,7 +456,7 @@
       "ingredients": [
         {
           "id": 3,
-          "amount": 5000
+          "amount": 10000
         }
       ]
     },
@@ -465,7 +465,7 @@
       "ingredients": [
         {
           "id": 97,
-          "amount": 5000
+          "amount": 10000
         }
       ]
     },
@@ -474,7 +474,7 @@
       "ingredients": [
         {
           "id": 73,
-          "amount": 5000
+          "amount": 10000
         }
       ]
     },
@@ -483,7 +483,7 @@
       "ingredients": [
         {
           "id": 94,
-          "amount": 5000
+          "amount": 10000
         }
       ]
     },
@@ -510,7 +510,7 @@
       "ingredients": [
         {
           "id": 113,
-          "amount": 5000
+          "amount": 10000
         }
       ]
     },
@@ -519,7 +519,7 @@
       "ingredients": [
         {
           "id": 89,
-          "amount": 5000
+          "amount": 10000
         }
       ]
     },
@@ -528,7 +528,7 @@
       "ingredients": [
         {
           "id": 87,
-          "amount": 3000
+          "amount": 10000
         }
       ]
     },
@@ -537,7 +537,7 @@
       "ingredients": [
         {
           "id": 81,
-          "amount": 5000
+          "amount": 10000
         }
       ]
     },

@@ -16,7 +16,7 @@ contract CollectionSystem is System, CharacterAccessControl {
     uint32[] calldata amounts
   )
     public
-    onlyCharacterOwner(characterId)
+    onlyAuthorizedWallet(characterId)
   {
     if (itemIds.length != amounts.length) {
       revert Errors.CollectionSystem_InvalidParams(itemIds.length, amounts.length);
@@ -43,7 +43,7 @@ contract CollectionSystem is System, CharacterAccessControl {
     }
   }
 
-  function exchangeItem(uint256 characterId, uint256 itemId, uint32 amount) public onlyCharacterOwner(characterId) {
+  function exchangeItem(uint256 characterId, uint256 itemId, uint32 amount) public onlyAuthorizedWallet(characterId) {
     CollectionExcV2Data memory exchangeData = CollectionExcV2.get(itemId);
     if (exchangeData.inputItemIds.length == 0) {
       revert Errors.CollectionSystem_ExchangeNotExist(itemId);
