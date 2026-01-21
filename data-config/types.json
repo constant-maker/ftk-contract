@@ -43,7 +43,8 @@
     "HealingItem": 25,
     "StatModifierItem": 26,
     "Card": 27,
-    "BuffItem": 28
+    "BuffItem": 28,
+    "Pet": 29
   },
   "itemCategoryTypes": {
     "Tool": 0,
@@ -56,7 +57,8 @@
     "Armor": 2,
     "Headgear": 3,
     "Footwear": 4,
-    "Mount": 5
+    "Mount": 5,
+    "Pet": 6
   },
   "questTypes": {
     "Contribute": 0,

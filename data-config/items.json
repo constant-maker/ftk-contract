@@ -7390,7 +7390,16 @@
       "desc": "A loyal companion to aid you on your adventures.",
       "untradable": false,
       "equipmentInfo": {
-        "slotType": 6
+        "slotType": 6,
+        "advantageType": 0,
+        "twoHanded": false,
+        "atk": 0,
+        "def": 0,
+        "agi": 0,
+        "hp": 0,
+        "ms": 0,
+        "weight": 0,
+        "barrier": 0
       }
     }
   }
