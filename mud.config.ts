@@ -36,13 +36,13 @@ export default defineWorld({
       "LeatherArmor", "LeatherHeadgear", "LeatherFootwear",
       "PlateArmor", "PlateHeadgear", "PlateFootwear",
       "Mount", "Resource", "SkillItem", "HealingItem", "StatModifierItem",
-      "Card", "BuffItem"
+      "Card", "BuffItem", "Pet"
     ],
     ItemCategoryType: ["Tool", "Equipment", "Other"],
     CharacterType: ["Male", "Female"],
     StatType: ["ATK", "DEF", "AGI"],
     SlotType: [
-      "Weapon", "SubWeapon", "Armor", "Headgear", "Footwear", "Mount"
+      "Weapon", "SubWeapon", "Armor", "Headgear", "Footwear", "Mount", "Pet"
     ],
     SkinSlotType: [
       "Weapon", "SubWeapon", "Armor", "Headgear", "Footwear", "Mount", "Pet", "Aura", "Ring"
@@ -50,7 +50,7 @@ export default defineWorld({
     QuestType: ["Contribute", "Locate"],
     QuestStatusType: ["NotReceived", "InProgress", "Done"],
     SocialType: ["Twitter", "Telegram", "Discord"],
-    ZoneType: ["Green, Orange, Red, Black"],
+    ZoneType: ["Green", "Orange", "Red", "Black"],
     TerrainType: ["GrassLand", "Forest", "Mountain"],
     AdvantageType: ["Red", "Green", "Blue", "Grey"],
     EntityType: ["Character", "Monster"],
@@ -59,7 +59,7 @@ export default defineWorld({
     // Note: Healing potion represents for ItemType HealingItem
     // To save gas, limit contract size purpose only
     BuffType: ["None", "StatsModify", "ExpAmplify", "InstantDamage", "InstantHeal", "HealingPotion"],
-    GachaType: ["Pet", "Scroll"],
+    GachaType: ["Unlimited", "Limited"],
   },
   tables: {
     Unmovable: {

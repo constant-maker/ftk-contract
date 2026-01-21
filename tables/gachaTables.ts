@@ -13,6 +13,13 @@ const GACHA_TABLES: any = {
     },
     key: ['characterId', 'requestId'],
   },
+  CharGachaStatus: {
+    schema: {
+      characterId: "uint256",
+      hasPendingRequest: "bool",
+    },
+    key: ['characterId'],
+  },
   GachaReqChar: {
     schema: {
       requestId: "uint256",
@@ -20,13 +27,17 @@ const GACHA_TABLES: any = {
     },
     key: ['requestId'],
   },
-  Gacha: {
+  GachaV4: {
     schema: {
       id : "uint256",
       gachaType: "GachaType",
       startTime: "uint256",
       endTime: "uint256",
+      ticketValue: "uint256", // Use ETH for gacha
+      ticketItemId: "uint256", // Use item as ticket for gacha
       itemIds: "uint256[]",
+      amounts: "uint32[]",
+      percents: "uint16[]", // The percent chance of getting each item, total is 10000 - min is 1 (0.01%)
     },
     key: ['id'],
   },

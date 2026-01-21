@@ -147,7 +147,14 @@ const ITEM_TABLES: any = {
       inputItemAmounts: "uint32[]",
     },
     key: ['itemId',],
-  }
+  },
+  EquipmentPet: { // Mapping from equipmentId to petId
+    schema: {
+      equipmentId: "uint256",
+      petId: "uint256",
+    },
+    key: ['equipmentId'],
+  },
 };
 
 export default ITEM_TABLES;

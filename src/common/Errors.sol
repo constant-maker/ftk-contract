@@ -373,9 +373,11 @@ library Errors {
   error GachaSystem_RequestAlreadyFulfilled(uint256 requestId);
   error Gacha_AlreadyHad(uint256 gachaId, uint256 itemId);
   error Gacha_NoItem(uint256 gachaId, uint256 itemId);
-  error Gacha_NoItemLeft(uint256 gachaId);
+  error Gacha_NoItemToGacha(uint256 gachaId);
   error Gacha_InactiveGacha(uint256 gachaId);
   error GachaSystem_InvalidRequestId(uint256 requestId);
+  error GachaSystem_InsufficientGachaFee(uint256 msgValue, uint256 requiredFee);
+  error GachaSystem_ExistingPendingRequest(uint256 characterId);
 
   /* -------------------------------------------------------------------------- */
   /*                               CollectionSystem                                  */
