@@ -80,7 +80,7 @@ library BattlePvEUtils2 {
     // reset afk data
     PvEAfk.deleteRecord(characterId);
     PvEAfkLoc.deleteRecord(characterPosition.x, characterPosition.y);
-    CharState.setState(characterId, CharacterStateType.Standby);
+    CharState.set(characterId, CharacterStateType.Standby, block.timestamp);
   }
 
   function updateCharacterExp(uint256 characterId, uint32 gainedExp, uint32 gainedPerkExp) public {
