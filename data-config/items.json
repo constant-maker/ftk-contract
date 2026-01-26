@@ -7408,8 +7408,8 @@
       "category": 2,
       "tier": 7,
       "weight": 1,
-      "name": "Pet",
-      "desc": "A loyal companion to aid you on your adventures.",
+      "name": "Gacha Ticket",
+      "desc": "A ticket that allows you to draw a random item from the gacha machine.",
       "untradable": true
     }
   }
