@@ -28,7 +28,7 @@ library CharacterUtils {
   }
 
   /// @dev Check whether characterId is owned by wallet
-  function checkCharacterOwner(uint256 characterId, address wallet) internal {
+  function checkCharacterOwner(uint256 characterId, address wallet) internal view {
     IERC721Mintable token = IERC721Mintable(Contracts.getErc721Token());
     address actualOwner = token.ownerOf(characterId);
     if (wallet != actualOwner) {

@@ -14,11 +14,11 @@ library SystemUtils {
     return WorldResourceIdLib.encode(RESOURCE_SYSTEM, "app", systemName);
   }
 
-  function getRootSystemAddress(bytes16 systemName) internal returns (address) {
+  function getRootSystemAddress(bytes16 systemName) internal view returns (address) {
     return Systems.getSystem(getRootSystemId(systemName));
   }
 
-  function getSystemAddress(bytes16 systemName) internal returns (address systemAddress) {
+  function getSystemAddress(bytes16 systemName) internal view returns (address systemAddress) {
     return Systems.getSystem(getSystemId(systemName));
   }
 }

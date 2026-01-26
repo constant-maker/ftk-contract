@@ -91,7 +91,7 @@ library KingSystemUtils {
     CharRoleCounter.setCount(kingdomId, roleType, currentCount + 1);
   }
 
-  function validateKingdomId(uint8 kingdomId) public view {
+  function validateKingdomId(uint8 kingdomId) public pure {
     if (kingdomId < 1 || kingdomId > 4) {
       revert Errors.KingSystem_InvalidKingdomId(kingdomId);
     }

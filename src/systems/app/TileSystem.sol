@@ -175,7 +175,7 @@ contract TileSystem is System, CharacterAccessControl {
     ZoneType zoneType
   )
     private
-    view
+    pure
     returns (uint256[] memory)
   {
     uint256[] memory itemIds = new uint256[](3);

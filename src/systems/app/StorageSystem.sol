@@ -108,7 +108,7 @@ contract StorageSystem is System, CharacterAccessControl {
     }
   }
 
-  function _validateStorageMaxWeight(uint256 characterId, uint256 cityId) internal {
+  function _validateStorageMaxWeight(uint256 characterId, uint256 cityId) internal view {
     uint32 storageWeight = CharStorage.getWeight(characterId, cityId);
     uint32 maxWeight = CharStorage.getMaxWeight(characterId, cityId);
     if (storageWeight > maxWeight) {

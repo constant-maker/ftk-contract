@@ -152,6 +152,7 @@ library FarmingUtils {
 
   function getResourceItemAndResourceType(uint256 resourceItemId)
     public
+    view
     returns (ItemV2Data memory resourceItem, ResourceType resourceType)
   {
     resourceItem = ItemV2.get(resourceItemId);

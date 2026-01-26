@@ -1,17 +1,14 @@
 pragma solidity >=0.8.24;
 
-import { GachaV4, GachaItemIndex } from "@codegen/index.sol";
+import { GachaPet, GachaItemIndex } from "@codegen/index.sol";
 import { Errors } from "@common/Errors.sol";
 
 library GachaUtils {
-  /// This lib provides utility functions for managing gacha items, but for LIMITED gacha only.
-  /// LIMITED gacha means that once an item is drawn, it is removed from the gacha pool.
-
   /// @dev Add items to gacha
-  function addItems(uint256 gachaId, uint256[] memory itemIds) internal {
-    uint256 length = itemIds.length;
+  function addItems(uint256 gachaId, uint256[] memory petIds) internal {
+    uint256 length = petIds.length;
     for (uint256 i = 0; i < length; i++) {
-      addItem(gachaId, itemIds[i]);
+      addItem(gachaId, petIds[i]);
     }
   }
 
@@ -20,18 +17,18 @@ library GachaUtils {
     if (hasItem(gachaId, itemId)) {
       revert Errors.Gacha_AlreadyHad(gachaId, itemId);
     }
-    GachaV4.pushItemIds(gachaId, itemId);
+    GachaPet.pushPetIds(gachaId, itemId);
     // The value is stored at length-1, but we add 1 to all indexes
     // and use 0 as a sentinel value
-    uint256 index = GachaV4.lengthItemIds(gachaId);
+    uint256 index = GachaPet.lengthPetIds(gachaId);
     GachaItemIndex.set(gachaId, itemId, index);
   }
 
   /// @dev Remove items from gacha
-  function removeItems(uint256 gachaId, uint256[] memory itemIds) internal {
-    uint256 length = itemIds.length;
+  function removeItems(uint256 gachaId, uint256[] memory petIds) internal {
+    uint256 length = petIds.length;
     for (uint256 i = 0; i < length; i++) {
-      removeItem(gachaId, itemIds[i]);
+      removeItem(gachaId, petIds[i]);
     }
   }
 
@@ -43,14 +40,14 @@ library GachaUtils {
     // the array, and then remove the last element (sometimes called as 'swap and pop').
     // This modifies the order of the array, as noted in {at}.
     uint256 valueIndex = index - 1;
-    uint256 lastIndex = GachaV4.lengthItemIds(gachaId) - 1;
+    uint256 lastIndex = GachaPet.lengthPetIds(gachaId) - 1;
     if (valueIndex != lastIndex) {
-      uint256 lastItemIdValue = GachaV4.getItemItemIds(gachaId, lastIndex);
-      GachaV4.updateItemIds(gachaId, valueIndex, lastItemIdValue);
+      uint256 lastItemIdValue = GachaPet.getItemPetIds(gachaId, lastIndex);
+      GachaPet.updatePetIds(gachaId, valueIndex, lastItemIdValue);
       // Update the index for the moved value
       GachaItemIndex.set(gachaId, lastItemIdValue, index);
     }
-    GachaV4.popItemIds(gachaId);
+    GachaPet.popPetIds(gachaId);
     GachaItemIndex.deleteRecord(gachaId, itemId);
   }
 

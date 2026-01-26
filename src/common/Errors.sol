@@ -376,7 +376,7 @@ library Errors {
   error Gacha_NoItemToGacha(uint256 gachaId);
   error Gacha_InactiveGacha(uint256 gachaId);
   error GachaSystem_InvalidRequestId(uint256 requestId);
-  error GachaSystem_InsufficientGachaFee(uint256 msgValue, uint256 requiredFee);
+  error GachaSystem_InsufficientGachaFee(uint256 msgValue, uint256 requireValue, uint256 requireItemId);
   error GachaSystem_ExistingPendingRequest(uint256 characterId);
 
   /* -------------------------------------------------------------------------- */

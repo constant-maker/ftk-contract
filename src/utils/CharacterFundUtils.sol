@@ -40,7 +40,7 @@ library CharacterFundUtils {
     CharFund.setCrystal(characterId, _balance - amount);
   }
 
-  function mustEnoughCrystal(uint256 characterId, uint32 requireAmount) internal {
+  function mustEnoughCrystal(uint256 characterId, uint32 requireAmount) internal view {
     uint32 _balance = CharFund.getCrystal(characterId);
     if (_balance < requireAmount) {
       revert Errors.CharacterFund_NotEnoughCrystal(_balance, requireAmount);
