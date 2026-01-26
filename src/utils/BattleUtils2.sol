@@ -58,7 +58,7 @@ library BattleUtils2 {
 
     // move back to city and reset character state to standby
     CharacterPositionUtils.moveToCapital(characterId);
-    CharState.setState(characterId, CharacterStateType.Standby);
+    CharState.set(characterId, CharacterStateType.Standby, block.timestamp);
     // character is dead, remove all buffs
     CharacterBuffUtils.dispelAllBuff(characterId);
   }
