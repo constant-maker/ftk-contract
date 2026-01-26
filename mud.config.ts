@@ -36,7 +36,7 @@ export default defineWorld({
       "LeatherArmor", "LeatherHeadgear", "LeatherFootwear",
       "PlateArmor", "PlateHeadgear", "PlateFootwear",
       "Mount", "Resource", "SkillItem", "HealingItem", "StatModifierItem",
-      "Card", "BuffItem", "Pet"
+      "Card", "BuffItem", "Pet", "GachaTicket"
     ],
     ItemCategoryType: ["Tool", "Equipment", "Other"],
     CharacterType: ["Male", "Female"],

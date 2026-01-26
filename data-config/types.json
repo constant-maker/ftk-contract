@@ -44,7 +44,8 @@
     "StatModifierItem": 26,
     "Card": 27,
     "BuffItem": 28,
-    "Pet": 29
+    "Pet": 29,
+    "GachaTicket": 30
   },
   "itemCategoryTypes": {
     "Tool": 0,
