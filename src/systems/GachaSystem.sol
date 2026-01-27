@@ -41,7 +41,7 @@ contract GachaSystem is System, CharacterAccessControl, IVRFConsumer {
   uint256 constant MIN_DELAY_TIME = 60; // 60 seconds
 
   /// @dev Renews an existing gacha request if it is still pending. No new payment is required.
-  function renewGachaRequest(uint256 characterId) public payable onlyAuthorizedWallet(characterId) {
+  function renewGachaRequest(uint256 characterId) public onlyAuthorizedWallet(characterId) {
     uint256 existingRequestId = CharGachaReq.get(characterId);
     if (existingRequestId == 0) {
       revert Errors.GachaSystem_NoPendingRequest(characterId);
