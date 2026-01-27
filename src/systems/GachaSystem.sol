@@ -38,6 +38,31 @@ contract GachaSystem is System, CharacterAccessControl, IVRFConsumer {
   uint8 constant NUM_REQUEST_NUMBER = 1;
   uint256 constant PET_ITEM_ID = 436;
   uint256 constant TOTAL_PERCENT = 10_000; // for probability calculation with 2 decimal places ~ 100.00%
+  uint256 constant MIN_DELAY_TIME = 60; // 60 seconds
+
+  /// @dev Renews an existing gacha request if it is still pending. No new payment is required.
+  function renewGachaRequest(uint256 characterId) public payable onlyAuthorizedWallet(characterId) {
+    uint256 existingRequestId = CharGachaReq.get(characterId);
+    if (existingRequestId == 0) {
+      revert Errors.GachaSystem_NoPendingRequest(characterId);
+    }
+    CharGachaV2Data memory charGacha = CharGachaV2.get(characterId, existingRequestId);
+    if (!charGacha.isPending) {
+      revert Errors.GachaSystem_RequestAlreadyFulfilled(existingRequestId);
+    }
+    if (block.timestamp < charGacha.timestamp + MIN_DELAY_TIME) {
+      revert Errors.GachaSystem_ExistingPendingRequest(characterId);
+    }
+
+    CharGachaV2.deleteRecord(characterId, existingRequestId); // remove old request
+    GachaReqChar.deleteRecord(existingRequestId); // remove old request mapping
+
+    uint256 requestId = IVRFCoordinator(VRF_COORDINATOR).requestRandomNumbers(
+      NUM_REQUEST_NUMBER, uint256(keccak256(abi.encodePacked(characterId, block.timestamp, existingRequestId)))
+    );
+
+    _storeCharGachaData(characterId, charGacha.gachaId, requestId, charGacha.isLimitedGacha);
+  }
 
   function requestGacha(uint256 characterId, uint256 gachaId) public payable onlyAuthorizedWallet(characterId) {
     _checkPendingRequest(characterId);
@@ -151,7 +176,8 @@ contract GachaSystem is System, CharacterAccessControl, IVRFConsumer {
     GachaV5Data memory gachaData = GachaV5.get(gachaId);
     uint256 r = randomNumber % TOTAL_PERCENT;
     uint256 cumulativePercent = 0;
-    for (uint256 i = 0; i < gachaData.itemIds.length; i++) {
+    uint256 len = gachaData.itemIds.length;
+    for (uint256 i = 0; i < len; i++) {
       cumulativePercent += gachaData.percents[i];
       if (r < cumulativePercent) {
         uint256 receivedItemId = gachaData.itemIds[i];

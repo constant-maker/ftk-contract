@@ -84,6 +84,7 @@ contract WorldDeployment is Script {
     GachaSystem gachaSystem = new GachaSystem();
 
     world.registerSystem(systemId, gachaSystem, true);
+    world.registerRootFunctionSelector(systemId, "renewGachaRequest(uint256)", "renewGachaRequest(uint256)");
     world.registerRootFunctionSelector(systemId, "requestGacha(uint256,uint256)", "requestGacha(uint256,uint256)");
     world.registerRootFunctionSelector(systemId, "requestPetGacha(uint256,uint256)", "requestPetGacha(uint256,uint256)");
     world.registerRootFunctionSelector(

@@ -213,4 +213,97 @@ contract GachaTest is Test, WorldFixture, SpawnSystemFixture, WelcomeSystemFixtu
     uint256 prevLastEquipmentId = equipmentIds[equipmentIds.length - 2];
     assertTrue(Equipment.getItemId(prevLastEquipmentId) == charGacha.gachaItemId);
   }
+
+  function test_VRF_DoesNotResponseInACertainTime() public {
+    uint256 gachaId = GachaCounter.get() + 1;
+
+    uint256[] memory itemIds = new uint256[](2);
+    itemIds[0] = 361;
+    itemIds[1] = 362;
+
+    uint32[] memory amounts = new uint32[](2);
+    amounts[0] = 2;
+    amounts[1] = 2;
+
+    uint16[] memory percents = new uint16[](2);
+    percents[0] = 5000; // 50%
+    percents[1] = 5000; // 50%
+
+    GachaV5Data memory gachaData = GachaV5Data({
+      startTime: block.timestamp,
+      ticketValue: 0,
+      ticketItemId: 1,
+      itemIds: itemIds,
+      amounts: amounts,
+      percents: percents
+    });
+
+    assertEq(gachaId, 1);
+
+    vm.startPrank(worldDeployer);
+    InventoryItemUtils.addItem(characterId, 1, 1);
+    GachaV5.set(gachaId, gachaData);
+    GachaCounter.set(gachaId);
+
+    vm.stopPrank();
+
+    // ── simulate VRF request (normally called by gacha system)
+
+    ResourceId gachaSystemResourceId = SystemUtils.getRootSystemId("GachaSystem");
+    bytes memory data = abi.encodeCall(GachaSystem.requestGacha, (characterId, gachaId));
+
+    vm.startPrank(player);
+    world.call(gachaSystemResourceId, data);
+    vm.stopPrank();
+
+    assertTrue(CharGachaReq.get(characterId) > 0);
+
+    uint256 requestId = CharGachaReq.get(characterId);
+
+    // ── fulfill randomness
+    CharGachaV2Data memory charGacha = CharGachaV2.get(characterId, requestId);
+    assertEq(GachaReqChar.get(requestId), characterId);
+
+    vm.warp(block.timestamp + 59 seconds);
+    // retry gacha request
+    data = abi.encodeCall(GachaSystem.renewGachaRequest, (characterId));
+
+    vm.expectRevert();
+    vm.startPrank(player);
+    world.call(gachaSystemResourceId, data);
+    vm.stopPrank();
+
+    vm.warp(block.timestamp + 2 seconds); // warp time to exceed VRF response time limit
+
+    vm.startPrank(player);
+    world.call(gachaSystemResourceId, data);
+    vm.stopPrank();
+
+    charGacha = CharGachaV2.get(characterId, requestId);
+    assertTrue(charGacha.timestamp == block.timestamp);
+
+    uint256[] memory randomNumbers = new uint256[](1);
+    randomNumbers[0] = 123; // example random number
+    MockVRFCoordinator(VRF_COORDINATOR).fulfill(requestId, randomNumbers);
+
+    charGacha = CharGachaV2.get(characterId, requestId);
+    assertFalse(charGacha.isPending);
+    assertEq(charGacha.randomNumber, 123);
+    assertTrue(charGacha.gachaItemId == 361 || charGacha.gachaItemId == 362);
+    assertEq(CharOtherItem.getAmount(characterId, 1), 0);
+    assertTrue(CharGachaReq.get(characterId) == 0);
+    uint256[] memory equipmentIds = CharInventory.getEquipmentIds(characterId);
+    uint256 lastEquipmentId = equipmentIds[equipmentIds.length - 1];
+    assertTrue(Equipment.getItemId(lastEquipmentId) == charGacha.gachaItemId);
+    uint256 prevLastEquipmentId = equipmentIds[equipmentIds.length - 2];
+    assertTrue(Equipment.getItemId(prevLastEquipmentId) == charGacha.gachaItemId);
+
+
+    // retry again should fail since already fulfilled
+    data = abi.encodeCall(GachaSystem.renewGachaRequest, (characterId));
+    vm.expectRevert();
+    vm.startPrank(player);
+    world.call(gachaSystemResourceId, data);
+    vm.stopPrank();
+  }
 }
