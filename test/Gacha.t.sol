@@ -264,7 +264,7 @@ contract GachaTest is Test, WorldFixture, SpawnSystemFixture, WelcomeSystemFixtu
     CharGachaV2Data memory charGacha = CharGachaV2.get(characterId, requestId);
     assertEq(GachaReqChar.get(requestId), characterId);
 
-    vm.warp(block.timestamp + 59 seconds);
+    vm.warp(block.timestamp + 14 seconds);
     // retry gacha request
     data = abi.encodeCall(GachaSystem.renewGachaRequest, (characterId));
 

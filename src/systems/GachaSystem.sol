@@ -35,10 +35,10 @@ interface IVRFConsumer {
 contract GachaSystem is System, CharacterAccessControl, IVRFConsumer {
   // RISE Testnet VRF Coordinator
   address constant VRF_COORDINATOR = 0x9d57aB4517ba97349551C876a01a7580B1338909;
-  uint8 constant NUM_REQUEST_NUMBER = 1;
+  uint32 constant NUM_REQUEST_NUMBER = 1;
   uint256 constant PET_ITEM_ID = 436;
   uint256 constant TOTAL_PERCENT = 10_000; // for probability calculation with 2 decimal places ~ 100.00%
-  uint256 constant MIN_DELAY_TIME = 60; // 60 seconds
+  uint256 constant MIN_DELAY_TIME = 15; // 15 seconds
 
   /// @dev Renews an existing gacha request if it is still pending. No new payment is required.
   function renewGachaRequest(uint256 characterId) public onlyAuthorizedWallet(characterId) {
@@ -117,7 +117,7 @@ contract GachaSystem is System, CharacterAccessControl, IVRFConsumer {
   function rawFulfillRandomNumbers(uint256 requestId, uint256[] memory randomNumbers) external override {
     require(_msgSender() == VRF_COORDINATOR, "Only VRF coordinator");
 
-    require(randomNumbers.length == NUM_REQUEST_NUMBER, "Invalid random numbers length");
+    require(randomNumbers.length == uint256(NUM_REQUEST_NUMBER), "Invalid random numbers length");
 
     // Find the characterId associated with this requestId
     uint256 characterId = GachaReqChar.get(requestId);

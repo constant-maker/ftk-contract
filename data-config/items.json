@@ -7472,7 +7472,7 @@
     },
     "435": {
       "id": 435,
-      "type": 32,
+      "type": 30,
       "category": 2,
       "tier": 4,
       "weight": 1,
@@ -7508,13 +7508,13 @@
       "category": 2,
       "tier": 5,
       "weight": 1,
-      "name": "Gacha Ticket",
-      "desc": "A ticket that allows you to draw a random item from the gacha machine.",
+      "name": "Tome of Pet Awakening",
+      "desc": "An arcane tome used to summon a monster from its slumber that is extremely loyal to its master.",
       "untradable": true
     },
     "438": {
       "id": 438,
-      "type": 32,
+      "type": 30,
       "category": 2,
       "tier": 7,
       "weight": 1,
@@ -7524,17 +7524,17 @@
     },
     "439": {
       "id": 439,
-      "type": 32,
+      "type": 30,
       "category": 2,
       "tier": 6,
       "weight": 5,
-      "name": "Fire Dragon's Bounty",
-      "desc": "The blazing bounty received after defeating Ignis, still burning bright. Open it, and harness the dragon's power.",
+      "name": "Fire Dragon's Chest",
+      "desc": "The chest received after defeating Ignis, still burning bright. Open it, and harness the dragon's power.",
       "untradable": false
     },
     "440": {
       "id": 440,
-      "type": 32,
+      "type": 30,
       "category": 2,
       "tier": 7,
       "weight": 5,
@@ -7544,7 +7544,7 @@
     },
     "441": {
       "id": 441,
-      "type": 32,
+      "type": 30,
       "category": 2,
       "tier": 7,
       "weight": 50,
@@ -7564,7 +7564,7 @@
     },
     "443": {
       "id": 443,
-      "type": 32,
+      "type": 30,
       "category": 2,
       "tier": 4,
       "weight": 1,
