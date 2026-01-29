@@ -126,23 +126,6 @@
         }
       ]
     },
-    "276": {
-      "itemId": 276,
-      "ingredients": [
-        {
-          "id": 67,
-          "amount": 30
-        },
-        {
-          "id": 68,
-          "amount": 30
-        },
-        {
-          "id": 69,
-          "amount": 30
-        }
-      ]
-    },
     "277": {
       "itemId": 277,
       "ingredients": [
@@ -574,36 +557,6 @@
         {
           "id": 261,
           "amount": 50
-        }
-      ]
-    },
-    "420": {
-      "itemId": 420,
-      "ingredients": [
-        {
-          "id": 352,
-          "amount": 25
-        },
-        {
-          "id": 353,
-          "amount": 25
-        },
-        {
-          "id": 354,
-          "amount": 25
-        },
-        {
-          "id": 355,
-          "amount": 25
-        }
-      ]
-    },
-    "421": {
-      "itemId": 421,
-      "ingredients": [
-        {
-          "id": 380,
-          "amount": 25
         }
       ]
     },
