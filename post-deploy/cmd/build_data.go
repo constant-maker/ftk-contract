@@ -167,7 +167,7 @@ func buildCallData(
 	callData = append(callData, itemRecipeCallData...)
 
 	// item exchange - collection exc
-	itemExchangeCallData, err := calldata.BuildCollectionExcData(l, dataConfig)
+	itemExchangeCallData, err := calldata.BuildCollectionExcData(l, dataConfig, 0)
 	if err != nil {
 		l.Errorw("cannot build itemExchangeCallData", "err", err)
 		return nil, err

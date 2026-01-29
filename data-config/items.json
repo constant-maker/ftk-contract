@@ -6993,7 +6993,7 @@
       "buffInfo": {
         "type": 2,
         "range": 0,
-        "duration": 43200,
+        "duration": 28800,
         "selfCastOnly": true,
         "numTarget": 1,
         "isBuff": true
@@ -7016,7 +7016,7 @@
       "buffInfo": {
         "type": 2,
         "range": 0,
-        "duration": 43200,
+        "duration": 28800,
         "selfCastOnly": true,
         "numTarget": 1,
         "isBuff": true
@@ -7039,7 +7039,7 @@
       "buffInfo": {
         "type": 2,
         "range": 0,
-        "duration": 43200,
+        "duration": 28800,
         "selfCastOnly": true,
         "numTarget": 1,
         "isBuff": true
@@ -7062,7 +7062,7 @@
       "buffInfo": {
         "type": 2,
         "range": 0,
-        "duration": 43200,
+        "duration": 28800,
         "selfCastOnly": true,
         "numTarget": 1,
         "isBuff": true
@@ -7165,7 +7165,7 @@
       "id": 414,
       "type": 23,
       "category": 2,
-      "tier": 5,
+      "tier": 4,
       "weight": 1,
       "name": "Hidden Chest",
       "desc": "A hidden treasure chest! The first person to obtain it can get hefty rewards, but the chest becomes useless after that.",
@@ -7268,7 +7268,7 @@
       "category": 1,
       "tier": 5,
       "weight": 0,
-      "name": "Unicorn",
+      "name": "Faelin",
       "desc": "A radiant, myth-born beast said to appear only in the eyes of the chosen ones. Its presence turns storms to starlight.",
       "untradable": false,
       "equipmentInfo": {
@@ -7380,11 +7380,111 @@
         "right": 8
       }
     },
+    "426": {
+      "id": 426,
+      "type": 31,
+      "category": 2,
+      "tier": 5,
+      "weight": 0,
+      "name": "Armor of Heavenly Judgement",
+      "desc": "A gleaming chestplate blessed with celestial protection, forged to turn back the wrath of mortals and monsters alike.",
+      "untradable": false
+    },
+    "427": {
+      "id": 427,
+      "type": 31,
+      "category": 2,
+      "tier": 5,
+      "weight": 0,
+      "name": "Helmet of Heavenly Judgement",
+      "desc": "A radiant helm that blinds the wicked and shields the mind with the weight of divine purpose.",
+      "untradable": false
+    },
+    "428": {
+      "id": 428,
+      "type": 31,
+      "category": 2,
+      "tier": 5,
+      "weight": 0,
+      "name": "Boots of Heavenly Judgement",
+      "desc": "These polished boots carry their wearer with unwavering steps, as if walking above the world’s sins.",
+      "untradable": false
+    },
+    "429": {
+      "id": 429,
+      "type": 31,
+      "category": 2,
+      "tier": 5,
+      "weight": 0,
+      "name": "Sword of the Eminence",
+      "desc": "A blade that hums with divine resonance, striking not just flesh but the very will of those it judges.",
+      "untradable": false
+    },
+    "430": {
+      "id": 430,
+      "type": 31,
+      "category": 2,
+      "tier": 5,
+      "weight": 0,
+      "name": "Armor of Shadow's Wrath",
+      "desc": "Wrought from abyssal steel and cloaked in mist, this armor shifts with its wearer’s fury and fades into the dark.",
+      "untradable": false
+    },
+    "431": {
+      "id": 431,
+      "type": 31,
+      "category": 2,
+      "tier": 5,
+      "weight": 0,
+      "name": "Helm of Shadow's Wrath",
+      "desc": "This blood-eyed helm channels the vengeance of lost souls, veiling the wearer in silence and fear.",
+      "untradable": false
+    },
+    "432": {
+      "id": 432,
+      "type": 31,
+      "category": 2,
+      "tier": 5,
+      "weight": 0,
+      "name": "Leggings of Shadow's Wrath",
+      "desc": "These shadowbound greaves move like smoke, giving each stride the weight of silence and the speed of death.",
+      "untradable": false
+    },
+    "433": {
+      "id": 433,
+      "type": 31,
+      "category": 2,
+      "tier": 5,
+      "weight": 0,
+      "name": "Blade of the Soul Reaper",
+      "desc": "A cursed sword that feeds on the essence of the fallen, its edge sharpened by every life it takes.",
+      "untradable": false
+    },
+    "434": {
+      "id": 434,
+      "type": 31,
+      "category": 2,
+      "tier": 5,
+      "weight": 0,
+      "name": "Black Cat Ears",
+      "desc": "This cosmetic headband stands out with its cute black cat ears.",
+      "untradable": false
+    },
+    "435": {
+      "id": 435,
+      "type": 32,
+      "category": 2,
+      "tier": 4,
+      "weight": 1,
+      "name": "Gold Token",
+      "desc": "A token that can be exchanged for the equivalent of 5,000 gold.",
+      "untradable": false
+    },
     "436": {
       "id": 436,
       "type": 29,
       "category": 1,
-      "tier": 7,
+      "tier": 5,
       "weight": 1,
       "name": "Pet",
       "desc": "A loyal companion to aid you on your adventures.",
@@ -7406,11 +7506,197 @@
       "id": 437,
       "type": 30,
       "category": 2,
-      "tier": 7,
+      "tier": 5,
       "weight": 1,
       "name": "Gacha Ticket",
       "desc": "A ticket that allows you to draw a random item from the gacha machine.",
       "untradable": true
+    },
+    "438": {
+      "id": 438,
+      "type": 32,
+      "category": 2,
+      "tier": 7,
+      "weight": 1,
+      "name": "FayLinn's Divine Favor",
+      "desc": "The gentle fae's divine treasure, wrapped in ivy and starlight. This is her gift to her dearest friend. Don't lose it.",
+      "untradable": true
+    },
+    "439": {
+      "id": 439,
+      "type": 32,
+      "category": 2,
+      "tier": 6,
+      "weight": 5,
+      "name": "Fire Dragon's Bounty",
+      "desc": "The blazing bounty received after defeating Ignis, still burning bright. Open it, and harness the dragon's power.",
+      "untradable": false
+    },
+    "440": {
+      "id": 440,
+      "type": 32,
+      "category": 2,
+      "tier": 7,
+      "weight": 5,
+      "name": "Great Serpent's Chest",
+      "desc": "The ancient treasure chest belonging to Kalyndra, bearing knowledge beyond time. Open it, and harness the power of a great monster.",
+      "untradable": false
+    },
+    "441": {
+      "id": 441,
+      "type": 32,
+      "category": 2,
+      "tier": 7,
+      "weight": 50,
+      "name": "Frost Warlord's Treasure",
+      "desc": "The relic collected by the legendary Beowulf holds lots of secrets. Open it, and harness the power of the alpha wolf.",
+      "untradable": false
+    },
+    "442": {
+      "id": 442,
+      "type": 32,
+      "category": 2,
+      "tier": 4,
+      "weight": 1,
+      "name": "Floating Dandelion",
+      "desc": "A magical floating dandelion that returns its user to their Save Point after channeling for 1 minute.",
+      "untradable": false
+    },
+    "443": {
+      "id": 443,
+      "type": 32,
+      "category": 2,
+      "tier": 4,
+      "weight": 1,
+      "name": "Bag of Rice",
+      "desc": "Everyone needs rice to survive the coming winter.",
+      "untradable": false
+    },
+    "444": {
+      "id": 444,
+      "type": 27,
+      "category": 2,
+      "tier": 3,
+      "weight": 0,
+      "name": "Lucy Card",
+      "desc": "The beloved shopkeeper has been helping new adventurers for ages.",
+      "untradable": false,
+      "cardInfo": {
+        "top": 3,
+        "bottom": 8,
+        "left": 2,
+        "right": 7
+      }
+    },
+    "445": {
+      "id": 445,
+      "type": 27,
+      "category": 2,
+      "tier": 3,
+      "weight": 0,
+      "name": "Ironwolf Card",
+      "desc": "The famed weaponsmith is both respected and adored by warriors.",
+      "untradable": false,
+      "cardInfo": {
+        "top": 8,
+        "bottom": 3,
+        "left": 8,
+        "right": 2
+      }
+    },
+    "446": {
+      "id": 446,
+      "type": 27,
+      "category": 2,
+      "tier": 4,
+      "weight": 0,
+      "name": "Raya Card",
+      "desc": "Raya is the heart of every bustling marketplaces across all realms.",
+      "untradable": false,
+      "cardInfo": {
+        "top": 9,
+        "bottom": 6,
+        "left": 7,
+        "right": 4
+      }
+    },
+    "447": {
+      "id": 447,
+      "type": 27,
+      "category": 2,
+      "tier": 3,
+      "weight": 0,
+      "name": "Alice Card",
+      "desc": "Alice is why adventurers go to their storage a lot more than necessary.",
+      "untradable": false,
+      "cardInfo": {
+        "top": 4,
+        "bottom": 8,
+        "left": 1,
+        "right": 8
+      }
+    },
+    "448": {
+      "id": 448,
+      "type": 27,
+      "category": 2,
+      "tier": 3,
+      "weight": 0,
+      "name": "Elric Card",
+      "desc": "This noble Kingsguard was knighted not for bravery, but a stout heart.",
+      "untradable": false,
+      "cardInfo": {
+        "top": 1,
+        "bottom": 8,
+        "left": 8,
+        "right": 4
+      }
+    },
+    "449": {
+      "id": 449,
+      "type": 31,
+      "category": 2,
+      "tier": 5,
+      "weight": 0,
+      "name": "Wings of Draconic Fury",
+      "desc": "Dragon wings are the symbol of unchained strength and freedom.",
+      "untradable": false
+    },
+    "450": {
+      "id": 450,
+      "type": 31,
+      "category": 2,
+      "tier": 5,
+      "weight": 0,
+      "name": "Ancient Hatred",
+      "desc": "Kalyndra's primal emotions now course through you like fire and blood. Hatred materialized.",
+      "untradable": false
+    },
+    "451": {
+      "id": 451,
+      "type": 31,
+      "category": 2,
+      "tier": 5,
+      "weight": 0,
+      "name": "Alpha Wolf Hat",
+      "desc": "With this hat on, the words you speak are no longer enquiries. They are commands.",
+      "untradable": false
+    },
+    "452": {
+      "id": 452,
+      "type": 27,
+      "category": 2,
+      "tier": 3,
+      "weight": 0,
+      "name": "Pip Card",
+      "desc": "He keeps sheep safe and secrets safer.",
+      "untradable": false,
+      "cardInfo": {
+        "top": 8,
+        "bottom": 8,
+        "left": 1,
+        "right": 3
+      }
     }
   }
 }

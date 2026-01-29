@@ -45,7 +45,10 @@
     "Card": 27,
     "BuffItem": 28,
     "Pet": 29,
-    "GachaTicket": 30
+    "GachaTicket": 30,
+    "Skin": 31,
+    "Treasure": 32,
+    "Teleport": 33
   },
   "itemCategoryTypes": {
     "Tool": 0,

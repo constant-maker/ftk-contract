@@ -37,6 +37,7 @@ func UpdateDataConfig(dataConfig *DataConfig, basePath string) {
 	}
 	for _, monsterResource := range listMonsterResourceUpdate {
 		currentResource, ok := dataConfig.Items[intToString(monsterResource.Id)]
+		monsterResource.Weight = currentResource.Weight // keep old weight
 		if reflect.DeepEqual(monsterResource, currentResource) {
 			// l.Infow("monsterResource data unchanged")
 			continue
@@ -59,6 +60,7 @@ func UpdateDataConfig(dataConfig *DataConfig, basePath string) {
 	}
 	for _, farmResource := range listFarmResourceUpdate {
 		currentResource, ok := dataConfig.Items[intToString(farmResource.Id)]
+		farmResource.Weight = currentResource.Weight // keep old weight
 		if reflect.DeepEqual(farmResource, currentResource) {
 			// l.Infow("farmResource data unchanged")
 			continue
@@ -89,6 +91,7 @@ func UpdateDataConfig(dataConfig *DataConfig, basePath string) {
 			l.Infow("detect new equipment", "data", equipment)
 		} else {
 			l.Infow("detect equipment update", "data", equipment)
+			// no need to keep old weight for equipment
 		}
 		shouldRewriteFile = true
 		dataConfig.Items[intToString(equipment.Id)] = equipment // add
@@ -103,6 +106,7 @@ func UpdateDataConfig(dataConfig *DataConfig, basePath string) {
 	}
 	for _, healingItem := range listHealingItemUpdate {
 		currentItem, ok := dataConfig.Items[intToString(healingItem.Id)]
+		healingItem.Weight = currentItem.Weight // keep old weight
 		if reflect.DeepEqual(healingItem, currentItem) {
 			l.Infow("healingItem data unchanged")
 			continue
@@ -125,6 +129,7 @@ func UpdateDataConfig(dataConfig *DataConfig, basePath string) {
 	}
 	for _, scrollItem := range listScrollItemUpdate {
 		currentItem, ok := dataConfig.Items[intToString(scrollItem.Id)]
+		scrollItem.Weight = currentItem.Weight // keep old weight
 		if reflect.DeepEqual(scrollItem, currentItem) {
 			l.Infow("scrollItem data unchanged")
 			continue
@@ -169,6 +174,7 @@ func UpdateDataConfig(dataConfig *DataConfig, basePath string) {
 	}
 	for _, card := range listCardUpdate {
 		currentCard, ok := dataConfig.Items[intToString(card.Id)]
+		card.Weight = currentCard.Weight // keep old weight
 		if reflect.DeepEqual(card, currentCard) {
 			// l.Infow("tool data unchanged")
 			continue
