@@ -33,6 +33,7 @@ type Item struct {
 	InstantDamage *InstantDamage `json:"instantDmg,omitempty"`
 	ExpAmplify    *ExpAmplify    `json:"expAmplify,omitempty"`
 	StatsModify   *StatsModify   `json:"statsModify,omitempty"`
+	SkinInfo      *SkinInfo      `json:"skinInfo,omitempty"`
 }
 
 type BuffItemInfo struct {
@@ -91,6 +92,10 @@ type HealingInfo struct {
 
 type ResourceInfo struct {
 	ResourceType int `json:"type"`
+}
+
+type SkinInfo struct {
+	SlotType int `json:"slotType"`
 }
 
 type WelcomeConfig struct {
@@ -299,6 +304,7 @@ type ItemType string
 type EquipmentSlotType string
 type CharacterStateType string
 type ItemCategoryType string
+type SkinSlotType string
 
 const (
 	ItemCategoryTool       ItemCategoryType = "Tool"
@@ -359,6 +365,7 @@ type DataConfig struct {
 	TerrainTypes       map[TerrainType]int        `json:"terrainTypes"`       // enums
 	AdvantageTypes     map[AdvantageType]int      `json:"advantageType"`      // enums
 	RarityTypes        map[RarityType]int         `json:"rarityType"`         // enums
+	SkinSlotTypes      map[SkinSlotType]int       `json:"skinSlotTypes"`      // enums
 }
 
 var (
@@ -373,6 +380,7 @@ var (
 	MapTerrainTypes        = make(map[int]TerrainType)
 	MapAdvantageTypes      = make(map[int]AdvantageType)
 	MapRarityTypes         = make(map[int]RarityType)
+	MapSkinSlotTypes       = make(map[int]SkinSlotType)
 )
 
 type MapColor struct {

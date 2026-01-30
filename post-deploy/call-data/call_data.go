@@ -227,6 +227,14 @@ func BuildExtraItemInfoData(l *zap.SugaredLogger, dataConfig common.DataConfig, 
 				return nil, err
 			}
 			callData = append(callData, resourceItemInfoCallData)
+		case item.SkinInfo != nil:
+			l.Infow("skin info", "value", item.SkinInfo)
+			skinItemInfoCallData, err := table.SkinInfoCallData(item)
+			if err != nil {
+				l.Errorw("cannot build Skin Info call data", "err", err)
+				return nil, err
+			}
+			callData = append(callData, skinItemInfoCallData)
 		case item.BuffInfo != nil:
 			l.Infow("buff info", "value", item.BuffInfo)
 			buffItemInfoCallData, err := table.BuffItemInfoCallData(*item.BuffInfo, item.Id)

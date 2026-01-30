@@ -97,11 +97,19 @@ const CHARACTER_TABLES: any = {
     },
     key: ['characterId', 'slotType'],
   },
-  CharSkinEquipment: {
+  CharSkinEquipment: { // deprecated
     schema: {
       characterId: "uint256",
       slotType: "SkinSlotType",
       equipmentId: "uint256",
+    },
+    key: ['characterId', 'slotType'],
+  },
+  CharSkin: {
+    schema: {
+      characterId: "uint256",
+      slotType: "SkinSlotType",
+      itemId: "uint256",
     },
     key: ['characterId', 'slotType'],
   },

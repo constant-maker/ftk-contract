@@ -43,6 +43,13 @@ const ITEM_TABLES: any = {
     },
     key: ['itemId'],
   },
+  SkinInfo: {
+    schema: {
+      itemId: "uint256",
+      slotType: "SkinSlotType",
+    },
+    key: ['itemId'],
+  },
   CardInfo: {
     schema: {
       itemId: "uint256",

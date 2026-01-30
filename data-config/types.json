@@ -47,7 +47,9 @@
     "Pet": 29,
     "GachaTicket": 30,
     "Skin": 31,
-    "Teleport": 32
+    "Teleport": 32,
+    "Ring": 33,
+    "Bundle": 34
   },
   "itemCategoryTypes": {
     "Tool": 0,
@@ -61,7 +63,18 @@
     "Headgear": 3,
     "Footwear": 4,
     "Mount": 5,
-    "Pet": 6
+    "Pet": 6,
+    "Ring": 7
+  },
+  "skinSlotTypes": {
+    "Weapon": 0,
+    "SubWeapon": 1,
+    "Armor": 2,
+    "Headgear": 3,
+    "Footwear": 4,
+    "Aura": 5,
+    "Wings": 6,
+    "Cloak": 7
   },
   "questTypes": {
     "Contribute": 0,

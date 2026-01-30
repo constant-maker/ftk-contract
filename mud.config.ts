@@ -42,10 +42,10 @@ export default defineWorld({
     CharacterType: ["Male", "Female"],
     StatType: ["ATK", "DEF", "AGI"],
     SlotType: [
-      "Weapon", "SubWeapon", "Armor", "Headgear", "Footwear", "Mount", "Pet"
+      "Weapon", "SubWeapon", "Armor", "Headgear", "Footwear", "Mount", "Pet", "Ring"
     ],
     SkinSlotType: [
-      "Weapon", "SubWeapon", "Armor", "Headgear", "Footwear", "Mount", "Pet", "Aura", "Ring"
+      "Weapon", "SubWeapon", "Armor", "Headgear", "Footwear", "Aura", "Wings", "Cloak"
     ],
     QuestType: ["Contribute", "Locate"],
     QuestStatusType: ["NotReceived", "InProgress", "Done"],

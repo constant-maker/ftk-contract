@@ -6,6 +6,7 @@ import (
 	"os"
 
 	"github.com/ftk/post-deploy/pkg/common"
+	onlineconfig "github.com/ftk/post-deploy/pkg/online-config"
 	"github.com/urfave/cli"
 	"go.uber.org/zap"
 )
@@ -116,7 +117,7 @@ func run(c *cli.Context) error {
 			}
 		}
 		if c.Bool(updateOnlineFlag) {
-			common.UpdateDataConfig(&dataConfig, "../..") // update config by online data
+			onlineconfig.UpdateDataConfig(&dataConfig, "../..") // update config by online data
 		}
 	}
 

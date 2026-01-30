@@ -9,6 +9,7 @@ import (
 
 const (
 	itemWeightCacheFieldLayout = "0x0004010004000000000000000000000000000000000000000000000000000000"
+	skinInfoFieldLayout        = "0x0001010001000000000000000000000000000000000000000000000000000000"
 )
 
 func ItemCallData(item common.Item) ([]byte, error) {
@@ -185,5 +186,19 @@ func ItemWeightCacheCallData(item common.Item) ([]byte, error) {
 		[32]byte(encodeUint256(big.NewInt(int64(item.Id)))),
 	}
 	mt := mud.NewMudTable("ItemWeightCache", "app", itemWeightCacheFieldLayout)
+	return mt.SetStaticFieldRawCalldata(keyTuple, 0, staticData)
+}
+
+func SkinInfoCallData(item common.Item) ([]byte, error) {
+	staticData, err := encodePacked(
+		uint8(item.SkinInfo.SlotType),
+	)
+	if err != nil {
+		return nil, err
+	}
+	keyTuple := [][32]byte{
+		[32]byte(encodeUint256(big.NewInt(int64(item.Id)))),
+	}
+	mt := mud.NewMudTable("SkinInfo", "app", skinInfoFieldLayout)
 	return mt.SetStaticFieldRawCalldata(keyTuple, 0, staticData)
 }

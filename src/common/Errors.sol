@@ -1,7 +1,14 @@
 pragma solidity >=0.8.24;
 
 import {
-  CharacterStateType, ResourceType, ItemType, SlotType, StatType, SocialType, RoleType
+  CharacterStateType,
+  ResourceType,
+  ItemType,
+  SlotType,
+  StatType,
+  SocialType,
+  RoleType,
+  SkinSlotType
 } from "../codegen/common.sol";
 
 library Errors {
@@ -381,7 +388,7 @@ library Errors {
   error GachaSystem_NoPendingRequest(uint256 characterId);
 
   /* -------------------------------------------------------------------------- */
-  /*                               CollectionSystem                                  */
+  /*                               CollectionSystem                             */
   /* -------------------------------------------------------------------------- */
   error CollectionSystem_InvalidParams(uint256 lenItemIds, uint256 lenAmounts);
   error CollectionSystem_ExchangeNotExist(uint256 itemId);
@@ -389,4 +396,9 @@ library Errors {
     uint256 characterId, uint256 inputItemId, uint256 outputItemId, uint32 requiredAmount, uint32 currentAmount
   );
   error CollectionSystem_ExceedMaxAmount(uint256 characterId, uint256 itemId);
+
+  /* -------------------------------------------------------------------------- */
+  /*                               SkinSystem                                   */
+  /* -------------------------------------------------------------------------- */
+  error SkinSystem_SkinSlotTypeMismatch(uint256 itemId, SkinSlotType slotType);
 }

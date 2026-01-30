@@ -7388,7 +7388,10 @@
       "weight": 0,
       "name": "Armor of Heavenly Judgement",
       "desc": "A gleaming chestplate blessed with celestial protection, forged to turn back the wrath of mortals and monsters alike.",
-      "untradable": false
+      "untradable": false,
+      "skinInfo": {
+        "slotType": 2
+      }
     },
     "427": {
       "id": 427,
@@ -7398,7 +7401,10 @@
       "weight": 0,
       "name": "Helmet of Heavenly Judgement",
       "desc": "A radiant helm that blinds the wicked and shields the mind with the weight of divine purpose.",
-      "untradable": false
+      "untradable": false,
+      "skinInfo": {
+        "slotType": 3
+      }
     },
     "428": {
       "id": 428,
@@ -7408,7 +7414,10 @@
       "weight": 0,
       "name": "Boots of Heavenly Judgement",
       "desc": "These polished boots carry their wearer with unwavering steps, as if walking above the world’s sins.",
-      "untradable": false
+      "untradable": false,
+      "skinInfo": {
+        "slotType": 4
+      }
     },
     "429": {
       "id": 429,
@@ -7418,7 +7427,10 @@
       "weight": 0,
       "name": "Sword of the Eminence",
       "desc": "A blade that hums with divine resonance, striking not just flesh but the very will of those it judges.",
-      "untradable": false
+      "untradable": false,
+      "skinInfo": {
+        "slotType": 0
+      }
     },
     "430": {
       "id": 430,
@@ -7428,7 +7440,10 @@
       "weight": 0,
       "name": "Armor of Shadow's Wrath",
       "desc": "Wrought from abyssal steel and cloaked in mist, this armor shifts with its wearer’s fury and fades into the dark.",
-      "untradable": false
+      "untradable": false,
+      "skinInfo": {
+        "slotType": 2
+      }
     },
     "431": {
       "id": 431,
@@ -7438,7 +7453,10 @@
       "weight": 0,
       "name": "Helm of Shadow's Wrath",
       "desc": "This blood-eyed helm channels the vengeance of lost souls, veiling the wearer in silence and fear.",
-      "untradable": false
+      "untradable": false,
+      "skinInfo": {
+        "slotType": 3
+      }
     },
     "432": {
       "id": 432,
@@ -7448,7 +7466,10 @@
       "weight": 0,
       "name": "Leggings of Shadow's Wrath",
       "desc": "These shadowbound greaves move like smoke, giving each stride the weight of silence and the speed of death.",
-      "untradable": false
+      "untradable": false,
+      "skinInfo": {
+        "slotType": 4
+      }
     },
     "433": {
       "id": 433,
@@ -7458,7 +7479,10 @@
       "weight": 0,
       "name": "Blade of the Soul Reaper",
       "desc": "A cursed sword that feeds on the essence of the fallen, its edge sharpened by every life it takes.",
-      "untradable": false
+      "untradable": false,
+      "skinInfo": {
+        "slotType": 0
+      }
     },
     "434": {
       "id": 434,
@@ -7468,7 +7492,10 @@
       "weight": 0,
       "name": "Black Cat Ears",
       "desc": "This cosmetic headband stands out with its cute black cat ears.",
-      "untradable": false
+      "untradable": false,
+      "skinInfo": {
+        "slotType": 3
+      }
     },
     "435": {
       "id": 435,
@@ -7660,7 +7687,10 @@
       "weight": 0,
       "name": "Wings of Draconic Fury",
       "desc": "Dragon wings are the symbol of unchained strength and freedom.",
-      "untradable": false
+      "untradable": false,
+      "skinInfo": {
+        "slotType": 6
+      }
     },
     "450": {
       "id": 450,
@@ -7670,7 +7700,10 @@
       "weight": 0,
       "name": "Ancient Hatred",
       "desc": "Kalyndra's primal emotions now course through you like fire and blood. Hatred materialized.",
-      "untradable": false
+      "untradable": false,
+      "skinInfo": {
+        "slotType": 7
+      }
     },
     "451": {
       "id": 451,
@@ -7680,7 +7713,10 @@
       "weight": 0,
       "name": "Alpha Wolf Hat",
       "desc": "With this hat on, the words you speak are no longer enquiries. They are commands.",
-      "untradable": false
+      "untradable": false,
+      "skinInfo": {
+        "slotType": 3
+      }
     },
     "452": {
       "id": 452,

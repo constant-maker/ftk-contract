@@ -5636,6 +5636,71 @@
         "barrier": 0
       }
     },
+    "426": {
+      "id": 426,
+      "type": 31,
+      "category": 2,
+      "tier": 5,
+      "weight": 0,
+      "name": "Armor of Heavenly Judgement",
+      "desc": "A gleaming chestplate blessed with celestial protection, forged to turn back the wrath of mortals and monsters alike.",
+      "untradable": false,
+      "skinInfo": {
+        "slotType": 2
+      }
+    },
+    "427": {
+      "id": 427,
+      "type": 31,
+      "category": 2,
+      "tier": 5,
+      "weight": 0,
+      "name": "Helmet of Heavenly Judgement",
+      "desc": "A radiant helm that blinds the wicked and shields the mind with the weight of divine purpose.",
+      "untradable": false,
+      "skinInfo": {
+        "slotType": 3
+      }
+    },
+    "428": {
+      "id": 428,
+      "type": 31,
+      "category": 2,
+      "tier": 5,
+      "weight": 0,
+      "name": "Boots of Heavenly Judgement",
+      "desc": "These polished boots carry their wearer with unwavering steps, as if walking above the world’s sins.",
+      "untradable": false,
+      "skinInfo": {
+        "slotType": 4
+      }
+    },
+    "429": {
+      "id": 429,
+      "type": 31,
+      "category": 2,
+      "tier": 5,
+      "weight": 0,
+      "name": "Sword of the Eminence",
+      "desc": "A blade that hums with divine resonance, striking not just flesh but the very will of those it judges.",
+      "untradable": false,
+      "skinInfo": {
+        "slotType": 0
+      }
+    },
+    "430": {
+      "id": 430,
+      "type": 31,
+      "category": 2,
+      "tier": 5,
+      "weight": 0,
+      "name": "Armor of Shadow's Wrath",
+      "desc": "Wrought from abyssal steel and cloaked in mist, this armor shifts with its wearer’s fury and fades into the dark.",
+      "untradable": false,
+      "skinInfo": {
+        "slotType": 2
+      }
+    },
     "436": {
       "id": 436,
       "type": 29,

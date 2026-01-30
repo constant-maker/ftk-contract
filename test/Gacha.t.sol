@@ -298,7 +298,6 @@ contract GachaTest is Test, WorldFixture, SpawnSystemFixture, WelcomeSystemFixtu
     uint256 prevLastEquipmentId = equipmentIds[equipmentIds.length - 2];
     assertTrue(Equipment.getItemId(prevLastEquipmentId) == charGacha.gachaItemId);
 
-
     // retry again should fail since already fulfilled
     data = abi.encodeCall(GachaSystem.renewGachaRequest, (characterId));
     vm.expectRevert();
