@@ -16,6 +16,7 @@ import (
 // - tool
 // - card
 // - skin
+// - other item
 func updateItemDataConfig(dataConfig *common.DataConfig, basePath string) {
 	l := zap.S().With("func", "updateItemDataConfig")
 	shouldRewriteFile := false
@@ -199,6 +200,29 @@ func updateItemDataConfig(dataConfig *common.DataConfig, basePath string) {
 		}
 		shouldRewriteFile = true
 		dataConfig.Items[intToString(skin.Id)] = skin // add or update
+	}
+
+	// update list other item
+	l.Infow("GET LIST OTHER ITEM")
+	listOtherItemUpdate, _, err := getListOtherItemUpdate(dataConfig)
+	if err != nil {
+		l.Errorw("cannot get list other item update", "err", err)
+		panic(err)
+	}
+	for _, otherItem := range listOtherItemUpdate {
+		currentItem, ok := dataConfig.Items[intToString(otherItem.Id)]
+		otherItem.Weight = currentItem.Weight // keep old weight
+		if reflect.DeepEqual(otherItem, currentItem) {
+			// l.Infow("other item data unchanged")
+			continue
+		}
+		if !ok {
+			l.Infow("detect new other item", "data", otherItem)
+		} else {
+			l.Infow("detect other item update", "data", otherItem)
+		}
+		shouldRewriteFile = true
+		dataConfig.Items[intToString(otherItem.Id)] = otherItem // add or update
 	}
 
 	// write item if needed

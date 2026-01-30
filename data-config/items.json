@@ -7163,16 +7163,13 @@
     },
     "414": {
       "id": 414,
-      "type": 23,
+      "type": 30,
       "category": 2,
-      "tier": 4,
+      "tier": 5,
       "weight": 1,
       "name": "Hidden Chest",
       "desc": "A hidden treasure chest! The first person to obtain it can get hefty rewards, but the chest becomes useless after that.",
-      "untradable": false,
-      "resourceInfo": {
-        "type": 6
-      }
+      "untradable": false
     },
     "415": {
       "id": 415,
@@ -7499,7 +7496,7 @@
     },
     "435": {
       "id": 435,
-      "type": 30,
+      "type": 34,
       "category": 2,
       "tier": 4,
       "weight": 1,
@@ -7537,7 +7534,7 @@
       "weight": 1,
       "name": "Tome of Pet Awakening",
       "desc": "An arcane tome used to summon a monster from its slumber that is extremely loyal to its master.",
-      "untradable": true
+      "untradable": false
     },
     "438": {
       "id": 438,
@@ -7547,7 +7544,7 @@
       "weight": 1,
       "name": "FayLinn's Divine Favor",
       "desc": "The gentle fae's divine treasure, wrapped in ivy and starlight. This is her gift to her dearest friend. Don't lose it.",
-      "untradable": true
+      "untradable": false
     },
     "439": {
       "id": 439,
@@ -7556,7 +7553,7 @@
       "tier": 6,
       "weight": 5,
       "name": "Fire Dragon's Chest",
-      "desc": "The chest received after defeating Ignis, still burning bright. Open it, and harness the dragon's power.",
+      "desc": "The blazing bounty received after defeating Ignis, still burning bright. Open it, and harness the dragon's power.",
       "untradable": false
     },
     "440": {
@@ -7576,7 +7573,7 @@
       "tier": 7,
       "weight": 50,
       "name": "Frost Warlord's Treasure",
-      "desc": "The relic collected by the legendary Beowulf holds lots of secrets. Open it, and harness the power of the alpha wolf.",
+      "desc": "The relic collected by the legendary Beowulf hold lots of secrets. Open it, and harness the power of the alpha wolf.",
       "untradable": false
     },
     "442": {
@@ -7591,7 +7588,7 @@
     },
     "443": {
       "id": 443,
-      "type": 30,
+      "type": 34,
       "category": 2,
       "tier": 4,
       "weight": 1,
