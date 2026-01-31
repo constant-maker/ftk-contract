@@ -196,6 +196,9 @@
       "exp": 14,
       "gold": 5,
       "requiredDoneQuestIds": [],
+      "requiredAchievementIds": [
+        5, 6
+      ],
       "contributeDetails": [
         {
           "id": 1,

@@ -39,7 +39,7 @@ const QUEST_TABLES: any = {
     },
     key: [],
   },
-  Quest3: {
+  QuestV4: {
     schema: {
       id: "uint256",
       exp: "uint32",
@@ -48,6 +48,7 @@ const QUEST_TABLES: any = {
       fromNpcId: "uint256",
       toNpcId: "uint256",
       achievementId: "uint256",
+      requiredAchievementIds: "uint256[]",
       requiredDoneQuestIds: "uint256[]",
       rewardItemIds: "uint256[]",
       rewardItemAmounts: "uint32[]",

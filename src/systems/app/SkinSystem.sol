@@ -14,13 +14,7 @@ struct EquipSkinData {
 }
 
 contract SkinSystem is System, CharacterAccessControl {
-  function equipSkins(
-    uint256 characterId,
-    EquipSkinData[] calldata equipData
-  )
-    public
-    onlyAuthorizedWallet(characterId)
-  {
+  function equipSkins(uint256 characterId, EquipSkinData[] calldata equipData) public onlyAuthorizedWallet(characterId) {
     for (uint256 i = 0; i < equipData.length; ++i) {
       _equipSkin(characterId, equipData[i]);
     }

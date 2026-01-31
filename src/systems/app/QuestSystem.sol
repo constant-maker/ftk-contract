@@ -12,22 +12,23 @@ import {
   Npc,
   CityVault,
   ItemV2,
-  Quest3Data
+  QuestV4,
+  QuestV4Data,
+  QuestContribute,
+  QuestContributeData
 } from "@codegen/index.sol";
-import { Quest3 } from "@codegen/tables/Quest3.sol";
-import { QuestContribute, QuestContributeData } from "@codegen/tables/QuestContribute.sol";
 import { CharacterAccessControl } from "@abstracts/CharacterAccessControl.sol";
 import {
   CharacterQuestUtils,
   InventoryItemUtils,
   CharacterStatsUtils,
   CharacterFundUtils,
-  CharacterItemUtils
+  CharacterItemUtils,
+  CharacterPositionUtils,
+  CharAchievementUtils
 } from "@utils/index.sol";
 import { QuestStatusType, QuestType, SocialType, ItemCategoryType } from "@codegen/common.sol";
 import { Errors } from "@common/index.sol";
-import { CharacterPositionUtils } from "@utils/CharacterPositionUtils.sol";
-import { CharAchievementUtils } from "@utils/CharAchievementUtils.sol";
 
 contract QuestSystem is System, CharacterAccessControl {
   /// @dev receive quest
@@ -47,8 +48,8 @@ contract QuestSystem is System, CharacterAccessControl {
 
   /// @dev finish quest with a specific npc
   function finishQuest(uint256 characterId, uint256 toNpcId, uint256 questId) public onlyAuthorizedWallet(characterId) {
-    QuestType questType = Quest3.getQuestType(questId);
-    if (Quest3.getToNpcId(questId) != toNpcId) {
+    QuestType questType = QuestV4.getQuestType(questId);
+    if (QuestV4.getToNpcId(questId) != toNpcId) {
       revert Errors.QuestSystem_FinishWithWrongNpc(toNpcId, questId);
     }
     CharacterQuestUtils.mustFinishInProgressQuest(characterId, questId);
@@ -125,7 +126,7 @@ contract QuestSystem is System, CharacterAccessControl {
   }
 
   function _claimReward(uint256 characterId, uint256 questId) private {
-    Quest3Data memory questData = Quest3.get(questId);
+    QuestV4Data memory questData = QuestV4.get(questId);
     CharacterStatsUtils.updateExp(characterId, questData.exp, true);
     CharacterFundUtils.increaseGold(characterId, questData.gold);
     if (questData.achievementId > 0) {

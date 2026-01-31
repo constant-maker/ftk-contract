@@ -99,13 +99,14 @@ library Errors {
   error EquipmentSystem_ExceedMaxLevel(uint8 maxLevel);
 
   /* -------------------------------------------------------------------------- */
-  /*                                    Quest3                                   */
+  /*                                    QuestV4                                   */
   /* -------------------------------------------------------------------------- */
   error QuestSystem_QuestNotFound(uint256 questId);
   error QuestSystem_AlreadyReceived(uint256 characterId, uint256 questId);
   error QuestSystem_NotSamePositionWithNpc(int32 characterX, int32 characterY, int32 npcX, int32 npcY);
   error QuestSystem_ReceiveFromWrongNpc(uint256 npcId, uint256 questId);
   error QuestSystem_RequiredQuestsAreNotDone(uint256 characterId, uint256 undoneQuestId);
+  error QuestSystem_RequiredAchievementNotCompleted(uint256 characterId, uint256 achievementId);
   error QuestSystem_InvalidContributeQuest(uint256 lenResourceIds, uint256 lenAmounts);
   error QuestSystem_FinishWithWrongNpc(uint256 npcId, uint256 questId);
   error QuestSystem_MustFinishInProgressQuest(uint256 characterId, uint256 questId);

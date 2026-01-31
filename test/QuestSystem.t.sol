@@ -3,8 +3,8 @@ pragma solidity >=0.8.24;
 import { console2 } from "forge-std/console2.sol";
 import { WorldFixture, SpawnSystemFixture, WelcomeSystemFixture, FarmingSystemFixture } from "./fixtures/index.sol";
 import {
-  Quest3,
-  Quest3Data,
+  QuestV4,
+  QuestV4Data,
   QuestContribute,
   QuestContributeData,
   QuestLocate,
@@ -16,7 +16,8 @@ import {
   CharOtherItem,
   CharCurrentStats,
   CharFund,
-  QuestLocateTracking2
+  QuestLocateTracking2,
+  CharAchievementIndex
 } from "@codegen/index.sol";
 import { CharQuestStatus } from "@codegen/index.sol";
 import { QuestType, QuestStatusType, SocialType } from "@codegen/common.sol";
@@ -190,14 +191,14 @@ contract QuestSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixtu
     assertEq(npc.x, npc2X);
     assertEq(npc.y, npc2Y);
 
-    Quest3Data memory quest = Quest3.get(1);
+    QuestV4Data memory quest = QuestV4.get(1);
     assertEq(quest.exp, 14);
     assertEq(quest.gold, 5);
     assertEq(quest.fromNpcId, 1);
     assertEq(quest.toNpcId, 1);
     assertEq(quest.requiredDoneQuestIds.length, 0);
 
-    quest = Quest3.get(4);
+    quest = QuestV4.get(4);
     assertEq(quest.exp, 56);
     assertEq(quest.fromNpcId, 1);
     assertEq(quest.toNpcId, 1);
@@ -211,14 +212,14 @@ contract QuestSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixtu
     assertEq(questContribute.itemIds.length, 3);
     assertEq(questContribute.amounts.length, 3);
 
-    quest = Quest3.get(9);
+    quest = QuestV4.get(9);
     assertEq(quest.gold, 5);
     QuestLocateData memory questLocate = QuestLocate.get(9);
     assertEq(questLocate.xs.length, 2);
     assertEq(questLocate.ys.length, 2);
     assertEq(questLocate.xs[1], 31);
 
-    quest = Quest3.get(10);
+    quest = QuestV4.get(10);
     assertEq(quest.fromNpcId, 1);
     assertEq(quest.rewardItemIds.length, 2);
     assertEq(quest.rewardItemAmounts.length, 2);
@@ -226,6 +227,9 @@ contract QuestSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixtu
     assertEq(quest.rewardItemIds[1], 1);
     assertEq(quest.rewardItemAmounts[0], 1);
     assertEq(quest.rewardItemAmounts[1], 100);
+    assertEq(quest.requiredAchievementIds.length, 2);
+    assertEq(quest.requiredAchievementIds[0], 5);
+    assertEq(quest.requiredAchievementIds[1], 6);
   }
 
   function test_ShouldReceiveAndFinishQuest() external {
@@ -365,6 +369,8 @@ contract QuestSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixtu
     // set position same as npc 1
     vm.startPrank(worldDeployer);
     CharacterPositionUtils.moveToLocation(characterId, npc1X, npc1Y);
+    CharAchievementIndex.set(characterId, 5, 10);
+    CharAchievementIndex.set(characterId, 6, 11);
     vm.stopPrank();
     // after state
     CharPositionData memory characterPosition = CharacterPositionUtils.currentPosition(characterId);
