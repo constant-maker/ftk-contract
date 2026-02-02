@@ -6544,6 +6544,7 @@
         "defPercent": 0,
         "agiPercent": 0,
         "ms": 0,
+        "slowPercent": 0,
         "sp": 0,
         "dmg": 0,
         "isAbsDmg": false
@@ -6571,6 +6572,7 @@
         "defPercent": 5,
         "agiPercent": 0,
         "ms": 0,
+        "slowPercent": 0,
         "sp": 0,
         "dmg": 0,
         "isAbsDmg": false
@@ -6598,6 +6600,7 @@
         "defPercent": 0,
         "agiPercent": 5,
         "ms": 0,
+        "slowPercent": 0,
         "sp": 0,
         "dmg": 0,
         "isAbsDmg": false
@@ -6625,6 +6628,7 @@
         "defPercent": 0,
         "agiPercent": 0,
         "ms": 1,
+        "slowPercent": 0,
         "sp": 0,
         "dmg": 0,
         "isAbsDmg": false
@@ -6652,6 +6656,7 @@
         "defPercent": 0,
         "agiPercent": 0,
         "ms": 0,
+        "slowPercent": 0,
         "sp": 0,
         "dmg": 0,
         "isAbsDmg": false
@@ -6679,6 +6684,7 @@
         "defPercent": 10,
         "agiPercent": 0,
         "ms": 0,
+        "slowPercent": 0,
         "sp": 0,
         "dmg": 0,
         "isAbsDmg": false
@@ -6706,6 +6712,7 @@
         "defPercent": 0,
         "agiPercent": 10,
         "ms": 0,
+        "slowPercent": 0,
         "sp": 0,
         "dmg": 0,
         "isAbsDmg": false
@@ -6733,6 +6740,7 @@
         "defPercent": 0,
         "agiPercent": 0,
         "ms": 0,
+        "slowPercent": 0,
         "sp": 0,
         "dmg": 0,
         "isAbsDmg": false
@@ -6760,6 +6768,7 @@
         "defPercent": 0,
         "agiPercent": 0,
         "ms": 0,
+        "slowPercent": 0,
         "sp": 0,
         "dmg": 0,
         "isAbsDmg": false
@@ -6787,6 +6796,7 @@
         "defPercent": -5,
         "agiPercent": 0,
         "ms": 0,
+        "slowPercent": 0,
         "sp": 0,
         "dmg": 0,
         "isAbsDmg": false
@@ -6814,6 +6824,7 @@
         "defPercent": -10,
         "agiPercent": 0,
         "ms": 0,
+        "slowPercent": 0,
         "sp": 0,
         "dmg": 0,
         "isAbsDmg": false
@@ -6841,6 +6852,7 @@
         "defPercent": 0,
         "agiPercent": -5,
         "ms": 0,
+        "slowPercent": 0,
         "sp": 0,
         "dmg": 0,
         "isAbsDmg": false
@@ -6868,6 +6880,7 @@
         "defPercent": 0,
         "agiPercent": -10,
         "ms": 0,
+        "slowPercent": 0,
         "sp": 0,
         "dmg": 0,
         "isAbsDmg": false
@@ -6895,6 +6908,7 @@
         "defPercent": 0,
         "agiPercent": 0,
         "ms": -1,
+        "slowPercent": 0,
         "sp": 0,
         "dmg": 0,
         "isAbsDmg": false
@@ -6922,6 +6936,7 @@
         "defPercent": 0,
         "agiPercent": 0,
         "ms": -2,
+        "slowPercent": 0,
         "sp": 0,
         "dmg": 0,
         "isAbsDmg": false
@@ -6949,6 +6964,7 @@
         "defPercent": 0,
         "agiPercent": 0,
         "ms": -10,
+        "slowPercent": 0,
         "sp": 0,
         "dmg": 0,
         "isAbsDmg": false
@@ -6976,6 +6992,7 @@
         "defPercent": -40,
         "agiPercent": 0,
         "ms": 0,
+        "slowPercent": 0,
         "sp": 0,
         "dmg": 0,
         "isAbsDmg": false
@@ -7544,7 +7561,7 @@
       "weight": 1,
       "name": "FayLinn's Divine Favor",
       "desc": "The gentle fae's divine treasure, wrapped in ivy and starlight. This is her gift to her dearest friend. Don't lose it.",
-      "untradable": false
+      "untradable": true
     },
     "439": {
       "id": 439,
@@ -7729,6 +7746,114 @@
         "bottom": 8,
         "left": 1,
         "right": 3
+      }
+    },
+    "453": {
+      "id": 453,
+      "type": 31,
+      "category": 2,
+      "tier": 5,
+      "weight": 0,
+      "name": "Cloak of Nature's Guise",
+      "desc": "A cloak woven from vine-thread and dappled leaves, letting its wearer vanish inside the forest’s domain.",
+      "untradable": false,
+      "skinInfo": {
+        "slotType": 5
+      }
+    },
+    "454": {
+      "id": 454,
+      "type": 31,
+      "category": 2,
+      "tier": 5,
+      "weight": 0,
+      "name": "Cloak of Misty Mirage",
+      "desc": "The shimmering cloak sways like fog and confuses the eye with every step.",
+      "untradable": false,
+      "skinInfo": {
+        "slotType": 5
+      }
+    },
+    "455": {
+      "id": 455,
+      "type": 31,
+      "category": 2,
+      "tier": 5,
+      "weight": 0,
+      "name": "Cloak of Everwinter",
+      "desc": "Stitched from frostwolf fur and glacier silk, this cloak carries the chill of endless snow wherever it flows.",
+      "untradable": false,
+      "skinInfo": {
+        "slotType": 5
+      }
+    },
+    "456": {
+      "id": 456,
+      "type": 31,
+      "category": 2,
+      "tier": 5,
+      "weight": 0,
+      "name": "Cloak of the Red Dune",
+      "desc": "This dust-stained and sun-bound cloak is made to repel the the fiercest of desert winds.",
+      "untradable": false,
+      "skinInfo": {
+        "slotType": 5
+      }
+    },
+    "457": {
+      "id": 457,
+      "type": 28,
+      "category": 2,
+      "tier": 7,
+      "weight": 0,
+      "name": "Shattering Aftershock",
+      "desc": "The summoned guardian executes an earth-shattering strike so powerful its aftershock can be felt from every corner of the kingdom.",
+      "untradable": false,
+      "buffInfo": {
+        "type": 1,
+        "range": 3,
+        "duration": 10,
+        "selfCastOnly": false,
+        "numTarget": 20,
+        "isBuff": false
+      },
+      "statsModify": {
+        "atkPercent": 0,
+        "defPercent": 0,
+        "agiPercent": 0,
+        "ms": -10,
+        "slowPercent": 0,
+        "sp": 0,
+        "dmg": 0,
+        "isAbsDmg": false
+      }
+    },
+    "458": {
+      "id": 458,
+      "type": 28,
+      "category": 2,
+      "tier": 7,
+      "weight": 0,
+      "name": "Chain of Judgment",
+      "desc": "Judged and shackled for your crimes",
+      "untradable": false,
+      "buffInfo": {
+        "type": 1,
+        "range": 0,
+        "duration": 21600,
+        "selfCastOnly": true,
+        "numTarget": 1,
+        "isBuff": false
+      },
+      "statsModify": {
+        "atkPercent": 0,
+        "defPercent": 0,
+        "agiPercent": 0,
+        "ms": 0,
+        "slowPercent": 0,
+        "sp": 0,
+        "dmg": 0,
+        "isAbsDmg": false
       }
     }
   }

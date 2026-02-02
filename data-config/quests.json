@@ -2484,6 +2484,352 @@
           "amount": 10
         }
       ]
+    },
+    "121": {
+      "id": 121,
+      "questType": 0,
+      "name": "Claws Beneath the Sand",
+      "description": "The Ravagers stir beneath the dunes, drawn to ancient veins of power. Kestrel sends me into the scorched caverns of Sunscar to gather rare ores and wild relics buried deep in the stone.",
+      "fromNpcId": 15,
+      "exp": 5000,
+      "gold": 400,
+      "requiredDoneQuestIds": [],
+      "requiredAchievementIds": [
+        3
+      ],
+      "contributeDetails": [
+        {
+          "id": 257,
+          "amount": 40
+        },
+        {
+          "id": 96,
+          "amount": 40
+        },
+        {
+          "id": 80,
+          "amount": 30
+        }
+      ]
+    },
+    "122": {
+      "id": 122,
+      "questType": 0,
+      "name": "Currents of the Forgotten",
+      "description": "Strange whirlpools twist through Misthaven’s rivers, stirred by relics long submerged. Duval tasks me with retrieving what sleeps beneath the surface, and what guards it.",
+      "fromNpcId": 7,
+      "exp": 5000,
+      "gold": 400,
+      "requiredDoneQuestIds": [
+        121
+      ],
+      "contributeDetails": [
+        {
+          "id": 253,
+          "amount": 40
+        },
+        {
+          "id": 96,
+          "amount": 40
+        },
+        {
+          "id": 88,
+          "amount": 30
+        }
+      ]
+    },
+    "123": {
+      "id": 123,
+      "questType": 0,
+      "name": "Frozen Grapes of Glass",
+      "description": "Among the shimmering tundra and ghostlit groves, Crystal Oracles hum in patterns Chione seeks to decipher. Gather crystalline shards and rare fruits under Everfrost’s twilight sky.",
+      "fromNpcId": 9,
+      "exp": 5000,
+      "gold": 400,
+      "requiredDoneQuestIds": [
+        122
+      ],
+      "contributeDetails": [
+        {
+          "id": 255,
+          "amount": 40
+        },
+        {
+          "id": 5,
+          "amount": 40
+        },
+        {
+          "id": 104,
+          "amount": 30
+        }
+      ]
+    },
+    "124": {
+      "id": 124,
+      "questType": 0,
+      "name": "Prisms and Petals",
+      "description": "Sylvanreach’s radiant forest glows with whispers of balance. Haines calls upon my help to collect the magical pulse of nature blooming from rare Prismdeer and sacred flora.",
+      "fromNpcId": 5,
+      "exp": 5000,
+      "gold": 400,
+      "requiredDoneQuestIds": [
+        123
+      ],
+      "contributeDetails": [
+        {
+          "id": 251,
+          "amount": 40
+        },
+        {
+          "id": 5,
+          "amount": 40
+        },
+        {
+          "id": 112,
+          "amount": 30
+        }
+      ]
+    },
+    "125": {
+      "id": 125,
+      "questType": 0,
+      "name": "Roots of the Rift",
+      "description": "Beneath the frost, the world fractures. Chione senses unstable energy forming deep within the rift-hollows, essence coalesced in shards, flame-kissed berries, and ancient wood.",
+      "fromNpcId": 9,
+      "exp": 10000,
+      "gold": 1000,
+      "requiredDoneQuestIds": [
+        124
+      ],
+      "contributeDetails": [
+        {
+          "id": 73,
+          "amount": 40
+        },
+        {
+          "id": 105,
+          "amount": 30
+        },
+        {
+          "id": 350,
+          "amount": 20
+        }
+      ]
+    },
+    "126": {
+      "id": 126,
+      "questType": 0,
+      "name": "The Deep Calls",
+      "description": "Tidelure stirs the haunted rivers, casting illusions that trap the unwary. Duval needs my strength to pull truth from myth by capturing what slips through water and shadow.",
+      "fromNpcId": 7,
+      "exp": 10000,
+      "gold": 1000,
+      "requiredDoneQuestIds": [
+        125
+      ],
+      "contributeDetails": [
+        {
+          "id": 97,
+          "amount": 40
+        },
+        {
+          "id": 89,
+          "amount": 30
+        },
+        {
+          "id": 349,
+          "amount": 20
+        }
+      ]
+    },
+    "127": {
+      "id": 127,
+      "questType": 0,
+      "name": "Heart of the Forge",
+      "description": "The deepest chambers of Sunscar roar with flame and stone. Kestrel sends me to brave molten beasts and fractured terrain in search of rare cores and minerals born of fire.",
+      "fromNpcId": 15,
+      "exp": 10000,
+      "gold": 1000,
+      "requiredDoneQuestIds": [
+        126
+      ],
+      "contributeDetails": [
+        {
+          "id": 97,
+          "amount": 40
+        },
+        {
+          "id": 81,
+          "amount": 30
+        },
+        {
+          "id": 351,
+          "amount": 20
+        }
+      ]
+    },
+    "128": {
+      "id": 128,
+      "questType": 0,
+      "name": "Trial of Roots and Blood",
+      "description": "My quest ends where the wild meets will. With poisons blooming and others blood still on my hands, Haines sets the final test: gather the rarest flora and prove my worth.",
+      "fromNpcId": 5,
+      "exp": 10000,
+      "gold": 1000,
+      "rewardItemIds": [
+        438
+      ],
+      "rewardItemAmounts": [
+        1
+      ],
+      "requiredDoneQuestIds": [
+        127
+      ],
+      "requiredAchievementIds": [
+        12
+      ],
+      "contributeDetails": [
+        {
+          "id": 73,
+          "amount": 40
+        },
+        {
+          "id": 113,
+          "amount": 30
+        },
+        {
+          "id": 348,
+          "amount": 20
+        }
+      ]
+    },
+    "129": {
+      "id": 129,
+      "questType": 0,
+      "name": "Veil of the Forest",
+      "description": "A strange presence has unsettled the forest. Haines believes it's an echo of the old warding rituals once performed by the druids. To restore the forest’s balance, I must gather key materials for FayLinn to craft a protective garment said to harmonize with nature itself.",
+      "fromNpcId": 5,
+      "exp": 500,
+      "gold": 50,
+      "rewardItemIds": [
+        453
+      ],
+      "rewardItemAmounts": [
+        1
+      ],
+      "requiredDoneQuestIds": [
+        5
+      ],
+      "contributeDetails": [
+        {
+          "id": 2,
+          "amount": 30
+        },
+        {
+          "id": 13,
+          "amount": 30
+        },
+        {
+          "id": 20,
+          "amount": 20
+        }
+      ]
+    },
+    "130": {
+      "id": 130,
+      "questType": 0,
+      "name": "Mirage Threads",
+      "description": "Duval speaks of an ancient veil worn by illusionists of old, garments said to shimmer and vanish in the morning mist. With the aid of FayLinn, I’ll craft one anew. To do so, gather materials both from the depths of Misthaven’s marshes and the wings of the night.",
+      "fromNpcId": 7,
+      "exp": 500,
+      "gold": 50,
+      "rewardItemIds": [
+        454
+      ],
+      "rewardItemAmounts": [
+        1
+      ],
+      "requiredDoneQuestIds": [
+        10
+      ],
+      "contributeDetails": [
+        {
+          "id": 11,
+          "amount": 30
+        },
+        {
+          "id": 9,
+          "amount": 30
+        },
+        {
+          "id": 19,
+          "amount": 20
+        }
+      ]
+    },
+    "131": {
+      "id": 131,
+      "questType": 0,
+      "name": "Woven Stillness",
+      "description": "The biting cold of Everfrost has begun to carry an unnatural silence. Raena senses an old enchantment weakening near the southern ridges. With FayLinn’s guidance, my task is to gather rare materials to recreate the Cloak of Everwinter, a mantle once worn by the frost wardens of legend.",
+      "fromNpcId": 14,
+      "exp": 500,
+      "gold": 50,
+      "rewardItemIds": [
+        455
+      ],
+      "rewardItemAmounts": [
+        1
+      ],
+      "requiredDoneQuestIds": [
+        15
+      ],
+      "contributeDetails": [
+        {
+          "id": 2,
+          "amount": 30
+        },
+        {
+          "id": 15,
+          "amount": 30
+        },
+        {
+          "id": 16,
+          "amount": 20
+        }
+      ]
+    },
+    "132": {
+      "id": 132,
+      "questType": 0,
+      "name": "Crimson Drift",
+      "description": "Kestrel uncovered a sandstone carving describing a ceremonial cloak once worn by the trailblazers of the Dune Sea. With FayLinn’s magic and your efforts, the cloak can be reawakened—stitched from the essence of claw, ore, and desert stone.",
+      "fromNpcId": 15,
+      "exp": 500,
+      "gold": 50,
+      "rewardItemIds": [
+        456
+      ],
+      "rewardItemAmounts": [
+        1
+      ],
+      "requiredDoneQuestIds": [
+        20
+      ],
+      "contributeDetails": [
+        {
+          "id": 11,
+          "amount": 30
+        },
+        {
+          "id": 7,
+          "amount": 30
+        },
+        {
+          "id": 17,
+          "amount": 20
+        }
+      ]
     }
   }
 }
