@@ -7808,7 +7808,7 @@
       "weight": 0,
       "name": "Shattering Aftershock",
       "desc": "The summoned guardian executes an earth-shattering strike so powerful its aftershock can be felt from every corner of the kingdom.",
-      "untradable": false,
+      "untradable": true,
       "buffInfo": {
         "type": 1,
         "range": 3,
@@ -7836,7 +7836,7 @@
       "weight": 0,
       "name": "Chain of Judgment",
       "desc": "Judged and shackled for your crimes",
-      "untradable": false,
+      "untradable": true,
       "buffInfo": {
         "type": 1,
         "range": 0,
