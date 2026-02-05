@@ -72,7 +72,7 @@ const ITEM_TABLES: any = {
     },
     key: ['itemId'],
   },
-  BuffStatV3: {
+  BuffStatV4: {
     schema: {
       itemId: "uint256",
       atkPercent: "int16", 
@@ -80,6 +80,7 @@ const ITEM_TABLES: any = {
       agiPercent: "int16",
       sp: "int8", // flat, modify the max sp
       ms: "int8", // flat, modify the movement speed
+      slowPercent: "uint16", // debuff for moving duration, e.g 20 means +20% moving time
       dmg: "uint32",
       isAbsDmg: "bool",
     },

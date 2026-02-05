@@ -125,11 +125,10 @@ func getListScrollUpdate(dataConfig *common.DataConfig) ([]common.Item, []common
 		if strings.EqualFold(record[isAbsDmgIndex], "true") {
 			isAbsDmg = true
 		}
-		untradable := false
-		if strings.EqualFold(record[untradableIndex], "true") {
-			untradable = true
+		untradable := true
+		if record[untradableIndex] == "" || strings.EqualFold(record[untradableIndex], "false") {
+			untradable = false
 		}
-
 		perkItemTypes := make([]int, 0)
 		requiredPerkLevels := make([]int, 0)
 

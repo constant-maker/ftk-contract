@@ -290,6 +290,13 @@ const CHARACTER_TABLES: any = {
     },
     key: ['characterId', 'itemId'],
   },
+  CharTotalSpend: {
+    schema: {
+      characterId: "uint256",
+      total: "uint256",
+    },
+    key: ['characterId'],
+  }
 };
 
 export default CHARACTER_TABLES;

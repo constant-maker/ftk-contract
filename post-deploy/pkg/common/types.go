@@ -52,13 +52,14 @@ type ExpAmplify struct {
 }
 
 type StatsModify struct {
-	AtkPercent int16 `json:"atkPercent"`
-	DefPercent int16 `json:"defPercent"`
-	AgiPercent int16 `json:"agiPercent"`
-	Ms         int8  `json:"ms"`  // flat value
-	Sp         int8  `json:"sp"`  // flat value
-	Dmg        int   `json:"dmg"` // percent or flat
-	IsAbsDmg   bool  `json:"isAbsDmg"`
+	AtkPercent  int16  `json:"atkPercent"`
+	DefPercent  int16  `json:"defPercent"`
+	AgiPercent  int16  `json:"agiPercent"`
+	Ms          int8   `json:"ms"` // flat value
+	SlowPercent uint16 `json:"slowPercent"`
+	Sp          int8   `json:"sp"`  // flat value
+	Dmg         int    `json:"dmg"` // percent or flat
+	IsAbsDmg    bool   `json:"isAbsDmg"`
 }
 
 type InstantDamage struct {

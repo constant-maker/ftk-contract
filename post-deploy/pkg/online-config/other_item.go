@@ -60,16 +60,15 @@ func getListOtherItemUpdate(dataConfig *common.DataConfig) ([]common.Item, []com
 		if strings.EqualFold(record[untradableIndex], "true") {
 			untradable = true
 		}
-
 		otherItems = append(otherItems, common.Item{
 			Id:         id,
 			Type:       otherItemType,
 			Category:   otherItemCategory,
 			Tier:       tier,
 			Weight:     weight,
+			Untradable: untradable,
 			Name:       removeRedundantText(record[nameIndex]),
 			Desc:       removeRedundantText(record[descIndex]),
-			Untradable: untradable,
 		})
 	}
 	return otherItems, nil, nil

@@ -17,30 +17,17 @@ import {
   PvPExtra2V3,
   PvPExtra2V3Data,
   PvPBattleCounter,
-  TileInfo3,
-  CharStats2,
   CharCStats2,
-  KingSetting,
-  PvPEnemyCounter,
   RestrictLocV2,
   City,
-  CharInfo,
   CharBuff,
   CharBuffData,
   CharDebuff,
   CharDebuffData
 } from "@codegen/index.sol";
 import { BattleInfo, BattleUtils } from "@utils/BattleUtils.sol";
-import {
-  DailyQuestUtils,
-  CharacterPositionUtils,
-  CharAchievementUtils,
-  BattleUtils2,
-  CharacterStatsUtils
-} from "@utils/index.sol";
-import { CharacterStateType, ZoneType } from "@codegen/common.sol";
+import { DailyQuestUtils, CharacterPositionUtils, BattleUtils2, CharacterStatsUtils, PvPUtils } from "@utils/index.sol";
 import { Errors, Config } from "@common/index.sol";
-import { ZoneInfo, KingdomUtils } from "@utils/KingdomUtils.sol";
 
 contract PvPSystem is System, CharacterAccessControl {
   /// @dev character init a battle with other player
@@ -63,7 +50,7 @@ contract PvPSystem is System, CharacterAccessControl {
 
     (uint32 attackerHp, uint32 defenderHp) = _battle(attackerId, defenderId, false);
 
-    _updateCharacterFame(attackerId, attackerHp, defenderId, defenderHp, attackerPosition);
+    PvPUtils.updateCharacterFame(attackerId, attackerHp, defenderId, defenderHp, attackerPosition);
     _handleBattleResult(attackerId, attackerHp, attackerPosition); // handle attacker result
     _handleBattleResult(defenderId, defenderHp, defenderPosition); // handle defender result
 
@@ -75,110 +62,6 @@ contract PvPSystem is System, CharacterAccessControl {
     _battle(attackerId, defenderId, true);
     // check and update daily quest
     DailyQuestUtils.updatePvpCount(attackerId);
-  }
-
-  function _updateCharacterFame(
-    uint256 attackerId,
-    uint32 attackerHp,
-    uint256 defenderId,
-    uint32 defenderHp,
-    CharPositionData memory position
-  )
-    private
-  {
-    if (attackerHp != 0 && defenderHp != 0) {
-      return; // both alive, no fame change
-    }
-    int32 attackerFameChange = 0;
-    int32 defenderFameChange = 0;
-    uint32 attackerFame = CharStats2.getFame(attackerId);
-    ZoneInfo memory zoneInfo = KingdomUtils.getZoneTypeFull(position.x, position.y, attackerId, defenderId);
-    bool isAlliance = KingdomUtils.getIsAlliance(zoneInfo.attackerKingdomId, zoneInfo.defenderKingdomId);
-
-    // Apply alliance adjustment to zoneType (only if attacker owns tile)
-    bool isSameSide = (
-      zoneInfo.attackerKingdomId == zoneInfo.defenderKingdomId && zoneInfo.tileKingdomId == zoneInfo.attackerKingdomId
-    ) || isAlliance;
-
-    if (isSameSide && defenderHp == 0) {
-      if (zoneInfo.attackerZoneType == ZoneType.Green || zoneInfo.defenderZoneType == ZoneType.Green) {
-        attackerFame = attackerFame > 50 ? attackerFame - 50 : 1; // min fame is 1
-        CharStats2.set(attackerId, attackerFame);
-        attackerFameChange = -50;
-      } else {
-        uint32 famePenalty = KingSetting.getPvpFamePenalty(zoneInfo.attackerKingdomId);
-        if (famePenalty > 0) {
-          attackerFameChange = -int32(famePenalty);
-          attackerFame = attackerFame > famePenalty ? attackerFame - famePenalty : 1; // min fame is 1
-          CharStats2.set(attackerId, attackerFame);
-        }
-      }
-      _storeFameChange(attackerFameChange, 0, attackerId, defenderId);
-      return;
-    }
-
-    if (zoneInfo.attackerKingdomId == zoneInfo.defenderKingdomId) return; // same kingdom, no fame change
-
-    uint32 defenderFame = CharStats2.getFame(defenderId);
-    if (attackerHp == 0 && attackerFame >= 1070 && zoneInfo.attackerZoneType != ZoneType.Green) {
-      _setFame(attackerId, defenderId, -20, 10); // fame transfer from attacker to defender
-      _checkAndGiveAchievement(defenderId, zoneInfo);
-    } else if (defenderHp == 0 && defenderFame >= 1070 && zoneInfo.defenderZoneType != ZoneType.Green) {
-      _setFame(attackerId, defenderId, 10, -20); // fame transfer from defender to attacker
-      _checkAndGiveAchievement(attackerId, zoneInfo);
-    }
-  }
-
-  function _setFame(uint256 attackerId, uint256 defenderId, int32 attackerChange, int32 defenderChange) private {
-    int32 attackerFameChange = attackerChange;
-    int32 defenderFameChange = defenderChange;
-
-    uint32 attackerFame = CharStats2.getFame(attackerId);
-    uint32 defenderFame = CharStats2.getFame(defenderId);
-    int32 newAttackerFame = int32(attackerFame) + attackerFameChange;
-    int32 newDefenderFame = int32(defenderFame) + defenderFameChange;
-    CharStats2.set(attackerId, uint32(newAttackerFame));
-    CharStats2.set(defenderId, uint32(newDefenderFame));
-
-    _storeFameChange(attackerFameChange, defenderFameChange, attackerId, defenderId);
-  }
-
-  function _storeFameChange(
-    int32 attackerFameChange,
-    int32 defenderFameChange,
-    uint256 attackerId,
-    uint256 defenderId
-  )
-    private
-  {
-    uint256 pvpId = PvPBattleCounter.getCounter(); // this return the current pvpId
-    int32[2] memory fameChanges = [attackerFameChange, defenderFameChange];
-    PvPExtraV3.setFames(pvpId, fameChanges);
-  }
-
-  function _checkAndGiveAchievement(uint256 characterId, ZoneInfo memory zoneInfo) private {
-    if (zoneInfo.attackerKingdomId == zoneInfo.defenderKingdomId) {
-      return;
-    }
-    uint256 currentKills = PvPEnemyCounter.get(characterId);
-    uint256 newKills = currentKills + 1;
-    PvPEnemyCounter.set(characterId, newKills);
-
-    if (newKills >= 20) {
-      CharAchievementUtils.addAchievement(characterId, 12);
-    }
-    if (newKills >= 50) {
-      CharAchievementUtils.addAchievement(characterId, 13);
-    }
-    if (newKills >= 100) {
-      CharAchievementUtils.addAchievement(characterId, 14);
-    }
-    if (newKills >= 250) {
-      CharAchievementUtils.addAchievement(characterId, 15);
-    }
-    if (newKills >= 500) {
-      CharAchievementUtils.addAchievement(characterId, 16);
-    }
   }
 
   function _handleBattleResult(uint256 characterId, uint32 characterHp, CharPositionData memory position) private {
@@ -413,9 +296,5 @@ contract PvPSystem is System, CharacterAccessControl {
     if (City.getIsCapital(cityId)) {
       revert Errors.PvP_CannotBattleInCapitalCity();
     }
-
-    uint8 cityKingdomId = City.getKingdomId(cityId);
-    uint8 attackerKingdomId = CharInfo.getKingdomId(attackerId);
-    uint8 defenderKingdomId = CharInfo.getKingdomId(defenderId);
   }
 }
