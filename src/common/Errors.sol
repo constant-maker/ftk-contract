@@ -348,6 +348,7 @@ library Errors {
     uint256 characterId, uint32 currentQuota, uint32 withdrawWeight, uint256 nextResetTime
   );
   error VaultSystem_WithdrawalRestricted(uint256 characterId, uint8 kingdomId, uint256 itemId);
+  error VaultSystem_DepositUntradeableItem(uint256 itemId);
 
   /* -------------------------------------------------------------------------- */
   /*                               CitySystem                                   */

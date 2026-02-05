@@ -102,12 +102,18 @@ contract VaultSystem is System, CharacterAccessControl {
     }
     // no need check character and city kingdom id, because it's free to contribute to any city
     for (uint256 i = 0; i < itemIds.length; i++) {
-      if (itemIds[i] == 0 || amounts[i] == 0) {
-        revert Errors.VaultSystem_InvalidParamsValue(itemIds[i], amounts[i]);
+      uint256 itemId = itemIds[i];
+      uint32 amount = amounts[i];
+      if (itemId == 0 || amount == 0) {
+        revert Errors.VaultSystem_InvalidParamsValue(itemId, amount);
       }
-      uint32 currentVaultAmount = CityVault.getAmount(cityId, itemIds[i]);
-      uint32 newVaultAmount = currentVaultAmount + amounts[i];
-      CityVault.setAmount(cityId, itemIds[i], newVaultAmount);
+      bool isUntradeable = ItemV2.getIsUntradeable(itemId);
+      if (isUntradeable) {
+        revert Errors.VaultSystem_DepositUntradeableItem(itemId);
+      }
+      uint32 currentVaultAmount = CityVault.getAmount(cityId, itemId);
+      uint32 newVaultAmount = currentVaultAmount + amount;
+      CityVault.setAmount(cityId, itemId, newVaultAmount);
     }
     InventoryItemUtils.removeItems(characterId, itemIds, amounts);
     CVaultHistoryV3.set(cityId, _getVaultHistoryId(cityId), characterId, gold, block.timestamp, true, itemIds, amounts);
