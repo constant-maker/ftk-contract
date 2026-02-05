@@ -18,6 +18,8 @@ library Errors {
   error MustInACapital(uint256 capitalId, int32 charX, int32 charY);
   error MustBeCapitalCity(uint256 cityId);
   error CityBelongsToOtherKingdom(uint8 originalKingdomId, uint8 currentKingdomId);
+  error InsufficientPayment(uint256 msgValue, uint256 requiredValue);
+  error WorldBalanceInsufficient(uint256 worldBalance, uint256 requiredAmount);
 
   /* -------------------------------------------------------------------------- */
   /*                                Spawn system                                */
@@ -403,4 +405,15 @@ library Errors {
   /*                               SkinSystem                                   */
   /* -------------------------------------------------------------------------- */
   error SkinSystem_SkinSlotTypeMismatch(uint256 itemId, SkinSlotType slotType);
+
+  /* -------------------------------------------------------------------------- */
+  /*                               SaleSystem                                   */
+  /* -------------------------------------------------------------------------- */
+  error SaleSystem_PackageNotFound(uint256 packageId);
+
+  /* -------------------------------------------------------------------------- */
+  /*                               PortalSystem                                   */
+  /* -------------------------------------------------------------------------- */
+  error PortalSystem_CrystalAmountTooSmall(uint256 amount, uint256 minAmount);
+  error PortalSystem_InsufficientCrystal(uint32 currentBalance, uint256 requiredAmount);
 }

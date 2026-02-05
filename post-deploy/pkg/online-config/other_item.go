@@ -22,7 +22,7 @@ func getListOtherItemUpdate(dataConfig *common.DataConfig) ([]common.Item, []com
 	}
 	otherItems := make([]common.Item, 0)
 	var (
-		idIndex, tierIndex, weightIndex, nameIndex, descIndex, otherItemTypeIndex int
+		idIndex, tierIndex, weightIndex, nameIndex, descIndex, otherItemTypeIndex, untradableIndex int
 	)
 	for {
 		record, err := reader.Read()
@@ -48,6 +48,7 @@ func getListOtherItemUpdate(dataConfig *common.DataConfig) ([]common.Item, []com
 			weightIndex = findIndex(record, "weight")
 			otherItemTypeIndex = findIndex(record, "item_type")
 			descIndex = findIndex(record, "desc")
+			untradableIndex = findIndex(record, "untradable")
 			continue
 		}
 
@@ -55,15 +56,19 @@ func getListOtherItemUpdate(dataConfig *common.DataConfig) ([]common.Item, []com
 		tier := mustStringToInt(record[tierIndex], tierIndex)
 		weight := mustStringToInt(record[weightIndex], weightIndex)
 		otherItemType := getEnumType(record[otherItemTypeIndex], record)
-
+		untradable := false
+		if strings.EqualFold(record[untradableIndex], "true") {
+			untradable = true
+		}
 		otherItems = append(otherItems, common.Item{
-			Id:       id,
-			Type:     otherItemType,
-			Category: otherItemCategory,
-			Tier:     tier,
-			Weight:   weight,
-			Name:     removeRedundantText(record[nameIndex]),
-			Desc:     removeRedundantText(record[descIndex]),
+			Id:         id,
+			Type:       otherItemType,
+			Category:   otherItemCategory,
+			Tier:       tier,
+			Weight:     weight,
+			Untradable: untradable,
+			Name:       removeRedundantText(record[nameIndex]),
+			Desc:       removeRedundantText(record[descIndex]),
 		})
 	}
 	return otherItems, nil, nil

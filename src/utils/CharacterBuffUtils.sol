@@ -5,19 +5,27 @@ import {
   CharBuffData,
   CharDebuff,
   CharDebuffData,
-  BuffStatV3,
-  BuffStatV3Data,
+  BuffStatV4,
+  BuffStatV4Data,
   BuffItemInfoV3,
   CharCurrentStats,
   CharCurrentStatsData
 } from "@codegen/index.sol";
 import { BuffType } from "@codegen/common.sol";
+import { PvPUtils } from "./PvPUtils.sol";
+import { Config } from "@common/index.sol";
 
 library CharacterBuffUtils {
   /// @dev Remove all buffs from character (e.g. on death)
   function dispelAllBuff(uint256 characterId) public {
     CharBuff.deleteRecord(characterId);
-    CharDebuff.deleteRecord(characterId);
+    CharDebuffData memory debuffData = CharDebuff.get(characterId);
+    for (uint256 i = 0; i < debuffData.debuffIds.length; i++) {
+      if (debuffData.debuffIds[i] == Config.LOW_FAME_DEBUFF_ID) continue; // This is permanent debuff for PvP
+      debuffData.debuffIds[i] = 0;
+      debuffData.expireTimes[i] = 0;
+    }
+    CharDebuff.set(characterId, debuffData);
   }
 
   /// @dev Get total buff speed (can be negative)
@@ -33,7 +41,7 @@ library CharacterBuffUtils {
 
       if (BuffItemInfoV3.getBuffType(buffId) != BuffType.StatsModify) continue;
 
-      int16 buffSpeed = BuffStatV3.getMs(buffId);
+      int16 buffSpeed = BuffStatV4.getMs(buffId);
       speedBuff += buffSpeed;
     }
 
@@ -45,11 +53,29 @@ library CharacterBuffUtils {
       if (debuffId == 0) continue;
 
       if (BuffItemInfoV3.getBuffType(debuffId) != BuffType.StatsModify) continue;
-      int16 debuffSpeed = BuffStatV3.getMs(debuffId);
+      int16 debuffSpeed = BuffStatV4.getMs(debuffId);
       speedBuff += debuffSpeed;
     }
 
     return speedBuff;
+  }
+
+  /// @dev Get total slow debuff speed (percent - positive value)
+  function getSlowDebuff(uint256 characterId) public view returns (uint16) {
+    uint16 slowDebuff = 0;
+
+    CharDebuffData memory charDebuff = CharDebuff.get(characterId);
+    for (uint256 i = 0; i < charDebuff.debuffIds.length; i++) {
+      if (charDebuff.expireTimes[i] < block.timestamp) continue;
+
+      uint256 debuffId = charDebuff.debuffIds[i];
+      if (debuffId == 0) continue;
+
+      if (BuffItemInfoV3.getBuffType(debuffId) != BuffType.StatsModify) continue;
+      slowDebuff += BuffStatV4.getSlowPercent(debuffId);
+    }
+
+    return slowDebuff;
   }
 
   /// @dev Get total buff stats (can be negative)
@@ -66,7 +92,7 @@ library CharacterBuffUtils {
       if (buffId == 0) continue;
 
       if (BuffItemInfoV3.getBuffType(buffId) != BuffType.StatsModify) continue;
-      BuffStatV3Data memory statBuff = BuffStatV3.get(buffId);
+      BuffStatV4Data memory statBuff = BuffStatV4.get(buffId);
       totalAtkPercent += statBuff.atkPercent;
       totalDefPercent += statBuff.defPercent;
       totalAgiPercent += statBuff.agiPercent;
@@ -79,7 +105,7 @@ library CharacterBuffUtils {
       if (debuffId == 0) continue;
 
       if (BuffItemInfoV3.getBuffType(debuffId) != BuffType.StatsModify) continue;
-      BuffStatV3Data memory statDebuff = BuffStatV3.get(debuffId);
+      BuffStatV4Data memory statDebuff = BuffStatV4.get(debuffId);
       // buff or debuff, just accumulate, final calculation will handle positive/negative
       // we have both buff and debuff loop to separate the two effects so they will not be replace each other
       totalAtkPercent += statDebuff.atkPercent;
@@ -103,7 +129,7 @@ library CharacterBuffUtils {
       if (buffId == 0) continue;
 
       if (BuffItemInfoV3.getBuffType(buffId) != BuffType.StatsModify) continue;
-      int8 buffSp = BuffStatV3.getSp(buffId);
+      int8 buffSp = BuffStatV4.getSp(buffId);
       sp += buffSp;
     }
   }

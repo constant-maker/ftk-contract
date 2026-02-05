@@ -5,10 +5,8 @@ import { CharacterAccessControl } from "@abstracts/CharacterAccessControl.sol";
 import {
   CharPosition, CharPositionData, CharNextPosition, CharPositionV2, CharPositionV2Data
 } from "@codegen/index.sol";
-import { MoveSystemUtils } from "@utils/MoveSystemUtils.sol";
-import { DailyQuestUtils } from "@utils/DailyQuestUtils.sol";
 import { CharacterStateType } from "@codegen/common.sol";
-import { CharacterPositionUtils } from "@utils/CharacterPositionUtils.sol";
+import { CharacterPositionUtils, MoveSystemUtils, DailyQuestUtils, CharacterBuffUtils } from "@utils/index.sol";
 import { Errors } from "@common/index.sol";
 
 contract MoveSystem is CharacterAccessControl, System {
@@ -36,6 +34,8 @@ contract MoveSystem is CharacterAccessControl, System {
     }
     // update next position
     uint256 arriveTimestamp = block.timestamp + MoveSystemUtils.getMovementDuration(characterId);
+    uint16 slowDebuffPercent = CharacterBuffUtils.getSlowDebuff(characterId);
+    arriveTimestamp = (arriveTimestamp * (100 + uint256(slowDebuffPercent))) / 100;
     CharNextPosition.set(characterId, destX, destY, arriveTimestamp);
     CharPositionV2Data memory posV2 = CharPositionV2Data({
       x: characterPosition.x,
