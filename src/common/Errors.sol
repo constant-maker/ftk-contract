@@ -19,6 +19,7 @@ library Errors {
   error MustBeCapitalCity(uint256 cityId);
   error CityBelongsToOtherKingdom(uint8 originalKingdomId, uint8 currentKingdomId);
   error InsufficientPayment(uint256 msgValue, uint256 requiredValue);
+  error InsufficientCrystalsPayment(uint256 crystals, uint256 requiredCrystals);
   error WorldBalanceInsufficient(uint256 worldBalance, uint256 requiredAmount);
 
   /* -------------------------------------------------------------------------- */
