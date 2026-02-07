@@ -2830,6 +2830,114 @@
           "amount": 20
         }
       ]
+    },
+    "133": {
+      "id": 133,
+      "questType": 0,
+      "name": "Threads of the Greenwood",
+      "description": "Haines uncovers records of an old Sylvanreach craft that used forest fibers and reclaimed cloth to form the base of enchanted accessories. To recreate the technique, I must gather sturdy wood, nourishing grain, and cloth salvaged from Gobblekin raiders.",
+      "fromNpcId": 5,
+      "exp": 500,
+      "gold": 50,
+      "requiredDoneQuestIds": [],
+      "contributeDetails": [
+        {
+          "id": 2,
+          "amount": 20
+        },
+        {
+          "id": 13,
+          "amount": 20
+        },
+        {
+          "id": 20,
+          "amount": 40
+        }
+      ]
+    },
+    "134": {
+      "id": 134,
+      "questType": 0,
+      "name": "Coldbound Linings",
+      "description": "Raena explains that Everfrost artisans reinforced early accessories with insulating layers woven from fur and frost-touched berries. To preserve the enchantment from breaking under cold magic, I must gather these materials from the frozen wilds.",
+      "fromNpcId": 14,
+      "exp": 500,
+      "gold": 50,
+      "requiredDoneQuestIds": [
+        133
+      ],
+      "contributeDetails": [
+        {
+          "id": 2,
+          "amount": 20
+        },
+        {
+          "id": 15,
+          "amount": 20
+        },
+        {
+          "id": 16,
+          "amount": 40
+        }
+      ]
+    },
+    "135": {
+      "id": 135,
+      "questType": 0,
+      "name": "Veins of Mist and Wing",
+      "description": "Duval reveals that Misthaven smiths once infused accessories with conductive metals and alchemical reagents drawn from mist-dwelling creatures. Copper, river harvests, and bat wings are needed to restore the lost balance between matter and illusion.",
+      "fromNpcId": 7,
+      "exp": 500,
+      "gold": 50,
+      "requiredDoneQuestIds": [
+        134
+      ],
+      "contributeDetails": [
+        {
+          "id": 11,
+          "amount": 20
+        },
+        {
+          "id": 9,
+          "amount": 20
+        },
+        {
+          "id": 19,
+          "amount": 40
+        }
+      ]
+    },
+    "136": {
+      "id": 136,
+      "questType": 0,
+      "name": "Claws in the Dust",
+      "description": "Kestrel traces the final step of the old craft to Sunscar, where desert artisans tempered accessories with heat, stone, and predator essence. By gathering these materials, I'll complete the ancient process. One forgotten for generations.",
+      "fromNpcId": 15,
+      "exp": 500,
+      "gold": 50,
+      "rewardItemIds": [
+        459
+      ],
+      "rewardItemAmounts": [
+        1
+      ],
+      "requiredDoneQuestIds": [
+        135
+      ],
+      "contributeDetails": [
+        {
+          "id": 11,
+          "amount": 20
+        },
+        {
+          "id": 7,
+          "amount": 20
+        },
+        {
+          "id": 17,
+          "amount": 40
+        }
+      ]
     }
   }
 }
