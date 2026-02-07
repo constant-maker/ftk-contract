@@ -5,14 +5,13 @@ import { LibString } from "@solady/utils/LibString.sol";
 import { CharState, CharInfo, CharInfoData, CharName, ActiveChar, Kingdom } from "@codegen/index.sol";
 import { CharStats2 } from "@codegen/tables/CharStats2.sol";
 import { CharacterStateType } from "@codegen/common.sol";
-import { CharacterPositionUtils } from "@utils/CharacterPositionUtils.sol";
-import { CharacterUtils } from "@utils/CharacterUtils.sol";
+import { CharacterPositionUtils, CharacterUtils } from "@utils/index.sol";
 import { Errors, Events, Config } from "@common/index.sol";
 
 contract SpawnSystem is System {
   /// @dev User call this function to create character, expect to be called once
   function createCharacter(CharInfoData memory data) public payable {
-    if (_msgValue() != 0.0001 ether) {
+    if (_msgValue() != Config.CREATE_CHARACTER_FEE) {
       revert Errors.SpawnSystem_InsufficientCreateCharacterFee(_msgValue());
     }
     address wallet = _msgSender();

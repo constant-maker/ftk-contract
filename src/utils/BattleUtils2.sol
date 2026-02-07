@@ -56,8 +56,8 @@ library BattleUtils2 {
       TileInventoryUtils.addEquipments(x, y, dropEquipmentIds);
     }
 
-    // move back to city and reset character state to standby
-    CharacterPositionUtils.moveToCapital(characterId);
+    // move character back to saved point (if saved point is empty, move to capital)
+    CharacterPositionUtils.moveToSavedPoint(characterId);
     CharState.set(characterId, CharacterStateType.Standby, block.timestamp);
     // character is dead, remove all buffs
     CharacterBuffUtils.dispelAllBuff(characterId);

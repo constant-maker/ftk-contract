@@ -33,4 +33,12 @@ library Config {
 
   uint256 public constant NORMAL_ATTACK_SKILL_ID = 0;
   uint256 public constant MAX_EQUIPMENT_ID_TO_CHECK_CACHE_WEIGHT = 16_000;
+
+  uint256 public constant LOW_FAME_DEBUFF_ID = 458;
+
+  uint256 public constant TELEPORT_DURATION = 60; // seconds
+
+  uint256 public constant CREATE_CHARACTER_FEE = 0.0001 ether;
+  uint256 public constant CRYSTAL_UNIT_PRICE = 0.000001 ether;
+  address public constant TEAM_ADDRESS = address(0x0);
 }

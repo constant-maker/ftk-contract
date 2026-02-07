@@ -10,8 +10,8 @@ import {
   BuffItemInfoV3Data,
   BuffExp,
   BuffExpData,
-  BuffStatV3,
-  BuffStatV3Data,
+  BuffStatV4,
+  BuffStatV4Data,
   BuffDmg,
   BuffDmgData,
   RestrictLocV2,
@@ -152,7 +152,7 @@ contract ConsumeSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFix
     BuffExpData memory buffExpData = BuffExp.get(358);
     assertEq(buffExpData.farmingPerkAmp, 120);
 
-    BuffStatV3Data memory buffStatData = BuffStatV3.get(356); // stat buff
+    BuffStatV4Data memory buffStatData = BuffStatV4.get(356); // stat buff
     assertEq(buffStatData.atkPercent, 50);
     assertEq(buffStatData.defPercent, -100);
     assertEq(buffStatData.agiPercent, 0);
