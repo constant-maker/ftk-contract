@@ -24,7 +24,7 @@ func getListScrollUpdate(dataConfig *common.DataConfig) ([]common.Item, []common
 	var (
 		idIndex, nameIndex, tierIndex, scrollTypeIndex, rangeIndex, durationIndex, numTargetIndex, isBuffIndex, selfCastOnlyIndex, atkPercentIndex,
 		defPercentIndex, agiPercentIndex, msIndex, spIndex, farmingPerkAmpIndex, pveExpAmpIndex, // pvePerkAmpIndex,
-		dmgIndex, isAbsDmgIndex, goldCostIndex, weightIndex, recipeIndex, descIndex int
+		dmgIndex, isAbsDmgIndex, goldCostIndex, weightIndex, recipeIndex, descIndex, untradableIndex int
 	)
 	for {
 		record, err := reader.Read()
@@ -66,6 +66,7 @@ func getListScrollUpdate(dataConfig *common.DataConfig) ([]common.Item, []common
 			weightIndex = findIndex(record, "weight")
 			recipeIndex = findIndex(record, "recipe")
 			descIndex = findIndex(record, "desc")
+			untradableIndex = findIndex(record, "untradable")
 
 			l.Infow(
 				"list index",
@@ -125,6 +126,10 @@ func getListScrollUpdate(dataConfig *common.DataConfig) ([]common.Item, []common
 			isAbsDmg = true
 		}
 		untradable := false
+		if strings.EqualFold(record[untradableIndex], "true") {
+			untradable = true
+		}
+
 		perkItemTypes := make([]int, 0)
 		requiredPerkLevels := make([]int, 0)
 
