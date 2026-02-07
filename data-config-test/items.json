@@ -5701,6 +5701,16 @@
         "slotType": 2
       }
     },
+    "435": {
+      "id": 435,
+      "type": 34,
+      "category": 2,
+      "tier": 4,
+      "weight": 1,
+      "name": "Gold Token",
+      "desc": "A token that can be exchanged for the equivalent of 5,000 gold.",
+      "untradable": false
+    },
     "436": {
       "id": 436,
       "type": 29,
@@ -5712,6 +5722,16 @@
       "untradable": false,
       "petInfo": {
       }
+    },
+    "442": {
+      "id": 442,
+      "type": 32,
+      "category": 2,
+      "tier": 4,
+      "weight": 1,
+      "name": "Floating Dandelion",
+      "desc": "A magical floating dandelion that returns its user to their Save Point after channeling for 1 minute.",
+      "untradable": false
     }
   }
 }

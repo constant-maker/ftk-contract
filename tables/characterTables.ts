@@ -293,7 +293,7 @@ const CHARACTER_TABLES: any = {
   CharTotalSpend: {
     schema: {
       characterId: "uint256",
-      total: "uint256",
+      total: "uint256", // total crystal spent
     },
     key: ['characterId'],
   }

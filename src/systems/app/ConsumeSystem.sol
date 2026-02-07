@@ -18,7 +18,14 @@ import {
   BuffStatV4,
   CharCurrentStats
 } from "@codegen/index.sol";
-import { CharacterStatsUtils, InventoryItemUtils, CharacterPositionUtils, ConsumeUtils, CharacterStateUtils } from "@utils/index.sol";
+import {
+  CharacterStatsUtils,
+  InventoryItemUtils,
+  CharacterPositionUtils,
+  ConsumeUtils,
+  CharacterStateUtils,
+  CharacterFundUtils
+} from "@utils/index.sol";
 import { Config, Errors } from "@common/index.sol";
 import { ItemType, ResourceType, BuffType, CharacterStateType } from "@codegen/common.sol";
 import { TargetItemData } from "./ConsumeSystem.sol";
@@ -88,13 +95,22 @@ contract ConsumeSystem is System, CharacterAccessControl {
     }
   }
 
-  function teleport(uint256 characterId, int32 destX, int32 destY) public onlyAuthorizedWallet(characterId) {
-    CharacterStateUtils.mustInState(characterId, CharacterStateType.Standby);
-  }
-
   function _handleByItemType(uint256 characterId, uint256 itemId, uint32 amount, ItemType itemType) private {
     if (itemType == ItemType.HealingItem) {
       _healing(characterId, itemId, amount);
+      return;
+    }
+    if (itemType == ItemType.Teleport) {
+      CharacterStateUtils.mustInState(characterId, CharacterStateType.Standby);
+      CharacterPositionUtils.moveToSavedPointWithArriveTime(characterId, block.timestamp + Config.TELEPORT_DURATION);
+      return;
+    }
+    if (itemType == ItemType.Bundle) {
+      if (itemId == 435) {
+        // gold bundle - unpack to get instant 5000 golds
+        CharacterFundUtils.increaseGold(characterId, 5000 * amount);
+        return;
+      }
       return;
     }
     revert Errors.ConsumeSystem_ItemIsNotConsumable(itemId);

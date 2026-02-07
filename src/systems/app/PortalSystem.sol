@@ -2,16 +2,13 @@ pragma solidity >=0.8.24;
 
 import { System } from "@latticexyz/world/src/System.sol";
 import { CharacterAccessControl } from "@abstracts/CharacterAccessControl.sol";
-import { WorldResourceIdLib } from "@latticexyz/world/src/WorldResourceId.sol";
 import { IWorld } from "@codegen/world/IWorld.sol";
-import {
-  SalePackage, SalePackageData, CharTotalSpend, CharFund
-} from "@codegen/index.sol";
-import { CharAchievementUtils, CharacterFundUtils, InventoryItemUtils, WorldUtils } from "@utils/index.sol";
+import { SalePackage, SalePackageData, CharTotalSpend, CharFund } from "@codegen/index.sol";
+import { CharAchievementUtils, CharacterFundUtils, InventoryItemUtils } from "@utils/index.sol";
+import { WorldUtils } from "@utils/WorldUtils.sol";
 import { Config, Errors } from "@common/index.sol";
 
 contract PortalSystem is CharacterAccessControl, System {
-
   uint256 constant MIN_CRYSTALS_PER_PURCHASE = 100; // Minimum crystals per purchase
   uint256 constant SELL_CRYSTAL_FEE_PERCENTAGE = 5; // 5% fee when selling crystals
 
@@ -21,7 +18,7 @@ contract PortalSystem is CharacterAccessControl, System {
       revert Errors.PortalSystem_CrystalAmountTooSmall(amount, MIN_CRYSTALS_PER_PURCHASE);
     }
     uint256 requiredPayment = amount * Config.CRYSTAL_UNIT_PRICE;
-    if (value < requiredPayment) {
+    if (value != requiredPayment) {
       revert Errors.InsufficientPayment(value, requiredPayment);
     }
     CharacterFundUtils.increaseCrystal(characterId, amount);
@@ -36,11 +33,10 @@ contract PortalSystem is CharacterAccessControl, System {
       revert Errors.PortalSystem_CrystalAmountTooSmall(amount, MIN_CRYSTALS_PER_PURCHASE);
     }
     CharacterFundUtils.decreaseCrystal(characterId, amount);
-    uint256 rawPayment = amount * CRYSTAL_UNIT_PRICE;
-    uint256 fee = (rawPayment * SELL_CRYSTAL_FEE_PERCENTAGE) / 100;
+    uint256 rawPayment = amount * Config.CRYSTAL_UNIT_PRICE;
+    uint256 fee = (rawPayment * SELL_CRYSTAL_FEE_PERCENTAGE + 99) / 100; // rounding up
     uint256 paymentAmount = rawPayment - fee;
-    IWorld world = IWorld(_world());
-    world.transferBalanceToAddress(WorldResourceIdLib.encodeNamespace(""), _msgSender(), paymentAmount);
-    WorldUtils.transferToTeam(world, fee);
+    WorldUtils.transferTo(paymentAmount, _msgSender());
+    WorldUtils.transferToTeam(fee);
   }
 }
