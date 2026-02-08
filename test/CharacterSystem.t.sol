@@ -7,7 +7,7 @@ import { ActiveChar, Contracts } from "@codegen/index.sol";
 import { SlotType } from "@codegen/common.sol";
 import { CharacterUtils } from "@utils/CharacterUtils.sol";
 import { SystemUtils } from "@utils/SystemUtils.sol";
-import { EquipData } from "@systems/app/EquipmentSystem.sol";
+import { EquipData } from "@utils/CharacterEquipmentUtils.sol";
 
 contract CharacterSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture {
   address player = makeAddr("player");

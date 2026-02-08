@@ -30,9 +30,9 @@ contract SaleSystem is CharacterAccessControl, System {
     }
     for (uint256 i = 0; i < salePackage.itemIds.length; i++) {
       uint256 itemId = salePackage.itemIds[i];
-      uint32 amount = salePackage.itemAmounts[i];
+      uint32 itemAmount = salePackage.itemAmounts[i];
       // add item to character inventory
-      InventoryItemUtils.addItem(characterId, itemId, amount);
+      InventoryItemUtils.addItem(characterId, itemId, itemAmount * amount);
     }
   }
 }

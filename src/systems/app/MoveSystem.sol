@@ -22,7 +22,7 @@ contract MoveSystem is CharacterAccessControl, System {
     validateCurrentWeight(characterId)
   {
     // when character in StandBy state, this will return CharNextPosition
-    CharPositionData memory characterPosition = CharacterPositionUtils.currentPosition(characterId);
+    CharPositionData memory characterPosition = CharacterPositionUtils.getCurrentPosition(characterId);
     // validate player possible movement blocks
     if (!MoveSystemUtils.isMoveValid(characterPosition.x, characterPosition.y, destX, destY)) {
       revert Errors.MoveSystem_MovePositionError(characterPosition.x, characterPosition.y, destX, destY);
@@ -33,9 +33,10 @@ contract MoveSystem is CharacterAccessControl, System {
       CharPosition.set(characterId, characterPosition.x, characterPosition.y);
     }
     // update next position
-    uint256 arriveTimestamp = block.timestamp + MoveSystemUtils.getMovementDuration(characterId);
+    uint16 moveDuration = MoveSystemUtils.getMovementDuration(characterId);
     uint16 slowDebuffPercent = CharacterBuffUtils.getSlowDebuff(characterId);
-    arriveTimestamp = (arriveTimestamp * (100 + uint256(slowDebuffPercent))) / 100;
+    moveDuration = (moveDuration * (100 + slowDebuffPercent)) / 100;
+    uint256 arriveTimestamp = block.timestamp + moveDuration;
     CharNextPosition.set(characterId, destX, destY, arriveTimestamp);
     CharPositionV2Data memory posV2 = CharPositionV2Data({
       x: characterPosition.x,

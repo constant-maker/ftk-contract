@@ -1,10 +1,20 @@
 pragma solidity >=0.8.24;
 
 import { Equipment, EquipmentInfo, ItemV2, CharCurrentStats, CharEquipment } from "@codegen/index.sol";
-import { AdvantageType, SlotType } from "@codegen/common.sol";
+import { AdvantageType, SlotType, SkinSlotType } from "@codegen/common.sol";
 import { Errors } from "@common/Errors.sol";
 import { InventoryEquipmentUtils } from "./InventoryEquipmentUtils.sol";
 import { CharacterStatsUtils } from "./CharacterStatsUtils.sol";
+
+struct EquipData {
+  SlotType slotType;
+  uint256 equipmentId;
+}
+
+struct EquipSkinData {
+  SkinSlotType slotType;
+  uint256 itemId;
+}
 
 library CharacterEquipmentUtils {
   /// @dev unequip all equipments

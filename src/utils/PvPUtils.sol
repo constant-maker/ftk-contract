@@ -10,13 +10,6 @@ import { ZoneType } from "@codegen/common.sol";
 import { Config } from "@common/index.sol";
 
 library PvPUtils {
-  uint32 constant MIN_PROTECT_FAME = 500; // minimum fame to be protected in green zone
-  uint32 constant GREEN_ZONE_FAME_PENALTY = 50;
-  uint32 constant MIN_FAME = 1;
-  uint32 constant LOST_FAME_PENALTY = 20;
-  uint32 constant GAINED_FAME_REWARD = 10;
-  uint32 constant MIN_FAME_THRESHOLD = 1070;
-
   function updateCharacterFame(
     uint256 attackerId,
     uint32 attackerHp,
@@ -30,7 +23,6 @@ library PvPUtils {
       return; // both alive, no fame change
     }
     int32 attackerFameChange = 0;
-    int32 defenderFameChange = 0;
     uint32 attackerFame = CharStats2.getFame(attackerId);
     uint32 defenderFame = CharStats2.getFame(defenderId);
     ZoneInfo memory zoneInfo = KingdomUtils.getZoneTypeFull(position.x, position.y, attackerId, defenderId);
@@ -44,35 +36,41 @@ library PvPUtils {
     if (isSameSide && defenderHp == 0) {
       if (
         (zoneInfo.attackerZoneType == ZoneType.Green || zoneInfo.defenderZoneType == ZoneType.Green)
-          && defenderFame > MIN_PROTECT_FAME
+          && defenderFame > Config.MIN_PROTECT_FAME
       ) {
-        attackerFame = attackerFame > GREEN_ZONE_FAME_PENALTY ? attackerFame - GREEN_ZONE_FAME_PENALTY : MIN_FAME;
+        attackerFame = attackerFame > Config.GREEN_ZONE_FAME_PENALTY
+          ? attackerFame - Config.GREEN_ZONE_FAME_PENALTY
+          : Config.MIN_FAME;
         CharStats2.set(attackerId, attackerFame);
-        attackerFameChange = -int32(GREEN_ZONE_FAME_PENALTY);
+        attackerFameChange = -int32(Config.GREEN_ZONE_FAME_PENALTY);
       } else {
         uint32 famePenalty = KingSetting.getPvpFamePenalty(zoneInfo.attackerKingdomId);
         if (famePenalty > 0) {
           attackerFameChange = -int32(famePenalty);
-          attackerFame = attackerFame > famePenalty ? attackerFame - famePenalty : MIN_FAME;
+          attackerFame = attackerFame > famePenalty ? attackerFame - famePenalty : Config.MIN_FAME;
           CharStats2.set(attackerId, attackerFame);
         }
       }
-      if (attackerFame < MIN_PROTECT_FAME) {
+      if (attackerFame < Config.MIN_PROTECT_FAME && attackerFameChange < 0) {
         // apply debuff to attacker
         _applyDebuff(attackerId);
       }
-      _storeFameChange(attackerFameChange, 0, attackerId, defenderId);
+      _storeFameChange(attackerFameChange, 0);
       return;
     }
 
     if (zoneInfo.attackerKingdomId == zoneInfo.defenderKingdomId) return; // same kingdom, no fame change
 
-    if (attackerHp == 0 && attackerFame >= MIN_FAME_THRESHOLD && zoneInfo.attackerZoneType != ZoneType.Green) {
-      _setFame(attackerId, defenderId, -int32(LOST_FAME_PENALTY), int32(GAINED_FAME_REWARD)); // fame transfer from
+    if (attackerHp == 0 && attackerFame >= Config.MIN_FAME_THRESHOLD && zoneInfo.attackerZoneType != ZoneType.Green) {
+      _setFame(attackerId, defenderId, -int32(Config.LOST_FAME_PENALTY), int32(Config.GAINED_FAME_REWARD)); // fame
+        // transfer from
         // attacker to defender
       _checkAndGiveAchievement(defenderId, zoneInfo);
-    } else if (defenderHp == 0 && defenderFame >= MIN_FAME_THRESHOLD && zoneInfo.defenderZoneType != ZoneType.Green) {
-      _setFame(attackerId, defenderId, int32(GAINED_FAME_REWARD), -int32(LOST_FAME_PENALTY)); // fame transfer from
+    } else if (
+      defenderHp == 0 && defenderFame >= Config.MIN_FAME_THRESHOLD && zoneInfo.defenderZoneType != ZoneType.Green
+    ) {
+      _setFame(attackerId, defenderId, int32(Config.GAINED_FAME_REWARD), -int32(Config.LOST_FAME_PENALTY)); // fame
+        // transfer from
         // defender to attacker
       _checkAndGiveAchievement(attackerId, zoneInfo);
     }
@@ -89,17 +87,10 @@ library PvPUtils {
     CharStats2.set(attackerId, uint32(newAttackerFame));
     CharStats2.set(defenderId, uint32(newDefenderFame));
 
-    _storeFameChange(attackerFameChange, defenderFameChange, attackerId, defenderId);
+    _storeFameChange(attackerFameChange, defenderFameChange);
   }
 
-  function _storeFameChange(
-    int32 attackerFameChange,
-    int32 defenderFameChange,
-    uint256 attackerId,
-    uint256 defenderId
-  )
-    private
-  {
+  function _storeFameChange(int32 attackerFameChange, int32 defenderFameChange) private {
     uint256 pvpId = PvPBattleCounter.getCounter(); // this return the current pvpId
     int32[2] memory fameChanges = [attackerFameChange, defenderFameChange];
     PvPExtraV3.setFames(pvpId, fameChanges);

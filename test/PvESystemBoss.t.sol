@@ -30,7 +30,7 @@ import { Errors } from "@common/Errors.sol";
 import { Config } from "@common/Config.sol";
 import { CharacterPositionUtils } from "@utils/CharacterPositionUtils.sol";
 import { CharAchievementUtils } from "@utils/CharAchievementUtils.sol";
-import { EquipData } from "@systems/app/EquipmentSystem.sol";
+import { EquipData } from "@utils/CharacterEquipmentUtils.sol";
 
 contract PvESystemBossTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture, MoveSystemFixture {
   address player = makeAddr("player");

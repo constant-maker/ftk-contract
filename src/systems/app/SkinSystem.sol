@@ -6,12 +6,7 @@ import { CharSkin, SkinInfo } from "@codegen/index.sol";
 import { SkinSlotType } from "@codegen/common.sol";
 import { Errors } from "@common/index.sol";
 import { InventoryItemUtils } from "@utils/InventoryItemUtils.sol";
-import { EquipSkinData } from "./SkinSystem.sol";
-
-struct EquipSkinData {
-  SkinSlotType slotType;
-  uint256 itemId;
-}
+import { EquipSkinData } from "@utils/CharacterEquipmentUtils.sol";
 
 contract SkinSystem is System, CharacterAccessControl {
   function equipSkins(uint256 characterId, EquipSkinData[] calldata equipData) public onlyAuthorizedWallet(characterId) {

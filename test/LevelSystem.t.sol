@@ -301,7 +301,7 @@ contract LevelSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixtu
     CharacterPositionUtils.moveToLocation(characterId, npc1X, npc1Y);
     vm.stopPrank();
     // after state
-    CharPositionData memory characterPosition = CharacterPositionUtils.currentPosition(characterId);
+    CharPositionData memory characterPosition = CharacterPositionUtils.getCurrentPosition(characterId);
     assertEq(characterPosition.x, npc1X);
     assertEq(characterPosition.y, npc1Y);
 

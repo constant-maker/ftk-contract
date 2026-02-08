@@ -1,7 +1,7 @@
 pragma solidity >=0.8.24;
 
 import { CharOtherItemStorage } from "@codegen/index.sol";
-import { StorageWeightUtils } from "@utils/StorageWeightUtils.sol";
+import { StorageWeightUtils } from "./StorageWeightUtils.sol";
 import { Errors } from "@common/Errors.sol";
 
 library StorageItemUtils {

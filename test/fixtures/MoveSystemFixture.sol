@@ -24,52 +24,52 @@ abstract contract MoveSystemFixture is WorldFixture {
 
   /// @dev Go up one tile and finish action
   function _goUp(address player, uint256 characterId) internal doPrank(player) {
-    CharPositionData memory characterPosition = CharacterPositionUtils.currentPosition(characterId);
+    CharPositionData memory characterPosition = CharacterPositionUtils.getCurrentPosition(characterId);
     world.app__move(characterId, characterPosition.x, characterPosition.y + 1);
     assertTrue(CharacterStateUtils.getCharacterState(characterId) == CharacterStateType.Moving);
     uint16 moveDuration = MoveSystemUtils.getMovementDuration(characterId);
     vm.warp(block.timestamp + moveDuration);
 
-    CharPositionData memory newCharacterPosition = CharacterPositionUtils.currentPosition(characterId);
+    CharPositionData memory newCharacterPosition = CharacterPositionUtils.getCurrentPosition(characterId);
     assertEq(newCharacterPosition.y, characterPosition.y + 1);
     assertTrue(CharacterStateUtils.getCharacterState(characterId) == CharacterStateType.Standby);
   }
 
   /// @dev Go down one tile and finish the action
   function _goDown(address player, uint256 characterId) internal doPrank(player) {
-    CharPositionData memory characterPosition = CharacterPositionUtils.currentPosition(characterId);
+    CharPositionData memory characterPosition = CharacterPositionUtils.getCurrentPosition(characterId);
     world.app__move(characterId, characterPosition.x, characterPosition.y - 1);
     assertTrue(CharacterStateUtils.getCharacterState(characterId) == CharacterStateType.Moving);
     uint16 moveDuration = MoveSystemUtils.getMovementDuration(characterId);
     vm.warp(block.timestamp + moveDuration);
 
-    CharPositionData memory newCharacterPosition = CharacterPositionUtils.currentPosition(characterId);
+    CharPositionData memory newCharacterPosition = CharacterPositionUtils.getCurrentPosition(characterId);
     assertEq(newCharacterPosition.y, characterPosition.y - 1);
     assertTrue(CharacterStateUtils.getCharacterState(characterId) == CharacterStateType.Standby);
   }
 
   /// @dev Go left one tile and finish the action
   function _goLeft(address player, uint256 characterId) internal doPrank(player) {
-    CharPositionData memory characterPosition = CharacterPositionUtils.currentPosition(characterId);
+    CharPositionData memory characterPosition = CharacterPositionUtils.getCurrentPosition(characterId);
     world.app__move(characterId, characterPosition.x - 1, characterPosition.y);
     assertTrue(CharacterStateUtils.getCharacterState(characterId) == CharacterStateType.Moving);
     uint16 moveDuration = MoveSystemUtils.getMovementDuration(characterId);
     vm.warp(block.timestamp + moveDuration);
 
-    CharPositionData memory newCharacterPosition = CharacterPositionUtils.currentPosition(characterId);
+    CharPositionData memory newCharacterPosition = CharacterPositionUtils.getCurrentPosition(characterId);
     assertEq(newCharacterPosition.x, characterPosition.x - 1);
     assertTrue(CharacterStateUtils.getCharacterState(characterId) == CharacterStateType.Standby);
   }
 
   /// @dev Go right one tile and finish the action
   function _goRight(address player, uint256 characterId) internal doPrank(player) {
-    CharPositionData memory characterPosition = CharacterPositionUtils.currentPosition(characterId);
+    CharPositionData memory characterPosition = CharacterPositionUtils.getCurrentPosition(characterId);
     world.app__move(characterId, characterPosition.x + 1, characterPosition.y);
     assertTrue(CharacterStateUtils.getCharacterState(characterId) == CharacterStateType.Moving);
     uint16 moveDuration = MoveSystemUtils.getMovementDuration(characterId);
     vm.warp(block.timestamp + moveDuration);
 
-    CharPositionData memory newCharacterPosition = CharacterPositionUtils.currentPosition(characterId);
+    CharPositionData memory newCharacterPosition = CharacterPositionUtils.getCurrentPosition(characterId);
     assertEq(newCharacterPosition.x, characterPosition.x + 1);
     assertTrue(CharacterStateUtils.getCharacterState(characterId) == CharacterStateType.Standby);
   }

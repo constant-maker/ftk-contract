@@ -47,7 +47,7 @@ contract TileSystem is System, CharacterAccessControl {
 
   /// @dev Occupy a tile to expand your kingdom area
   function occupyTile(uint256 characterId) public onlyAuthorizedWallet(characterId) {
-    CharPositionData memory position = CharacterPositionUtils.currentPosition(characterId);
+    CharPositionData memory position = CharacterPositionUtils.getCurrentPosition(characterId);
     int32 x = position.x;
     int32 y = position.y;
     if (x < X_LEFT || x > X_RIGHT || y < Y_BOTTOM || y > Y_TOP) {
@@ -91,7 +91,7 @@ contract TileSystem is System, CharacterAccessControl {
     if (data.itemIds.length != data.itemAmounts.length) {
       revert("Invalid input: itemIds and itemAmounts");
     }
-    CharPositionData memory position = CharacterPositionUtils.currentPosition(characterId);
+    CharPositionData memory position = CharacterPositionUtils.getCurrentPosition(characterId);
     int32 x = position.x;
     int32 y = position.y;
     uint256 lastDropTime = TileInventory.getLastDropTime(x, y);

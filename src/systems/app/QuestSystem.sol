@@ -55,7 +55,7 @@ contract QuestSystem is System, CharacterAccessControl {
     CharacterQuestUtils.mustFinishInProgressQuest(characterId, questId);
     if (questType == QuestType.Contribute) {
       CharacterQuestUtils.mustSameNpcPosition(characterId, toNpcId);
-      _finishContributeQuest(characterId, toNpcId, questId);
+      _finishContributeQuest(characterId, questId);
     } else if (questType == QuestType.Locate) {
       _finishLocateQuest(characterId, toNpcId, questId);
     }
@@ -78,21 +78,17 @@ contract QuestSystem is System, CharacterAccessControl {
     }
   }
 
-  function _finishContributeQuest(uint256 characterId, uint256 npcId, uint256 questId) private {
+  function _finishContributeQuest(uint256 characterId, uint256 questId) private {
     QuestContributeData memory questContribute = QuestContribute.get(questId);
     uint256 lenResourceIds = questContribute.itemIds.length;
     uint256 lenAmounts = questContribute.amounts.length;
     if (lenResourceIds != lenAmounts) {
       revert Errors.QuestSystem_InvalidContributeQuest(lenResourceIds, lenAmounts);
     }
-    // uint256 cityId = Npc.getCityId(npcId);
     for (uint256 i; i < questContribute.itemIds.length; i++) {
       uint256 itemId = questContribute.itemIds[i];
       uint32 amount = questContribute.amounts[i];
       InventoryItemUtils.removeItem(characterId, itemId, amount);
-      // update city vault
-      // uint32 currentResourceAmount = CityVault.getAmount(cityId, itemId);
-      // CityVault.setAmount(cityId, itemId, currentResourceAmount + amount);
     }
     CharQuestStatus.set(characterId, questId, QuestStatusType.Done);
     _claimReward(characterId, questId);
@@ -108,7 +104,7 @@ contract QuestSystem is System, CharacterAccessControl {
       // already done the locate task
       CharacterQuestUtils.mustSameNpcPosition(characterId, toNpcId);
       if (QuestContribute.lengthItemIds(questId) > 0) {
-        _finishContributeQuest(characterId, toNpcId, questId);
+        _finishContributeQuest(characterId, questId);
       } else {
         CharQuestStatus.set(characterId, questId, QuestStatusType.Done);
         _claimReward(characterId, questId);
@@ -117,7 +113,7 @@ contract QuestSystem is System, CharacterAccessControl {
     }
     int32 comparedX = questLocate.xs[trackIndex];
     int32 comparedY = questLocate.ys[trackIndex];
-    CharPositionData memory characterPosition = CharacterPositionUtils.currentPosition(characterId);
+    CharPositionData memory characterPosition = CharacterPositionUtils.getCurrentPosition(characterId);
     if (characterPosition.x == comparedX && characterPosition.y == comparedY) {
       QuestLocateTracking2.set(characterId, questId, trackIndex + 1);
     } else {

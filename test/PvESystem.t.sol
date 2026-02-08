@@ -235,7 +235,7 @@ contract PvESystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
     uint32 newCurrentWeight = CharCurrentStats.getWeight(characterId);
     assertTrue(newCurrentWeight > currentWeight);
 
-    CharPositionData memory charPosition = CharacterPositionUtils.currentPosition(characterId);
+    CharPositionData memory charPosition = CharacterPositionUtils.getCurrentPosition(characterId);
     uint8 farmSlot = TileInfo3.getFarmSlot(charPosition.x, charPosition.y);
     assertEq(farmSlot, 5);
   }
@@ -296,7 +296,7 @@ contract PvESystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
     uint32 newCurrentWeight = CharCurrentStats.getWeight(characterId);
     assertTrue(newCurrentWeight > currentWeight);
 
-    CharPositionData memory charPosition = CharacterPositionUtils.currentPosition(characterId);
+    CharPositionData memory charPosition = CharacterPositionUtils.getCurrentPosition(characterId);
     uint8 farmSlot = TileInfo3.getFarmSlot(charPosition.x, charPosition.y);
     console2.log("farmSlot", farmSlot);
     assertEq(farmSlot, 5);
@@ -354,7 +354,7 @@ contract PvESystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
     uint32 newCurrentWeight = CharCurrentStats.getWeight(characterId);
     assertTrue(newCurrentWeight > currentWeight);
 
-    CharPositionData memory charPosition = CharacterPositionUtils.currentPosition(characterId);
+    CharPositionData memory charPosition = CharacterPositionUtils.getCurrentPosition(characterId);
     uint8 farmSlot = TileInfo3.getFarmSlot(charPosition.x, charPosition.y);
     assertEq(farmSlot, 5);
   }
@@ -410,7 +410,7 @@ contract PvESystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
     uint32 newCurrentWeight = CharCurrentStats.getWeight(characterId);
     assertTrue(newCurrentWeight > currentWeight);
 
-    CharPositionData memory charPosition = CharacterPositionUtils.currentPosition(characterId);
+    CharPositionData memory charPosition = CharacterPositionUtils.getCurrentPosition(characterId);
     uint8 farmSlot = TileInfo3.getFarmSlot(charPosition.x, charPosition.y);
     assertEq(farmSlot, 5);
   }
@@ -510,7 +510,7 @@ contract PvESystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
     assertEq(characterCurrentHp, characterMaxHp);
     assertEq(CharCurrentStats.getExp(characterId), 75); // penalty 25%
 
-    CharPositionData memory characterPosition = CharacterPositionUtils.currentPosition(characterId);
+    CharPositionData memory characterPosition = CharacterPositionUtils.getCurrentPosition(characterId);
     assertEq(characterPosition.x, 30);
     assertEq(characterPosition.y, -36);
     CharPositionData memory prevPosition = CharPosition.get(characterId);

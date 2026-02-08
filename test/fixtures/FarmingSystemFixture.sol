@@ -13,7 +13,7 @@ abstract contract FarmingSystemFixture is WorldFixture {
   }
 
   function _startFarming(address _player, uint256 _characterId, uint256 _resourceId, uint256 _toolId) internal {
-    CharPositionData memory charPosition = CharacterPositionUtils.currentPosition(_characterId);
+    CharPositionData memory charPosition = CharacterPositionUtils.getCurrentPosition(_characterId);
     vm.startPrank(worldDeployer);
     TileInfo3.setFarmSlot(charPosition.x, charPosition.y, 200);
     vm.stopPrank();

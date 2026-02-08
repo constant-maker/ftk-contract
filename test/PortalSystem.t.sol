@@ -1,15 +1,13 @@
 pragma solidity >=0.8.24;
 
 import { console2 } from "forge-std/console2.sol";
-// import { Balances } from "@latticexyz/world/src/codegen/tables/Balances.sol";
-// import { WorldResourceIdLib } from "@latticexyz/world/src/WorldResourceId.sol";
 import { WorldFixture } from "@fixtures/WorldFixture.sol";
 import { SpawnSystemFixture } from "@fixtures/SpawnSystemFixture.sol";
 import { WelcomeSystemFixture } from "@fixtures/WelcomeSystemFixture.sol";
 import { TestHelper } from "./TestHelper.sol";
 import { Config } from "@common/index.sol";
 import { CharFund } from "@codegen/index.sol";
-import { WorldUtils } from "@utils/WorldUtils.sol";
+import { UWorldUtils } from "@utils/UWorldUtils.sol";
 
 contract PortalSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture {
   address player = makeAddr("player");
@@ -31,29 +29,32 @@ contract PortalSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixt
     world.app__buyCrystal{ value: requireEth }(characterId, 500);
     vm.stopPrank();
 
-    uint256 appNsBalance = WorldUtils.balanceOfNs("app");
-    console2.log("app ns balance:", appNsBalance);
+    uint256 appNsBalance = UWorldUtils.balanceOfNs("app");
+    console2.log("test app ns balance:", appNsBalance);
     assertEq(appNsBalance, requireEth);
     assertEq(CharFund.getCrystal(characterId), 500);
     // assert player balance
     assertEq(player.balance, 10 ether - requireEth);
 
+    uint256 currentTeamBalance = Config.TEAM_ADDRESS.balance;
+
     vm.startPrank(player);
     world.app__sellCrystal(characterId, 500);
     vm.stopPrank();
 
-    uint256 fee = (requireEth * 5) / 100;
+    uint256 fee = (requireEth * 5 + 99) / 100;
     uint256 paymentAmount = requireEth - fee;
-    console2.log("payment amount:", paymentAmount);
-    console2.log("fee amount:", fee);
+    console2.log("test payment amount:", paymentAmount);
+    console2.log("test fee amount:", fee);
 
     // assert player balance after sell
     assertEq(player.balance, 10 ether - requireEth + paymentAmount);
     // assert app ns balance after sell
-    uint256 appNsBalanceAfterSell = WorldUtils.balanceOfNs("app");
+    uint256 appNsBalanceAfterSell = UWorldUtils.balanceOfNs("app");
+    console2.log("test app ns balance after sell:", appNsBalanceAfterSell);
     assertEq(appNsBalanceAfterSell, appNsBalance - requireEth);
     // assert team ns balance after sell
-    assertEq(Config.TEAM_ADDRESS.balance, fee);
+    assertEq(Config.TEAM_ADDRESS.balance, currentTeamBalance + fee);
     // assert character crystal after sell
     assertEq(CharFund.getCrystal(characterId), 0);
   }

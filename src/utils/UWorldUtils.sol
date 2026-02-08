@@ -6,12 +6,12 @@ import { WorldContextConsumerLib } from "@latticexyz/world/src/WorldContext.sol"
 import { IWorld } from "@codegen/world/IWorld.sol";
 import { Config, Errors } from "@common/index.sol";
 
-library WorldUtils {
+library UWorldUtils {
   bytes14 constant APP_NAMESPACE = "app";
   bytes14 constant ROOT_NAMESPACE = "";
 
   /// @dev Send fund from namespace app to a specified address
-  function transferTo(uint256 ethValue, address to) internal {
+  function transferTo(address to, uint256 ethValue) internal {
     if (ethValue == 0) return;
     validateNsBalance(APP_NAMESPACE, ethValue);
     IWorld world = IWorld(WorldContextConsumerLib._world());

@@ -23,11 +23,10 @@ contract NFTTransferHook is SystemHook {
     bytes4 selector = bytes4(callData);
 
     if (selector == TRANSFER_FROM_SELECTOR || selector == SAFE_TRANSFER_FROM_SELECTOR) {
-      (address from, address to, uint256 characterId) = abi.decode(_decodeArgs(callData), (address, address, uint256));
+      (, address to, uint256 characterId) = abi.decode(_decodeArgs(callData), (address, address, uint256));
       _handleTransfer(to, characterId);
     } else if (selector == SAFE_TRANSFER_FROM_DATA_SELECTOR) {
-      (address from, address to, uint256 characterId,) =
-        abi.decode(_decodeArgs(callData), (address, address, uint256, bytes));
+      (, address to, uint256 characterId,) = abi.decode(_decodeArgs(callData), (address, address, uint256, bytes));
       _handleTransfer(to, characterId);
     }
   }

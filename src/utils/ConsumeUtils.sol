@@ -14,7 +14,12 @@ import {
 import { CharacterPositionUtils } from "./CharacterPositionUtils.sol";
 import { ZoneType } from "@codegen/common.sol";
 import { Errors } from "@common/index.sol";
-import { TargetItemData } from "@systems/app/ConsumeSystem.sol";
+
+struct TargetItemData {
+  int32 x;
+  int32 y;
+  uint256[] targetPlayers;
+}
 
 library ConsumeUtils {
   uint16 constant DEBUFF_COOLDOWN = 10; // seconds
@@ -174,7 +179,7 @@ library ConsumeUtils {
     //   revert Errors.ConsumeSystem_CannotTargetRestrictLocation();
     // }
 
-    CharPositionData memory charPosition = CharacterPositionUtils.currentPosition(characterId);
+    CharPositionData memory charPosition = CharacterPositionUtils.getCurrentPosition(characterId);
 
     uint32 dx = _getAbsValue(charPosition.x - targetData.x);
     uint32 dy = _getAbsValue(charPosition.y - targetData.y);

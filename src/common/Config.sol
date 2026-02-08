@@ -34,6 +34,12 @@ library Config {
   uint256 public constant NORMAL_ATTACK_SKILL_ID = 0;
   uint256 public constant MAX_EQUIPMENT_ID_TO_CHECK_CACHE_WEIGHT = 16_000;
 
+  uint32 public constant MIN_PROTECT_FAME = 500; // minimum fame to be protected in green zone
+  uint32 public constant GREEN_ZONE_FAME_PENALTY = 50;
+  uint32 public constant MIN_FAME = 1;
+  uint32 public constant LOST_FAME_PENALTY = 20;
+  uint32 public constant GAINED_FAME_REWARD = 10;
+  uint32 public constant MIN_FAME_THRESHOLD = 1070;
   uint256 public constant LOW_FAME_DEBUFF_ID = 458;
 
   uint256 public constant TELEPORT_DURATION = 60; // seconds

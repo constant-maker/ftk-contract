@@ -40,12 +40,12 @@ contract PvPSystem is System, CharacterAccessControl {
     mustInStateStandByOrMoving(attackerId)
     validateCurrentWeight(attackerId)
   {
-    CharPositionData memory attackerPosition = CharacterPositionUtils.currentPosition(attackerId);
-    CharPositionData memory defenderPosition = CharacterPositionUtils.currentPosition(defenderId);
+    CharPositionData memory attackerPosition = CharacterPositionUtils.getCurrentPosition(attackerId);
+    CharPositionData memory defenderPosition = CharacterPositionUtils.getCurrentPosition(defenderId);
     if (attackerPosition.x != defenderPosition.x || attackerPosition.y != defenderPosition.y) {
       revert Errors.PvP_NotSamePosition(attackerPosition.x, attackerPosition.y, defenderPosition.x, defenderPosition.y);
     }
-    _checkIfInCity(attackerId, defenderId, attackerPosition);
+    _checkIfInCity(attackerPosition);
     _checkIsReadyToBattle(attackerId, defenderId);
 
     (uint32 attackerHp, uint32 defenderHp) = _battle(attackerId, defenderId, false);
@@ -165,7 +165,7 @@ contract PvPSystem is System, CharacterAccessControl {
       equipmentIds: _mergeEquipmentIds(attackerEquipmentIds, defenderEquipmentIds)
     });
     PvPExtraV3.set(pvpId, pvpExtra);
-    CharPositionData memory attackerPosition = CharacterPositionUtils.currentPosition(attackerId);
+    CharPositionData memory attackerPosition = CharacterPositionUtils.getCurrentPosition(attackerId);
     PvPExtra2V3Data memory pvpExtra2 = PvPExtra2V3Data({
       x: attackerPosition.x,
       y: attackerPosition.y,
@@ -289,7 +289,7 @@ contract PvPSystem is System, CharacterAccessControl {
       : [CharCurrentStats.getHp(attackerId), CharCurrentStats.getHp(defenderId)];
   }
 
-  function _checkIfInCity(uint256 attackerId, uint256 defenderId, CharPositionData memory currentPosition) private view {
+  function _checkIfInCity(CharPositionData memory currentPosition) private view {
     uint256 cityId = RestrictLocV2.getCityId(currentPosition.x, currentPosition.y);
     if (cityId == 0) return; // not in city
 

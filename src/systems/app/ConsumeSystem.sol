@@ -18,23 +18,15 @@ import {
   BuffStatV4,
   CharCurrentStats
 } from "@codegen/index.sol";
-import {
-  CharacterStatsUtils,
-  InventoryItemUtils,
-  CharacterPositionUtils,
-  ConsumeUtils,
-  CharacterStateUtils,
-  CharacterFundUtils
-} from "@utils/index.sol";
+import { InventoryItemUtils } from "@utils/InventoryItemUtils.sol";
+import { CharacterFundUtils } from "@utils/CharacterFundUtils.sol";
+import { CharacterStatsUtils } from "@utils/CharacterStatsUtils.sol";
+import { CharacterPositionUtils } from "@utils/CharacterPositionUtils.sol";
+import { ConsumeUtils, TargetItemData } from "@utils/ConsumeUtils.sol";
+import { CharacterStateUtils } from "@utils/CharacterStateUtils.sol";
 import { Config, Errors } from "@common/index.sol";
 import { ItemType, ResourceType, BuffType, CharacterStateType } from "@codegen/common.sol";
 import { TargetItemData } from "./ConsumeSystem.sol";
-
-struct TargetItemData {
-  int32 x;
-  int32 y;
-  uint256[] targetPlayers;
-}
 
 contract ConsumeSystem is System, CharacterAccessControl {
   /// @dev eat berries to heal
@@ -81,7 +73,7 @@ contract ConsumeSystem is System, CharacterAccessControl {
       if (buffType == BuffType.StatsModify) {
         _handleStatsBuffItem(characterId, itemId, targetData);
       } else if (buffType == BuffType.ExpAmplify) {
-        _handleExpBuffItem(characterId, itemId, targetData);
+        _handleExpBuffItem(itemId, targetData);
       } else if (buffType == BuffType.InstantHeal) {
         // _healing(characterId, itemId, 1);
       } else if (buffType == BuffType.InstantDamage) {
@@ -120,7 +112,7 @@ contract ConsumeSystem is System, CharacterAccessControl {
     uint32 itemDmg = _calculateBuffDmg(characterId, BuffStatV4.getDmg(itemId), BuffStatV4.getIsAbsDmg(itemId));
     for (uint256 i = 0; i < targetData.targetPlayers.length; i++) {
       uint256 targetPlayer = targetData.targetPlayers[i];
-      CharPositionData memory targetPosition = CharacterPositionUtils.currentPosition(targetPlayer);
+      CharPositionData memory targetPosition = CharacterPositionUtils.getCurrentPosition(targetPlayer);
       if (targetPosition.x != targetData.x || targetPosition.y != targetData.y) {
         continue; // skip if target player not in position
       }
@@ -145,7 +137,7 @@ contract ConsumeSystem is System, CharacterAccessControl {
     }
     for (uint256 i = 0; i < targetData.targetPlayers.length; i++) {
       uint256 targetPlayer = targetData.targetPlayers[i];
-      CharPositionData memory targetPosition = CharacterPositionUtils.currentPosition(targetPlayer);
+      CharPositionData memory targetPosition = CharacterPositionUtils.getCurrentPosition(targetPlayer);
       if (targetPosition.x != targetData.x || targetPosition.y != targetData.y) {
         continue; // skip if target player not in position
       }
@@ -182,10 +174,10 @@ contract ConsumeSystem is System, CharacterAccessControl {
     CharacterStatsUtils.restoreHp(characterId, uint32(gainedHp));
   }
 
-  function _handleExpBuffItem(uint256 characterId, uint256 itemId, TargetItemData memory targetData) private {
+  function _handleExpBuffItem(uint256 itemId, TargetItemData memory targetData) private {
     for (uint256 i = 0; i < targetData.targetPlayers.length; i++) {
       uint256 targetPlayer = targetData.targetPlayers[i];
-      CharPositionData memory targetPosition = CharacterPositionUtils.currentPosition(targetPlayer);
+      CharPositionData memory targetPosition = CharacterPositionUtils.getCurrentPosition(targetPlayer);
       if (targetPosition.x != targetData.x || targetPosition.y != targetData.y) {
         continue; // skip if target player not in position
       }

@@ -10,7 +10,7 @@ library CharacterQuestUtils {
   /// @dev Verify whether the player character and the NPC are at the same position.
   function mustSameNpcPosition(uint256 characterId, uint256 npcId) internal view {
     NpcData memory npc = Npc.get(npcId);
-    CharPositionData memory characterPosition = CharacterPositionUtils.currentPosition(characterId);
+    CharPositionData memory characterPosition = CharacterPositionUtils.getCurrentPosition(characterId);
 
     if (characterPosition.x != npc.x || characterPosition.y != npc.y) {
       revert Errors.QuestSystem_NotSamePositionWithNpc(characterPosition.x, characterPosition.y, npc.x, npc.y);

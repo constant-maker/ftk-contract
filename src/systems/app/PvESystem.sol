@@ -43,7 +43,7 @@ contract PvESystem is System, CharacterAccessControl {
     validateCurrentWeight(characterId)
   {
     PvEAfkData memory afkData = PvEAfk.get(characterId);
-    CharPositionData memory characterPosition = CharacterPositionUtils.currentPosition(characterId);
+    CharPositionData memory characterPosition = CharacterPositionUtils.getCurrentPosition(characterId);
     if (stop) {
       BattlePvEUtils2.stopPvEAFK(characterId, afkData, characterPosition);
     } else {
@@ -55,7 +55,7 @@ contract PvESystem is System, CharacterAccessControl {
       if (afkData.monsterId != 0) {
         revert Errors.PvE_AfkAlreadyStarted(characterId, afkData.monsterId);
       }
-      BattlePvEUtils2.startPvEAFK(characterId, monsterId, afkData, characterPosition);
+      BattlePvEUtils2.startPvEAFK(characterId, monsterId, characterPosition);
     }
   }
 
@@ -72,7 +72,7 @@ contract PvESystem is System, CharacterAccessControl {
     // check whether character is ready to battle
     CharacterStateUtils.mustInState(characterId, CharacterStateType.Standby);
     BattlePvEUtils.checkIsReadyToBattlePvE(characterId);
-    CharPositionData memory characterPosition = CharacterPositionUtils.currentPosition(characterId);
+    CharPositionData memory characterPosition = CharacterPositionUtils.getCurrentPosition(characterId);
     MonsterLocationData memory monsterLocation =
       MonsterLocation.get(characterPosition.x, characterPosition.y, monsterId);
     if (monsterLocation.level == 0) {

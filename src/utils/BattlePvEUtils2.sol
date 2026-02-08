@@ -31,14 +31,7 @@ import { CharacterStatsUtils } from "./CharacterStatsUtils.sol";
 import { Config, Errors } from "@common/index.sol";
 
 library BattlePvEUtils2 {
-  function startPvEAFK(
-    uint256 characterId,
-    uint256 monsterId,
-    PvEAfkData memory afkData,
-    CharPositionData memory characterPosition
-  )
-    public
-  {
+  function startPvEAFK(uint256 characterId, uint256 monsterId, CharPositionData memory characterPosition) public {
     if (PvEAfkLoc.getMonsterId(characterPosition.x, characterPosition.y) == monsterId) {
       revert Errors.PvE_SomeoneIsFightingThisMonster(characterPosition.x, characterPosition.y, monsterId);
     }

@@ -17,7 +17,7 @@ import {
 import { ItemCategoryType, ItemType } from "@codegen/common.sol";
 import { Errors } from "@common/index.sol";
 import { Config } from "@common/Config.sol";
-import { InventoryItemUtils } from "@utils/InventoryItemUtils.sol";
+import { InventoryItemUtils } from "./InventoryItemUtils.sol";
 
 library CharacterItemUtils {
   uint16 public constant DEFAULT_TOOL_DURABILITY = 50;
@@ -25,8 +25,8 @@ library CharacterItemUtils {
   /// @dev Check whether character perk level is enough to equip item
   function checkCharacterPerkLevelByItemId(uint256 characterId, uint256 itemId) internal view {
     ItemV2Data memory item = ItemV2.get(itemId);
-    if (item.itemType == ItemType.Mount) {
-      // Mounts do not require perk level check
+    if (item.itemType == ItemType.Mount || item.itemType == ItemType.Ring || item.itemType == ItemType.Pet) {
+      // no perk level requirement for mount, ring, pet
       return;
     }
     checkCharacterPerkLevel(characterId, item);

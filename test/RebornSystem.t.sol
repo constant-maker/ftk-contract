@@ -11,7 +11,7 @@ import { CharBaseStats, CharBaseStatsData } from "@codegen/tables/CharBaseStats.
 import {
   CharReborn, CharInfo, ItemV2, CharInventory, CharEquipment, CharEquipStats, Equipment
 } from "@codegen/index.sol";
-import { EquipData } from "@systems/app/EquipmentSystem.sol";
+import { EquipData } from "@utils/CharacterEquipmentUtils.sol";
 import { SlotType } from "@codegen/common.sol";
 import { Config } from "@common/Config.sol";
 import { CharAchievementUtils } from "@utils/CharAchievementUtils.sol";

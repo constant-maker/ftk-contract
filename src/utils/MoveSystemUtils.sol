@@ -30,7 +30,7 @@ library MoveSystemUtils {
     uint16 baseDuration = MovementConfig.getDuration();
     // characterMovementSpeed is the speed reduction value
     uint16 characterMovementSpeed = (getCharacterMovementSpeed(characterId) - 1); // ms 1 => characterMovementSpeed = 0
-    CharPositionData memory characterPosition = CharacterPositionUtils.currentPosition(characterId);
+    CharPositionData memory characterPosition = CharacterPositionUtils.getCurrentPosition(characterId);
     uint8 tileKingdomId = TileInfo3.getKingdomId(characterPosition.x, characterPosition.y);
     if (tileKingdomId != 0 && tileKingdomId == CharInfo.getKingdomId(characterId)) {
       characterMovementSpeed += 2; // bonus speed

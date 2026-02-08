@@ -5732,6 +5732,34 @@
       "name": "Floating Dandelion",
       "desc": "A magical floating dandelion that returns its user to their Save Point after channeling for 1 minute.",
       "untradable": false
+    },
+    "458": {
+      "id": 458,
+      "type": 28,
+      "category": 2,
+      "tier": 7,
+      "weight": 0,
+      "name": "Chain of Judgment",
+      "desc": "Judged and shackled for your crimes",
+      "untradable": true,
+      "buffInfo": {
+        "type": 1,
+        "range": 0,
+        "duration": 21600,
+        "selfCastOnly": true,
+        "numTarget": 1,
+        "isBuff": false
+      },
+      "statsModify": {
+        "atkPercent": 0,
+        "defPercent": 0,
+        "agiPercent": 0,
+        "ms": 0,
+        "slowPercent": 100,
+        "sp": 0,
+        "dmg": 0,
+        "isAbsDmg": false
+      }
     }
   }
 }

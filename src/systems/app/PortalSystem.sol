@@ -5,7 +5,7 @@ import { CharacterAccessControl } from "@abstracts/CharacterAccessControl.sol";
 import { IWorld } from "@codegen/world/IWorld.sol";
 import { SalePackage, SalePackageData, CharTotalSpend, CharFund } from "@codegen/index.sol";
 import { CharAchievementUtils, CharacterFundUtils, InventoryItemUtils } from "@utils/index.sol";
-import { WorldUtils } from "@utils/WorldUtils.sol";
+import { UWorldUtils } from "@utils/UWorldUtils.sol";
 import { Config, Errors } from "@common/index.sol";
 
 contract PortalSystem is CharacterAccessControl, System {
@@ -36,7 +36,7 @@ contract PortalSystem is CharacterAccessControl, System {
     uint256 rawPayment = amount * Config.CRYSTAL_UNIT_PRICE;
     uint256 fee = (rawPayment * SELL_CRYSTAL_FEE_PERCENTAGE + 99) / 100; // rounding up
     uint256 paymentAmount = rawPayment - fee;
-    WorldUtils.transferTo(paymentAmount, _msgSender());
-    WorldUtils.transferToTeam(fee);
+    UWorldUtils.transferTo(_msgSender(), paymentAmount);
+    UWorldUtils.transferToTeam(fee);
   }
 }

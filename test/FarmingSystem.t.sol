@@ -49,7 +49,7 @@ contract FarmingSystemTest is FarmingSystemFixture, SpawnSystemFixture, MoveSyst
     CharacterPositionUtils.moveToLocation(characterId, 20, -32);
     vm.stopPrank();
 
-    CharPositionData memory characterPosition = CharacterPositionUtils.currentPosition(characterId);
+    CharPositionData memory characterPosition = CharacterPositionUtils.getCurrentPosition(characterId);
     characterX = characterPosition.x;
     characterY = characterPosition.y;
   }

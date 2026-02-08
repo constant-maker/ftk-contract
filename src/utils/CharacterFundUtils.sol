@@ -2,7 +2,6 @@ pragma solidity >=0.8.24;
 
 import { CharFund } from "@codegen/index.sol";
 import { Errors } from "@common/Errors.sol";
-import { WorldUtils } from "./WorldUtils.sol";
 
 library CharacterFundUtils {
   function increaseGold(uint256 characterId, uint32 amount) internal {
@@ -39,7 +38,6 @@ library CharacterFundUtils {
       revert Errors.CharacterFund_NotEnoughCrystal(_balance, amount);
     }
     CharFund.setCrystal(characterId, _balance - amount);
-    WorldUtils.transferToTeam(amount);
   }
 
   function mustEnoughCrystal(uint256 characterId, uint32 requireAmount) internal view {

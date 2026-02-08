@@ -29,7 +29,11 @@ import {
   CharInventory,
   CharBuff,
   CharBuffData,
-  EquipmentInfo
+  CharDebuff,
+  CharDebuffData,
+  EquipmentInfo,
+  CharPositionV2,
+  CharPositionV2Data
 } from "@codegen/index.sol";
 import { EntityType, SlotType, ItemType, ZoneType } from "@codegen/common.sol";
 import { Errors } from "@common/Errors.sol";
@@ -44,7 +48,7 @@ import {
 } from "@utils/index.sol";
 import { CharStats2 } from "@codegen/tables/CharStats2.sol";
 import { LootItems } from "@systems/app/TileSystem.sol";
-import { EquipData } from "@systems/app/EquipmentSystem.sol";
+import { EquipData } from "@utils/CharacterEquipmentUtils.sol";
 import { ItemsActionData } from "@common/Types.sol";
 import { TargetItemData } from "@systems/app/ConsumeSystem.sol";
 
@@ -251,7 +255,7 @@ contract PvPSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
     assertEq(currentCharacterHp_2, characterHp_2); // reset hp
 
     // character2 lost => move back to city
-    CharPositionData memory characterPosition = CharacterPositionUtils.currentPosition(characterId_2);
+    CharPositionData memory characterPosition = CharacterPositionUtils.getCurrentPosition(characterId_2);
     assertEq(characterPosition.x, 30);
     assertEq(characterPosition.y, -36);
   }
@@ -448,6 +452,72 @@ contract PvPSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
     assertEq(char1Fame, 900);
   }
 
+  function test_LowFamePenalty() external {
+    // no fame change because defender has low fame
+    vm.warp(block.timestamp + 300);
+
+    _moveToTheLocation(20, -32);
+
+    vm.startPrank(worldDeployer);
+    CharCurrentStats.setAtk(characterId_1, 1000);
+    CharCurrentStats.setAgi(characterId_1, 1000);
+    TileInfo3.setKingdomId(20, -32, 1);
+    CharStats2.setFame(characterId_2, Config.MIN_PROTECT_FAME);
+    vm.stopPrank();
+
+    vm.startPrank(player_1);
+    world.app__battlePvP(characterId_1, characterId_2);
+    vm.stopPrank();
+
+    uint32 char1Fame = CharStats2.get(characterId_1);
+    assertEq(char1Fame, 1000); // no fame change, because defender has low fame
+
+    // test normal condition when defender has enough fame
+    vm.warp(block.timestamp + 300);
+
+    _moveToTheLocation(20, -32);
+
+    vm.startPrank(worldDeployer);
+    CharStats2.setFame(characterId_2, Config.MIN_PROTECT_FAME + 1);
+    vm.stopPrank();
+
+    vm.startPrank(player_1);
+    world.app__battlePvP(characterId_1, characterId_2);
+    vm.stopPrank();
+    char1Fame = CharStats2.get(characterId_1);
+    assertEq(char1Fame, 950);
+
+    // test attacker has low fame, will get slow debuff
+    vm.warp(block.timestamp + 300);
+
+    _moveToTheLocation(20, -32);
+
+    vm.startPrank(worldDeployer);
+    CharStats2.setFame(characterId_1, Config.MIN_PROTECT_FAME + 1); // after this fight, fame will be below min protect
+      // fame -50
+    CharStats2.setFame(characterId_2, Config.MIN_PROTECT_FAME + 1);
+    vm.stopPrank();
+
+    vm.startPrank(player_1);
+    world.app__battlePvP(characterId_1, characterId_2);
+    vm.stopPrank();
+    char1Fame = CharStats2.get(characterId_1);
+    assertEq(char1Fame, Config.MIN_PROTECT_FAME + 1 - Config.GREEN_ZONE_FAME_PENALTY);
+
+    // check slow debuff
+    CharDebuffData memory debuff = CharDebuff.get(characterId_1);
+    assertEq(debuff.debuffIds[0], Config.LOW_FAME_DEBUFF_ID);
+    assertEq(debuff.expireTimes[0], block.timestamp + 6 * 60 * 60); // 6 hours
+
+    CharPositionData memory charPos = CharacterPositionUtils.getCurrentPosition(characterId_1);
+    vm.startPrank(player_1);
+    world.app__move(characterId_1, charPos.x, charPos.y + 1);
+    vm.stopPrank();
+    CharPositionV2Data memory charPosAfterMove = CharPositionV2.get(characterId_1);
+    console2.log("check arrive timestamp after move with low fame debuff", charPosAfterMove.arriveTimestamp);
+    assertEq(charPosAfterMove.arriveTimestamp, block.timestamp + (Config.DEFAULT_MOVEMENT_DURATION - 2) * 2);
+  }
+
   function test_DropItemInDangerZone() external {
     vm.warp(block.timestamp + 300);
 
@@ -636,7 +706,7 @@ contract PvPSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
     itemAmounts[0] = 10;
     uint256[] memory emptyArray = new uint256[](0);
     uint32[] memory emptyArray32 = new uint32[](0);
-    CharPositionData memory charPosition1 = CharacterPositionUtils.currentPosition(characterId_1);
+    CharPositionData memory charPosition1 = CharacterPositionUtils.getCurrentPosition(characterId_1);
     console2.log("char 1 position x", charPosition1.x);
     console2.log("char 1 position y", charPosition1.y);
     console2.log("play 1 try to loot item");
@@ -828,7 +898,7 @@ contract PvPSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
     world.app__battlePvP(characterId_1, characterId_2);
     vm.stopPrank();
 
-    CharPositionData memory char1Position = CharacterPositionUtils.currentPosition(characterId_1);
+    CharPositionData memory char1Position = CharacterPositionUtils.getCurrentPosition(characterId_1);
     assertEq(char1Position.x, 30);
     assertEq(char1Position.y, -36);
     CharBuffData memory char1Buff = CharBuff.get(characterId_1);

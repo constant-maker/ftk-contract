@@ -21,7 +21,7 @@ library CharacterPositionUtils {
   /// @dev character must be in a capital
   function mustInCapital(uint256 characterId, uint256 capitalId) internal view {
     if (!isInCapital(characterId, capitalId)) {
-      CharPositionData memory characterPosition = currentPosition(characterId);
+      CharPositionData memory characterPosition = getCurrentPosition(characterId);
       revert Errors.MustInACapital(capitalId, characterPosition.x, characterPosition.y);
     }
   }
@@ -35,7 +35,7 @@ library CharacterPositionUtils {
     if (!city.isCapital) {
       return false;
     }
-    CharPositionData memory characterPosition = currentPosition(characterId);
+    CharPositionData memory characterPosition = getCurrentPosition(characterId);
     if (city.x == characterPosition.x && city.y == characterPosition.y) {
       return true;
     }
@@ -45,7 +45,7 @@ library CharacterPositionUtils {
   /// @dev character must be in a city
   function mustInCity(uint256 characterId, uint256 cityId) internal view {
     if (!isInCity(characterId, cityId)) {
-      CharPositionData memory characterPosition = currentPosition(characterId);
+      CharPositionData memory characterPosition = getCurrentPosition(characterId);
       revert Errors.MustInACity(cityId, characterPosition.x, characterPosition.y);
     }
   }
@@ -56,7 +56,7 @@ library CharacterPositionUtils {
     if (city.kingdomId == 0) {
       revert Errors.InvalidCityId(cityId);
     }
-    CharPositionData memory characterPosition = currentPosition(characterId);
+    CharPositionData memory characterPosition = getCurrentPosition(characterId);
     if (city.x == characterPosition.x && city.y == characterPosition.y) {
       return true;
     }
@@ -105,7 +105,7 @@ library CharacterPositionUtils {
       return;
     }
     // move to saved point
-    CharPositionData memory currentPosition = currentPosition(characterId);
+    CharPositionData memory currentPosition = getCurrentPosition(characterId);
     if (savedCity.x != currentPosition.x || savedCity.y != currentPosition.y) {
       // only move if not already in saved point
       moveToLocationWithArriveTime(characterId, savedCity.x, savedCity.y, arriveTimestamp);
@@ -119,15 +119,23 @@ library CharacterPositionUtils {
 
   /// @dev move character to a specific location with a given arrive time
   function moveToLocationWithArriveTime(uint256 characterId, int32 x, int32 y, uint256 arriveTimestamp) internal {
-    CharPosition.set(characterId, x, y);
+    CharPositionData memory currentPosition = getCurrentPosition(characterId);
+    int32 currentX = currentPosition.x;
+    int32 currentY = currentPosition.y;
+    if (arriveTimestamp == block.timestamp) {
+      // instant move to location
+      currentX = x;
+      currentY = y;
+    }
+    CharPosition.set(characterId, currentX, currentY);
     CharNextPosition.set(characterId, x, y, arriveTimestamp);
     CharPositionV2Data memory posV2 =
-      CharPositionV2Data({ x: x, y: y, nextX: x, nextY: y, arriveTimestamp: arriveTimestamp });
+      CharPositionV2Data({ x: currentX, y: currentY, nextX: x, nextY: y, arriveTimestamp: arriveTimestamp });
     CharPositionV2.set(characterId, posV2);
   }
 
   /// @dev get current character position
-  function currentPosition(uint256 characterId) internal view returns (CharPositionData memory cpd) {
+  function getCurrentPosition(uint256 characterId) internal view returns (CharPositionData memory cpd) {
     CharNextPositionData memory cnpd = CharNextPosition.get(characterId);
     if (block.timestamp >= cnpd.arriveTimestamp) {
       return CharPositionData({ x: cnpd.x, y: cnpd.y });

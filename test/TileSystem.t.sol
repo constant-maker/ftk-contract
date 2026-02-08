@@ -40,7 +40,7 @@ contract TileSystemTest is WorldFixture, SpawnSystemFixture, MoveSystemFixture {
   }
 
   function test_CityShouldHaveTileInfo() external {
-    CharPositionData memory charPosition = CharacterPositionUtils.currentPosition(characterId);
+    CharPositionData memory charPosition = CharacterPositionUtils.getCurrentPosition(characterId);
     int32 x = charPosition.x;
     int32 y = charPosition.y;
     uint8 kingdomId = TileInfo3.getKingdomId(x, y);
@@ -51,7 +51,7 @@ contract TileSystemTest is WorldFixture, SpawnSystemFixture, MoveSystemFixture {
     vm.warp(block.timestamp + 100_000);
     _goUp(player, characterId);
 
-    CharPositionData memory charPosition = CharacterPositionUtils.currentPosition(characterId);
+    CharPositionData memory charPosition = CharacterPositionUtils.getCurrentPosition(characterId);
 
     vm.startPrank(worldDeployer);
     InventoryItemUtils.addItem(characterId, woodTier1_Id, 20);
@@ -91,7 +91,7 @@ contract TileSystemTest is WorldFixture, SpawnSystemFixture, MoveSystemFixture {
     assertEq(CharOtherItem.getAmount(characterId, stoneTier1_Id), 10);
     assertEq(CharOtherItem.getAmount(characterId, fishTier1_Id), 10);
     assertEq(CharFund.getGold(characterId), 10);
-    charPosition = CharacterPositionUtils.currentPosition(characterId);
+    charPosition = CharacterPositionUtils.getCurrentPosition(characterId);
     console2.log("position x", charPosition.x);
     console2.log("position y", charPosition.y);
 
@@ -108,7 +108,7 @@ contract TileSystemTest is WorldFixture, SpawnSystemFixture, MoveSystemFixture {
     vm.startPrank(player);
     world.app__occupyTile(characterId);
     vm.stopPrank();
-    charPosition = CharacterPositionUtils.currentPosition(characterId);
+    charPosition = CharacterPositionUtils.getCurrentPosition(characterId);
     console2.log("position x", charPosition.x);
     console2.log("position y", charPosition.y);
 
@@ -127,7 +127,7 @@ contract TileSystemTest is WorldFixture, SpawnSystemFixture, MoveSystemFixture {
     vm.warp(block.timestamp + 28_800);
     _goUp(player, characterId);
     _goDown(player, characterId);
-    charPosition = CharacterPositionUtils.currentPosition(characterId);
+    charPosition = CharacterPositionUtils.getCurrentPosition(characterId);
     vm.startPrank(worldDeployer);
     TileInfo3.setKingdomId(charPosition.x, charPosition.y, 4);
     vm.stopPrank();
@@ -174,7 +174,7 @@ contract TileSystemTest is WorldFixture, SpawnSystemFixture, MoveSystemFixture {
 
     _goUp(player, characterId);
     vm.warp(block.timestamp + 100_000);
-    CharPositionData memory charPosition = CharacterPositionUtils.currentPosition(characterId);
+    CharPositionData memory charPosition = CharacterPositionUtils.getCurrentPosition(characterId);
     vm.startPrank(worldDeployer);
     TileInfo3.setKingdomId(charPosition.x, charPosition.y, 2);
     vm.stopPrank();
@@ -185,7 +185,7 @@ contract TileSystemTest is WorldFixture, SpawnSystemFixture, MoveSystemFixture {
     assertEq(CharOtherItem.getAmount(characterId, stoneTier1_Id), 10);
     assertEq(CharOtherItem.getAmount(characterId, fishTier1_Id), 10);
     assertEq(CharFund.getGold(characterId), 10);
-    charPosition = CharacterPositionUtils.currentPosition(characterId);
+    charPosition = CharacterPositionUtils.getCurrentPosition(characterId);
     console2.log("position x", charPosition.x);
     console2.log("position y", charPosition.y);
 

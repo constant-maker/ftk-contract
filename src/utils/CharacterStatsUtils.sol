@@ -287,13 +287,17 @@ library CharacterStatsUtils {
   }
 
   /// @dev Get the upgraded equipment stats for a given equipment ID. Higher level equipment provides better stats.
-  function _getUpgradedEquipmentStats(uint256 equipmentId) private view returns (EquipmentSnapshotData memory) {
+  function _getUpgradedEquipmentStats(uint256 equipmentId)
+    private
+    view
+    returns (EquipmentSnapshotData memory equipmentSnapshot)
+  {
     uint256 itemId = Equipment.getItemId(equipmentId);
     EquipmentInfoData memory equipmentInfo = EquipmentInfo.get(itemId);
     EquipmentInfo2V2Data memory equipmentInfo2V2 = EquipmentInfo2V2.get(itemId);
     uint8 level = Equipment.getLevel(equipmentId);
     if (level == 1) {
-      EquipmentSnapshotData memory equipmentSnapshot = EquipmentSnapshotData({
+      equipmentSnapshot = EquipmentSnapshotData({
         barrier: equipmentInfo2V2.shieldBarrier,
         hp: equipmentInfo.hp,
         atk: equipmentInfo.atk,
@@ -308,7 +312,7 @@ library CharacterStatsUtils {
     uint16 percentGain = _getStatBonusPercent(itemId, level);
     uint16 multiplier = 100 + percentGain;
 
-    EquipmentSnapshotData memory equipmentSnapshot = EquipmentSnapshotData({
+    equipmentSnapshot = EquipmentSnapshotData({
       barrier: _calculateNewStat(equipmentInfo2V2.shieldBarrier, multiplier, level),
       hp: _calculateNewStat(equipmentInfo.hp, multiplier, level),
       atk: uint16(_calculateNewStat(equipmentInfo.atk, multiplier, level)),
