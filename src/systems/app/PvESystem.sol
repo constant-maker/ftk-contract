@@ -20,9 +20,10 @@ import {
   BattleUtils2,
   CharacterStatsUtils,
   CharacterStateUtils,
-  BattlePvEUtils2,
   BattleUtils,
   BattlePvEUtils,
+  BattlePvEUtils2,
+  BattlePvEUtils3,
   DailyQuestUtils,
   SystemUtils,
   TileUtils
@@ -42,7 +43,7 @@ contract PvESystem is System, CharacterAccessControl {
     validateCurrentWeight(characterId)
   {
     PvEAfkData memory afkData = PvEAfk.get(characterId);
-    CharPositionData memory characterPosition = CharacterPositionUtils.currentPosition(characterId);
+    CharPositionData memory characterPosition = CharacterPositionUtils.getCurrentPosition(characterId);
     if (stop) {
       BattlePvEUtils2.stopPvEAFK(characterId, afkData, characterPosition);
     } else {
@@ -54,7 +55,7 @@ contract PvESystem is System, CharacterAccessControl {
       if (afkData.monsterId != 0) {
         revert Errors.PvE_AfkAlreadyStarted(characterId, afkData.monsterId);
       }
-      BattlePvEUtils2.startPvEAFK(characterId, monsterId, afkData, characterPosition);
+      BattlePvEUtils2.startPvEAFK(characterId, monsterId, characterPosition);
     }
   }
 
@@ -71,7 +72,7 @@ contract PvESystem is System, CharacterAccessControl {
     // check whether character is ready to battle
     CharacterStateUtils.mustInState(characterId, CharacterStateType.Standby);
     BattlePvEUtils.checkIsReadyToBattlePvE(characterId);
-    CharPositionData memory characterPosition = CharacterPositionUtils.currentPosition(characterId);
+    CharPositionData memory characterPosition = CharacterPositionUtils.getCurrentPosition(characterId);
     MonsterLocationData memory monsterLocation =
       MonsterLocation.get(characterPosition.x, characterPosition.y, monsterId);
     if (monsterLocation.level == 0) {
@@ -107,7 +108,7 @@ contract PvESystem is System, CharacterAccessControl {
         BattlePvEUtils.getExpAndPerkExpReward(monsterId, isBoss, monsterLevel, CharStats.getLevel(characterId));
       if (claimItem) {
         // claim reward, and set extra data
-        BattlePvEUtils.claimReward(characterId, monsterId);
+        BattlePvEUtils3.claimReward(characterId, monsterId);
       }
       BattlePvEUtils2.updateCharacterExp(characterId, gainedExp, gainedPerkExp);
       // check and update daily quest
@@ -161,6 +162,6 @@ contract PvESystem is System, CharacterAccessControl {
 
     // handle battle result
     _handleBattleResult(characterId, monsterId, hps[0], hps[1], monsterLocation.level, characterPosition, claimItem);
-    BattlePvEUtils.handleBossResult(characterId, monsterId, hps[1], characterPosition);
+    BattlePvEUtils3.handleBossResult(characterId, monsterId, hps[1], characterPosition);
   }
 }

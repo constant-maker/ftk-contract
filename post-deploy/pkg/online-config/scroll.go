@@ -24,7 +24,7 @@ func getListScrollUpdate(dataConfig *common.DataConfig) ([]common.Item, []common
 	var (
 		idIndex, nameIndex, tierIndex, scrollTypeIndex, rangeIndex, durationIndex, numTargetIndex, isBuffIndex, selfCastOnlyIndex, atkPercentIndex,
 		defPercentIndex, agiPercentIndex, msIndex, spIndex, farmingPerkAmpIndex, pveExpAmpIndex, // pvePerkAmpIndex,
-		dmgIndex, isAbsDmgIndex, goldCostIndex, weightIndex, recipeIndex, descIndex, untradableIndex int
+		dmgIndex, isAbsDmgIndex, goldCostIndex, weightIndex, recipeIndex, descIndex, untradableIndex, slowPercentIndex int
 	)
 	for {
 		record, err := reader.Read()
@@ -67,6 +67,7 @@ func getListScrollUpdate(dataConfig *common.DataConfig) ([]common.Item, []common
 			recipeIndex = findIndex(record, "recipe")
 			descIndex = findIndex(record, "desc")
 			untradableIndex = findIndex(record, "untradable")
+			slowPercentIndex = findIndex(record, "slow_percent")
 
 			l.Infow(
 				"list index",
@@ -93,6 +94,8 @@ func getListScrollUpdate(dataConfig *common.DataConfig) ([]common.Item, []common
 				"weightIndex", weightIndex,
 				"recipeIndex", recipeIndex,
 				"descIndex", descIndex,
+				"untradableIndex", untradableIndex,
+				"slowPercentIndex", slowPercentIndex,
 			)
 			continue
 		}
@@ -129,7 +132,7 @@ func getListScrollUpdate(dataConfig *common.DataConfig) ([]common.Item, []common
 		if strings.EqualFold(record[untradableIndex], "true") {
 			untradable = true
 		}
-
+		slowPercent := mustStringToInt(record[slowPercentIndex], slowPercentIndex)
 		perkItemTypes := make([]int, 0)
 		requiredPerkLevels := make([]int, 0)
 
@@ -154,13 +157,14 @@ func getListScrollUpdate(dataConfig *common.DataConfig) ([]common.Item, []common
 		switch scrollType {
 		case 1: // StatsModify
 			item.StatsModify = &common.StatsModify{
-				AtkPercent: atkPercent,
-				DefPercent: defPercent,
-				AgiPercent: agiPercent,
-				Ms:         ms,
-				Sp:         sp,
-				Dmg:        0, // now no data
-				IsAbsDmg:   false,
+				AtkPercent:  atkPercent,
+				DefPercent:  defPercent,
+				AgiPercent:  agiPercent,
+				Ms:          ms,
+				SlowPercent: uint16(slowPercent),
+				Sp:          sp,
+				Dmg:         0, // now no data
+				IsAbsDmg:    false,
 			}
 		case 2: // ExpAmplify
 			item.ExpAmplify = &common.ExpAmplify{

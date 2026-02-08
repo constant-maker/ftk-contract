@@ -23,7 +23,7 @@ contract MarketSystem is System, CharacterAccessControl {
       _updateOrder(characterId, order);
       return;
     }
-    MarketSystemUtils.validateOrder(characterId, order);
+    MarketSystemUtils.validateOrder(order);
     MarketSystemUtils.validateCharacter(characterId, order);
     _lockAsset(characterId, order);
     uint256 orderId = _getNewOrderId();

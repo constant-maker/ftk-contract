@@ -92,7 +92,7 @@ contract QuestSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixtu
     vm.stopPrank();
     console2.log("received quest -1");
     // after state
-    CharPositionData memory characterPosition = CharacterPositionUtils.currentPosition(characterId);
+    CharPositionData memory characterPosition = CharacterPositionUtils.getCurrentPosition(characterId);
     assertEq(characterPosition.x, npc1X);
     assertEq(characterPosition.y, npc1Y);
 
@@ -138,7 +138,7 @@ contract QuestSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixtu
     CharacterPositionUtils.moveToLocation(characterId, npc1X, npc1Y);
     vm.stopPrank();
     // after state
-    CharPositionData memory characterPosition = CharacterPositionUtils.currentPosition(characterId);
+    CharPositionData memory characterPosition = CharacterPositionUtils.getCurrentPosition(characterId);
     assertEq(characterPosition.x, npc1X);
     assertEq(characterPosition.y, npc1Y);
 
@@ -238,7 +238,7 @@ contract QuestSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixtu
     CharacterPositionUtils.moveToLocation(characterId, npc1X, npc1Y);
     vm.stopPrank();
     // after state
-    CharPositionData memory characterPosition = CharacterPositionUtils.currentPosition(characterId);
+    CharPositionData memory characterPosition = CharacterPositionUtils.getCurrentPosition(characterId);
     assertEq(characterPosition.x, npc1X);
     assertEq(characterPosition.y, npc1Y);
 
@@ -283,7 +283,7 @@ contract QuestSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixtu
     CharacterPositionUtils.moveToLocation(characterId, -6, -3);
     vm.stopPrank();
     // after state
-    CharPositionData memory characterPosition = CharacterPositionUtils.currentPosition(characterId);
+    CharPositionData memory characterPosition = CharacterPositionUtils.getCurrentPosition(characterId);
     assertEq(characterPosition.x, -6);
     assertEq(characterPosition.y, -3);
 
@@ -300,7 +300,7 @@ contract QuestSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixtu
     CharacterPositionUtils.moveToLocation(characterId, npc1X, npc1Y);
     vm.stopPrank();
     // after state
-    CharPositionData memory characterPosition = CharacterPositionUtils.currentPosition(characterId);
+    CharPositionData memory characterPosition = CharacterPositionUtils.getCurrentPosition(characterId);
     assertEq(characterPosition.x, npc1X);
     assertEq(characterPosition.y, npc1Y);
 
@@ -316,7 +316,7 @@ contract QuestSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixtu
     CharacterPositionUtils.moveToLocation(characterId, -5, -3);
     vm.stopPrank();
     // after state
-    characterPosition = CharacterPositionUtils.currentPosition(characterId);
+    characterPosition = CharacterPositionUtils.getCurrentPosition(characterId);
     assertEq(characterPosition.x, -5);
 
     // try finish quest - expect revert => position is not same as npc position
@@ -373,7 +373,7 @@ contract QuestSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixtu
     CharAchievementIndex.set(characterId, 6, 11);
     vm.stopPrank();
     // after state
-    CharPositionData memory characterPosition = CharacterPositionUtils.currentPosition(characterId);
+    CharPositionData memory characterPosition = CharacterPositionUtils.getCurrentPosition(characterId);
     assertEq(characterPosition.x, npc1X);
     assertEq(characterPosition.y, npc1Y);
 

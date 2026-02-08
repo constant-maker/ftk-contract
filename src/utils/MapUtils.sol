@@ -9,7 +9,6 @@ library MapUtils {
   }
 
   function isTileMovable(int32 x, int32 y) internal view returns (bool) {
-    bytes32 tileId = getTileId(x, y);
     return !Unmovable.get(x, y);
   }
 

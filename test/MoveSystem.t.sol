@@ -42,14 +42,14 @@ contract MoveSystemTest is WorldFixture, MoveSystemFixture, SpawnSystemFixture, 
   }
 
   function test_CheckMoveState() external {
-    CharPositionData memory position = CharacterPositionUtils.currentPosition(characterId);
+    CharPositionData memory position = CharacterPositionUtils.getCurrentPosition(characterId);
     console2.log("position x", position.x);
     console2.log("position y", position.y);
     vm.startPrank(player);
     world.app__move(characterId, position.x, position.y + 1);
     vm.stopPrank();
 
-    CharPositionData memory newPosition = CharacterPositionUtils.currentPosition(characterId);
+    CharPositionData memory newPosition = CharacterPositionUtils.getCurrentPosition(characterId);
     CharPositionData memory prevPosition = CharPosition.get(characterId);
     CharNextPositionData memory nextPosition = CharNextPosition.get(characterId);
     // character is moving so position is unchanged
@@ -66,7 +66,7 @@ contract MoveSystemTest is WorldFixture, MoveSystemFixture, SpawnSystemFixture, 
     assertTrue(state == CharacterStateType.Moving);
 
     vm.warp(block.timestamp + Config.DEFAULT_MOVEMENT_DURATION);
-    newPosition = CharacterPositionUtils.currentPosition(characterId);
+    newPosition = CharacterPositionUtils.getCurrentPosition(characterId);
     assertEq(newPosition.x, position.x);
     assertEq(newPosition.y, position.y + 1);
     console2.log("newPosition x", newPosition.x);
@@ -86,7 +86,7 @@ contract MoveSystemTest is WorldFixture, MoveSystemFixture, SpawnSystemFixture, 
   }
 
   function test_RevertDoubleMove() external {
-    CharPositionData memory position = CharacterPositionUtils.currentPosition(characterId);
+    CharPositionData memory position = CharacterPositionUtils.getCurrentPosition(characterId);
     console2.log("position x", position.x);
     console2.log("position y", position.y);
     vm.startPrank(player);
@@ -114,7 +114,7 @@ contract MoveSystemTest is WorldFixture, MoveSystemFixture, SpawnSystemFixture, 
     CharacterPositionUtils.moveToLocation(characterId, 20, -32);
     vm.stopPrank();
 
-    CharPositionData memory position = CharacterPositionUtils.currentPosition(characterId);
+    CharPositionData memory position = CharacterPositionUtils.getCurrentPosition(characterId);
     console2.log("position x", position.x);
     console2.log("position y", position.y);
     vm.startPrank(player);
@@ -143,7 +143,7 @@ contract MoveSystemTest is WorldFixture, MoveSystemFixture, SpawnSystemFixture, 
 
     vm.warp(block.timestamp + Config.DEFAULT_MOVEMENT_DURATION);
 
-    CharPositionData memory position = CharacterPositionUtils.currentPosition(characterId);
+    CharPositionData memory position = CharacterPositionUtils.getCurrentPosition(characterId);
     console2.log("position x", position.x);
     console2.log("position y", position.y);
     assertEq(position.x, 20);
@@ -162,7 +162,7 @@ contract MoveSystemTest is WorldFixture, MoveSystemFixture, SpawnSystemFixture, 
 
     vm.warp(block.timestamp + Config.DEFAULT_MOVEMENT_DURATION - 5);
 
-    position = CharacterPositionUtils.currentPosition(characterId);
+    position = CharacterPositionUtils.getCurrentPosition(characterId);
     console2.log("position x", position.x);
     console2.log("position y", position.y);
     assertEq(position.x, 20);
@@ -189,7 +189,7 @@ contract MoveSystemTest is WorldFixture, MoveSystemFixture, SpawnSystemFixture, 
 
     vm.warp(block.timestamp + Config.DEFAULT_MOVEMENT_DURATION - 5 + 3);
 
-    position = CharacterPositionUtils.currentPosition(characterId);
+    position = CharacterPositionUtils.getCurrentPosition(characterId);
     console2.log("position x", position.x);
     console2.log("position y", position.y);
     assertEq(position.x, 20);
@@ -209,7 +209,7 @@ contract MoveSystemTest is WorldFixture, MoveSystemFixture, SpawnSystemFixture, 
 
     vm.warp(block.timestamp + Config.DEFAULT_MOVEMENT_DURATION);
 
-    CharPositionData memory position = CharacterPositionUtils.currentPosition(characterId);
+    CharPositionData memory position = CharacterPositionUtils.getCurrentPosition(characterId);
     console2.log("position x", position.x);
     console2.log("position y", position.y);
     assertEq(position.x, 20);
@@ -245,7 +245,7 @@ contract MoveSystemTest is WorldFixture, MoveSystemFixture, SpawnSystemFixture, 
 
     vm.warp(block.timestamp + Config.DEFAULT_MOVEMENT_DURATION);
 
-    position = CharacterPositionUtils.currentPosition(characterId);
+    position = CharacterPositionUtils.getCurrentPosition(characterId);
     console2.log("position x", position.x);
     console2.log("position y", position.y);
     assertEq(position.x, 20);

@@ -176,7 +176,7 @@ library MarketSystemUtils {
   }
 
   /// @dev validate order params
-  function validateOrder(uint256 characterId, OrderParams memory order) public view {
+  function validateOrder(OrderParams memory order) public view {
     validateOrderPrice(order.unitPrice);
     if (order.amount == 0) {
       revert Errors.MarketSystem_ZeroAmount();

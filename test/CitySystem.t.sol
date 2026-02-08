@@ -287,7 +287,7 @@ contract CitySystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixtur
     world.app__cityTeleport(voterId, cityId, newCityId);
     vm.stopPrank();
     assertEq(CharFund.getGold(voterId), 182);
-    CharPositionData memory position = CharacterPositionUtils.currentPosition(voterId);
+    CharPositionData memory position = CharacterPositionUtils.getCurrentPosition(voterId);
     assertEq(position.x, newCityX);
     assertEq(position.y, newCityY);
     assertEq(CityVault2.getGold(cityId), currentCapitalGold + 15);
@@ -308,7 +308,7 @@ contract CitySystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixtur
     world.app__battlePvP(candidateId, voterId);
     vm.stopPrank();
 
-    position = CharacterPositionUtils.currentPosition(voterId);
+    position = CharacterPositionUtils.getCurrentPosition(voterId);
     assertEq(position.x, newCityX);
     assertEq(position.y, newCityY);
 
@@ -332,7 +332,7 @@ contract CitySystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixtur
     world.app__battlePvP(candidateId, voterId);
     vm.stopPrank();
     city = City.get(cityId);
-    position = CharacterPositionUtils.currentPosition(voterId);
+    position = CharacterPositionUtils.getCurrentPosition(voterId);
     assertEq(position.x, city.x);
     assertEq(position.y, city.y);
   }

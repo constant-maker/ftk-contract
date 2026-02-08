@@ -5,10 +5,8 @@ import { CharacterAccessControl } from "@abstracts/CharacterAccessControl.sol";
 import {
   CharPosition, CharPositionData, CharNextPosition, CharPositionV2, CharPositionV2Data
 } from "@codegen/index.sol";
-import { MoveSystemUtils } from "@utils/MoveSystemUtils.sol";
-import { DailyQuestUtils } from "@utils/DailyQuestUtils.sol";
 import { CharacterStateType } from "@codegen/common.sol";
-import { CharacterPositionUtils } from "@utils/CharacterPositionUtils.sol";
+import { CharacterPositionUtils, MoveSystemUtils, DailyQuestUtils, CharacterBuffUtils } from "@utils/index.sol";
 import { Errors } from "@common/index.sol";
 
 contract MoveSystem is CharacterAccessControl, System {
@@ -24,7 +22,7 @@ contract MoveSystem is CharacterAccessControl, System {
     validateCurrentWeight(characterId)
   {
     // when character in StandBy state, this will return CharNextPosition
-    CharPositionData memory characterPosition = CharacterPositionUtils.currentPosition(characterId);
+    CharPositionData memory characterPosition = CharacterPositionUtils.getCurrentPosition(characterId);
     // validate player possible movement blocks
     if (!MoveSystemUtils.isMoveValid(characterPosition.x, characterPosition.y, destX, destY)) {
       revert Errors.MoveSystem_MovePositionError(characterPosition.x, characterPosition.y, destX, destY);
@@ -35,7 +33,10 @@ contract MoveSystem is CharacterAccessControl, System {
       CharPosition.set(characterId, characterPosition.x, characterPosition.y);
     }
     // update next position
-    uint256 arriveTimestamp = block.timestamp + MoveSystemUtils.getMovementDuration(characterId);
+    uint16 moveDuration = MoveSystemUtils.getMovementDuration(characterId);
+    uint16 slowDebuffPercent = CharacterBuffUtils.getSlowDebuff(characterId);
+    moveDuration = (moveDuration * (100 + slowDebuffPercent)) / 100;
+    uint256 arriveTimestamp = block.timestamp + moveDuration;
     CharNextPosition.set(characterId, destX, destY, arriveTimestamp);
     CharPositionV2Data memory posV2 = CharPositionV2Data({
       x: characterPosition.x,

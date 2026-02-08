@@ -33,7 +33,7 @@ contract FarmingSystem is CharacterAccessControl, System {
     onlyAuthorizedWallet(characterId)
     mustInState(characterId, CharacterStateType.Standby)
   {
-    CharPositionData memory characterPosition = CharacterPositionUtils.currentPosition(characterId);
+    CharPositionData memory characterPosition = CharacterPositionUtils.getCurrentPosition(characterId);
     // ensure the tile has enough farming slot and resource
     FarmingUtils.validateTile(characterPosition, resourceItemId);
     FarmingUtils.checkAndUpdateTileQuota(characterPosition, resourceItemId);

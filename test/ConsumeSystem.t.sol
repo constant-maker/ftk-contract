@@ -10,12 +10,20 @@ import {
   BuffItemInfoV3Data,
   BuffExp,
   BuffExpData,
-  BuffStatV3,
-  BuffStatV3Data,
+  BuffStatV4,
+  BuffStatV4Data,
   BuffDmg,
   BuffDmgData,
   RestrictLocV2,
-  CharPositionData
+  CharPositionData,
+  CharPositionV2,
+  CharPositionV2Data,
+  City,
+  CityData,
+  CharSavePoint,
+  TileInfo3,
+  CharFund,
+  CharFundData
 } from "@codegen/index.sol";
 import { BuffType } from "@codegen/common.sol";
 import { WorldFixture, SpawnSystemFixture } from "@fixtures/index.sol";
@@ -24,6 +32,7 @@ import { InventoryItemUtils } from "@utils/InventoryItemUtils.sol";
 import { CharacterPositionUtils } from "@utils/CharacterPositionUtils.sol";
 import { console2 } from "forge-std/console2.sol";
 import { TargetItemData } from "@systems/app/ConsumeSystem.sol";
+import { Config } from "@common/index.sol";
 
 contract ConsumeSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture {
   address player = makeAddr("player");
@@ -152,7 +161,7 @@ contract ConsumeSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFix
     BuffExpData memory buffExpData = BuffExp.get(358);
     assertEq(buffExpData.farmingPerkAmp, 120);
 
-    BuffStatV3Data memory buffStatData = BuffStatV3.get(356); // stat buff
+    BuffStatV4Data memory buffStatData = BuffStatV4.get(356); // stat buff
     assertEq(buffStatData.atkPercent, 50);
     assertEq(buffStatData.defPercent, -100);
     assertEq(buffStatData.agiPercent, 0);
@@ -161,7 +170,7 @@ contract ConsumeSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFix
   }
 
   function test_ActiveSkillItem() external {
-    CharPositionData memory charPosition = CharacterPositionUtils.currentPosition(characterId);
+    CharPositionData memory charPosition = CharacterPositionUtils.getCurrentPosition(characterId);
     console2.log("char position x", charPosition.x);
     console2.log("char position y", charPosition.y);
     vm.startPrank(worldDeployer);
@@ -215,5 +224,85 @@ contract ConsumeSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFix
 
     assertEq(CharOtherItem.getAmount(characterId, 360), 0);
     assertEq(CharCurrentStats.getHp(characterId2), 1); // abs dmg - min hp is 1
+  }
+
+  function test_UseTeleport() external {
+    CharPositionData memory charPosition = CharacterPositionUtils.getCurrentPosition(characterId);
+    console2.log("char position x", charPosition.x);
+    console2.log("char position y", charPosition.y);
+    vm.startPrank(worldDeployer);
+    InventoryItemUtils.addItem(characterId, 442, 3); // teleport item
+    CharacterPositionUtils.moveToLocation(characterId2, charPosition.x, charPosition.y + 5);
+    vm.stopPrank();
+
+    vm.startPrank(player);
+    TargetItemData memory targetData;
+    world.app__consumeItem(characterId, 442, 1, targetData);
+    vm.stopPrank();
+
+    CityData memory capital = City.get(1); // teleport to capital
+
+    CharPositionV2Data memory newPos = CharPositionV2.get(characterId);
+    assertEq(newPos.x, charPosition.x);
+    assertEq(newPos.y, charPosition.y);
+    assertEq(newPos.nextX, capital.x);
+    assertEq(newPos.nextY, capital.y);
+    assertEq(newPos.arriveTimestamp, block.timestamp + Config.TELEPORT_DURATION);
+
+    vm.warp(block.timestamp + Config.TELEPORT_DURATION + 1);
+
+    vm.startPrank(worldDeployer);
+    CharacterPositionUtils.moveToLocation(characterId, 20, 20);
+    City.set(5, 10, 10, false, 1, 1, "123");
+    CharSavePoint.set(characterId, 5, 10, 10);
+    vm.stopPrank();
+
+    vm.startPrank(player);
+    world.app__consumeItem(characterId, 442, 1, targetData);
+    vm.stopPrank();
+
+    newPos = CharPositionV2.get(characterId);
+    assertEq(newPos.x, 20);
+    assertEq(newPos.y, 20);
+    assertEq(newPos.nextX, capital.x); // saved point is invalid (the tile should be belong to the kingdom), teleport to
+      // capital
+    assertEq(newPos.nextY, capital.y);
+    assertEq(newPos.arriveTimestamp, block.timestamp + Config.TELEPORT_DURATION);
+
+    vm.warp(block.timestamp + Config.TELEPORT_DURATION + 1);
+
+    vm.startPrank(worldDeployer);
+    TileInfo3.setKingdomId(10, 10, 1); // make the saved point valid
+    CharacterPositionUtils.moveToLocation(characterId, 20, 20);
+    vm.stopPrank();
+
+    vm.startPrank(player);
+    world.app__consumeItem(characterId, 442, 1, targetData);
+    vm.stopPrank();
+
+    newPos = CharPositionV2.get(characterId);
+    assertEq(newPos.x, 20);
+    assertEq(newPos.y, 20);
+    assertEq(newPos.nextX, 10); // saved point is valid, teleport to saved point
+    assertEq(newPos.nextY, 10);
+    assertEq(newPos.arriveTimestamp, block.timestamp + Config.TELEPORT_DURATION);
+  }
+
+  function test_ConsumeGoldToken() external {
+    CharPositionData memory charPosition = CharacterPositionUtils.getCurrentPosition(characterId);
+    console2.log("char position x", charPosition.x);
+    console2.log("char position y", charPosition.y);
+    vm.startPrank(worldDeployer);
+    InventoryItemUtils.addItem(characterId, 435, 2); // gold token
+    CharacterPositionUtils.moveToLocation(characterId2, charPosition.x, charPosition.y + 5);
+    vm.stopPrank();
+
+    vm.startPrank(player);
+    TargetItemData memory targetData;
+    world.app__consumeItem(characterId, 435, 2, targetData);
+    vm.stopPrank();
+
+    CharFundData memory charFund = CharFund.get(characterId);
+    assertEq(charFund.gold, 10_000); // each gold token gives 5,000 gold
   }
 }

@@ -6544,6 +6544,7 @@
         "defPercent": 0,
         "agiPercent": 0,
         "ms": 0,
+        "slowPercent": 0,
         "sp": 0,
         "dmg": 0,
         "isAbsDmg": false
@@ -6571,6 +6572,7 @@
         "defPercent": 5,
         "agiPercent": 0,
         "ms": 0,
+        "slowPercent": 0,
         "sp": 0,
         "dmg": 0,
         "isAbsDmg": false
@@ -6598,6 +6600,7 @@
         "defPercent": 0,
         "agiPercent": 5,
         "ms": 0,
+        "slowPercent": 0,
         "sp": 0,
         "dmg": 0,
         "isAbsDmg": false
@@ -6625,6 +6628,7 @@
         "defPercent": 0,
         "agiPercent": 0,
         "ms": 1,
+        "slowPercent": 0,
         "sp": 0,
         "dmg": 0,
         "isAbsDmg": false
@@ -6652,6 +6656,7 @@
         "defPercent": 0,
         "agiPercent": 0,
         "ms": 0,
+        "slowPercent": 0,
         "sp": 0,
         "dmg": 0,
         "isAbsDmg": false
@@ -6679,6 +6684,7 @@
         "defPercent": 10,
         "agiPercent": 0,
         "ms": 0,
+        "slowPercent": 0,
         "sp": 0,
         "dmg": 0,
         "isAbsDmg": false
@@ -6706,6 +6712,7 @@
         "defPercent": 0,
         "agiPercent": 10,
         "ms": 0,
+        "slowPercent": 0,
         "sp": 0,
         "dmg": 0,
         "isAbsDmg": false
@@ -6733,6 +6740,7 @@
         "defPercent": 0,
         "agiPercent": 0,
         "ms": 0,
+        "slowPercent": 0,
         "sp": 0,
         "dmg": 0,
         "isAbsDmg": false
@@ -6760,6 +6768,7 @@
         "defPercent": 0,
         "agiPercent": 0,
         "ms": 0,
+        "slowPercent": 0,
         "sp": 0,
         "dmg": 0,
         "isAbsDmg": false
@@ -6787,6 +6796,7 @@
         "defPercent": -5,
         "agiPercent": 0,
         "ms": 0,
+        "slowPercent": 0,
         "sp": 0,
         "dmg": 0,
         "isAbsDmg": false
@@ -6814,6 +6824,7 @@
         "defPercent": -10,
         "agiPercent": 0,
         "ms": 0,
+        "slowPercent": 0,
         "sp": 0,
         "dmg": 0,
         "isAbsDmg": false
@@ -6841,6 +6852,7 @@
         "defPercent": 0,
         "agiPercent": -5,
         "ms": 0,
+        "slowPercent": 0,
         "sp": 0,
         "dmg": 0,
         "isAbsDmg": false
@@ -6868,6 +6880,7 @@
         "defPercent": 0,
         "agiPercent": -10,
         "ms": 0,
+        "slowPercent": 0,
         "sp": 0,
         "dmg": 0,
         "isAbsDmg": false
@@ -6895,6 +6908,7 @@
         "defPercent": 0,
         "agiPercent": 0,
         "ms": -1,
+        "slowPercent": 0,
         "sp": 0,
         "dmg": 0,
         "isAbsDmg": false
@@ -6922,6 +6936,7 @@
         "defPercent": 0,
         "agiPercent": 0,
         "ms": -2,
+        "slowPercent": 0,
         "sp": 0,
         "dmg": 0,
         "isAbsDmg": false
@@ -6949,6 +6964,7 @@
         "defPercent": 0,
         "agiPercent": 0,
         "ms": -10,
+        "slowPercent": 0,
         "sp": 0,
         "dmg": 0,
         "isAbsDmg": false
@@ -6976,6 +6992,7 @@
         "defPercent": -40,
         "agiPercent": 0,
         "ms": 0,
+        "slowPercent": 0,
         "sp": 0,
         "dmg": 0,
         "isAbsDmg": false
@@ -7805,6 +7822,7 @@
         "defPercent": 0,
         "agiPercent": 0,
         "ms": -10,
+        "slowPercent": 0,
         "sp": 0,
         "dmg": 0,
         "isAbsDmg": false
@@ -7832,6 +7850,7 @@
         "defPercent": 0,
         "agiPercent": 0,
         "ms": 0,
+        "slowPercent": 1000,
         "sp": 0,
         "dmg": 0,
         "isAbsDmg": false

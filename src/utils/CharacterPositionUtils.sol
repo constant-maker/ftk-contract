@@ -21,7 +21,7 @@ library CharacterPositionUtils {
   /// @dev character must be in a capital
   function mustInCapital(uint256 characterId, uint256 capitalId) internal view {
     if (!isInCapital(characterId, capitalId)) {
-      CharPositionData memory characterPosition = currentPosition(characterId);
+      CharPositionData memory characterPosition = getCurrentPosition(characterId);
       revert Errors.MustInACapital(capitalId, characterPosition.x, characterPosition.y);
     }
   }
@@ -35,7 +35,7 @@ library CharacterPositionUtils {
     if (!city.isCapital) {
       return false;
     }
-    CharPositionData memory characterPosition = currentPosition(characterId);
+    CharPositionData memory characterPosition = getCurrentPosition(characterId);
     if (city.x == characterPosition.x && city.y == characterPosition.y) {
       return true;
     }
@@ -45,7 +45,7 @@ library CharacterPositionUtils {
   /// @dev character must be in a city
   function mustInCity(uint256 characterId, uint256 cityId) internal view {
     if (!isInCity(characterId, cityId)) {
-      CharPositionData memory characterPosition = currentPosition(characterId);
+      CharPositionData memory characterPosition = getCurrentPosition(characterId);
       revert Errors.MustInACity(cityId, characterPosition.x, characterPosition.y);
     }
   }
@@ -56,7 +56,7 @@ library CharacterPositionUtils {
     if (city.kingdomId == 0) {
       revert Errors.InvalidCityId(cityId);
     }
-    CharPositionData memory characterPosition = currentPosition(characterId);
+    CharPositionData memory characterPosition = getCurrentPosition(characterId);
     if (city.x == characterPosition.x && city.y == characterPosition.y) {
       return true;
     }
@@ -67,33 +67,75 @@ library CharacterPositionUtils {
   function moveToCapital(uint256 characterId) internal {
     uint8 kingdomId = CharInfo.getKingdomId(characterId);
     uint256 capitalId = Kingdom.getCapitalId(kingdomId);
-    // check if character have save point => move back to that point
-    CharPositionData memory currentPosition = currentPosition(characterId);
-    CharSavePointData memory charSavePoint = CharSavePoint.get(characterId);
-    if (charSavePoint.cityId != 0 && charSavePoint.cityId != capitalId) {
-      uint8 tileKingdomId = TileInfo3.getKingdomId(charSavePoint.x, charSavePoint.y);
-      if (tileKingdomId == kingdomId && (charSavePoint.x != currentPosition.x || charSavePoint.y != currentPosition.y))
-      {
-        moveToLocation(characterId, charSavePoint.x, charSavePoint.y);
-        return;
-      }
-    }
-    // fallback back to capital
     CityData memory city = City.get(capitalId);
     moveToLocation(characterId, city.x, city.y);
   }
 
+  /// @dev move character to their original capital
+  function moveToCapitalWithArriveTime(uint256 characterId, uint256 arriveTimestamp) internal {
+    uint8 kingdomId = CharInfo.getKingdomId(characterId);
+    uint256 capitalId = Kingdom.getCapitalId(kingdomId);
+    CityData memory city = City.get(capitalId);
+    moveToLocationWithArriveTime(characterId, city.x, city.y, arriveTimestamp);
+  }
+
+  /// @dev move character to saved point (or capital if saved point is invalid)
+  function moveToSavedPoint(uint256 characterId) internal {
+    moveToSavedPointWithArriveTime(characterId, block.timestamp);
+  }
+
+  /// @dev move character to saved point (or capital if saved point is invalid) with arrive time
+  function moveToSavedPointWithArriveTime(uint256 characterId, uint256 arriveTimestamp) internal {
+    uint256 savedCityId = CharSavePoint.getCityId(characterId);
+    bool shouldMoveToCapital = false;
+    CityData memory savedCity;
+    if (savedCityId == 0) {
+      shouldMoveToCapital = true;
+    } else {
+      savedCity = City.get(savedCityId);
+      uint8 kingdomId = CharInfo.getKingdomId(characterId);
+      uint8 tileKingdomId = TileInfo3.getKingdomId(savedCity.x, savedCity.y);
+      if (tileKingdomId != kingdomId) {
+        // saved city was conquered and no longer belongs to character's kingdom
+        shouldMoveToCapital = true;
+      }
+    }
+    if (shouldMoveToCapital) {
+      moveToCapitalWithArriveTime(characterId, arriveTimestamp);
+      return;
+    }
+    // move to saved point
+    CharPositionData memory currentPosition = getCurrentPosition(characterId);
+    if (savedCity.x != currentPosition.x || savedCity.y != currentPosition.y) {
+      // only move if not already in saved point
+      moveToLocationWithArriveTime(characterId, savedCity.x, savedCity.y, arriveTimestamp);
+    }
+  }
+
   /// @dev move character to a specific location
   function moveToLocation(uint256 characterId, int32 x, int32 y) internal {
-    CharPosition.set(characterId, x, y);
-    CharNextPosition.set(characterId, x, y, block.timestamp);
+    moveToLocationWithArriveTime(characterId, x, y, block.timestamp);
+  }
+
+  /// @dev move character to a specific location with a given arrive time
+  function moveToLocationWithArriveTime(uint256 characterId, int32 x, int32 y, uint256 arriveTimestamp) internal {
+    CharPositionData memory currentPosition = getCurrentPosition(characterId);
+    int32 currentX = currentPosition.x;
+    int32 currentY = currentPosition.y;
+    if (arriveTimestamp == block.timestamp) {
+      // instant move to location
+      currentX = x;
+      currentY = y;
+    }
+    CharPosition.set(characterId, currentX, currentY);
+    CharNextPosition.set(characterId, x, y, arriveTimestamp);
     CharPositionV2Data memory posV2 =
-      CharPositionV2Data({ x: x, y: y, nextX: x, nextY: y, arriveTimestamp: block.timestamp });
+      CharPositionV2Data({ x: currentX, y: currentY, nextX: x, nextY: y, arriveTimestamp: arriveTimestamp });
     CharPositionV2.set(characterId, posV2);
   }
 
   /// @dev get current character position
-  function currentPosition(uint256 characterId) internal view returns (CharPositionData memory cpd) {
+  function getCurrentPosition(uint256 characterId) internal view returns (CharPositionData memory cpd) {
     CharNextPositionData memory cnpd = CharNextPosition.get(characterId);
     if (block.timestamp >= cnpd.arriveTimestamp) {
       return CharPositionData({ x: cnpd.x, y: cnpd.y });

@@ -61,25 +61,25 @@ library KingdomUtils {
   }
 
   // getZoneType return zone type
-  function getZoneType(
-    int32 x,
-    int32 y,
-    uint256 attackerId,
-    uint256 defenderId
-  )
-    public
-    view
-    returns (ZoneType zoneType)
-  {
-    uint8 attackerKingdomId = CharInfo.getKingdomId(attackerId);
-    uint8 defenderKingdomId = CharInfo.getKingdomId(defenderId);
-    uint8 tileKingdomId = TileInfo3.getKingdomId(x, y);
-    ZoneType zoneType = TileInfo3.getZoneType(x, y); // for defender
-    if (zoneType == ZoneType.Black && defenderKingdomId == tileKingdomId) {
-      zoneType = ZoneType.Red;
-    } else if (zoneType != ZoneType.Black) {
-      zoneType = (defenderKingdomId == tileKingdomId) ? ZoneType.Green : ZoneType.Red;
-    }
-    return zoneType;
-  }
+  // function getZoneType(
+  //   int32 x,
+  //   int32 y,
+  //   uint256 attackerId,
+  //   uint256 defenderId
+  // )
+  //   public
+  //   view
+  //   returns (ZoneType zoneType)
+  // {
+  //   uint8 attackerKingdomId = CharInfo.getKingdomId(attackerId);
+  //   uint8 defenderKingdomId = CharInfo.getKingdomId(defenderId);
+  //   uint8 tileKingdomId = TileInfo3.getKingdomId(x, y);
+  //   ZoneType zoneType = TileInfo3.getZoneType(x, y); // for defender
+  //   if (zoneType == ZoneType.Black && defenderKingdomId == tileKingdomId) {
+  //     zoneType = ZoneType.Red;
+  //   } else if (zoneType != ZoneType.Black) {
+  //     zoneType = (defenderKingdomId == tileKingdomId) ? ZoneType.Green : ZoneType.Red;
+  //   }
+  //   return zoneType;
+  // }
 }

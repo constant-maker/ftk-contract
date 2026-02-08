@@ -1,7 +1,7 @@
 pragma solidity >=0.8.24;
 
 import { CharInventory, InventoryToolIndex } from "@codegen/index.sol";
-import { CharacterWeightUtils } from "@utils/CharacterWeightUtils.sol";
+import { CharacterWeightUtils } from "./CharacterWeightUtils.sol";
 import { Errors } from "@common/Errors.sol";
 
 library InventoryToolUtils {

@@ -37,7 +37,7 @@ library CharacterUtils {
   }
 
   /// @dev Check character authorized
-  function checkCharacterAuthorized(uint256 characterId, address wallet) internal {
+  function checkCharacterAuthorized(uint256 characterId, address wallet) internal view {
     address sessionWallet = ActiveChar.getSessionWallet(characterId);
     if (sessionWallet == wallet) return;
     checkCharacterOwner(characterId, wallet);

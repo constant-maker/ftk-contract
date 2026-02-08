@@ -20,6 +20,7 @@ import ROLE_TABLES from "./tables/roleTables";
 import STATUS_TABLES from "./tables/statusTables";
 import GUILD_TABLES from "./tables/guildTables";
 import GACHA_TABLES from "./tables/gachaTables";
+import SALE_TABLES from "./tables/saleTables";
 
 export default defineWorld({
   deploy: {
@@ -36,7 +37,7 @@ export default defineWorld({
       "LeatherArmor", "LeatherHeadgear", "LeatherFootwear",
       "PlateArmor", "PlateHeadgear", "PlateFootwear",
       "Mount", "Resource", "SkillItem", "HealingItem", "StatModifierItem",
-      "Card", "BuffItem", "Pet", "GachaTicket", "Skin", "Teleport"
+      "Card", "BuffItem", "Pet", "GachaTicket", "Skin", "Teleport", "Ring", "Bundle"
     ],
     ItemCategoryType: ["Tool", "Equipment", "Other"],
     CharacterType: ["Male", "Female"],
@@ -90,6 +91,7 @@ export default defineWorld({
     ...STATUS_TABLES,
     ...GUILD_TABLES,
     ...GACHA_TABLES,
+    ...SALE_TABLES,
   },
   excludeSystems: ["SpawnSystem", "GachaSystem"], // registered as root systems
 });

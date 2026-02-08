@@ -21,7 +21,7 @@ import {
   CharCStats2
 } from "@codegen/index.sol";
 import { SlotType, ItemType } from "@codegen/common.sol";
-import { EquipData } from "@systems/app/EquipmentSystem.sol";
+import { EquipData } from "@utils/CharacterEquipmentUtils.sol";
 
 contract EquipmentSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture {
   address player = makeAddr("player");

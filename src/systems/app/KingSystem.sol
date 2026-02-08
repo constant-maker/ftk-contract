@@ -138,7 +138,7 @@ contract KingSystem is CharacterAccessControl, System {
   function setMarketFee(
     uint256 characterId,
     uint8[] calldata kingdomIds,
-    uint8[] calldata fee
+    uint8[] calldata fees
   )
     public
     onlyAuthorizedWallet(characterId)
@@ -147,7 +147,7 @@ contract KingSystem is CharacterAccessControl, System {
     CharacterRoleUtils.mustBeKing(charKingdomId, characterId);
     for (uint256 i = 0; i < kingdomIds.length; i++) {
       uint8 kingdomId = kingdomIds[i];
-      uint8 fee = fee[i];
+      uint8 fee = fees[i];
       KingSystemUtils.validateKingdomId(kingdomId);
       if (fee > 100) {
         revert Errors.KingSystem_InvalidMarketFee(fee);

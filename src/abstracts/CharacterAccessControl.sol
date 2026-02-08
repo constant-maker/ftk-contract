@@ -5,8 +5,6 @@ import { CharacterUtils } from "@utils/CharacterUtils.sol";
 import { CharacterStateUtils } from "@utils/CharacterStateUtils.sol";
 import { CharacterStateType } from "@codegen/common.sol";
 import { CharacterStatsUtils } from "@utils/CharacterStatsUtils.sol";
-import { CharState, CharFarmingState, CharFarmingStateData } from "@codegen/index.sol";
-import { Errors } from "@common/index.sol";
 
 abstract contract CharacterAccessControl {
   /// @dev only character owner access control

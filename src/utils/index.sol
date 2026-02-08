@@ -38,3 +38,7 @@ import { CharacterRoleUtils } from "./CharacterRoleUtils.sol";
 import { KingSystemUtils } from "./KingSystemUtils.sol";
 import { GuildUtils } from "./GuildUtils.sol";
 import { GachaUtils } from "./GachaUtils.sol";
+import { BattlePvEUtils3 } from "./BattlePvEUtils3.sol";
+import { PvPUtils } from "./PvPUtils.sol";
+import { ConsumeUtils } from "./ConsumeUtils.sol";
+import { CharacterBuffUtils } from "./CharacterBuffUtils.sol";
