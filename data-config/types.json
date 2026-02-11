@@ -72,9 +72,9 @@
     "Armor": 2,
     "Headgear": 3,
     "Footwear": 4,
-    "Aura": 5,
+    "Cloak": 5,
     "Wings": 6,
-    "Cloak": 7
+    "Aura": 7
   },
   "questTypes": {
     "Contribute": 0,
