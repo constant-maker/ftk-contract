@@ -14,7 +14,8 @@ import {
   CharInventory,
   Equipment,
   EquipmentPet,
-  CharGachaReq
+  CharGachaReq,
+  CharFund
 } from "@codegen/index.sol";
 import { WorldFixture } from "@fixtures/WorldFixture.sol";
 import { SpawnSystemFixture } from "@fixtures/SpawnSystemFixture.sol";
@@ -89,7 +90,7 @@ contract GachaTest is Test, WorldFixture, SpawnSystemFixture, WelcomeSystemFixtu
     GachaPetData memory gachaData = GachaPetData({
       startTime: block.timestamp,
       endTime: block.timestamp + 30 days,
-      ticketValue: 0.001 ether,
+      ticketValue: 1000,
       ticketItemId: 1,
       petIds: new uint256[](0)
     });
@@ -105,6 +106,8 @@ contract GachaTest is Test, WorldFixture, SpawnSystemFixture, WelcomeSystemFixtu
       GachaUtils.addItem(gachaId, itemId);
     }
 
+    CharFund.setCrystal(characterId, 1001);
+
     vm.stopPrank();
 
     // ── simulate VRF request (normally called by gacha system)
@@ -112,20 +115,18 @@ contract GachaTest is Test, WorldFixture, SpawnSystemFixture, WelcomeSystemFixtu
     ResourceId gachaSystemResourceId = SystemUtils.getRootSystemId("GachaSystem");
     bytes memory data = abi.encodeCall(GachaSystem.requestPetGacha, (characterId, gachaId));
 
-    vm.deal(player, 1 ether);
+    // vm.deal(player, 1 ether);
 
     vm.startPrank(player);
-    world.call{ value: 0.001 ether }(gachaSystemResourceId, data);
+    world.call(gachaSystemResourceId, data);
     vm.stopPrank();
 
     assertTrue(CharGachaReq.get(characterId) == 1);
 
     uint256 requestId = 1; // first request
 
-    uint256 worldBalance = Balances.getBalance(WorldResourceIdLib.encodeNamespace(""));
-    assertEq(worldBalance, 0.0011 ether); // including spawn fee
-    // assert player balance decreased
-    assertEq(player.balance, 1 ether - 0.001 ether);
+    // assert player crystal balance decreased
+    assertEq(CharFund.getCrystal(characterId), 1);
 
     // ── fulfill randomness
     CharGachaV2Data memory charGacha = CharGachaV2.get(characterId, requestId);
