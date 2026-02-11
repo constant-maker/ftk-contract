@@ -12,7 +12,7 @@ contract PortalSystem is CharacterAccessControl, System {
   uint256 constant MIN_CRYSTALS_PER_PURCHASE = 100; // Minimum crystals per purchase
   uint256 constant SELL_CRYSTAL_FEE_PERCENTAGE = 5; // 5% fee when selling crystals
 
-  function buyCrystal(uint256 characterId, uint32 amount) public payable onlyCharacterOwner(characterId) {
+  function buyCrystal(uint256 characterId, uint32 amount) public payable onlyAuthorizedWallet(characterId) {
     uint256 value = _msgValue();
     if (amount < MIN_CRYSTALS_PER_PURCHASE) {
       revert Errors.PortalSystem_CrystalAmountTooSmall(amount, MIN_CRYSTALS_PER_PURCHASE);
@@ -24,7 +24,7 @@ contract PortalSystem is CharacterAccessControl, System {
     CharacterFundUtils.increaseCrystal(characterId, amount);
   }
 
-  function sellCrystal(uint256 characterId, uint32 amount) public onlyCharacterOwner(characterId) {
+  function sellCrystal(uint256 characterId, uint32 amount) public onlyAuthorizedWallet(characterId) {
     uint32 currentCrystals = CharFund.getCrystal(characterId);
     if (currentCrystals < amount) {
       revert Errors.PortalSystem_InsufficientCrystal(currentCrystals, amount);
