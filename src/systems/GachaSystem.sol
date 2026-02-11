@@ -12,10 +12,11 @@ import {
   GachaReqChar,
   EquipmentPet,
   CharInventory,
-  CharGachaReq
+  CharGachaReq,
+  CharOtherItem
 } from "@codegen/index.sol";
 import { Errors } from "@common/index.sol";
-import { GachaUtils, CharacterItemUtils, InventoryItemUtils } from "@utils/index.sol";
+import { GachaUtils, CharacterItemUtils, InventoryItemUtils, CharacterFundUtils } from "@utils/index.sol";
 
 // Interface for requesting random numbers
 interface IVRFCoordinator {
@@ -64,7 +65,7 @@ contract GachaSystem is System, CharacterAccessControl, IVRFConsumer {
     _storeCharGachaData(characterId, charGacha.gachaId, requestId, charGacha.isLimitedGacha);
   }
 
-  function requestGacha(uint256 characterId, uint256 gachaId) public payable onlyAuthorizedWallet(characterId) {
+  function requestGacha(uint256 characterId, uint256 gachaId) public onlyAuthorizedWallet(characterId) {
     _checkPendingRequest(characterId);
 
     // Validate gacha
@@ -77,7 +78,7 @@ contract GachaSystem is System, CharacterAccessControl, IVRFConsumer {
       revert Errors.Gacha_InactiveGacha(gachaId);
     }
 
-    // Either pay with ETH or item
+    // Either pay with crystal or ticket item
     _checkAndSpendTicket(characterId, gacha.ticketValue, gacha.ticketItemId);
 
     // Request one random number from the VRF Coordinator
@@ -89,7 +90,7 @@ contract GachaSystem is System, CharacterAccessControl, IVRFConsumer {
     _storeCharGachaData(characterId, gachaId, requestId, false);
   }
 
-  function requestPetGacha(uint256 characterId, uint256 gachaId) public payable onlyAuthorizedWallet(characterId) {
+  function requestPetGacha(uint256 characterId, uint256 gachaId) public onlyAuthorizedWallet(characterId) {
     _checkPendingRequest(characterId);
 
     // Validate gacha
@@ -192,21 +193,14 @@ contract GachaSystem is System, CharacterAccessControl, IVRFConsumer {
   }
 
   function _checkAndSpendTicket(uint256 characterId, uint256 ticketValue, uint256 ticketItemId) private {
-    uint256 msgValue = _msgValue();
-    if (msgValue > 0) {
-      if (msgValue != ticketValue) {
-        revert Errors.GachaSystem_InsufficientGachaFee(msgValue, ticketValue, ticketItemId);
-      }
-      return;
-    }
-
-    if (ticketItemId != 0) {
+    if (CharOtherItem.getAmount(characterId, ticketItemId) > 0) {
+      // Has ticket item, use it
       InventoryItemUtils.removeItem(characterId, ticketItemId, 1);
       return;
     }
 
-    // no payment provided
-    revert Errors.GachaSystem_InsufficientGachaFee(msgValue, ticketValue, ticketItemId);
+    // No ticket item, try to pay with crystal
+    CharacterFundUtils.decreaseCrystal(characterId, uint32(ticketValue));
   }
 
   function _storeCharGachaData(uint256 characterId, uint256 gachaId, uint256 requestId, bool isLimitedGacha) private {
