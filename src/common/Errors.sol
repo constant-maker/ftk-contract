@@ -391,6 +391,7 @@ library Errors {
   error GachaSystem_InsufficientGachaFee(uint256 msgValue, uint256 requireValue, uint256 requireItemId);
   error GachaSystem_ExistingPendingRequest(uint256 characterId);
   error GachaSystem_NoPendingRequest(uint256 characterId);
+  error GachaSystem_InsufficientPayment(uint256 characterId);
 
   /* -------------------------------------------------------------------------- */
   /*                               CollectionSystem                             */

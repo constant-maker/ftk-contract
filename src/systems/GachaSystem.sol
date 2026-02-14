@@ -200,7 +200,13 @@ contract GachaSystem is System, CharacterAccessControl, IVRFConsumer {
     }
 
     // No ticket item, try to pay with crystal
-    CharacterFundUtils.decreaseCrystal(characterId, uint32(ticketValue));
+    if (ticketValue > 0) {
+      CharacterFundUtils.decreaseCrystal(characterId, uint32(ticketValue));
+      return;
+    }
+
+    // Either ticket item or crystal is required, but user has neither
+    revert Errors.GachaSystem_InsufficientPayment(characterId);
   }
 
   function _storeCharGachaData(uint256 characterId, uint256 gachaId, uint256 requestId, bool isLimitedGacha) private {
