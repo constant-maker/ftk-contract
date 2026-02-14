@@ -12,6 +12,7 @@ import {
 } from "@utils/index.sol";
 import { OrderParams, TakeOrderParams, MarketSystemUtils } from "@utils/MarketSystemUtils.sol";
 import { Config } from "@common/index.sol";
+import { CurrencyType } from "@codegen/common.sol";
 import {
   City,
   OrderData,
@@ -51,8 +52,16 @@ contract MarketSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixt
 
   function test_SellAndTakeEquipmentOrder() public {
     // sell equipment
-    OrderParams memory orderParams =
-      OrderParams({ orderId: 0, cityId: city1, equipmentId: 1, itemId: 0, amount: 0, unitPrice: 100, isBuy: false });
+    OrderParams memory orderParams = OrderParams({
+      orderId: 0,
+      cityId: city1,
+      equipmentId: 1,
+      itemId: 0,
+      amount: 0,
+      unitPrice: 100,
+      currencyType: CurrencyType.Gold,
+      isBuy: false
+    });
     vm.expectRevert(); // fame too low
     vm.startPrank(player1);
     world.app__placeOrder(characterId1, orderParams);
@@ -164,8 +173,16 @@ contract MarketSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixt
 
   function test_SellOtherItemOrder() public {
     // sell equipment
-    OrderParams memory orderParams =
-      OrderParams({ orderId: 0, cityId: city1, equipmentId: 0, itemId: 33, amount: 100, unitPrice: 1, isBuy: false });
+    OrderParams memory orderParams = OrderParams({
+      orderId: 0,
+      cityId: city1,
+      equipmentId: 0,
+      itemId: 33,
+      amount: 100,
+      unitPrice: 1,
+      currencyType: CurrencyType.Gold,
+      isBuy: false
+    });
 
     vm.startPrank(worldDeployer);
 
@@ -325,8 +342,16 @@ contract MarketSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixt
     MarketFee.setFee(2, 1, 100);
     vm.stopPrank();
     _moveAllToCity(city2);
-    orderParams =
-      OrderParams({ orderId: 0, cityId: city2, equipmentId: 0, itemId: 2, amount: 10, unitPrice: 2, isBuy: false });
+    orderParams = OrderParams({
+      orderId: 0,
+      cityId: city2,
+      equipmentId: 0,
+      itemId: 2,
+      amount: 10,
+      unitPrice: 2,
+      currencyType: CurrencyType.Gold,
+      isBuy: false
+    });
     vm.startPrank(player1);
     world.app__placeOrder(characterId1, orderParams);
     vm.stopPrank();
@@ -344,8 +369,16 @@ contract MarketSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixt
 
   function test_BuyOtherItemOrder() public {
     // buy other item
-    OrderParams memory orderParams =
-      OrderParams({ orderId: 0, cityId: city1, equipmentId: 0, itemId: 1, amount: 100, unitPrice: 100, isBuy: true });
+    OrderParams memory orderParams = OrderParams({
+      orderId: 0,
+      cityId: city1,
+      equipmentId: 0,
+      itemId: 1,
+      amount: 100,
+      unitPrice: 100,
+      currencyType: CurrencyType.Gold,
+      isBuy: true
+    });
 
     vm.startPrank(worldDeployer);
 
@@ -492,8 +525,16 @@ contract MarketSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixt
     uint32 prevChar2Fund = CharFund.getGold(characterId2);
 
     // buy equipment
-    OrderParams memory orderParams =
-      OrderParams({ orderId: 0, cityId: city1, equipmentId: 0, itemId: 33, amount: 2, unitPrice: 100, isBuy: true });
+    OrderParams memory orderParams = OrderParams({
+      orderId: 0,
+      cityId: city1,
+      equipmentId: 0,
+      itemId: 33,
+      amount: 2,
+      unitPrice: 100,
+      currencyType: CurrencyType.Gold,
+      isBuy: true
+    });
     vm.startPrank(player1);
     world.app__placeOrder(characterId1, orderParams);
     vm.stopPrank();
@@ -549,8 +590,16 @@ contract MarketSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixt
     vm.stopPrank();
 
     // buy equipment
-    OrderParams memory orderParams =
-      OrderParams({ orderId: 0, cityId: city1, equipmentId: 0, itemId: 33, amount: 2, unitPrice: 100, isBuy: true });
+    OrderParams memory orderParams = OrderParams({
+      orderId: 0,
+      cityId: city1,
+      equipmentId: 0,
+      itemId: 33,
+      amount: 2,
+      unitPrice: 100,
+      currencyType: CurrencyType.Gold,
+      isBuy: true
+    });
     vm.expectRevert(); // fame too low
     vm.startPrank(player1);
     world.app__placeOrder(characterId1, orderParams);

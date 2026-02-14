@@ -9,9 +9,11 @@ import {
   CharacterPositionUtils,
   MarketWeightUtils
 } from "@utils/index.sol";
-import { OrderCounter, Order, OrderData, Equipment, CharMarketWeight, CharOtherItem, Order2 } from "@codegen/index.sol";
+import {
+  OrderCounter, Order, OrderData, Equipment, CharMarketWeight, CharOtherItem, Order2V2
+} from "@codegen/index.sol";
 import { OrderParams, TakeOrderParams, MarketSystemUtils } from "@utils/MarketSystemUtils.sol";
-import { ItemCategoryType } from "@codegen/common.sol";
+import { ItemCategoryType, CurrencyType } from "@codegen/common.sol";
 import { Errors, Config } from "@common/index.sol";
 
 contract MarketSystem is System, CharacterAccessControl {
@@ -38,7 +40,7 @@ contract MarketSystem is System, CharacterAccessControl {
       order.isBuy,
       false
     );
-    Order2.set(orderId, block.timestamp, block.timestamp);
+    Order2V2.set(orderId, order.currencyType, block.timestamp, block.timestamp);
   }
 
   function cancelOrder(uint256 characterId, uint256 orderId) public onlyAuthorizedWallet(characterId) {
@@ -76,7 +78,7 @@ contract MarketSystem is System, CharacterAccessControl {
       } else {
         MarketSystemUtils.takeSellOrder(characterId, order, top);
       }
-      Order2.setUpdateTime(top.orderId, block.timestamp);
+      Order2V2.setUpdateTime(top.orderId, block.timestamp);
       // store fill order
       MarketSystemUtils.storeFillOrder(order, characterId, top);
     }
@@ -94,9 +96,13 @@ contract MarketSystem is System, CharacterAccessControl {
   /// @dev Lock asset for order, also update market weight if it's a sell order
   function _lockAsset(uint256 characterId, OrderParams memory order) private {
     if (order.isBuy) {
-      // buy - lock gold
-      uint32 totalGold = order.unitPrice * order.amount;
-      CharacterFundUtils.decreaseGold(characterId, totalGold);
+      // buy - lock gold or crystal
+      uint32 totalValue = order.unitPrice * order.amount;
+      if (order.currencyType == CurrencyType.Crystal) {
+        CharacterFundUtils.decreaseCrystal(characterId, totalValue);
+        return;
+      }
+      CharacterFundUtils.decreaseGold(characterId, totalValue);
       return;
     }
     // sell - lock item and update market weight
@@ -114,9 +120,13 @@ contract MarketSystem is System, CharacterAccessControl {
   /// @dev Unlock asset for order
   function _unlockAsset(uint256 characterId, OrderData memory order) private {
     if (order.isBuy) {
-      // buy - unlock gold
-      uint32 totalGold = order.unitPrice * order.amount;
-      CharacterFundUtils.increaseGold(characterId, totalGold);
+      // buy - unlock gold or crystal
+      uint32 totalValue = order.unitPrice * order.amount;
+      if (Order2V2.getCurrencyType(order.orderId) == CurrencyType.Crystal) {
+        CharacterFundUtils.increaseCrystal(characterId, totalValue);
+        return;
+      }
+      CharacterFundUtils.increaseGold(characterId, totalValue);
       return;
     }
     // sell - unlock item and update market weight

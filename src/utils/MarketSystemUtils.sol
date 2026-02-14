@@ -26,7 +26,7 @@ import {
   CityVault2,
   Kingdom
 } from "@codegen/index.sol";
-import { ItemCategoryType } from "@codegen/common.sol";
+import { ItemCategoryType, CurrencyType } from "@codegen/common.sol";
 import { Errors, Config } from "@common/index.sol";
 
 struct OrderParams {
@@ -36,6 +36,7 @@ struct OrderParams {
   uint256 itemId;
   uint32 amount;
   uint32 unitPrice;
+  CurrencyType currencyType;
   bool isBuy;
 }
 
@@ -190,6 +191,11 @@ library MarketSystemUtils {
     // sell order has zero equipmentId, it must be an other item
     if (!order.isBuy && order.equipmentId == 0 && ItemV2.getCategory(order.itemId) != ItemCategoryType.Other) {
       revert Errors.MarketSystem_InvalidItemType(order.itemId);
+    }
+    if (order.currencyType == CurrencyType.Crystal) {
+      if (order.unitPrice % Config.CRYSTAL_UNIT_PRICE != 0) {
+        revert Errors.MarketSystem_InvalidCrystalPrice(order.unitPrice, Config.CRYSTAL_UNIT_PRICE);
+      }
     }
   }
 
