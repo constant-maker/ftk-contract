@@ -14,9 +14,6 @@ contract PortalSystem is CharacterAccessControl, System {
   function buyCrystal(uint256 characterId, uint32 amount) public payable onlyAuthorizedWallet(characterId) {
     _validateCrystalAmount(amount);
     uint256 value = _msgValue();
-    if (amount < Config.MIN_CRYSTALS_PER_PURCHASE) {
-      revert Errors.PortalSystem_CrystalAmountTooSmall(amount, Config.MIN_CRYSTALS_PER_PURCHASE);
-    }
     uint256 requiredPayment = amount * Config.CRYSTAL_UNIT_PRICE;
     if (value != requiredPayment) {
       revert Errors.InsufficientPayment(value, requiredPayment);
@@ -29,9 +26,6 @@ contract PortalSystem is CharacterAccessControl, System {
     if (currentCrystals < amount) {
       revert Errors.PortalSystem_InsufficientCrystal(currentCrystals, amount);
     }
-    if (amount < Config.MIN_CRYSTALS_PER_PURCHASE) {
-      revert Errors.PortalSystem_CrystalAmountTooSmall(amount, Config.MIN_CRYSTALS_PER_PURCHASE);
-    }
     _validateCrystalAmount(amount);
     CharacterFundUtils.decreaseCrystal(characterId, amount);
     uint256 rawPayment = amount * Config.CRYSTAL_UNIT_PRICE;
@@ -42,8 +36,11 @@ contract PortalSystem is CharacterAccessControl, System {
   }
 
   function _validateCrystalAmount(uint32 amount) private view {
+    if (amount < Config.MIN_CRYSTALS_PER_PURCHASE) {
+      revert Errors.PortalSystem_CrystalAmountTooSmall(amount, Config.MIN_CRYSTALS_PER_PURCHASE);
+    }
     if (amount % Config.MIN_CRYSTALS_PER_PURCHASE != 0) {
-      revert Errors.PortalSystem_CrystalAmountNotMultiple(amount, Config.MIN_CRYSTALS_PER_PURCHASE);
+      revert Errors.InvalidCrystalAmount(amount, Config.MIN_CRYSTALS_PER_PURCHASE);
     }
   }
 }

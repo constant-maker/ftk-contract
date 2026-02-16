@@ -40,7 +40,7 @@ contract MarketSystem is System, CharacterAccessControl {
       order.isBuy,
       false
     );
-    Order2V2.set(orderId, order.currencyType, block.timestamp, block.timestamp);
+    Order2V2.set(orderId, order.currency, block.timestamp, block.timestamp);
   }
 
   function cancelOrder(uint256 characterId, uint256 orderId) public onlyAuthorizedWallet(characterId) {
@@ -50,7 +50,7 @@ contract MarketSystem is System, CharacterAccessControl {
     if (order.isDone) {
       revert Errors.MarketSystem_OrderAlreadyDone(orderId);
     }
-    _unlockAsset(characterId, order);
+    _unlockAsset(characterId, order, orderId);
     Order.deleteRecord(orderId);
   }
 
@@ -98,7 +98,7 @@ contract MarketSystem is System, CharacterAccessControl {
     if (order.isBuy) {
       // buy - lock gold or crystal
       uint32 totalValue = order.unitPrice * order.amount;
-      if (order.currencyType == CurrencyType.Crystal) {
+      if (order.currency == CurrencyType.Crystal) {
         CharacterFundUtils.decreaseCrystal(characterId, totalValue);
         return;
       }
@@ -118,11 +118,11 @@ contract MarketSystem is System, CharacterAccessControl {
   }
 
   /// @dev Unlock asset for order
-  function _unlockAsset(uint256 characterId, OrderData memory order) private {
+  function _unlockAsset(uint256 characterId, OrderData memory order, uint256 orderId) private {
     if (order.isBuy) {
       // buy - unlock gold or crystal
       uint32 totalValue = order.unitPrice * order.amount;
-      if (Order2V2.getCurrencyType(order.orderId) == CurrencyType.Crystal) {
+      if (Order2V2.getCurrency(orderId) == CurrencyType.Crystal) {
         CharacterFundUtils.increaseCrystal(characterId, totalValue);
         return;
       }
@@ -143,7 +143,7 @@ contract MarketSystem is System, CharacterAccessControl {
 
   /// @dev Update existing order - user only can update unit price
   function _updateOrder(uint256 characterId, OrderParams memory order) private {
-    MarketSystemUtils.validateOrderPrice(order.unitPrice);
+    MarketSystemUtils.validateOrderPrice(order.unitPrice, Order2V2.getCurrency(order.orderId));
     OrderData memory existingOrder = Order.get(order.orderId);
     if (existingOrder.isDone) {
       revert Errors.MarketSystem_OrderAlreadyDone(order.orderId);
@@ -160,8 +160,8 @@ contract MarketSystem is System, CharacterAccessControl {
     }
 
     if (existingOrder.isBuy) {
-      // buy order - we need to update gold
-      MarketSystemUtils.updateBuyOrderGold(characterId, existingOrder, order.unitPrice);
+      // buy order - we need to update gold or crystal
+      MarketSystemUtils.updateBuyOrder(characterId, existingOrder, order);
     }
     Order.setUnitPrice(order.orderId, order.unitPrice);
   }

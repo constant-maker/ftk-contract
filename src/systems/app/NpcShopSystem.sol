@@ -20,7 +20,7 @@ import {
   CharacterItemUtils,
   CharacterPositionUtils
 } from "@utils/index.sol";
-import { ItemCategoryType, ItemType } from "@codegen/common.sol";
+import { ItemCategoryType, ItemType, CurrencyType } from "@codegen/common.sol";
 import { TradeData } from "./NpcShopSystem.sol";
 
 struct TradeData {
@@ -77,7 +77,7 @@ contract NpcShopSystem is CharacterAccessControl, System {
           unitPrice = CARD_PRICE_MULTIPLIER * itemData.tier;
         }
         // apply tax
-        unitPrice += MarketSystemUtils.calculateOrderFee(characterId, cityId, unitPrice);
+        unitPrice += MarketSystemUtils.calculateOrderFee(characterId, cityId, unitPrice, CurrencyType.Gold);
         goldCost += unitPrice * amount;
         InventoryItemUtils.addItem(characterId, itemId, amount);
         _updateNpcInventory(cityId, itemId, amount, true);
@@ -102,7 +102,7 @@ contract NpcShopSystem is CharacterAccessControl, System {
       }
       InventoryItemUtils.removeItem(characterId, itemId, amount);
       uint32 unitPrice = uint32(ItemV2.getTier(itemId));
-      unitPrice -= MarketSystemUtils.calculateOrderFee(characterId, cityId, unitPrice);
+      unitPrice -= MarketSystemUtils.calculateOrderFee(characterId, cityId, unitPrice, CurrencyType.Gold);
       uint32 earn = unitPrice * amount;
       if (earn > npcBalance) {
         revert Errors.NpcShopSystem_NotEnoughGold(cityId, npcBalance, earn);

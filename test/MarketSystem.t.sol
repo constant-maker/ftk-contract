@@ -8,7 +8,8 @@ import {
   CharacterItemUtils,
   CharAchievementUtils,
   StorageEquipmentUtils,
-  StorageItemUtils
+  StorageItemUtils,
+  CharacterFundUtils
 } from "@utils/index.sol";
 import { OrderParams, TakeOrderParams, MarketSystemUtils } from "@utils/MarketSystemUtils.sol";
 import { Config } from "@common/index.sol";
@@ -29,7 +30,9 @@ import {
   CharAchievementIndex,
   FillOrder,
   FillOrderData,
-  CharOtherItemStorage
+  CharOtherItemStorage,
+  MarketFeeCrystal,
+  CityVault2V2
 } from "@codegen/index.sol";
 
 contract MarketSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture {
@@ -59,7 +62,7 @@ contract MarketSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixt
       itemId: 0,
       amount: 0,
       unitPrice: 100,
-      currencyType: CurrencyType.Gold,
+      currency: CurrencyType.Gold,
       isBuy: false
     });
     vm.expectRevert(); // fame too low
@@ -180,7 +183,7 @@ contract MarketSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixt
       itemId: 33,
       amount: 100,
       unitPrice: 1,
-      currencyType: CurrencyType.Gold,
+      currency: CurrencyType.Gold,
       isBuy: false
     });
 
@@ -349,7 +352,7 @@ contract MarketSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixt
       itemId: 2,
       amount: 10,
       unitPrice: 2,
-      currencyType: CurrencyType.Gold,
+      currency: CurrencyType.Gold,
       isBuy: false
     });
     vm.startPrank(player1);
@@ -376,7 +379,7 @@ contract MarketSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixt
       itemId: 1,
       amount: 100,
       unitPrice: 100,
-      currencyType: CurrencyType.Gold,
+      currency: CurrencyType.Gold,
       isBuy: true
     });
 
@@ -532,7 +535,7 @@ contract MarketSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixt
       itemId: 33,
       amount: 2,
       unitPrice: 100,
-      currencyType: CurrencyType.Gold,
+      currency: CurrencyType.Gold,
       isBuy: true
     });
     vm.startPrank(player1);
@@ -597,7 +600,7 @@ contract MarketSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixt
       itemId: 33,
       amount: 2,
       unitPrice: 100,
-      currencyType: CurrencyType.Gold,
+      currency: CurrencyType.Gold,
       isBuy: true
     });
     vm.expectRevert(); // fame too low
@@ -616,6 +619,157 @@ contract MarketSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixt
     vm.startPrank(player1);
     world.app__placeOrder(characterId1, orderParams);
     vm.stopPrank();
+  }
+
+  function test_PlaceOrderWithCrystal() public {
+    vm.startPrank(worldDeployer);
+
+    CharOtherItem.setAmount(characterId1, 1, 100);
+    CharCurrentStats.setWeight(characterId1, CharCurrentStats.getWeight(characterId1) + 100);
+
+    CharOtherItem.setAmount(characterId2, 1, 100);
+    CharCurrentStats.setWeight(characterId2, CharCurrentStats.getWeight(characterId2) + 100);
+
+    CharacterFundUtils.increaseCrystal(characterId1, 1000);
+
+    CharStats2.setFame(characterId1, 1050);
+    CharStats2.setFame(characterId2, 1050);
+    vm.stopPrank();
+
+    // buy item
+    OrderParams memory orderParams = OrderParams({
+      orderId: 0,
+      cityId: city1,
+      equipmentId: 0,
+      itemId: 1,
+      amount: 5,
+      unitPrice: 99,
+      currency: CurrencyType.Crystal,
+      isBuy: true
+    });
+
+    vm.expectRevert(); // invalid price, too small
+    vm.startPrank(player1);
+    world.app__placeOrder(characterId1, orderParams);
+    vm.stopPrank();
+
+    orderParams.unitPrice = 101;
+    vm.expectRevert(); // invalid price, must be multiple of 100
+    vm.startPrank(player1);
+    world.app__placeOrder(characterId1, orderParams);
+    vm.stopPrank();
+
+    orderParams.unitPrice = 100;
+    vm.startPrank(player1);
+    world.app__placeOrder(characterId1, orderParams);
+    vm.stopPrank();
+
+    orderParams.orderId = 1;
+    orderParams.unitPrice = 150;
+    vm.expectRevert(); // try to update invalid price, must be multiple of 100
+    vm.startPrank(player1);
+    world.app__placeOrder(characterId1, orderParams);
+    vm.stopPrank();
+
+    orderParams.unitPrice = 200;
+    vm.startPrank(player1);
+    world.app__placeOrder(characterId1, orderParams);
+    vm.stopPrank();
+
+    // take order
+    _moveToCity(characterId2, city1);
+    vm.startPrank(worldDeployer);
+    MarketFeeCrystal.set(1, 5); // 5% fee when take order in kingdom 1
+    vm.stopPrank();
+    TakeOrderParams memory takeOrderParams = TakeOrderParams({ orderId: 1, amount: 5, equipmentIds: new uint256[](0) });
+    TakeOrderParams[] memory takeOrderParamsArray = new TakeOrderParams[](1);
+    takeOrderParamsArray[0] = takeOrderParams;
+    vm.startPrank(player2);
+    world.app__takeOrder(characterId2, takeOrderParamsArray);
+    vm.stopPrank();
+    FillOrderData memory fillOrder = FillOrder.get(1);
+    console2.log("fill order city id", fillOrder.cityId);
+    console2.log("fill order character id", fillOrder.characterId);
+    console2.log("fill order equipment id", fillOrder.equipmentId);
+    console2.log("fill order item id", fillOrder.itemId);
+    console2.log("fill order amount", fillOrder.amount);
+    console2.log("fill order unit price", fillOrder.unitPrice);
+    console2.log("fill order is buy", fillOrder.isBuy);
+    console2.log("fill order timestamp", fillOrder.filledAt);
+    assertEq(fillOrder.cityId, city1);
+    assertEq(fillOrder.characterId, characterId2);
+    assertEq(fillOrder.equipmentId, 0);
+    assertEq(fillOrder.itemId, 1);
+    assertEq(fillOrder.amount, 5);
+    assertEq(fillOrder.unitPrice, 200);
+    assertEq(fillOrder.isBuy, false);
+
+    uint32 char2Crystal = CharFund.getCrystal(characterId2);
+    console2.log("character2 crystal after take order", char2Crystal);
+    uint32 platFormFee = (1000 * Config.MARKET_FEE_PERCENTAGE + 99) / 100;
+    uint32 finalOrderValue = 1000 - platFormFee;
+    uint32 kingdomFee = (finalOrderValue * 5) / 100;
+    assertEq(char2Crystal, finalOrderValue - kingdomFee); // 922
+    uint32 cityVaultCrystal = uint32(CityVault2V2.getCrystal(1));
+    console2.log("city vault crystal after take order", cityVaultCrystal);
+    assertEq(cityVaultCrystal, kingdomFee);
+    assertEq(CharOtherItem.getAmount(characterId1, 1), 100);
+    assertEq(CharOtherItemStorage.getAmount(characterId1, 1, 1), 5); // just bought 5, so 5 in storage
+    assertEq(CharOtherItem.getAmount(characterId2, 1), 95); // just sold 5, so 95 left
+
+    _moveAllToCity(city2);
+
+    uint32 char1CrystalBalance = CharFund.getCrystal(characterId1);
+    console2.log("character1 crystal balance", char1CrystalBalance);
+    assertEq(char1CrystalBalance, 0); // spent all crystal in previous order
+
+    orderParams.orderId = 0; // to create new order
+    orderParams.cityId = city2;
+    orderParams.unitPrice = 100;
+    orderParams.isBuy = false;
+    // test place order sell with crystal
+    vm.startPrank(player1);
+    world.app__placeOrder(characterId1, orderParams);
+    vm.stopPrank();
+    OrderData memory order = Order.get(2);
+    assertEq(order.isBuy, false);
+
+    // test take order sell with crystal
+    takeOrderParams = TakeOrderParams({ orderId: 2, amount: 5, equipmentIds: new uint256[](0) });
+    takeOrderParamsArray[0] = takeOrderParams;
+    vm.startPrank(player2);
+    world.app__takeOrder(characterId2, takeOrderParamsArray);
+    vm.stopPrank();
+    fillOrder = FillOrder.get(2);
+    console2.log("fill order city id", fillOrder.cityId);
+    console2.log("fill order character id", fillOrder.characterId);
+    console2.log("fill order equipment id", fillOrder.equipmentId);
+    console2.log("fill order item id", fillOrder.itemId);
+    console2.log("fill order amount", fillOrder.amount);
+    console2.log("fill order unit price", fillOrder.unitPrice);
+    console2.log("fill order is buy", fillOrder.isBuy);
+    assertEq(fillOrder.cityId, city2);
+    assertEq(fillOrder.characterId, characterId2);
+    assertEq(fillOrder.equipmentId, 0);
+    assertEq(fillOrder.itemId, 1);
+    assertEq(fillOrder.amount, 5);
+    assertEq(fillOrder.unitPrice, 100);
+    assertEq(fillOrder.isBuy, true);
+
+    char2Crystal = CharFund.getCrystal(characterId2);
+    console2.log("character2 crystal after take order", char2Crystal);
+    assertEq(char2Crystal, 422); // 922 - 5 * 100 (no fee for taker of a sell order)
+    uint32 orderValue = 5 * 100;
+    platFormFee = (orderValue * Config.MARKET_FEE_PERCENTAGE + 99) / 100;
+    finalOrderValue = orderValue - platFormFee;
+    kingdomFee = MarketFeeCrystal.get(2); // 0, not set yet
+    uint32 newChar1Crystal = CharFund.getCrystal(characterId1);
+    assertEq(newChar1Crystal, char1CrystalBalance + (finalOrderValue - kingdomFee));
+    cityVaultCrystal = uint32(CityVault2V2.getCrystal(city2));
+    console2.log("city vault crystal after take order", cityVaultCrystal);
+    assertEq(cityVaultCrystal, kingdomFee); // 0
+    assertEq(CharOtherItem.getAmount(characterId1, 1), 95); // just sold 5, so 95 left
+    assertEq(CharOtherItem.getAmount(characterId2, 1), 100); // sold 5, bought 5, back to 100
   }
 
   function _moveToCity(uint256 characterId, uint256 cityId) internal {

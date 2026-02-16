@@ -73,6 +73,13 @@ const MARKET_TABLES: any = {
     },
     key: ['kingdomAId', 'kingdomBId'],
   },
+  MarketFeeCrystal: {
+    schema: {
+      kingdomId: "uint8",
+      fee: "uint8",
+    },
+    key: ['kingdomId'],
+  },
   OrderCounter: {
     schema: {
       counter: "uint256",
