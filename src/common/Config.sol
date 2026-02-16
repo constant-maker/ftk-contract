@@ -5,20 +5,20 @@ library Config {
   uint8 public constant MAX_MOVEMENT_SPEED = 20;
   uint8 public constant HP_GAIN_PER_LEVEL = 20;
   uint8 public constant DEFAULT_SKILL_POINT = 3;
-  uint8 public constant MAX_PERK_LEVEL = 9; // perk level starts from 0 ~ so max is 10 on UI
+  uint8 public constant MAX_PERK_LEVEL = 9; // Perk level starts from 0 ~ so max is 10 on UI
   uint8 public constant AMOUNT_RECEIVE_FROM_FARMING = 5;
   uint8 public constant DEFAULT_MARKET_FEE = 5; // 5%
 
-  uint16 public constant DEFAULT_MOVEMENT_DURATION = 8; // seconds
-  uint16 public constant DEFAULT_PLAYER_ACTION_DURATION = 10;
+  uint16 public constant DEFAULT_MOVEMENT_DURATION = 8; // Seconds
+  uint16 public constant DEFAULT_PLAYER_ACTION_DURATION = 10; // Seconds
   uint16 public constant MAX_LEVEL = 99;
   uint16 public constant MAX_BASE_STAT = 130;
   uint16 public constant ONE_HAND_ADVANTAGE_TYPE_DAMAGE_MODIFIER = 8; // 8%
   uint16 public constant TWO_HAND_ADVANTAGE_TYPE_DAMAGE_MODIFIER = 15; // 15%
-  uint16 public constant ATTACK_COOLDOWN = 2; // seconds
-  uint16 public constant PVE_ATTACK_COOLDOWN = 10; // seconds
-  uint16 public constant CHALLENGE_COOLDOWN = 10;
-  uint16 public constant PROTECTION_DURATION = 0;
+  uint16 public constant ATTACK_COOLDOWN = 2; // Seconds
+  uint16 public constant PVE_ATTACK_COOLDOWN = 10; // Seconds
+  uint16 public constant CHALLENGE_COOLDOWN = 10; // Seconds
+  uint16 public constant PROTECTION_DURATION = 0; // Seconds
   uint16 public constant BASE_DMG = 20;
   uint32 public constant DEFAULT_HP = 100;
   uint32 public constant DEFAULT_WEIGHT = 200;
@@ -26,15 +26,15 @@ library Config {
   uint32 public constant DEFAULT_FAME = 1000;
 
   uint32 public constant BASE_RESOURCE_PERK_EXP = 15;
-  uint32 public constant UPGRADE_STORAGE_COST = 50; // golds
+  uint32 public constant UPGRADE_STORAGE_COST = 50; // Golds
   uint32 public constant INIT_STORAGE_MAX_WEIGHT = 300;
   uint32 public constant STORAGE_MAX_WEIGHT_INCREMENT = 100;
-  uint32 public constant TILE_ITEM_AVAILABLE_DURATION = 3600; // 1 hour (second)
+  uint32 public constant TILE_ITEM_AVAILABLE_DURATION = 3600; // 1 hour (Seconds)
 
   uint256 public constant NORMAL_ATTACK_SKILL_ID = 0;
   uint256 public constant MAX_EQUIPMENT_ID_TO_CHECK_CACHE_WEIGHT = 16_000;
 
-  uint32 public constant MIN_PROTECT_FAME = 500; // minimum fame to be protected in green zone
+  uint32 public constant MIN_PROTECT_FAME = 500; // Minimum fame to be protected in green zone
   uint32 public constant GREEN_ZONE_FAME_PENALTY = 50;
   uint32 public constant MIN_FAME = 1;
   uint32 public constant LOST_FAME_PENALTY = 20;
@@ -42,9 +42,11 @@ library Config {
   uint32 public constant MIN_FAME_THRESHOLD = 1070;
   uint256 public constant LOW_FAME_DEBUFF_ID = 458;
 
-  uint256 public constant TELEPORT_DURATION = 60; // seconds
+  uint256 public constant TELEPORT_DURATION = 60; // Seconds
 
-  uint256 public constant CREATE_CHARACTER_FEE = 0.0001 ether;
-  uint256 public constant CRYSTAL_UNIT_PRICE = 0.000001 ether;
+  uint256 public constant MIN_CRYSTALS_PER_PURCHASE = 100; // Minimum crystals per purchase
+  uint256 public constant CREATE_CHARACTER_FEE = 0.0001 ether; // TODO: Adjust later on mainnet
+  uint256 public constant CRYSTAL_UNIT_PRICE = 0.000005 ether;
+  uint32 public constant MARKET_FEE_PERCENTAGE = 3; // platform fee (apply for crystal only)
   address public constant TEAM_ADDRESS = address(0x0);
 }

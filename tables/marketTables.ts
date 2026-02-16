@@ -25,9 +25,18 @@ const MARKET_TABLES: any = {
     },
     key: ['id'],
   },
-  Order2: {
+  Order2: { // Deprecated, use Order2V2 instead
     schema: {
       id: "uint256",
+      createdTime: "uint256",
+      updateTime: "uint256",
+    },
+    key: ['id'],
+  },
+  Order2V2: {
+    schema: {
+      id: "uint256",
+      currency: "CurrencyType",
       createdTime: "uint256",
       updateTime: "uint256",
     },
@@ -63,6 +72,13 @@ const MARKET_TABLES: any = {
       fee: "uint8",
     },
     key: ['kingdomAId', 'kingdomBId'],
+  },
+  MarketFeeCrystal: {
+    schema: {
+      kingdomId: "uint8",
+      fee: "uint8",
+    },
+    key: ['kingdomId'],
   },
   OrderCounter: {
     schema: {

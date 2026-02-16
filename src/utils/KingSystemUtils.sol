@@ -12,7 +12,7 @@ import {
   AllianceV2Data,
   CityMoveHistory,
   RestrictLocV2,
-  CityVault2,
+  CityVault2V2,
   TileInfo3,
   CharInfo
 } from "@codegen/index.sol";
@@ -172,13 +172,13 @@ library KingSystemUtils {
       return; // No change in position
     }
     uint32 goldCost = (city.level + 1) * 2000;
-    uint32 cityGold = CityVault2.getGold(cityId);
+    uint32 cityGold = CityVault2V2.getGold(cityId);
     if (cityGold < goldCost) {
       revert Errors.KingSystem_InsufficientCityGold(cityId, goldCost);
     }
     CityMoveHistory.set(cityId, city.x, city.y, block.timestamp);
     RestrictLocV2.deleteRecord(city.x, city.y); // Unmark the old location
-    CityVault2.setGold(cityId, cityGold - goldCost);
+    CityVault2V2.setGold(cityId, cityGold - goldCost);
     // Set new city position
     city.x = x;
     city.y = y;

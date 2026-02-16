@@ -60,6 +60,7 @@ export default defineWorld({
     // Note: Healing potion represents for ItemType HealingItem
     // To save gas, limit contract size purpose only
     BuffType: ["None", "StatsModify", "ExpAmplify", "InstantDamage", "InstantHeal", "HealingPotion"],
+    CurrencyType: ["Gold", "Crystal"],
   },
   tables: {
     Unmovable: {

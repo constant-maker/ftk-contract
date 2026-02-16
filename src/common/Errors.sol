@@ -21,6 +21,7 @@ library Errors {
   error InsufficientPayment(uint256 msgValue, uint256 requiredValue);
   error InsufficientCrystalsPayment(uint256 crystals, uint256 requiredCrystals);
   error WorldBalanceInsufficient(uint256 worldBalance, uint256 requiredAmount);
+  error InvalidCrystalAmount(uint256 amount, uint256 uintAmount);
 
   /* -------------------------------------------------------------------------- */
   /*                                Spawn system                                */
@@ -294,6 +295,7 @@ library Errors {
   error MarketSystem_UntradeableItem(uint256 itemId);
   error MarketSystem_ExceedMaxWeight(uint256 characterId, uint256 cityId, uint32 totalWeight, uint32 maxWeight);
   error MarketSystem_InsufficientGold(uint256 characterId, uint32 charGold, uint32 requiredGold);
+  error MarketSystem_InsufficientCrystal(uint256 characterId, uint32 charCrystal, uint32 requiredCrystal);
   error MarketSystem_InsufficientItem(uint256 characterId, uint256 itemId, uint32 requiredAmount);
   error MarketSystem_SellEquipmentOrderAmount(uint32 amount);
   error MarketSystem_CharacterNotOwner(uint256 characterId, uint256 orderId);

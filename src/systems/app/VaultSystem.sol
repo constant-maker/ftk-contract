@@ -7,7 +7,7 @@ import {
   City,
   CharInfo,
   CityVault,
-  CityVault2,
+  CityVault2V2,
   CVaultHistoryV3,
   HistoryCounter,
   KingElection,
@@ -98,7 +98,7 @@ contract VaultSystem is System, CharacterAccessControl {
         revert Errors.VaultSystem_FameTooLow(characterId, fame);
       }
       CharacterFundUtils.decreaseGold(characterId, gold);
-      CityVault2.setGold(cityId, CityVault2.getGold(cityId) + gold);
+      CityVault2V2.setGold(cityId, CityVault2V2.getGold(cityId) + gold);
     }
     // no need check character and city kingdom id, because it's free to contribute to any city
     for (uint256 i = 0; i < itemIds.length; i++) {

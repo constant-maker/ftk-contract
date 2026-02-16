@@ -7,7 +7,7 @@ import {
   CityData,
   CharInfo,
   CityVault,
-  CityVault2,
+  CityVault2V2,
   CResourceRequire,
   CResourceRequireData,
   CharCurrentStats,
@@ -53,11 +53,11 @@ contract CitySystem is System, CharacterAccessControl {
       CityVault.setAmount(cityId, resourceId, currentVaultAmount - amount);
     }
     uint32 requiredGold = nextLevel * UPGRADE_GOLD_COST;
-    uint32 currentCityGold = CityVault2.getGold(cityId);
+    uint32 currentCityGold = CityVault2V2.getGold(cityId);
     if (currentCityGold < requiredGold) {
       revert Errors.CitySystem_InsufficientVaultGold(cityId, currentCityGold, requiredGold);
     }
-    CityVault2.setGold(cityId, currentCityGold - requiredGold);
+    CityVault2V2.setGold(cityId, currentCityGold - requiredGold);
     City.setLevel(cityId, nextLevel);
   }
 
@@ -131,7 +131,7 @@ contract CitySystem is System, CharacterAccessControl {
     if (capitalId == 0) {
       revert Errors.InvalidCityId(capitalId);
     }
-    uint32 currentGold = CityVault2.getGold(capitalId);
-    CityVault2.setGold(capitalId, currentGold + gainedGold);
+    uint32 currentGold = CityVault2V2.getGold(capitalId);
+    CityVault2V2.setGold(capitalId, currentGold + gainedGold);
   }
 }

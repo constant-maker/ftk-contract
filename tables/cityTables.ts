@@ -19,38 +19,21 @@ const CITY_TABLES: any = {
     },
     key: ['cityId', 'itemId'],
   },
-  CityVault2: {
+  CityVault2: { // DEPRECATED, use CityVault2V2 instead
     schema: {
       cityId: "uint256",
       gold: "uint32",
     },
     key: ['cityId'],
   },
-  // CVaultHistory: {
-  //   schema: {
-  //     cityId: "uint256",
-  //     id: "uint256",
-  //     characterId: "uint256",
-  //     itemId: "uint256",
-  //     amount: "uint32",
-  //     timestamp: "uint256",
-  //     isContributed: "bool",
-  //   },
-  //   key: ['cityId', 'id'],
-  // },
-  // CVaultHistoryV2: {
-  //   schema: {
-  //     cityId: "uint256",
-  //     id: "uint256",
-  //     characterId: "uint256",
-  //     itemId: "uint256",
-  //     amount: "uint32",
-  //     gold: "uint32",
-  //     timestamp: "uint256",
-  //     isContributed: "bool",
-  //   },
-  //   key: ['cityId', 'id'],
-  // },
+  CityVault2V2: {
+    schema: {
+      cityId: "uint256",
+      gold: "uint32",
+      crystal: "uint256",
+    },
+    key: ['cityId'],
+  },
   CVaultHistoryV3: {
     schema: {
       cityId: "uint256",
