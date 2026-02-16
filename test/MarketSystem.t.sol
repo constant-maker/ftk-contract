@@ -676,6 +676,8 @@ contract MarketSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixt
     world.app__placeOrder(characterId1, orderParams);
     vm.stopPrank();
 
+    assertEq(CharFund.getCrystal(characterId1), 0); // all crystal locked in order    
+
     // take order
     _moveToCity(characterId2, city1);
     vm.startPrank(worldDeployer);

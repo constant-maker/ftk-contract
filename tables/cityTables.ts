@@ -19,6 +19,13 @@ const CITY_TABLES: any = {
     },
     key: ['cityId', 'itemId'],
   },
+  CityVault2: { // DEPRECATED, use CityVault2V2 instead
+    schema: {
+      cityId: "uint256",
+      gold: "uint32",
+    },
+    key: ['cityId'],
+  },
   CityVault2V2: {
     schema: {
       cityId: "uint256",
