@@ -115,5 +115,9 @@
     "Rare": 2,
     "Epic": 3,
     "Legendary": 4
+  },
+  "currencyTypes": {
+    "Gold": 0,
+    "Crystal": 1
   }
 }
