@@ -35,7 +35,7 @@ interface IVRFConsumer {
 
 contract GachaSystem is System, CharacterAccessControl, IVRFConsumer {
   // RISE Testnet VRF Coordinator
-  address constant VRF_COORDINATOR = 0x9d57aB4517ba97349551C876a01a7580B1338909;
+  address constant VRF_COORDINATOR = 0xc0d49A572cF25aC3e9ae21B939e8B619b39291Ea;
   uint32 constant NUM_REQUEST_NUMBER = 1;
   uint256 constant PET_ITEM_ID = 436;
   uint256 constant TOTAL_PERCENT = 10_000; // for probability calculation with 2 decimal places ~ 100.00%
