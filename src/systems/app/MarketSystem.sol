@@ -61,6 +61,7 @@ contract MarketSystem is System, CharacterAccessControl {
     }
     _unlockAsset(characterId, order, orderId);
     Order.deleteRecord(orderId);
+    Order2V2.deleteRecord(orderId);
   }
 
   function takeOrder(
