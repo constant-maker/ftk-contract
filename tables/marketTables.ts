@@ -25,14 +25,6 @@ const MARKET_TABLES: any = {
     },
     key: ['id'],
   },
-  Order2: { // Deprecated, use Order2V2 instead
-    schema: {
-      id: "uint256",
-      createdTime: "uint256",
-      updateTime: "uint256",
-    },
-    key: ['id'],
-  },
   Order2V2: {
     schema: {
       id: "uint256",

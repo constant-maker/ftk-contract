@@ -47,6 +47,6 @@ library Config {
   uint256 public constant MIN_CRYSTALS_PER_PURCHASE = 100; // Minimum crystals per purchase
   uint256 public constant CREATE_CHARACTER_FEE = 0.0001 ether; // TODO: Adjust later on mainnet
   uint256 public constant CRYSTAL_UNIT_PRICE = 0.000005 ether;
-  uint32 public constant MARKET_FEE_PERCENTAGE = 3; // platform fee (apply for crystal only)
+  uint32 public constant PLATFORM_FEE_PERCENTAGE = 3; // platform fee (apply for crystal only)
   address public constant TEAM_ADDRESS = address(0x0);
 }

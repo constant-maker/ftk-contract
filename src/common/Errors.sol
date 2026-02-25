@@ -30,7 +30,7 @@ library Errors {
   error SpawnSystem_InvalidCharacterName(string name);
   error SpawnSystem_InvalidKingdomId(uint8 kingdomId);
   error SpawnSystem_InvalidTraitStats(uint16 traitStats);
-  error SpawnSystem_InsufficientCreateCharacterFee(uint256 msgValue);
+  error SpawnSystem_InvalidCharacterCreationFee(uint256 msgValue);
 
   /* -------------------------------------------------------------------------- */
   /*                                  Character                                 */
@@ -307,6 +307,7 @@ library Errors {
   error MarketSystem_InvalidTakerAmount(uint256 orderId, uint32 maxAmount, uint32 takeAmount);
   error MarketSystem_InvalidItemType(uint256 itemId);
   error MarketSystem_OrderIsNotExist(uint256 orderId);
+  error MarketSystem_MustInACapital(); // character must be in a capital either their own or other kingdom's capital
 
   /* -------------------------------------------------------------------------- */
   /*                               KingSystem                                   */

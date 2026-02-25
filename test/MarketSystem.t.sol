@@ -16,6 +16,7 @@ import { Config } from "@common/index.sol";
 import { CurrencyType } from "@codegen/common.sol";
 import {
   City,
+  CityData,
   OrderData,
   Order,
   CharStats2,
@@ -32,7 +33,8 @@ import {
   FillOrderData,
   CharOtherItemStorage,
   MarketFeeCrystal,
-  CityVault2V2
+  CityVault2V2,
+  RestrictLocV2
 } from "@codegen/index.sol";
 
 contract MarketSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture {
@@ -676,13 +678,15 @@ contract MarketSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixt
     world.app__placeOrder(characterId1, orderParams);
     vm.stopPrank();
 
-    assertEq(CharFund.getCrystal(characterId1), 0); // all crystal locked in order    
+    assertEq(CharFund.getCrystal(characterId1), 0); // all crystal locked in order
 
     // take order
-    _moveToCity(characterId2, city1);
     vm.startPrank(worldDeployer);
+    CityData memory city2Data = City.get(city2);
+    RestrictLocV2.set(city2Data.x, city2Data.y, city2, true);
     MarketFeeCrystal.set(1, 5); // 5% fee when take order in kingdom 1
     vm.stopPrank();
+    _moveToCity(characterId2, city2); // with crystal, no need to be in the same city, but must be in another capital
     TakeOrderParams memory takeOrderParams = TakeOrderParams({ orderId: 1, amount: 5, equipmentIds: new uint256[](0) });
     TakeOrderParams[] memory takeOrderParamsArray = new TakeOrderParams[](1);
     takeOrderParamsArray[0] = takeOrderParams;
@@ -708,7 +712,7 @@ contract MarketSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixt
 
     uint32 char2Crystal = CharFund.getCrystal(characterId2);
     console2.log("character2 crystal after take order", char2Crystal);
-    uint32 platFormFee = (1000 * Config.MARKET_FEE_PERCENTAGE + 99) / 100;
+    uint32 platFormFee = (1000 * Config.PLATFORM_FEE_PERCENTAGE + 99) / 100;
     uint32 finalOrderValue = 1000 - platFormFee;
     uint32 kingdomFee = (finalOrderValue * 5) / 100;
     assertEq(char2Crystal, finalOrderValue - kingdomFee); // 922
@@ -762,7 +766,7 @@ contract MarketSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixt
     console2.log("character2 crystal after take order", char2Crystal);
     assertEq(char2Crystal, 422); // 922 - 5 * 100 (no fee for taker of a sell order)
     uint32 orderValue = 5 * 100;
-    platFormFee = (orderValue * Config.MARKET_FEE_PERCENTAGE + 99) / 100;
+    platFormFee = (orderValue * Config.PLATFORM_FEE_PERCENTAGE + 99) / 100;
     finalOrderValue = orderValue - platFormFee;
     kingdomFee = MarketFeeCrystal.get(2); // 0, not set yet
     uint32 newChar1Crystal = CharFund.getCrystal(characterId1);

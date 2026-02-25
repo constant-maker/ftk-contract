@@ -365,7 +365,7 @@ library MarketSystemUtils {
 
   /// @dev calculate platform fee, using for crystal only
   function _getPlatformFee(uint32 orderValue) private pure returns (uint32) {
-    return (orderValue * uint32(Config.MARKET_FEE_PERCENTAGE) + 99) / 100; // rounding up
+    return (orderValue * uint32(Config.PLATFORM_FEE_PERCENTAGE) + 99) / 100; // rounding up
   }
 
   function _updateCityVaultGold(uint256 cityId, uint32 gainedGold) private {

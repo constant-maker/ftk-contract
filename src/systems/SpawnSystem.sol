@@ -2,7 +2,16 @@ pragma solidity >=0.8.24;
 
 import { System } from "@latticexyz/world/src/System.sol";
 import { LibString } from "@solady/utils/LibString.sol";
-import { CharState, CharInfo, CharInfoData, CharName, ActiveChar, Kingdom } from "@codegen/index.sol";
+import {
+  CharState,
+  CharInfo,
+  CharInfoData,
+  CharName,
+  ActiveChar,
+  Kingdom,
+  MarketFeeCrystal,
+  CityVault2V2
+} from "@codegen/index.sol";
 import { CharStats2 } from "@codegen/tables/CharStats2.sol";
 import { CharacterStateType } from "@codegen/common.sol";
 import { CharacterPositionUtils, CharacterUtils } from "@utils/index.sol";
@@ -12,7 +21,7 @@ contract SpawnSystem is System {
   /// @dev User call this function to create character, expect to be called once
   function createCharacter(CharInfoData memory data) public payable {
     if (_msgValue() != Config.CREATE_CHARACTER_FEE) {
-      revert Errors.SpawnSystem_InsufficientCreateCharacterFee(_msgValue());
+      revert Errors.SpawnSystem_InvalidCharacterCreationFee(_msgValue());
     }
     address wallet = _msgSender();
     // Validate inputs
@@ -36,6 +45,9 @@ contract SpawnSystem is System {
     CharStats2.setFame(characterId, Config.DEFAULT_FAME);
 
     emit Events.CharacterCreated(characterId, wallet, block.timestamp);
+
+    // share the fee to king
+    _shareFeeToCityVault(data.kingdomId, _msgValue());
   }
 
   /// @dev Validate the data to create character
@@ -77,5 +89,15 @@ contract SpawnSystem is System {
     }
 
     return true;
+  }
+
+  function _shareFeeToCityVault(uint8 kingdomId, uint256 rawEthFee) private {
+    uint8 feePercentage = MarketFeeCrystal.getFee(kingdomId);
+    if (feePercentage == 0) return;
+    uint256 ethFeeAmount = (rawEthFee * uint256(feePercentage)) / 100;
+    uint256 crystalAmount = ethFeeAmount / Config.CRYSTAL_UNIT_PRICE;
+    uint256 capitalId = Kingdom.getCapitalId(kingdomId);
+    uint256 currentVaultCrystal = CityVault2V2.getCrystal(capitalId);
+    CityVault2V2.setCrystal(capitalId, currentVaultCrystal + crystalAmount);
   }
 }

@@ -24,6 +24,7 @@ import { SpawnSystem } from "@systems/index.sol";
 import { CharacterInfoMock } from "@mocks/index.sol";
 import { SystemUtils } from "@utils/SystemUtils.sol";
 import { CharacterStateUtils } from "@utils/CharacterStateUtils.sol";
+import { Config } from "@common/index.sol";
 
 abstract contract SpawnSystemFixture is WorldFixture {
   function setUp() public virtual override {
@@ -50,7 +51,7 @@ abstract contract SpawnSystemFixture is WorldFixture {
     bytes memory data = abi.encodeCall(SpawnSystem.createCharacter, characterInfoData);
 
     vm.recordLogs();
-    world.call{ value: 0.0001 ether }(spawnSystemResourceId, data);
+    world.call{ value: Config.CREATE_CHARACTER_FEE }(spawnSystemResourceId, data);
 
     Vm.Log[] memory logs = vm.getRecordedLogs();
     bool gotCharacterCreated;

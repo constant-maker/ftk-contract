@@ -2,7 +2,7 @@ pragma solidity >=0.8.24;
 
 import { Test } from "forge-std/Test.sol";
 import { Vm } from "forge-std/Vm.sol";
-import { console } from "forge-std/console.sol";
+import { console2 } from "forge-std/console2.sol";
 import { IERC721Mintable } from "@latticexyz/world-modules/src/modules/erc721-puppet/IERC721Mintable.sol";
 import {
   CharPosition,
@@ -17,7 +17,9 @@ import {
   CharStateData,
   ActiveChar,
   ActiveCharData,
-  Contracts
+  Contracts,
+  MarketFeeCrystal,
+  CityVault2V2
 } from "@codegen/index.sol";
 import { CharacterStateType, CharacterType } from "@codegen/common.sol";
 import { ResourceId } from "@latticexyz/store/src/ResourceId.sol";
@@ -29,6 +31,7 @@ import { SystemUtils } from "@utils/SystemUtils.sol";
 import { CharacterStateUtils } from "@utils/CharacterStateUtils.sol";
 import { Balances } from "@latticexyz/world/src/codegen/tables/Balances.sol";
 import { WorldResourceIdLib, WorldResourceIdInstance } from "@latticexyz/world/src/WorldResourceId.sol";
+import { Config } from "@common/index.sol";
 
 abstract contract SpawnSystemFixture is WorldFixture {
   address player = makeAddr("player1");
@@ -60,7 +63,7 @@ abstract contract SpawnSystemFixture is WorldFixture {
     bytes memory data = abi.encodeCall(SpawnSystem.createCharacter, characterInfoData);
 
     vm.recordLogs();
-    world.call{ value: 0.0001 ether }(spawnSystemResourceId, data);
+    world.call{ value: Config.CREATE_CHARACTER_FEE }(spawnSystemResourceId, data);
 
     Vm.Log[] memory logs = vm.getRecordedLogs();
     bool gotCharacterCreated;
@@ -237,7 +240,7 @@ contract CreateCharacter is SpawnSystemFixture {
   function test_ShouldBeOk_WithValidData() external {
     // create one character
     uint256 characterId = _createCharacter(player, CharacterInfoMock.getCharacterInfoData());
-    console.log("Kingdom Id %d", CharacterInfoMock.getCharacterInfoData().kingdomId);
+    console2.log("Kingdom Id: ", CharacterInfoMock.getCharacterInfoData().kingdomId);
 
     // expect character nft is minted
     _expectCharacterNftOwner(characterId, player);
@@ -254,7 +257,7 @@ contract CreateCharacter is SpawnSystemFixture {
     vm.startPrank(player);
 
     // (bool success, bytes memory result) = address(mockTest).call(data);
-    (bool success, bytes memory result) = address(world).call{ value: 0.0001 ether }(data);
+    (bool success, bytes memory result) = address(world).call{ value: Config.CREATE_CHARACTER_FEE }(data);
     assertTrue(success);
 
     vm.stopPrank();
@@ -285,13 +288,27 @@ contract CreateCharacter is SpawnSystemFixture {
   }
 
   function test_TransferNFTWithData() external {
+    uint8 feePercentage = 5;
+    vm.startPrank(worldDeployer);
+    MarketFeeCrystal.setFee(1, feePercentage);
+    vm.stopPrank();
+
     uint256 characterId = _createCharacter(player, CharacterInfoMock.getCharacterInfoData());
 
     // expect character nft is minted
     _expectCharacterNftOwner(characterId, player);
 
     uint256 balance = Balances.getBalance(WorldResourceIdLib.encodeNamespace("")); // root space
-    assertEq(balance, 0.0001 ether);
+    assertEq(balance, Config.CREATE_CHARACTER_FEE);
+
+    uint256 vaultCrystal = CityVault2V2.getCrystal(1);
+
+    uint256 ethFeeAmount = (Config.CREATE_CHARACTER_FEE * uint256(feePercentage)) / 100;
+    console2.log("ethFeeAmount: ", ethFeeAmount);
+    uint256 crystalAmount = ethFeeAmount / Config.CRYSTAL_UNIT_PRICE;
+    console2.log("crystalAmount: ", crystalAmount);
+
+    assertEq(vaultCrystal, crystalAmount);
 
     address bob = makeAddr("bob");
 

@@ -10,7 +10,16 @@ import {
   MarketWeightUtils
 } from "@utils/index.sol";
 import {
-  OrderCounter, Order, OrderData, Equipment, CharMarketWeight, CharOtherItem, Order2V2
+  OrderCounter,
+  Order,
+  OrderData,
+  Equipment,
+  CharMarketWeight,
+  CharOtherItem,
+  Order2V2,
+  RestrictLocV2,
+  CharPositionData,
+  City
 } from "@codegen/index.sol";
 import { OrderParams, TakeOrderParams, MarketSystemUtils } from "@utils/MarketSystemUtils.sol";
 import { ItemCategoryType, CurrencyType } from "@codegen/common.sol";
@@ -19,7 +28,7 @@ import { Errors, Config } from "@common/index.sol";
 contract MarketSystem is System, CharacterAccessControl {
   function placeOrder(uint256 characterId, OrderParams memory order) public onlyAuthorizedWallet(characterId) {
     MarketWeightUtils.checkAndSetMaxWeight(characterId, order.cityId); // set default max weight if not set
-    CharacterPositionUtils.mustInCity(characterId, order.cityId);
+    CharacterPositionUtils.mustInCapital(characterId, order.cityId);
     _updateOrderParams(order);
     if (order.orderId != 0) {
       _updateOrder(characterId, order);
@@ -64,6 +73,12 @@ contract MarketSystem is System, CharacterAccessControl {
     for (uint256 i = 0; i < takeParams.length; i++) {
       TakeOrderParams memory top = takeParams[i];
       OrderData memory order = Order.get(top.orderId);
+      CurrencyType orderCurrency = Order2V2.getCurrency(top.orderId);
+      if (orderCurrency == CurrencyType.Gold) {
+        CharacterPositionUtils.mustInCity(characterId, order.cityId);
+      } else if (orderCurrency == CurrencyType.Crystal) {
+        _mustInACapital(characterId);
+      }
       if (order.isDone) {
         revert Errors.MarketSystem_OrderAlreadyDone(top.orderId);
       }
@@ -185,5 +200,13 @@ contract MarketSystem is System, CharacterAccessControl {
     uint256 orderId = OrderCounter.get() + 1;
     OrderCounter.set(orderId);
     return orderId;
+  }
+
+  function _mustInACapital(uint256 characterId) private view {
+    CharPositionData memory position = CharacterPositionUtils.getCurrentPosition(characterId);
+    uint256 cityId = RestrictLocV2.getCityId(position.x, position.y);
+    if (cityId == 0 || !City.getIsCapital(cityId)) {
+      revert Errors.MarketSystem_MustInACapital();
+    }
   }
 }
