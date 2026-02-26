@@ -9,7 +9,7 @@ import {
   CharName,
   ActiveChar,
   Kingdom,
-  MarketFeeCrystal,
+  CrystalFee,
   CityVault2V2
 } from "@codegen/index.sol";
 import { CharStats2 } from "@codegen/tables/CharStats2.sol";
@@ -92,7 +92,7 @@ contract SpawnSystem is System {
   }
 
   function _shareFeeToCityVault(uint8 kingdomId, uint256 rawEthFee) private {
-    uint8 feePercentage = MarketFeeCrystal.getFee(kingdomId);
+    uint8 feePercentage = CrystalFee.getFee(kingdomId);
     if (feePercentage == 0) return;
     uint256 ethFeeAmount = (rawEthFee * uint256(feePercentage)) / 100;
     uint256 crystalAmount = ethFeeAmount / Config.CRYSTAL_UNIT_PRICE;

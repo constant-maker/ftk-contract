@@ -21,7 +21,7 @@ import {
   CharInfo,
   City,
   MarketFee,
-  MarketFeeCrystal,
+  CrystalFee,
   FillOrder,
   FillOrder2,
   FillCounter,
@@ -295,7 +295,7 @@ library MarketSystemUtils {
     uint8 marketKingdomId = City.getKingdomId(cityId);
     uint8 feePercentage;
     if (currency == CurrencyType.Crystal) {
-      feePercentage = MarketFeeCrystal.getFee(marketKingdomId);
+      feePercentage = CrystalFee.getFee(marketKingdomId);
     } else {
       uint8 characterKingdomId = CharInfo.getKingdomId(character);
       feePercentage = MarketFee.getFee(marketKingdomId, characterKingdomId);

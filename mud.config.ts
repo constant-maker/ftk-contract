@@ -21,6 +21,7 @@ import STATUS_TABLES from "./tables/statusTables";
 import GUILD_TABLES from "./tables/guildTables";
 import GACHA_TABLES from "./tables/gachaTables";
 import SALE_TABLES from "./tables/saleTables";
+import PORTAL_TABLES from "./tables/portalTables";
 
 export default defineWorld({
   deploy: {
@@ -93,6 +94,7 @@ export default defineWorld({
     ...GUILD_TABLES,
     ...GACHA_TABLES,
     ...SALE_TABLES,
+    ...PORTAL_TABLES,
   },
   excludeSystems: ["SpawnSystem", "GachaSystem"], // registered as root systems
 });

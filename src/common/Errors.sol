@@ -338,6 +338,7 @@ library Errors {
   error KingSystem_CityNotInYourKingdom(uint256 cityId, uint8 kingdomId);
   error KingSystem_CityMoveOnCooldown(uint256 cityId);
   error KingSystem_InsufficientCityGold(uint256 cityId, uint32 requiredGold);
+  error KingSystem_InvalidCrystalFee(uint256 fee, uint256 maxFee);
 
   /* -------------------------------------------------------------------------- */
   /*                               VaultSystem                                  */
@@ -421,4 +422,6 @@ library Errors {
   /* -------------------------------------------------------------------------- */
   error PortalSystem_CrystalAmountTooSmall(uint256 amount, uint256 minAmount);
   error PortalSystem_InsufficientCrystal(uint32 currentBalance, uint256 requiredAmount);
+  error PortalSystem_SellRequestNotFound(uint256 reqId);
+  error PortalSystem_SellRequestProcessing(uint256 reqId);
 }
