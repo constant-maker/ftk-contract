@@ -32,7 +32,7 @@ import {
   FillOrder,
   FillOrderData,
   CharOtherItemStorage,
-  MarketFeeCrystal,
+  CrystalFee,
   CityVault2V2,
   RestrictLocV2
 } from "@codegen/index.sol";
@@ -684,7 +684,7 @@ contract MarketSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixt
     vm.startPrank(worldDeployer);
     CityData memory city2Data = City.get(city2);
     RestrictLocV2.set(city2Data.x, city2Data.y, city2, true);
-    MarketFeeCrystal.set(1, 5); // 5% fee when take order in kingdom 1
+    CrystalFee.set(1, 5); // 5% fee when take order in kingdom 1
     vm.stopPrank();
     _moveToCity(characterId2, city2); // with crystal, no need to be in the same city, but must be in another capital
     TakeOrderParams memory takeOrderParams = TakeOrderParams({ orderId: 1, amount: 5, equipmentIds: new uint256[](0) });
@@ -768,7 +768,7 @@ contract MarketSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixt
     uint32 orderValue = 5 * 100;
     platFormFee = (orderValue * Config.PLATFORM_FEE_PERCENTAGE + 99) / 100;
     finalOrderValue = orderValue - platFormFee;
-    kingdomFee = MarketFeeCrystal.get(2); // 0, not set yet
+    kingdomFee = CrystalFee.get(2); // 0, not set yet
     uint32 newChar1Crystal = CharFund.getCrystal(characterId1);
     assertEq(newChar1Crystal, char1CrystalBalance + (finalOrderValue - kingdomFee));
     cityVaultCrystal = uint32(CityVault2V2.getCrystal(city2));

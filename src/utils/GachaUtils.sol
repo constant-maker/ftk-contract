@@ -1,59 +1,69 @@
 pragma solidity >=0.8.24;
 
-import { GachaPet, GachaItemIndex } from "@codegen/index.sol";
+import {
+  CityVault2V2,
+  CharOtherItem,
+  CharInfo,
+  Kingdom,
+  CrystalFee,
+  CharGachaReq,
+  GachaReqChar,
+  CharGachaV3,
+  CharGachaV3Data,
+  CharTotalSpend
+} from "@codegen/index.sol";
 import { Errors } from "@common/Errors.sol";
+import { InventoryItemUtils } from "./InventoryItemUtils.sol";
+import { CharacterFundUtils } from "./CharacterFundUtils.sol";
 
 library GachaUtils {
-  /// @dev Add items to gacha
-  function addItems(uint256 gachaId, uint256[] memory petIds) internal {
-    uint256 length = petIds.length;
-    for (uint256 i = 0; i < length; i++) {
-      addItem(gachaId, petIds[i]);
+  function checkAndSpendTicket(uint256 characterId, uint256 ticketValue, uint256 ticketItemId) public {
+    if (CharOtherItem.getAmount(characterId, ticketItemId) > 0) {
+      // Has ticket item, use it
+      InventoryItemUtils.removeItem(characterId, ticketItemId, 1);
+      return;
     }
+
+    // No ticket item, try to pay with crystal
+    if (ticketValue > 0) {
+      CharacterFundUtils.decreaseCrystal(characterId, uint32(ticketValue));
+      // account total spent
+      uint256 totalSpend = CharTotalSpend.get(characterId);
+      totalSpend += ticketValue;
+      CharTotalSpend.set(characterId, totalSpend);
+      // share the fee to city vault
+      uint8 kingdomId = CharInfo.getKingdomId(characterId); // TODO: create an utility function to do this
+      uint256 capitalId = Kingdom.getCapitalId(kingdomId);
+      uint8 kingdomFeePercentage = CrystalFee.get(kingdomId);
+      uint256 shareValue = (ticketValue * uint256(kingdomFeePercentage)) / 100;
+      uint256 currentVaultCrystal = CityVault2V2.getCrystal(capitalId);
+      CityVault2V2.setCrystal(capitalId, currentVaultCrystal + shareValue);
+      return;
+    }
+
+    // Either ticket item or crystal is required, but user has neither
+    revert Errors.GachaSystem_InsufficientPayment(characterId);
   }
 
-  /// @dev Add a item to gacha
-  function addItem(uint256 gachaId, uint256 itemId) internal {
-    if (hasItem(gachaId, itemId)) {
-      revert Errors.Gacha_AlreadyHad(gachaId, itemId);
-    }
-    GachaPet.pushPetIds(gachaId, itemId);
-    // The value is stored at length-1, but we add 1 to all indexes
-    // and use 0 as a sentinel value
-    uint256 index = GachaPet.lengthPetIds(gachaId);
-    GachaItemIndex.set(gachaId, itemId, index);
+  function storeCharGachaData(uint256 characterId, uint256 gachaId, uint256 requestId, bool isLimitedGacha) public {
+    CharGachaV3Data memory charGacha = CharGachaV3Data({
+      randomNumber: 0, // will be set when fulfilled
+      gachaId: gachaId,
+      isLimitedGacha: isLimitedGacha,
+      gachaItemId: 0, // will be set when fulfilled
+      gachaEquipmentId: 0, // will be set when fulfilled if it's equipment
+      isPending: true,
+      timestamp: block.timestamp
+    });
+
+    CharGachaV3.set(characterId, requestId, charGacha);
+    GachaReqChar.set(requestId, characterId);
+    CharGachaReq.set(characterId, requestId);
   }
 
-  /// @dev Remove items from gacha
-  function removeItems(uint256 gachaId, uint256[] memory petIds) internal {
-    uint256 length = petIds.length;
-    for (uint256 i = 0; i < length; i++) {
-      removeItem(gachaId, petIds[i]);
+  function checkPendingRequest(uint256 characterId) public view {
+    if (CharGachaReq.get(characterId) > 0) {
+      revert Errors.GachaSystem_ExistingPendingRequest(characterId);
     }
-  }
-
-  /// @dev Remove a item from gacha
-  function removeItem(uint256 gachaId, uint256 itemId) internal {
-    uint256 index = GachaItemIndex.get(gachaId, itemId);
-    if (index == 0) revert Errors.Gacha_NoItem(gachaId, itemId);
-    // To delete an element from the _values array in O(1), we swap the element to delete with the last one in
-    // the array, and then remove the last element (sometimes called as 'swap and pop').
-    // This modifies the order of the array, as noted in {at}.
-    uint256 valueIndex = index - 1;
-    uint256 lastIndex = GachaPet.lengthPetIds(gachaId) - 1;
-    if (valueIndex != lastIndex) {
-      uint256 lastItemIdValue = GachaPet.getItemPetIds(gachaId, lastIndex);
-      GachaPet.updatePetIds(gachaId, valueIndex, lastItemIdValue);
-      // Update the index for the moved value
-      GachaItemIndex.set(gachaId, lastItemIdValue, index);
-    }
-    GachaPet.popPetIds(gachaId);
-    GachaItemIndex.deleteRecord(gachaId, itemId);
-  }
-
-  /// @dev Return whether the gacha has the item
-  function hasItem(uint256 gachaId, uint256 itemId) internal view returns (bool) {
-    uint256 index = GachaItemIndex.get(gachaId, itemId);
-    return index != 0;
   }
 }

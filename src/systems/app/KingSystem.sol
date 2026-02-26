@@ -22,7 +22,8 @@ import {
   CharRole,
   CharRoleCounter,
   KingdomCityCounter,
-  VaultRestriction
+  VaultRestriction,
+  CrystalFee
 } from "@codegen/index.sol";
 import { CharAchievementUtils, MapUtils, CharacterRoleUtils, KingSystemUtils } from "@utils/index.sol";
 import { Errors, Config } from "@common/index.sol";
@@ -154,6 +155,15 @@ contract KingSystem is CharacterAccessControl, System {
       }
       MarketFee.set(charKingdomId, kingdomId, fee);
     }
+  }
+
+  function setCrystalFee(uint256 characterId, uint8 fee) public onlyAuthorizedWallet(characterId) {
+    uint8 charKingdomId = CharInfo.getKingdomId(characterId);
+    CharacterRoleUtils.mustBeKing(charKingdomId, characterId);
+    if (fee > Config.MAX_CRYSTAL_FEE) {
+      revert Errors.KingSystem_InvalidCrystalFee(fee, Config.MAX_CRYSTAL_FEE);
+    }
+    CrystalFee.set(charKingdomId, fee);
   }
 
   function setPvPFamePenalty(uint256 characterId, uint8 penalty) public onlyAuthorizedWallet(characterId) {

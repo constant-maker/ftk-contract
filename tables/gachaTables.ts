@@ -1,7 +1,7 @@
 import { timeStamp } from "console";
 
 const GACHA_TABLES: any = {
-  CharGachaV2: {
+  CharGachaV3: {
     schema: {
       characterId: "uint256",
       requestId: "uint256",
@@ -9,6 +9,7 @@ const GACHA_TABLES: any = {
       gachaId: "uint256",
       isLimitedGacha: "bool",
       gachaItemId: "uint256", // The itemId received from gacha
+      gachaEquipmentId: "uint256", // The equipmentId received from gacha, 0 if not equipment
       isPending: "bool",
       timestamp: "uint256",
     },

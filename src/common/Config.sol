@@ -8,6 +8,7 @@ library Config {
   uint8 public constant MAX_PERK_LEVEL = 9; // Perk level starts from 0 ~ so max is 10 on UI
   uint8 public constant AMOUNT_RECEIVE_FROM_FARMING = 5;
   uint8 public constant DEFAULT_MARKET_FEE = 5; // 5%
+  uint8 public constant MAX_CRYSTAL_FEE = 10; // 10%
 
   uint16 public constant DEFAULT_MOVEMENT_DURATION = 8; // Seconds
   uint16 public constant DEFAULT_PLAYER_ACTION_DURATION = 10; // Seconds
@@ -47,6 +48,8 @@ library Config {
   uint256 public constant MIN_CRYSTALS_PER_PURCHASE = 100; // Minimum crystals per purchase
   uint256 public constant CREATE_CHARACTER_FEE = 0.0001 ether; // TODO: Adjust later on mainnet
   uint256 public constant CRYSTAL_UNIT_PRICE = 0.000005 ether;
+  uint256 public constant MIN_SELL_CRYSTAL = 1000; // Minimum crystals to sell
+  uint256 public constant SELL_CRYSTAL_PROCESSING_TIME = 3 days; // 3 days
   uint32 public constant PLATFORM_FEE_PERCENTAGE = 3; // platform fee (apply for crystal only)
   address public constant TEAM_ADDRESS = address(0x0);
 }

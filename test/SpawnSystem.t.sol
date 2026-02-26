@@ -18,7 +18,7 @@ import {
   ActiveChar,
   ActiveCharData,
   Contracts,
-  MarketFeeCrystal,
+  CrystalFee,
   CityVault2V2
 } from "@codegen/index.sol";
 import { CharacterStateType, CharacterType } from "@codegen/common.sol";
@@ -290,7 +290,7 @@ contract CreateCharacter is SpawnSystemFixture {
   function test_TransferNFTWithData() external {
     uint8 feePercentage = 5;
     vm.startPrank(worldDeployer);
-    MarketFeeCrystal.setFee(1, feePercentage);
+    CrystalFee.setFee(1, feePercentage);
     vm.stopPrank();
 
     uint256 characterId = _createCharacter(player, CharacterInfoMock.getCharacterInfoData());

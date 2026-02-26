@@ -3,8 +3,8 @@ pragma solidity >=0.8.24;
 import { System } from "@latticexyz/world/src/System.sol";
 import { CharacterAccessControl } from "@abstracts/CharacterAccessControl.sol";
 import {
-  CharGachaV2,
-  CharGachaV2Data,
+  CharGachaV3,
+  CharGachaV3Data,
   GachaV5,
   GachaV5Data,
   GachaPet,
@@ -13,10 +13,13 @@ import {
   EquipmentPet,
   CharInventory,
   CharGachaReq,
-  CharOtherItem
+  ItemV2
 } from "@codegen/index.sol";
 import { Errors } from "@common/index.sol";
-import { GachaUtils, CharacterItemUtils, InventoryItemUtils, CharacterFundUtils } from "@utils/index.sol";
+import {
+  GachaIndexUtils, CharacterItemUtils, InventoryItemUtils, CharacterFundUtils, GachaUtils
+} from "@utils/index.sol";
+import { ItemCategoryType } from "@codegen/common.sol";
 
 // Interface for requesting random numbers
 interface IVRFCoordinator {
@@ -47,7 +50,7 @@ contract GachaSystem is System, CharacterAccessControl, IVRFConsumer {
     if (existingRequestId == 0) {
       revert Errors.GachaSystem_NoPendingRequest(characterId);
     }
-    CharGachaV2Data memory charGacha = CharGachaV2.get(characterId, existingRequestId);
+    CharGachaV3Data memory charGacha = CharGachaV3.get(characterId, existingRequestId);
     if (!charGacha.isPending) {
       revert Errors.GachaSystem_RequestAlreadyFulfilled(existingRequestId);
     }
@@ -55,18 +58,18 @@ contract GachaSystem is System, CharacterAccessControl, IVRFConsumer {
       revert Errors.GachaSystem_ExistingPendingRequest(characterId);
     }
 
-    CharGachaV2.deleteRecord(characterId, existingRequestId); // remove old request
+    CharGachaV3.deleteRecord(characterId, existingRequestId); // remove old request
     GachaReqChar.deleteRecord(existingRequestId); // remove old request mapping
 
     uint256 requestId = IVRFCoordinator(VRF_COORDINATOR).requestRandomNumbers(
       NUM_REQUEST_NUMBER, uint256(keccak256(abi.encodePacked(characterId, block.timestamp, existingRequestId)))
     );
 
-    _storeCharGachaData(characterId, charGacha.gachaId, requestId, charGacha.isLimitedGacha);
+    GachaUtils.storeCharGachaData(characterId, charGacha.gachaId, requestId, charGacha.isLimitedGacha);
   }
 
   function requestGacha(uint256 characterId, uint256 gachaId) public onlyAuthorizedWallet(characterId) {
-    _checkPendingRequest(characterId);
+    GachaUtils.checkPendingRequest(characterId);
 
     // Validate gacha
     GachaV5Data memory gacha = GachaV5.get(gachaId);
@@ -79,7 +82,7 @@ contract GachaSystem is System, CharacterAccessControl, IVRFConsumer {
     }
 
     // Either pay with crystal or ticket item
-    _checkAndSpendTicket(characterId, gacha.ticketValue, gacha.ticketItemId);
+    GachaUtils.checkAndSpendTicket(characterId, gacha.ticketValue, gacha.ticketItemId);
 
     // Request one random number from the VRF Coordinator
     uint256 requestId = IVRFCoordinator(VRF_COORDINATOR).requestRandomNumbers(
@@ -87,11 +90,11 @@ contract GachaSystem is System, CharacterAccessControl, IVRFConsumer {
     );
 
     // Store the gacha request info
-    _storeCharGachaData(characterId, gachaId, requestId, false);
+    GachaUtils.storeCharGachaData(characterId, gachaId, requestId, false);
   }
 
   function requestPetGacha(uint256 characterId, uint256 gachaId) public onlyAuthorizedWallet(characterId) {
-    _checkPendingRequest(characterId);
+    GachaUtils.checkPendingRequest(characterId);
 
     // Validate gacha
     GachaPetData memory gacha = GachaPet.get(gachaId);
@@ -103,7 +106,7 @@ contract GachaSystem is System, CharacterAccessControl, IVRFConsumer {
       revert Errors.Gacha_InactiveGacha(gachaId);
     }
 
-    _checkAndSpendTicket(characterId, gacha.ticketValue, gacha.ticketItemId);
+    GachaUtils.checkAndSpendTicket(characterId, gacha.ticketValue, gacha.ticketItemId);
 
     // Request one random number from the VRF Coordinator
     uint256 requestId = IVRFCoordinator(VRF_COORDINATOR).requestRandomNumbers(
@@ -111,7 +114,7 @@ contract GachaSystem is System, CharacterAccessControl, IVRFConsumer {
     );
 
     // Store the gacha request info
-    _storeCharGachaData(characterId, gachaId, requestId, true);
+    GachaUtils.storeCharGachaData(characterId, gachaId, requestId, true);
   }
 
   // This function is called by the VRF Coordinator when the random numbers are ready
@@ -126,8 +129,8 @@ contract GachaSystem is System, CharacterAccessControl, IVRFConsumer {
       revert Errors.GachaSystem_InvalidRequestId(requestId);
     }
 
-    // Get the CharGachaV2 record
-    CharGachaV2Data memory charGacha = CharGachaV2.get(characterId, requestId);
+    // Get the CharGachaV3 record
+    CharGachaV3Data memory charGacha = CharGachaV3.get(characterId, requestId);
     if (!charGacha.isPending) {
       revert Errors.GachaSystem_RequestAlreadyFulfilled(requestId);
     }
@@ -138,27 +141,39 @@ contract GachaSystem is System, CharacterAccessControl, IVRFConsumer {
     uint256 receivedItemId;
 
     if (charGacha.isLimitedGacha) {
-      receivedItemId = _handleLimitedGacha(characterId, charGacha.gachaId, randomNumber);
+      (receivedItemId, charGacha.gachaEquipmentId) = _handleLimitedGacha(characterId, charGacha.gachaId, randomNumber);
     } else {
       receivedItemId = _handleUnlimitedGacha(characterId, charGacha.gachaId, randomNumber);
+      if (ItemV2.getCategory(receivedItemId) == ItemCategoryType.Equipment) {
+        charGacha.gachaEquipmentId =
+          CharInventory.getItemEquipmentIds(characterId, CharInventory.lengthEquipmentIds(characterId) - 1);
+      }
     }
 
-    // Update the CharGachaV2 table with the received item and remove item from gacha
+    // Update the CharGachaV3 table with the received item and remove item from gacha
     charGacha.randomNumber = randomNumber;
     charGacha.gachaItemId = receivedItemId;
     charGacha.isPending = false;
-    CharGachaV2.set(characterId, requestId, charGacha);
+    CharGachaV3.set(characterId, requestId, charGacha);
     GachaReqChar.deleteRecord(requestId);
     CharGachaReq.set(characterId, 0);
   }
 
-  function _handleLimitedGacha(uint256 characterId, uint256 gachaId, uint256 randomNumber) private returns (uint256) {
+  // _handleLimitedGacha in this version return pet id and also the equipment id of the pet item added to inventory
+  function _handleLimitedGacha(
+    uint256 characterId,
+    uint256 gachaId,
+    uint256 randomNumber
+  )
+    private
+    returns (uint256, uint256)
+  {
     GachaPetData memory gachaData = GachaPet.get(gachaId);
     uint256 randomIndex = randomNumber % gachaData.petIds.length;
     uint256 receivedItemId = gachaData.petIds[randomIndex];
 
     // Remove the item from the gacha pool
-    GachaUtils.removeItem(gachaId, receivedItemId);
+    GachaIndexUtils.removeItem(gachaId, receivedItemId);
     // Current gacha is PET gacha
     // This logic is for PET gacha only
 
@@ -170,7 +185,7 @@ contract GachaSystem is System, CharacterAccessControl, IVRFConsumer {
       // equipmentId
     EquipmentPet.set(lastEquipmentId, receivedItemId); // map equipmentId to petId
 
-    return receivedItemId;
+    return (receivedItemId, lastEquipmentId);
   }
 
   function _handleUnlimitedGacha(uint256 characterId, uint256 gachaId, uint256 randomNumber) private returns (uint256) {
@@ -190,43 +205,5 @@ contract GachaSystem is System, CharacterAccessControl, IVRFConsumer {
     uint256 fallbackItemId = gachaData.itemIds[0];
     CharacterItemUtils.addNewItem(characterId, fallbackItemId, gachaData.amounts[0]);
     return fallbackItemId;
-  }
-
-  function _checkAndSpendTicket(uint256 characterId, uint256 ticketValue, uint256 ticketItemId) private {
-    if (CharOtherItem.getAmount(characterId, ticketItemId) > 0) {
-      // Has ticket item, use it
-      InventoryItemUtils.removeItem(characterId, ticketItemId, 1);
-      return;
-    }
-
-    // No ticket item, try to pay with crystal
-    if (ticketValue > 0) {
-      CharacterFundUtils.decreaseCrystal(characterId, uint32(ticketValue));
-      return;
-    }
-
-    // Either ticket item or crystal is required, but user has neither
-    revert Errors.GachaSystem_InsufficientPayment(characterId);
-  }
-
-  function _storeCharGachaData(uint256 characterId, uint256 gachaId, uint256 requestId, bool isLimitedGacha) private {
-    CharGachaV2Data memory charGacha = CharGachaV2Data({
-      randomNumber: 0, // will be set when fulfilled
-      gachaId: gachaId,
-      isLimitedGacha: isLimitedGacha,
-      gachaItemId: 0, // will be set when fulfilled
-      isPending: true,
-      timestamp: block.timestamp
-    });
-
-    CharGachaV2.set(characterId, requestId, charGacha);
-    GachaReqChar.set(requestId, characterId);
-    CharGachaReq.set(characterId, requestId);
-  }
-
-  function _checkPendingRequest(uint256 characterId) private view {
-    if (CharGachaReq.get(characterId) > 0) {
-      revert Errors.GachaSystem_ExistingPendingRequest(characterId);
-    }
   }
 }
