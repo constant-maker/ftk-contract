@@ -23,7 +23,7 @@ import {
   MarketFee,
   CrystalFee,
   FillOrder,
-  FillOrder2,
+  FillOrder2V2,
   FillCounter,
   CityVault2V2,
   Kingdom
@@ -126,7 +126,14 @@ library MarketSystemUtils {
     }
   }
 
-  function storeFillOrder(OrderData memory order, uint256 takerId, TakeOrderParams memory top) public {
+  function storeFillOrder(
+    OrderData memory order,
+    CurrencyType orderCurrency,
+    uint256 takerId,
+    TakeOrderParams memory top
+  )
+    public
+  {
     uint256 newFillOrderId = FillCounter.get() + 1;
     FillCounter.set(newFillOrderId);
     bool isBuy = order.isBuy ? false : true; // reverse isBuy for fill order
@@ -141,7 +148,7 @@ library MarketSystemUtils {
       isBuy,
       block.timestamp
     );
-    FillOrder2.set(newFillOrderId, top.orderId, order.characterId, top.equipmentIds);
+    FillOrder2V2.set(newFillOrderId, top.orderId, order.characterId, orderCurrency, top.equipmentIds);
   }
 
   /// @dev validate order params

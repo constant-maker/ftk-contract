@@ -96,7 +96,7 @@ contract MarketSystem is System, CharacterAccessControl {
       }
       Order2V2.setUpdateTime(top.orderId, block.timestamp);
       // store fill order
-      MarketSystemUtils.storeFillOrder(order, characterId, top);
+      MarketSystemUtils.storeFillOrder(order, orderCurrency, characterId, top);
     }
   }
 

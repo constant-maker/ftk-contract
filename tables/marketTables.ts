@@ -48,11 +48,12 @@ const MARKET_TABLES: any = {
     },
     key: ['id'],
   },
-  FillOrder2: {
+  FillOrder2V2: {
     schema: {
       fillOrderId: "uint256",
       makerOrderId: "uint256",
       makerId: "uint256",
+      currency: "CurrencyType",
       equipmentIds: "uint256[]",
     },
     key: ['fillOrderId'],
