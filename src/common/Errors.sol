@@ -308,6 +308,7 @@ library Errors {
   error MarketSystem_InvalidItemType(uint256 itemId);
   error MarketSystem_OrderIsNotExist(uint256 orderId);
   error MarketSystem_MustInACapital(); // character must be in a capital either their own or other kingdom's capital
+  error MarketSystem_InvalidSellOrderEquipment(uint32 amount);
 
   /* -------------------------------------------------------------------------- */
   /*                               KingSystem                                   */
@@ -356,6 +357,9 @@ library Errors {
   );
   error VaultSystem_WithdrawalRestricted(uint256 characterId, uint8 kingdomId, uint256 itemId);
   error VaultSystem_DepositUntradeableItem(uint256 itemId);
+  error VaultSystem_OnlyKingCanWithdrawGoldOrCrystal(uint256 characterId);
+  error VaultSystem_InsufficientVaultGold(uint256 cityId, uint32 currentGold, uint32 withdrawGold);
+  error VaultSystem_InsufficientVaultCrystal(uint256 cityId, uint256 currentCrystal, uint256 withdrawCrystal);
 
   /* -------------------------------------------------------------------------- */
   /*                               CitySystem                                   */

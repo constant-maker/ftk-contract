@@ -22,8 +22,8 @@ import {
   City,
   CityData,
   CharFund,
-  CVaultHistoryV3,
-  CVaultHistoryV3Data,
+  CVaultHistoryV4,
+  CVaultHistoryV4Data,
   CharOtherItem,
   CharFund,
   CityVault2V2,
@@ -40,6 +40,7 @@ import {
 } from "@codegen/index.sol";
 import { RoleType } from "@codegen/common.sol";
 import { CharacterPositionUtils, InventoryItemUtils } from "@utils/index.sol";
+import { VaultActionParams } from "@common/Types.sol";
 
 contract CitySystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture {
   address candidate = makeAddr("candidate");
@@ -113,7 +114,9 @@ contract CitySystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixtur
     // revert - not the keeper
     vm.expectRevert();
     vm.startPrank(voter);
-    world.app__withdrawItemFromCity(voterId, cityId, resourceIds, withdrawAmounts);
+    world.app__withdrawItemFromCity(
+      voterId, cityId, VaultActionParams({ gold: 0, crystal: 0, itemIds: resourceIds, amounts: withdrawAmounts })
+    );
     vm.stopPrank();
 
     vm.startPrank(candidate);
@@ -139,10 +142,12 @@ contract CitySystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixtur
 
     // withdraw resource
     vm.startPrank(voter);
-    world.app__withdrawItemFromCity(voterId, cityId, resourceIds, withdrawAmounts);
+    world.app__withdrawItemFromCity(
+      voterId, cityId, VaultActionParams({ gold: 0, crystal: 0, itemIds: resourceIds, amounts: withdrawAmounts })
+    );
     vm.stopPrank();
     console2.log("test vault history 1");
-    CVaultHistoryV3Data memory history = CVaultHistoryV3.get(cityId, 1);
+    CVaultHistoryV4Data memory history = CVaultHistoryV4.get(cityId, 1);
     assertEq(history.itemIds[0], 1);
     assertEq(history.amounts[0], 300);
     assertFalse(history.isContributed);
@@ -207,9 +212,13 @@ contract CitySystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixtur
     TileInfo3.setKingdomId(newCityX, newCityY + 5, CharInfo.getKingdomId(candidateId));
     vm.stopPrank();
     vm.startPrank(voter);
-    world.app__contributeItemToCity(voterId, newCityId, resourceIds, withdrawAmounts, 100_000);
+    world.app__contributeItemToCity(
+      voterId,
+      newCityId,
+      VaultActionParams({ gold: 100_000, crystal: 0, itemIds: resourceIds, amounts: withdrawAmounts })
+    );
     vm.stopPrank();
-    history = CVaultHistoryV3.get(newCityId, 1);
+    history = CVaultHistoryV4.get(newCityId, 1);
     assertTrue(history.isContributed);
     assertEq(history.itemIds[0], 1);
     assertEq(history.amounts[0], 300);
@@ -366,7 +375,9 @@ contract CitySystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixtur
 
     vm.expectRevert(); // exceed daily withdraw limit
     vm.startPrank(voter);
-    world.app__withdrawItemFromCity(voterId, cityId, resourceIds, withdrawAmounts);
+    world.app__withdrawItemFromCity(
+      voterId, cityId, VaultActionParams({ gold: 0, crystal: 0, itemIds: resourceIds, amounts: withdrawAmounts })
+    );
     vm.stopPrank();
 
     withdrawAmounts[0] = 100;
@@ -374,7 +385,9 @@ contract CitySystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixtur
     withdrawAmounts[2] = 100;
 
     vm.startPrank(voter);
-    world.app__withdrawItemFromCity(voterId, cityId, resourceIds, withdrawAmounts);
+    world.app__withdrawItemFromCity(
+      voterId, cityId, VaultActionParams({ gold: 0, crystal: 0, itemIds: resourceIds, amounts: withdrawAmounts })
+    );
     vm.stopPrank();
 
     CharVaultWithdrawData memory cvw = CharVaultWithdraw.get(voterId);
@@ -386,7 +399,9 @@ contract CitySystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixtur
     withdrawAmounts[1] = 10;
     withdrawAmounts[2] = 10;
     vm.startPrank(voter);
-    world.app__withdrawItemFromCity(voterId, cityId, resourceIds, withdrawAmounts);
+    world.app__withdrawItemFromCity(
+      voterId, cityId, VaultActionParams({ gold: 0, crystal: 0, itemIds: resourceIds, amounts: withdrawAmounts })
+    );
     vm.stopPrank();
     cvw = CharVaultWithdraw.get(voterId);
     assertEq(cvw.weightQuota, 1970); // reset to 2000 - (10*1 + 10*1 + 10*1) = 1970
@@ -394,7 +409,9 @@ contract CitySystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixtur
 
     vm.warp(ts + 1);
     vm.startPrank(voter);
-    world.app__withdrawItemFromCity(voterId, cityId, resourceIds, withdrawAmounts);
+    world.app__withdrawItemFromCity(
+      voterId, cityId, VaultActionParams({ gold: 0, crystal: 0, itemIds: resourceIds, amounts: withdrawAmounts })
+    );
     vm.stopPrank();
     cvw = CharVaultWithdraw.get(voterId);
     assertEq(cvw.weightQuota, 1940); // 1970 - (10*1 + 10*1 + 10*1) = 1940
