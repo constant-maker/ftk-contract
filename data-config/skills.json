@@ -1246,8 +1246,8 @@
       "id": 76,
       "name": "Laser Beam",
       "desc": "The monster fires a concentrated beam of energy that burns through enemies with intense heat, dealing massive damage and leaving a lingering burn effect.",
-      "damage": 600,
-      "sp": 5,
+      "damage": 375,
+      "sp": 3,
       "perkItemTypes": [
         0
       ],
