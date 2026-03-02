@@ -7,6 +7,7 @@ import { MarketWeightUtils } from "./MarketWeightUtils.sol";
 import { CharAchievementUtils } from "./CharAchievementUtils.sol";
 import { StorageEquipmentUtils } from "./StorageEquipmentUtils.sol";
 import { StorageItemUtils } from "./StorageItemUtils.sol";
+import { KingdomUtils } from "./KingdomUtils.sol";
 import {
   CharStats2,
   OrderCounter,
@@ -290,7 +291,7 @@ library MarketSystemUtils {
 
   /// @dev Calculate order fee based on currency type and kingdom relationship between character and city
   function calculateOrderFee(
-    uint256 character,
+    uint256 characterId,
     uint256 cityId,
     uint32 value,
     CurrencyType currency
@@ -300,11 +301,12 @@ library MarketSystemUtils {
     returns (uint32)
   {
     uint8 marketKingdomId = City.getKingdomId(cityId);
+    uint8 characterKingdomId = CharInfo.getKingdomId(characterId);
     uint8 feePercentage;
     if (currency == CurrencyType.Crystal) {
-      feePercentage = CrystalFee.getFee(marketKingdomId);
+      // crystal fee is based on character kingdom only, no matter where the market is
+      feePercentage = CrystalFee.getFee(characterKingdomId);
     } else {
-      uint8 characterKingdomId = CharInfo.getKingdomId(character);
       feePercentage = MarketFee.getFee(marketKingdomId, characterKingdomId);
     }
     if (feePercentage == 0) {
@@ -319,25 +321,27 @@ library MarketSystemUtils {
     uint32 orderValue = order.unitPrice * top.amount;
     if (Order2V2.getCurrency(top.orderId) == CurrencyType.Gold) {
       CharacterFundUtils.decreaseGold(takerId, orderValue);
-      _handleSellOrderMakerWithGold(order, orderValue);
+      _handleSellOrderTakerWithGold(order, orderValue);
     } else {
       CharacterFundUtils.decreaseCrystal(takerId, orderValue);
-      _handleSellOrderMakerWithCrystal(order, orderValue);
+      _handleSellOrderTakerWithCrystal(order, orderValue);
     }
   }
 
-  function _handleSellOrderMakerWithGold(OrderData memory order, uint32 orderValue) private {
+  function _handleSellOrderTakerWithGold(OrderData memory order, uint32 orderValue) private {
     uint32 orderFee = calculateOrderFee(order.characterId, order.cityId, orderValue, CurrencyType.Gold);
     CharacterFundUtils.increaseGold(order.characterId, orderValue - orderFee);
     // fee is always smaller than orderValue (<= 100%)
     _updateCityVaultGold(order.cityId, orderFee);
   }
 
-  function _handleSellOrderMakerWithCrystal(OrderData memory order, uint32 orderValue) private {
+  function _handleSellOrderTakerWithCrystal(OrderData memory order, uint32 orderValue) private {
     uint32 platformFee = _getPlatformFee(orderValue);
     uint32 finalOrderValue = orderValue - platformFee;
+    // charge fee seller
     uint32 orderFee = calculateOrderFee(order.characterId, order.cityId, finalOrderValue, CurrencyType.Crystal);
-    _updateCityVaultCrystal(order.cityId, orderFee);
+    uint256 kingdomId = KingdomUtils.getCapitalIdByCharacterId(order.characterId);
+    _updateCityVaultCrystal(kingdomId, orderFee);
     // fee is always smaller than finalOrderValue (<= 100%)
     CharacterFundUtils.increaseCrystal(order.characterId, finalOrderValue - orderFee);
   }
@@ -365,7 +369,10 @@ library MarketSystemUtils {
     uint32 platformFee = _getPlatformFee(orderValue);
     uint32 finalOrderValue = orderValue - platformFee;
     uint32 orderFee = calculateOrderFee(takerId, order.cityId, finalOrderValue, CurrencyType.Crystal);
-    _updateCityVaultCrystal(order.cityId, orderFee);
+    // fee will be sent to taker city vault, and kingdom fee is based on taker kingdom, so we use takerId to calculate
+    // fee
+    uint256 takerCapitalId = KingdomUtils.getCapitalIdByCharacterId(takerId);
+    _updateCityVaultCrystal(takerCapitalId, orderFee);
     // fee is always smaller than finalOrderValue (<= 100%)
     CharacterFundUtils.increaseCrystal(takerId, finalOrderValue - orderFee);
   }

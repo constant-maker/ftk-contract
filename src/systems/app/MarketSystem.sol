@@ -26,10 +26,13 @@ import { ItemCategoryType, CurrencyType } from "@codegen/common.sol";
 import { Errors, Config } from "@common/index.sol";
 
 contract MarketSystem is System, CharacterAccessControl {
-  function placeOrder(uint256 characterId, OrderParams memory order) public onlyAuthorizedWallet(characterId) {
+  function placeOrder(uint256 characterId, OrderParams calldata order) public onlyAuthorizedWallet(characterId) {
     MarketWeightUtils.checkAndSetMaxWeight(characterId, order.cityId); // set default max weight if not set
     CharacterPositionUtils.mustInCapital(characterId, order.cityId);
-    _updateOrderParams(order);
+    if (!order.isBuy && order.equipmentId != 0) {
+      // validate sell equipment order params
+      _validateSellEquipmentOrderParams(order.amount);
+    }
     if (order.orderId != 0) {
       _updateOrder(characterId, order);
       return;
@@ -110,7 +113,7 @@ contract MarketSystem is System, CharacterAccessControl {
   }
 
   /// @dev Lock asset for order, also update market weight if it's a sell order
-  function _lockAsset(uint256 characterId, OrderParams memory order) private {
+  function _lockAsset(uint256 characterId, OrderParams calldata order) private {
     if (order.isBuy) {
       // buy - lock gold or crystal
       uint32 totalValue = order.unitPrice * order.amount;
@@ -188,12 +191,10 @@ contract MarketSystem is System, CharacterAccessControl {
     }
   }
 
-  /// @dev Update order params
-  /// @dev if equipmentId is set, we need to update itemId and amount
-  function _updateOrderParams(OrderParams memory order) private view {
-    if (order.equipmentId != 0) {
-      order.itemId = Equipment.getItemId(order.equipmentId);
-      order.amount = 1;
+  /// @dev Validate the sell order params for equipment, currently we only support selling 1 equipment per order
+  function _validateSellEquipmentOrderParams(uint32 orderAmount) private view {
+    if (orderAmount != 1) {
+      revert Errors.MarketSystem_InvalidSellOrderEquipment(orderAmount);
     }
   }
 

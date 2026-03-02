@@ -27,12 +27,13 @@ const CITY_TABLES: any = {
     },
     key: ['cityId'],
   },
-  CVaultHistoryV3: {
+  CVaultHistoryV4: {
     schema: {
       cityId: "uint256",
       id: "uint256",
       characterId: "uint256",
       gold: "uint32",
+      crystal: "uint256",
       timestamp: "uint256",
       isContributed: "bool",
       itemIds: "uint256[]",

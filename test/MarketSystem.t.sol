@@ -61,8 +61,8 @@ contract MarketSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixt
       orderId: 0,
       cityId: city1,
       equipmentId: 1,
-      itemId: 0,
-      amount: 0,
+      itemId: Equipment.getItemId(1),
+      amount: 1,
       unitPrice: 100,
       currency: CurrencyType.Gold,
       isBuy: false
@@ -685,6 +685,7 @@ contract MarketSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixt
     CityData memory city2Data = City.get(city2);
     RestrictLocV2.set(city2Data.x, city2Data.y, city2, true);
     CrystalFee.set(1, 5); // 5% fee when take order in kingdom 1
+    CrystalFee.set(2, 3); // 3% fee when take order in kingdom 2
     vm.stopPrank();
     _moveToCity(characterId2, city2); // with crystal, no need to be in the same city, but must be in another capital
     TakeOrderParams memory takeOrderParams = TakeOrderParams({ orderId: 1, amount: 5, equipmentIds: new uint256[](0) });
@@ -714,11 +715,16 @@ contract MarketSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixt
     console2.log("character2 crystal after take order", char2Crystal);
     uint32 platFormFee = (1000 * Config.PLATFORM_FEE_PERCENTAGE + 99) / 100;
     uint32 finalOrderValue = 1000 - platFormFee;
-    uint32 kingdomFee = (finalOrderValue * 5) / 100;
-    assertEq(char2Crystal, finalOrderValue - kingdomFee); // 922
-    uint32 cityVaultCrystal = uint32(CityVault2V2.getCrystal(1));
-    console2.log("city vault crystal after take order", cityVaultCrystal);
-    assertEq(cityVaultCrystal, kingdomFee);
+    uint32 kingdomFee = (finalOrderValue * CrystalFee.get(2)) / 100; // 29
+    assertEq(char2Crystal, finalOrderValue - kingdomFee); // 970 - 29 = 941
+    // uint32 cityVaultCrystal = uint32(CityVault2V2.getCrystal(1));
+    // console2.log("city vault crystal after take order", cityVaultCrystal);
+    // assertEq(cityVaultCrystal, kingdomFee);
+
+    uint32 city2VaultCrystal = uint32(CityVault2V2.getCrystal(2));
+    console2.log("city2 vault crystal after take order", city2VaultCrystal);
+    assertEq(city2VaultCrystal, kingdomFee);
+
     assertEq(CharOtherItem.getAmount(characterId1, 1), 100);
     assertEq(CharOtherItemStorage.getAmount(characterId1, 1, 1), 5); // just bought 5, so 5 in storage
     assertEq(CharOtherItem.getAmount(characterId2, 1), 95); // just sold 5, so 95 left
@@ -764,16 +770,16 @@ contract MarketSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixt
 
     char2Crystal = CharFund.getCrystal(characterId2);
     console2.log("character2 crystal after take order", char2Crystal);
-    assertEq(char2Crystal, 422); // 922 - 5 * 100 (no fee for taker of a sell order)
+    assertEq(char2Crystal, 441); // 941 - 5 * 100 (no fee for taker of a sell order)
     uint32 orderValue = 5 * 100;
     platFormFee = (orderValue * Config.PLATFORM_FEE_PERCENTAGE + 99) / 100;
     finalOrderValue = orderValue - platFormFee;
-    kingdomFee = CrystalFee.get(2); // 0, not set yet
+    kingdomFee = (finalOrderValue * CrystalFee.get(1)) / 100; // character 1 is the seller, so use kingdom 1 fee
     uint32 newChar1Crystal = CharFund.getCrystal(characterId1);
     assertEq(newChar1Crystal, char1CrystalBalance + (finalOrderValue - kingdomFee));
-    cityVaultCrystal = uint32(CityVault2V2.getCrystal(city2));
+    uint32 cityVaultCrystal = uint32(CityVault2V2.getCrystal(city1));
     console2.log("city vault crystal after take order", cityVaultCrystal);
-    assertEq(cityVaultCrystal, kingdomFee); // 0
+    assertEq(cityVaultCrystal, kingdomFee); // (500 - 500 * 0.03) * 0.05 = 24 // 3% platform fee, then 5% kingdom fee
     assertEq(CharOtherItem.getAmount(characterId1, 1), 95); // just sold 5, so 95 left
     assertEq(CharOtherItem.getAmount(characterId2, 1), 100); // sold 5, bought 5, back to 100
   }

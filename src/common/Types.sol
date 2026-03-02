@@ -17,3 +17,10 @@ struct EquipmentSnapshotData {
   uint16 ms;
   uint32 weight; // bonus weight
 }
+
+struct VaultActionParams {
+  uint32 gold;
+  uint256 crystal;
+  uint256[] itemIds;
+  uint32[] amounts;
+}

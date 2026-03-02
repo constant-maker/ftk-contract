@@ -8,7 +8,7 @@ import {
   CharInfo,
   CityVault,
   CityVault2V2,
-  CVaultHistoryV3,
+  CVaultHistoryV4,
   HistoryCounter,
   KingElection,
   CharStats2,
@@ -21,13 +21,13 @@ import {
 import { RoleType } from "@codegen/common.sol";
 import { CharacterPositionUtils, InventoryItemUtils, CharacterFundUtils, MapUtils } from "@utils/index.sol";
 import { Errors } from "@common/Errors.sol";
+import { VaultActionParams } from "@common/Types.sol";
 
 contract VaultSystem is System, CharacterAccessControl {
   function withdrawItemFromCity(
     uint256 characterId,
     uint256 cityId,
-    uint256[] memory itemIds,
-    uint32[] memory amounts
+    VaultActionParams calldata params
   )
     public
     onlyAuthorizedWallet(characterId)
@@ -35,75 +35,81 @@ contract VaultSystem is System, CharacterAccessControl {
     uint8 kingdomId = City.getKingdomId(cityId);
     bool isKing = KingElection.getKingId(kingdomId) == characterId;
 
-    _validateWithdrawInput(characterId, cityId, itemIds, amounts, isKing, kingdomId);
+    _validateWithdrawInput(characterId, cityId, isKing, kingdomId, params);
 
-    uint8 charKingdomId = CharInfo.getKingdomId(characterId);
-    if (kingdomId != charKingdomId) {
-      revert Errors.VaultSystem_CharacterNotInSameKingdom(characterId, cityId);
+    if (params.gold > 0) {
+      CharacterFundUtils.increaseGold(characterId, params.gold);
+      CityVault2V2.setGold(cityId, CityVault2V2.getGold(cityId) - params.gold);
     }
-    if (!isKing && CharRole.get(characterId) != RoleType.VaultKeeper) {
-      revert Errors.VaultSystem_MustBeVaultKeeper(characterId);
+
+    if (params.crystal > 0) {
+      CharacterFundUtils.increaseCrystal(characterId, uint32(params.crystal));
+      CityVault2V2.setCrystal(cityId, CityVault2V2.getCrystal(cityId) - params.crystal);
     }
+
     uint32 totalWithdrawWeight;
-    for (uint256 i = 0; i < itemIds.length; i++) {
-      if (itemIds[i] == 0 || amounts[i] == 0) {
-        revert Errors.VaultSystem_InvalidParamsValue(itemIds[i], amounts[i]);
+    for (uint256 i = 0; i < params.itemIds.length; i++) {
+      if (params.itemIds[i] == 0 || params.amounts[i] == 0) {
+        revert Errors.VaultSystem_InvalidParamsValue(params.itemIds[i], params.amounts[i]);
       }
-      uint32 currentVaultAmount = CityVault.getAmount(cityId, itemIds[i]);
-      if (currentVaultAmount < amounts[i]) {
-        revert Errors.VaultSystem_InsufficientVaultAmount(cityId, itemIds[i], currentVaultAmount, amounts[i]);
-      }
-      uint32 itemWeight = ItemV2.getWeight(itemIds[i]) * amounts[i];
-      totalWithdrawWeight += itemWeight;
-      uint32 newVaultAmount = currentVaultAmount - amounts[i];
-      CityVault.setAmount(cityId, itemIds[i], newVaultAmount);
-    }
-    uint32 withdrawWeightLimit = KingSetting2.getWithdrawWeightLimit(kingdomId);
-    if (withdrawWeightLimit > 0 && !isKing) {
-      // King has no limit
-      // check daily withdraw limit
-      CharVaultWithdrawData memory cvw = CharVaultWithdraw.get(characterId);
-      uint256 nextResetTime = cvw.markTimestamp + 1 days;
-      if (cvw.markTimestamp == 0 || nextResetTime < block.timestamp) {
-        cvw.weightQuota = withdrawWeightLimit; // reset daily limit
-        CharVaultWithdraw.setMarkTimestamp(characterId, block.timestamp);
-      }
-      if (cvw.weightQuota < totalWithdrawWeight) {
-        revert Errors.VaultSystem_ExceedDailyWithdrawLimit(
-          characterId, cvw.weightQuota, totalWithdrawWeight, nextResetTime
+      uint32 currentVaultAmount = CityVault.getAmount(cityId, params.itemIds[i]);
+      if (currentVaultAmount < params.amounts[i]) {
+        revert Errors.VaultSystem_InsufficientVaultAmount(
+          cityId, params.itemIds[i], currentVaultAmount, params.amounts[i]
         );
       }
-      cvw.weightQuota -= totalWithdrawWeight;
-      CharVaultWithdraw.setWeightQuota(characterId, cvw.weightQuota);
+      uint32 itemWeight = ItemV2.getWeight(params.itemIds[i]) * params.amounts[i];
+      totalWithdrawWeight += itemWeight;
+      uint32 newVaultAmount = currentVaultAmount - params.amounts[i];
+      CityVault.setAmount(cityId, params.itemIds[i], newVaultAmount);
     }
-    InventoryItemUtils.addItems(characterId, itemIds, amounts);
-    CVaultHistoryV3.set(cityId, _getVaultHistoryId(cityId), characterId, 0, block.timestamp, false, itemIds, amounts);
+
+    if (!isKing) {
+      _checkAndSetWeightQuota(characterId, kingdomId, totalWithdrawWeight);
+    }
+
+    InventoryItemUtils.addItems(characterId, params.itemIds, params.amounts);
+    CVaultHistoryV4.set(
+      cityId,
+      _getVaultHistoryId(cityId),
+      characterId,
+      params.gold,
+      params.crystal,
+      block.timestamp,
+      false,
+      params.itemIds,
+      params.amounts
+    );
   }
 
   function contributeItemToCity(
     uint256 characterId,
     uint256 cityId,
-    uint256[] memory itemIds,
-    uint32[] memory amounts,
-    uint32 gold
+    VaultActionParams calldata params
   )
     public
     onlyAuthorizedWallet(characterId)
   {
-    _validateInput(characterId, cityId, itemIds, amounts);
+    _validateInput(characterId, cityId, params.itemIds, params.amounts);
 
-    if (gold > 0) {
+    if (params.gold > 0) {
       uint32 fame = CharStats2.getFame(characterId);
       if (fame < 1050) {
         revert Errors.VaultSystem_FameTooLow(characterId, fame);
       }
-      CharacterFundUtils.decreaseGold(characterId, gold);
-      CityVault2V2.setGold(cityId, CityVault2V2.getGold(cityId) + gold);
+      CharacterFundUtils.decreaseGold(characterId, params.gold);
+      CityVault2V2.setGold(cityId, CityVault2V2.getGold(cityId) + params.gold);
     }
+
+    if (params.crystal > 0) {
+      CharacterFundUtils.decreaseCrystal(characterId, uint32(params.crystal));
+      CityVault2V2.setCrystal(cityId, CityVault2V2.getCrystal(cityId) + params.crystal);
+    }
+
     // no need check character and city kingdom id, because it's free to contribute to any city
-    for (uint256 i = 0; i < itemIds.length; i++) {
-      uint256 itemId = itemIds[i];
-      uint32 amount = amounts[i];
+    for (uint256 i = 0; i < params.itemIds.length; i++) {
+      uint256 itemId = params.itemIds[i];
+      uint32 amount = params.amounts[i];
       if (itemId == 0 || amount == 0) {
         revert Errors.VaultSystem_InvalidParamsValue(itemId, amount);
       }
@@ -115,8 +121,18 @@ contract VaultSystem is System, CharacterAccessControl {
       uint32 newVaultAmount = currentVaultAmount + amount;
       CityVault.setAmount(cityId, itemId, newVaultAmount);
     }
-    InventoryItemUtils.removeItems(characterId, itemIds, amounts);
-    CVaultHistoryV3.set(cityId, _getVaultHistoryId(cityId), characterId, gold, block.timestamp, true, itemIds, amounts);
+    InventoryItemUtils.removeItems(characterId, params.itemIds, params.amounts);
+    CVaultHistoryV4.set(
+      cityId,
+      _getVaultHistoryId(cityId),
+      characterId,
+      params.gold,
+      params.crystal,
+      block.timestamp,
+      true,
+      params.itemIds,
+      params.amounts
+    );
   }
 
   function _getVaultHistoryId(uint256 cityId) private returns (uint256 id) {
@@ -126,24 +142,69 @@ contract VaultSystem is System, CharacterAccessControl {
     return newCounter % 100; // wrap around after 100 entries
   }
 
+  function _checkAndSetWeightQuota(uint256 characterId, uint8 kingdomId, uint32 withdrawWeight) private {
+    uint32 withdrawWeightLimit = KingSetting2.getWithdrawWeightLimit(kingdomId);
+    if (withdrawWeightLimit == 0) return; // no limit
+
+    CharVaultWithdrawData memory cvw = CharVaultWithdraw.get(characterId);
+
+    uint256 nextResetTime = cvw.markTimestamp + 1 days;
+
+    if (cvw.markTimestamp == 0 || nextResetTime <= block.timestamp) {
+      cvw.weightQuota = withdrawWeightLimit; // reset daily limit
+      CharVaultWithdraw.setMarkTimestamp(characterId, block.timestamp);
+    }
+
+    if (cvw.weightQuota < withdrawWeight) {
+      revert Errors.VaultSystem_ExceedDailyWithdrawLimit(characterId, cvw.weightQuota, withdrawWeight, nextResetTime);
+    }
+
+    cvw.weightQuota -= withdrawWeight;
+    CharVaultWithdraw.setWeightQuota(characterId, cvw.weightQuota);
+  }
+
   function _validateWithdrawInput(
     uint256 characterId,
     uint256 cityId,
-    uint256[] memory itemIds,
-    uint32[] memory amounts,
     bool isKing,
-    uint8 kingdomId
+    uint8 kingdomId,
+    VaultActionParams calldata params
   )
     private
     view
   {
-    _validateInput(characterId, cityId, itemIds, amounts);
+    _validateInput(characterId, cityId, params.itemIds, params.amounts);
 
-    if (isKing) return;
+    uint8 charKingdomId = CharInfo.getKingdomId(characterId);
+    if (kingdomId != charKingdomId) {
+      revert Errors.VaultSystem_CharacterNotInSameKingdom(characterId, cityId);
+    }
 
-    for (uint256 i = 0; i < itemIds.length; i++) {
-      if (VaultRestriction.getIsRestricted(kingdomId, itemIds[i])) {
-        revert Errors.VaultSystem_WithdrawalRestricted(characterId, kingdomId, itemIds[i]);
+    if (isKing) {
+      // check vault gold and crystal balance
+      uint32 vaultGold = CityVault2V2.getGold(cityId);
+      if (params.gold > vaultGold) {
+        revert Errors.VaultSystem_InsufficientVaultGold(cityId, vaultGold, params.gold);
+      }
+      uint256 vaultCrystal = CityVault2V2.getCrystal(cityId);
+      if (params.crystal > vaultCrystal) {
+        revert Errors.VaultSystem_InsufficientVaultCrystal(cityId, vaultCrystal, params.crystal);
+      }
+      return;
+    }
+
+    // only king can withdraw gold/crystal
+    if (params.gold > 0 || params.crystal > 0) {
+      revert Errors.VaultSystem_OnlyKingCanWithdrawGoldOrCrystal(characterId);
+    }
+
+    if (CharRole.get(characterId) != RoleType.VaultKeeper) {
+      revert Errors.VaultSystem_MustBeVaultKeeper(characterId);
+    }
+
+    for (uint256 i = 0; i < params.itemIds.length; i++) {
+      if (VaultRestriction.getIsRestricted(kingdomId, params.itemIds[i])) {
+        revert Errors.VaultSystem_WithdrawalRestricted(characterId, kingdomId, params.itemIds[i]);
       }
     }
   }
