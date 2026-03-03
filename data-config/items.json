@@ -7443,7 +7443,8 @@
       "desc": "A blade that hums with divine resonance, striking not just flesh but the very will of those it judges.",
       "untradable": false,
       "skinInfo": {
-        "slotType": 0
+        "slotType": 0,
+        "weaponType": 6
       }
     },
     "430": {
@@ -7495,7 +7496,8 @@
       "desc": "A cursed sword that feeds on the essence of the fallen, its edge sharpened by every life it takes.",
       "untradable": false,
       "skinInfo": {
-        "slotType": 0
+        "slotType": 0,
+        "weaponType": 6
       }
     },
     "434": {
@@ -7527,8 +7529,8 @@
       "category": 1,
       "tier": 5,
       "weight": 1,
-      "name": "Pet",
-      "desc": "A loyal companion to aid you on your adventures.",
+      "name": "Pochi",
+      "desc": "Pochi is a small woodland creature deep inside the forest, always trying to make friends with animals and humans alike.",
       "untradable": false,
       "equipmentInfo": {
         "slotType": 6,

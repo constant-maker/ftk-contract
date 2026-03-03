@@ -23,7 +23,7 @@ func getListSkinUpdate(dataConfig *common.DataConfig) ([]common.Item, []common.I
 	}
 	skinItems := make([]common.Item, 0)
 	var (
-		idIndex, tierIndex, weightIndex, nameIndex, descIndex, skinSlotIndex int
+		idIndex, tierIndex, weightIndex, nameIndex, descIndex, skinSlotIndex, weaponTypeIndex int
 	)
 	for {
 		record, err := reader.Read()
@@ -48,6 +48,7 @@ func getListSkinUpdate(dataConfig *common.DataConfig) ([]common.Item, []common.I
 			tierIndex = findIndex(record, "tier")
 			weightIndex = findIndex(record, "weight")
 			skinSlotIndex = findIndex(record, "slot_type")
+			weaponTypeIndex = findIndex(record, "weapon_type")
 			descIndex = findIndex(record, "desc")
 			continue
 		}
@@ -56,6 +57,12 @@ func getListSkinUpdate(dataConfig *common.DataConfig) ([]common.Item, []common.I
 		tier := mustStringToInt(record[tierIndex], tierIndex)
 		weight := mustStringToInt(record[weightIndex], weightIndex)
 		skinSlot := getEnumType(record[skinSlotIndex], record)
+
+		var weaponTypePtr *int
+		if skinSlot == 0 { // weapon slot only
+			weaponType := getEnumType(record[weaponTypeIndex], record)
+			weaponTypePtr = &weaponType
+		}
 
 		skinItems = append(skinItems, common.Item{
 			Id:       id,
@@ -66,7 +73,8 @@ func getListSkinUpdate(dataConfig *common.DataConfig) ([]common.Item, []common.I
 			Name:     removeRedundantText(record[nameIndex]),
 			Desc:     removeRedundantText(record[descIndex]),
 			SkinInfo: &common.SkinInfo{
-				SlotType: skinSlot,
+				SlotType:   skinSlot,
+				WeaponType: weaponTypePtr,
 			},
 		})
 	}

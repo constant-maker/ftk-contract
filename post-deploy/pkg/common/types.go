@@ -96,7 +96,8 @@ type ResourceInfo struct {
 }
 
 type SkinInfo struct {
-	SlotType int `json:"slotType"`
+	SlotType   int  `json:"slotType"`
+	WeaponType *int `json:"weaponType,omitempty"` // only applicable for skin, nil means it can be applied to any weapon type
 }
 
 type WelcomeConfig struct {
