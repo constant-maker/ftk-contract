@@ -63,15 +63,15 @@ library PvPUtils {
 
     if (attackerHp == 0 && attackerFame >= Config.MIN_FAME_THRESHOLD && zoneInfo.attackerZoneType != ZoneType.Green) {
       _setFame(attackerId, defenderId, -int32(Config.LOST_FAME_PENALTY), int32(Config.GAINED_FAME_REWARD)); // fame
-        // transfer from
-        // attacker to defender
+      // transfer from
+      // attacker to defender
       _checkAndGiveAchievement(defenderId, zoneInfo);
     } else if (
       defenderHp == 0 && defenderFame >= Config.MIN_FAME_THRESHOLD && zoneInfo.defenderZoneType != ZoneType.Green
     ) {
       _setFame(attackerId, defenderId, int32(Config.GAINED_FAME_REWARD), -int32(Config.LOST_FAME_PENALTY)); // fame
-        // transfer from
-        // defender to attacker
+      // transfer from
+      // defender to attacker
       _checkAndGiveAchievement(attackerId, zoneInfo);
     }
   }

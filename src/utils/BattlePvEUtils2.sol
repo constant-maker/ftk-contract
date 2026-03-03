@@ -5,7 +5,6 @@ import {
   CharBattle,
   MonsterLocation,
   MonsterLocationData,
-  Monster,
   CharEquipment,
   CharGrindSlot,
   ExpAmpConfig,
@@ -16,7 +15,6 @@ import {
   PvEAfkData,
   PvEAfkLoc,
   CharState,
-  CharBattle,
   ItemV2,
   Equipment,
   CharCurrentStats,
@@ -31,6 +29,8 @@ import { CharacterStatsUtils } from "./CharacterStatsUtils.sol";
 import { Config, Errors } from "@common/index.sol";
 
 library BattlePvEUtils2 {
+  uint32 private constant MAX_AFK_GAINED_EXP = 2_000_000;
+
   function startPvEAFK(uint256 characterId, uint256 monsterId, CharPositionData memory characterPosition) public {
     if (PvEAfkLoc.getMonsterId(characterPosition.x, characterPosition.y) == monsterId) {
       revert Errors.PvE_SomeoneIsFightingThisMonster(characterPosition.x, characterPosition.y, monsterId);
@@ -60,10 +60,14 @@ library BattlePvEUtils2 {
     if (afkData.monsterId == 0) {
       revert Errors.PvE_AfkNotStarted(characterId);
     }
-    uint32 tick = uint32((block.timestamp - afkData.startTime) / Config.PVE_ATTACK_COOLDOWN);
-    if (tick != 0) {
-      uint32 gainedExp = afkData.maxTick > tick ? tick * afkData.expPerTick : afkData.maxTick * afkData.expPerTick;
-      uint32 gainedPerkExp = tick * afkData.perkExpPerTick;
+    uint256 elapsed = block.timestamp > afkData.startTime ? block.timestamp - afkData.startTime : 0;
+    uint256 tick = elapsed / Config.PVE_ATTACK_COOLDOWN;
+    if (tick > 0) {
+      uint256 expTick = tick > afkData.maxTick ? afkData.maxTick : tick; // limited by max tick
+      uint256 gainedExpRaw = expTick * afkData.expPerTick;
+      uint256 gainedPerkExpRaw = tick * afkData.perkExpPerTick; // use raw tick other than effective tick to calculate perk exp
+      uint32 gainedExp = gainedExpRaw > type(uint32).max ? type(uint32).max : uint32(gainedExpRaw);
+      uint32 gainedPerkExp = gainedPerkExpRaw > type(uint32).max ? type(uint32).max : uint32(gainedPerkExpRaw);
       // update character exp and perk exp
       updateCharacterExp(characterId, gainedExp, gainedPerkExp);
 
@@ -92,8 +96,10 @@ library BattlePvEUtils2 {
       basePerkExpPercent += charExpAmp.pveExpAmp;
     }
     // calculate final exp and perk exp after applying all amps
-    gainedExp = (gainedExp * baseExpPercent) / 100;
-    gainedPerkExp = (gainedPerkExp * basePerkExpPercent) / 100;
+    uint256 finalExp = (uint256(gainedExp) * baseExpPercent) / 100;
+    uint256 finalPerkExp = (uint256(gainedPerkExp) * basePerkExpPercent) / 100;
+    gainedExp = finalExp > MAX_AFK_GAINED_EXP ? MAX_AFK_GAINED_EXP : uint32(finalExp);
+    gainedPerkExp = finalPerkExp > MAX_AFK_GAINED_EXP ? MAX_AFK_GAINED_EXP : uint32(finalPerkExp);
     // update character exp and perk exp
     CharCurrentStats.setExp(characterId, CharCurrentStats.getExp(characterId) + gainedExp);
     SlotType grindSlot = CharGrindSlot.get(characterId);

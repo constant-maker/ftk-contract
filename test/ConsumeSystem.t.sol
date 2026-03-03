@@ -265,7 +265,7 @@ contract ConsumeSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFix
     assertEq(newPos.x, 20);
     assertEq(newPos.y, 20);
     assertEq(newPos.nextX, capital.x); // saved point is invalid (the tile should be belong to the kingdom), teleport to
-      // capital
+    // capital
     assertEq(newPos.nextY, capital.y);
     assertEq(newPos.arriveTimestamp, block.timestamp + Config.TELEPORT_DURATION);
 

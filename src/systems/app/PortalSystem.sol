@@ -106,13 +106,13 @@ contract PortalSystem is CharacterAccessControl, System {
     SellCrystalReq.setIsDone(characterId, reqId, true);
   }
 
-  function _validateSellCrystalRequest(uint256 reqId, SellCrystalReqData memory reqData) private view {
+  function _validateSellCrystalRequest(uint256 reqId, SellCrystalReqData memory reqData) private pure {
     if (reqData.amount == 0 || reqData.requestedAt == 0 || reqData.isDone) {
       revert Errors.PortalSystem_SellRequestNotFound(reqId);
     }
   }
 
-  function _validateCrystalAmount(uint32 amount) private view {
+  function _validateCrystalAmount(uint32 amount) private pure {
     if (amount < Config.MIN_CRYSTALS_PER_PURCHASE) {
       revert Errors.PortalSystem_CrystalAmountTooSmall(amount, Config.MIN_CRYSTALS_PER_PURCHASE);
     }

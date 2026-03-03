@@ -169,7 +169,7 @@ contract MarketSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixt
 
     assertEq(CharMarketWeight.getWeight(characterId2, city1), 0); // market weight decrease because of taking order
     assertEq(CharCurrentStats.getWeight(characterId1), prevCurrentWeight + 5); // weight increase because of taking
-      // order
+    // order
     assertEq(CharFund.getGold(characterId2), 200); // 100 + 100 - 0% fee
     assertEq(CharFund.getGold(characterId1), 5); // already spent to take order
     assertEq(Equipment.getCharacterId(2), characterId1); // transfer equipment to player1
@@ -263,7 +263,7 @@ contract MarketSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixt
     console2.log("character2 take order success");
     assertEq(CharMarketWeight.getWeight(characterId1, city1), 50); // from 100 to 50 (50 is taken)
     assertEq(CharCurrentStats.getWeight(characterId2), prevChar2CurrentWeight + 50); // weight increase because of
-      // taking order
+    // taking order
     assertEq(CharOtherItem.getAmount(characterId2, 1), 50);
     assertEq(CharFund.getGold(characterId2), 150); // 200 - 50 - 0 (fee)
     assertEq(CharFund.getGold(characterId1), 250); // 200 + 50 - 0 (fee)
@@ -330,7 +330,7 @@ contract MarketSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixt
     assertEq(CharMarketWeight.getWeight(characterId1, city1), 0); // from 50 to 0 (50 is taken)
     assertEq(CharCurrentStats.getWeight(characterId1), prevCurrentWeight - 100);
     assertEq(CharCurrentStats.getWeight(characterId2), prevChar2CurrentWeight + 100); // weight increase because of
-      // taking order
+    // taking order
     assertEq(CharOtherItem.getAmount(characterId2, 1), 100);
     assertEq(CharFund.getGold(characterId2), 50); // 150 - 100 - 0 (fee) (unit price changed to 2)
     assertEq(CharFund.getGold(characterId1), 350); // 200 + 100 - 0 (fee)
@@ -472,7 +472,7 @@ contract MarketSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixt
     assertEq(Order.getUnitPrice(1), 2); // order updated
     assertEq(Order.getAmount(1), 50); // order amount not updated
     assertEq(CharFund.getGold(characterId1), prevFund - 100 - 50); // price changed to 2, so locked amount
-      // increased
+    // increased
 
     // test repay fund when price changed smaller
     orderParams.unitPrice = 1;

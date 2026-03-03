@@ -192,7 +192,7 @@ contract MarketSystem is System, CharacterAccessControl {
   }
 
   /// @dev Validate the sell order params for equipment, currently we only support selling 1 equipment per order
-  function _validateSellEquipmentOrderParams(uint32 orderAmount) private view {
+  function _validateSellEquipmentOrderParams(uint32 orderAmount) private pure {
     if (orderAmount != 1) {
       revert Errors.MarketSystem_InvalidSellOrderEquipment(orderAmount);
     }

@@ -169,6 +169,7 @@ library Errors {
   /* -------------------------------------------------------------------------- */
   error PvP_NotReadyToAttack(uint256 nextAttackTime);
   error PvP_NotReadyToBeAttacked(uint256 nextTimeToBeAttacked);
+  error PvP_CannotBattleSelf();
   error PvP_NotSamePosition(int32 attackerX, int32 attackerY, int32 defenderX, int32 defenderY);
   error PvP_CannotBattleInCapitalCity();
 

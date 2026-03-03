@@ -40,6 +40,9 @@ contract PvPSystem is System, CharacterAccessControl {
     mustInStateStandByOrMoving(attackerId)
     validateCurrentWeight(attackerId)
   {
+    if (attackerId == defenderId) {
+      revert Errors.PvP_CannotBattleSelf();
+    }
     CharPositionData memory attackerPosition = CharacterPositionUtils.getCurrentPosition(attackerId);
     CharPositionData memory defenderPosition = CharacterPositionUtils.getCurrentPosition(defenderId);
     if (attackerPosition.x != defenderPosition.x || attackerPosition.y != defenderPosition.y) {
@@ -53,12 +56,13 @@ contract PvPSystem is System, CharacterAccessControl {
     PvPUtils.updateCharacterFame(attackerId, attackerHp, defenderId, defenderHp, attackerPosition);
     _handleBattleResult(attackerId, attackerHp, attackerPosition); // handle attacker result
     _handleBattleResult(defenderId, defenderHp, defenderPosition); // handle defender result
-
-    // DailyQuestUtils.updatePvpCount(attackerId);
   }
 
   /// @dev character try to challenge with other player, result is only win or lose, no hp or exp update
   function challengePvP(uint256 attackerId, uint256 defenderId) public onlyAuthorizedWallet(attackerId) {
+    if (attackerId == defenderId) {
+      revert Errors.PvP_CannotBattleSelf();
+    }
     _battle(attackerId, defenderId, true);
     // check and update daily quest
     DailyQuestUtils.updatePvpCount(attackerId);
@@ -84,7 +88,7 @@ contract PvPSystem is System, CharacterAccessControl {
     (uint256 firstAttackerId, uint32[2] memory hps, uint32[11] memory damages, uint256[11] memory skillIds) =
       _performFight(attackerId, defenderId, attackerSkills, defenderSkills, originHps);
 
-    // store PvEData
+    // store PvPData
     if (isChallenge) {
       _storePvPChallengeData(attackerId, defenderId, firstAttackerId, skillIds, damages, originHps);
     } else {
@@ -100,7 +104,7 @@ contract PvPSystem is System, CharacterAccessControl {
     uint256 firstAttackerId,
     uint256[11] memory skillIds,
     uint32[11] memory damages,
-    uint32[2] memory hps
+    uint32[2] memory originHps
   )
     private
   {
@@ -113,7 +117,7 @@ contract PvPSystem is System, CharacterAccessControl {
       prevPvpIds: prevPvpIds,
       skillIds: skillIds,
       damages: damages,
-      hps: hps
+      hps: originHps
     });
     uint256 newId = PvPBattleCounter.getCounter() + 1;
     PvP.set(newId, pvp);
@@ -131,7 +135,7 @@ contract PvPSystem is System, CharacterAccessControl {
     uint256 firstAttackerId,
     uint256[11] memory skillIds,
     uint32[11] memory damages,
-    uint32[2] memory hps
+    uint32[2] memory originHps
   )
     private
   {
@@ -144,7 +148,7 @@ contract PvPSystem is System, CharacterAccessControl {
       timestamp: block.timestamp,
       skillIds: skillIds,
       damages: damages,
-      hps: hps,
+      hps: originHps,
       barriers: barriers
     });
     PvPChallengeV2.set(attackerId, pvpChallenge);

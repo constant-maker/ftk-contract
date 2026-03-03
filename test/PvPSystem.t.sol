@@ -385,6 +385,14 @@ contract PvPSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
     vm.stopPrank();
   }
 
+  function test_BattleRevertSelfTarget() external {
+    vm.warp(block.timestamp + 300);
+    vm.expectRevert(Errors.PvP_CannotBattleSelf.selector);
+    vm.startPrank(player_1);
+    world.app__battlePvP(characterId_1, characterId_1);
+    vm.stopPrank();
+  }
+
   function test_Fame() external {
     vm.warp(block.timestamp + 300);
 
@@ -494,7 +502,7 @@ contract PvPSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
 
     vm.startPrank(worldDeployer);
     CharStats2.setFame(characterId_1, Config.MIN_PROTECT_FAME + 1); // after this fight, fame will be below min protect
-      // fame -50
+    // fame -50
     CharStats2.setFame(characterId_2, Config.MIN_PROTECT_FAME + 1);
     vm.stopPrank();
 
@@ -866,7 +874,7 @@ contract PvPSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
     vm.warp(block.timestamp + 300);
     vm.startPrank(player_1);
     world.app__consumeItem(characterId_1, 356, 1, targetData); // char 1, atk = 3 (2 + 50% of 2), def = 0 (4 - 100% of
-      // 4)
+    // 4)
     world.app__battlePvP(characterId_1, characterId_2);
     vm.stopPrank();
 

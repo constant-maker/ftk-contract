@@ -179,10 +179,9 @@ contract GachaSystem is System, CharacterAccessControl, IVRFConsumer {
 
     // Pet gacha case
     CharacterItemUtils.addNewItem(characterId, PET_ITEM_ID, 1); // add pet item to inventory
-    // Get last added equipmentId
+    // Bind the equipmentId of the pet item to the petId (receivedItemId) for later use in pet system
     uint256 lastEquipmentId =
-      CharInventory.getItemEquipmentIds(characterId, CharInventory.lengthEquipmentIds(characterId) - 1); // last added
-      // equipmentId
+      CharInventory.getItemEquipmentIds(characterId, CharInventory.lengthEquipmentIds(characterId) - 1);
     EquipmentPet.set(lastEquipmentId, receivedItemId); // map equipmentId to petId
 
     return (receivedItemId, lastEquipmentId);

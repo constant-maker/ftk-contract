@@ -44,8 +44,7 @@ library DailyQuestUtils {
   /// @dev Check if the current time is valid or not
   function isValidQuestTime(uint256 characterId) internal view returns (bool) {
     uint256 startTime = CharDailyQuest.getStartTime(characterId);
-    if (startTime == 0 || block.timestamp < startTime || block.timestamp > startTime + ONE_DAY_SECONDS) return false; // quest
-      // timeout
+    if (startTime == 0 || block.timestamp < startTime || block.timestamp > startTime + ONE_DAY_SECONDS) return false; 
     return true;
   }
 }

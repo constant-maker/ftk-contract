@@ -154,7 +154,7 @@ contract GachaTest is Test, WorldFixture, SpawnSystemFixture, WelcomeSystemFixtu
     uint256[] memory equipmentIds = CharInventory.getEquipmentIds(characterId);
     uint256 lastEquipmentId = equipmentIds[equipmentIds.length - 1];
     assertTrue(EquipmentPet.getPetId(lastEquipmentId) == charGacha.gachaItemId); // itemId 4 is a pet id not a normal
-      // item id
+    // item id
     assertEq(charGacha.gachaEquipmentId, lastEquipmentId);
   }
 
