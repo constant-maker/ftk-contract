@@ -12,7 +12,7 @@ import {
   ItemV2,
   Equipment
 } from "@codegen/index.sol";
-import { ZoneType, CharacterStateType } from "@codegen/common.sol";
+import { ZoneType, CharacterStateType, ItemType } from "@codegen/common.sol";
 import { CharacterEquipmentUtils } from "./CharacterEquipmentUtils.sol";
 import { TileInventoryUtils } from "./TileInventoryUtils.sol";
 import { InventoryItemUtils } from "./InventoryItemUtils.sol";
@@ -52,8 +52,10 @@ library BattleUtils2 {
       // drop equipment in inventory
       CharacterEquipmentUtils.unequipAllEquipment(characterId);
       uint256[] memory dropEquipmentIds = _getDropEquipment(characterId);
-      InventoryEquipmentUtils.removeEquipments(characterId, dropEquipmentIds, true);
-      TileInventoryUtils.addEquipments(x, y, dropEquipmentIds);
+      if (dropEquipmentIds.length > 0) {
+        InventoryEquipmentUtils.removeEquipments(characterId, dropEquipmentIds, true);
+        TileInventoryUtils.addEquipments(x, y, dropEquipmentIds);
+      }
     }
 
     // move character back to saved point (if saved point is empty, move to capital)
@@ -75,13 +77,31 @@ library BattleUtils2 {
   /// @dev get up to 2 equipments that can be dropped when character lost
   function _getDropEquipment(uint256 characterId) private view returns (uint256[] memory) {
     uint256[] memory equipmentIds = CharInventory.getEquipmentIds(characterId);
-    uint256 len = equipmentIds.length;
 
-    if (len <= 2) return equipmentIds;
+    uint256 oLen = equipmentIds.length;
+    uint256[] memory petExcludedEquipmentIds = new uint256[](oLen);
 
-    (uint8[] memory tiers, uint8 highest, uint8 second) = _scanTiers(equipmentIds);
+    uint256 count;
 
-    (uint256[] memory high, uint256[] memory sec) = _collectCandidates(equipmentIds, tiers, highest, second);
+    for (uint256 i; i < oLen; i++) {
+      uint256 equipmentId = equipmentIds[i];
+
+      ItemType itemType = ItemV2.getItemType(Equipment.getItemId(equipmentId));
+
+      if (itemType != ItemType.Pet) {
+        petExcludedEquipmentIds[count++] = equipmentId;
+      }
+    }
+
+    assembly {
+      mstore(petExcludedEquipmentIds, count)
+    }
+
+    if (petExcludedEquipmentIds.length <= 2) return petExcludedEquipmentIds;
+
+    (uint8[] memory tiers, uint8 highest, uint8 second) = _scanTiers(petExcludedEquipmentIds);
+
+    (uint256[] memory high, uint256[] memory sec) = _collectCandidates(petExcludedEquipmentIds, tiers, highest, second);
 
     return _pickResult(characterId, high, sec);
   }
@@ -176,18 +196,25 @@ library BattleUtils2 {
       return res;
     }
 
-    uint256[] memory onlyOne = new uint256[](1);
-    onlyOne[0] = high[0];
-    return onlyOne;
+    if (highCount == 1) {
+      uint256[] memory onlyOne = new uint256[](1);
+      onlyOne[0] = high[0];
+      return onlyOne;
+    }
+
+    return new uint256[](0);
   }
 
   /// @dev Fisher–Yates shuffle for the whole array
   function _shuffle(uint256[] memory arr, uint256 seed) private pure {
     uint256 n = arr.length;
-    for (uint256 i = 0; i < n; i++) {
-      uint256 j = i + (seed % (n - i));
+
+    for (uint256 i; i < n - 1; i++) {
+      uint256 randomWord = uint256(keccak256(abi.encodePacked(seed, i)));
+
+      uint256 j = i + (randomWord % (n - i));
+
       (arr[i], arr[j]) = (arr[j], arr[i]);
-      seed >>= 1; // advance seed
     }
   }
 }

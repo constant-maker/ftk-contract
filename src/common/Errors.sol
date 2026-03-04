@@ -311,6 +311,7 @@ library Errors {
   error MarketSystem_OrderIsNotExist(uint256 orderId);
   error MarketSystem_MustInACapital(); // character must be in a capital either their own or other kingdom's capital
   error MarketSystem_InvalidSellOrderEquipment(uint32 amount);
+  error MarketSystem_PetPriceTooLow(uint32 orderPrice);
 
   /* -------------------------------------------------------------------------- */
   /*                               KingSystem                                   */

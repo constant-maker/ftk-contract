@@ -26,12 +26,12 @@ import { ItemCategoryType, CurrencyType } from "@codegen/common.sol";
 import { Errors, Config } from "@common/index.sol";
 
 contract MarketSystem is System, CharacterAccessControl {
-  function placeOrder(uint256 characterId, OrderParams calldata order) public onlyAuthorizedWallet(characterId) {
+  function placeOrder(uint256 characterId, OrderParams memory order) public onlyAuthorizedWallet(characterId) {
     MarketWeightUtils.checkAndSetMaxWeight(characterId, order.cityId); // set default max weight if not set
     CharacterPositionUtils.mustInCapital(characterId, order.cityId);
     if (!order.isBuy && order.equipmentId != 0) {
-      // validate sell equipment order params
-      _validateSellEquipmentOrderParams(order.amount);
+      // validate and adjust sell equipment order params
+      _validateAndAdjustSellEquipmentOrderParams(order);
     }
     if (order.orderId != 0) {
       _updateOrder(characterId, order);
@@ -113,7 +113,7 @@ contract MarketSystem is System, CharacterAccessControl {
   }
 
   /// @dev Lock asset for order, also update market weight if it's a sell order
-  function _lockAsset(uint256 characterId, OrderParams calldata order) private {
+  function _lockAsset(uint256 characterId, OrderParams memory order) private {
     if (order.isBuy) {
       // buy - lock gold or crystal
       uint32 totalValue = order.unitPrice * order.amount;
@@ -162,7 +162,7 @@ contract MarketSystem is System, CharacterAccessControl {
 
   /// @dev Update existing order - user only can update unit price
   function _updateOrder(uint256 characterId, OrderParams memory order) private {
-    MarketSystemUtils.validateOrderPrice(order.unitPrice, Order2V2.getCurrency(order.orderId));
+    MarketSystemUtils.validateOrderPrice(order.itemId, order.unitPrice, Order2V2.getCurrency(order.orderId));
     OrderData memory existingOrder = Order.get(order.orderId);
     if (existingOrder.isDone) {
       revert Errors.MarketSystem_OrderAlreadyDone(order.orderId);
@@ -192,10 +192,11 @@ contract MarketSystem is System, CharacterAccessControl {
   }
 
   /// @dev Validate the sell order params for equipment, currently we only support selling 1 equipment per order
-  function _validateSellEquipmentOrderParams(uint32 orderAmount) private pure {
-    if (orderAmount != 1) {
-      revert Errors.MarketSystem_InvalidSellOrderEquipment(orderAmount);
+  function _validateAndAdjustSellEquipmentOrderParams(OrderParams memory order) private view {
+    if (order.amount != 1) {
+      revert Errors.MarketSystem_InvalidSellOrderEquipment(order.amount);
     }
+    order.itemId = Equipment.getItemId(order.equipmentId);
   }
 
   function _getNewOrderId() private returns (uint256) {

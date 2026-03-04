@@ -29,7 +29,7 @@ import {
   CityVault2V2,
   Kingdom
 } from "@codegen/index.sol";
-import { ItemCategoryType, CurrencyType } from "@codegen/common.sol";
+import { ItemCategoryType, CurrencyType, ItemType } from "@codegen/common.sol";
 import { Errors, Config } from "@common/index.sol";
 
 struct OrderParams {
@@ -154,7 +154,7 @@ library MarketSystemUtils {
 
   /// @dev validate order params
   function validateOrder(OrderParams memory order) public view {
-    validateOrderPrice(order.unitPrice, order.currency);
+    validateOrderPrice(order.itemId, order.unitPrice, order.currency);
     if (order.amount == 0) {
       revert Errors.MarketSystem_ZeroAmount();
     }
@@ -258,9 +258,12 @@ library MarketSystemUtils {
     }
   }
 
-  function validateOrderPrice(uint32 orderPrice, CurrencyType currency) public pure {
+  function validateOrderPrice(uint256 itemId, uint32 orderPrice, CurrencyType currency) public view {
     if (currency == CurrencyType.Crystal) {
       _validateCrystalPrice(orderPrice);
+      if (ItemV2.getItemType(itemId) == ItemType.Pet && orderPrice < Config.MIN_PET_CRYSTAL_PRICE) {
+        revert Errors.MarketSystem_PetPriceTooLow(orderPrice);
+      }
       return;
     }
     if (orderPrice == 0) {

@@ -49,6 +49,7 @@ library Config {
   uint256 public constant CREATE_CHARACTER_FEE = 0.0001 ether; // TODO: Adjust later on mainnet
   uint256 public constant CRYSTAL_UNIT_PRICE = 0.000005 ether;
   uint256 public constant MIN_SELL_CRYSTAL = 1000; // Minimum crystals to sell
+  uint256 public constant MIN_PET_CRYSTAL_PRICE = 1000; // Minimum crystal price for pet item
   uint256 public constant SELL_CRYSTAL_PROCESSING_TIME = 3 days; // 3 days
   uint32 public constant PLATFORM_FEE_PERCENTAGE = 3; // platform fee (apply for crystal only)
   address public constant TEAM_ADDRESS = address(0x0);
