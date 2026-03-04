@@ -110,7 +110,7 @@ contract PvESystem is System, CharacterAccessControl {
         // claim reward, and set extra data
         BattlePvEUtils3.claimReward(characterId, monsterId);
       }
-      BattlePvEUtils2.updateCharacterExp(characterId, gainedExp, gainedPerkExp);
+      BattlePvEUtils2.updateCharacterExp(characterId, gainedExp, gainedPerkExp, true);
       // check and update daily quest
       DailyQuestUtils.updatePveCount(characterId);
       // increase slot farm

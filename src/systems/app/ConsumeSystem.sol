@@ -26,7 +26,6 @@ import { ConsumeUtils, TargetItemData } from "@utils/ConsumeUtils.sol";
 import { CharacterStateUtils } from "@utils/CharacterStateUtils.sol";
 import { Config, Errors } from "@common/index.sol";
 import { ItemType, ResourceType, BuffType, CharacterStateType } from "@codegen/common.sol";
-import { TargetItemData } from "./ConsumeSystem.sol";
 
 contract ConsumeSystem is System, CharacterAccessControl {
   /// @dev eat berries to heal
@@ -177,6 +176,9 @@ contract ConsumeSystem is System, CharacterAccessControl {
   function _handleExpBuffItem(uint256 itemId, TargetItemData memory targetData) private {
     for (uint256 i = 0; i < targetData.targetPlayers.length; i++) {
       uint256 targetPlayer = targetData.targetPlayers[i];
+      if (CharacterStateUtils.getCharacterState(targetPlayer) == CharacterStateType.Hunting) {
+        revert Errors.ConsumeSystem_CannotApplyExpBuffToHunting(targetPlayer);
+      }
       CharPositionData memory targetPosition = CharacterPositionUtils.getCurrentPosition(targetPlayer);
       if (targetPosition.x != targetData.x || targetPosition.y != targetData.y) {
         continue; // skip if target player not in position

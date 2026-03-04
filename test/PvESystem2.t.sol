@@ -23,10 +23,14 @@ import {
   PvEAfkLoc,
   PvEAfk,
   PvEAfkData,
-  MonsterLocation
+  MonsterLocation,
+  CharExpAmp,
+  CharExpAmpData,
+  PvEAfkExpAmp
 } from "@codegen/index.sol";
 import { EntityType, SlotType, ItemType, CharacterStateType } from "@codegen/common.sol";
 import { CharacterItemUtils, CharacterStateUtils } from "@utils/index.sol";
+import { TargetItemData } from "@utils/ConsumeUtils.sol";
 import { Errors } from "@common/Errors.sol";
 import { Config } from "@common/Config.sol";
 import { CharacterPositionUtils } from "@utils/CharacterPositionUtils.sol";
@@ -187,6 +191,166 @@ contract PvESystem2Test is WorldFixture, SpawnSystemFixture, WelcomeSystemFixtur
     assertEq(charCurrentStats.exp, 1700);
     assertEq(CharPerk.getExp(characterId, ItemType.Sword), 1015); // 2000 => 200 ticks * 5 perk exp per tick + 15 from
       // previous afk
+  }
+
+  function test_AFK_Exp() external {
+    // character atk 2 def 2
+    // monster atk 5 def 1
+
+    // set position to hunting place
+    _moveToMonsterLocation(characterId);
+    _moveToMonsterLocation(characterId2);
+
+    vm.startPrank(worldDeployer);
+    MonsterStats.setHp(monsterId, 200);
+    CharCurrentStats.setHp(characterId, 200);
+    CharCurrentStats.setAtk(characterId, 150);
+    CharCurrentStats.setAgi(characterId, 100);
+    CharEquipment.set(characterId, SlotType.Weapon, 1);
+    CharacterItemUtils.addNewItem(characterId, 406, 2);
+    vm.stopPrank();
+
+    uint32 characterHp = CharCurrentStats.getHp(characterId);
+    assertEq(characterHp, 200);
+    uint256[5] memory skills = CharSkill.get(characterId);
+
+    vm.warp(block.timestamp + 10);
+    vm.startPrank(player);
+    world.app__battlePvE(characterId, monsterId, true);
+    vm.stopPrank();
+
+    PvEData memory pve = PvE.get(characterId);
+    assertEq(pve.monsterId, monsterId);
+    assertEq(pve.x, locationX);
+    assertEq(pve.y, locationY);
+    assertTrue(pve.firstAttacker == EntityType.Character);
+    assertEq(pve.hps[0], characterHp);
+    for (uint256 i = 0; i < skills.length; i++) {
+      assertEq(pve.characterSkillIds[i], skills[i]);
+    }
+    // for (uint256 i = 0; i < pve.damages.length; i++) {
+    //   console2.log("dmg index", i);
+    //   console2.log("dmg value", pve.damages[i]);
+    // }
+    assertEq(pve.damages[0], 364);
+    assertEq(pve.damages[1], 0);
+    assertEq(pve.damages[2], 0);
+    assertEq(pve.damages[3], 0);
+
+    uint32 characterCurrentHp = CharCurrentStats.getHp(characterId);
+    assertEq(characterCurrentHp, 200);
+    assertEq(CharCurrentStats.getExp(characterId), 10);
+    assertEq(CharPerk.getExp(characterId, ItemType.Sword), 5);
+
+    uint16 monsterLevel = MonsterLocation.getLevel(locationX, locationY, monsterId);
+    console2.log("monster level", monsterLevel);
+
+    // test AFK
+    vm.warp(block.timestamp + 10);
+
+    vm.expectRevert(); // must in state standby
+    vm.startPrank(player);
+    world.app__pveAFK(characterId, monsterId, true);
+    vm.stopPrank();
+
+    vm.startPrank(player);
+    world.app__pveAFK(characterId, monsterId, false);
+    vm.stopPrank();
+    CharacterStateUtils.mustInState(characterId, CharacterStateType.Hunting);
+
+    vm.expectRevert(); // can't pve while in afk
+    vm.startPrank(player);
+    world.app__battlePvE(characterId, monsterId, false);
+    vm.stopPrank();
+
+    PvEAfkData memory afk = PvEAfk.get(characterId);
+    console2.log("afk monsterId", afk.monsterId);
+    console2.log("afk expPerTick", afk.expPerTick);
+    console2.log("afk maxTick", afk.maxTick);
+    console2.log("afk perkExpPerTick", afk.perkExpPerTick);
+
+    assertEq(afk.monsterId, monsterId);
+    assertEq(afk.expPerTick, 10);
+    assertEq(afk.perkExpPerTick, 5);
+    assertEq(afk.maxTick, 169);
+
+    uint256[] memory targetPlayers = new uint256[](1);
+    targetPlayers[0] = characterId;
+    CharPositionData memory charPosition = CharacterPositionUtils.getCurrentPosition(characterId);
+    TargetItemData memory targetData;
+    targetData.targetPlayers = targetPlayers;
+    targetData.x = charPosition.x;
+    targetData.y = charPosition.y;
+
+    vm.expectRevert(); // cannot apply exp buff while hunting
+    vm.startPrank(player);
+    world.app__consumeItem(characterId, 406, 1, targetData);
+    vm.stopPrank();
+
+    vm.warp(block.timestamp + 21); // 2 ticks
+    vm.startPrank(player);
+    world.app__pveAFK(characterId, monsterId, true);
+    vm.stopPrank();
+
+    CharacterStateUtils.mustInState(characterId, CharacterStateType.Standby);
+
+    CharCurrentStatsData memory charCurrentStats = CharCurrentStats.get(characterId);
+    console2.log("char current stats exp", charCurrentStats.exp);
+    assertEq(charCurrentStats.exp, 30); // 10 + 10 * 2 ticks
+    assertEq(CharPerk.getExp(characterId, ItemType.Sword), 15); // 5 + 5 * 2 ticks
+
+    afk = PvEAfk.get(characterId);
+    assertEq(afk.maxTick, 0); // reset max tick
+    assertEq(afk.monsterId, 0); // reset monster id
+    assertEq(afk.expPerTick, 0); // reset exp per tick
+    assertEq(afk.perkExpPerTick, 0); // reset perk exp per tick
+    assertEq(PvEAfkLoc.get(locationX, locationY), 0); // reset afk loc
+
+    vm.expectRevert(); // not ready to battle pve
+    vm.startPrank(player);
+    world.app__pveAFK(characterId, monsterId, false);
+    vm.stopPrank();
+
+    vm.warp(block.timestamp + 10);
+
+    vm.startPrank(player);
+    world.app__consumeItem(characterId, 406, 1, targetData); // duration 28800 ~ 2880 ticks
+    vm.stopPrank();
+
+    CharExpAmpData memory charExpAmp = CharExpAmp.get(characterId);
+    console2.log("char exp amp", charExpAmp.pveExpAmp);
+    console2.log("current time", block.timestamp);
+    console2.log("char exp amp expire time", charExpAmp.expireTime);
+
+    vm.startPrank(player);
+    world.app__pveAFK(characterId, monsterId, false);
+    vm.stopPrank();
+
+    afk = PvEAfk.get(characterId);
+    assertEq(afk.maxTick, 167);
+
+    vm.warp(block.timestamp + 2000); // 200 ticks
+
+    console2.log("character2 pve afk");
+    console2.log("current time", block.timestamp);
+
+    vm.expectRevert(); // other character already in pve afk
+    vm.startPrank(player2);
+    world.app__pveAFK(characterId2, monsterId, false);
+    vm.stopPrank();
+
+    assertEq(PvEAfkExpAmp.get(characterId), 50);
+
+    vm.startPrank(player);
+    world.app__pveAFK(characterId, monsterId, true);
+    vm.stopPrank();
+
+    charCurrentStats = CharCurrentStats.get(characterId);
+    console2.log("char current stats exp", charCurrentStats.exp);
+    // 167 * (10 * 150 / 100) + 30 (before afk) = 167 * 15 + 30 = 2535
+    assertEq(charCurrentStats.exp, 2535);
+    // 167 * (5 * 150 / 100) + 15 (before afk) = 167 * 7 + 15 = 1184 + (200 - 167) * 5 = 1184 + 165 = 1349
+    assertEq(CharPerk.getExp(characterId, ItemType.Sword), 1349);
   }
 
   function _gearUpEquipment() private {

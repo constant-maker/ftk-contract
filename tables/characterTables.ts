@@ -269,8 +269,8 @@ const CHARACTER_TABLES: any = {
       characterId: "uint256", // these values are percentages, e.g., 20 means gain 20% more exp
       farmingPerkAmp: "uint16",
       pveExpAmp: "uint16",
-      pvePerkAmp: "uint16",
-      expireTime: "uint256",
+      pvePerkAmp: "uint16", // deprecated, kept for backward compatibility
+      expireTime: "uint256", // TODO: we need 2 expire times for farming perk amp and pve exp/ perk amp
     },
     key: ['characterId'],
   },

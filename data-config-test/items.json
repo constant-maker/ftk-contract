@@ -5636,6 +5636,29 @@
         "barrier": 0
       }
     },
+    "406": {
+      "id": 406,
+      "type": 28,
+      "category": 2,
+      "tier": 4,
+      "weight": 1,
+      "name": "Scroll of Hunting Knowledge I",
+      "desc": "Grants increased EXP gain from fighting monsters and weapon mastery.",
+      "untradable": false,
+      "buffInfo": {
+        "type": 2,
+        "range": 0,
+        "duration": 28800,
+        "selfCastOnly": true,
+        "numTarget": 1,
+        "isBuff": true
+      },
+      "expAmplify": {
+        "farmingPerkAmp": 0,
+        "pveExpAmp": 50,
+        "pvePerkAmp": 50
+      }
+    },
     "426": {
       "id": 426,
       "type": 31,

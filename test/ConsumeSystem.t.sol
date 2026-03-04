@@ -31,7 +31,7 @@ import { WelcomeSystemFixture } from "@fixtures/WelcomeSystemFixture.sol";
 import { InventoryItemUtils } from "@utils/InventoryItemUtils.sol";
 import { CharacterPositionUtils } from "@utils/CharacterPositionUtils.sol";
 import { console2 } from "forge-std/console2.sol";
-import { TargetItemData } from "@systems/app/ConsumeSystem.sol";
+import { TargetItemData } from "@utils/ConsumeUtils.sol";
 import { Config } from "@common/index.sol";
 
 contract ConsumeSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture {

@@ -18,7 +18,8 @@ import {
   ItemV2,
   Equipment,
   CharCurrentStats,
-  CharStats
+  CharStats,
+  PvEAfkExpAmp
 } from "@codegen/index.sol";
 import { CharacterStateType, SlotType } from "@codegen/common.sol";
 import { BattleUtils } from "./BattleUtils.sol";
@@ -50,6 +51,16 @@ library BattlePvEUtils2 {
       BattlePvEUtils.getExpAndPerkExpReward(monsterId, false, monsterLocation.level, charLevel);
     uint32 maxExp = _calculateMaxAFKExp(monsterLocation.level, charLevel, characterId);
     uint32 maxTick = gainedExp == 0 ? 0 : maxExp / gainedExp;
+    // check exp amp and adjust max tick accordingly to prevent over gain exp due to exp amp
+    CharExpAmpData memory charExpAmp = CharExpAmp.get(characterId);
+    uint32 maxTickFromExpAmp = _calculateMaxTickFromExpAmp(charExpAmp);
+    if (maxTickFromExpAmp > 0) {
+      PvEAfkExpAmp.set(characterId, charExpAmp.pveExpAmp);
+      // take smaller one to prevent over gain exp
+      if (maxTick > maxTickFromExpAmp) {
+        maxTick = maxTickFromExpAmp;
+      }
+    }
     PvEAfk.set(characterId, monsterId, block.timestamp, gainedExp, gainedPerkExp, maxTick);
     PvEAfkLoc.set(characterPosition.x, characterPosition.y, monsterId);
     CharState.set(characterId, CharacterStateType.Hunting, block.timestamp);
@@ -64,23 +75,31 @@ library BattlePvEUtils2 {
     uint256 tick = elapsed / Config.PVE_ATTACK_COOLDOWN;
     if (tick > 0) {
       uint256 expTick = tick > afkData.maxTick ? afkData.maxTick : tick; // limited by max tick
-      uint256 gainedExpRaw = expTick * afkData.expPerTick;
-      uint256 gainedPerkExpRaw = tick * afkData.perkExpPerTick; // use raw tick other than effective tick to calculate perk exp
+      uint32 pveAfkExpAmp = PvEAfkExpAmp.get(characterId);
+      uint256 boostedExpPerTick =
+        pveAfkExpAmp > 0 ? (uint256(afkData.expPerTick) * (100 + pveAfkExpAmp)) / 100 : afkData.expPerTick;
+      uint256 gainedExpRaw = expTick * boostedExpPerTick;
+      uint256 boostedPerkExpPerTick =
+        pveAfkExpAmp > 0 ? (uint256(afkData.perkExpPerTick) * (100 + pveAfkExpAmp)) / 100 : afkData.perkExpPerTick;
+      uint256 boostedTick = tick > afkData.maxTick ? afkData.maxTick : tick;
+      uint256 normalTick = tick > afkData.maxTick ? tick - afkData.maxTick : 0;
+      uint256 gainedPerkExpRaw = (boostedTick * boostedPerkExpPerTick) + (normalTick * afkData.perkExpPerTick);
       uint32 gainedExp = gainedExpRaw > type(uint32).max ? type(uint32).max : uint32(gainedExpRaw);
       uint32 gainedPerkExp = gainedPerkExpRaw > type(uint32).max ? type(uint32).max : uint32(gainedPerkExpRaw);
       // update character exp and perk exp
-      updateCharacterExp(characterId, gainedExp, gainedPerkExp);
+      updateCharacterExp(characterId, gainedExp, gainedPerkExp, false);
 
       CharBattle.setPveLastAtkTime(characterId, block.timestamp);
     }
 
     // reset afk data
     PvEAfk.deleteRecord(characterId);
+    PvEAfkExpAmp.set(characterId, 0);
     PvEAfkLoc.deleteRecord(characterPosition.x, characterPosition.y);
     CharState.set(characterId, CharacterStateType.Standby, block.timestamp);
   }
 
-  function updateCharacterExp(uint256 characterId, uint32 gainedExp, uint32 gainedPerkExp) public {
+  function updateCharacterExp(uint256 characterId, uint32 gainedExp, uint32 gainedPerkExp, bool applyCharExpAmp) public {
     ExpAmpConfigData memory expAmpConfig = ExpAmpConfig.get();
     uint32 baseExpPercent = 100;
     uint32 basePerkExpPercent = 100;
@@ -89,11 +108,12 @@ library BattlePvEUtils2 {
       baseExpPercent += expAmpConfig.pveExpAmp;
       basePerkExpPercent += expAmpConfig.pveExpAmp;
     }
-    // apply character exp amp
-    CharExpAmpData memory charExpAmp = CharExpAmp.get(characterId);
-    if (block.timestamp <= charExpAmp.expireTime) {
-      baseExpPercent += charExpAmp.pveExpAmp;
-      basePerkExpPercent += charExpAmp.pveExpAmp;
+    if (applyCharExpAmp) {
+      CharExpAmpData memory charExpAmp = CharExpAmp.get(characterId);
+      if (block.timestamp <= charExpAmp.expireTime) {
+        baseExpPercent += charExpAmp.pveExpAmp;
+        basePerkExpPercent += charExpAmp.pveExpAmp;
+      }
     }
     // calculate final exp and perk exp after applying all amps
     uint256 finalExp = (uint256(gainedExp) * baseExpPercent) / 100;
@@ -157,5 +177,13 @@ library BattlePvEUtils2 {
       return true;
     }
     return false;
+  }
+
+  /// @dev calculate the max tick based on exp amp to prevent over gain exp due to exp amp
+  function _calculateMaxTickFromExpAmp(CharExpAmpData memory charExpAmp) private view returns (uint32 maxTick) {
+    if (block.timestamp > charExpAmp.expireTime) {
+      return 0;
+    }
+    return uint32((charExpAmp.expireTime - block.timestamp) / Config.PVE_ATTACK_COOLDOWN);
   }
 }

@@ -123,6 +123,13 @@ const BATTLE_TABLES: any = {
     },
     key: ['x', 'y'],
   },
+  PvEAfkExpAmp: {
+    schema: {
+      characterId: "uint256",
+      expAmp: "uint32",
+    },
+    key: ['characterId'],
+  },
 };
 
 export default BATTLE_TABLES;
