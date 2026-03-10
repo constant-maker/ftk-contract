@@ -1,7 +1,6 @@
 package onlineconfig
 
 import (
-	"io"
 	"strings"
 
 	"github.com/ftk/post-deploy/pkg/common"
@@ -14,9 +13,9 @@ const (
 	skinItemType = 31
 )
 
-func getListSkinUpdate(dataConfig *common.DataConfig) ([]common.Item, []common.ItemRecipe, error) {
+func getListSkinUpdate(sheetName string, dataConfig *common.DataConfig) ([]common.Item, []common.ItemRecipe, error) {
 	l := zap.S().With("func", "getListSkinUpdate")
-	reader, err := getRawCsvReader(listSkinUpdate)
+	rawData, err := getSheetRawData(sheetName)
 	if err != nil {
 		l.Errorw("cannot csv reader", "err", err)
 		return nil, nil, err
@@ -25,15 +24,11 @@ func getListSkinUpdate(dataConfig *common.DataConfig) ([]common.Item, []common.I
 	var (
 		idIndex, tierIndex, weightIndex, nameIndex, descIndex, skinSlotIndex, weaponTypeIndex int
 	)
-	for {
-		record, err := reader.Read()
-		if err == io.EOF {
-			break
-		} else if err != nil {
-			l.Errorw("cannot read data", "err", err)
-			return nil, nil, err
+	for i := range rawData {
+		record := rawData[i]
+		if len(record) == 0 {
+			continue
 		}
-
 		if record[0] == "" { // empty row
 			l.Warnw("invalid equipment data format", "data", record)
 			continue

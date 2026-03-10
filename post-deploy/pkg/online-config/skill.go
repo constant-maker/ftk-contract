@@ -1,7 +1,6 @@
 package onlineconfig
 
 import (
-	"io"
 	"strconv"
 	"strings"
 
@@ -9,13 +8,9 @@ import (
 	"go.uber.org/zap"
 )
 
-const (
-	listSkillUpdate = "https://docs.google.com/spreadsheets/d/1re4m7CvzE2UYzBCgIgM4mTCNzWE0Yf1g66IfzbSk-xY/export?format=csv&gid=1359260272#gid=1359260272"
-)
-
-func getListSkillUpdate(dataConfig *common.DataConfig) ([]common.Skill, error) {
+func getListSkillUpdate(sheetName string, dataConfig *common.DataConfig) ([]common.Skill, error) {
 	l := zap.S().With("func", "getListSkillUpdate")
-	reader, err := getRawCsvReader(listSkillUpdate)
+	rawData, err := getSheetRawData(sheetName)
 	if err != nil {
 		l.Errorw("cannot csv reader", "err", err)
 		return nil, err
@@ -26,18 +21,15 @@ func getListSkillUpdate(dataConfig *common.DataConfig) ([]common.Skill, error) {
 		nameIndex, mainDamageIndex, dmgPerTurnIndex, turnActiveIndex,
 		spIndex, descIndex int
 	)
-	for {
-		record, err := reader.Read()
-		if err == io.EOF {
-			break
-		} else if err != nil {
-			l.Errorw("cannot read data", "err", err)
-			return nil, err
+	for i := range rawData {
+		record := rawData[i]
+		if len(record) == 0 {
+			continue
 		}
 		if record[0] == "END" {
 			break
 		}
-		if record[0] == "" && record[4] == "" { // empty row
+		if record[0] == "" { // empty row
 			// l.Warnw("invalid skill data format", "data", record)
 			continue
 		}

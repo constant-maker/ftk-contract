@@ -391,3 +391,19 @@ type MapColor struct {
 	Black   [4]Location            `json:"black"`
 	Greens  map[string][4]Location `json:"greens"`
 }
+
+// SheetUrlConfig contains the sheet ID for each data type in google sheet
+type SheetUrlConfig struct {
+	SpreadsheetsId            string `json:"spreadsheetsId"`
+	ListMonsterResourceUpdate int64  `json:"listMonsterResourceUpdate"`
+	ListFarmingResourceUpdate int64  `json:"listFarmingResourceUpdate"`
+	ListEquipmentUpdate       int64  `json:"listEquipmentUpdate"`
+	ListHealingItemUpdate     int64  `json:"listHealingItemUpdate"`
+	ListScrollUpdate          int64  `json:"listScrollUpdate"`
+	ListToolUpdate            int64  `json:"listToolUpdate"`
+	ListCardUpdate            int64  `json:"listCardUpdate"`
+	ListSkinUpdate            int64  `json:"listSkinUpdate"`
+	ListOtherItemUpdate       int64  `json:"listOtherItemUpdate"`
+	ListSkillUpdate           int64  `json:"listSkillUpdate"`
+	ListItemExUpdate          int64  `json:"listItemExUpdate"`
+}

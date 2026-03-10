@@ -5,6 +5,7 @@ import (
 
 	"github.com/ftk/post-deploy/pkg/common"
 	"go.uber.org/zap"
+	sheets "google.golang.org/api/sheets/v4"
 )
 
 // updateItemDataConfig update item data config, also the item recipes
@@ -17,12 +18,14 @@ import (
 // - card
 // - skin
 // - other item
-func updateItemDataConfig(dataConfig *common.DataConfig, basePath string) {
+func updateItemDataConfig(dataConfig *common.DataConfig, basePath string,
+	sheetUrlConfig common.SheetUrlConfig, spreadSheetMetadata *sheets.Spreadsheet) {
 	l := zap.S().With("func", "updateItemDataConfig")
 	shouldRewriteFile := false
 	// update list monster resource
 	l.Infow("GET LIST MONSTER RESOURCE")
-	listMonsterResourceUpdate, err := getListMonsterResourceUpdate()
+	sheetName := findSheetNameById(sheetUrlConfig.ListMonsterResourceUpdate, spreadSheetMetadata)
+	listMonsterResourceUpdate, err := getListMonsterResourceUpdate(sheetName)
 	if err != nil {
 		l.Errorw("cannot get list monster resource update", "err", err)
 		panic(err)
@@ -45,7 +48,8 @@ func updateItemDataConfig(dataConfig *common.DataConfig, basePath string) {
 
 	// update list farming resource
 	l.Infow("GET LIST FARMING RESOURCE")
-	listFarmingResourceUpdate, err := getListFarmingResourceUpdate()
+	sheetName = findSheetNameById(sheetUrlConfig.ListFarmingResourceUpdate, spreadSheetMetadata)
+	listFarmingResourceUpdate, err := getListFarmingResourceUpdate(sheetName)
 	if err != nil {
 		l.Errorw("cannot get list farming resource update", "err", err)
 		panic(err)
@@ -68,7 +72,8 @@ func updateItemDataConfig(dataConfig *common.DataConfig, basePath string) {
 
 	// update list equipment
 	l.Infow("GET LIST EQUIPMENT")
-	listEquipmentUpdate, listEquipmentRecipeUpdate, err := getListEquipmentUpdate(dataConfig)
+	sheetName = findSheetNameById(sheetUrlConfig.ListEquipmentUpdate, spreadSheetMetadata)
+	listEquipmentUpdate, listEquipmentRecipeUpdate, err := getListEquipmentUpdate(sheetName, dataConfig)
 	if err != nil {
 		l.Errorw("cannot get list equipment update", "err", err)
 		panic(err)
@@ -91,7 +96,8 @@ func updateItemDataConfig(dataConfig *common.DataConfig, basePath string) {
 
 	// update list healing item
 	l.Infow("GET LIST HEALING ITEM")
-	listHealingItemUpdate, listHealingItemRecipeUpdate, err := getListHealingItemUpdate(dataConfig)
+	sheetName = findSheetNameById(sheetUrlConfig.ListHealingItemUpdate, spreadSheetMetadata)
+	listHealingItemUpdate, listHealingItemRecipeUpdate, err := getListHealingItemUpdate(sheetName, dataConfig)
 	if err != nil {
 		l.Errorw("cannot get list healing item update", "err", err)
 		panic(err)
@@ -114,7 +120,8 @@ func updateItemDataConfig(dataConfig *common.DataConfig, basePath string) {
 
 	// update list scroll item
 	l.Infow("GET LIST SCROLL ITEM")
-	listScrollItemUpdate, listScrollItemRecipeUpdate, err := getListScrollUpdate(dataConfig)
+	sheetName = findSheetNameById(sheetUrlConfig.ListScrollUpdate, spreadSheetMetadata)
+	listScrollItemUpdate, listScrollItemRecipeUpdate, err := getListScrollUpdate(sheetName, dataConfig)
 	if err != nil {
 		l.Errorw("cannot get list scroll item update", "err", err)
 		panic(err)
@@ -137,7 +144,8 @@ func updateItemDataConfig(dataConfig *common.DataConfig, basePath string) {
 
 	// update list tool
 	l.Infow("GET LIST TOOL")
-	listToolUpdate, listToolRecipeUpdate, err := getListToolUpdate(dataConfig)
+	sheetName = findSheetNameById(sheetUrlConfig.ListToolUpdate, spreadSheetMetadata)
+	listToolUpdate, listToolRecipeUpdate, err := getListToolUpdate(sheetName, dataConfig)
 	if err != nil {
 		l.Errorw("cannot get list tool update", "err", err)
 		panic(err)
@@ -159,7 +167,8 @@ func updateItemDataConfig(dataConfig *common.DataConfig, basePath string) {
 
 	// update list card
 	l.Infow("GET LIST CARD")
-	listCardUpdate, err := getListCardUpdate(*dataConfig)
+	sheetName = findSheetNameById(sheetUrlConfig.ListCardUpdate, spreadSheetMetadata)
+	listCardUpdate, err := getListCardUpdate(sheetName, *dataConfig)
 	if err != nil {
 		l.Errorw("cannot get list card update", "err", err)
 		panic(err)
@@ -182,7 +191,8 @@ func updateItemDataConfig(dataConfig *common.DataConfig, basePath string) {
 
 	// update list skin
 	l.Infow("GET LIST SKIN")
-	listSkinUpdate, _, err := getListSkinUpdate(dataConfig)
+	sheetName = findSheetNameById(sheetUrlConfig.ListSkinUpdate, spreadSheetMetadata)
+	listSkinUpdate, _, err := getListSkinUpdate(sheetName, dataConfig)
 	if err != nil {
 		l.Errorw("cannot get list skin update", "err", err)
 		panic(err)
@@ -204,7 +214,8 @@ func updateItemDataConfig(dataConfig *common.DataConfig, basePath string) {
 
 	// update list other item
 	l.Infow("GET LIST OTHER ITEM")
-	listOtherItemUpdate, _, err := getListOtherItemUpdate(dataConfig)
+	sheetName = findSheetNameById(sheetUrlConfig.ListOtherItemUpdate, spreadSheetMetadata)
+	listOtherItemUpdate, _, err := getListOtherItemUpdate(sheetName, dataConfig)
 	if err != nil {
 		l.Errorw("cannot get list other item update", "err", err)
 		panic(err)

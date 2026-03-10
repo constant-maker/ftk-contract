@@ -1,16 +1,13 @@
 package onlineconfig
 
 import (
-	"bytes"
-	"encoding/csv"
 	"fmt"
-	"io"
-	"net/http"
 	"strconv"
 	"strings"
 
 	"github.com/ftk/post-deploy/pkg/common"
 	"go.uber.org/zap"
+	sheets "google.golang.org/api/sheets/v4"
 )
 
 const (
@@ -59,7 +56,7 @@ func getMaterialList(rawRecord []string, rawS string, dataConfig *common.DataCon
 
 // removeRedundantText removes leading and trailing spaces and carriage return characters from the input string.
 func removeRedundantText(s string) string {
-	for i := 0; i < 3; i++ {
+	for range 3 {
 		s = strings.TrimSuffix(s, " ")
 		s = strings.TrimSuffix(s, "\r")
 
@@ -98,22 +95,23 @@ func getEnumType(s string, record []string) int {
 	return int(num)
 }
 
-func getRawCsvReader(url string) (*csv.Reader, error) {
-	l := zap.S().With("func", "readCSV")
-	resp, err := http.Get(url)
+func getSheetRawData(sheetName string) ([][]string, error) {
+	resp, err := gSrv.Spreadsheets.Values.Get(
+		gSpreadSheetId,
+		sheetName,
+	).Do()
 	if err != nil {
-		l.Errorw("cannot get data", "err", err)
 		return nil, err
 	}
-	body, err := io.ReadAll(resp.Body)
-	resp.Body.Close()
-	if err != nil {
-		l.Errorw("cannot read data", "err", err)
-		return nil, err
+	rawData := make([][]string, 0)
+	for _, row := range resp.Values {
+		stringRow := make([]string, len(row))
+		for i, cell := range row {
+			stringRow[i] = fmt.Sprintf("%v", cell)
+		}
+		rawData = append(rawData, stringRow)
 	}
-	reader := csv.NewReader(bytes.NewReader(body))
-	reader.LazyQuotes = true
-	return reader, nil
+	return rawData, nil
 }
 
 func getToolType(rawS string) int {
@@ -287,4 +285,13 @@ func findItemIDByName(name string, dataConfig *common.DataConfig) (int, error) {
 
 func intToString(i int) string {
 	return strconv.FormatInt(int64(i), 10)
+}
+
+func findSheetNameById(sheetId int64, spreadSheetMetadata *sheets.Spreadsheet) string {
+	for _, sheet := range spreadSheetMetadata.Sheets {
+		if sheet.Properties.SheetId == sheetId {
+			return sheet.Properties.Title
+		}
+	}
+	panic(fmt.Sprintf("sheet id not found, id = %d", sheetId))
 }

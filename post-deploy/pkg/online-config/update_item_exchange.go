@@ -5,14 +5,18 @@ import (
 
 	"github.com/ftk/post-deploy/pkg/common"
 	"go.uber.org/zap"
+	sheets "google.golang.org/api/sheets/v4"
 )
 
-func updateItemExchangeDataConfig(dataConfig *common.DataConfig, basePath string) {
+func updateItemExchangeDataConfig(
+	dataConfig *common.DataConfig, basePath string,
+	sheetUrlConfig common.SheetUrlConfig, spreadSheetMetadata *sheets.Spreadsheet) {
 	l := zap.S().With("func", "updateItemExchangeDataConfig")
 	// update list item exchange
 	shouldRewriteFile := false
 	l.Infow("GET LIST ITEM EXCHANGE")
-	listItemExUpdate, err := getItemExUpdate(dataConfig)
+	sheetName := findSheetNameById(sheetUrlConfig.ListItemExUpdate, spreadSheetMetadata)
+	listItemExUpdate, err := getItemExUpdate(sheetName, dataConfig)
 	if err != nil {
 		l.Errorw("cannot get list item exchange update", "err", err)
 		panic(err)

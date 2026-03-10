@@ -1,20 +1,15 @@
 package onlineconfig
 
 import (
-	"io"
 	"strings"
 
 	"github.com/ftk/post-deploy/pkg/common"
 	"go.uber.org/zap"
 )
 
-const (
-	listScrollUpdate = "https://docs.google.com/spreadsheets/d/1re4m7CvzE2UYzBCgIgM4mTCNzWE0Yf1g66IfzbSk-xY/export?format=csv&gid=54253469#gid=54253469"
-)
-
-func getListScrollUpdate(dataConfig *common.DataConfig) ([]common.Item, []common.ItemRecipe, error) {
+func getListScrollUpdate(sheetName string, dataConfig *common.DataConfig) ([]common.Item, []common.ItemRecipe, error) {
 	l := zap.S().With("func", "getListScrollUpdate")
-	reader, err := getRawCsvReader(listScrollUpdate)
+	rawData, err := getSheetRawData(sheetName)
 	if err != nil {
 		l.Errorw("cannot csv reader", "err", err)
 		return nil, nil, err
@@ -26,15 +21,12 @@ func getListScrollUpdate(dataConfig *common.DataConfig) ([]common.Item, []common
 		defPercentIndex, agiPercentIndex, msIndex, spIndex, farmingPerkAmpIndex, pveExpAmpIndex, // pvePerkAmpIndex,
 		dmgIndex, isAbsDmgIndex, goldCostIndex, weightIndex, recipeIndex, descIndex, untradableIndex, slowPercentIndex int
 	)
-	for {
-		record, err := reader.Read()
-		if err == io.EOF {
-			break
-		} else if err != nil {
-			l.Errorw("cannot read data", "err", err)
-			return nil, nil, err
+	for i := range rawData {
+		record := rawData[i]
+		if len(record) == 0 {
+			continue
 		}
-		if record[0] == "" || record[1] == "" || record[2] == "" { // empty row
+		if record[0] == "" { // empty row
 			l.Warnw("invalid equipment data format", "data", record)
 			continue
 		}

@@ -3,6 +3,7 @@ package main
 import (
 	"bufio"
 	"encoding/hex"
+	"encoding/json"
 	"os"
 
 	"github.com/ftk/post-deploy/pkg/common"
@@ -12,12 +13,16 @@ import (
 )
 
 const (
-	testFlag         = "test"
-	outFlag          = "out"
-	out2Flag         = "out2"
-	localFlag        = "local"
-	updateOnlineFlag = "update-online"
-	dataPercentFlag  = "data-percent"
+	testFlag                = "test"
+	outFlag                 = "out"
+	out2Flag                = "out2"
+	localFlag               = "local"
+	updateOnlineFlag        = "update-online"
+	dataPercentFlag         = "data-percent"
+	sheetAuthFileFlag       = "sheet-auth"
+	sheetAuthFileValue      = "sheetConfig.json"
+	sheetUrlConfigFileFlag  = "sheet-config"
+	sheetUrlConfigFileValue = "sheetUrlConfig.json"
 
 	pathToTestFile = "../../post_deploy_test.txt"
 )
@@ -62,6 +67,16 @@ func main() {
 		cli.BoolFlag{
 			Name:  localFlag,
 			Usage: "build a small data for local",
+		},
+		cli.StringFlag{
+			Name:  sheetAuthFileFlag,
+			Usage: "sheet auth file",
+			Value: sheetAuthFileValue,
+		},
+		cli.StringFlag{
+			Name:  sheetUrlConfigFileFlag,
+			Usage: "sheet url config",
+			Value: sheetUrlConfigFileValue,
 		},
 		cli.Int64Flag{
 			Name:  dataPercentFlag,
@@ -117,7 +132,23 @@ func run(c *cli.Context) error {
 			}
 		}
 		if c.Bool(updateOnlineFlag) {
-			onlineconfig.UpdateDataConfig(&dataConfig, "../..") // update config by online data
+			sheetAuthBytes, err := os.ReadFile(c.String(sheetAuthFileFlag))
+			if err != nil {
+				l.Errorw("cannot read sheet auth file", "err", err)
+				return err
+			}
+			sheetUrlConfigBytes, err := os.ReadFile(c.String(sheetUrlConfigFileFlag))
+			if err != nil {
+				l.Errorw("cannot read sheet url config file", "err", err)
+				return err
+			}
+			var sheetUrlConfig common.SheetUrlConfig
+			if err := json.Unmarshal(sheetUrlConfigBytes, &sheetUrlConfig); err != nil {
+				l.Errorw("cannot unmarshal sheet url config", "err", err)
+				return err
+			}
+			l.Infow("sheet url config", "value", sheetUrlConfig)
+			onlineconfig.UpdateDataConfig(&dataConfig, "../..", sheetAuthBytes, sheetUrlConfig) // update config by online data
 		}
 	}
 

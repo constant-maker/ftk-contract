@@ -1,20 +1,15 @@
 package onlineconfig
 
 import (
-	"io"
 	"strings"
 
 	"github.com/ftk/post-deploy/pkg/common"
 	"go.uber.org/zap"
 )
 
-const (
-	listItemExUpdate = "https://docs.google.com/spreadsheets/d/1re4m7CvzE2UYzBCgIgM4mTCNzWE0Yf1g66IfzbSk-xY/export?format=csv&gid=78299081#gid=78299081"
-)
-
-func getItemExUpdate(dataConfig *common.DataConfig) ([]common.ItemExchange, error) {
+func getItemExUpdate(sheetName string, dataConfig *common.DataConfig) ([]common.ItemExchange, error) {
 	l := zap.S().With("func", "getItemExUpdate")
-	reader, err := getRawCsvReader(listItemExUpdate)
+	rawData, err := getSheetRawData(sheetName)
 	if err != nil {
 		l.Errorw("cannot csv reader", "err", err)
 		return nil, err
@@ -23,24 +18,21 @@ func getItemExUpdate(dataConfig *common.DataConfig) ([]common.ItemExchange, erro
 	var (
 		outputItemIndex, inputResourceIndex int
 	)
-	for {
-		record, err := reader.Read()
-		if err == io.EOF {
-			break
-		} else if err != nil {
-			l.Errorw("cannot read data", "err", err)
-			return nil, err
+	for i := range rawData {
+		record := rawData[i]
+		if len(record) == 0 {
+			continue
 		}
-		if record[1] == "" || record[2] == "" { // empty row
+		if record[0] == "" { // empty row
 			l.Warnw("invalid item exchange format", "data", record)
 			continue
 		}
 		// l.Infow("record", "value", record)
-		if strings.EqualFold(record[1], "input_resources") { // header
+		if strings.EqualFold(record[0], "input_resources") { // header
 			if outputItemIndex != 0 {
 				l.Panicw("detect header more than one time", "value", record)
 			}
-			inputResourceIndex = 1 // no need to find index, fixed position
+			inputResourceIndex = 0 // no need to find index, fixed position
 			outputItemIndex = findIndex(record, "output_item")
 
 			l.Infow(

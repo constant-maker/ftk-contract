@@ -5,14 +5,18 @@ import (
 
 	"github.com/ftk/post-deploy/pkg/common"
 	"go.uber.org/zap"
+	sheets "google.golang.org/api/sheets/v4"
 )
 
-func updateSkillDataConfig(dataConfig *common.DataConfig, basePath string) {
+func updateSkillDataConfig(
+	dataConfig *common.DataConfig, basePath string,
+	sheetUrlConfig common.SheetUrlConfig, spreadSheetMetadata *sheets.Spreadsheet) {
 	l := zap.S().With("func", "updateSkillDataConfig")
 	// update list skill
 	shouldRewriteSkillFile := false
 	l.Infow("GET LIST SKILL")
-	listSkillUpdate, err := getListSkillUpdate(dataConfig)
+	sheetName := findSheetNameById(sheetUrlConfig.ListSkillUpdate, spreadSheetMetadata)
+	listSkillUpdate, err := getListSkillUpdate(sheetName, dataConfig)
 	if err != nil {
 		l.Errorw("cannot get list skill update", "err", err)
 		panic(err)

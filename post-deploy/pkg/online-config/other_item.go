@@ -1,7 +1,6 @@
 package onlineconfig
 
 import (
-	"io"
 	"strings"
 
 	"github.com/ftk/post-deploy/pkg/common"
@@ -13,9 +12,9 @@ const (
 )
 
 // getListOtherItemUpdate others other item
-func getListOtherItemUpdate(dataConfig *common.DataConfig) ([]common.Item, []common.ItemRecipe, error) {
+func getListOtherItemUpdate(sheetName string, dataConfig *common.DataConfig) ([]common.Item, []common.ItemRecipe, error) {
 	l := zap.S().With("func", "getListOtherItemUpdate")
-	reader, err := getRawCsvReader(listOtherItemUpdate)
+	rawData, err := getSheetRawData(sheetName)
 	if err != nil {
 		l.Errorw("cannot csv reader", "err", err)
 		return nil, nil, err
@@ -24,13 +23,10 @@ func getListOtherItemUpdate(dataConfig *common.DataConfig) ([]common.Item, []com
 	var (
 		idIndex, tierIndex, weightIndex, nameIndex, descIndex, otherItemTypeIndex, untradableIndex int
 	)
-	for {
-		record, err := reader.Read()
-		if err == io.EOF {
-			break
-		} else if err != nil {
-			l.Errorw("cannot read data", "err", err)
-			return nil, nil, err
+	for i := range rawData {
+		record := rawData[i]
+		if len(record) == 0 {
+			continue
 		}
 
 		if record[0] == "" { // empty row

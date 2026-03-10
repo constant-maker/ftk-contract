@@ -1,20 +1,15 @@
 package onlineconfig
 
 import (
-	"io"
 	"strings"
 
 	"github.com/ftk/post-deploy/pkg/common"
 	"go.uber.org/zap"
 )
 
-const (
-	listMonsterResourceUpdate = "https://docs.google.com/spreadsheets/d/1re4m7CvzE2UYzBCgIgM4mTCNzWE0Yf1g66IfzbSk-xY/export?format=csv&gid=507192015#gid=507192015"
-)
-
-func getListMonsterResourceUpdate() ([]common.Item, error) {
+func getListMonsterResourceUpdate(sheetName string) ([]common.Item, error) {
 	l := zap.S().With("func", "getListMonsterResourceUpdate")
-	reader, err := getRawCsvReader(listMonsterResourceUpdate)
+	rawData, err := getSheetRawData(sheetName)
 	if err != nil {
 		l.Errorw("cannot csv reader", "err", err)
 		return nil, err
@@ -23,13 +18,10 @@ func getListMonsterResourceUpdate() ([]common.Item, error) {
 	var (
 		idIndex, tierIndex, weightIndex, nameIndex, descIndex int
 	)
-	for {
-		record, err := reader.Read()
-		if err == io.EOF {
-			break
-		} else if err != nil {
-			l.Errorw("cannot read data", "err", err)
-			return nil, err
+	for i := range rawData {
+		record := rawData[i]
+		if len(record) == 0 {
+			continue
 		}
 		if record[0] == "" { // empty row
 			l.Infow("invalid data, skip ...", "data", record)

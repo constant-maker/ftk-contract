@@ -1,20 +1,15 @@
 package onlineconfig
 
 import (
-	"io"
 	"strings"
 
 	"github.com/ftk/post-deploy/pkg/common"
 	"go.uber.org/zap"
 )
 
-const (
-	listToolUpdate = "https://docs.google.com/spreadsheets/d/1re4m7CvzE2UYzBCgIgM4mTCNzWE0Yf1g66IfzbSk-xY/export?format=csv&gid=1372566467#gid=1372566467"
-)
-
-func getListToolUpdate(dataConfig *common.DataConfig) ([]common.Item, []common.ItemRecipe, error) {
+func getListToolUpdate(sheetName string, dataConfig *common.DataConfig) ([]common.Item, []common.ItemRecipe, error) {
 	l := zap.S().With("func", "getListToolUpdate")
-	reader, err := getRawCsvReader(listToolUpdate)
+	rawData, err := getSheetRawData(sheetName)
 	if err != nil {
 		l.Errorw("cannot csv reader", "err", err)
 		return nil, nil, err
@@ -24,19 +19,15 @@ func getListToolUpdate(dataConfig *common.DataConfig) ([]common.Item, []common.I
 	var (
 		idIndex, tierIndex, weightIndex, nameIndex, descIndex, typeIndex, goldCostIndex, recipeIndex int
 	)
-	for {
-		record, err := reader.Read()
-		if err == io.EOF {
-			break
-		} else if err != nil {
-			l.Errorw("cannot read data", "err", err)
-			return nil, nil, err
+	for i := range rawData {
+		record := rawData[i]
+		if len(record) == 0 {
+			continue
 		}
 		if record[0] == "" { // empty row
 			l.Warnw("invalid equipment data format", "data", record)
 			continue
 		}
-
 		if strings.EqualFold(record[0], "id") { // header
 			if tierIndex != 0 && nameIndex != 0 {
 				l.Panicw("detect header more than one time", "value", record)
