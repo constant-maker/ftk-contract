@@ -7,7 +7,7 @@ import {
   Kingdom,
   CrystalFee,
   CharGachaReq,
-  GachaReqChar,
+  GachaReqInfo,
   CharGachaV3,
   CharGachaV3Data,
   CharTotalSpend
@@ -57,7 +57,7 @@ library GachaUtils {
     });
 
     CharGachaV3.set(characterId, requestId, charGacha);
-    GachaReqChar.set(requestId, characterId);
+    GachaReqInfo.setCharacterId(requestId, characterId);
     CharGachaReq.set(characterId, requestId);
   }
 

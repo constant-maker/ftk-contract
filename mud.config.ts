@@ -38,7 +38,8 @@ export default defineWorld({
       "LeatherArmor", "LeatherHeadgear", "LeatherFootwear",
       "PlateArmor", "PlateHeadgear", "PlateFootwear",
       "Mount", "Resource", "SkillItem", "HealingItem", "StatModifierItem",
-      "Card", "BuffItem", "Pet", "GachaTicket", "Skin", "Teleport", "Ring", "Bundle"
+      "Card", "BuffItem", "Pet", "GachaTicket", "Skin", "Teleport", "Ring", "Bundle",
+      "CraftingMaterial"
     ],
     ItemCategoryType: ["Tool", "Equipment", "Other"],
     CharacterType: ["Male", "Female"],
@@ -62,6 +63,8 @@ export default defineWorld({
     // To save gas, limit contract size purpose only
     BuffType: ["None", "StatsModify", "ExpAmplify", "InstantDamage", "InstantHeal", "HealingPotion"],
     CurrencyType: ["Gold", "Crystal"],
+    GachaType: ["OpenBox"],
+    PetComponentType: ["Bag", "Eye", "Horn", "Mouth", "Tail", "Wing", "Body", "Head", "Weapon"],
   },
   tables: {
     Unmovable: {

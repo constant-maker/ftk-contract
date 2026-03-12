@@ -7520,7 +7520,7 @@
       "tier": 4,
       "weight": 1,
       "name": "Gold Token",
-      "desc": "A token that can be exchanged for the equivalent of 5,000 gold.",
+      "desc": "A token that can be exchanged for the equivalent of 2,500 gold.",
       "untradable": false
     },
     "436": {
@@ -7529,8 +7529,8 @@
       "category": 1,
       "tier": 5,
       "weight": 1,
-      "name": "Pochi",
-      "desc": "Pochi is a small woodland creature deep inside the forest, always trying to make friends with animals and humans alike.",
+      "name": "Cotochi",
+      "desc": "A Pochi in its softest shape, the kind of creature that makes everyone it meets feel instantly at ease.",
       "untradable": false,
       "equipmentInfo": {
         "slotType": 6,
@@ -7551,9 +7551,9 @@
       "category": 2,
       "tier": 5,
       "weight": 1,
-      "name": "Tome of Pet Awakening",
-      "desc": "An arcane tome used to summon a monster from its slumber that is extremely loyal to its master.",
-      "untradable": false
+      "name": "Pochi Egg",
+      "desc": "A softly glowing egg wrapped in leaf-shaped markings, as though the trees themselves decorated it. Something inside seems very eager to come out.",
+      "untradable": true
     },
     "438": {
       "id": 438,
@@ -7955,6 +7955,80 @@
         "weight": 0,
         "barrier": 0
       }
+    },
+    "464": {
+      "id": 464,
+      "type": 29,
+      "category": 1,
+      "tier": 5,
+      "weight": 1,
+      "name": "Drakochi",
+      "desc": "A Pochi in the form of a small dragon who would rather make a new friend than find treasure any day.",
+      "untradable": false,
+      "equipmentInfo": {
+        "slotType": 6,
+        "advantageType": 0,
+        "twoHanded": false,
+        "atk": 0,
+        "def": 0,
+        "agi": 0,
+        "hp": 0,
+        "ms": 0,
+        "weight": 0,
+        "barrier": 0
+      }
+    },
+    "465": {
+      "id": 465,
+      "type": 29,
+      "category": 1,
+      "tier": 5,
+      "weight": 1,
+      "name": "Pakochi",
+      "desc": "A Pochi with the shape of a winged box that flutters clumsily through the forest, always landing somewhere it wasn't supposed to.",
+      "untradable": false,
+      "equipmentInfo": {
+        "slotType": 6,
+        "advantageType": 0,
+        "twoHanded": false,
+        "atk": 0,
+        "def": 0,
+        "agi": 0,
+        "hp": 0,
+        "ms": 0,
+        "weight": 0,
+        "barrier": 0
+      }
+    },
+    "466": {
+      "id": 466,
+      "type": 35,
+      "category": 2,
+      "tier": 5,
+      "weight": 0,
+      "name": "Valtherium",
+      "desc": "A rare metal discovered in the ruins of the ancients, known for its ability to absorb magical energy.",
+      "untradable": true
+    },
+    "467": {
+      "id": 467,
+      "type": 35,
+      "category": 2,
+      "tier": 7,
+      "weight": 0,
+      "name": "Enriched Valtherium",
+      "desc": "A refined form of Valtherium, enriched to hold far greater magical energy.",
+      "untradable": true
+    },
+    "468": {
+      "id": 468,
+      "type": 35,
+      "category": 2,
+      "tier": 5,
+      "weight": 0,
+      "name": "Pochi Fusion Cookie",
+      "desc": "Magical cookie made from crystal fragments, used to upgrade your Pochi pets.",
+      "untradable": true
     }
   }
 }

@@ -5738,13 +5738,33 @@
       "id": 436,
       "type": 29,
       "category": 1,
-      "tier": 7,
+      "tier": 5,
       "weight": 1,
-      "name": "Pet",
-      "desc": "A loyal companion to aid you on your adventures.",
+      "name": "Cotochi",
+      "desc": "A Pochi in its softest shape, the kind of creature that makes everyone it meets feel instantly at ease.",
       "untradable": false,
-      "petInfo": {
+      "equipmentInfo": {
+        "slotType": 6,
+        "advantageType": 0,
+        "twoHanded": false,
+        "atk": 0,
+        "def": 0,
+        "agi": 0,
+        "hp": 0,
+        "ms": 0,
+        "weight": 0,
+        "barrier": 0
       }
+    },
+    "437": {
+      "id": 437,
+      "type": 30,
+      "category": 2,
+      "tier": 5,
+      "weight": 1,
+      "name": "Pochi Egg",
+      "desc": "A softly glowing egg wrapped in leaf-shaped markings, as though the trees themselves decorated it. Something inside seems very eager to come out.",
+      "untradable": true
     },
     "442": {
       "id": 442,
@@ -5782,6 +5802,50 @@
         "sp": 0,
         "dmg": 0,
         "isAbsDmg": false
+      }
+    },
+    "464": {
+      "id": 464,
+      "type": 29,
+      "category": 1,
+      "tier": 5,
+      "weight": 1,
+      "name": "Drakochi",
+      "desc": "A Pochi in the form of a small dragon who would rather make a new friend than find treasure any day.",
+      "untradable": false,
+      "equipmentInfo": {
+        "slotType": 6,
+        "advantageType": 0,
+        "twoHanded": false,
+        "atk": 0,
+        "def": 0,
+        "agi": 0,
+        "hp": 0,
+        "ms": 0,
+        "weight": 0,
+        "barrier": 0
+      }
+    },
+    "465": {
+      "id": 465,
+      "type": 29,
+      "category": 1,
+      "tier": 5,
+      "weight": 1,
+      "name": "Pakochi",
+      "desc": "A Pochi with the shape of a winged box that flutters clumsily through the forest, always landing somewhere it wasn't supposed to.",
+      "untradable": false,
+      "equipmentInfo": {
+        "slotType": 6,
+        "advantageType": 0,
+        "twoHanded": false,
+        "atk": 0,
+        "def": 0,
+        "agi": 0,
+        "hp": 0,
+        "ms": 0,
+        "weight": 0,
+        "barrier": 0
       }
     }
   }

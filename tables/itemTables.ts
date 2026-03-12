@@ -156,10 +156,38 @@ const ITEM_TABLES: any = {
     },
     key: ['itemId',],
   },
-  EquipmentPet: { // Mapping from equipmentId to petId
+  EquipmentPet: { // DEPRECATED
     schema: {
       equipmentId: "uint256",
       petId: "uint256",
+    },
+    key: ['equipmentId'],
+  },
+  PetCpnInfo: { // Pet Component Info
+    schema: {
+      petId: "uint256",
+      componentType: "PetComponentType",
+      // The ratio of each component, e.g., 2500 means 25%, total is 10000
+      // Max value of the component is the len of componentRatios
+      // e.g componentRatios = [2500, 5000, 2500] means the value of the component is either 0, 1, or 2 with the corresponding ratio
+      componentRatios: "uint16[]",
+    },
+    key: ['petId', "componentType"],
+  },
+  PetCpn: {
+    schema: {
+      petEquipmentId: "uint256",
+      componentTypes: "uint8[]",
+      componentValues: "uint16[]",
+    },
+    key: ['petEquipmentId'],
+  },
+  EPetStats: {
+    schema: {
+      equipmentId: "uint256",
+      atk: "uint16",
+      def: "uint16",
+      agi: "uint16",
     },
     key: ['equipmentId'],
   },

@@ -81,12 +81,7 @@ func getDataConfig(isTest bool) (common.DataConfig, error) {
 		dataConfig common.DataConfig
 		l          = zap.S().With("func", "getDataConfig")
 		dir        = "../../data-config"
-		files      = []string{
-			"characterQuestions.json", "items.json", "itemRecipes.json", "map.json", "quests.json",
-			"tileInfos.json", "types.json", "welcomeConfig.json", "skills.json",
-			"monsters.json", "monsterLocationsCache.json", "monsterLocationsOverride.json", "monsterLocationsBoss.json",
-			"achievements.json", "itemExchanges.json",
-		}
+		files      = common.DataConfigFiles
 	)
 	if isTest {
 		dir = "../../data-config-test"
