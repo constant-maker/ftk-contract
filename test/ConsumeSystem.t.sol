@@ -303,6 +303,6 @@ contract ConsumeSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFix
     vm.stopPrank();
 
     CharFundData memory charFund = CharFund.get(characterId);
-    assertEq(charFund.gold, 10_000); // each gold token gives 5,000 gold
+    assertEq(charFund.gold, 5_000); // each gold token gives 2500 gold
   }
 }
