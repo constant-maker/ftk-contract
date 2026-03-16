@@ -174,6 +174,14 @@ func buildCallData(
 	}
 	callData = append(callData, itemExchangeCallData...)
 
+	// pet component info
+	petCpnCallData, err := calldata.BuildPetComponentData(l, dataConfig)
+	if err != nil {
+		l.Errorw("cannot build petCpnCallData", "err", err)
+		return nil, err
+	}
+	callData = append(callData, petCpnCallData...)
+
 	// welcome config
 	l.Infow("welcomeConfig", "value", dataConfig.WelcomeConfig)
 	welcomeConfigCallData, err := table.WelcomeConfigCallData(dataConfig.WelcomeConfig)

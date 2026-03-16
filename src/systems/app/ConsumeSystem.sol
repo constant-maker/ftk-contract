@@ -98,8 +98,8 @@ contract ConsumeSystem is System, CharacterAccessControl {
     }
     if (itemType == ItemType.Bundle) {
       if (itemId == 435) {
-        // gold bundle - unpack to get instant 5000 golds
-        CharacterFundUtils.increaseGold(characterId, 5000 * amount);
+        // gold bundle - unpack to get instant 2500 golds
+        CharacterFundUtils.increaseGold(characterId, 2500 * amount);
         return;
       }
       return;

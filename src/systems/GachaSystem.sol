@@ -9,17 +9,19 @@ import {
   GachaV5Data,
   GachaPet,
   GachaPetData,
-  GachaReqChar,
-  EquipmentPet,
+  GachaReqInfo,
   CharInventory,
   CharGachaReq,
-  ItemV2
+  ItemV2,
+  EPetStats,
+  PetCpnInfo,
+  PetCpn
 } from "@codegen/index.sol";
 import { Errors } from "@common/index.sol";
 import {
   GachaIndexUtils, CharacterItemUtils, InventoryItemUtils, CharacterFundUtils, GachaUtils
 } from "@utils/index.sol";
-import { ItemCategoryType } from "@codegen/common.sol";
+import { ItemCategoryType, PetComponentType, ItemType } from "@codegen/common.sol";
 
 // Interface for requesting random numbers
 interface IVRFCoordinator {
@@ -59,10 +61,10 @@ contract GachaSystem is System, CharacterAccessControl, IVRFConsumer {
     }
 
     CharGachaV3.deleteRecord(characterId, existingRequestId); // remove old request
-    GachaReqChar.deleteRecord(existingRequestId); // remove old request mapping
+    GachaReqInfo.deleteRecord(existingRequestId); // remove old request mapping
 
     uint256 requestId = IVRFCoordinator(VRF_COORDINATOR).requestRandomNumbers(
-      NUM_REQUEST_NUMBER, uint256(keccak256(abi.encodePacked(characterId, block.timestamp, existingRequestId)))
+      NUM_REQUEST_NUMBER, uint256(keccak256(abi.encode(characterId, block.timestamp, existingRequestId)))
     );
 
     GachaUtils.storeCharGachaData(characterId, charGacha.gachaId, requestId, charGacha.isLimitedGacha);
@@ -86,35 +88,11 @@ contract GachaSystem is System, CharacterAccessControl, IVRFConsumer {
 
     // Request one random number from the VRF Coordinator
     uint256 requestId = IVRFCoordinator(VRF_COORDINATOR).requestRandomNumbers(
-      NUM_REQUEST_NUMBER, uint256(keccak256(abi.encodePacked(characterId, block.timestamp, gachaId)))
+      NUM_REQUEST_NUMBER, uint256(keccak256(abi.encode(characterId, block.timestamp, gachaId)))
     );
 
     // Store the gacha request info
     GachaUtils.storeCharGachaData(characterId, gachaId, requestId, false);
-  }
-
-  function requestPetGacha(uint256 characterId, uint256 gachaId) public onlyAuthorizedWallet(characterId) {
-    GachaUtils.checkPendingRequest(characterId);
-
-    // Validate gacha
-    GachaPetData memory gacha = GachaPet.get(gachaId);
-    if (gacha.petIds.length == 0) {
-      revert Errors.Gacha_NoItemToGacha(gachaId);
-    }
-
-    if (block.timestamp < gacha.startTime || block.timestamp > gacha.endTime) {
-      revert Errors.Gacha_InactiveGacha(gachaId);
-    }
-
-    GachaUtils.checkAndSpendTicket(characterId, gacha.ticketValue, gacha.ticketItemId);
-
-    // Request one random number from the VRF Coordinator
-    uint256 requestId = IVRFCoordinator(VRF_COORDINATOR).requestRandomNumbers(
-      NUM_REQUEST_NUMBER, uint256(keccak256(abi.encodePacked(characterId, block.timestamp, gachaId)))
-    );
-
-    // Store the gacha request info
-    GachaUtils.storeCharGachaData(characterId, gachaId, requestId, true);
   }
 
   // This function is called by the VRF Coordinator when the random numbers are ready
@@ -124,7 +102,7 @@ contract GachaSystem is System, CharacterAccessControl, IVRFConsumer {
     require(randomNumbers.length == uint256(NUM_REQUEST_NUMBER), "Invalid random numbers length");
 
     // Find the characterId associated with this requestId
-    uint256 characterId = GachaReqChar.get(requestId);
+    uint256 characterId = GachaReqInfo.getCharacterId(requestId);
     if (characterId == 0) {
       revert Errors.GachaSystem_InvalidRequestId(requestId);
     }
@@ -138,15 +116,14 @@ contract GachaSystem is System, CharacterAccessControl, IVRFConsumer {
     // Use the random number to select an item from the gacha
     require(randomNumbers.length > 0, "No random numbers provided");
     uint256 randomNumber = randomNumbers[0];
-    uint256 receivedItemId;
 
-    if (charGacha.isLimitedGacha) {
-      (receivedItemId, charGacha.gachaEquipmentId) = _handleLimitedGacha(characterId, charGacha.gachaId, randomNumber);
-    } else {
-      receivedItemId = _handleUnlimitedGacha(characterId, charGacha.gachaId, randomNumber);
-      if (ItemV2.getCategory(receivedItemId) == ItemCategoryType.Equipment) {
-        charGacha.gachaEquipmentId =
-          CharInventory.getItemEquipmentIds(characterId, CharInventory.lengthEquipmentIds(characterId) - 1);
+    uint256 receivedItemId = _handleUnlimitedGacha(characterId, charGacha.gachaId, randomNumber);
+    if (ItemV2.getCategory(receivedItemId) == ItemCategoryType.Equipment) {
+      uint256 equipmentId =
+        CharInventory.getItemEquipmentIds(characterId, CharInventory.lengthEquipmentIds(characterId) - 1);
+      charGacha.gachaEquipmentId = equipmentId;
+      if (ItemV2.getItemType(receivedItemId) == ItemType.Pet) {
+        _handlePetData(receivedItemId, equipmentId, randomNumber);
       }
     }
 
@@ -155,43 +132,16 @@ contract GachaSystem is System, CharacterAccessControl, IVRFConsumer {
     charGacha.gachaItemId = receivedItemId;
     charGacha.isPending = false;
     CharGachaV3.set(characterId, requestId, charGacha);
-    GachaReqChar.deleteRecord(requestId);
+    GachaReqInfo.deleteRecord(requestId);
     CharGachaReq.set(characterId, 0);
-  }
-
-  // _handleLimitedGacha in this version return pet id and also the equipment id of the pet item added to inventory
-  function _handleLimitedGacha(
-    uint256 characterId,
-    uint256 gachaId,
-    uint256 randomNumber
-  )
-    private
-    returns (uint256, uint256)
-  {
-    GachaPetData memory gachaData = GachaPet.get(gachaId);
-    uint256 randomIndex = randomNumber % gachaData.petIds.length;
-    uint256 receivedItemId = gachaData.petIds[randomIndex];
-
-    // Remove the item from the gacha pool
-    GachaIndexUtils.removeItem(gachaId, receivedItemId);
-    // Current gacha is PET gacha
-    // This logic is for PET gacha only
-
-    // Pet gacha case
-    CharacterItemUtils.addNewItem(characterId, PET_ITEM_ID, 1); // add pet item to inventory
-    // Bind the equipmentId of the pet item to the petId (receivedItemId) for later use in pet system
-    uint256 lastEquipmentId =
-      CharInventory.getItemEquipmentIds(characterId, CharInventory.lengthEquipmentIds(characterId) - 1);
-    EquipmentPet.set(lastEquipmentId, receivedItemId); // map equipmentId to petId
-
-    return (receivedItemId, lastEquipmentId);
   }
 
   function _handleUnlimitedGacha(uint256 characterId, uint256 gachaId, uint256 randomNumber) private returns (uint256) {
     GachaV5Data memory gachaData = GachaV5.get(gachaId);
     uint256 r = randomNumber % TOTAL_PERCENT;
-    uint256 cumulativePercent = 0;
+    uint256 cumulativePercent;
     uint256 len = gachaData.itemIds.length;
+
     for (uint256 i = 0; i < len; i++) {
       cumulativePercent += gachaData.percents[i];
       if (r < cumulativePercent) {
@@ -200,9 +150,50 @@ contract GachaSystem is System, CharacterAccessControl, IVRFConsumer {
         return receivedItemId;
       }
     }
+    
     // Fallback (should not reach here if percents sum to TOTAL_PERCENT)
     uint256 fallbackItemId = gachaData.itemIds[0];
     CharacterItemUtils.addNewItem(characterId, fallbackItemId, gachaData.amounts[0]);
     return fallbackItemId;
+  }
+
+  /// @dev Generate pet stats and components based on the received pet item and its associated equipment
+  function _handlePetData(uint256 petItemId, uint256 petEquipmentId, uint256 randomNumber) private {
+    // Generate pet stats (atk, def, agi) between 1 and 5
+    // 1 2 3 are just seed, magic number
+    uint256 atk = (uint256(keccak256(abi.encode(petEquipmentId, 1, randomNumber))) % 5) + 1;
+    uint256 def = (uint256(keccak256(abi.encode(petEquipmentId, 2, randomNumber))) % 5) + 1;
+    uint256 agi = (uint256(keccak256(abi.encode(petEquipmentId, 3, randomNumber))) % 5) + 1;
+
+    // Store pet stats in EPetStats table
+    EPetStats.set(petEquipmentId, uint16(atk), uint16(def), uint16(agi));
+
+    // Generate pet components
+    uint8 maxComponentType = uint8(PetComponentType.Weapon);
+    uint8[] memory componentTypes = new  uint8[](maxComponentType + 1);
+    uint16[] memory componentValues = new  uint16[](maxComponentType + 1);
+
+    for (uint8 i = 0; i <= maxComponentType; i++) {
+      componentTypes[i] = i;
+      uint16[] memory componentRatios = PetCpnInfo.get(petItemId, PetComponentType(i));
+      uint256 eR = uint256(keccak256(abi.encode(petEquipmentId, i, randomNumber))) % TOTAL_PERCENT;
+      uint256 cumulativeRatio;
+      uint256 ratioLen = componentRatios.length;
+      for (uint16 j = 0; j < ratioLen; j++) {
+        uint16 cRatio = componentRatios[j];
+        if (cRatio == 0) {
+          // skip if ratio is 0, not all pet items have all component types
+          continue;
+        }
+        cumulativeRatio += cRatio;
+        if (eR < cumulativeRatio) {
+          componentValues[i] = j;
+          break;
+        }
+      }
+    }
+
+    // Store pet components in PetCpn table
+    PetCpn.set(petEquipmentId, componentTypes, componentValues);
   }
 }

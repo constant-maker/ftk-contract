@@ -44,5 +44,8 @@ func UpdateDataConfig(
 	// update item exchange data config
 	updateItemExchangeDataConfig(dataConfig, basePath, sheetUrlConfig, spreadSheetMetadata)
 
+	// update pet component rate data config
+	updatePetComponentRateDataConfig(dataConfig, basePath, sheetUrlConfig, spreadSheetMetadata)
+
 	l.Infow("update data config completed")
 }

@@ -13,6 +13,8 @@ deploys/**/*.json
 .idea
 
 post-deploy/cmd/cmd*
+post-deploy/cmd/sheetUrlConfig.json
+post-deploy/cmd/sheetConfig.json
 post-deploy/cmd/resource-distribution/resource-distribution
 post-deploy/cmd/updater/*.json
 post-deploy/cmd/updater

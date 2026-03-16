@@ -616,3 +616,18 @@ func BuildCollectionExcData(l *zap.SugaredLogger, dataConfig common.DataConfig, 
 	}
 	return callData, nil
 }
+
+func BuildPetComponentData(l *zap.SugaredLogger, dataConfig common.DataConfig) ([][]byte, error) {
+	callData := make([][]byte, 0)
+	for _, petCpnInfo := range dataConfig.PetComponentRates {
+		for _, eCpn := range petCpnInfo.Components {
+			petCpnCallData, err := table.PetComponentInfoCallData(petCpnInfo.PetItemId, eCpn)
+			if err != nil {
+				l.Errorw("cannot build PetComponent call data", "err", err)
+				return nil, err
+			}
+			callData = append(callData, petCpnCallData)
+		}
+	}
+	return callData, nil
+}

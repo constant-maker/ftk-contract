@@ -22,10 +22,12 @@ const GACHA_TABLES: any = {
     },
     key: ['characterId'],
   },
-  GachaReqChar: {
+  GachaReqInfo: {
     schema: {
       requestId: "uint256",
-      characterId: "uint256"
+      characterId: "uint256",
+      gachaType: "GachaType",
+      extraData: "bytes",
     },
     key: ['requestId'],
   },
@@ -41,7 +43,7 @@ const GACHA_TABLES: any = {
     },
     key: ['id'],
   },
-  GachaPet: {
+  GachaPet: { // DEPRECATED, use GachaV5 instead
     schema: {
       id : "uint256",
       startTime: "uint256",
@@ -58,7 +60,7 @@ const GACHA_TABLES: any = {
     },
     key: [],
   },
-  GachaItemIndex: {
+  GachaItemIndex: { // DEPRECATED, removed
     schema: {
       gachaId: "uint256",
       itemId: "uint256",

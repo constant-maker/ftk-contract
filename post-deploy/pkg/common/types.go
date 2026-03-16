@@ -338,6 +338,18 @@ type DailyQuestConfig struct {
 
 type RarityType string
 
+// Pet component rate for gacha
+type PetCpnRate struct {
+	PetItemId  int      `json:"id"`
+	Components []PetCpn `json:"components"`
+}
+
+type PetCpn struct {
+	CpnType   uint8    `json:"cpnType"` // 0, 1, 2 ...
+	CpnValues []uint16 `json:"cpnValues"`
+	CpnRatios []uint16 `json:"cpnRatios"`
+}
+
 type DataConfig struct {
 	Achievements             map[string]Achievement  `json:"achievements"` // map id => Achievement
 	Items                    map[string]Item         `json:"items"`        // map itemId => Item
@@ -356,6 +368,7 @@ type DataConfig struct {
 	MonsterLocationsOverride []MonsterLocation       `json:"monsterLocationsOverride"`
 	MonsterLocationsBoss     []MonsterLocation       `json:"monsterLocationsBoss"`
 	ItemExchanges            map[string]ItemExchange `json:"itemExchanges"`
+	PetComponentRates        map[string]PetCpnRate   `json:"petComponentRates"`
 
 	// enum type
 	ResourceTypes      map[ResourceType]int       `json:"resourceTypes"`      // enums
@@ -394,16 +407,17 @@ type MapColor struct {
 
 // SheetUrlConfig contains the sheet ID for each data type in google sheet
 type SheetUrlConfig struct {
-	SpreadsheetsId            string `json:"spreadsheetsId"`
-	ListMonsterResourceUpdate int64  `json:"listMonsterResourceUpdate"`
-	ListFarmingResourceUpdate int64  `json:"listFarmingResourceUpdate"`
-	ListEquipmentUpdate       int64  `json:"listEquipmentUpdate"`
-	ListHealingItemUpdate     int64  `json:"listHealingItemUpdate"`
-	ListScrollUpdate          int64  `json:"listScrollUpdate"`
-	ListToolUpdate            int64  `json:"listToolUpdate"`
-	ListCardUpdate            int64  `json:"listCardUpdate"`
-	ListSkinUpdate            int64  `json:"listSkinUpdate"`
-	ListOtherItemUpdate       int64  `json:"listOtherItemUpdate"`
-	ListSkillUpdate           int64  `json:"listSkillUpdate"`
-	ListItemExUpdate          int64  `json:"listItemExUpdate"`
+	SpreadsheetsId             string `json:"spreadsheetsId"`
+	ListMonsterResourceUpdate  int64  `json:"listMonsterResourceUpdate"`
+	ListFarmingResourceUpdate  int64  `json:"listFarmingResourceUpdate"`
+	ListEquipmentUpdate        int64  `json:"listEquipmentUpdate"`
+	ListHealingItemUpdate      int64  `json:"listHealingItemUpdate"`
+	ListScrollUpdate           int64  `json:"listScrollUpdate"`
+	ListToolUpdate             int64  `json:"listToolUpdate"`
+	ListCardUpdate             int64  `json:"listCardUpdate"`
+	ListSkinUpdate             int64  `json:"listSkinUpdate"`
+	ListOtherItemUpdate        int64  `json:"listOtherItemUpdate"`
+	ListSkillUpdate            int64  `json:"listSkillUpdate"`
+	ListItemExUpdate           int64  `json:"listItemExUpdate"`
+	ListPetComponentRateUpdate int64  `json:"listPetComponentRateUpdate"`
 }

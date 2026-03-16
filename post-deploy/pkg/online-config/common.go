@@ -95,7 +95,7 @@ func getEnumType(s string, record []string) int {
 	return int(num)
 }
 
-func getSheetRawData(sheetName string) ([][]string, error) {
+func getSheetRawData(sheetName string, maxLen ...int) ([][]string, error) {
 	resp, err := gSrv.Spreadsheets.Values.Get(
 		gSpreadSheetId,
 		sheetName,
@@ -105,8 +105,15 @@ func getSheetRawData(sheetName string) ([][]string, error) {
 	}
 	rawData := make([][]string, 0)
 	for _, row := range resp.Values {
-		stringRow := make([]string, len(row))
+		maxLenValue := len(row)
+		if len(maxLen) > 0 {
+			maxLenValue = maxLen[0]
+		}
+		stringRow := make([]string, maxLenValue)
 		for i, cell := range row {
+			if i >= maxLenValue {
+				break
+			}
 			stringRow[i] = fmt.Sprintf("%v", cell)
 		}
 		rawData = append(rawData, stringRow)
@@ -294,4 +301,9 @@ func findSheetNameById(sheetId int64, spreadSheetMetadata *sheets.Spreadsheet) s
 		}
 	}
 	panic(fmt.Sprintf("sheet id not found, id = %d", sheetId))
+}
+
+func isNumber(s string) bool {
+	_, err := strconv.ParseFloat(s, 64)
+	return err == nil
 }

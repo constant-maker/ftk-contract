@@ -49,7 +49,8 @@
     "Skin": 31,
     "Teleport": 32,
     "Ring": 33,
-    "Bundle": 34
+    "Bundle": 34,
+    "CraftingMaterial": 35
   },
   "itemCategoryTypes": {
     "Tool": 0,

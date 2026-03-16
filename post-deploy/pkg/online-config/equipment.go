@@ -88,6 +88,7 @@ func getListEquipmentUpdate(sheetName string, dataConfig *common.DataConfig) ([]
 
 		id := mustStringToInt(record[idIndex], idIndex)
 		tier := mustStringToInt(record[tierIndex], tierIndex)
+		l.Infow("record", "value", record)
 		weight := mustStringToInt(record[weightIndex], weightIndex)
 		oldWeigh := mustStringToInt(record[oldWeightIndex], oldWeightIndex)
 		bonusWeight := mustStringToInt(record[bonusWeightIndex], bonusWeightIndex)
