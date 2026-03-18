@@ -8,7 +8,7 @@ import (
 	"github.com/ftk/post-deploy/pkg/mud"
 )
 
-func PetComponentInfoCallData(petId int, petCpn common.PetCpn) ([]byte, error) {
+func PetComponentInfoCallData(petId int, petCpn common.PetComponents) ([]byte, error) {
 	// zap.S().Infow("quest.TitleId", "value", quest.AchievementId)
 	staticData := []byte{}
 	if len(petCpn.CpnValues) != len(petCpn.CpnRatios) {

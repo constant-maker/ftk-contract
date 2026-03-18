@@ -340,11 +340,11 @@ type RarityType string
 
 // Pet component rate for gacha
 type PetCpnRate struct {
-	PetItemId  int      `json:"id"`
-	Components []PetCpn `json:"components"`
+	PetItemId  int             `json:"id"`
+	Components []PetComponents `json:"components"`
 }
 
-type PetCpn struct {
+type PetComponents struct {
 	CpnType   uint8    `json:"cpnType"` // 0, 1, 2 ...
 	CpnValues []uint16 `json:"cpnValues"`
 	CpnRatios []uint16 `json:"cpnRatios"`

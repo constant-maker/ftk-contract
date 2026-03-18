@@ -174,10 +174,9 @@ const ITEM_TABLES: any = {
     },
     key: ['petId', "componentType"],
   },
-  PetCpn: {
+  PetCpnV2: {
     schema: {
       petEquipmentId: "uint256",
-      componentTypes: "uint8[]",
       componentValues: "uint16[]",
     },
     key: ['petEquipmentId'],

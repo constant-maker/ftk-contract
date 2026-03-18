@@ -17,8 +17,7 @@ import {
   CityVault2V2,
   CrystalFee,
   PetCpnInfo,
-  PetCpn,
-  PetCpnData,
+  PetCpnV2,
   EPetStats,
   EPetStatsData
 } from "@codegen/index.sol";
@@ -162,7 +161,7 @@ contract GachaTest is Test, WorldFixture, SpawnSystemFixture, WelcomeSystemFixtu
     // assert data
     uint16[] memory componentRatios = PetCpnInfo.get(436, PetComponentType.Bag);
     assertEq(componentRatios.length, 1);
-    assertEq(componentRatios[0], 10000);
+    assertEq(componentRatios[0], 10_000);
 
     componentRatios = PetCpnInfo.get(436, PetComponentType.Eye);
     assertEq(componentRatios.length, 35);
@@ -182,7 +181,6 @@ contract GachaTest is Test, WorldFixture, SpawnSystemFixture, WelcomeSystemFixtu
     itemIds[0] = 436;
     itemIds[1] = 464;
     itemIds[2] = 465;
-
 
     uint32[] memory amounts = new uint32[](3);
     amounts[0] = 1;
@@ -246,9 +244,12 @@ contract GachaTest is Test, WorldFixture, SpawnSystemFixture, WelcomeSystemFixtu
     assertTrue(Equipment.getItemId(lastEquipmentId) == charGacha.gachaItemId);
 
     console2.log("Assert pet equipment data");
-    PetCpnData memory petCpn = PetCpn.get(lastEquipmentId);
-    assertGt(petCpn.componentTypes[2], 0);
-    assertEq(petCpn.componentTypes.length, 9);
+    uint16[] memory componentValues = PetCpnV2.get(lastEquipmentId);
+    for (uint256 i = 0; i < componentValues.length; i++) {
+      console2.log("componentValues", componentValues[i]);
+    }
+    assertGt(componentValues[1], 0);
+    assertEq(componentValues.length, 9);
     EPetStatsData memory petStats = EPetStats.get(lastEquipmentId);
     assertTrue(petStats.atk >= 1 && petStats.atk <= 5);
     assertTrue(petStats.def >= 1 && petStats.def <= 5);

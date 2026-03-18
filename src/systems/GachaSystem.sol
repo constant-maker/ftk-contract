@@ -15,7 +15,7 @@ import {
   ItemV2,
   EPetStats,
   PetCpnInfo,
-  PetCpn
+  PetCpnV2
 } from "@codegen/index.sol";
 import { Errors } from "@common/index.sol";
 import {
@@ -150,7 +150,7 @@ contract GachaSystem is System, CharacterAccessControl, IVRFConsumer {
         return receivedItemId;
       }
     }
-    
+
     // Fallback (should not reach here if percents sum to TOTAL_PERCENT)
     uint256 fallbackItemId = gachaData.itemIds[0];
     CharacterItemUtils.addNewItem(characterId, fallbackItemId, gachaData.amounts[0]);
@@ -160,21 +160,18 @@ contract GachaSystem is System, CharacterAccessControl, IVRFConsumer {
   /// @dev Generate pet stats and components based on the received pet item and its associated equipment
   function _handlePetData(uint256 petItemId, uint256 petEquipmentId, uint256 randomNumber) private {
     // Generate pet stats (atk, def, agi) between 1 and 5
-    // 1 2 3 are just seed, magic number
-    uint256 atk = (uint256(keccak256(abi.encode(petEquipmentId, 1, randomNumber))) % 5) + 1;
-    uint256 def = (uint256(keccak256(abi.encode(petEquipmentId, 2, randomNumber))) % 5) + 1;
-    uint256 agi = (uint256(keccak256(abi.encode(petEquipmentId, 3, randomNumber))) % 5) + 1;
+    uint256 atk = (uint256(keccak256(abi.encode(petEquipmentId, 123, randomNumber + 1))) % 5) + 1;
+    uint256 def = (uint256(keccak256(abi.encode(petEquipmentId, 234, randomNumber + 2))) % 5) + 1;
+    uint256 agi = (uint256(keccak256(abi.encode(petEquipmentId, 345, randomNumber + 3))) % 5) + 1;
 
     // Store pet stats in EPetStats table
     EPetStats.set(petEquipmentId, uint16(atk), uint16(def), uint16(agi));
 
     // Generate pet components
     uint8 maxComponentType = uint8(PetComponentType.Weapon);
-    uint8[] memory componentTypes = new  uint8[](maxComponentType + 1);
-    uint16[] memory componentValues = new  uint16[](maxComponentType + 1);
+    uint16[] memory componentValues = new uint16[](maxComponentType + 1);
 
     for (uint8 i = 0; i <= maxComponentType; i++) {
-      componentTypes[i] = i;
       uint16[] memory componentRatios = PetCpnInfo.get(petItemId, PetComponentType(i));
       uint256 eR = uint256(keccak256(abi.encode(petEquipmentId, i, randomNumber))) % TOTAL_PERCENT;
       uint256 cumulativeRatio;
@@ -193,7 +190,7 @@ contract GachaSystem is System, CharacterAccessControl, IVRFConsumer {
       }
     }
 
-    // Store pet components in PetCpn table
-    PetCpn.set(petEquipmentId, componentTypes, componentValues);
+    // Store pet components in PetCpnV2 table
+    PetCpnV2.set(petEquipmentId, componentValues);
   }
 }

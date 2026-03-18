@@ -69,9 +69,9 @@ func getPetComponentRateUpdate(sheetName string) ([]common.PetCpnRate, error) {
 		petItemId := mustStringToInt(record[petItemIdIndex], petItemIdIndex)
 		listCpnIndex := []int{bagIndex, eyeIndex, hornIndex, mouthIndex, tailIndex, wingIndex, bodyIndex, headIndex, weaponIndex}
 
-		petComponents := make([]common.PetCpn, 0)
+		petComponents := make([]common.PetComponents, 0)
 		for cpnType, recordIndex := range listCpnIndex {
-			petCpn := common.PetCpn{
+			petCpn := common.PetComponents{
 				CpnType: uint8(cpnType),
 			}
 			CpnValues := make([]uint16, 0)
