@@ -11,18 +11,18 @@ const ACHIEVEMENT_TABLES: any = {
   },
   CharAchievement: {
     schema: {
-      charId: "uint256",
+      characterId: "uint256",
       achievementIds: "uint256[]"
     },
-    key: ['charId'],
+    key: ['characterId'],
   },
   CharAchievementIndex: {
     schema: {
-      charId: "uint256",
+      characterId: "uint256",
       achievementId: "uint256",
       index: "uint256",
     },
-    key: ['charId', 'achievementId'],
+    key: ['characterId', 'achievementId'],
   },
 }
 

@@ -3,15 +3,10 @@
 const CONFIG_TABLES: any = {
   MapConfig: {
     schema: {
-      width: "uint32",
-      height: "uint32",
-    },
-    key: [],
-  },
-  InventoryConfig: {
-    schema: {
-      baseWeight: "uint32",
-      maxWeight: "uint32",
+      top: "int32",
+      right: "int32",
+      bottom: "int32",
+      left: "int32",
     },
     key: [],
   },
@@ -30,24 +25,15 @@ const CONFIG_TABLES: any = {
     },
     key: [],
   },
-  // This table is used to store experience amplification settings
+  // This table is used to store global experience amplification settings
   // Usually for special occasions
   ExpAmpConfig: {
     schema: {
       farmingPerkAmp: "uint16", // these values are percentages, e.g., 20 means gain 20% more exp
       pveExpAmp: "uint16",
-      pvePerkAmp: "uint16",
       expireTime: "uint256",
     },
     key: [],
-  },
-  TestTable: {
-    schema: {
-      column1: "uint256",
-      column2: "uint256",
-      column3: "uint256",
-    },
-    key: ['column1'],
   },
 };
 

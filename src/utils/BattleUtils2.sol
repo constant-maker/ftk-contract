@@ -1,7 +1,7 @@
 pragma solidity >=0.8.24;
 
 import {
-  TileInfo3,
+  Tile,
   CharInfo,
   DropResource,
   CharPositionData,
@@ -9,7 +9,7 @@ import {
   CharState,
   PvEAfk,
   PvEAfkData,
-  ItemV2,
+  Item,
   Equipment
 } from "@codegen/index.sol";
 import { ZoneType, CharacterStateType, ItemType } from "@codegen/common.sol";
@@ -34,8 +34,8 @@ library BattleUtils2 {
     // check if inventory should be dropped
     int32 x = position.x;
     int32 y = position.y;
-    ZoneType zoneType = TileInfo3.getZoneType(x, y);
-    uint8 tileKingdomId = TileInfo3.getKingdomId(x, y);
+    ZoneType zoneType = Tile.getZoneType(x, y);
+    uint8 tileKingdomId = Tile.getKingdomId(x, y);
     uint8 characterKingdomId = CharInfo.getKingdomId(characterId);
     if (zoneType == ZoneType.Black && tileKingdomId == characterKingdomId) {
       zoneType = ZoneType.Red;

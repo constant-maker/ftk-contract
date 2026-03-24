@@ -10,9 +10,9 @@ import (
 )
 
 // loadTileInfos load tileInfo from cache file
-func loadTileInfos(kingdomId int) ([]common.TileInfo, error) {
+func loadTileInfos(kingdomId int) ([]common.Tile, error) {
 	var (
-		result []common.TileInfo
+		result []common.Tile
 		l      = zap.S().With("func", "loadTileInfos")
 	)
 	fileName := fmt.Sprintf("./tileInfos_%d.json", kingdomId)

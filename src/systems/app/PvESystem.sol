@@ -10,10 +10,9 @@ import {
   MonsterLocation,
   MonsterLocationData,
   Monster,
-  PvEExtraV2,
+  PvEExtra,
   PvEAfk,
-  PvEAfkData,
-  CharCStats2
+  PvEAfkData
 } from "@codegen/index.sol";
 import {
   CharacterPositionUtils,
@@ -101,7 +100,7 @@ contract PvESystem is System, CharacterAccessControl {
       BattleUtils2.applyLoss(characterId, characterPosition);
       characterHp = CharStats.getHp(characterId); // set character hp to max hp
       CharCurrentStats.setExp(characterId, CharCurrentStats.getExp(characterId) * 75 / 100); // penalty 25% current exp
-      PvEExtraV2.set(characterId, 0, 0, CharCStats2.getBarrier(characterId));
+      PvEExtra.set(characterId, 0, 0, CharCurrentStats.getBarrier(characterId));
     } else if (monsterHp == 0) {
       // character won
       (uint32 gainedExp, uint32 gainedPerkExp) =

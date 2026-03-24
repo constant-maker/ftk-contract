@@ -4,23 +4,21 @@ import {
   CharStats,
   CharCurrentStats,
   CharCurrentStatsData,
-  CharCStats2,
   CharBaseStats,
   Equipment,
   EquipmentInfo,
   EquipmentInfoData,
-  EquipmentInfo2V2,
-  EquipmentInfo2V2Data,
+  EquipmentInfo2,
+  EquipmentInfo2Data,
   CharReborn,
-  ItemV2,
-  CharEquipStats,
-  CharEquipStatsData,
-  CharEquipStats2,
-  CharEquipStats2Data
+  Item,
+  CharEqCache,
+  CharEqCacheData,
+  EPetStats,
+  EPetStatsData
 } from "@codegen/index.sol";
-import { StatType, SlotType } from "@codegen/common.sol";
+import { StatType, SlotType, ItemType } from "@codegen/common.sol";
 import { Errors, Config } from "@common/index.sol";
-import { EquipmentSnapshotData } from "@common/Types.sol";
 
 library CharacterStatsUtils {
   /// @dev calculate the required exp to level up
@@ -44,6 +42,7 @@ library CharacterStatsUtils {
     }
   }
 
+  /// @dev validate current weight of character, revert if current weight exceed max weight
   function validateCurrentWeight(uint256 characterId) internal view {
     uint32 currentWeight = CharCurrentStats.getWeight(characterId);
     uint32 maxWeight = CharStats.getWeight(characterId);
@@ -52,6 +51,7 @@ library CharacterStatsUtils {
     }
   }
 
+  /// @dev validate weight after adding new weight, revert if new weight exceed max weight
   function validateWeight(uint256 characterId, uint32 plusWeight) internal view {
     uint32 newWeight = CharCurrentStats.getWeight(characterId) + plusWeight;
     uint32 maxWeight = CharStats.getWeight(characterId);
@@ -60,6 +60,7 @@ library CharacterStatsUtils {
     }
   }
 
+  /// @dev update char exp
   function updateExp(uint256 characterId, uint32 exp, bool isGained) internal {
     uint32 currentExp = CharCurrentStats.getExp(characterId);
     uint32 newExp;
@@ -75,6 +76,7 @@ library CharacterStatsUtils {
     CharCurrentStats.setExp(characterId, newExp);
   }
 
+  /// @dev restore hp for character, the new hp will not exceed max hp
   function restoreHp(uint256 characterId, uint32 gainedHp) internal {
     if (gainedHp == 0) return;
     uint32 maxHp = CharStats.getHp(characterId);
@@ -98,7 +100,7 @@ library CharacterStatsUtils {
     }
   }
 
-  // set new hp if it's != current hp
+  /// @dev set new hp if it's != current hp
   function setNewHp(uint256 characterId, uint32 newHp) internal {
     uint32 currentHp = CharCurrentStats.getHp(characterId);
     if (currentHp != newHp) {
@@ -106,6 +108,7 @@ library CharacterStatsUtils {
     }
   }
 
+  /// @dev get stat by stat type (ATK, DEF, AGI)
   function getStatByStatType(uint256 characterId, StatType statType) internal view returns (uint16) {
     if (statType == StatType.ATK) {
       return CharCurrentStats.getAtk(characterId);
@@ -118,6 +121,7 @@ library CharacterStatsUtils {
     }
   }
 
+  /// @dev set base stat by stat type (ATK, DEF, AGI)
   function setBaseStatByStatType(uint256 characterId, StatType statType, uint16 value) internal {
     if (statType == StatType.ATK) {
       CharBaseStats.setAtk(characterId, value);
@@ -130,6 +134,7 @@ library CharacterStatsUtils {
     }
   }
 
+  /// @dev get base stat by stat type (ATK, DEF, AGI)
   function getBaseStatByStatType(uint256 characterId, StatType statType) internal view returns (uint16) {
     if (statType == StatType.ATK) {
       return CharBaseStats.getAtk(characterId);
@@ -142,12 +147,18 @@ library CharacterStatsUtils {
     }
   }
 
+  /// @dev remove equipment stats from character current stats, use the snapshot stats to update
   function removeEquipment(uint256 characterId, uint256 equipmentId, SlotType slotType) internal {
     _updateWithEquipmentStats(characterId, equipmentId, slotType, true);
   }
 
+  /// @dev add equipment stats to character current stats,
   function addEquipment(uint256 characterId, uint256 equipmentId, SlotType slotType) internal {
-    _snapshotStats(characterId, equipmentId, slotType);
+    // we snapshot the equipment stats when equip equipment,
+    // so we can use the snapshot to update character stats when unequip or remove equipment,
+    // no need to calculate the stats again which will save gas,
+    // and also avoid the issue of change the item stats
+    _snapshotEquipmentStats(characterId, equipmentId, slotType);
     _updateWithEquipmentStats(characterId, equipmentId, slotType, false);
   }
 
@@ -165,8 +176,7 @@ library CharacterStatsUtils {
     }
 
     CharCurrentStatsData memory characterCurrentStats = CharCurrentStats.get(characterId);
-    EquipmentSnapshotData memory equipmentSnapshot =
-      _getSnapshotEquipmentStats(characterId, slotType, equipmentId, isRemoved);
+    CharEqCacheData memory equipmentSnapshot = CharEqCache.get(characterId, slotType);
 
     if (equipmentSnapshot.hp > 0) {
       uint32 maxHp = CharStats.getHp(characterId);
@@ -178,39 +188,27 @@ library CharacterStatsUtils {
         characterCurrentStats.hp = maxHp;
       }
     }
+    // only mount equipment has weight, and weight will affect max weight of character,
+    // so we need to update max weight when equip or unequip mount equipment
     if (slotType == SlotType.Mount) {
       _updateMaxWeightWithEquipment(characterId, equipmentSnapshot.weight, isRemoved);
     }
-
-    uint32 shieldBarrier = CharCStats2.getBarrier(characterId);
-    bool shouldUpdateShieldBarrier = equipmentSnapshot.barrier > 0;
 
     if (isRemoved) {
       characterCurrentStats.ms -= equipmentSnapshot.ms;
       characterCurrentStats.atk -= equipmentSnapshot.atk;
       characterCurrentStats.def -= equipmentSnapshot.def;
       characterCurrentStats.agi -= equipmentSnapshot.agi;
-      if (shouldUpdateShieldBarrier) {
-        if (shieldBarrier < equipmentSnapshot.barrier) {
-          shieldBarrier = 0;
-        } else {
-          shieldBarrier -= equipmentSnapshot.barrier;
-        }
-      }
+      characterCurrentStats.barrier -= equipmentSnapshot.barrier;
     } else {
       characterCurrentStats.ms += equipmentSnapshot.ms;
       characterCurrentStats.atk += equipmentSnapshot.atk;
       characterCurrentStats.def += equipmentSnapshot.def;
       characterCurrentStats.agi += equipmentSnapshot.agi;
-      if (shouldUpdateShieldBarrier) {
-        shieldBarrier += equipmentSnapshot.barrier;
-      }
+      characterCurrentStats.barrier += equipmentSnapshot.barrier;
     }
 
     CharCurrentStats.set(characterId, characterCurrentStats);
-    if (shouldUpdateShieldBarrier) {
-      CharCStats2.setBarrier(characterId, shieldBarrier);
-    }
   }
 
   function _updateMaxWeightWithEquipment(uint256 characterId, uint32 bonusWeight, bool isRemoved) private {
@@ -230,96 +228,60 @@ library CharacterStatsUtils {
     CharStats.setWeight(characterId, newMaxWeight);
   }
 
-  function _getSnapshotEquipmentStats(
-    uint256 characterId,
-    SlotType slotType,
-    uint256 equipmentId,
-    bool isRemoved
-  )
-    private
-    view
-    returns (EquipmentSnapshotData memory equipmentSnapshot)
-  {
-    // Get directly from EquipmentInfo if adding equipment
-    EquipmentSnapshotData memory latestEquipmentSnapshot = _getUpgradedEquipmentStats(equipmentId);
-    if (!isRemoved) return latestEquipmentSnapshot;
-    // Load equipment stats from CharEquipStats2
-    CharEquipStats2Data memory charEquipStats2 = CharEquipStats2.get(characterId, slotType);
-    equipmentSnapshot.barrier = charEquipStats2.barrier;
-    if (equipmentSnapshot.barrier == 0) {
-      equipmentSnapshot.barrier = latestEquipmentSnapshot.barrier;
-    }
-    equipmentSnapshot.weight = charEquipStats2.weight;
-    if (equipmentSnapshot.weight == 0) {
-      equipmentSnapshot.weight = latestEquipmentSnapshot.weight;
-    }
-    // Load equipment stats from CharEquipStats
-    CharEquipStatsData memory charEquipStats = CharEquipStats.get(characterId, slotType);
-    equipmentSnapshot.hp = charEquipStats.hp;
-    equipmentSnapshot.atk = charEquipStats.atk;
-    equipmentSnapshot.def = charEquipStats.def;
-    equipmentSnapshot.agi = charEquipStats.agi;
-    equipmentSnapshot.ms = charEquipStats.ms;
-
-    if (
-      equipmentSnapshot.hp == 0 && equipmentSnapshot.atk == 0 && equipmentSnapshot.def == 0
-        && equipmentSnapshot.agi == 0 && equipmentSnapshot.ms == 0 && equipmentSnapshot.barrier == 0
-    ) {
-      revert Errors.EquipmentSystem_EquipmentSnapshotStatsNotFound(characterId, equipmentId, slotType);
-    }
-    return equipmentSnapshot;
-  }
-
   /// @dev Get equipment stats and snapshot them for the character.
-  function _snapshotStats(uint256 characterId, uint256 equipmentId, SlotType slotType) private {
-    EquipmentSnapshotData memory equipmentSnapshot = _getUpgradedEquipmentStats(equipmentId);
-    CharEquipStatsData memory charEquipStats = CharEquipStatsData({
-      hp: equipmentSnapshot.hp,
-      atk: equipmentSnapshot.atk,
-      def: equipmentSnapshot.def,
-      agi: equipmentSnapshot.agi,
-      ms: equipmentSnapshot.ms
-    });
-    CharEquipStats.set(characterId, slotType, charEquipStats);
-    CharEquipStats2Data memory charEquipStats2 =
-      CharEquipStats2Data({ barrier: equipmentSnapshot.barrier, weight: equipmentSnapshot.weight });
-    CharEquipStats2.set(characterId, slotType, charEquipStats2);
+  function _snapshotEquipmentStats(uint256 characterId, uint256 equipmentId, SlotType slotType) private {
+    CharEqCacheData memory equipmentSnapshot = _getUpgradedEquipmentStats(equipmentId);
+    CharEqCache.set(characterId, slotType, equipmentSnapshot);
   }
 
   /// @dev Get the upgraded equipment stats for a given equipment ID. Higher level equipment provides better stats.
   function _getUpgradedEquipmentStats(uint256 equipmentId)
     private
     view
-    returns (EquipmentSnapshotData memory equipmentSnapshot)
+    returns (CharEqCacheData memory equipmentSnapshot)
   {
     uint256 itemId = Equipment.getItemId(equipmentId);
+    if (itemId == 0) {
+      revert Errors.Equipment_NotExisted(equipmentId);
+    }
     EquipmentInfoData memory equipmentInfo = EquipmentInfo.get(itemId);
-    EquipmentInfo2V2Data memory equipmentInfo2V2 = EquipmentInfo2V2.get(itemId);
+    if (Item.getItemType(itemId) == ItemType.Pet) {
+      // pet stats will take from this table
+      EPetStatsData memory petStats = EPetStats.get(itemId);
+      // replace equipment info with pet stats for pet equipment, only atk, def, agi
+      equipmentInfo.atk = petStats.atk;
+      equipmentInfo.def = petStats.def;
+      equipmentInfo.agi = petStats.agi;
+    }
+    EquipmentInfo2Data memory equipmentInfo2 = EquipmentInfo2.get(itemId);
     uint8 level = Equipment.getLevel(equipmentId);
+
     if (level == 1) {
-      equipmentSnapshot = EquipmentSnapshotData({
-        barrier: equipmentInfo2V2.shieldBarrier,
+      equipmentSnapshot = CharEqCacheData({
         hp: equipmentInfo.hp,
+        barrier: equipmentInfo2.shieldBarrier,
+        weight: equipmentInfo2.bonusWeight,
         atk: equipmentInfo.atk,
         def: equipmentInfo.def,
         agi: equipmentInfo.agi,
-        ms: equipmentInfo.ms,
-        weight: equipmentInfo2V2.bonusWeight
+        ms: equipmentInfo.ms
       });
+
       return equipmentSnapshot;
     }
+
     // bonus stats
     uint16 percentGain = _getStatBonusPercent(itemId, level);
     uint16 multiplier = 100 + percentGain;
 
-    equipmentSnapshot = EquipmentSnapshotData({
-      barrier: _calculateNewStat(equipmentInfo2V2.shieldBarrier, multiplier, level),
+    equipmentSnapshot = CharEqCacheData({
+      barrier: _calculateNewStat(equipmentInfo2.shieldBarrier, multiplier, level),
       hp: _calculateNewStat(equipmentInfo.hp, multiplier, level),
       atk: uint16(_calculateNewStat(equipmentInfo.atk, multiplier, level)),
       def: uint16(_calculateNewStat(equipmentInfo.def, multiplier, level)),
       agi: uint16(_calculateNewStat(equipmentInfo.agi, multiplier, level)),
       ms: equipmentInfo.ms, // unchanged
-      weight: _calculateNewStat(equipmentInfo2V2.bonusWeight, multiplier, level)
+      weight: _calculateNewStat(equipmentInfo2.bonusWeight, multiplier, level)
     });
 
     return equipmentSnapshot;
@@ -338,7 +300,7 @@ library CharacterStatsUtils {
   function _getStatBonusPercent(uint256 itemId, uint8 level) private view returns (uint16) {
     if (level <= 1) return 0;
 
-    uint8 tier = ItemV2.getTier(itemId);
+    uint8 tier = Item.getTier(itemId);
 
     uint16 bonusPercent = sumOfArithmeticSeries(level - 1, 5, 5);
 

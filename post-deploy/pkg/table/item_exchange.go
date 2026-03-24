@@ -24,6 +24,6 @@ func CollectionExcCallData(itemEx common.ItemExchange) ([]byte, error) {
 		return nil, err
 	}
 
-	mt := mud.NewMudTable("CollectionExcV2", "app", "")
+	mt := mud.NewMudTable("AshVaultExc", "app", "")
 	return mt.SetRecordRawCalldata(keyTuple, []byte{}, encodedLength, dynamicData)
 }

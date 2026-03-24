@@ -1,6 +1,6 @@
 pragma solidity >=0.8.24;
 
-import { CharOtherItem, BuffItemInfoV3, CharBuffCounter, ItemV2 } from "@codegen/index.sol";
+import { CharOtherItem, BuffInfo, CharBuffCounter, Item } from "@codegen/index.sol";
 import { ItemType, BuffType } from "@codegen/common.sol";
 import { CharacterWeightUtils } from "./CharacterWeightUtils.sol";
 import { Errors } from "@common/Errors.sol";
@@ -83,19 +83,14 @@ library InventoryItemUtils {
     } else {
       newAmount = currentAmount + changeAmount;
     }
-    if (currentAmount == 0) {
-      // new record
-      CharOtherItem.set(characterId, itemId, characterId, newAmount);
-    } else {
-      CharOtherItem.setAmount(characterId, itemId, newAmount);
-    }
+    CharOtherItem.set(characterId, itemId, newAmount);
   }
 
   function _checkItemLimit(uint256 characterId, uint256 itemId, uint32 changeAmount, bool isReduce) private {
-    ItemType itemType = ItemV2.getItemType(itemId);
+    ItemType itemType = Item.getItemType(itemId);
     if (itemType != ItemType.BuffItem && itemType != ItemType.HealingItem) return;
 
-    BuffType buffType = itemType == ItemType.HealingItem ? BuffType.HealingPotion : BuffItemInfoV3.getBuffType(itemId);
+    BuffType buffType = itemType == ItemType.HealingItem ? BuffType.HealingPotion : BuffInfo.getBuffType(itemId);
 
     if (buffType == BuffType.ExpAmplify) return;
 

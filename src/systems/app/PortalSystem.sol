@@ -4,14 +4,14 @@ import { System } from "@latticexyz/world/src/System.sol";
 import { CharacterAccessControl } from "@abstracts/CharacterAccessControl.sol";
 import { IWorld } from "@codegen/world/IWorld.sol";
 import {
-  SalePackageV2,
-  SalePackageV2Data,
+  SalePackage,
+  SalePackageData,
   CharTotalSpend,
   CharFund,
   CrystalFee,
   CharInfo,
   Kingdom,
-  CityVault2V2,
+  CityVault2,
   SellCrystalCounter,
   SellCrystalReq,
   SellCrystalReqData
@@ -21,7 +21,7 @@ import { UWorldUtils } from "@utils/UWorldUtils.sol";
 import { Config, Errors } from "@common/index.sol";
 
 contract PortalSystem is CharacterAccessControl, System {
-  function buyCrystal(uint256 characterId, uint32 amount) public payable onlyAuthorizedWallet(characterId) {
+  function buyCrystal(uint256 characterId, uint256 amount) public payable onlyAuthorizedWallet(characterId) {
     _validateCrystalAmount(amount);
     uint256 value = _msgValue();
     uint256 requiredPayment = amount * Config.CRYSTAL_UNIT_PRICE;
@@ -34,7 +34,7 @@ contract PortalSystem is CharacterAccessControl, System {
   function transferCrystal(
     uint256 fromCharacterId,
     uint256 toCharacterId,
-    uint32 amount
+    uint256 amount
   )
     public
     onlyAuthorizedWallet(fromCharacterId)
@@ -44,22 +44,22 @@ contract PortalSystem is CharacterAccessControl, System {
     CharacterFundUtils.decreaseCrystal(fromCharacterId, amount);
 
     // charge fee and transfer net amount to recipient
-    uint32 platformFeeCrystal = (amount * uint32(Config.PLATFORM_FEE_PERCENTAGE) + 99) / 100; // TODO: move to lib
-    uint32 remainAmount = amount - platformFeeCrystal;
+    uint256 platformFeeCrystal = (amount * Config.PLATFORM_FEE_PERCENTAGE + 99) / 100; // TODO: move to lib
+    uint256 remainAmount = amount - platformFeeCrystal;
     uint8 kingdomId = CharInfo.getKingdomId(fromCharacterId); // TODO: move to lib
     uint8 kingdomFeePercentage = CrystalFee.getFee(kingdomId);
-    uint32 kingdomFeeCrystal = (remainAmount * uint32(kingdomFeePercentage)) / 100;
-    uint32 netAmount = remainAmount - kingdomFeeCrystal;
+    uint256 kingdomFeeCrystal = (remainAmount * uint256(kingdomFeePercentage)) / 100;
+    uint256 netAmount = remainAmount - kingdomFeeCrystal;
 
     CharacterFundUtils.increaseCrystal(toCharacterId, netAmount);
   }
 
-  function requestSellCrystal(uint256 characterId, uint32 amount) public onlyAuthorizedWallet(characterId) {
+  function requestSellCrystal(uint256 characterId, uint256 amount) public onlyAuthorizedWallet(characterId) {
     _validateCrystalAmount(amount);
     if (amount < Config.MIN_SELL_CRYSTAL) {
       revert Errors.PortalSystem_CrystalAmountTooSmall(amount, Config.MIN_SELL_CRYSTAL);
     }
-    uint32 crystalBalance = CharFund.getCrystal(characterId);
+    uint256 crystalBalance = CharFund.getCrystal(characterId);
     if (crystalBalance < amount) {
       revert Errors.PortalSystem_InsufficientCrystal(crystalBalance, amount);
     }
@@ -82,13 +82,13 @@ contract PortalSystem is CharacterAccessControl, System {
     if (block.timestamp < reqData.requestedAt + Config.SELL_CRYSTAL_PROCESSING_TIME) {
       revert Errors.PortalSystem_SellRequestProcessing(reqId);
     }
-    uint32 amount = reqData.amount;
+    uint256 amount = reqData.amount;
     uint8 kingdomId = CharInfo.getKingdomId(characterId);
-    uint32 platformFeeCrystal = (amount * uint32(Config.PLATFORM_FEE_PERCENTAGE) + 99) / 100;
-    uint32 remainAmount = amount - platformFeeCrystal;
+    uint256 platformFeeCrystal = (amount * Config.PLATFORM_FEE_PERCENTAGE + 99) / 100;
+    uint256 remainAmount = amount - platformFeeCrystal;
     uint8 kingdomFeePercentage = CrystalFee.getFee(kingdomId);
-    uint32 kingdomFeeCrystal = (remainAmount * uint32(kingdomFeePercentage)) / 100;
-    uint32 netAmount = remainAmount - kingdomFeeCrystal;
+    uint256 kingdomFeeCrystal = (remainAmount * uint256(kingdomFeePercentage)) / 100;
+    uint256 netAmount = remainAmount - kingdomFeeCrystal;
 
     uint256 platformFeeEth = platformFeeCrystal * Config.CRYSTAL_UNIT_PRICE;
     uint256 receivedEth = netAmount * Config.CRYSTAL_UNIT_PRICE;
@@ -98,8 +98,8 @@ contract PortalSystem is CharacterAccessControl, System {
     // kingdom fee will be sent to city vault
     if (kingdomFeeCrystal > 0) {
       uint256 capitalId = Kingdom.getCapitalId(kingdomId);
-      uint256 currentVaultCrystal = CityVault2V2.getCrystal(capitalId);
-      CityVault2V2.setCrystal(capitalId, currentVaultCrystal + uint256(kingdomFeeCrystal));
+      uint256 currentVaultCrystal = CityVault2.getCrystal(capitalId);
+      CityVault2.setCrystal(capitalId, currentVaultCrystal + kingdomFeeCrystal);
     }
 
     // update request status
@@ -112,7 +112,7 @@ contract PortalSystem is CharacterAccessControl, System {
     }
   }
 
-  function _validateCrystalAmount(uint32 amount) private pure {
+  function _validateCrystalAmount(uint256 amount) private pure {
     if (amount < Config.MIN_CRYSTALS_PER_PURCHASE) {
       revert Errors.PortalSystem_CrystalAmountTooSmall(amount, Config.MIN_CRYSTALS_PER_PURCHASE);
     }

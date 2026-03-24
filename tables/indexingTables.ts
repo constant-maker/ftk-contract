@@ -1,5 +1,5 @@
 const INDEXING_TABLES: any = {
-  InventoryToolIndex: {
+  IvToolIndex: { // Inventory Tool Index
     schema: {
       characterId: "uint256",
       toolId: "uint256",
@@ -8,7 +8,7 @@ const INDEXING_TABLES: any = {
     key: ['characterId', 'toolId'],
   },
 
-  InventoryEquipmentIndex: {
+  IvEquipmentIndex: { // Inventory Equipment Index
     schema: {
       characterId: "uint256",
       equipmentId: "uint256",
@@ -17,7 +17,7 @@ const INDEXING_TABLES: any = {
     key: ['characterId', 'equipmentId'],
   },
 
-  StorageToolIndex: {
+  StToolIndex: { // Storage Tool Index
     schema: {
       characterId: "uint256",
       cityId: "uint256",
@@ -27,7 +27,7 @@ const INDEXING_TABLES: any = {
     key: ['characterId', 'cityId', 'toolId'],
   },
 
-  StorageEquipmentIndex: {
+  StEquipmentIndex: { // Storage Equipment Index
     schema: {
       characterId: "uint256",
       cityId: "uint256",
@@ -37,7 +37,7 @@ const INDEXING_TABLES: any = {
     key: ['characterId', 'cityId', 'equipmentId'],
   },
 
-  MonsterIndexLocation: {
+  MonsterLocIndex: { // Monster Location Index
     schema: {
       x: "int32",
       y: "int32",
@@ -47,7 +47,7 @@ const INDEXING_TABLES: any = {
     key: ['x', 'y', 'monsterId'],
   },
 
-  TileOtherItemIndex: {
+  TileOItemIndex: { // Tile Other Item Index
     schema: {
       x: "int32",
       y: "int32",
@@ -57,7 +57,7 @@ const INDEXING_TABLES: any = {
     key: ['x', 'y', 'itemId'],
   },
 
-  TileEquipmentIndex: {
+  TileEqIndex: { // Tile Equipment Index
     schema: {
       x: "int32",
       y: "int32",
@@ -67,7 +67,7 @@ const INDEXING_TABLES: any = {
     key: ['x', 'y', 'equipmentId'],
   },
 
-  GuildMemberIndex: {
+  GuildMemberIndex: { // Guild Member Index
     schema: {
       guildId: "uint256",
       memberId: "uint256",

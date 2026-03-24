@@ -1,10 +1,7 @@
 pragma solidity >=0.8.24;
 
 import { SD59x18, sd } from "@prb/math/src/SD59x18.sol";
-import { MovementConfig, CharCurrentStats } from "@codegen/index.sol";
-import { TileInfo3 } from "@codegen/tables/TileInfo3.sol";
-import { CharInfo } from "@codegen/tables/CharInfo.sol";
-import { CharPositionData } from "@codegen/tables/CharPosition.sol";
+import { MovementConfig, CharCurrentStats, Tile, CharInfo, CharPositionData } from "@codegen/index.sol";
 import { MapUtils } from "./MapUtils.sol";
 import { CharacterPositionUtils } from "./CharacterPositionUtils.sol";
 import { CharacterBuffUtils } from "./CharacterBuffUtils.sol";
@@ -31,7 +28,7 @@ library MoveSystemUtils {
     // characterMovementSpeed is the speed reduction value
     uint16 characterMovementSpeed = (getCharacterMovementSpeed(characterId) - 1); // ms 1 => characterMovementSpeed = 0
     CharPositionData memory characterPosition = CharacterPositionUtils.getCurrentPosition(characterId);
-    uint8 tileKingdomId = TileInfo3.getKingdomId(characterPosition.x, characterPosition.y);
+    uint8 tileKingdomId = Tile.getKingdomId(characterPosition.x, characterPosition.y);
     if (tileKingdomId != 0 && tileKingdomId == CharInfo.getKingdomId(characterId)) {
       characterMovementSpeed += 2; // bonus speed
     }

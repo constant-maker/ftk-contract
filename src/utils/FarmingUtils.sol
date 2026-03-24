@@ -2,19 +2,20 @@ pragma solidity >=0.8.24;
 
 import {
   CharPositionData,
-  TileInfo3,
-  ItemV2,
-  ItemV2Data,
+  Tile,
+  Item,
+  ItemData,
   CharPerk,
-  Tool2Data,
-  TileInfo3,
-  TileInfo3Data,
+  ToolData,
+  Tile,
+  TileData,
   ResourceInfo,
   ExpAmpConfig,
   CharExpAmp,
   CharExpAmpData
 } from "@codegen/index.sol";
 import { ResourceType, ItemType } from "@codegen/common.sol";
+import { CharacterPerkUtils } from "./CharacterPerkUtils.sol";
 import { Errors } from "@common/Errors.sol";
 import { Config } from "@common/Config.sol";
 
@@ -23,10 +24,10 @@ library FarmingUtils {
   function validateTile(CharPositionData memory characterPosition, uint256 resourceItemId) public view {
     int32 x = characterPosition.x;
     int32 y = characterPosition.y;
-    if (TileInfo3.getFarmSlot(x, y) == 0) {
+    if (Tile.getFarmSlot(x, y) == 0) {
       revert Errors.FarmingSystem_NoFarmSlot(x, y);
     }
-    uint256[] memory itemIds = TileInfo3.getItemIds(x, y);
+    uint256[] memory itemIds = Tile.getItemIds(x, y);
     bool hasResource = false;
     for (uint256 i = 0; i < itemIds.length; i++) {
       if (itemIds[i] == resourceItemId) {
@@ -43,7 +44,7 @@ library FarmingUtils {
   function checkAndUpdateTileQuota(CharPositionData memory characterPosition, uint256 resourceItemId) public {
     int32 x = characterPosition.x;
     int32 y = characterPosition.y;
-    TileInfo3Data memory tileInfo = TileInfo3.get(x, y);
+    TileData memory tileInfo = Tile.get(x, y);
     uint256[] memory itemIds = tileInfo.itemIds;
     uint256 lenItem = itemIds.length;
 
@@ -53,12 +54,12 @@ library FarmingUtils {
 
       for (uint256 i = 0; i < lenItem; i++) {
         uint256 itemId = itemIds[i];
-        uint16 tier = ItemV2.getTier(itemId);
+        uint16 tier = Item.getTier(itemId);
         uint16 quota;
         if (tier <= 5) {
           quota = 20 - (tier - 1) * 2;
         } else {
-          quota = uint16((11 - tier) * 12 / 10); // scaled up by 1.2x
+          quota = uint16((11 - tier) * 12 / 10); // scaled up by 1.2x, maximum tier is 10
         }
         quotas[i] = quota;
       }
@@ -66,8 +67,8 @@ library FarmingUtils {
       tileInfo.farmingQuotas = quotas;
 
       // Update quota and replenish time
-      TileInfo3.setFarmingQuotas(x, y, quotas);
-      TileInfo3.setReplenishTime(x, y, block.timestamp + 3 hours);
+      Tile.setFarmingQuotas(x, y, quotas);
+      Tile.setReplenishTime(x, y, block.timestamp + 3 hours);
     }
 
     // Check quota for the specified resourceItemId
@@ -78,7 +79,7 @@ library FarmingUtils {
         }
         // Decrease quota and store updated value
         uint16 newQuota = tileInfo.farmingQuotas[i] - 1;
-        TileInfo3.updateFarmingQuotas(x, y, i, newQuota);
+        Tile.updateFarmingQuotas(x, y, i, newQuota);
         break;
       }
     }
@@ -86,7 +87,7 @@ library FarmingUtils {
 
   /// @dev Calculate resource perk exp
   function calculateResourcePerkExp(uint256 characterId, uint256 resourceItemId) public view returns (uint32 perkExp) {
-    uint32 tier = uint32(ItemV2.getTier(resourceItemId));
+    uint32 tier = uint32(Item.getTier(resourceItemId));
     perkExp = Config.BASE_RESOURCE_PERK_EXP * tier + (tier - 1) * 2; // all tier starts from 1
     uint32 basePercent = 100;
     uint32 farmingPerkAmp = ExpAmpConfig.getFarmingPerkAmp();
@@ -95,7 +96,7 @@ library FarmingUtils {
       basePercent += farmingPerkAmp;
     }
     CharExpAmpData memory charExpAmp = CharExpAmp.get(characterId);
-    if (block.timestamp <= charExpAmp.expireTime) {
+    if (block.timestamp <= charExpAmp.farmingExpireTime) {
       basePercent += charExpAmp.farmingPerkAmp;
     }
     return (perkExp * basePercent) / 100;
@@ -106,18 +107,17 @@ library FarmingUtils {
     uint256 characterId,
     ResourceType resourceType,
     uint8 resourceItemTier,
-    Tool2Data memory tool,
+    ToolData memory tool,
     uint256 toolId
   )
     public
     view
     returns (ItemType itemType, uint16 requireDurability)
   {
-    ItemV2Data memory item = ItemV2.get(tool.itemId);
+    ItemData memory item = Item.get(tool.itemId);
     requireDurability = uint16(resourceItemTier);
-    uint8 perkLevel = CharPerk.getLevel(characterId, item.itemType);
-    if (perkLevel + 1 < resourceItemTier) {
-      // perk starts from zero
+    uint8 perkLevel = CharacterPerkUtils.getPerkLevel(characterId, item.itemType);
+    if (perkLevel < resourceItemTier) {
       revert Errors.FarmingSystem_PerkLevelTooLow(perkLevel, resourceItemTier);
     }
     if (resourceType != getResourceTypeByItemType(item.itemType)) {
@@ -153,9 +153,9 @@ library FarmingUtils {
   function getResourceItemAndResourceType(uint256 resourceItemId)
     public
     view
-    returns (ItemV2Data memory resourceItem, ResourceType resourceType)
+    returns (ItemData memory resourceItem, ResourceType resourceType)
   {
-    resourceItem = ItemV2.get(resourceItemId);
+    resourceItem = Item.get(resourceItemId);
     if (resourceItem.itemType != ItemType.Resource) {
       revert Errors.FarmingSystem_MustFarmAResource(resourceItemId);
     }

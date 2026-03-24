@@ -51,11 +51,6 @@ library StorageItemUtils {
     } else {
       newAmount = currentAmount + changeAmount;
     }
-    if (currentAmount == 0) {
-      // new record
-      CharOtherItemStorage.set(characterId, cityId, itemId, characterId, newAmount);
-    } else {
-      CharOtherItemStorage.setAmount(characterId, cityId, itemId, newAmount);
-    }
+    CharOtherItemStorage.set(characterId, cityId, itemId, newAmount);
   }
 }

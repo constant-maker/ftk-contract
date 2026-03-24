@@ -65,7 +65,8 @@ library CharacterUtils {
       level: 1,
       hp: Config.DEFAULT_HP,
       statPoint: 0,
-      sp: Config.DEFAULT_SKILL_POINT
+      sp: Config.DEFAULT_SKILL_POINT,
+      fame: Config.DEFAULT_FAME
     });
     CharStats.set(characterId, stats);
 
@@ -74,6 +75,7 @@ library CharacterUtils {
       exp: 0,
       weight: 0,
       hp: Config.DEFAULT_HP,
+      barrier: 0,
       atk: atk,
       def: def,
       agi: agi,

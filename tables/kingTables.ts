@@ -31,15 +31,18 @@ const KING_TABLES: any = {
       kingdomId: 'uint8',
       pvpFamePenalty: 'uint16', // penalty for killing ally
       captureTilePenalty: 'uint16', // penalty for capturing tile of ally kingdom
-    },
-    key: ['kingdomId'],
-  },
-  KingSetting2: {
-    schema: {
-      kingdomId: 'uint8',
       withdrawWeightLimit: 'uint32', // daily weight limit for withdrawing resources from kingdom treasury
     },
     key: ['kingdomId'],
+  },
+  Alliance: {
+    schema: {
+      kingdomA: "uint8",
+      kingdomB: "uint8",
+      isAlliance: "bool",
+      isApproved: "bool",
+    },
+    key: ['kingdomA', 'kingdomB'],
   },
 }
 

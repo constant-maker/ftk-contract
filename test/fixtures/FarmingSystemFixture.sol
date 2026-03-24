@@ -1,6 +1,6 @@
 pragma solidity >=0.8.24;
 
-import { CharPosition, CharPositionData, CharOtherItem, CharCurrentStats, TileInfo3 } from "@codegen/index.sol";
+import { CharPositionData, CharOtherItem, CharCurrentStats, Tile } from "@codegen/index.sol";
 import { console2 } from "forge-std/console2.sol";
 import { ResourceId } from "@latticexyz/store/src/ResourceId.sol";
 import { WorldFixture } from "./WorldFixture.sol";
@@ -15,7 +15,7 @@ abstract contract FarmingSystemFixture is WorldFixture {
   function _startFarming(address _player, uint256 _characterId, uint256 _resourceId, uint256 _toolId) internal {
     CharPositionData memory charPosition = CharacterPositionUtils.getCurrentPosition(_characterId);
     vm.startPrank(worldDeployer);
-    TileInfo3.setFarmSlot(charPosition.x, charPosition.y, 200);
+    Tile.setFarmSlot(charPosition.x, charPosition.y, 200);
     vm.stopPrank();
 
     vm.startPrank(_player);
@@ -62,7 +62,7 @@ abstract contract FarmingSystemFixture is WorldFixture {
     console2.log("farming times", times);
     vm.startPrank(worldDeployer);
     CharacterPositionUtils.moveToLocation(characterId, 20, -32);
-    TileInfo3.setFarmSlot(20, -32, 200);
+    Tile.setFarmSlot(20, -32, 200);
     vm.stopPrank();
     console2.log("before weight", CharCurrentStats.getWeight(characterId));
     uint256 counter = 0;

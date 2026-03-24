@@ -1,5 +1,5 @@
 const ITEM_TABLES: any = {
-  ItemV2: {
+  Item: {
     schema: {
       id: "uint256",
       category: "ItemCategoryType",
@@ -32,12 +32,10 @@ const ITEM_TABLES: any = {
     },
     key: ['itemId'],
   },
-  EquipmentInfo2V2: {
+  EquipmentInfo2: {
     schema: {
       itemId: "uint256",
       maxLevel: "uint8",
-      counter: "uint8",
-      dmgPercent: "uint16",
       bonusWeight: "uint32",
       shieldBarrier: "uint32",
     },
@@ -60,7 +58,25 @@ const ITEM_TABLES: any = {
     },
     key: ['itemId'],
   },
-  BuffItemInfoV3: {
+  HealingItemInfo: {
+    schema: {
+      itemId: "uint256",
+      hpRestore: "uint32",
+    },
+    key: ['itemId'],
+  },
+  StatModItemInfo: { // Stat Modification Item Info
+    schema: {
+      itemId: "uint256",
+      duration: "uint16",
+      atkPercent: "int16",
+      defPercent: "int16",
+      agiPercent: "int16",
+      ms: "int16",
+    },
+    key: ['itemId'],
+  },
+  BuffInfo: {
     schema: {
       itemId: "uint256",
       range: "uint16", // range to cast in tile units
@@ -72,7 +88,7 @@ const ITEM_TABLES: any = {
     },
     key: ['itemId'],
   },
-  BuffStatV4: {
+  BuffStat: { // change stats also can deal dmg
     schema: {
       itemId: "uint256",
       atkPercent: "int16", 
@@ -89,21 +105,13 @@ const ITEM_TABLES: any = {
   BuffExp: {
     schema: {
       itemId: "uint256",
-      farmingPerkAmp: "uint16", // these values are percentages, e.g., 200 means 2x
+      farmingPerkAmp: "uint16", // these values are percentages, e.g., 20 means gain 20% more exp
       pveExpAmp: "uint16",
       pvePerkAmp: "uint16",
     },
     key: ['itemId'],
   },
-  BuffDmg: {
-    schema: {
-      itemId: "uint256",
-      dmg: "uint32",
-      isAbsDmg: "bool",
-    },
-    key: ['itemId'],
-  },
-  Tool2: {
+  Tool: {
     schema: {
       id: "uint256",
       itemId: "uint256",
@@ -123,15 +131,8 @@ const ITEM_TABLES: any = {
       id: "uint256",
       itemId: "uint256",
       characterId: "uint256",
-      level: "uint8",
-      counter: "uint8",
-    },
-    key: ['id'],
-  },
-  Equipment2: {
-    schema: {
-      id: "uint256",
       authorId: "uint256", // the original creator of the equipment
+      level: "uint8",
     },
     key: ['id'],
   },
@@ -141,27 +142,13 @@ const ITEM_TABLES: any = {
     },
     key: [],
   },
-  ItemWeightCache: {
-    schema: {
-      itemId: "uint256",
-      weight: "uint32", // Old weight
-    },
-    key: ['itemId'],
-  },
-  CollectionExcV2: {
+  AshVaultExc: {
     schema: {
       itemId: "uint256",
       inputItemIds: "uint256[]",
       inputItemAmounts: "uint32[]",
     },
     key: ['itemId',],
-  },
-  EquipmentPet: { // DEPRECATED
-    schema: {
-      equipmentId: "uint256",
-      petId: "uint256",
-    },
-    key: ['equipmentId'],
   },
   PetCpnInfo: { // Pet Component Info
     schema: {
@@ -174,7 +161,7 @@ const ITEM_TABLES: any = {
     },
     key: ['petId', "componentType"],
   },
-  PetCpnV2: {
+  PetCpn: {
     schema: {
       petEquipmentId: "uint256",
       componentValues: "uint16[]",

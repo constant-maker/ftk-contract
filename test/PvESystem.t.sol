@@ -4,10 +4,9 @@ import { console2 } from "forge-std/console2.sol";
 import { WorldFixture, SpawnSystemFixture, WelcomeSystemFixture, MoveSystemFixture } from "./fixtures/index.sol";
 import {
   CharGrindSlot,
-  CharPosition,
+  CharPositionFull,
+  CharPositionFullData,
   CharPositionData,
-  CharNextPosition,
-  CharNextPositionData,
   CharCurrentStats,
   CharStats,
   CharSkill,
@@ -18,9 +17,9 @@ import {
   MonsterStats,
   PvE,
   PvEData,
-  PvEExtraV2,
-  PvEExtraV2Data,
-  TileInfo3
+  PvEExtra,
+  PvEExtraData,
+  Tile
 } from "@codegen/index.sol";
 import { EntityType, SlotType, ItemType } from "@codegen/common.sol";
 import { CharacterItemUtils } from "@utils/CharacterItemUtils.sol";
@@ -222,21 +221,18 @@ contract PvESystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
     assertEq(CharPerk.getExp(characterId, ItemType.Sword), 6);
     // assertEq(CharOtherItem.getAmount(characterId, 17), 1);
     // assertEq(CharOtherItem.getAmount(characterId, 16), 1);
-    PvEExtraV2Data memory pvpExtra = PvEExtraV2.get(characterId);
+    PvEExtraData memory pvpExtra = PvEExtra.get(characterId);
     uint256 rewardItemId = pvpExtra.itemId;
     uint256 rewardItemAmount = pvpExtra.itemAmount;
     assertEq(CharOtherItem.getAmount(characterId, rewardItemId), rewardItemAmount);
 
     assertTrue(CharOtherItem.getAmount(characterId, 17) == 1 || CharOtherItem.getAmount(characterId, 16) == 1);
-    assertTrue(
-      CharOtherItem.getCharId(characterId, 17) == characterId || CharOtherItem.getCharId(characterId, 16) == characterId
-    );
 
     uint32 newCurrentWeight = CharCurrentStats.getWeight(characterId);
     assertTrue(newCurrentWeight > currentWeight);
 
     CharPositionData memory charPosition = CharacterPositionUtils.getCurrentPosition(characterId);
-    uint8 farmSlot = TileInfo3.getFarmSlot(charPosition.x, charPosition.y);
+    uint8 farmSlot = Tile.getFarmSlot(charPosition.x, charPosition.y);
     assertEq(farmSlot, 5);
   }
 
@@ -283,21 +279,18 @@ contract PvESystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
     assertEq(CharPerk.getExp(characterId, ItemType.Sword), 6);
     // assertEq(CharOtherItem.getAmount(characterId, 17), 1);
     // assertEq(CharOtherItem.getAmount(characterId, 16), 1);
-    PvEExtraV2Data memory pvpExtra = PvEExtraV2.get(characterId);
+    PvEExtraData memory pvpExtra = PvEExtra.get(characterId);
     uint256 rewardItemId = pvpExtra.itemId;
     uint256 rewardItemAmount = pvpExtra.itemAmount;
     assertEq(CharOtherItem.getAmount(characterId, rewardItemId), rewardItemAmount);
 
     assertTrue(CharOtherItem.getAmount(characterId, 17) == 1 || CharOtherItem.getAmount(characterId, 16) == 1);
-    assertTrue(
-      CharOtherItem.getCharId(characterId, 17) == characterId || CharOtherItem.getCharId(characterId, 16) == characterId
-    );
 
     uint32 newCurrentWeight = CharCurrentStats.getWeight(characterId);
     assertTrue(newCurrentWeight > currentWeight);
 
     CharPositionData memory charPosition = CharacterPositionUtils.getCurrentPosition(characterId);
-    uint8 farmSlot = TileInfo3.getFarmSlot(charPosition.x, charPosition.y);
+    uint8 farmSlot = Tile.getFarmSlot(charPosition.x, charPosition.y);
     console2.log("farmSlot", farmSlot);
     assertEq(farmSlot, 5);
 
@@ -347,15 +340,12 @@ contract PvESystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
     assertEq(CharPerk.getExp(characterId, ItemType.Sword), 6);
 
     assertTrue(CharOtherItem.getAmount(characterId, 17) == 1 || CharOtherItem.getAmount(characterId, 16) == 1);
-    assertTrue(
-      CharOtherItem.getCharId(characterId, 17) == characterId || CharOtherItem.getCharId(characterId, 16) == characterId
-    );
 
     uint32 newCurrentWeight = CharCurrentStats.getWeight(characterId);
     assertTrue(newCurrentWeight > currentWeight);
 
     CharPositionData memory charPosition = CharacterPositionUtils.getCurrentPosition(characterId);
-    uint8 farmSlot = TileInfo3.getFarmSlot(charPosition.x, charPosition.y);
+    uint8 farmSlot = Tile.getFarmSlot(charPosition.x, charPosition.y);
     assertEq(farmSlot, 5);
   }
 
@@ -397,21 +387,18 @@ contract PvESystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
     uint32 characterCurrentHp = CharCurrentStats.getHp(characterId);
     assertEq(characterCurrentHp, 75);
 
-    PvEExtraV2Data memory pvpExtra = PvEExtraV2.get(characterId);
+    PvEExtraData memory pvpExtra = PvEExtra.get(characterId);
 
     assertEq(CharCurrentStats.getExp(characterId), 0);
     assertEq(CharPerk.getExp(characterId, ItemType.Sword), 6);
 
     assertTrue(CharOtherItem.getAmount(characterId, 17) == 1 || CharOtherItem.getAmount(characterId, 16) == 1);
-    assertTrue(
-      CharOtherItem.getCharId(characterId, 17) == characterId || CharOtherItem.getCharId(characterId, 16) == characterId
-    );
 
     uint32 newCurrentWeight = CharCurrentStats.getWeight(characterId);
     assertTrue(newCurrentWeight > currentWeight);
 
     CharPositionData memory charPosition = CharacterPositionUtils.getCurrentPosition(characterId);
-    uint8 farmSlot = TileInfo3.getFarmSlot(charPosition.x, charPosition.y);
+    uint8 farmSlot = Tile.getFarmSlot(charPosition.x, charPosition.y);
     assertEq(farmSlot, 5);
   }
 
@@ -465,9 +452,6 @@ contract PvESystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
     // assertEq(CharOtherItem.getAmount(characterId, 17), 1);
     // assertEq(CharOtherItem.getAmount(characterId, 16), 1);
     assertTrue(CharOtherItem.getAmount(characterId, 17) == 1 || CharOtherItem.getAmount(characterId, 16) == 1);
-    assertTrue(
-      CharOtherItem.getCharId(characterId, 17) == characterId || CharOtherItem.getCharId(characterId, 16) == characterId
-    );
 
     uint32 newCurrentWeight = CharCurrentStats.getWeight(characterId);
     assertTrue(newCurrentWeight > currentWeight);
@@ -513,12 +497,12 @@ contract PvESystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
     CharPositionData memory characterPosition = CharacterPositionUtils.getCurrentPosition(characterId);
     assertEq(characterPosition.x, 30);
     assertEq(characterPosition.y, -36);
-    CharPositionData memory prevPosition = CharPosition.get(characterId);
-    assertEq(prevPosition.x, 30);
-    assertEq(prevPosition.y, -36);
-    CharNextPositionData memory nextPosition = CharNextPosition.get(characterId);
-    assertEq(nextPosition.x, 30);
-    assertEq(nextPosition.y, -36);
+
+    CharPositionFullData memory positionFull = CharPositionFull.get(characterId);
+    assertEq(positionFull.x, 30);
+    assertEq(positionFull.y, -36);
+    assertEq(positionFull.nextX, 30);
+    assertEq(positionFull.nextY, -36);
   }
 
   function test_BattleRevertWrongPosition() external {

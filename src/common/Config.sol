@@ -33,7 +33,6 @@ library Config {
   uint32 public constant TILE_ITEM_AVAILABLE_DURATION = 3600; // 1 hour (Seconds)
 
   uint256 public constant NORMAL_ATTACK_SKILL_ID = 0;
-  uint256 public constant MAX_EQUIPMENT_ID_TO_CHECK_CACHE_WEIGHT = 16_000;
 
   uint32 public constant MIN_PROTECT_FAME = 500; // Minimum fame to be protected in green zone
   uint32 public constant GREEN_ZONE_FAME_PENALTY = 50;
@@ -51,6 +50,6 @@ library Config {
   uint256 public constant MIN_SELL_CRYSTAL = 1000; // Minimum crystals to sell
   uint256 public constant MIN_PET_CRYSTAL_PRICE = 1000; // Minimum crystal price for pet item
   uint256 public constant SELL_CRYSTAL_PROCESSING_TIME = 3 days; // 3 days
-  uint32 public constant PLATFORM_FEE_PERCENTAGE = 3; // platform fee (apply for crystal only)
+  uint256 public constant PLATFORM_FEE_PERCENTAGE = 3; // platform fee (apply for crystal only)
   address public constant TEAM_ADDRESS = address(0x0);
 }

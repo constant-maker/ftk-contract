@@ -1,7 +1,7 @@
 pragma solidity >=0.8.24;
 
 import {
-  CharPositionData, CharStats2, PvPBattleCounter, PvPEnemyCounter, PvPExtraV3, KingSetting
+  CharPositionData, CharStats, PvPBattleCounter, PvPEnemyCounter, PvPExtra, KingSetting
 } from "@codegen/index.sol";
 import { CharAchievementUtils } from "./CharAchievementUtils.sol";
 import { ZoneInfo, KingdomUtils } from "./KingdomUtils.sol";
@@ -23,8 +23,8 @@ library PvPUtils {
       return; // both alive, no fame change
     }
     int32 attackerFameChange = 0;
-    uint32 attackerFame = CharStats2.getFame(attackerId);
-    uint32 defenderFame = CharStats2.getFame(defenderId);
+    uint32 attackerFame = CharStats.getFame(attackerId);
+    uint32 defenderFame = CharStats.getFame(defenderId);
     ZoneInfo memory zoneInfo = KingdomUtils.getZoneTypeFull(position.x, position.y, attackerId, defenderId);
     bool isAlliance = KingdomUtils.getIsAlliance(zoneInfo.attackerKingdomId, zoneInfo.defenderKingdomId);
 
@@ -41,14 +41,14 @@ library PvPUtils {
         attackerFame = attackerFame > Config.GREEN_ZONE_FAME_PENALTY
           ? attackerFame - Config.GREEN_ZONE_FAME_PENALTY
           : Config.MIN_FAME;
-        CharStats2.set(attackerId, attackerFame);
+        CharStats.setFame(attackerId, attackerFame);
         attackerFameChange = -int32(Config.GREEN_ZONE_FAME_PENALTY);
       } else {
         uint32 famePenalty = KingSetting.getPvpFamePenalty(zoneInfo.attackerKingdomId);
         if (famePenalty > 0) {
           attackerFameChange = -int32(famePenalty);
           attackerFame = attackerFame > famePenalty ? attackerFame - famePenalty : Config.MIN_FAME;
-          CharStats2.set(attackerId, attackerFame);
+          CharStats.setFame(attackerId, attackerFame);
         }
       }
       if (attackerFame < Config.MIN_PROTECT_FAME && attackerFameChange < 0) {
@@ -80,12 +80,12 @@ library PvPUtils {
     int32 attackerFameChange = attackerChange;
     int32 defenderFameChange = defenderChange;
 
-    uint32 attackerFame = CharStats2.getFame(attackerId);
-    uint32 defenderFame = CharStats2.getFame(defenderId);
+    uint32 attackerFame = CharStats.getFame(attackerId);
+    uint32 defenderFame = CharStats.getFame(defenderId);
     int32 newAttackerFame = int32(attackerFame) + attackerFameChange;
     int32 newDefenderFame = int32(defenderFame) + defenderFameChange;
-    CharStats2.set(attackerId, uint32(newAttackerFame));
-    CharStats2.set(defenderId, uint32(newDefenderFame));
+    CharStats.setFame(attackerId, uint32(newAttackerFame));
+    CharStats.setFame(defenderId, uint32(newDefenderFame));
 
     _storeFameChange(attackerFameChange, defenderFameChange);
   }
@@ -93,7 +93,7 @@ library PvPUtils {
   function _storeFameChange(int32 attackerFameChange, int32 defenderFameChange) private {
     uint256 pvpId = PvPBattleCounter.getCounter(); // this return the current pvpId
     int32[2] memory fameChanges = [attackerFameChange, defenderFameChange];
-    PvPExtraV3.setFames(pvpId, fameChanges);
+    PvPExtra.setFames(pvpId, fameChanges);
   }
 
   function _checkAndGiveAchievement(uint256 characterId, ZoneInfo memory zoneInfo) private {

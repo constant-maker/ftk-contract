@@ -1,22 +1,4 @@
 const MAP_TABLES: any = {
-  Kingdom: {
-    schema: {
-      id: "uint8",
-      capitalId: "uint256",
-      name: "string",
-    },
-    key: ['id'],
-  },
-  // KingdomV2: {
-  //   schema: {
-  //     id: "uint8",
-  //     capitalId: "uint256",
-  //     level: "uint8",
-  //     numCityToBuild: "uint8",
-  //     name: "string",
-  //   },
-  //   key: ['id'],
-  // },
   Npc: {
     schema: {
       id: "uint256",
@@ -27,7 +9,7 @@ const MAP_TABLES: any = {
     },
     key: ['id'],
   },
-  TileInfo3: {
+  Tile: {
     schema: {
       x: "int32",
       y: "int32",
@@ -70,15 +52,6 @@ const MAP_TABLES: any = {
     },
     key: ['cityId', 'itemId'],
   },
-  AllianceV2: {
-    schema: {
-      kingdomA: "uint8",
-      kingdomB: "uint8",
-      isAlliance: "bool",
-      isApproved: "bool",
-    },
-    key: ['kingdomA', 'kingdomB'],
-  },
   NonOccupyTile: {
     schema: {
       x: "int32",
@@ -87,6 +60,13 @@ const MAP_TABLES: any = {
     },
     key: ['x', 'y'],
   },
+  TileOccupation: { // count the number of times a tile has been occupied
+    schema: {
+      kingdomId: "uint8",
+      counter: "uint32",
+    },
+    key: ['kingdomId'],
+  }
 };
 
 export default MAP_TABLES;

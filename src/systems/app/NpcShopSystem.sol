@@ -1,18 +1,8 @@
 pragma solidity >=0.8.24;
 
 import { System } from "@latticexyz/world/src/System.sol";
-import {
-  CharPosition,
-  CharPositionData,
-  CharNextPosition,
-  CharNextPositionData,
-  NpcShop,
-  ItemV2,
-  ItemV2Data,
-  NpcShopInventory
-} from "@codegen/index.sol";
-import { Errors } from "@common/Errors.sol";
 import { CharacterAccessControl } from "@abstracts/CharacterAccessControl.sol";
+import { NpcShop, Item, ItemData, NpcShopInventory } from "@codegen/index.sol";
 import {
   MarketSystemUtils,
   InventoryItemUtils,
@@ -21,12 +11,8 @@ import {
   CharacterPositionUtils
 } from "@utils/index.sol";
 import { ItemCategoryType, ItemType, CurrencyType } from "@codegen/common.sol";
-import { TradeData } from "./NpcShopSystem.sol";
-
-struct TradeData {
-  uint256 itemId;
-  uint32 amount;
-}
+import { Errors } from "@common/Errors.sol";
+import { TradeData } from "@utils/NpcShopUtils.sol";
 
 contract NpcShopSystem is CharacterAccessControl, System {
   uint32 constant INIT_SHOP_BALANCE = 100_000; // golds
@@ -66,14 +52,14 @@ contract NpcShopSystem is CharacterAccessControl, System {
     for (uint256 i; i < data.length; i++) {
       uint256 itemId = data[i].itemId;
       uint32 amount = data[i].amount;
-      ItemV2Data memory itemData = ItemV2.get(itemId);
+      ItemData memory itemData = Item.get(itemId);
       if (itemData.category == ItemCategoryType.Tool) {
         if (itemData.tier != 1) revert Errors.NpcShopSystem_OnlySellTierOneTool(itemId);
         goldCost += TOOL_PRICE * amount;
         CharacterItemUtils.addNewItem(characterId, itemId, amount);
       } else if (itemData.category == ItemCategoryType.Other) {
         uint32 unitPrice = _getNpcSellUnitPrice(itemData.tier);
-        if (ItemV2.getItemType(itemId) == ItemType.Card) {
+        if (Item.getItemType(itemId) == ItemType.Card) {
           unitPrice = CARD_PRICE_MULTIPLIER * itemData.tier;
         }
         // apply tax
@@ -93,7 +79,7 @@ contract NpcShopSystem is CharacterAccessControl, System {
     for (uint256 i = 0; i < data.length; i++) {
       uint256 itemId = data[i].itemId;
       uint32 amount = data[i].amount;
-      if (ItemV2.getCategory(itemId) != ItemCategoryType.Other) {
+      if (Item.getCategory(itemId) != ItemCategoryType.Other) {
         revert Errors.NpcShopSystem_OnlyAcceptOtherItem(itemId);
       }
       uint32 npcItemBalance = NpcShopInventory.getAmount(cityId, itemId);
@@ -101,7 +87,7 @@ contract NpcShopSystem is CharacterAccessControl, System {
         revert Errors.NpcShopSystem_ExceedItemBalanceCap(cityId, itemId, npcItemBalance, amount);
       }
       InventoryItemUtils.removeItem(characterId, itemId, amount);
-      uint32 unitPrice = uint32(ItemV2.getTier(itemId));
+      uint32 unitPrice = uint32(Item.getTier(itemId));
       unitPrice -= MarketSystemUtils.calculateOrderFee(characterId, cityId, unitPrice, CurrencyType.Gold);
       uint32 earn = unitPrice * amount;
       if (earn > npcBalance) {

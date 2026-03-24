@@ -10,15 +10,14 @@ import {
   CharBattle,
   PvP,
   PvPData,
-  PvPChallengeV2,
-  PvPChallengeV2Data,
-  PvPExtraV3,
-  PvPExtraV3Data,
-  PvPExtra2V3,
-  PvPExtra2V3Data,
+  PvPChallenge,
+  PvPChallengeData,
+  PvPExtra,
+  PvPExtraData,
+  PvPExtra2,
+  PvPExtra2Data,
   PvPBattleCounter,
-  CharCStats2,
-  RestrictLocV2,
+  RestrictLoc,
   City,
   CharBuff,
   CharBuffData,
@@ -26,7 +25,14 @@ import {
   CharDebuffData
 } from "@codegen/index.sol";
 import { BattleInfo, BattleUtils } from "@utils/BattleUtils.sol";
-import { DailyQuestUtils, CharacterPositionUtils, BattleUtils2, CharacterStatsUtils, PvPUtils } from "@utils/index.sol";
+import {
+  DailyQuestUtils,
+  CharacterPositionUtils,
+  BattleUtils2,
+  CharacterStatsUtils,
+  PvPUtils,
+  CharacterEquipmentUtils
+} from "@utils/index.sol";
 import { Errors, Config } from "@common/index.sol";
 
 contract PvPSystem is System, CharacterAccessControl {
@@ -140,9 +146,9 @@ contract PvPSystem is System, CharacterAccessControl {
     private
   {
     uint32[2] memory barriers;
-    barriers[0] = CharCStats2.getBarrier(attackerId);
-    barriers[1] = CharCStats2.getBarrier(defenderId);
-    PvPChallengeV2Data memory pvpChallenge = PvPChallengeV2Data({
+    barriers[0] = CharCurrentStats.getBarrier(attackerId);
+    barriers[1] = CharCurrentStats.getBarrier(defenderId);
+    PvPChallengeData memory pvpChallenge = PvPChallengeData({
       defenderId: defenderId,
       firstAttackerId: firstAttackerId,
       timestamp: block.timestamp,
@@ -151,26 +157,26 @@ contract PvPSystem is System, CharacterAccessControl {
       hps: originHps,
       barriers: barriers
     });
-    PvPChallengeV2.set(attackerId, pvpChallenge);
+    PvPChallenge.set(attackerId, pvpChallenge);
   }
 
   function _storePvPExtraData(uint256 pvpId, uint256 attackerId, uint256 defenderId) private {
-    uint256[6] memory attackerEquipmentIds = BattleUtils.getCharacterEquipments(attackerId);
-    uint256[6] memory defenderEquipmentIds = BattleUtils.getCharacterEquipments(defenderId);
+    uint256[] memory attackerEquipmentIds = CharacterEquipmentUtils.getAllCharacterEquipments(attackerId);
+    uint256[] memory defenderEquipmentIds = CharacterEquipmentUtils.getAllCharacterEquipments(defenderId);
     uint32[2] memory barriers;
-    barriers[0] = CharCStats2.getBarrier(attackerId);
-    barriers[1] = CharCStats2.getBarrier(defenderId);
+    barriers[0] = CharCurrentStats.getBarrier(attackerId);
+    barriers[1] = CharCurrentStats.getBarrier(defenderId);
     int32[2] memory fames; // this will be update later
-    PvPExtraV3Data memory pvpExtra = PvPExtraV3Data({
+    PvPExtraData memory pvpExtra = PvPExtraData({
       characterLevels: [CharStats.getLevel(attackerId), CharStats.getLevel(defenderId)],
       characterSps: [CharStats.getSp(attackerId), CharStats.getSp(defenderId)],
       barriers: barriers,
       fames: fames,
       equipmentIds: _mergeEquipmentIds(attackerEquipmentIds, defenderEquipmentIds)
     });
-    PvPExtraV3.set(pvpId, pvpExtra);
+    PvPExtra.set(pvpId, pvpExtra);
     CharPositionData memory attackerPosition = CharacterPositionUtils.getCurrentPosition(attackerId);
-    PvPExtra2V3Data memory pvpExtra2 = PvPExtra2V3Data({
+    PvPExtra2Data memory pvpExtra2 = PvPExtra2Data({
       x: attackerPosition.x,
       y: attackerPosition.y,
       attackerStats: _buildCharStats(attackerId),
@@ -178,7 +184,7 @@ contract PvPSystem is System, CharacterAccessControl {
       attackerBuffs: _getCharBuff(attackerId),
       defenderBuffs: _getCharBuff(defenderId)
     });
-    PvPExtra2V3.set(pvpId, pvpExtra2);
+    PvPExtra2.set(pvpId, pvpExtra2);
   }
 
   function _buildCharStats(uint256 characterId) private view returns (uint16[3] memory stats) {
@@ -200,16 +206,18 @@ contract PvPSystem is System, CharacterAccessControl {
   }
 
   function _mergeEquipmentIds(
-    uint256[6] memory attackerEquipmentIds,
-    uint256[6] memory defenderEquipmentIds
+    uint256[] memory attackerEquipmentIds,
+    uint256[] memory defenderEquipmentIds
   )
     private
     pure
-    returns (uint256[12] memory equipmentIds)
+    returns (uint256[] memory equipmentIds)
   {
-    for (uint256 i = 0; i < 6; i++) {
+    // attackerEquipmentIds and defenderEquipmentIds have same length
+    equipmentIds = new uint256[](attackerEquipmentIds.length + defenderEquipmentIds.length);
+    for (uint256 i = 0; i < attackerEquipmentIds.length; i++) {
       equipmentIds[i] = attackerEquipmentIds[i];
-      equipmentIds[i + 6] = defenderEquipmentIds[i];
+      equipmentIds[i + attackerEquipmentIds.length] = defenderEquipmentIds[i];
     }
     return equipmentIds;
   }
@@ -294,7 +302,7 @@ contract PvPSystem is System, CharacterAccessControl {
   }
 
   function _checkIfInCity(CharPositionData memory currentPosition) private view {
-    uint256 cityId = RestrictLocV2.getCityId(currentPosition.x, currentPosition.y);
+    uint256 cityId = RestrictLoc.getCityId(currentPosition.x, currentPosition.y);
     if (cityId == 0) return; // not in city
 
     if (City.getIsCapital(cityId)) {

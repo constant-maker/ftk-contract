@@ -15,7 +15,7 @@ import {
 } from "@latticexyz/store/src/storeHookTypes.sol";
 
 import { ToolHook, EquipmentHook, MonsterLocationHook } from "@hooks/index.sol";
-import { Tool2, Equipment, MonsterLocation } from "@codegen/index.sol";
+import { Tool, Equipment, MonsterLocation } from "@codegen/index.sol";
 
 library HookDeployment {
   function registerHooks(address worldAddress) internal {
@@ -24,7 +24,7 @@ library HookDeployment {
     // register ToolHook
     ToolHook toolHook = new ToolHook();
     world.registerStoreHook({
-      tableId: Tool2._tableId,
+      tableId: Tool._tableId,
       hookAddress: toolHook,
       enabledHooksBitmap: AFTER_SET_RECORD | BEFORE_DELETE_RECORD
     });

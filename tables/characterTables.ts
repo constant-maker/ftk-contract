@@ -41,12 +41,6 @@ const CHARACTER_TABLES: any = {
       level: "uint16",
       statPoint: "uint16",
       sp: "uint8",
-    },
-    key: ['characterId'],
-  },
-  CharStats2: {
-    schema: {
-      characterId: "uint256",
       fame: "uint32",
     },
     key: ['characterId'],
@@ -57,17 +51,11 @@ const CHARACTER_TABLES: any = {
       exp: "uint32",
       weight: "uint32",
       hp: "uint32",
+      barrier: "uint32",
       atk: "uint16",
       def: "uint16",
       agi: "uint16",
       ms: "uint16",
-    },
-    key: ['characterId'],
-  },
-  CharCStats2: { // Character Current Stats 2
-    schema: {
-      characterId: "uint256",
-      barrier: "uint32", // shield barrier
     },
     key: ['characterId'],
   },
@@ -124,7 +112,6 @@ const CHARACTER_TABLES: any = {
     schema: {
       characterId: "uint256",
       itemId: "uint256",
-      charId: "uint256", // help to query data: REMOVE LATER
       amount: "uint32",
     },
     key: ['characterId', 'itemId'],
@@ -137,7 +124,7 @@ const CHARACTER_TABLES: any = {
     },
     key: ['characterId'],
   },
-  CharPosition: {
+  CharPosition: { // We don't store data in this table, just use the type
     schema: {
       characterId: "uint256",
       x: "int32",
@@ -145,16 +132,7 @@ const CHARACTER_TABLES: any = {
     },
     key: ['characterId'],
   },
-  CharNextPosition: {
-    schema: {
-      characterId: "uint256",
-      x: "int32",
-      y: "int32",
-      arriveTimestamp: "uint256",
-    },
-    key: ['characterId'],
-  },
-  CharPositionV2: {
+  CharPositionFull: {
     schema: {
       characterId: "uint256",
       x: "int32",
@@ -185,7 +163,7 @@ const CHARACTER_TABLES: any = {
     schema: {
       characterId: "uint256",
       gold: "uint32",
-      crystal: "uint32",
+      crystal: "uint256",
     },
     key: ['characterId'],
   },
@@ -205,16 +183,17 @@ const CHARACTER_TABLES: any = {
       characterId: "uint256",
       cityId: "uint256",
       itemId: "uint256",
-      charId: "uint256", // help to query data, REMOVE LATER
       amount: "uint32",
     },
     key: ['characterId', 'cityId', 'itemId'],
   },
-  CharEquipStats: { // Cached data for equipment stats
+  CharEqCache: { // Cached data for equipment stats - snapshot when equip equipment
     schema: {
       characterId: "uint256",
       slotType: "SlotType",
       hp: "uint32",
+      barrier: "uint32",
+      weight: "uint32",
       atk: "uint16",
       def: "uint16",
       agi: "uint16",
@@ -222,14 +201,13 @@ const CHARACTER_TABLES: any = {
     },
     key: ['characterId', 'slotType'],
   },
-  CharEquipStats2: { // Cached data for equipment stats 2
+  CharItemCache: { // Cached item weight
     schema: {
       characterId: "uint256",
-      slotType: "SlotType",
-      barrier: "uint32",
-      weight: "uint32", // bonus weight
+      itemId: "uint256",
+      weight: "uint32",
     },
-    key: ['characterId', 'slotType'],
+    key: ['characterId', 'itemId'],
   },
   CharReborn: {
     schema: {
@@ -238,43 +216,25 @@ const CHARACTER_TABLES: any = {
     },
     key: ['characterId'],
   },
-  CharMigration: {
-    schema: {
-      characterId: "uint256",
-      equipmentId: "uint256",
-      isMigrate: "bool",
-    },
-    key: ['characterId', 'equipmentId'],
-  },
-  CharStorageMigration: {
-    schema: {
-      characterId: "uint256",
-      equipmentId: "uint256",
-      isMigrate: "bool",
-    },
-    key: ['characterId', 'equipmentId'],
-  },
   CharSavePoint: {
     schema: {
       characterId: "uint256",
       cityId: "uint256",
-      x: "int32",
-      y: "int32",
     },
     key: ['characterId'],
   },
   // This table is used to store experience amplification settings for each character
   CharExpAmp: {
     schema: {
-      characterId: "uint256", // these values are percentages, e.g., 20 means gain 20% more exp
-      farmingPerkAmp: "uint16",
-      pveExpAmp: "uint16",
-      pvePerkAmp: "uint16", // deprecated, kept for backward compatibility
-      expireTime: "uint256", // TODO: we need 2 expire times for farming perk amp and pve exp/ perk amp
+      characterId: "uint256",
+      farmingPerkAmp: "uint16", // these values are percentages, e.g., 20 means gain 20% more exp
+      farmingExpireTime: "uint256",
+      pveExpAmp: "uint16", // use for both exp and perk exp from PvE
+      pveExpireTime: "uint256",
     },
     key: ['characterId'],
   },
-  CharCollection: {
+  CharAshVault: {
     schema: {
       characterId: "uint256",
       itemId: "uint256",

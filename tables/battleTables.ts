@@ -11,7 +11,7 @@ const BATTLE_TABLES: any = {
     },
     key: ['characterId'],
   },
-  PvPChallengeV2: {
+  PvPChallenge: {
     schema: {
       attackerId: "uint256",
       defenderId: "uint256",
@@ -38,18 +38,18 @@ const BATTLE_TABLES: any = {
     },
     key: ['id'],
   },
-  PvPExtraV3: {
+  PvPExtra: {
     schema: {
       pvpId: "uint256",
       characterLevels: "uint16[2]",
       characterSps: "uint8[2]",
       barriers: "uint32[2]",
       fames: "int32[2]",
-      equipmentIds: "uint256[12]",
+      equipmentIds: "uint256[]", // equipmentIds of both attacker and defender
     },
     key: ['pvpId'],
   },
-  PvPExtra2V3: {
+  PvPExtra2: {
     schema: {
       pvpId: "uint256",
       x: "int32",
@@ -89,7 +89,7 @@ const BATTLE_TABLES: any = {
     },
     key: ['characterId'],
   },
-  PvEExtraV2: {
+  PvEExtra: {
     schema: {
       characterId: "uint256",
       itemId: "uint256", // reward

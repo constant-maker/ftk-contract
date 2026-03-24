@@ -9,7 +9,7 @@ import (
 	"go.uber.org/zap"
 )
 
-func QuestCallData(quest common.QuestV4) ([]byte, error) {
+func QuestCallData(quest common.Quest) ([]byte, error) {
 	// zap.S().Infow("quest.TitleId", "value", quest.AchievementId)
 	staticData, err := encodePacked(quest.Exp, quest.Gold, uint8(quest.QuestType),
 		big.NewInt(quest.FromNpcId), big.NewInt(quest.ToNpcId), big.NewInt(quest.AchievementId))
@@ -47,7 +47,7 @@ func QuestCallData(quest common.QuestV4) ([]byte, error) {
 	keyTuple := [][32]byte{
 		[32]byte(encodeUint256(big.NewInt(quest.Id))),
 	}
-	mt := mud.NewMudTable("QuestV4", "app", "")
+	mt := mud.NewMudTable("Quest", "app", "")
 	return mt.SetRecordRawCalldata(keyTuple, staticData, encodedLength, dynamicData)
 }
 

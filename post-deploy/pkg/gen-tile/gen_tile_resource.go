@@ -20,7 +20,7 @@ func getZone(index, totalLen int) uint8 {
 	}
 }
 
-func genKingdomTileInfos(kingdomId int, sortedAllTiles []common.Location, mapResourceQty map[int64]int) []common.TileInfo {
+func genKingdomTileInfos(kingdomId int, sortedAllTiles []common.Location, mapResourceQty map[int64]int) []common.Tile {
 	l := zap.S().With("func", "genKingdomTileInfos")
 	arrTileResource := genTileResource(len(sortedAllTiles), mapResourceQty)
 	if len(arrTileResource) != len(sortedAllTiles) {
@@ -31,9 +31,9 @@ func genKingdomTileInfos(kingdomId int, sortedAllTiles []common.Location, mapRes
 		arrTileResource[i], arrTileResource[j] = arrTileResource[j], arrTileResource[i]
 	})
 	l.Infow("len tiles", "len", len(sortedAllTiles), "len(arrTileResource)", len(arrTileResource))
-	var result []common.TileInfo
+	var result []common.Tile
 	for index, tile := range sortedAllTiles {
-		result = append(result, common.TileInfo{
+		result = append(result, common.Tile{
 			KingdomId:       0,
 			X:               tile.X,
 			Y:               tile.Y,

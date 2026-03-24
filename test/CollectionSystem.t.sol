@@ -4,7 +4,7 @@ import { Vm } from "forge-std/Vm.sol";
 import { WorldFixture } from "@fixtures/WorldFixture.sol";
 import { SpawnSystemFixture } from "@fixtures/SpawnSystemFixture.sol";
 import { MoveSystemFixture } from "@fixtures/MoveSystemFixture.sol";
-import { CharCollection, CollectionExcV2, CharOtherItem } from "@codegen/index.sol";
+import { CharAshVault, AshVaultExc, CharOtherItem } from "@codegen/index.sol";
 import { CharacterAccessControl } from "@abstracts/CharacterAccessControl.sol";
 import { CharacterPositionUtils, InventoryItemUtils } from "@utils/index.sol";
 import { CharacterFundUtils } from "@utils/CharacterFundUtils.sol";
@@ -27,7 +27,7 @@ contract CollectionSystemTest is WorldFixture, SpawnSystemFixture, MoveSystemFix
     inputItemIds[0] = 1;
     uint32[] memory inputItemAmounts = new uint32[](1);
     inputItemAmounts[0] = 100;
-    CollectionExcV2.set(2, inputItemIds, inputItemAmounts);
+    AshVaultExc.set(2, inputItemIds, inputItemAmounts);
 
     InventoryItemUtils.addItem(characterId, 1, 100);
 
@@ -42,7 +42,7 @@ contract CollectionSystemTest is WorldFixture, SpawnSystemFixture, MoveSystemFix
 
     vm.expectRevert(); // not in capital
     vm.prank(player);
-    world.app__addToCollection(characterId, 1, itemIds, amounts);
+    world.app__addToAshVault(characterId, 1, itemIds, amounts);
     vm.stopPrank();
 
     vm.startPrank(worldDeployer);
@@ -56,12 +56,12 @@ contract CollectionSystemTest is WorldFixture, SpawnSystemFixture, MoveSystemFix
 
     amounts[0] = 99;
     vm.prank(player);
-    world.app__addToCollection(characterId, 1, itemIds, amounts);
+    world.app__addToAshVault(characterId, 1, itemIds, amounts);
     vm.stopPrank();
 
     uint32 remainingAmountInInventory = CharOtherItem.getAmount(characterId, 1);
     assertEq(remainingAmountInInventory, 1); // 99 moved to collection
-    uint32 amountInCollection = CharCollection.get(characterId, 1);
+    uint32 amountInCollection = CharAshVault.get(characterId, 1);
     assertEq(amountInCollection, 99);
 
     vm.expectRevert(); // insufficient item amount
@@ -71,12 +71,12 @@ contract CollectionSystemTest is WorldFixture, SpawnSystemFixture, MoveSystemFix
 
     amounts[0] = 1;
     vm.prank(player);
-    world.app__addToCollection(characterId, 1, itemIds, amounts);
+    world.app__addToAshVault(characterId, 1, itemIds, amounts);
     vm.stopPrank();
 
     remainingAmountInInventory = CharOtherItem.getAmount(characterId, 1);
     assertEq(remainingAmountInInventory, 0); // 100 moved to collection
-    amountInCollection = CharCollection.get(characterId, 1);
+    amountInCollection = CharAshVault.get(characterId, 1);
     assertEq(amountInCollection, 100);
 
     vm.prank(player);
@@ -85,7 +85,7 @@ contract CollectionSystemTest is WorldFixture, SpawnSystemFixture, MoveSystemFix
 
     remainingAmountInInventory = CharOtherItem.getAmount(characterId, 2);
     assertEq(remainingAmountInInventory, 1); // received 1 output item
-    amountInCollection = CharCollection.get(characterId, 1);
+    amountInCollection = CharAshVault.get(characterId, 1);
     assertEq(amountInCollection, 0); // 100 input items exchanged
   }
 }

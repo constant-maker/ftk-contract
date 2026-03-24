@@ -15,12 +15,12 @@ func GenMapData(
 	dataConfig common.DataConfig,
 	kingdomMaps []KingdomMap,
 	cities []common.City,
-	allTileInfosInZone []common.TileInfo, // this was provided as cached data
+	allTileInfosInZone []common.Tile, // this was provided as cached data
 	allMonsterLocations []common.MonsterLocation, // this was provided as cached data
 	overrideMonsterLocations []common.MonsterLocation, // this override the monster in tile
 	customMonsterLocations []common.MonsterLocation, // this custom will set the whole tile monster data
 	mapMonster map[string]common.Monster) (
-	[]common.TileInfo,
+	[]common.Tile,
 	[]common.MonsterLocation) {
 	l := zap.S().With("func", "GenMapData")
 	// if no cache we need to generate
@@ -79,7 +79,7 @@ func GenMapData(
 
 			if shouldGenTileInfo {
 				tilesMapResourceQty := buildTilesWithMapResourceQty(sortedAllTiles, listResource)
-				kingdomTileInfos := make([]common.TileInfo, 0)
+				kingdomTileInfos := make([]common.Tile, 0)
 				for _, tm := range tilesMapResourceQty {
 					subTileInfos := genKingdomTileInfos(kingdom.ID, tm.Tiles, tm.MapResourceQty)
 					kingdomTileInfos = append(kingdomTileInfos, subTileInfos...)
@@ -149,7 +149,7 @@ func writeMonsterLocationsFile(monsterLocations []common.MonsterLocation, kingdo
 	return nil
 }
 
-func writeTileInfosFile(tileInfos []common.TileInfo, kingdomId int) error {
+func writeTileInfosFile(tileInfos []common.Tile, kingdomId int) error {
 	l := zap.S().With("func", "writeTileInfosFile")
 	path := fmt.Sprintf("tileInfos_%d.json", kingdomId)
 	if err := common.WriteJSONFile(tileInfos, path); err != nil {

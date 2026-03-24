@@ -2,7 +2,6 @@ pragma solidity >=0.8.24;
 
 import { ResourceId } from "@latticexyz/store/src/ResourceId.sol";
 import {
-  CharPosition,
   CharPositionData,
   CharInfoData,
   CharFarmingState,
@@ -14,7 +13,7 @@ import {
   CharPerk
 } from "@codegen/index.sol";
 import { CharInventory } from "@codegen/tables/CharInventory.sol";
-import { Tool2, Tool2Data, ItemV2, ItemV2Data } from "@codegen/index.sol";
+import { Tool, ToolData, Item, ItemData } from "@codegen/index.sol";
 import { CharacterStateType, ItemType } from "@codegen/common.sol";
 import { SpawnSystemFixture, MoveSystemFixture, WelcomeSystemFixture } from "@fixtures/index.sol";
 import { FarmingSystemFixture } from "@fixtures/FarmingSystemFixture.sol";
@@ -24,7 +23,8 @@ import { console2 } from "forge-std/console2.sol";
 import { CharacterPositionUtils } from "@utils/CharacterPositionUtils.sol";
 import { CharacterStateUtils } from "@utils/CharacterStateUtils.sol";
 import { CharacterItemUtils } from "@utils/CharacterItemUtils.sol";
-import { TileInfo3, TileInfo3Data } from "@codegen/tables/TileInfo3.sol";
+import { CharacterPerkUtils } from "@utils/CharacterPerkUtils.sol";
+import { Tile, TileData } from "@codegen/tables/Tile.sol";
 
 contract FarmingSystemTest is FarmingSystemFixture, SpawnSystemFixture, MoveSystemFixture, WelcomeSystemFixture {
   address player = makeAddr("player");
@@ -77,12 +77,12 @@ contract FarmingSystemTest is FarmingSystemFixture, SpawnSystemFixture, MoveSyst
 
     for (uint256 i = 0; i <= toolIndexInInventory; i++) {
       uint256 toolId = characterInventory.toolIds[i];
-      Tool2Data memory tool = Tool2.get(toolId);
+      ToolData memory tool = Tool.get(toolId);
       uint256 itemId = tool.itemId;
 
       assertTrue(itemId > 0);
 
-      if (ItemV2.getItemType(itemId) == ItemType.WoodAxe) {
+      if (Item.getItemType(itemId) == ItemType.WoodAxe) {
         _startFarming(player, characterId, woodTier1, toolId);
       } else {
         _expectStartFarmingReverted(player, characterId, woodTier1, toolId);
@@ -145,7 +145,7 @@ contract FarmingSystemTest is FarmingSystemFixture, SpawnSystemFixture, MoveSyst
     vm.stopPrank();
     uint256 toolId = 7;
 
-    assertEq(Tool2.getDurability(toolId), 150);
+    assertEq(Tool.getDurability(toolId), 150);
 
     _startFarming(player, characterId, 3, toolId);
 
@@ -172,33 +172,33 @@ contract FarmingSystemTest is FarmingSystemFixture, SpawnSystemFixture, MoveSyst
     CharacterItemUtils.addNewItem(characterId, 163, 1);
     CharPerk.setLevel(characterId, ItemType.WoodAxe, 5);
     vm.stopPrank();
-    uint8 perkLevel = CharPerk.getLevel(characterId, ItemType.WoodAxe);
-    assertEq(perkLevel, 5);
+    uint8 perkLevel = CharacterPerkUtils.getPerkLevel(characterId, ItemType.WoodAxe);
+    assertEq(perkLevel, 6);
     uint256 prevLen = CharInventory.lengthToolIds(characterId);
     for (uint256 i = 0; i < prevLen; i++) {
       console2.log("tool", CharInventory.getItemToolIds(characterId, i));
     }
     uint256 toolTier3Id = 7;
 
-    TileInfo3Data memory tileInfo2 = TileInfo3.get(20, -32);
+    TileData memory tileInfo2 = Tile.get(20, -32);
     assertEq(tileInfo2.farmingQuotas.length, 0);
     _doFarmingToGetResource(player, characterId, woodTier1, 1, 2);
     _doFarmingToGetResource(player, characterId, 3, toolTier3Id, 2);
-    tileInfo2 = TileInfo3.get(20, -32);
-    // for (uint256 i = 0; i < TileInfo3.farmingQuotas.length; i++) {
-    //   console2.log("quota", TileInfo3.farmingQuotas[i]);
+    tileInfo2 = Tile.get(20, -32);
+    // for (uint256 i = 0; i < Tile.farmingQuotas.length; i++) {
+    //   console2.log("quota", Tile.farmingQuotas[i]);
     // }
     assertEq(tileInfo2.farmingQuotas[0], 18); // from 20 => 18
     assertEq(tileInfo2.farmingQuotas[2], 14); // from 16 => 14
     vm.warp(block.timestamp + 3 hours);
 
     _doFarmingToGetResource(player, characterId, woodTier1, 1, 1);
-    tileInfo2 = TileInfo3.get(20, -32);
+    tileInfo2 = Tile.get(20, -32);
     assertEq(tileInfo2.farmingQuotas[0], 19); // from 20 => 19
     assertEq(tileInfo2.farmingQuotas[2], 16); // from 16 => 16
 
     _doFarmingToGetResource(player, characterId, 3, toolTier3Id, 16);
-    tileInfo2 = TileInfo3.get(20, -32);
+    tileInfo2 = Tile.get(20, -32);
     assertEq(tileInfo2.farmingQuotas[2], 0);
     // vm.expectRevert();
     // _startFarming(player, characterId, 3, toolTier3Id);

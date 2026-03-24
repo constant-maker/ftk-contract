@@ -10,9 +10,9 @@ import {
   ActiveChar,
   Kingdom,
   CrystalFee,
-  CityVault2V2
+  CityVault,
+  CityVault2
 } from "@codegen/index.sol";
-import { CharStats2 } from "@codegen/tables/CharStats2.sol";
 import { CharacterStateType } from "@codegen/common.sol";
 import { CharacterPositionUtils, CharacterUtils } from "@utils/index.sol";
 import { Errors, Events, Config } from "@common/index.sol";
@@ -42,7 +42,6 @@ contract SpawnSystem is System {
 
     // init character stats
     CharacterUtils.initCharacterStatsWithTraits(characterId, data.traits);
-    CharStats2.setFame(characterId, Config.DEFAULT_FAME);
 
     emit Events.CharacterCreated(characterId, wallet, block.timestamp);
 
@@ -97,7 +96,7 @@ contract SpawnSystem is System {
     uint256 ethFeeAmount = (rawEthFee * uint256(feePercentage)) / 100;
     uint256 crystalAmount = ethFeeAmount / Config.CRYSTAL_UNIT_PRICE;
     uint256 capitalId = Kingdom.getCapitalId(kingdomId);
-    uint256 currentVaultCrystal = CityVault2V2.getCrystal(capitalId);
-    CityVault2V2.setCrystal(capitalId, currentVaultCrystal + crystalAmount);
+    uint256 currentVaultCrystal = CityVault2.getCrystal(capitalId);
+    CityVault2.setCrystal(capitalId, currentVaultCrystal + crystalAmount);
   }
 }

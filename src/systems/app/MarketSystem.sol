@@ -16,8 +16,8 @@ import {
   Equipment,
   CharMarketWeight,
   CharOtherItem,
-  Order2V2,
-  RestrictLocV2,
+  Order2,
+  RestrictLoc,
   CharPositionData,
   City
 } from "@codegen/index.sol";
@@ -52,7 +52,7 @@ contract MarketSystem is System, CharacterAccessControl {
       order.isBuy,
       false
     );
-    Order2V2.set(orderId, order.currency, block.timestamp, block.timestamp);
+    Order2.set(orderId, order.currency, block.timestamp, block.timestamp);
   }
 
   function cancelOrder(uint256 characterId, uint256 orderId) public onlyAuthorizedWallet(characterId) {
@@ -64,7 +64,7 @@ contract MarketSystem is System, CharacterAccessControl {
     }
     _unlockAsset(characterId, order, orderId);
     Order.deleteRecord(orderId);
-    Order2V2.deleteRecord(orderId);
+    Order2.deleteRecord(orderId);
   }
 
   function takeOrder(
@@ -77,7 +77,7 @@ contract MarketSystem is System, CharacterAccessControl {
     for (uint256 i = 0; i < takeParams.length; i++) {
       TakeOrderParams memory top = takeParams[i];
       OrderData memory order = Order.get(top.orderId);
-      CurrencyType orderCurrency = Order2V2.getCurrency(top.orderId);
+      CurrencyType orderCurrency = Order2.getCurrency(top.orderId);
       if (orderCurrency == CurrencyType.Gold) {
         CharacterPositionUtils.mustInCity(characterId, order.cityId);
       } else if (orderCurrency == CurrencyType.Crystal) {
@@ -97,7 +97,7 @@ contract MarketSystem is System, CharacterAccessControl {
       } else {
         MarketSystemUtils.takeSellOrder(characterId, order, top);
       }
-      Order2V2.setUpdateTime(top.orderId, block.timestamp);
+      Order2.setUpdateTime(top.orderId, block.timestamp);
       // store fill order
       MarketSystemUtils.storeFillOrder(order, orderCurrency, characterId, top);
     }
@@ -141,7 +141,7 @@ contract MarketSystem is System, CharacterAccessControl {
     if (order.isBuy) {
       // buy - unlock gold or crystal
       uint32 totalValue = order.unitPrice * order.amount;
-      if (Order2V2.getCurrency(orderId) == CurrencyType.Crystal) {
+      if (Order2.getCurrency(orderId) == CurrencyType.Crystal) {
         CharacterFundUtils.increaseCrystal(characterId, totalValue);
         return;
       }
@@ -162,7 +162,7 @@ contract MarketSystem is System, CharacterAccessControl {
 
   /// @dev Update existing order - user only can update unit price
   function _updateOrder(uint256 characterId, OrderParams memory order) private {
-    MarketSystemUtils.validateOrderPrice(order.itemId, order.unitPrice, Order2V2.getCurrency(order.orderId));
+    MarketSystemUtils.validateOrderPrice(order.itemId, order.unitPrice, Order2.getCurrency(order.orderId));
     OrderData memory existingOrder = Order.get(order.orderId);
     if (existingOrder.isDone) {
       revert Errors.MarketSystem_OrderAlreadyDone(order.orderId);
@@ -207,7 +207,7 @@ contract MarketSystem is System, CharacterAccessControl {
 
   function _mustInACapital(uint256 characterId) private view {
     CharPositionData memory position = CharacterPositionUtils.getCurrentPosition(characterId);
-    uint256 cityId = RestrictLocV2.getCityId(position.x, position.y);
+    uint256 cityId = RestrictLoc.getCityId(position.x, position.y);
     if (cityId == 0 || !City.getIsCapital(cityId)) {
       revert Errors.MarketSystem_MustInACapital();
     }

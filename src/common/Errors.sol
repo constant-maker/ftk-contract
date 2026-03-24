@@ -13,7 +13,7 @@ import {
 
 library Errors {
   // common errors
-  error InvalidCityId(uint256 cityId);
+  error CityIsNotExist(uint256 cityId);
   error MustInACity(uint256 cityId, int32 charX, int32 charY);
   error MustInACapital(uint256 capitalId, int32 charX, int32 charY);
   error MustBeCapitalCity(uint256 cityId);
@@ -63,7 +63,6 @@ library Errors {
   error Equipment_NotOwned(uint256 characterId, uint256 equipmentId);
   error Equipment_AlreadyHad(uint256 characterId, uint256 equipmentId);
   error Equipment_NotExisted(uint256 equipmentId);
-  error EquipmentSystem_CharacterLevelTooLow(uint256 characterId, uint16 level, uint8 itemTier);
 
   /* -------------------------------------------------------------------------- */
   /*                                 Move system                                */
@@ -87,7 +86,7 @@ library Errors {
   error FarmingSystem_ExceedFarmingQuota(int32 x, int32 y, uint256 itemId);
 
   /* -------------------------------------------------------------------------- */
-  /*                                    ItemV2                                    */
+  /*                                    Item                                    */
   /* -------------------------------------------------------------------------- */
   error Item_AddItemExisted(uint256 itemId);
   error Item_NotExisted(uint256 itemId);
@@ -101,9 +100,11 @@ library Errors {
   error EquipmentSystem_EquipmentSnapshotStatsNotFound(uint256 characterId, uint256 itemId, SlotType slotType);
   error EquipmentSystem_UnmatchEquipmentId(uint256 targetEquipmentId, uint256 materialEquipmentId);
   error EquipmentSystem_ExceedMaxLevel(uint8 maxLevel);
+  error EquipmentSystem_EquipDataIsEmpty();
+  error EquipmentSystem_CharacterLevelTooLow(uint256 characterId, uint16 level, uint8 itemTier);
 
   /* -------------------------------------------------------------------------- */
-  /*                                    QuestV4                                   */
+  /*                                    Quest                                   */
   /* -------------------------------------------------------------------------- */
   error QuestSystem_QuestNotFound(uint256 questId);
   error QuestSystem_AlreadyReceived(uint256 characterId, uint256 questId);
@@ -189,12 +190,11 @@ library Errors {
   /*                               CharFund                                */
   /* -------------------------------------------------------------------------- */
   error CharacterFund_NotEnoughGold(uint32 balance, uint32 requireAmount);
-  error CharacterFund_NotEnoughCrystal(uint32 balance, uint32 requireAmount);
+  error CharacterFund_NotEnoughCrystal(uint256 balance, uint256 requireAmount);
 
   /* -------------------------------------------------------------------------- */
   /*                               CraftSystem                                  */
   /* -------------------------------------------------------------------------- */
-  error CraftSystem_MustInACity(uint256 characterId);
   error CraftSystem_NoRecipeForItem(uint256 itemId);
   error CraftSystem_CraftAmountIsZero();
   error CraftSystem_InvalidRecipeData(uint256 itemId);
@@ -297,7 +297,7 @@ library Errors {
   error MarketSystem_UntradeableItem(uint256 itemId);
   error MarketSystem_ExceedMaxWeight(uint256 characterId, uint256 cityId, uint32 totalWeight, uint32 maxWeight);
   error MarketSystem_InsufficientGold(uint256 characterId, uint32 charGold, uint32 requiredGold);
-  error MarketSystem_InsufficientCrystal(uint256 characterId, uint32 charCrystal, uint32 requiredCrystal);
+  error MarketSystem_InsufficientCrystal(uint256 characterId, uint256 charCrystal, uint256 requiredCrystal);
   error MarketSystem_InsufficientItem(uint256 characterId, uint256 itemId, uint32 requiredAmount);
   error MarketSystem_SellEquipmentOrderAmount(uint32 amount);
   error MarketSystem_CharacterNotOwner(uint256 characterId, uint256 orderId);
@@ -361,7 +361,7 @@ library Errors {
   error VaultSystem_WithdrawalRestricted(uint256 characterId, uint8 kingdomId, uint256 itemId);
   error VaultSystem_DepositUntradeableItem(uint256 itemId);
   error VaultSystem_OnlyKingCanWithdrawGoldOrCrystal(uint256 characterId);
-  error VaultSystem_InsufficientVaultGold(uint256 cityId, uint32 currentGold, uint32 withdrawGold);
+  error VaultSystem_InsufficientVaultGold(uint256 cityId, uint256 currentGold, uint32 withdrawGold);
   error VaultSystem_InsufficientVaultCrystal(uint256 cityId, uint256 currentCrystal, uint256 withdrawCrystal);
 
   /* -------------------------------------------------------------------------- */
@@ -373,7 +373,7 @@ library Errors {
   error CitySystem_InsufficientVaultAmount(
     uint256 cityId, uint256 itemId, uint32 currentVaultAmount, uint32 withdrawAmount
   );
-  error CitySystem_InsufficientVaultGold(uint256 cityId, uint32 currentGold, uint32 vaultGold);
+  error CitySystem_InsufficientVaultGold(uint256 cityId, uint256 currentGold, uint32 requiredGold);
   error CitySystem_CityLevelTooLow(uint256 cityId, uint8 cityLevel);
 
   /* -------------------------------------------------------------------------- */
@@ -405,14 +405,14 @@ library Errors {
   error GachaSystem_InsufficientPayment(uint256 characterId);
 
   /* -------------------------------------------------------------------------- */
-  /*                               CollectionSystem                             */
+  /*                               AshVaultSystem                             */
   /* -------------------------------------------------------------------------- */
-  error CollectionSystem_InvalidParams(uint256 lenItemIds, uint256 lenAmounts);
-  error CollectionSystem_ExchangeNotExist(uint256 itemId);
-  error CollectionSystem_InsufficientItemAmount(
+  error AshVaultSystem_InvalidParams(uint256 lenItemIds, uint256 lenAmounts);
+  error AshVaultSystem_ExchangeNotExist(uint256 itemId);
+  error AshVaultSystem_InsufficientItemAmount(
     uint256 characterId, uint256 inputItemId, uint256 outputItemId, uint32 requiredAmount, uint32 currentAmount
   );
-  error CollectionSystem_ExceedMaxAmount(uint256 characterId, uint256 itemId);
+  error AshVaultSystem_ExceedMaxAmount(uint256 characterId, uint256 itemId);
 
   /* -------------------------------------------------------------------------- */
   /*                               SkinSystem                                   */
@@ -428,7 +428,7 @@ library Errors {
   /*                               PortalSystem                                   */
   /* -------------------------------------------------------------------------- */
   error PortalSystem_CrystalAmountTooSmall(uint256 amount, uint256 minAmount);
-  error PortalSystem_InsufficientCrystal(uint32 currentBalance, uint256 requiredAmount);
+  error PortalSystem_InsufficientCrystal(uint256 currentBalance, uint256 requiredAmount);
   error PortalSystem_SellRequestNotFound(uint256 reqId);
   error PortalSystem_SellRequestProcessing(uint256 reqId);
 }

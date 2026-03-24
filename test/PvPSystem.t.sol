@@ -3,37 +3,35 @@ pragma solidity >=0.8.24;
 import { console2 } from "forge-std/console2.sol";
 import { WorldFixture, SpawnSystemFixture, WelcomeSystemFixture } from "./fixtures/index.sol";
 import {
-  CharPosition,
   CharStats,
   CharSkill,
   CharEquipment,
   CharPerk,
   CharOtherItem,
-  CharPosition,
+  CharPositionFull,
+  CharPositionFullData,
   CharPositionData,
   CharBattle,
   PvP,
   PvPData,
-  PvPChallengeV2,
-  PvPChallengeV2Data,
+  PvPChallenge,
+  PvPChallengeData,
   Equipment,
-  TileInfo3,
-  AllianceV2,
+  Tile,
+  Alliance,
   CharCurrentStats,
   CharCurrentStatsData,
   TileInventory,
   DropResource,
   KingSetting,
-  PvPExtraV3,
-  PvPExtraV3Data,
+  PvPExtra,
+  PvPExtraData,
   CharInventory,
   CharBuff,
   CharBuffData,
   CharDebuff,
   CharDebuffData,
-  EquipmentInfo,
-  CharPositionV2,
-  CharPositionV2Data
+  EquipmentInfo
 } from "@codegen/index.sol";
 import { EntityType, SlotType, ItemType, ZoneType } from "@codegen/common.sol";
 import { Errors } from "@common/Errors.sol";
@@ -46,7 +44,6 @@ import {
   CharacterItemUtils,
   CharacterEquipmentUtils
 } from "@utils/index.sol";
-import { CharStats2 } from "@codegen/tables/CharStats2.sol";
 import { LootItems } from "@systems/app/TileSystem.sol";
 import { EquipData } from "@utils/CharacterEquipmentUtils.sol";
 import { ItemsActionData } from "@common/Types.sol";
@@ -98,14 +95,14 @@ contract PvPSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
     assertEq(lastPvpId, 0);
 
     // char 2
-    PvPChallengeV2Data memory pvpChallenge = PvPChallengeV2.get(characterId_2);
+    PvPChallengeData memory pvpChallenge = PvPChallenge.get(characterId_2);
     assertEq(pvpChallenge.defenderId, 0);
     assertEq(pvpChallenge.firstAttackerId, 0);
     assertEq(pvpChallenge.hps[0], 0);
     assertEq(pvpChallenge.hps[1], 0);
 
     // char 1
-    pvpChallenge = PvPChallengeV2.get(characterId_1);
+    pvpChallenge = PvPChallenge.get(characterId_1);
     assertEq(pvpChallenge.defenderId, characterId_2);
     assertEq(pvpChallenge.firstAttackerId, characterId_1);
     assertEq(pvpChallenge.hps[0], characterHp_1);
@@ -401,14 +398,14 @@ contract PvPSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
     vm.startPrank(worldDeployer);
     CharCurrentStats.setAtk(characterId_1, 1000);
     CharCurrentStats.setAgi(characterId_1, 1000);
-    TileInfo3.setKingdomId(20, -32, 1);
+    Tile.setKingdomId(20, -32, 1);
     vm.stopPrank();
 
     vm.startPrank(player_1);
     world.app__battlePvP(characterId_1, characterId_2);
     vm.stopPrank();
 
-    uint32 char1Fame = CharStats2.get(characterId_1);
+    uint32 char1Fame = CharStats.getFame(characterId_1);
     assertEq(char1Fame, 950);
 
     vm.warp(block.timestamp + 300);
@@ -416,7 +413,7 @@ contract PvPSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
     vm.startPrank(player_1);
     world.app__battlePvP(characterId_1, characterId_3);
     vm.stopPrank();
-    char1Fame = CharStats2.get(characterId_1);
+    char1Fame = CharStats.getFame(characterId_1);
     assertEq(char1Fame, 950);
 
     vm.warp(block.timestamp + 300);
@@ -425,7 +422,7 @@ contract PvPSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
     vm.startPrank(player_1);
     world.app__battlePvP(characterId_1, characterId_2);
     vm.stopPrank();
-    char1Fame = CharStats2.get(characterId_1);
+    char1Fame = CharStats.getFame(characterId_1);
     assertEq(char1Fame, 950);
 
     // update char 2 stats
@@ -441,22 +438,22 @@ contract PvPSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
     world.app__battlePvP(characterId_1, characterId_2);
     vm.stopPrank();
 
-    char1Fame = CharStats2.get(characterId_1);
+    char1Fame = CharStats.getFame(characterId_1);
     assertEq(char1Fame, 950);
-    uint32 char2Fame = CharStats2.get(characterId_2);
+    uint32 char2Fame = CharStats.getFame(characterId_2);
     assertEq(char2Fame, 1000);
 
     // test alliance
     vm.warp(block.timestamp + 300);
     vm.startPrank(worldDeployer);
-    AllianceV2.set(1, 2, true, true);
+    Alliance.set(1, 2, true, true);
     vm.stopPrank();
     _moveToTheLocation(20, -32); // GREEN zone
     vm.startPrank(player_1);
     world.app__battlePvP(characterId_1, characterId_3);
     vm.stopPrank();
 
-    char1Fame = CharStats2.get(characterId_1);
+    char1Fame = CharStats.getFame(characterId_1);
     assertEq(char1Fame, 900);
   }
 
@@ -469,15 +466,15 @@ contract PvPSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
     vm.startPrank(worldDeployer);
     CharCurrentStats.setAtk(characterId_1, 1000);
     CharCurrentStats.setAgi(characterId_1, 1000);
-    TileInfo3.setKingdomId(20, -32, 1);
-    CharStats2.setFame(characterId_2, Config.MIN_PROTECT_FAME);
+    Tile.setKingdomId(20, -32, 1);
+    CharStats.setFame(characterId_2, Config.MIN_PROTECT_FAME);
     vm.stopPrank();
 
     vm.startPrank(player_1);
     world.app__battlePvP(characterId_1, characterId_2);
     vm.stopPrank();
 
-    uint32 char1Fame = CharStats2.get(characterId_1);
+    uint32 char1Fame = CharStats.getFame(characterId_1);
     assertEq(char1Fame, 1000); // no fame change, because defender has low fame
 
     // test normal condition when defender has enough fame
@@ -486,13 +483,13 @@ contract PvPSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
     _moveToTheLocation(20, -32);
 
     vm.startPrank(worldDeployer);
-    CharStats2.setFame(characterId_2, Config.MIN_PROTECT_FAME + 1);
+    CharStats.setFame(characterId_2, Config.MIN_PROTECT_FAME + 1);
     vm.stopPrank();
 
     vm.startPrank(player_1);
     world.app__battlePvP(characterId_1, characterId_2);
     vm.stopPrank();
-    char1Fame = CharStats2.get(characterId_1);
+    char1Fame = CharStats.getFame(characterId_1);
     assertEq(char1Fame, 950);
 
     // test attacker has low fame, will get slow debuff
@@ -501,15 +498,15 @@ contract PvPSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
     _moveToTheLocation(20, -32);
 
     vm.startPrank(worldDeployer);
-    CharStats2.setFame(characterId_1, Config.MIN_PROTECT_FAME + 1); // after this fight, fame will be below min protect
+    CharStats.setFame(characterId_1, Config.MIN_PROTECT_FAME + 1); // after this fight, fame will be below min protect
     // fame -50
-    CharStats2.setFame(characterId_2, Config.MIN_PROTECT_FAME + 1);
+    CharStats.setFame(characterId_2, Config.MIN_PROTECT_FAME + 1);
     vm.stopPrank();
 
     vm.startPrank(player_1);
     world.app__battlePvP(characterId_1, characterId_2);
     vm.stopPrank();
-    char1Fame = CharStats2.get(characterId_1);
+    char1Fame = CharStats.getFame(characterId_1);
     assertEq(char1Fame, Config.MIN_PROTECT_FAME + 1 - Config.GREEN_ZONE_FAME_PENALTY);
 
     // check slow debuff
@@ -521,7 +518,7 @@ contract PvPSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
     vm.startPrank(player_1);
     world.app__move(characterId_1, charPos.x, charPos.y + 1);
     vm.stopPrank();
-    CharPositionV2Data memory charPosAfterMove = CharPositionV2.get(characterId_1);
+    CharPositionFullData memory charPosAfterMove = CharPositionFull.get(characterId_1);
     console2.log("check arrive timestamp after move with low fame debuff", charPosAfterMove.arriveTimestamp);
     assertEq(charPosAfterMove.arriveTimestamp, block.timestamp + (Config.DEFAULT_MOVEMENT_DURATION - 2) * 2);
   }
@@ -538,7 +535,7 @@ contract PvPSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
     _moveToTheLocation(20, -32);
 
     vm.startPrank(worldDeployer);
-    TileInfo3.setKingdomId(20, -32, 1);
+    Tile.setKingdomId(20, -32, 1);
     InventoryItemUtils.addItem(characterId_1, 1, 100);
     InventoryItemUtils.addItem(characterId_1, 2, 100);
     vm.stopPrank();
@@ -587,7 +584,7 @@ contract PvPSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
 
     vm.warp(block.timestamp + 300);
     vm.startPrank(worldDeployer);
-    TileInfo3.setZoneType(21, -32, ZoneType.Black);
+    Tile.setZoneType(21, -32, ZoneType.Black);
     CharacterItemUtils.addNewItem(characterId_1, 329, 1); // tier 7 // weight 11
     CharacterItemUtils.addNewItem(characterId_1, 70, 1); // tier 6 // weight 10
     vm.stopPrank();
@@ -596,7 +593,7 @@ contract PvPSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
     console2.log("weight char 1", weightChar1); // 140
     console2.log("len equipment inventory", CharInventory.lengthEquipmentIds(characterId_1));
     assertEq(CharInventory.lengthEquipmentIds(characterId_1), 3);
-    console2.log("tile kingdom id", TileInfo3.getKingdomId(21, -32));
+    console2.log("tile kingdom id", Tile.getKingdomId(21, -32));
 
     vm.startPrank(player_1);
     EquipData[] memory equipDatas = new EquipData[](1);
@@ -679,7 +676,7 @@ contract PvPSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
     CharCurrentStats.setAtk(characterId_2, 2000);
     CharCurrentStats.setAgi(characterId_2, 2000);
 
-    TileInfo3.setZoneType(21, -32, ZoneType.Black);
+    Tile.setZoneType(21, -32, ZoneType.Black);
 
     InventoryItemUtils.addItem(characterId_1, 1, 100);
     InventoryItemUtils.addItem(characterId_1, 2, 100);
@@ -754,10 +751,10 @@ contract PvPSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
     CharCurrentStats.setAtk(characterId_1, 5000);
     CharCurrentStats.setAgi(characterId_1, 200);
 
-    TileInfo3.setZoneType(20, -32, ZoneType.Green);
-    TileInfo3.setKingdomId(20, -32, 1);
+    Tile.setZoneType(20, -32, ZoneType.Green);
+    Tile.setKingdomId(20, -32, 1);
 
-    AllianceV2.set(1, 2, true, true);
+    Alliance.set(1, 2, true, true);
     vm.stopPrank();
 
     _moveToTheLocation(20, -32);
@@ -766,10 +763,10 @@ contract PvPSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
     vm.startPrank(player_1);
     world.app__battlePvP(characterId_1, characterId_2);
     vm.stopPrank();
-    assertEq(CharStats2.get(characterId_1), 950);
+    assertEq(CharStats.getFame(characterId_1), 950);
 
     vm.startPrank(worldDeployer);
-    TileInfo3.setKingdomId(20, -32, 2);
+    Tile.setKingdomId(20, -32, 2);
 
     CharCurrentStats.setAtk(characterId_3, 9000);
     CharCurrentStats.setAgi(characterId_3, 500);
@@ -780,15 +777,15 @@ contract PvPSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
     world.app__battlePvP(characterId_3, characterId_1);
     vm.stopPrank();
 
-    assertEq(CharStats2.get(characterId_3), 950);
+    assertEq(CharStats.getFame(characterId_3), 950);
     uint256 lastPvpId = CharBattle.getLastPvpId(characterId_3);
-    PvPExtraV3Data memory pvpExtra = PvPExtraV3.get(lastPvpId);
+    PvPExtraData memory pvpExtra = PvPExtra.get(lastPvpId);
     assertEq(pvpExtra.fames[0], -50);
     assertEq(pvpExtra.fames[1], 0);
 
     // fight in safe zone with king setting
     vm.startPrank(worldDeployer);
-    TileInfo3.setKingdomId(20, -32, 1);
+    Tile.setKingdomId(20, -32, 1);
     KingSetting.setPvpFamePenalty(1, 10);
     vm.stopPrank();
     _moveToTheLocation(20, -32);
@@ -796,15 +793,15 @@ contract PvPSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
     vm.startPrank(player_1);
     world.app__battlePvP(characterId_1, characterId_2);
     vm.stopPrank();
-    assertEq(CharStats2.get(characterId_1), 900);
+    assertEq(CharStats.getFame(characterId_1), 900);
     lastPvpId = CharBattle.getLastPvpId(characterId_1);
-    pvpExtra = PvPExtraV3.get(lastPvpId);
+    pvpExtra = PvPExtra.get(lastPvpId);
     assertEq(pvpExtra.fames[0], -50);
     assertEq(pvpExtra.fames[1], 0);
 
     // fight in death zone with king setting
     vm.startPrank(worldDeployer);
-    TileInfo3.setZoneType(20, -32, ZoneType.Black);
+    Tile.setZoneType(20, -32, ZoneType.Black);
     CharCurrentStats.setAtk(characterId_3, 9);
     CharCurrentStats.setAgi(characterId_3, 9);
     vm.stopPrank();
@@ -814,19 +811,19 @@ contract PvPSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
     vm.startPrank(player_1);
     world.app__battlePvP(characterId_1, characterId_3);
     vm.stopPrank();
-    assertEq(CharStats2.get(characterId_1), 890);
+    assertEq(CharStats.getFame(characterId_1), 890);
     lastPvpId = CharBattle.getLastPvpId(characterId_1);
-    pvpExtra = PvPExtraV3.get(lastPvpId);
+    pvpExtra = PvPExtra.get(lastPvpId);
     assertEq(pvpExtra.fames[0], -10);
     assertEq(pvpExtra.fames[1], 0);
 
     // test achievement
     vm.startPrank(worldDeployer);
-    AllianceV2.deleteRecord(1, 2);
-    CharStats2.setFame(characterId_3, 100_000);
+    Alliance.deleteRecord(1, 2);
+    CharStats.setFame(characterId_3, 100_000);
     vm.stopPrank();
 
-    uint32 char1Fame = CharStats2.get(characterId_1);
+    uint32 char1Fame = CharStats.getFame(characterId_1);
 
     // for (uint256 i = 0; i < 500; i++) {
     //   _moveToTheLocation(20, -32);
@@ -835,12 +832,12 @@ contract PvPSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
     //   world.app__battlePvP(characterId_1, characterId_3);
     //   vm.stopPrank();
     //   lastPvpId = CharBattle.getLastPvpId(characterId_1);
-    //   pvpExtra = PvPExtraV3.get(lastPvpId);
+    //   pvpExtra = PvPExtra.get(lastPvpId);
     //   assertEq(pvpExtra.fames[0], 10);
     //   assertEq(pvpExtra.fames[1], -20);
     // }
 
-    // assertEq(CharStats2.get(characterId_1), char1Fame + 500 * 10); // 10 fame per fight
+    // assertEq(CharStats.getFame(characterId_1), char1Fame + 500 * 10); // 10 fame per fight
     // assertTrue(CharAchievementUtils.hasAchievement(characterId_1, 12));
     // assertTrue(CharAchievementUtils.hasAchievement(characterId_1, 13));
     // assertTrue(CharAchievementUtils.hasAchievement(characterId_1, 14));

@@ -6,15 +6,14 @@ import {
   MonsterLocationData,
   Monster,
   PvE,
-  PvEExtraV2,
-  PvEExtraV2Data,
+  PvEExtra,
+  PvEExtraData,
   BossInfo,
   BossInfoData,
   MonsterStats,
   CharCurrentStats,
   CharStats,
-  ItemV2,
-  CharCStats2
+  Item
 } from "@codegen/index.sol";
 import { CharacterFundUtils } from "./CharacterFundUtils.sol";
 import { InventoryItemUtils } from "./InventoryItemUtils.sol";
@@ -101,7 +100,7 @@ library BattlePvEUtils3 {
     }
     uint256 itemId = itemIds[index];
     uint32 amount = itemAmounts[index];
-    uint32 itemWeight = ItemV2.getWeight(itemId);
+    uint32 itemWeight = Item.getWeight(itemId);
     uint32 newWeight = CharCurrentStats.getWeight(characterId) + itemWeight * amount;
     uint32 maxWeight = CharStats.getWeight(characterId);
     if (newWeight > maxWeight) {
@@ -112,11 +111,11 @@ library BattlePvEUtils3 {
   }
 
   function storePvEExtraData(uint256 characterId, uint256 rewardItemId, uint32 rewardItemAmount) public {
-    PvEExtraV2Data memory pveExtra = PvEExtraV2Data({
+    PvEExtraData memory pveExtra = PvEExtraData({
       itemId: rewardItemId,
       itemAmount: rewardItemAmount,
-      characterBarrier: CharCStats2.getBarrier(characterId)
+      characterBarrier: CharCurrentStats.getBarrier(characterId)
     });
-    PvEExtraV2.set(characterId, pveExtra);
+    PvEExtra.set(characterId, pveExtra);
   }
 }

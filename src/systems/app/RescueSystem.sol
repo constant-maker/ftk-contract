@@ -5,10 +5,8 @@ import {
   CharState,
   CharInventory,
   CharInventoryData,
-  CharPosition,
-  CharPositionData,
-  CharNextPosition,
-  CharNextPositionData,
+  CharPositionFull,
+  CharPositionFullData,
   CharStorage,
   CharStorageData,
   CharFarmingState,
@@ -18,29 +16,26 @@ import {
   PvEAfkLoc,
   CharStats,
   CharStatsData,
-  CharStats2,
   CharCurrentStats,
   CharCurrentStatsData,
-  CharCStats2,
   CharEquipment,
-  CharOtherItem,
-  CharOtherItemData
+  CharOtherItem
 } from "@codegen/index.sol";
 import { SlotType } from "@codegen/common.sol";
 import { CharacterAccessControl } from "@abstracts/CharacterAccessControl.sol";
 import { Errors } from "@common/Errors.sol";
 
 contract RescueSystem is System, CharacterAccessControl {
+  uint8 constant MAX_SLOT_TYPE = uint8(SlotType.Ring);
+
   /// @dev re-update data to update indexer
   function rescue(uint256 characterId, uint256[] calldata cityIds, uint256[] calldata inventoryOtherItemIds) public {
     // Position
-    CharPositionData memory position = CharPosition.get(characterId);
-    CharPosition.set(characterId, position);
-    CharNextPositionData memory nextPosition = CharNextPosition.get(characterId);
-    CharNextPosition.set(characterId, nextPosition);
+    CharPositionFullData memory positionData = CharPositionFull.get(characterId);
+    CharPositionFull.set(characterId, positionData);
 
     // State
-    _rescueState(characterId, nextPosition);
+    _rescueState(characterId, positionData);
 
     // Stats
     _rescueStats(characterId);
@@ -71,39 +66,37 @@ contract RescueSystem is System, CharacterAccessControl {
   }
 
   function _rescueEquipment(uint256 characterId) private {
-    for (uint8 i = 0; i <= uint8(SlotType.Mount); i++) {
+    for (uint8 i = 0; i <= MAX_SLOT_TYPE; i++) {
       uint256 equipmentId = CharEquipment.getEquipmentId(characterId, SlotType(i));
       CharEquipment.setEquipmentId(characterId, SlotType(i), equipmentId);
     }
   }
 
-  function _rescueState(uint256 characterId, CharNextPositionData memory nextPosition) private {
+  function _rescueState(uint256 characterId, CharPositionFullData memory positionData) private {
     CharState.setState(characterId, CharState.getState(characterId));
     CharFarmingStateData memory farmingState = CharFarmingState.get(characterId);
     CharFarmingState.set(characterId, farmingState);
     PvEAfkData memory pveAfk = PvEAfk.get(characterId);
     PvEAfk.set(characterId, pveAfk);
-    uint256 monsterId = PvEAfkLoc.get(nextPosition.x, nextPosition.y);
-    PvEAfkLoc.set(nextPosition.x, nextPosition.y, monsterId);
+    uint256 monsterId = PvEAfkLoc.get(positionData.nextX, positionData.nextY);
+    PvEAfkLoc.set(positionData.nextX, positionData.nextY, monsterId);
   }
 
   function _rescueStats(uint256 characterId) private {
     CharStatsData memory stats = CharStats.get(characterId);
     CharStats.set(characterId, stats);
-    CharStats2.set(characterId, CharStats2.get(characterId));
   }
 
   function _rescueCurrentStats(uint256 characterId) private {
     CharCurrentStatsData memory currentStats = CharCurrentStats.get(characterId);
     CharCurrentStats.set(characterId, currentStats);
-    CharCStats2.set(characterId, CharCStats2.get(characterId));
   }
 
   function _rescueInventoryOtherItem(uint256 characterId, uint256[] calldata inventoryOtherItemIds) private {
     for (uint256 i = 0; i < inventoryOtherItemIds.length; i++) {
       uint256 otherItemId = inventoryOtherItemIds[i];
-      CharOtherItemData memory otherItemData = CharOtherItem.get(characterId, otherItemId);
-      CharOtherItem.set(characterId, otherItemId, otherItemData);
+      uint32 amount = CharOtherItem.get(characterId, otherItemId);
+      CharOtherItem.set(characterId, otherItemId, amount);
     }
   }
 }

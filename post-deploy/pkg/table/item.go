@@ -29,7 +29,7 @@ func ItemCallData(item common.Item) ([]byte, error) {
 	}
 	encodedLength := mud.EncodeLengths([]int{len(stringToBytes(item.Name))})
 	dynamicData := simpleEncodePacked(stringToBytes(item.Name))
-	mt := mud.NewMudTable("ItemV2", "app", "")
+	mt := mud.NewMudTable("Item", "app", "")
 	return mt.SetRecordRawCalldata(keyTuple, staticData, encodedLength, dynamicData)
 }
 
@@ -72,7 +72,7 @@ func EquipmentItemInfo2V2CallData(equipmentInfo common.EquipmentInfo, itemId int
 	}
 	encodedLength := mud.PackedCounter{}
 	dynamicData := []byte{}
-	mt := mud.NewMudTable("EquipmentInfo2V2", "app", "")
+	mt := mud.NewMudTable("EquipmentInfo2", "app", "")
 	// zap.S().Infow("equipment info v2", "itemId", itemId, "equipmentInfo", equipmentInfo)
 	return mt.SetRecordRawCalldata(keyTuple, staticData, encodedLength, dynamicData)
 }
@@ -122,7 +122,7 @@ func BuffItemInfoCallData(buffInfo common.BuffItemInfo, itemId int) ([]byte, err
 	}
 	encodedLength := mud.PackedCounter{}
 	dynamicData := []byte{}
-	mt := mud.NewMudTable("BuffItemInfoV3", "app", "")
+	mt := mud.NewMudTable("BuffInfo", "app", "")
 	return mt.SetRecordRawCalldata(keyTuple, staticData, encodedLength, dynamicData)
 }
 
@@ -155,7 +155,7 @@ func BuffStatCallData(statBuff common.StatsModify, itemId int) ([]byte, error) {
 	}
 	encodedLength := mud.PackedCounter{}
 	dynamicData := []byte{}
-	mt := mud.NewMudTable("BuffStatV4", "app", "")
+	mt := mud.NewMudTable("BuffStat", "app", "")
 	return mt.SetRecordRawCalldata(keyTuple, staticData, encodedLength, dynamicData)
 }
 
@@ -173,20 +173,6 @@ func BuffExpCallData(statBuff common.ExpAmplify, itemId int) ([]byte, error) {
 	dynamicData := []byte{}
 	mt := mud.NewMudTable("BuffExp", "app", "")
 	return mt.SetRecordRawCalldata(keyTuple, staticData, encodedLength, dynamicData)
-}
-
-func ItemWeightCacheCallData(item common.Item) ([]byte, error) {
-	staticData, err := encodePacked(
-		uint32(item.OldWeight),
-	)
-	if err != nil {
-		return nil, err
-	}
-	keyTuple := [][32]byte{
-		[32]byte(encodeUint256(big.NewInt(int64(item.Id)))),
-	}
-	mt := mud.NewMudTable("ItemWeightCache", "app", itemWeightCacheFieldLayout)
-	return mt.SetStaticFieldRawCalldata(keyTuple, 0, staticData)
 }
 
 func SkinInfoCallData(item common.Item) ([]byte, error) {

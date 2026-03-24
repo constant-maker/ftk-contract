@@ -27,21 +27,21 @@ library CharacterFundUtils {
     }
   }
 
-  function increaseCrystal(uint256 characterId, uint32 amount) internal {
-    uint32 newAmount = CharFund.getCrystal(characterId) + amount;
+  function increaseCrystal(uint256 characterId, uint256 amount) internal {
+    uint256 newAmount = CharFund.getCrystal(characterId) + amount;
     CharFund.setCrystal(characterId, newAmount);
   }
 
-  function decreaseCrystal(uint256 characterId, uint32 amount) internal {
-    uint32 _balance = CharFund.getCrystal(characterId);
+  function decreaseCrystal(uint256 characterId, uint256 amount) internal {
+    uint256 _balance = CharFund.getCrystal(characterId);
     if (_balance < amount) {
       revert Errors.CharacterFund_NotEnoughCrystal(_balance, amount);
     }
     CharFund.setCrystal(characterId, _balance - amount);
   }
 
-  function mustEnoughCrystal(uint256 characterId, uint32 requireAmount) internal view {
-    uint32 _balance = CharFund.getCrystal(characterId);
+  function mustEnoughCrystal(uint256 characterId, uint256 requireAmount) internal view {
+    uint256 _balance = CharFund.getCrystal(characterId);
     if (_balance < requireAmount) {
       revert Errors.CharacterFund_NotEnoughCrystal(_balance, requireAmount);
     }

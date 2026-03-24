@@ -1,15 +1,15 @@
 pragma solidity >=0.8.24;
 
 import {
-  CityVault2V2,
+  CityVault2,
   CharOtherItem,
   CharInfo,
   Kingdom,
   CrystalFee,
   CharGachaReq,
   GachaReqInfo,
-  CharGachaV3,
-  CharGachaV3Data,
+  CharGacha,
+  CharGachaData,
   CharTotalSpend
 } from "@codegen/index.sol";
 import { Errors } from "@common/Errors.sol";
@@ -26,7 +26,7 @@ library GachaUtils {
 
     // No ticket item, try to pay with crystal
     if (ticketValue > 0) {
-      CharacterFundUtils.decreaseCrystal(characterId, uint32(ticketValue));
+      CharacterFundUtils.decreaseCrystal(characterId, ticketValue);
       // account total spent
       uint256 totalSpend = CharTotalSpend.get(characterId);
       totalSpend += ticketValue;
@@ -36,8 +36,8 @@ library GachaUtils {
       uint256 capitalId = Kingdom.getCapitalId(kingdomId);
       uint8 kingdomFeePercentage = CrystalFee.get(kingdomId);
       uint256 shareValue = (ticketValue * uint256(kingdomFeePercentage)) / 100;
-      uint256 currentVaultCrystal = CityVault2V2.getCrystal(capitalId);
-      CityVault2V2.setCrystal(capitalId, currentVaultCrystal + shareValue);
+      uint256 currentVaultCrystal = CityVault2.getCrystal(capitalId);
+      CityVault2.setCrystal(capitalId, currentVaultCrystal + shareValue);
       return;
     }
 
@@ -46,7 +46,7 @@ library GachaUtils {
   }
 
   function storeCharGachaData(uint256 characterId, uint256 gachaId, uint256 requestId, bool isLimitedGacha) public {
-    CharGachaV3Data memory charGacha = CharGachaV3Data({
+    CharGachaData memory charGacha = CharGachaData({
       randomNumber: 0, // will be set when fulfilled
       gachaId: gachaId,
       isLimitedGacha: isLimitedGacha,
@@ -56,7 +56,7 @@ library GachaUtils {
       timestamp: block.timestamp
     });
 
-    CharGachaV3.set(characterId, requestId, charGacha);
+    CharGacha.set(characterId, requestId, charGacha);
     GachaReqInfo.setCharacterId(requestId, characterId);
     CharGachaReq.set(characterId, requestId);
   }

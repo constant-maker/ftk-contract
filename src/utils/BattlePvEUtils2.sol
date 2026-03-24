@@ -15,7 +15,7 @@ import {
   PvEAfkData,
   PvEAfkLoc,
   CharState,
-  ItemV2,
+  Item,
   Equipment,
   CharCurrentStats,
   CharStats,
@@ -110,7 +110,7 @@ library BattlePvEUtils2 {
     }
     if (applyCharExpAmp) {
       CharExpAmpData memory charExpAmp = CharExpAmp.get(characterId);
-      if (block.timestamp <= charExpAmp.expireTime) {
+      if (block.timestamp <= charExpAmp.pveExpireTime) {
         baseExpPercent += charExpAmp.pveExpAmp;
         basePerkExpPercent += charExpAmp.pveExpAmp;
       }
@@ -126,7 +126,7 @@ library BattlePvEUtils2 {
     uint256 grindEquipmentId = CharEquipment.getEquipmentId(characterId, grindSlot);
     if (grindEquipmentId != 0) {
       uint256 itemId = Equipment.getItemId(grindEquipmentId);
-      CharacterPerkUtils.updateCharacterPerkExp(characterId, ItemV2.getItemType(itemId), gainedPerkExp);
+      CharacterPerkUtils.increaseCharacterPerkExp(characterId, Item.getItemType(itemId), gainedPerkExp);
     }
   }
 
@@ -181,9 +181,9 @@ library BattlePvEUtils2 {
 
   /// @dev calculate the max tick based on exp amp to prevent over gain exp due to exp amp
   function _calculateMaxTickFromExpAmp(CharExpAmpData memory charExpAmp) private view returns (uint32 maxTick) {
-    if (block.timestamp > charExpAmp.expireTime) {
+    if (block.timestamp > charExpAmp.pveExpireTime) {
       return 0;
     }
-    return uint32((charExpAmp.expireTime - block.timestamp) / Config.PVE_ATTACK_COOLDOWN);
+    return uint32((charExpAmp.pveExpireTime - block.timestamp) / Config.PVE_ATTACK_COOLDOWN);
   }
 }

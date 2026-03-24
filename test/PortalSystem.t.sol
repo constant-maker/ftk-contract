@@ -6,7 +6,7 @@ import { SpawnSystemFixture } from "@fixtures/SpawnSystemFixture.sol";
 import { WelcomeSystemFixture } from "@fixtures/WelcomeSystemFixture.sol";
 import { TestHelper } from "./TestHelper.sol";
 import { Config } from "@common/index.sol";
-import { CharFund, CrystalFee, CityVault2V2 } from "@codegen/index.sol";
+import { CharFund, CrystalFee, CityVault2 } from "@codegen/index.sol";
 import { UWorldUtils } from "@utils/UWorldUtils.sol";
 
 contract PortalSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture {
@@ -42,7 +42,7 @@ contract PortalSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixt
     CrystalFee.setFee(1, 5);
     vm.stopPrank();
 
-    uint256 cityVaultCrystal = CityVault2V2.getCrystal(1);
+    uint256 cityVaultCrystal = CityVault2.getCrystal(1);
 
     vm.startPrank(player);
     world.app__requestSellCrystal(characterId, 5000); // reqId = 1
@@ -79,7 +79,7 @@ contract PortalSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixt
     console2.log("test paymentAmount:", paymentAmount);
     console2.log("test platFormFee:", platFormFee);
 
-    uint256 cityVaultCrystalAfter = CityVault2V2.getCrystal(1);
+    uint256 cityVaultCrystalAfter = CityVault2.getCrystal(1);
     assertEq(cityVaultCrystalAfter, cityVaultCrystal + kingdomFeeCrystal);
 
     // assert player balance after sell

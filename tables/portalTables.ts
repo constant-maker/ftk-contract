@@ -9,7 +9,7 @@ const PORTAL_TABLES: any = {
     schema: {
       characterId: "uint256",
       id: "uint256",
-      amount: "uint32",
+      amount: "uint256",
       isDone: "bool",
       requestedAt: "uint256",
     },

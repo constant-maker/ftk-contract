@@ -2,14 +2,14 @@ pragma solidity >=0.8.24;
 
 import { System } from "@latticexyz/world/src/System.sol";
 import { CharacterAccessControl } from "@abstracts/CharacterAccessControl.sol";
-import { SalePackageV2, SalePackageV2Data, CharTotalSpend } from "@codegen/index.sol";
+import { SalePackage, SalePackageData, CharTotalSpend } from "@codegen/index.sol";
 import { CharAchievementUtils, CharacterFundUtils, InventoryItemUtils } from "@utils/index.sol";
 import { Errors } from "@common/index.sol";
 
 contract SaleSystem is CharacterAccessControl, System {
   /// @dev Purchase a sale package for a character
   function buyPackage(uint256 characterId, uint256 packageId, uint16 amount) public onlyAuthorizedWallet(characterId) {
-    SalePackageV2Data memory salePackage = SalePackageV2.get(packageId);
+    SalePackageData memory salePackage = SalePackage.get(packageId);
     if (salePackage.crystalPrice == 0 && salePackage.goldPrice == 0) {
       revert Errors.SaleSystem_PackageNotFound(packageId);
     }

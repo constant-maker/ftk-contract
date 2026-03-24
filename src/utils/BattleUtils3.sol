@@ -1,4 +1,6 @@
-import { CharInventory, ItemV2, Equipment } from "@codegen/index.sol";
+pragma solidity >=0.8.24;
+
+import { CharInventory, Item, Equipment } from "@codegen/index.sol";
 import { ZoneType, CharacterStateType, ItemType } from "@codegen/common.sol";
 
 library BattleUtils3 {
@@ -14,7 +16,7 @@ library BattleUtils3 {
     for (uint256 i; i < oLen; i++) {
       uint256 equipmentId = equipmentIds[i];
 
-      ItemType itemType = ItemV2.getItemType(Equipment.getItemId(equipmentId));
+      ItemType itemType = Item.getItemType(Equipment.getItemId(equipmentId));
 
       if (itemType != ItemType.Pet) {
         petExcludedEquipmentIds[count++] = equipmentId;
@@ -46,7 +48,7 @@ library BattleUtils3 {
     second = 0;
 
     for (uint256 i = 0; i < len; i++) {
-      uint8 tier = ItemV2.getTier(Equipment.getItemId(equipmentIds[i]));
+      uint8 tier = Item.getTier(Equipment.getItemId(equipmentIds[i]));
       tiers[i] = tier;
       if (tier > highest) {
         second = highest;

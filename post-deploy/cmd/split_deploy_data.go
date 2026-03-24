@@ -12,9 +12,9 @@ import (
 	"go.uber.org/zap"
 )
 
-func getAllCachedDeployData(kingdoms []gentile.KingdomMap) ([]common.TileInfo, []common.MonsterLocation, error) {
+func getAllCachedDeployData(kingdoms []gentile.KingdomMap) ([]common.Tile, []common.MonsterLocation, error) {
 	l := zap.S().With("func", "getAllCachedDeployData")
-	tileInfos := make([]common.TileInfo, 0)
+	tileInfos := make([]common.Tile, 0)
 	monsterLocations := make([]common.MonsterLocation, 0)
 	for _, kingdom := range kingdoms {
 		cTileInfos, err := loadTileInfos(kingdom.ID)
@@ -43,13 +43,13 @@ func getAllCachedDeployData(kingdoms []gentile.KingdomMap) ([]common.TileInfo, [
 // return small part to deploy and the second one will be update later
 func splitDeployData(
 	kingdoms []gentile.KingdomMap, dataConfig common.DataConfig, reserveOutPutPath string, buildReserveData bool, dataPercent int64) (
-	[]common.TileInfo, []common.MonsterLocation, error) {
+	[]common.Tile, []common.MonsterLocation, error) {
 	l := zap.S().With("func", "splitDeployData")
 	processRatio := float64(dataPercent) / 100
-	processTileInfos := make([]common.TileInfo, 0)
+	processTileInfos := make([]common.Tile, 0)
 	processMonsterLocations := make([]common.MonsterLocation, 0)
 	// reserve data will be write to different file
-	reserveTileInfos := make([]common.TileInfo, 0)
+	reserveTileInfos := make([]common.Tile, 0)
 	reserveMonsterLocations := make([]common.MonsterLocation, 0)
 	for _, kingdom := range kingdoms {
 		cTileInfos, err := loadTileInfos(kingdom.ID)
@@ -94,7 +94,7 @@ func splitDeployData(
 }
 
 func writeReserveData(
-	tileInfos []common.TileInfo,
+	tileInfos []common.Tile,
 	monsterLocations []common.MonsterLocation,
 	dataConfig common.DataConfig,
 	reserveOutPutPath string) error {
@@ -105,7 +105,7 @@ func writeReserveData(
 	for _, ti := range tileInfos {
 		tileInfoCallData, err := table.TileInfoCallData(ti, dataConfig)
 		if err != nil {
-			l.Errorw("cannot build TileInfo call data", "err", err)
+			l.Errorw("cannot build Tile call data", "err", err)
 			return err
 		}
 		callData = append(callData, tileInfoCallData)

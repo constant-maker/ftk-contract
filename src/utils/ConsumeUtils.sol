@@ -1,15 +1,14 @@
 pragma solidity >=0.8.24;
 
 import {
-  BuffItemInfoV3,
-  BuffItemInfoV3Data,
+  BuffInfo,
+  BuffInfoData,
   CharPositionData,
   CharBuff,
   CharBuffData,
   CharDebuff,
   CharDebuffData,
-  CharDebuff2,
-  ItemV2
+  Item
 } from "@codegen/index.sol";
 import { CharacterPositionUtils } from "./CharacterPositionUtils.sol";
 import { ZoneType } from "@codegen/common.sol";
@@ -25,13 +24,13 @@ library ConsumeUtils {
   uint16 constant DEBUFF_COOLDOWN = 10; // seconds
 
   function applyStatsBuff(uint256 characterId, uint256 itemId, uint256 targetPlayer) public {
-    bool isGoodBuff = BuffItemInfoV3.getIsBuff(itemId);
+    bool isGoodBuff = BuffInfo.getIsBuff(itemId);
     if (isGoodBuff) {
       applyStatsGoodBuff(targetPlayer, itemId);
     } else {
       checkIsReadyToCast(characterId);
       applyStatsBadBuff(targetPlayer, itemId);
-      CharDebuff2.setLastCastTime(characterId, block.timestamp);
+      CharDebuff.setLastCastTime(characterId, block.timestamp);
     }
   }
 
@@ -39,8 +38,8 @@ library ConsumeUtils {
     CharBuffData memory currentBuff = CharBuff.get(targetPlayer);
 
     uint256 nowTs = block.timestamp;
-    uint256 newExpire = nowTs + BuffItemInfoV3.getDuration(itemId);
-    uint8 newTier = ItemV2.getTier(itemId);
+    uint256 newExpire = nowTs + BuffInfo.getDuration(itemId);
+    uint8 newTier = Item.getTier(itemId);
 
     // 0. Refresh existing buff if same ID is already active
     if (currentBuff.buffIds[0] == itemId && currentBuff.expireTimes[0] >= nowTs) {
@@ -78,7 +77,7 @@ library ConsumeUtils {
     }
 
     // 2. No free slot → try to replace a lower-tier buff
-    if (ItemV2.getTier(currentBuff.buffIds[0]) < newTier) {
+    if (Item.getTier(currentBuff.buffIds[0]) < newTier) {
       // replace slot 0
       currentBuff.buffIds[0] = itemId;
       currentBuff.expireTimes[0] = newExpire;
@@ -86,7 +85,7 @@ library ConsumeUtils {
       return;
     }
 
-    if (ItemV2.getTier(currentBuff.buffIds[1]) < newTier) {
+    if (Item.getTier(currentBuff.buffIds[1]) < newTier) {
       // replace slot 1 and swap to keep new buff in slot 0
       currentBuff.buffIds[1] = itemId;
       currentBuff.expireTimes[1] = newExpire;
@@ -102,8 +101,8 @@ library ConsumeUtils {
     CharDebuffData memory currentDebuff = CharDebuff.get(targetPlayer);
 
     uint256 nowTs = block.timestamp;
-    uint256 newExpire = nowTs + BuffItemInfoV3.getDuration(itemId);
-    uint8 newTier = ItemV2.getTier(itemId);
+    uint256 newExpire = nowTs + BuffInfo.getDuration(itemId);
+    uint8 newTier = Item.getTier(itemId);
 
     // 0. Refresh existing debuff if same ID is already active
     if (currentDebuff.debuffIds[0] == itemId && currentDebuff.expireTimes[0] >= nowTs) {
@@ -143,7 +142,7 @@ library ConsumeUtils {
     }
 
     // 2. No free slot → try to replace a lower-tier debuff
-    if (ItemV2.getTier(currentDebuff.debuffIds[0]) < newTier) {
+    if (Item.getTier(currentDebuff.debuffIds[0]) < newTier) {
       // replace slot 0
       currentDebuff.debuffIds[0] = uint32(itemId);
       currentDebuff.expireTimes[0] = newExpire;
@@ -151,7 +150,7 @@ library ConsumeUtils {
       return;
     }
 
-    if (ItemV2.getTier(currentDebuff.debuffIds[1]) < newTier) {
+    if (Item.getTier(currentDebuff.debuffIds[1]) < newTier) {
       // replace slot 1 and swap to keep new debuff in slot 0
       currentDebuff.debuffIds[1] = uint32(itemId);
       currentDebuff.expireTimes[1] = newExpire;
@@ -165,7 +164,7 @@ library ConsumeUtils {
   }
 
   function checkIsReadyToCast(uint256 characterId) public view {
-    uint256 lastCastTime = CharDebuff2.getLastCastTime(characterId);
+    uint256 lastCastTime = CharDebuff.getLastCastTime(characterId);
     uint256 nextCastTime = lastCastTime + DEBUFF_COOLDOWN;
     if (block.timestamp < nextCastTime) {
       revert Errors.ConsumeSystem_DebuffOnCooldown(characterId, nextCastTime);
@@ -173,11 +172,7 @@ library ConsumeUtils {
   }
 
   function validateTargetItemData(uint256 characterId, uint256 itemId, TargetItemData memory targetData) public view {
-    BuffItemInfoV3Data memory buffItemInfo = BuffItemInfoV3.get(itemId);
-
-    // if (RestrictLocV2.getIsRestricted(targetData.x, targetData.y) && !buffItemInfo.selfCastOnly) {
-    //   revert Errors.ConsumeSystem_CannotTargetRestrictLocation();
-    // }
+    BuffInfoData memory buffItemInfo = BuffInfo.get(itemId);
 
     CharPositionData memory charPosition = CharacterPositionUtils.getCurrentPosition(characterId);
 
@@ -215,6 +210,4 @@ library ConsumeUtils {
   function _getAbsValue(int32 value) private pure returns (uint32) {
     return value < 0 ? uint32(-value) : uint32(value);
   }
-
-  function _applyDebuff(uint256 characterId) private { }
 }

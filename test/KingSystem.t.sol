@@ -10,14 +10,13 @@ import {
   KingElectionData,
   CharStats,
   CharInfo,
-  CharStats2,
   CharVote,
   CharVoteData,
   CandidatePromise,
   CharCurrentStats,
   CharCurrentStatsData,
-  AllianceV2,
-  AllianceV2Data,
+  Alliance,
+  AllianceData,
   MarketFee,
   CharRole,
   CharRoleCounter
@@ -61,7 +60,7 @@ contract KingSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixtur
     vm.stopPrank();
 
     vm.startPrank(worldDeployer);
-    CharStats2.setFame(candidateId, 2000);
+    CharStats.setFame(candidateId, 2000);
     vm.stopPrank();
 
     vm.startPrank(candidate);
@@ -98,7 +97,7 @@ contract KingSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixtur
     vm.stopPrank();
 
     vm.startPrank(worldDeployer);
-    CharStats2.setFame(voterId, 1050);
+    CharStats.setFame(voterId, 1050);
     vm.stopPrank();
 
     vm.expectRevert(); // invalid candidate id
@@ -142,8 +141,8 @@ contract KingSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixtur
     world.app__registerKing(candidateId, "Promise summary");
     vm.stopPrank();
     vm.startPrank(worldDeployer);
-    CharStats2.setFame(voterId, 2100);
-    CharStats2.setFame(voter2Id, 2100);
+    CharStats.setFame(voterId, 2100);
+    CharStats.setFame(voter2Id, 2100);
     vm.stopPrank();
     vm.startPrank(voter);
     world.app__registerKing(voterId, "Promise summary");
@@ -204,21 +203,21 @@ contract KingSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixtur
     vm.startPrank(voter);
     world.app__setAlliance(voterId, 2, true);
     vm.stopPrank();
-    AllianceV2Data memory alliance = AllianceV2.get(2, 1);
+    AllianceData memory alliance = Alliance.get(2, 1);
     assertTrue(alliance.isAlliance);
     assertTrue(alliance.isApproved);
 
-    alliance = AllianceV2.get(1, 2);
+    alliance = Alliance.get(1, 2);
     assertFalse(alliance.isAlliance);
     assertFalse(alliance.isApproved);
 
     vm.startPrank(voter2);
     world.app__setAlliance(voter2Id, 1, false);
     vm.stopPrank();
-    alliance = AllianceV2.get(1, 2);
+    alliance = Alliance.get(1, 2);
     assertFalse(alliance.isAlliance);
     assertFalse(alliance.isApproved);
-    alliance = AllianceV2.get(2, 1);
+    alliance = Alliance.get(2, 1);
     assertFalse(alliance.isAlliance);
     assertFalse(alliance.isApproved);
 

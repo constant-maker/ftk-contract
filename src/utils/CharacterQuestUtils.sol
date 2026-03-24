@@ -1,6 +1,6 @@
 pragma solidity >=0.8.24;
 
-import { CharPosition, CharPositionData, CharQuestStatus, Npc, NpcData, QuestV4, QuestV4Data } from "@codegen/index.sol";
+import { CharPositionData, CharQuestStatus, Npc, NpcData, Quest, QuestData } from "@codegen/index.sol";
 import { QuestStatusType } from "@codegen/common.sol";
 import { Errors } from "@common/index.sol";
 import { CharacterPositionUtils } from "./CharacterPositionUtils.sol";
@@ -20,7 +20,7 @@ library CharacterQuestUtils {
   /// @dev Check if character receives quest from right npc, quest is not done yet,
   /// and the character has completed all previous quests
   function mustReceiveValidQuest(uint256 characterId, uint256 npcId, uint256 questId) internal view {
-    QuestV4Data memory questData = QuestV4.get(questId);
+    QuestData memory questData = Quest.get(questId);
     if (questData.fromNpcId == 0 && questData.exp == 0 && questData.gold == 0) {
       revert Errors.QuestSystem_QuestNotFound(questId);
     }

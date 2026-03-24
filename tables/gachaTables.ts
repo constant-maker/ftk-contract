@@ -1,7 +1,7 @@
 import { timeStamp } from "console";
 
 const GACHA_TABLES: any = {
-  CharGachaV3: {
+  CharGacha: {
     schema: {
       characterId: "uint256",
       requestId: "uint256",
@@ -31,7 +31,7 @@ const GACHA_TABLES: any = {
     },
     key: ['requestId'],
   },
-  GachaV5: {
+  Gacha: {
     schema: {
       id : "uint256",
       startTime: "uint256",
@@ -43,30 +43,11 @@ const GACHA_TABLES: any = {
     },
     key: ['id'],
   },
-  GachaPet: { // DEPRECATED, use GachaV5 instead
-    schema: {
-      id : "uint256",
-      startTime: "uint256",
-      endTime: "uint256",
-      ticketValue: "uint256", // Either use ETH or item as ticket for gacha
-      ticketItemId: "uint256",
-      petIds: "uint256[]",
-    },
-    key: ['id'],
-  },
   GachaCounter: {
     schema: {
       count: "uint256",
     },
     key: [],
-  },
-  GachaItemIndex: { // DEPRECATED, removed
-    schema: {
-      gachaId: "uint256",
-      itemId: "uint256",
-      index: "uint256",
-    },
-    key: ['gachaId', 'itemId'],
   },
 };
 

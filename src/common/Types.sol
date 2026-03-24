@@ -8,16 +8,6 @@ struct ItemsActionData {
   uint32[] itemAmounts;
 }
 
-struct EquipmentSnapshotData {
-  uint32 barrier;
-  uint32 hp;
-  uint16 atk;
-  uint16 def;
-  uint16 agi;
-  uint16 ms;
-  uint32 weight; // bonus weight
-}
-
 struct VaultActionParams {
   uint32 gold;
   uint256 crystal;

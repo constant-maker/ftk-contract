@@ -3,15 +3,14 @@ pragma solidity >=0.8.24;
 import { System } from "@latticexyz/world/src/System.sol";
 import { CharacterAccessControl } from "@abstracts/CharacterAccessControl.sol";
 import {
-  TileInfo3,
-  TileInfo3Data,
+  Tile,
+  TileData,
   TileInventory,
   Equipment,
-  CharNextPosition,
-  CharPosition,
+  CharPositionFull,
   CharPositionData,
   CharInfo,
-  CharStats2,
+  CharStats,
   KingSetting,
   NonOccupyTile
 } from "@codegen/index.sol";
@@ -54,11 +53,11 @@ contract TileSystem is System, CharacterAccessControl {
       revert Errors.TileSystem_InvalidTilePosition(x, y);
     }
     uint8 kingdomId = CharInfo.getKingdomId(characterId);
-    uint8 tileKingdomId = TileInfo3.getKingdomId(x, y);
+    uint8 tileKingdomId = Tile.getKingdomId(x, y);
     if (tileKingdomId == kingdomId) {
       revert Errors.TileSystem_TileAlreadyOccupied(x, y);
     }
-    ZoneType zoneType = TileInfo3.getZoneType(x, y);
+    ZoneType zoneType = Tile.getZoneType(x, y);
     _validateOccupation(characterId, tileKingdomId, kingdomId, position, zoneType);
     CharacterFundUtils.decreaseGold(characterId, TILE_OCCUPATION_COST);
     uint256[] memory itemIds = _getRequiredItemIds(position, zoneType);
@@ -68,23 +67,18 @@ contract TileSystem is System, CharacterAccessControl {
     }
     bool isAlliance = KingdomUtils.getIsAlliance(kingdomId, tileKingdomId);
     InventoryItemUtils.removeItems(characterId, itemIds, amounts);
-    // Set new tile data
-    TileInfo3.setKingdomId(x, y, kingdomId);
-    // increase fame
-    uint32 currentFame = CharStats2.getFame(characterId);
-    if (currentFame == 0) {
-      currentFame = Config.DEFAULT_FAME;
-    }
+    // set new tile data
+    Tile.setKingdomId(x, y, kingdomId);
+    Tile.setOccupiedTime(x, y, block.timestamp);
     if (isAlliance) {
+      // penalty fame when occupy tile from alliance kingdom
+      uint32 currentFame = CharStats.getFame(characterId);
       uint16 captureTilePenalty = KingSetting.getCaptureTilePenalty(kingdomId);
       if (captureTilePenalty > 0) {
         currentFame = currentFame > captureTilePenalty ? currentFame - captureTilePenalty : 1; // min fame is 1
+        CharStats.setFame(characterId, currentFame);
       }
-    } else {
-      currentFame += 10;
     }
-    CharStats2.setFame(characterId, currentFame);
-    TileInfo3.setOccupiedTime(x, y, block.timestamp);
   }
 
   function lootItems(uint256 characterId, LootItems calldata data) public onlyAuthorizedWallet(characterId) {
@@ -131,7 +125,7 @@ contract TileSystem is System, CharacterAccessControl {
     if (NonOccupyTile.get(x, y)) {
       revert Errors.TileSystem_CannotOccupyThisTile(x, y);
     }
-    uint256 occupiedTime = TileInfo3.getOccupiedTime(x, y);
+    uint256 occupiedTime = Tile.getOccupiedTime(x, y);
     uint32 tileLockedDuration = TILE_LOCKED_DURATION;
     if (zoneType == ZoneType.Black) {
       tileLockedDuration = DZ_TILE_LOCKED_DURATION;
@@ -140,7 +134,7 @@ contract TileSystem is System, CharacterAccessControl {
       revert Errors.TileSystem_TileIsLocked(x, y, occupiedTime);
     }
     if (tileKingdomId != 0 && tileKingdomId != kingdomId) {
-      uint256 arriveTimestamp = CharNextPosition.getArriveTimestamp(characterId);
+      uint256 arriveTimestamp = CharPositionFull.getArriveTimestamp(characterId);
       uint32 requireDuration = TILE_OCCUPATION_DURATION_REQUIRE;
       if (zoneType == ZoneType.Black) {
         requireDuration = DZ_TILE_OCCUPATION_DURATION_REQUIRE;
@@ -155,16 +149,16 @@ contract TileSystem is System, CharacterAccessControl {
   function _checkTileNearBy(uint8 kingdomId, CharPositionData memory position) private view {
     int32 x = position.x;
     int32 y = position.y;
-    if (TileInfo3.getKingdomId(x - 1, y) == kingdomId) {
+    if (Tile.getKingdomId(x - 1, y) == kingdomId) {
       return;
     }
-    if (TileInfo3.getKingdomId(x + 1, y) == kingdomId) {
+    if (Tile.getKingdomId(x + 1, y) == kingdomId) {
       return;
     }
-    if (TileInfo3.getKingdomId(x, y - 1) == kingdomId) {
+    if (Tile.getKingdomId(x, y - 1) == kingdomId) {
       return;
     }
-    if (TileInfo3.getKingdomId(x, y + 1) == kingdomId) {
+    if (Tile.getKingdomId(x, y + 1) == kingdomId) {
       return;
     }
     revert Errors.TileSystem_NoValidTileNearBy(x, y);

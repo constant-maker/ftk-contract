@@ -4,10 +4,6 @@ import { System } from "@latticexyz/world/src/System.sol";
 import { CharacterAccessControl } from "@abstracts/CharacterAccessControl.sol";
 import { CharStats, CharStatsData } from "@codegen/tables/CharStats.sol";
 import {
-  Equipment,
-  EquipmentInfo,
-  EquipmentInfoData,
-  CharEquipment,
   CharCurrentStats,
   CharCurrentStatsData,
   CharBaseStats,
@@ -18,7 +14,6 @@ import {
 import { CharAchievementUtils } from "@utils/CharAchievementUtils.sol";
 import { InventoryItemUtils } from "@utils/InventoryItemUtils.sol";
 import { CharacterEquipmentUtils } from "@utils/CharacterEquipmentUtils.sol";
-import { SlotType } from "@codegen/common.sol";
 import { Errors, Config } from "@common/index.sol";
 
 contract RebornSystem is System, CharacterAccessControl {

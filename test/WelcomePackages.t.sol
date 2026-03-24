@@ -2,7 +2,7 @@ pragma solidity >=0.8.24;
 
 import { ResourceId } from "@latticexyz/store/src/ResourceId.sol";
 import { CharInventory, CharInventoryData } from "@codegen/index.sol";
-import { Tool2, Tool2Data, Equipment, EquipmentData, ItemV2, ItemV2Data } from "@codegen/index.sol";
+import { Tool, ToolData, Equipment, EquipmentData, Item, ItemData } from "@codegen/index.sol";
 import { CharacterStateType, ResourceType, ItemCategoryType, ItemType } from "@codegen/common.sol";
 import { WorldFixture, SpawnSystemFixture, MoveSystemFixture, WelcomeSystemFixture } from "@fixtures/index.sol";
 import { Config } from "@common/Config.sol";
@@ -30,7 +30,7 @@ contract WelcomePackagesTest is WorldFixture, SpawnSystemFixture, WelcomeSystemF
     for (uint256 i = 0; i < characterInventory.toolIds.length; i++) {
       uint256 toolId = characterInventory.toolIds[i];
 
-      Tool2Data memory tool = Tool2.get(toolId);
+      ToolData memory tool = Tool.get(toolId);
       assertEq(tool.characterId, characterId_1);
       assertGe(tool.itemId, 21);
       assertLe(tool.itemId, 31);
@@ -55,10 +55,10 @@ contract WelcomePackagesTest is WorldFixture, SpawnSystemFixture, WelcomeSystemF
     for (uint256 i = 0; i < characterInventory.toolIds.length; i++) {
       uint256 toolId = characterInventory.toolIds[i];
       console2.log("toolId", toolId);
-      Tool2Data memory tool = Tool2.get(toolId);
+      ToolData memory tool = Tool.get(toolId);
       if (toolId == 8) {
         console2.log("itemId", tool.itemId);
-        assertTrue(ItemV2.getItemType(tool.itemId) == ItemType.StoneHammer);
+        assertTrue(Item.getItemType(tool.itemId) == ItemType.StoneHammer);
       }
       assertEq(tool.characterId, characterId_2);
       assertGe(tool.itemId, 21);

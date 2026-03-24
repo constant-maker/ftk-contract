@@ -9,34 +9,28 @@ import {
   KingElection,
   CharInfo,
   CharStats,
-  CharStats2,
   CharCurrentStats,
   CharCurrentStatsData,
   CharRole,
   CharRoleCounter,
   CResourceRequire,
   CityVault,
-  RestrictLocV2,
-  TileInfo3,
+  CityVault2,
+  RestrictLoc,
+  Tile,
   CityCounter,
   City,
   CityData,
   CharFund,
-  CVaultHistoryV4,
-  CVaultHistoryV4Data,
+  CVaultHistory,
+  CVaultHistoryData,
   CharOtherItem,
   CharFund,
-  CityVault2V2,
-  CharPositionV2,
-  CharPositionV2Data,
-  CharPosition,
   CharPositionData,
-  CharNextPosition,
-  CharNextPositionData,
   CityMoveHistory,
   CharVaultWithdraw,
   CharVaultWithdrawData,
-  KingSetting2
+  KingSetting
 } from "@codegen/index.sol";
 import { RoleType } from "@codegen/common.sol";
 import { CharacterPositionUtils, InventoryItemUtils } from "@utils/index.sol";
@@ -147,7 +141,7 @@ contract CitySystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixtur
     );
     vm.stopPrank();
     console2.log("test vault history 1");
-    CVaultHistoryV4Data memory history = CVaultHistoryV4.get(cityId, 1);
+    CVaultHistoryData memory history = CVaultHistory.get(cityId, 1);
     assertEq(history.itemIds[0], 1);
     assertEq(history.amounts[0], 300);
     assertFalse(history.isContributed);
@@ -166,9 +160,9 @@ contract CitySystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixtur
     vm.stopPrank();
 
     vm.startPrank(worldDeployer);
-    TileInfo3.setKingdomId(newCityX, newCityY, 1);
-    TileInfo3.setKingdomId(newCityX, newCityY + 1, 1);
-    RestrictLocV2.set(newCityX, newCityY - 1, 0, true);
+    Tile.setKingdomId(newCityX, newCityY, 1);
+    Tile.setKingdomId(newCityX, newCityY + 1, 1);
+    RestrictLoc.set(newCityX, newCityY - 1, 0, true);
     vm.stopPrank();
 
     vm.expectRevert(); // the coordinates must be valid
@@ -207,9 +201,8 @@ contract CitySystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixtur
     vm.startPrank(worldDeployer);
     CharacterPositionUtils.moveToLocation(candidateId, newCityX, newCityY);
     CharacterPositionUtils.moveToLocation(voterId, newCityX, newCityY);
-    CharStats2.setFame(voterId, 1050);
     City.setLevel(cityId, 3);
-    TileInfo3.setKingdomId(newCityX, newCityY + 5, CharInfo.getKingdomId(candidateId));
+    Tile.setKingdomId(newCityX, newCityY + 5, CharInfo.getKingdomId(candidateId));
     vm.stopPrank();
     vm.startPrank(voter);
     world.app__contributeItemToCity(
@@ -218,7 +211,7 @@ contract CitySystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixtur
       VaultActionParams({ gold: 100_000, crystal: 0, itemIds: resourceIds, amounts: withdrawAmounts })
     );
     vm.stopPrank();
-    history = CVaultHistoryV4.get(newCityId, 1);
+    history = CVaultHistory.get(newCityId, 1);
     assertTrue(history.isContributed);
     assertEq(history.itemIds[0], 1);
     assertEq(history.amounts[0], 300);
@@ -251,7 +244,7 @@ contract CitySystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixtur
     CharacterPositionUtils.moveToLocation(candidateId, newCityX, newCityY);
     vm.stopPrank();
 
-    assertEq(CityVault2V2.getGold(newCityId), 96_000);
+    assertEq(CityVault2.getGold(newCityId), 96_000);
 
     console2.log("upgrade city to level 1");
     vm.startPrank(candidate);
@@ -280,18 +273,10 @@ contract CitySystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixtur
     assertEq(CityVault.getAmount(newCityId, 3), 3);
 
     console2.log("test teleport");
-    uint32 currentCapitalGold = CityVault2V2.getGold(cityId);
+    uint256 currentCapitalGold = CityVault2.getGold(cityId);
     vm.startPrank(worldDeployer);
     CharacterPositionUtils.moveToCapital(voterId);
     vm.stopPrank();
-    CharPositionV2Data memory posV2 = CharPositionV2.get(voterId);
-    CharPositionData memory pos = CharPosition.get(voterId);
-    CharNextPositionData memory nextPos = CharNextPosition.get(voterId);
-    assertEq(pos.x, posV2.x);
-    assertEq(pos.y, posV2.y);
-    assertEq(nextPos.x, posV2.nextX);
-    assertEq(nextPos.y, posV2.nextY);
-    assertEq(nextPos.arriveTimestamp, posV2.arriveTimestamp);
     vm.startPrank(voter);
     world.app__cityTeleport(voterId, cityId, newCityId);
     vm.stopPrank();
@@ -299,7 +284,7 @@ contract CitySystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixtur
     CharPositionData memory position = CharacterPositionUtils.getCurrentPosition(voterId);
     assertEq(position.x, newCityX);
     assertEq(position.y, newCityY);
-    assertEq(CityVault2V2.getGold(cityId), currentCapitalGold + 15);
+    assertEq(CityVault2.getGold(cityId), currentCapitalGold + 15);
 
     console2.log("test save point");
     vm.startPrank(voter);
@@ -356,7 +341,7 @@ contract CitySystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixtur
     CityVault.setAmount(cityId, 2, 1000);
     CityVault.setAmount(cityId, 3, 1000);
     CharStats.setLevel(voterId, 80);
-    KingSetting2.setWithdrawWeightLimit(1, 2000);
+    KingSetting.setWithdrawWeightLimit(1, 2000);
     vm.stopPrank();
 
     vm.startPrank(candidate);

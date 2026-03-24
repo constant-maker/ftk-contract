@@ -4,12 +4,12 @@ import { System } from "@latticexyz/world/src/System.sol";
 import { CharacterAccessControl } from "@abstracts/CharacterAccessControl.sol";
 import { Errors } from "@common/Errors.sol";
 import { CharacterPositionUtils, CharacterItemUtils, InventoryItemUtils } from "@utils/index.sol";
-import { City, CharCollection, CollectionExcV2, CollectionExcV2Data, ItemV2 } from "@codegen/index.sol";
+import { City, CharAshVault, AshVaultExc, AshVaultExcData, Item } from "@codegen/index.sol";
 import { ItemCategoryType } from "@codegen/common.sol";
 
-contract CollectionSystem is System, CharacterAccessControl {
+contract AshVaultSystem is System, CharacterAccessControl {
   /// @dev delegate to specific session wallet
-  function addToCollection(
+  function addToAshVault(
     uint256 characterId,
     uint256 capitalId,
     uint256[] calldata itemIds,
@@ -19,46 +19,48 @@ contract CollectionSystem is System, CharacterAccessControl {
     onlyAuthorizedWallet(characterId)
   {
     if (itemIds.length != amounts.length) {
-      revert Errors.CollectionSystem_InvalidParams(itemIds.length, amounts.length);
+      revert Errors.AshVaultSystem_InvalidParams(itemIds.length, amounts.length);
     }
     CharacterPositionUtils.mustInCapital(characterId, capitalId);
 
     // deduct from inventory
     InventoryItemUtils.removeItems(characterId, itemIds, amounts);
 
-    // add to collection
-    for (uint256 i = 0; i < itemIds.length; i++) {
+    // add to ash vault
+    uint256 iLen = itemIds.length;
+    for (uint256 i = 0; i < iLen; i++) {
       uint256 itemId = itemIds[i];
       uint32 amount = amounts[i];
       if (amount == 0) {
         continue;
       }
-      uint32 currentAmount = CharCollection.get(characterId, itemId);
-      // add to collection
+      uint32 currentAmount = CharAshVault.get(characterId, itemId);
+      // add to ash vault
       uint256 newAmount = uint256(currentAmount) + uint256(amount);
       if (newAmount > type(uint32).max) {
-        revert Errors.CollectionSystem_ExceedMaxAmount(characterId, itemId);
+        revert Errors.AshVaultSystem_ExceedMaxAmount(characterId, itemId);
       }
-      CharCollection.set(characterId, itemId, uint32(newAmount));
+      CharAshVault.set(characterId, itemId, uint32(newAmount));
     }
   }
 
   function exchangeItem(uint256 characterId, uint256 itemId, uint32 amount) public onlyAuthorizedWallet(characterId) {
-    CollectionExcV2Data memory exchangeData = CollectionExcV2.get(itemId);
+    AshVaultExcData memory exchangeData = AshVaultExc.get(itemId);
     if (exchangeData.inputItemIds.length == 0) {
-      revert Errors.CollectionSystem_ExchangeNotExist(itemId);
+      revert Errors.AshVaultSystem_ExchangeNotExist(itemId);
     }
     // deduct input items
-    for (uint256 i = 0; i < exchangeData.inputItemAmounts.length; i++) {
+    uint256 len = exchangeData.inputItemIds.length;
+    for (uint256 i = 0; i < len; i++) {
       uint256 inputItemId = exchangeData.inputItemIds[i];
       uint32 amountRequire = exchangeData.inputItemAmounts[i] * uint32(amount);
-      uint32 currentAmount = CharCollection.get(characterId, inputItemId);
+      uint32 currentAmount = CharAshVault.get(characterId, inputItemId);
       if (currentAmount < amountRequire) {
-        revert Errors.CollectionSystem_InsufficientItemAmount(
+        revert Errors.AshVaultSystem_InsufficientItemAmount(
           characterId, inputItemId, itemId, amountRequire, currentAmount
         );
       }
-      CharCollection.set(characterId, inputItemId, currentAmount - amountRequire);
+      CharAshVault.set(characterId, inputItemId, currentAmount - amountRequire);
     }
     // add output items
     CharacterItemUtils.addNewItem(characterId, itemId, amount); // add to inventory

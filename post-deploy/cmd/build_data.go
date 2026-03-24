@@ -14,7 +14,7 @@ func buildCallData(
 	dataConfig common.DataConfig,
 	mapConfig []gentile.KingdomMap,
 	cacheMonsterLocations []common.MonsterLocation,
-	cacheTileInfos []common.TileInfo,
+	cacheTileInfos []common.Tile,
 	isTest bool) ([][]byte, error) {
 	l := zap.S().With("func", "buildCallData")
 
@@ -62,7 +62,7 @@ func buildCallData(
 
 	/* gen tile info and resource location */
 	var (
-		tileInfos        []common.TileInfo
+		tileInfos        []common.Tile
 		monsterLocations []common.MonsterLocation
 	)
 
@@ -132,7 +132,7 @@ func buildCallData(
 	}
 	// add city back to tile info
 	for _, city := range cities {
-		tileInfos = append(tileInfos, common.TileInfo{
+		tileInfos = append(tileInfos, common.Tile{
 			KingdomId:       city.KingdomId,
 			X:               city.X,
 			Y:               city.Y,
@@ -251,7 +251,7 @@ func buildCallData(
 	for _, ti := range tileInfos {
 		tileInfoCallData, err := table.TileInfoCallData(ti, dataConfig)
 		if err != nil {
-			l.Errorw("cannot build TileInfo call data", "err", err)
+			l.Errorw("cannot build Tile call data", "err", err)
 			return nil, err
 		}
 

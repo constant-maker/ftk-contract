@@ -4,16 +4,12 @@ import {
   Kingdom,
   City,
   CityData,
-  CharPosition,
+  CharPositionFull,
+  CharPositionFullData,
   CharPositionData,
-  CharNextPosition,
-  CharNextPositionData,
   CharInfo,
   CharSavePoint,
-  CharSavePointData,
-  TileInfo3,
-  CharPositionV2,
-  CharPositionV2Data
+  Tile
 } from "@codegen/index.sol";
 import { Errors } from "@common/index.sol";
 
@@ -30,7 +26,7 @@ library CharacterPositionUtils {
   function isInCapital(uint256 characterId, uint256 capitalId) internal view returns (bool) {
     CityData memory city = City.get(capitalId);
     if (city.kingdomId == 0) {
-      revert Errors.InvalidCityId(capitalId);
+      revert Errors.CityIsNotExist(capitalId);
     }
     if (!city.isCapital) {
       return false;
@@ -54,7 +50,7 @@ library CharacterPositionUtils {
   function isInCity(uint256 characterId, uint256 cityId) internal view returns (bool) {
     CityData memory city = City.get(cityId);
     if (city.kingdomId == 0) {
-      revert Errors.InvalidCityId(cityId);
+      revert Errors.CityIsNotExist(cityId);
     }
     CharPositionData memory characterPosition = getCurrentPosition(characterId);
     if (city.x == characterPosition.x && city.y == characterPosition.y) {
@@ -94,7 +90,7 @@ library CharacterPositionUtils {
     } else {
       savedCity = City.get(savedCityId);
       uint8 kingdomId = CharInfo.getKingdomId(characterId);
-      uint8 tileKingdomId = TileInfo3.getKingdomId(savedCity.x, savedCity.y);
+      uint8 tileKingdomId = Tile.getKingdomId(savedCity.x, savedCity.y);
       if (tileKingdomId != kingdomId) {
         // saved city was conquered and no longer belongs to character's kingdom
         shouldMoveToCapital = true;
@@ -127,19 +123,15 @@ library CharacterPositionUtils {
       currentX = x;
       currentY = y;
     }
-    CharPosition.set(characterId, currentX, currentY);
-    CharNextPosition.set(characterId, x, y, arriveTimestamp);
-    CharPositionV2Data memory posV2 =
-      CharPositionV2Data({ x: currentX, y: currentY, nextX: x, nextY: y, arriveTimestamp: arriveTimestamp });
-    CharPositionV2.set(characterId, posV2);
+    CharPositionFull.set(characterId, currentX, currentY, x, y, arriveTimestamp);
   }
 
-  /// @dev get current character position
+  /// @dev get current character position base on current timestamp and character position data
   function getCurrentPosition(uint256 characterId) internal view returns (CharPositionData memory cpd) {
-    CharNextPositionData memory cnpd = CharNextPosition.get(characterId);
-    if (block.timestamp >= cnpd.arriveTimestamp) {
-      return CharPositionData({ x: cnpd.x, y: cnpd.y });
+    CharPositionFullData memory cpf = CharPositionFull.get(characterId);
+    if (block.timestamp >= cpf.arriveTimestamp) {
+      return CharPositionData({ x: cpf.nextX, y: cpf.nextY });
     }
-    return CharPosition.get(characterId);
+    return CharPositionData({ x: cpf.x, y: cpf.y });
   }
 }

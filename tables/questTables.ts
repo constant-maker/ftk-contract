@@ -39,7 +39,7 @@ const QUEST_TABLES: any = {
     },
     key: [],
   },
-  QuestV4: {
+  Quest: {
     schema: {
       id: "uint256",
       exp: "uint32",
@@ -71,7 +71,7 @@ const QUEST_TABLES: any = {
     },
     key: ['questId'],
   },
-  QuestLocateTracking2: {
+  QuestLocateTracking: {
     schema: {
       characterId: "uint256",
       questId: "uint256",

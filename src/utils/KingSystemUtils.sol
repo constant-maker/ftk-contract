@@ -2,18 +2,17 @@ pragma solidity >=0.8.24;
 
 import {
   CharStats,
-  CharStats2,
   City,
   CityData,
   KingElection,
   Kingdom,
   CharRoleCounter,
-  AllianceV2,
-  AllianceV2Data,
+  Alliance,
+  AllianceData,
   CityMoveHistory,
-  RestrictLocV2,
-  CityVault2V2,
-  TileInfo3,
+  RestrictLoc,
+  CityVault2,
+  Tile,
   CharInfo
 } from "@codegen/index.sol";
 import { RoleType } from "@codegen/common.sol";
@@ -59,7 +58,7 @@ library KingSystemUtils {
     uint32 maxFame;
     uint256 maxFameIndex;
     for (uint256 i = 0; i < count; i++) {
-      uint32 fame = CharStats2.getFame(topCandidates[i]);
+      uint32 fame = CharStats.getFame(topCandidates[i]);
       if (fame > maxFame) {
         maxFame = fame;
         maxFameIndex = i;
@@ -124,30 +123,30 @@ library KingSystemUtils {
 
   function setAlliance(uint8 charKingdomId, uint8 otherKingdomId, bool value) public {
     if (!value) {
-      AllianceV2.deleteRecord(charKingdomId, otherKingdomId);
-      AllianceV2.deleteRecord(otherKingdomId, charKingdomId);
+      Alliance.deleteRecord(charKingdomId, otherKingdomId);
+      Alliance.deleteRecord(otherKingdomId, charKingdomId);
       return;
     }
-    AllianceV2Data memory allianceData = AllianceV2.get(charKingdomId, otherKingdomId);
+    AllianceData memory allianceData = Alliance.get(charKingdomId, otherKingdomId);
     if (allianceData.isAlliance) {
       // Already in alliance or already proposed
       return;
     }
 
     // Check if the other kingdom has proposed an alliance
-    allianceData = AllianceV2.get(otherKingdomId, charKingdomId);
+    allianceData = Alliance.get(otherKingdomId, charKingdomId);
     if (allianceData.isAlliance) {
       if (allianceData.isApproved) {
         // The other kingdom has already approved the alliance
         return;
       }
       // The other kingdom has proposed but not approved yet, so approve it.
-      AllianceV2.set(otherKingdomId, charKingdomId, true, true);
+      Alliance.set(otherKingdomId, charKingdomId, true, true);
       return;
     }
 
     // Initiate alliance request from this kingdom
-    AllianceV2.set(charKingdomId, otherKingdomId, true, false);
+    Alliance.set(charKingdomId, otherKingdomId, true, false);
   }
 
   function moveCity(uint256 characterId, int32 x, int32 y, uint256 cityId) public {
@@ -172,17 +171,17 @@ library KingSystemUtils {
       return; // No change in position
     }
     uint32 goldCost = (city.level + 1) * 2000;
-    uint32 cityGold = CityVault2V2.getGold(cityId);
+    uint256 cityGold = CityVault2.getGold(cityId);
     if (cityGold < goldCost) {
       revert Errors.KingSystem_InsufficientCityGold(cityId, goldCost);
     }
     CityMoveHistory.set(cityId, city.x, city.y, block.timestamp);
-    RestrictLocV2.deleteRecord(city.x, city.y); // Unmark the old location
-    CityVault2V2.setGold(cityId, cityGold - goldCost);
+    RestrictLoc.deleteRecord(city.x, city.y); // Unmark the old location
+    CityVault2.setGold(cityId, cityGold - goldCost);
     // Set new city position
     city.x = x;
     city.y = y;
     City.set(cityId, city);
-    RestrictLocV2.set(x, y, cityId, true); // Mark the new location as restricted for cities
+    RestrictLoc.set(x, y, cityId, true); // Mark the new location as restricted for cities
   }
 }

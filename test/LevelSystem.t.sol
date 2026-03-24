@@ -3,13 +3,12 @@ pragma solidity >=0.8.24;
 import { console2 } from "forge-std/console2.sol";
 import { WorldFixture, SpawnSystemFixture, WelcomeSystemFixture } from "./fixtures/index.sol";
 import {
-  QuestV4,
-  QuestV4Data,
+  Quest,
+  QuestData,
   QuestContribute,
   QuestContributeData,
   Npc,
   NpcData,
-  CharPosition,
   CharPositionData,
   CharStats,
   CharStatsData,

@@ -1,6 +1,6 @@
 pragma solidity >=0.8.24;
 
-import { Unmovable, RestrictLocV2, City, CityData, TileInfo3 } from "@codegen/index.sol";
+import { Unmovable, RestrictLoc, City, CityData, Tile } from "@codegen/index.sol";
 import { Errors } from "@common/index.sol";
 
 library MapUtils {
@@ -14,13 +14,13 @@ library MapUtils {
 
   /// @dev A location is valid if it is not restricted
   function isValidCityLocation(int32 x, int32 y) internal view returns (bool) {
-    return !RestrictLocV2.getIsRestricted(x, y);
+    return !RestrictLoc.getIsRestricted(x, y);
   }
 
   /// @dev A city is active if it is located within its kingdom territory
   function mustBeActiveCity(uint256 cityId) internal view {
     CityData memory city = City.get(cityId);
-    uint8 tileKingdomId = TileInfo3.getKingdomId(city.x, city.y);
+    uint8 tileKingdomId = Tile.getKingdomId(city.x, city.y);
     if (!city.isCapital && tileKingdomId != city.kingdomId) {
       // capitals are always ready to get resources
       revert Errors.CityBelongsToOtherKingdom(city.kingdomId, tileKingdomId);

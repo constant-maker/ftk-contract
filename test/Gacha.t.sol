@@ -2,22 +2,20 @@
 pragma solidity >=0.8.24;
 
 import {
-  GachaV5,
-  GachaV5Data,
-  CharGachaV3,
-  CharGachaV3Data,
+  Gacha,
+  GachaData,
+  CharGacha,
+  CharGachaData,
   GachaReqInfo,
   GachaCounter,
   CharOtherItem,
   CharInventory,
   Equipment,
-  EquipmentPet,
   CharGachaReq,
   CharFund,
-  CityVault2V2,
   CrystalFee,
   PetCpnInfo,
-  PetCpnV2,
+  PetCpn,
   EPetStats,
   EPetStatsData
 } from "@codegen/index.sol";
@@ -27,7 +25,7 @@ import { WelcomeSystemFixture } from "@fixtures/WelcomeSystemFixture.sol";
 import { Test } from "forge-std/Test.sol";
 import { console2 } from "forge-std/console2.sol";
 import { GachaSystem } from "@src/systems/GachaSystem.sol";
-import { SystemUtils, GachaIndexUtils, InventoryItemUtils } from "@utils/index.sol";
+import { SystemUtils, InventoryItemUtils } from "@utils/index.sol";
 import { ResourceId } from "@latticexyz/store/src/ResourceId.sol";
 import { Balances } from "@latticexyz/world/src/codegen/tables/Balances.sol";
 import { WorldResourceIdLib, WorldResourceIdInstance } from "@latticexyz/world/src/WorldResourceId.sol";
@@ -104,7 +102,7 @@ contract GachaTest is Test, WorldFixture, SpawnSystemFixture, WelcomeSystemFixtu
     percents[0] = 5000; // 50%
     percents[1] = 5000; // 50%
 
-    GachaV5Data memory gachaData = GachaV5Data({
+    GachaData memory gachaData = GachaData({
       startTime: block.timestamp,
       ticketValue: 0,
       ticketItemId: 1,
@@ -117,7 +115,7 @@ contract GachaTest is Test, WorldFixture, SpawnSystemFixture, WelcomeSystemFixtu
 
     vm.startPrank(worldDeployer);
     InventoryItemUtils.addItem(characterId, 1, 1);
-    GachaV5.set(gachaId, gachaData);
+    Gacha.set(gachaId, gachaData);
     GachaCounter.set(gachaId);
 
     vm.stopPrank();
@@ -136,14 +134,14 @@ contract GachaTest is Test, WorldFixture, SpawnSystemFixture, WelcomeSystemFixtu
     uint256 requestId = CharGachaReq.get(characterId);
 
     // ── fulfill randomness
-    CharGachaV3Data memory charGacha = CharGachaV3.get(characterId, requestId);
+    CharGachaData memory charGacha = CharGacha.get(characterId, requestId);
     assertEq(GachaReqInfo.getCharacterId(requestId), characterId);
 
     uint256[] memory randomNumbers = new uint256[](1);
     randomNumbers[0] = 123; // example random number
     MockVRFCoordinator(VRF_COORDINATOR).fulfill(requestId, randomNumbers);
 
-    charGacha = CharGachaV3.get(characterId, requestId);
+    charGacha = CharGacha.get(characterId, requestId);
     assertFalse(charGacha.isPending);
     assertEq(charGacha.randomNumber, 123);
     assertTrue(charGacha.gachaItemId == 361 || charGacha.gachaItemId == 362);
@@ -192,7 +190,7 @@ contract GachaTest is Test, WorldFixture, SpawnSystemFixture, WelcomeSystemFixtu
     percents[1] = 3000; // 30%
     percents[2] = 2000; // 20%
 
-    GachaV5Data memory gachaData = GachaV5Data({
+    GachaData memory gachaData = GachaData({
       startTime: block.timestamp,
       ticketValue: 0,
       ticketItemId: 437,
@@ -206,7 +204,7 @@ contract GachaTest is Test, WorldFixture, SpawnSystemFixture, WelcomeSystemFixtu
 
     vm.startPrank(worldDeployer);
     InventoryItemUtils.addItem(characterId, 437, 1);
-    GachaV5.set(gachaId, gachaData);
+    Gacha.set(gachaId, gachaData);
     GachaCounter.set(gachaId);
 
     vm.stopPrank();
@@ -225,7 +223,7 @@ contract GachaTest is Test, WorldFixture, SpawnSystemFixture, WelcomeSystemFixtu
     uint256 requestId = CharGachaReq.get(characterId);
 
     // ── fulfill randomness
-    CharGachaV3Data memory charGacha = CharGachaV3.get(characterId, requestId);
+    CharGachaData memory charGacha = CharGacha.get(characterId, requestId);
     assertEq(GachaReqInfo.getCharacterId(requestId), characterId);
 
     uint256[] memory randomNumbers = new uint256[](1);
@@ -233,7 +231,7 @@ contract GachaTest is Test, WorldFixture, SpawnSystemFixture, WelcomeSystemFixtu
     MockVRFCoordinator(VRF_COORDINATOR).fulfill(requestId, randomNumbers);
 
     console2.log("Assert data after gacha fulfillment");
-    charGacha = CharGachaV3.get(characterId, requestId);
+    charGacha = CharGacha.get(characterId, requestId);
     assertFalse(charGacha.isPending);
     assertEq(charGacha.randomNumber, 123);
     assertTrue(charGacha.gachaItemId == 436 || charGacha.gachaItemId == 464 || charGacha.gachaItemId == 465);
@@ -244,7 +242,7 @@ contract GachaTest is Test, WorldFixture, SpawnSystemFixture, WelcomeSystemFixtu
     assertTrue(Equipment.getItemId(lastEquipmentId) == charGacha.gachaItemId);
 
     console2.log("Assert pet equipment data");
-    uint16[] memory componentValues = PetCpnV2.get(lastEquipmentId);
+    uint16[] memory componentValues = PetCpn.get(lastEquipmentId);
     for (uint256 i = 0; i < componentValues.length; i++) {
       console2.log("componentValues", componentValues[i]);
     }
@@ -271,7 +269,7 @@ contract GachaTest is Test, WorldFixture, SpawnSystemFixture, WelcomeSystemFixtu
     percents[0] = 5000; // 50%
     percents[1] = 5000; // 50%
 
-    GachaV5Data memory gachaData = GachaV5Data({
+    GachaData memory gachaData = GachaData({
       startTime: block.timestamp,
       ticketValue: 0,
       ticketItemId: 1,
@@ -284,7 +282,7 @@ contract GachaTest is Test, WorldFixture, SpawnSystemFixture, WelcomeSystemFixtu
 
     vm.startPrank(worldDeployer);
     InventoryItemUtils.addItem(characterId, 1, 1);
-    GachaV5.set(gachaId, gachaData);
+    Gacha.set(gachaId, gachaData);
     GachaCounter.set(gachaId);
 
     vm.stopPrank();
@@ -303,7 +301,7 @@ contract GachaTest is Test, WorldFixture, SpawnSystemFixture, WelcomeSystemFixtu
     uint256 requestId = CharGachaReq.get(characterId);
 
     // ── fulfill randomness
-    CharGachaV3Data memory charGacha = CharGachaV3.get(characterId, requestId);
+    CharGachaData memory charGacha = CharGacha.get(characterId, requestId);
     assertEq(GachaReqInfo.getCharacterId(requestId), characterId);
 
     vm.warp(block.timestamp + 14 seconds);
@@ -321,14 +319,14 @@ contract GachaTest is Test, WorldFixture, SpawnSystemFixture, WelcomeSystemFixtu
     world.call(gachaSystemResourceId, data);
     vm.stopPrank();
 
-    charGacha = CharGachaV3.get(characterId, requestId);
+    charGacha = CharGacha.get(characterId, requestId);
     assertTrue(charGacha.timestamp == block.timestamp);
 
     uint256[] memory randomNumbers = new uint256[](1);
     randomNumbers[0] = 123; // example random number
     MockVRFCoordinator(VRF_COORDINATOR).fulfill(requestId, randomNumbers);
 
-    charGacha = CharGachaV3.get(characterId, requestId);
+    charGacha = CharGacha.get(characterId, requestId);
     assertFalse(charGacha.isPending);
     assertEq(charGacha.randomNumber, 123);
     assertTrue(charGacha.gachaItemId == 361 || charGacha.gachaItemId == 362);

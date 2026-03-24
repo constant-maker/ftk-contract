@@ -4,16 +4,14 @@ import { System } from "@latticexyz/world/src/System.sol";
 import {
   CharSocialQuest,
   CharQuestStatus,
-  CharPosition,
   CharPositionData,
   QuestLocate,
   QuestLocateData,
-  QuestLocateTracking2,
+  QuestLocateTracking,
   Npc,
-  CityVault,
-  ItemV2,
-  QuestV4,
-  QuestV4Data,
+  Item,
+  Quest,
+  QuestData,
   QuestContribute,
   QuestContributeData
 } from "@codegen/index.sol";
@@ -48,8 +46,8 @@ contract QuestSystem is System, CharacterAccessControl {
 
   /// @dev finish quest with a specific npc
   function finishQuest(uint256 characterId, uint256 toNpcId, uint256 questId) public onlyAuthorizedWallet(characterId) {
-    QuestType questType = QuestV4.getQuestType(questId);
-    if (QuestV4.getToNpcId(questId) != toNpcId) {
+    QuestType questType = Quest.getQuestType(questId);
+    if (Quest.getToNpcId(questId) != toNpcId) {
       revert Errors.QuestSystem_FinishWithWrongNpc(toNpcId, questId);
     }
     CharacterQuestUtils.mustFinishInProgressQuest(characterId, questId);
@@ -99,7 +97,7 @@ contract QuestSystem is System, CharacterAccessControl {
     if (questLocate.xs.length == 0 || questLocate.xs.length != questLocate.ys.length) {
       revert Errors.QuestSystem_InvalidLocateQuest(questLocate.xs.length, questLocate.ys.length);
     }
-    uint8 trackIndex = QuestLocateTracking2.get(characterId, questId);
+    uint8 trackIndex = QuestLocateTracking.get(characterId, questId);
     if (trackIndex == questLocate.xs.length) {
       // already done the locate task
       CharacterQuestUtils.mustSameNpcPosition(characterId, toNpcId);
@@ -115,14 +113,14 @@ contract QuestSystem is System, CharacterAccessControl {
     int32 comparedY = questLocate.ys[trackIndex];
     CharPositionData memory characterPosition = CharacterPositionUtils.getCurrentPosition(characterId);
     if (characterPosition.x == comparedX && characterPosition.y == comparedY) {
-      QuestLocateTracking2.set(characterId, questId, trackIndex + 1);
+      QuestLocateTracking.set(characterId, questId, trackIndex + 1);
     } else {
       revert Errors.QuestSystem_WrongLocation(comparedX, comparedY, characterPosition.x, characterPosition.y);
     }
   }
 
   function _claimReward(uint256 characterId, uint256 questId) private {
-    QuestV4Data memory questData = QuestV4.get(questId);
+    QuestData memory questData = Quest.get(questId);
     CharacterStatsUtils.updateExp(characterId, questData.exp, true);
     CharacterFundUtils.increaseGold(characterId, questData.gold);
     if (questData.achievementId > 0) {

@@ -10,12 +10,11 @@ import QUEST_TABLES from "./tables/questTables";
 import SKILL_TABLES from "./tables/skillTables";
 import BATTLE_TABLES from "./tables/battleTables";
 import MONSTER_TABLES from "./tables/monsterTables";
-import CONSUMABLE_INFO_TABLES from "./tables/consumableInfoTables";
 import ACHIEVEMENT_TABLES from "./tables/achievementTables";
 import SOCIAL_TABLES from "./tables/socialTables";
 import MARKET_TABLES from "./tables/marketTables";
 import KING_TABLES from "./tables/kingTables";
-import CITY_TABLES from "./tables/cityTables";
+import KINGDOM_TABLES from "./tables/kingdomTables";
 import ROLE_TABLES from "./tables/roleTables";
 import STATUS_TABLES from "./tables/statusTables";
 import GUILD_TABLES from "./tables/guildTables";
@@ -81,7 +80,6 @@ export default defineWorld({
     ...WELCOME_PACKAGE_TABLES,
     ...CHARACTER_TABLES,
     ...ITEM_TABLES,
-    ...CONSUMABLE_INFO_TABLES,
     ...CRAFT_TABLES,
     ...QUEST_TABLES,
     ...SKILL_TABLES,
@@ -91,7 +89,7 @@ export default defineWorld({
     ...SOCIAL_TABLES,
     ...MARKET_TABLES,
     ...KING_TABLES,
-    ...CITY_TABLES,
+    ...KINGDOM_TABLES,
     ...ROLE_TABLES,
     ...STATUS_TABLES,
     ...GUILD_TABLES,

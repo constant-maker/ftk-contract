@@ -7,7 +7,7 @@ import {
   CityData,
   CharInfo,
   CityVault,
-  CityVault2V2,
+  CityVault2,
   CResourceRequire,
   CResourceRequireData,
   CharCurrentStats,
@@ -22,6 +22,7 @@ import { Errors } from "@common/Errors.sol";
 contract CitySystem is System, CharacterAccessControl {
   uint32 constant TELEPORT_COST = 15;
   uint32 constant UPGRADE_GOLD_COST = 5000;
+  uint32 constant MAX_CITY_LEVEL = 3;
 
   function upgradeCity(uint256 characterId, uint256 cityId) public onlyAuthorizedWallet(characterId) {
     uint8 charKingdomId = CharInfo.getKingdomId(characterId);
@@ -32,7 +33,7 @@ contract CitySystem is System, CharacterAccessControl {
     }
     MapUtils.mustBeActiveCity(cityId);
     uint8 currentLevel = City.getLevel(cityId);
-    if (currentLevel >= 3) {
+    if (currentLevel >= MAX_CITY_LEVEL) {
       revert Errors.CitySystem_AlreadyMaxLevel(cityId);
     }
     uint8 nextLevel = currentLevel + 1;
@@ -42,7 +43,8 @@ contract CitySystem is System, CharacterAccessControl {
     if (resourceIds.length != amounts.length) {
       revert Errors.CitySystem_InvalidResourceRequire(resourceIds.length, amounts.length);
     }
-    for (uint256 i = 0; i < resourceIds.length; i++) {
+    uint256 rLen = resourceIds.length;
+    for (uint256 i = 0; i < rLen; i++) {
       uint256 resourceId = resourceIds[i];
       uint32 amount = amounts[i];
       if (amount == 0) continue;
@@ -53,16 +55,12 @@ contract CitySystem is System, CharacterAccessControl {
       CityVault.setAmount(cityId, resourceId, currentVaultAmount - amount);
     }
     uint32 requiredGold = nextLevel * UPGRADE_GOLD_COST;
-    uint32 currentCityGold = CityVault2V2.getGold(cityId);
-    if (currentCityGold < requiredGold) {
-      revert Errors.CitySystem_InsufficientVaultGold(cityId, currentCityGold, requiredGold);
-    }
-    CityVault2V2.setGold(cityId, currentCityGold - requiredGold);
+    _updateCityGold(cityId, requiredGold, false);
     City.setLevel(cityId, nextLevel);
   }
 
   function cityHealing(uint256 characterId, uint256 cityId) public onlyAuthorizedWallet(characterId) {
-    _validateCity(characterId, cityId, 1);
+    _validateCity(characterId, cityId, 1); // require city level 1 or above for healing
     CharacterPositionUtils.mustInCity(characterId, cityId);
     uint32 currentHp = CharCurrentStats.getHp(characterId);
     uint32 maxHp = CharStats.getHp(characterId);
@@ -74,14 +72,13 @@ contract CitySystem is System, CharacterAccessControl {
     }
     CharacterFundUtils.decreaseGold(characterId, goldCost);
     CharCurrentStats.setHp(characterId, maxHp);
-    _updateCapitalGold(CharInfo.getKingdomId(characterId), goldCost);
+    _updateCityGold(cityId, goldCost, true);
   }
 
   function citySavePoint(uint256 characterId, uint256 cityId) public onlyAuthorizedWallet(characterId) {
-    _validateCity(characterId, cityId, 2);
+    _validateCity(characterId, cityId, 2); // require city level 2 or above for save point
     CharacterPositionUtils.mustInCity(characterId, cityId);
-    CityData memory city = City.get(cityId);
-    CharSavePoint.set(characterId, cityId, city.x, city.y);
+    CharSavePoint.set(characterId, cityId);
   }
 
   function cityTeleport(
@@ -94,20 +91,21 @@ contract CitySystem is System, CharacterAccessControl {
     mustInState(characterId, CharacterStateType.Standby)
     validateCurrentWeight(characterId)
   {
+    // require both cities level 3 or above for teleportation
     _validateCity(characterId, fromCityId, 3);
     _validateCity(characterId, toCityId, 3);
     CharacterPositionUtils.mustInCity(characterId, fromCityId);
     CityData memory toCity = City.get(toCityId);
     CharacterFundUtils.decreaseGold(characterId, TELEPORT_COST);
     CharacterPositionUtils.moveToLocation(characterId, toCity.x, toCity.y);
-    _updateCapitalGold(CharInfo.getKingdomId(characterId), TELEPORT_COST);
+    _updateCityGold(fromCityId, TELEPORT_COST, true);
   }
 
   /// @dev Validate the city for the given action, ensuring it meets the required level
   /// and that the city still belongs to the character's kingdom (by tile).
   function _validateCity(uint256 characterId, uint256 cityId, uint8 requiredLevel) private view {
     if (cityId == 0) {
-      revert Errors.InvalidCityId(cityId);
+      revert Errors.CityIsNotExist(cityId);
     }
 
     // character vs city kingdom
@@ -126,12 +124,15 @@ contract CitySystem is System, CharacterAccessControl {
     MapUtils.mustBeActiveCity(cityId);
   }
 
-  function _updateCapitalGold(uint8 kingdomId, uint32 gainedGold) private {
-    uint256 capitalId = Kingdom.getCapitalId(kingdomId);
-    if (capitalId == 0) {
-      revert Errors.InvalidCityId(capitalId);
+  function _updateCityGold(uint256 cityId, uint32 goldChange, bool isGain) private {
+    uint256 currentGold = CityVault2.getGold(cityId);
+    if (isGain) {
+      CityVault2.setGold(cityId, currentGold + goldChange);
+    } else {
+      if (currentGold < goldChange) {
+        revert Errors.CitySystem_InsufficientVaultGold(cityId, currentGold, goldChange);
+      }
+      CityVault2.setGold(cityId, currentGold - goldChange);
     }
-    uint32 currentGold = CityVault2V2.getGold(capitalId);
-    CityVault2V2.setGold(capitalId, currentGold + gainedGold);
   }
 }

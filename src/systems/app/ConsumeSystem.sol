@@ -3,19 +3,17 @@ pragma solidity >=0.8.24;
 import { System } from "@latticexyz/world/src/System.sol";
 import { CharacterAccessControl } from "@abstracts/CharacterAccessControl.sol";
 import {
-  ItemV2,
+  Item,
   ResourceInfo,
   HealingItemInfo,
-  CharDebuff2,
+  CharDebuff,
   CharPositionData,
-  BuffItemInfoV3,
+  BuffInfo,
   CharExpAmp,
   CharExpAmpData,
   BuffExp,
   BuffExpData,
-  BuffDmg,
-  BuffDmgData,
-  BuffStatV4,
+  BuffStat,
   CharCurrentStats
 } from "@codegen/index.sol";
 import { InventoryItemUtils } from "@utils/InventoryItemUtils.sol";
@@ -35,7 +33,7 @@ contract ConsumeSystem is System, CharacterAccessControl {
     }
     InventoryItemUtils.removeItem(characterId, itemId, amount);
     // berry can heal equal with its tier (e.g tier 1 ~ 1 hp)
-    uint32 gainedHp = uint32(ItemV2.getTier(itemId)) * amount;
+    uint32 gainedHp = uint32(Item.getTier(itemId)) * amount;
     CharacterStatsUtils.restoreHp(characterId, gainedHp);
   }
 
@@ -55,7 +53,7 @@ contract ConsumeSystem is System, CharacterAccessControl {
     InventoryItemUtils.removeItem(characterId, itemId, amount);
 
     // determine item type and apply effect
-    ItemType itemType = ItemV2.getItemType(itemId);
+    ItemType itemType = Item.getItemType(itemId);
 
     if (itemType == ItemType.BuffItem) {
       if (amount != 1) {
@@ -68,16 +66,13 @@ contract ConsumeSystem is System, CharacterAccessControl {
       ConsumeUtils.validateTargetItemData(characterId, itemId, targetData);
 
       // apply buff to each target
-      BuffType buffType = BuffItemInfoV3.getBuffType(itemId);
+      BuffType buffType = BuffInfo.getBuffType(itemId);
       if (buffType == BuffType.StatsModify) {
         _handleStatsBuffItem(characterId, itemId, targetData);
       } else if (buffType == BuffType.ExpAmplify) {
         _handleExpBuffItem(itemId, targetData);
       } else if (buffType == BuffType.InstantHeal) {
         // _healing(characterId, itemId, 1);
-      } else if (buffType == BuffType.InstantDamage) {
-        ConsumeUtils.checkIsReadyToCast(characterId);
-        _handleInstantDamageBuffItem(characterId, itemId, targetData);
       } else {
         revert Errors.ConsumeSystem_ItemIsNotConsumable(itemId);
       }
@@ -97,10 +92,10 @@ contract ConsumeSystem is System, CharacterAccessControl {
       return;
     }
     if (itemType == ItemType.Bundle) {
+      // specific by itemId
       if (itemId == 435) {
         // gold bundle - unpack to get instant 2500 golds
         CharacterFundUtils.increaseGold(characterId, 2500 * amount);
-        return;
       }
       return;
     }
@@ -108,7 +103,11 @@ contract ConsumeSystem is System, CharacterAccessControl {
   }
 
   function _handleStatsBuffItem(uint256 characterId, uint256 itemId, TargetItemData memory targetData) private {
-    uint32 itemDmg = _calculateBuffDmg(characterId, BuffStatV4.getDmg(itemId), BuffStatV4.getIsAbsDmg(itemId));
+    uint32 itemDmg = _calculateBuffDmg(characterId, BuffStat.getDmg(itemId), BuffStat.getIsAbsDmg(itemId));
+    if (itemDmg > 0) {
+      ConsumeUtils.checkIsReadyToCast(characterId);
+      CharDebuff.setLastCastTime(characterId, block.timestamp);
+    }
     for (uint256 i = 0; i < targetData.targetPlayers.length; i++) {
       uint256 targetPlayer = targetData.targetPlayers[i];
       CharPositionData memory targetPosition = CharacterPositionUtils.getCurrentPosition(targetPlayer);
@@ -120,29 +119,6 @@ contract ConsumeSystem is System, CharacterAccessControl {
         _applyDmgBuff(targetPlayer, itemDmg);
       }
     }
-  }
-
-  function _handleInstantDamageBuffItem(
-    uint256 characterId,
-    uint256 itemId,
-    TargetItemData calldata targetData
-  )
-    private
-  {
-    BuffDmgData memory buffDmg = BuffDmg.get(itemId);
-    uint32 itemDmg = _calculateBuffDmg(characterId, buffDmg.dmg, buffDmg.isAbsDmg);
-    if (itemDmg == 0) {
-      return;
-    }
-    for (uint256 i = 0; i < targetData.targetPlayers.length; i++) {
-      uint256 targetPlayer = targetData.targetPlayers[i];
-      CharPositionData memory targetPosition = CharacterPositionUtils.getCurrentPosition(targetPlayer);
-      if (targetPosition.x != targetData.x || targetPosition.y != targetData.y) {
-        continue; // skip if target player not in position
-      }
-      _applyDmgBuff(targetPlayer, itemDmg);
-    }
-    CharDebuff2.setLastCastTime(characterId, block.timestamp);
   }
 
   function _applyDmgBuff(uint256 characterId, uint32 itemDmg) private {
@@ -184,13 +160,17 @@ contract ConsumeSystem is System, CharacterAccessControl {
         continue; // skip if target player not in position
       }
       BuffExpData memory expBuffData = BuffExp.get(itemId);
-      CharExpAmpData memory expBuff = CharExpAmpData({
-        farmingPerkAmp: expBuffData.farmingPerkAmp,
-        pveExpAmp: expBuffData.pveExpAmp,
-        pvePerkAmp: expBuffData.pveExpAmp,
-        expireTime: block.timestamp + BuffItemInfoV3.getDuration(itemId)
-      });
-      CharExpAmp.set(targetPlayer, expBuff);
+      uint32 buffDuration = BuffInfo.getDuration(itemId);
+      CharExpAmpData memory charExpBuff = CharExpAmp.get(targetPlayer);
+      if (expBuffData.farmingPerkAmp >= 0) {
+        charExpBuff.farmingPerkAmp = expBuffData.farmingPerkAmp;
+        charExpBuff.farmingExpireTime = block.timestamp + buffDuration;
+      }
+      if (expBuffData.pveExpAmp >= 0) {
+        charExpBuff.pveExpAmp = expBuffData.pveExpAmp;
+        charExpBuff.pveExpireTime = block.timestamp + buffDuration;
+      }
+      CharExpAmp.set(targetPlayer, charExpBuff);
     }
   }
 }

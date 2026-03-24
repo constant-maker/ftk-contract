@@ -7,13 +7,12 @@ import { MoveSystemFixture } from "@fixtures/MoveSystemFixture.sol";
 import {
   NonOccupyTile,
   CharOtherItem,
-  CharStats2,
+  CharStats,
   CharFund,
   CharInfo,
-  CharPosition,
   CharPositionData,
-  TileInfo3,
-  TileInfo3Data
+  Tile,
+  TileData
 } from "@codegen/index.sol";
 import { CharacterAccessControl } from "@abstracts/CharacterAccessControl.sol";
 import { CharacterPositionUtils } from "@utils/CharacterPositionUtils.sol";
@@ -21,7 +20,7 @@ import { CharacterFundUtils } from "@utils/CharacterFundUtils.sol";
 import { InventoryItemUtils } from "@utils/InventoryItemUtils.sol";
 import { TestHelper } from "./TestHelper.sol";
 import { console2 } from "forge-std/console2.sol";
-import { KingSetting, AllianceV2 } from "@codegen/index.sol";
+import { KingSetting, Alliance } from "@codegen/index.sol";
 
 contract TileSystemTest is WorldFixture, SpawnSystemFixture, MoveSystemFixture {
   address player = makeAddr("player");
@@ -43,7 +42,7 @@ contract TileSystemTest is WorldFixture, SpawnSystemFixture, MoveSystemFixture {
     CharPositionData memory charPosition = CharacterPositionUtils.getCurrentPosition(characterId);
     int32 x = charPosition.x;
     int32 y = charPosition.y;
-    uint8 kingdomId = TileInfo3.getKingdomId(x, y);
+    uint8 kingdomId = Tile.getKingdomId(x, y);
     assertEq(kingdomId, CharInfo.getKingdomId(characterId));
   }
 
@@ -129,7 +128,7 @@ contract TileSystemTest is WorldFixture, SpawnSystemFixture, MoveSystemFixture {
     _goDown(player, characterId);
     charPosition = CharacterPositionUtils.getCurrentPosition(characterId);
     vm.startPrank(worldDeployer);
-    TileInfo3.setKingdomId(charPosition.x, charPosition.y, 4);
+    Tile.setKingdomId(charPosition.x, charPosition.y, 4);
     vm.stopPrank();
     vm.warp(block.timestamp + 301);
     vm.startPrank(player);
@@ -137,7 +136,7 @@ contract TileSystemTest is WorldFixture, SpawnSystemFixture, MoveSystemFixture {
     vm.stopPrank();
     assertEq(CharFund.getGold(characterId), 0);
 
-    assertEq(CharStats2.getFame(characterId), 1040);
+    assertEq(CharStats.getFame(characterId), 1040);
   }
 
   function test_OccupyAllianceType() external {
@@ -156,10 +155,10 @@ contract TileSystemTest is WorldFixture, SpawnSystemFixture, MoveSystemFixture {
     CharFund.setGold(characterId, 20);
 
     KingSetting.setCaptureTilePenalty(CharInfo.getKingdomId(characterId), 100);
-    AllianceV2.set(1, 2, true, true);
+    Alliance.set(1, 2, true, true);
     vm.stopPrank();
 
-    uint32 charFame = CharStats2.getFame(characterId);
+    uint32 charFame = CharStats.getFame(characterId);
 
     vm.startPrank(player);
     world.app__occupyTile(characterId);
@@ -169,14 +168,14 @@ contract TileSystemTest is WorldFixture, SpawnSystemFixture, MoveSystemFixture {
     assertEq(CharOtherItem.getAmount(characterId, berriesTier1_Id), 20);
     assertEq(CharFund.getGold(characterId), 15);
 
-    uint32 newFame = CharStats2.getFame(characterId);
+    uint32 newFame = CharStats.getFame(characterId);
     assertEq(newFame, charFame + 10); // got 10 fame for occupying tile
 
     _goUp(player, characterId);
     vm.warp(block.timestamp + 100_000);
     CharPositionData memory charPosition = CharacterPositionUtils.getCurrentPosition(characterId);
     vm.startPrank(worldDeployer);
-    TileInfo3.setKingdomId(charPosition.x, charPosition.y, 2);
+    Tile.setKingdomId(charPosition.x, charPosition.y, 2);
     vm.stopPrank();
     vm.startPrank(player);
     world.app__occupyTile(characterId);
@@ -189,7 +188,7 @@ contract TileSystemTest is WorldFixture, SpawnSystemFixture, MoveSystemFixture {
     console2.log("position x", charPosition.x);
     console2.log("position y", charPosition.y);
 
-    newFame = CharStats2.getFame(characterId);
+    newFame = CharStats.getFame(characterId);
     assertEq(newFame, charFame + 10 - 100); // penalty 100 fame for occupying tile in alliance territory
   }
 }

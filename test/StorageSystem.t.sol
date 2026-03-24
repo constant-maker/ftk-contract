@@ -9,10 +9,7 @@ import {
   CharInventoryData,
   CharCurrentStats,
   CharFund,
-  ItemWeightCache,
-  ItemV2,
-  CharMigration,
-  CharStorageMigration
+  Item
 } from "@codegen/index.sol";
 
 import { CharOtherItem } from "@codegen/tables/CharOtherItem.sol";

@@ -4,24 +4,22 @@ import {
   CharOtherItem,
   CharCurrentStats,
   CharStats,
-  ItemV2,
-  ItemV2Data,
-  BuffItemInfoV3,
-  BuffItemInfoV3Data,
+  Item,
+  ItemData,
+  BuffInfo,
+  BuffInfoData,
   BuffExp,
   BuffExpData,
-  BuffStatV4,
-  BuffStatV4Data,
-  BuffDmg,
-  BuffDmgData,
-  RestrictLocV2,
+  BuffStat,
+  BuffStatData,
+  RestrictLoc,
   CharPositionData,
-  CharPositionV2,
-  CharPositionV2Data,
+  CharPositionFull,
+  CharPositionFullData,
   City,
   CityData,
   CharSavePoint,
-  TileInfo3,
+  Tile,
   CharFund,
   CharFundData
 } from "@codegen/index.sol";
@@ -141,18 +139,18 @@ contract ConsumeSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFix
   // test buff and skill item
 
   function test_ShouldHaveData() external {
-    BuffItemInfoV3Data memory buffItemInfo = BuffItemInfoV3.get(360); // instant dmg buff
+    BuffInfoData memory buffItemInfo = BuffInfo.get(360); // instant dmg buff
 
     assertEq(uint8(buffItemInfo.buffType), uint8(BuffType.InstantDamage));
     assertEq(buffItemInfo.range, 10);
     assertEq(buffItemInfo.numTarget, 10);
     assertFalse(buffItemInfo.selfCastOnly);
 
-    BuffDmgData memory buffDmg = BuffDmg.get(360); // skill item
+    BuffStatData memory buffDmg = BuffStat.get(360); // skill item
     assertEq(buffDmg.dmg, 200);
     assertTrue(buffDmg.isAbsDmg);
 
-    buffItemInfo = BuffItemInfoV3.get(358); // exp buff
+    buffItemInfo = BuffInfo.get(358); // exp buff
     assertEq(uint8(buffItemInfo.buffType), uint8(BuffType.ExpAmplify));
     assertEq(buffItemInfo.range, 0);
     assertEq(buffItemInfo.duration, 300);
@@ -161,7 +159,7 @@ contract ConsumeSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFix
     BuffExpData memory buffExpData = BuffExp.get(358);
     assertEq(buffExpData.farmingPerkAmp, 120);
 
-    BuffStatV4Data memory buffStatData = BuffStatV4.get(356); // stat buff
+    BuffStatData memory buffStatData = BuffStat.get(356); // stat buff
     assertEq(buffStatData.atkPercent, 50);
     assertEq(buffStatData.defPercent, -100);
     assertEq(buffStatData.agiPercent, 0);
@@ -174,7 +172,7 @@ contract ConsumeSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFix
     console2.log("char position x", charPosition.x);
     console2.log("char position y", charPosition.y);
     vm.startPrank(worldDeployer);
-    RestrictLocV2.set(charPosition.x, charPosition.y, 1, true);
+    RestrictLoc.set(charPosition.x, charPosition.y, 1, true);
     InventoryItemUtils.addItem(characterId, 360, 2); // instant dmg item with abs dmg
     InventoryItemUtils.addItem(characterId, 359, 1); // instant dmg item with percentage dmg
     CharacterPositionUtils.moveToLocation(characterId2, charPosition.x, charPosition.y + 1);
@@ -242,26 +240,26 @@ contract ConsumeSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFix
 
     CityData memory capital = City.get(1); // teleport to capital
 
-    CharPositionV2Data memory newPos = CharPositionV2.get(characterId);
-    assertEq(newPos.x, charPosition.x);
-    assertEq(newPos.y, charPosition.y);
-    assertEq(newPos.nextX, capital.x);
-    assertEq(newPos.nextY, capital.y);
-    assertEq(newPos.arriveTimestamp, block.timestamp + Config.TELEPORT_DURATION);
+    CharPositionFullData memory positionFull = CharPositionFull.get(characterId);
+    assertEq(positionFull.x, charPosition.x);
+    assertEq(positionFull.y, charPosition.y);
+    assertEq(positionFull.nextX, capital.x);
+    assertEq(positionFull.nextY, capital.y);
+    assertEq(positionFull.arriveTimestamp, block.timestamp + Config.TELEPORT_DURATION);
 
     vm.warp(block.timestamp + Config.TELEPORT_DURATION + 1);
 
     vm.startPrank(worldDeployer);
     CharacterPositionUtils.moveToLocation(characterId, 20, 20);
     City.set(5, 10, 10, false, 1, 1, "123");
-    CharSavePoint.set(characterId, 5, 10, 10);
+    CharSavePoint.set(characterId, 5);
     vm.stopPrank();
 
     vm.startPrank(player);
     world.app__consumeItem(characterId, 442, 1, targetData);
     vm.stopPrank();
 
-    newPos = CharPositionV2.get(characterId);
+    CharPositionFullData memory newPos = CharPositionFull.get(characterId);
     assertEq(newPos.x, 20);
     assertEq(newPos.y, 20);
     assertEq(newPos.nextX, capital.x); // saved point is invalid (the tile should be belong to the kingdom), teleport to
@@ -272,7 +270,7 @@ contract ConsumeSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFix
     vm.warp(block.timestamp + Config.TELEPORT_DURATION + 1);
 
     vm.startPrank(worldDeployer);
-    TileInfo3.setKingdomId(10, 10, 1); // make the saved point valid
+    Tile.setKingdomId(10, 10, 1); // make the saved point valid
     CharacterPositionUtils.moveToLocation(characterId, 20, 20);
     vm.stopPrank();
 
@@ -280,7 +278,7 @@ contract ConsumeSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFix
     world.app__consumeItem(characterId, 442, 1, targetData);
     vm.stopPrank();
 
-    newPos = CharPositionV2.get(characterId);
+    newPos = CharPositionFull.get(characterId);
     assertEq(newPos.x, 20);
     assertEq(newPos.y, 20);
     assertEq(newPos.nextX, 10); // saved point is valid, teleport to saved point

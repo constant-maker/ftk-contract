@@ -352,7 +352,7 @@ func BuildNpcData(l *zap.SugaredLogger, dataConfig common.DataConfig) ([][]byte,
 func BuildQuestData(l *zap.SugaredLogger, dataConfig common.DataConfig, fromQuestID int) ([][]byte, error) {
 	callData := make([][]byte, 0)
 	l.Infow("len Quests", "value", len(dataConfig.Quests))
-	var quests []common.QuestV4
+	var quests []common.Quest
 	for k, quest := range dataConfig.Quests {
 		if k != strconv.FormatInt(int64(quest.Id), 10) {
 			l.Errorw("wrong quest key and id", "key", k, "id", quest.Id)
@@ -387,7 +387,7 @@ func BuildQuestData(l *zap.SugaredLogger, dataConfig common.DataConfig, fromQues
 		}
 		questCallData, err := table.QuestCallData(quest)
 		if err != nil {
-			l.Errorw("cannot build QuestV4 call data", "err", err)
+			l.Errorw("cannot build Quest call data", "err", err)
 			return nil, err
 		}
 		callData = append(callData, questCallData)
@@ -573,22 +573,6 @@ func BuildDailyQuestData(l *zap.SugaredLogger, dataConfig common.DataConfig, fro
 		return nil, err
 	}
 	callData = append(callData, data)
-	return callData, nil
-}
-
-func BuildItemWeightCacheData(l *zap.SugaredLogger, dataConfig common.DataConfig) ([][]byte, error) {
-	callData := make([][]byte, 0)
-	l.Infow("len Items", "value", dataConfig.Items)
-	for _, item := range dataConfig.Items {
-		if item.EquipmentInfo != nil {
-			data, err := table.ItemWeightCacheCallData(item)
-			if err != nil {
-				l.Errorw("cannot build ItemWeightCache call data", "err", err)
-				return nil, err
-			}
-			callData = append(callData, data)
-		}
-	}
 	return callData, nil
 }
 

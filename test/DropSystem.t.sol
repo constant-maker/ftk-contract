@@ -2,7 +2,7 @@ pragma solidity >=0.8.24;
 
 import { console2 } from "forge-std/console2.sol";
 import { WorldFixture, SpawnSystemFixture, WelcomeSystemFixture, FarmingSystemFixture } from "./fixtures/index.sol";
-import { CharPosition, CharOtherItem, CharCurrentStats } from "@codegen/index.sol";
+import { CharOtherItem, CharCurrentStats } from "@codegen/index.sol";
 import { InventoryToolUtils, InventoryEquipmentUtils } from "@utils/index.sol";
 import { ItemsActionData } from "@common/Types.sol";
 

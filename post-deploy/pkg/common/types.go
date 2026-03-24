@@ -195,7 +195,7 @@ const (
 	QuestLocate     QuestType = "Locate"
 )
 
-type QuestV4 struct {
+type Quest struct {
 	Id                     int64              `json:"id"`
 	QuestType              int                `json:"questType"`
 	Name                   string             `json:"name"`
@@ -218,7 +218,7 @@ type ContributeDetail struct {
 	Amount uint32 `json:"amount"`
 }
 
-type TileInfo struct {
+type Tile struct {
 	KingdomId       uint8   `json:"kingdomId"`
 	X               int32   `json:"x"`
 	Y               int32   `json:"y"`
@@ -358,10 +358,10 @@ type DataConfig struct {
 	Cities                   map[string]City         `json:"cities"`
 	Kingdoms                 map[string]Kingdom      `json:"kingdoms"`
 	Npcs                     map[string]Npc          `json:"npcs"`
-	TileInfos                []TileInfo              `json:"tileInfos"`
+	TileInfos                []Tile                  `json:"tileInfos"`
 	ItemRecipes              map[string]ItemRecipe   `json:"itemRecipes"`
 	DailyQuestConfig         DailyQuestConfig        `json:"dailyQuestConfig"`
-	Quests                   map[string]QuestV4      `json:"quests"`
+	Quests                   map[string]Quest        `json:"quests"`
 	Skills                   map[string]Skill        `json:"skills"`
 	Monsters                 map[string]Monster      `json:"monsters"`
 	MonsterLocationsCache    []MonsterLocation       `json:"monsterLocationsCache"`

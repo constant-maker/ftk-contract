@@ -1,4 +1,19 @@
-const CITY_TABLES: any = {
+const KINGDOM_TABLES: any = {
+  Population: {
+    schema: {
+      kingdomId: "uint8",
+      population: "uint32",
+    },
+    key: ['kingdomId'],
+  },
+  Kingdom: {
+    schema: {
+      id: "uint8",
+      capitalId: "uint256",
+      name: "string",
+    },
+    key: ['id'],
+  },
   City: {
     schema: {
       id: "uint256",
@@ -19,15 +34,15 @@ const CITY_TABLES: any = {
     },
     key: ['cityId', 'itemId'],
   },
-  CityVault2V2: {
+  CityVault2: {
     schema: {
       cityId: "uint256",
-      gold: "uint32",
+      gold: "uint256", // normally it should be uint32, but we want to support more gold in vault, so use uint256 here
       crystal: "uint256",
     },
     key: ['cityId'],
   },
-  CVaultHistoryV4: {
+  CVaultHistory: {
     schema: {
       cityId: "uint256",
       id: "uint256",
@@ -64,15 +79,7 @@ const CITY_TABLES: any = {
     },
     key: ['cityId'],
   },
-  RestrictLocation: {
-    schema: {
-      x: "int32",
-      y: "int32",
-      isRestricted: "bool",
-    },
-    key: ['x', 'y'],
-  },
-  RestrictLocV2: {
+  RestrictLoc: {
     schema: {
       x: "int32",
       y: "int32",
@@ -113,4 +120,4 @@ const CITY_TABLES: any = {
   },
 };
 
-export default CITY_TABLES;
+export default KINGDOM_TABLES;

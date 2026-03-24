@@ -8,16 +8,15 @@ import {
   Monster,
   PvE,
   PvEData,
-  PvEExtraV2,
-  PvEExtraV2Data,
+  PvEExtra,
+  PvEExtraData,
   BossInfo,
   BossInfoData,
   MonsterStats,
   MonsterStatsData,
   CharCurrentStats,
   CharStats,
-  ItemV2,
-  CharCStats2
+  Item
 } from "@codegen/index.sol";
 import { BattleInfo, WeaponInfo, BattleUtils } from "./BattleUtils.sol";
 import { CharacterFundUtils } from "./CharacterFundUtils.sol";

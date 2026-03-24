@@ -4,29 +4,27 @@ import { InventoryEquipmentUtils } from "./InventoryEquipmentUtils.sol";
 import { InventoryItemUtils } from "./InventoryItemUtils.sol";
 import { CharacterFundUtils } from "./CharacterFundUtils.sol";
 import { MarketWeightUtils } from "./MarketWeightUtils.sol";
-import { CharAchievementUtils } from "./CharAchievementUtils.sol";
 import { StorageEquipmentUtils } from "./StorageEquipmentUtils.sol";
 import { StorageItemUtils } from "./StorageItemUtils.sol";
 import { KingdomUtils } from "./KingdomUtils.sol";
 import {
-  CharStats2,
   OrderCounter,
   Order,
   OrderData,
-  Order2V2,
+  Order2,
   Equipment,
   CharMarketWeight,
   CharOtherItem,
   CharFund,
-  ItemV2,
+  Item,
   CharInfo,
   City,
   MarketFee,
   CrystalFee,
   FillOrder,
-  FillOrder2V2,
+  FillOrder2,
   FillCounter,
-  CityVault2V2,
+  CityVault2,
   Kingdom
 } from "@codegen/index.sol";
 import { ItemCategoryType, CurrencyType, ItemType } from "@codegen/common.sol";
@@ -50,14 +48,12 @@ struct TakeOrderParams {
 }
 
 library MarketSystemUtils {
-  uint32 constant REQUIRED_FAME = 1050;
-
   /// @dev Take a buy order, no need to decrease gold from order owner because it's already locked when order is created
   function takeBuyOrder(uint256 takerId, OrderData memory order, TakeOrderParams memory top) public {
     if (order.amount < top.amount) {
       revert Errors.MarketSystem_InvalidTakerAmount(top.orderId, order.amount, top.amount);
     }
-    if (ItemV2.getCategory(order.itemId) == ItemCategoryType.Equipment) {
+    if (Item.getCategory(order.itemId) == ItemCategoryType.Equipment) {
       // equipment order
       if (top.equipmentIds.length != top.amount) {
         revert Errors.MarketSystem_InvalidTakerOrderEquipmentData(top.orderId, top.amount, top.equipmentIds.length);
@@ -149,7 +145,7 @@ library MarketSystemUtils {
       isBuy,
       block.timestamp
     );
-    FillOrder2V2.set(newFillOrderId, top.orderId, order.characterId, orderCurrency, top.equipmentIds);
+    FillOrder2.set(newFillOrderId, top.orderId, order.characterId, orderCurrency, top.equipmentIds);
   }
 
   /// @dev validate order params
@@ -161,11 +157,11 @@ library MarketSystemUtils {
     if (order.itemId == 0) {
       revert Errors.MarketSystem_ZeroItemId();
     }
-    if (ItemV2.getIsUntradeable(order.itemId)) {
+    if (Item.getIsUntradeable(order.itemId)) {
       revert Errors.MarketSystem_UntradeableItem(order.itemId);
     }
     // sell order has zero equipmentId, it must be an other item
-    if (!order.isBuy && order.equipmentId == 0 && ItemV2.getCategory(order.itemId) != ItemCategoryType.Other) {
+    if (!order.isBuy && order.equipmentId == 0 && Item.getCategory(order.itemId) != ItemCategoryType.Other) {
       revert Errors.MarketSystem_InvalidItemType(order.itemId);
     }
   }
@@ -183,7 +179,7 @@ library MarketSystemUtils {
 
   /// @dev update buy order - we need to charge more or repay gold or crystal
   function updateBuyOrder(uint256 characterId, OrderData memory existingOrder, OrderParams memory updateParams) public {
-    if (Order2V2.getCurrency(updateParams.orderId) == CurrencyType.Gold) {
+    if (Order2.getCurrency(updateParams.orderId) == CurrencyType.Gold) {
       _updateBuyOrderGold(characterId, existingOrder, updateParams.unitPrice);
     } else {
       _updateBuyOrderCrystal(characterId, existingOrder, updateParams.unitPrice);
@@ -210,10 +206,10 @@ library MarketSystemUtils {
 
   /// @dev update buy order crystal - we need to charge more or repay crystal
   function _updateBuyOrderCrystal(uint256 characterId, OrderData memory existingOrder, uint32 newUnitPrice) private {
-    uint32 charCrystal = CharFund.getCrystal(characterId);
+    uint256 charCrystal = CharFund.getCrystal(characterId);
     if (existingOrder.unitPrice < newUnitPrice) {
       // charge more crystal
-      uint32 crystalChange = (newUnitPrice - existingOrder.unitPrice) * existingOrder.amount;
+      uint256 crystalChange = (newUnitPrice - existingOrder.unitPrice) * existingOrder.amount;
       if (crystalChange > charCrystal) {
         revert Errors.MarketSystem_InsufficientCrystal(characterId, charCrystal, crystalChange);
       }
@@ -221,7 +217,7 @@ library MarketSystemUtils {
       CharacterFundUtils.decreaseCrystal(characterId, crystalChange);
     } else {
       // repay crystal
-      uint32 crystalChange = (existingOrder.unitPrice - newUnitPrice) * existingOrder.amount;
+      uint256 crystalChange = (existingOrder.unitPrice - newUnitPrice) * existingOrder.amount;
       CharacterFundUtils.increaseCrystal(characterId, crystalChange);
     }
   }
@@ -236,7 +232,7 @@ library MarketSystemUtils {
       return;
     }
     // check crystal
-    uint32 charCrystal = CharFund.getCrystal(characterId);
+    uint256 charCrystal = CharFund.getCrystal(characterId);
     if (charCrystal < order.unitPrice * order.amount) {
       revert Errors.MarketSystem_InsufficientCrystal(characterId, charCrystal, order.unitPrice * order.amount);
     }
@@ -244,11 +240,6 @@ library MarketSystemUtils {
 
   /// @dev validate character (fame, gold, weight)
   function validateCharacter(uint256 characterId, OrderParams memory order) public view {
-    uint32 fame = CharStats2.getFame(characterId);
-    if (fame < REQUIRED_FAME && !CharAchievementUtils.hasAchievement(characterId, 3)) {
-      // 3 - Knight of Valor
-      revert Errors.MarketSystem_FameTooLow(characterId, fame);
-    }
     if (order.isBuy) {
       // buy - we need to check if the character has enough gold or crystal
       validateBuyOrder(characterId, order);
@@ -261,7 +252,7 @@ library MarketSystemUtils {
   function validateOrderPrice(uint256 itemId, uint32 orderPrice, CurrencyType currency) public view {
     if (currency == CurrencyType.Crystal) {
       _validateCrystalPrice(orderPrice);
-      if (ItemV2.getItemType(itemId) == ItemType.Pet && orderPrice < Config.MIN_PET_CRYSTAL_PRICE) {
+      if (Item.getItemType(itemId) == ItemType.Pet && orderPrice < Config.MIN_PET_CRYSTAL_PRICE) {
         revert Errors.MarketSystem_PetPriceTooLow(orderPrice);
       }
       return;
@@ -285,7 +276,7 @@ library MarketSystemUtils {
     uint256 cityId = order.cityId;
     uint32 currentWeight = CharMarketWeight.getWeight(characterId, cityId);
     uint32 maxWeight = CharMarketWeight.getMaxWeight(characterId, cityId);
-    uint32 itemWeight = ItemV2.getWeight(order.itemId);
+    uint32 itemWeight = Item.getWeight(order.itemId);
     uint32 totalWeight = currentWeight + (itemWeight * order.amount);
     if (totalWeight > maxWeight) {
       revert Errors.MarketSystem_ExceedMaxWeight(characterId, order.cityId, totalWeight, maxWeight);
@@ -322,7 +313,7 @@ library MarketSystemUtils {
   /// the seller will pay fee
   function _handleSellOrderTakerBalance(uint256 takerId, OrderData memory order, TakeOrderParams memory top) public {
     uint32 orderValue = order.unitPrice * top.amount;
-    if (Order2V2.getCurrency(top.orderId) == CurrencyType.Gold) {
+    if (Order2.getCurrency(top.orderId) == CurrencyType.Gold) {
       CharacterFundUtils.decreaseGold(takerId, orderValue);
       _handleSellOrderTakerWithGold(order, orderValue);
     } else {
@@ -354,7 +345,7 @@ library MarketSystemUtils {
   function _handleBuyOrderTakerBalance(uint256 takerId, OrderData memory order, TakeOrderParams memory top) public {
     // claim gold or crystal from order
     uint32 orderValue = order.unitPrice * top.amount;
-    if (Order2V2.getCurrency(top.orderId) == CurrencyType.Gold) {
+    if (Order2.getCurrency(top.orderId) == CurrencyType.Gold) {
       _handleBuyOrderTakerWithGold(takerId, order, orderValue);
     } else {
       _handleBuyOrderTakerWithCrystal(takerId, order, orderValue);
@@ -387,13 +378,13 @@ library MarketSystemUtils {
 
   function _updateCityVaultGold(uint256 cityId, uint32 gainedGold) private {
     if (gainedGold == 0) return;
-    uint32 currentGold = CityVault2V2.getGold(cityId);
-    CityVault2V2.setGold(cityId, currentGold + gainedGold);
+    uint256 currentGold = CityVault2.getGold(cityId);
+    CityVault2.setGold(cityId, currentGold + gainedGold);
   }
 
   function _updateCityVaultCrystal(uint256 cityId, uint32 gainedCrystal) private {
     if (gainedCrystal == 0) return;
-    uint256 currentCrystal = CityVault2V2.getCrystal(cityId);
-    CityVault2V2.setCrystal(cityId, currentCrystal + uint256(gainedCrystal));
+    uint256 currentCrystal = CityVault2.getCrystal(cityId);
+    CityVault2.setCrystal(cityId, currentCrystal + uint256(gainedCrystal));
   }
 }

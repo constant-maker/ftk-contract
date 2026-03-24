@@ -1,6 +1,6 @@
 pragma solidity >=0.8.24;
 
-import { ItemV2, ItemV2Data, EquipmentInfo2V2, EquipmentInfo2V2Data } from "@codegen/index.sol";
+import { Item, ItemData, EquipmentInfo2, EquipmentInfo2Data } from "@codegen/index.sol";
 import { ItemType } from "@codegen/common.sol";
 import { WorldFixture } from "@fixtures/WorldFixture.sol";
 import { SpawnSystemFixture } from "@fixtures/SpawnSystemFixture.sol";
@@ -12,15 +12,13 @@ contract ItemTest is WorldFixture, SpawnSystemFixture {
   }
 
   function test_HaveData() external {
-    ItemV2Data memory item = ItemV2.get(269);
+    ItemData memory item = Item.get(269);
     assertTrue(item.itemType == ItemType.Card);
     assertEq(item.tier, 1);
 
-    EquipmentInfo2V2Data memory equipmentInfoV2 = EquipmentInfo2V2.get(41);
-    assertEq(equipmentInfoV2.maxLevel, 0);
-    assertEq(equipmentInfoV2.counter, 0);
-    assertEq(equipmentInfoV2.dmgPercent, 0);
-    assertEq(equipmentInfoV2.bonusWeight, 0);
-    assertEq(equipmentInfoV2.shieldBarrier, 0);
+    EquipmentInfo2Data memory equipmentInfo2 = EquipmentInfo2.get(41);
+    assertEq(equipmentInfo2.maxLevel, 0);
+    assertEq(equipmentInfo2.bonusWeight, 0);
+    assertEq(equipmentInfo2.shieldBarrier, 0);
   }
 }

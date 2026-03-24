@@ -4,7 +4,6 @@ import { console2 } from "forge-std/console2.sol";
 import { WorldFixture, SpawnSystemFixture, WelcomeSystemFixture, MoveSystemFixture } from "./fixtures/index.sol";
 import {
   CharGrindSlot,
-  CharPosition,
   CharPositionData,
   CharCurrentStats,
   CharCurrentStatsData,
@@ -17,9 +16,9 @@ import {
   MonsterStats,
   PvE,
   PvEData,
-  PvEExtraV2,
-  PvEExtraV2Data,
-  TileInfo3,
+  PvEExtra,
+  PvEExtraData,
+  Tile,
   PvEAfkLoc,
   PvEAfk,
   PvEAfkData,
@@ -320,7 +319,7 @@ contract PvESystem2Test is WorldFixture, SpawnSystemFixture, WelcomeSystemFixtur
     CharExpAmpData memory charExpAmp = CharExpAmp.get(characterId);
     console2.log("char exp amp", charExpAmp.pveExpAmp);
     console2.log("current time", block.timestamp);
-    console2.log("char exp amp expire time", charExpAmp.expireTime);
+    console2.log("char exp amp expire time", charExpAmp.pveExpireTime);
 
     vm.startPrank(player);
     world.app__pveAFK(characterId, monsterId, false);

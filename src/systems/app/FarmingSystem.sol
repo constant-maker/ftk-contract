@@ -1,9 +1,7 @@
 pragma solidity >=0.8.24;
 
 import { System } from "@latticexyz/world/src/System.sol";
-import {
-  CharPositionData, CharState, ItemV2, ItemV2Data, CharFarmingState, CharFarmingStateData
-} from "@codegen/index.sol";
+import { CharPositionData, CharState, Item, ItemData, CharFarmingState, CharFarmingStateData } from "@codegen/index.sol";
 import {
   CharacterStateUtils,
   CharacterStatsUtils,
@@ -16,7 +14,7 @@ import {
   FarmingUtils,
   InventoryItemUtils
 } from "@utils/index.sol";
-import { Tool2, Tool2Data } from "@codegen/index.sol";
+import { Tool, ToolData } from "@codegen/index.sol";
 import { CharacterStateType, ResourceType, ItemType } from "@codegen/common.sol";
 import { CharacterAccessControl } from "@abstracts/index.sol";
 import { Errors, Config } from "@common/index.sol";
@@ -64,7 +62,7 @@ contract FarmingSystem is CharacterAccessControl, System {
     // increase the character resource amount in inventory
     uint256 timestamp = block.timestamp;
     if (claimResource) {
-      uint32 receiveAmount = _calculateFarmingAmount(ItemV2.getTier(resourceItemId));
+      uint32 receiveAmount = _calculateFarmingAmount(Item.getTier(resourceItemId));
       InventoryItemUtils.addItem(characterId, resourceItemId, receiveAmount);
     }
 
@@ -75,7 +73,7 @@ contract FarmingSystem is CharacterAccessControl, System {
     CharFarmingState.setItemId(characterId, 0);
 
     // update character perk
-    CharacterPerkUtils.updateCharacterPerkExp(
+    CharacterPerkUtils.increaseCharacterPerkExp(
       characterId, characterFarmingState.itemType, FarmingUtils.calculateResourcePerkExp(characterId, resourceItemId)
     );
 
@@ -96,10 +94,10 @@ contract FarmingSystem is CharacterAccessControl, System {
   )
     private
   {
-    (ItemV2Data memory resourceItem, ResourceType resourceType) =
+    (ItemData memory resourceItem, ResourceType resourceType) =
       FarmingUtils.getResourceItemAndResourceType(resourceItemId);
 
-    Tool2Data memory tool = ToolUtils.mustGetToolData(toolId);
+    ToolData memory tool = ToolUtils.mustGetToolData(toolId);
     // ensure using the right tool, enough tool durability
     (ItemType itemType, uint16 requireDurability) =
       FarmingUtils.validateResourceAndTool(characterId, resourceType, resourceItem.tier, tool, toolId);
@@ -134,11 +132,11 @@ contract FarmingSystem is CharacterAccessControl, System {
     }
   }
 
-  function _updateTool(uint256 toolId, Tool2Data memory tool, uint16 requireDurability) private {
+  function _updateTool(uint256 toolId, ToolData memory tool, uint16 requireDurability) private {
     if (tool.durability == requireDurability) {
-      Tool2.deleteRecord(toolId); // hook will auto remove the tool from player inventory
+      Tool.deleteRecord(toolId); // hook will auto remove the tool from player inventory
     } else {
-      Tool2.setDurability(toolId, tool.durability - requireDurability);
+      Tool.setDurability(toolId, tool.durability - requireDurability);
     }
   }
 }

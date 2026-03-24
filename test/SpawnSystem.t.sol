@@ -5,10 +5,9 @@ import { Vm } from "forge-std/Vm.sol";
 import { console2 } from "forge-std/console2.sol";
 import { IERC721Mintable } from "@latticexyz/world-modules/src/modules/erc721-puppet/IERC721Mintable.sol";
 import {
-  CharPosition,
+  CharPositionFull,
+  CharPositionFullData,
   CharPositionData,
-  CharNextPosition,
-  CharNextPositionData,
   CharInfo,
   CharInfoData,
   Kingdom,
@@ -19,7 +18,7 @@ import {
   ActiveCharData,
   Contracts,
   CrystalFee,
-  CityVault2V2
+  CityVault2
 } from "@codegen/index.sol";
 import { CharacterStateType, CharacterType } from "@codegen/common.sol";
 import { ResourceId } from "@latticexyz/store/src/ResourceId.sol";
@@ -187,12 +186,11 @@ contract CreateCharacter is SpawnSystemFixture {
     uint256 characterId = _createCharacter(player, CharacterInfoMock.getCharacterInfoData());
 
     // check position
-    CharPositionData memory prevPosition = CharPosition.get(characterId);
-    CharNextPositionData memory nextPosition = CharNextPosition.get(characterId);
-    assertEq(prevPosition.x, nextPosition.x);
-    assertEq(prevPosition.y, nextPosition.y);
-    assertEq(prevPosition.x, 30);
-    assertEq(prevPosition.y, -36);
+    CharPositionFullData memory positionFull = CharPositionFull.get(characterId);
+    assertEq(positionFull.x, 30);
+    assertEq(positionFull.y, -36);
+    assertEq(positionFull.nextX, 30);
+    assertEq(positionFull.nextY, -36);
 
     // expect character nft is minted
     _expectCharacterNftOwner(characterId, player);
@@ -301,7 +299,7 @@ contract CreateCharacter is SpawnSystemFixture {
     uint256 balance = Balances.getBalance(WorldResourceIdLib.encodeNamespace("")); // root space
     assertEq(balance, Config.CREATE_CHARACTER_FEE);
 
-    uint256 vaultCrystal = CityVault2V2.getCrystal(1);
+    uint256 vaultCrystal = CityVault2.getCrystal(1);
 
     uint256 ethFeeAmount = (Config.CREATE_CHARACTER_FEE * uint256(feePercentage)) / 100;
     console2.log("ethFeeAmount: ", ethFeeAmount);

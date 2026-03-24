@@ -5,7 +5,6 @@ import { Vm } from "forge-std/Vm.sol";
 import { console2 } from "forge-std/console2.sol";
 import { IERC721Mintable } from "@latticexyz/world-modules/src/modules/erc721-puppet/IERC721Mintable.sol";
 import {
-  CharPosition,
   CharPositionData,
   CharInfo,
   CharInfoData,

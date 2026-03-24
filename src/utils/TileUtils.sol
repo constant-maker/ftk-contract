@@ -1,6 +1,6 @@
 pragma solidity >=0.8.24;
 
-import { TileInfo3 } from "@codegen/index.sol";
+import { Tile } from "@codegen/index.sol";
 
 library TileUtils {
   uint8 public constant MAX_FARM_SLOT = 10;
@@ -18,7 +18,7 @@ library TileUtils {
 
   /// @dev update farm slot increase or decrease
   function _updateFarmSlot(int32 x, int32 y, bool isIncreased) private {
-    uint8 farmSlot = TileInfo3.getFarmSlot(x, y);
+    uint8 farmSlot = Tile.getFarmSlot(x, y);
     if (isIncreased) {
       if (farmSlot == MAX_FARM_SLOT) return;
       farmSlot += DEFAULT_INCREASE_FARM_SLOT;
@@ -29,6 +29,6 @@ library TileUtils {
       if (farmSlot == 0) return;
       farmSlot--;
     }
-    TileInfo3.setFarmSlot(x, y, farmSlot);
+    Tile.setFarmSlot(x, y, farmSlot);
   }
 }

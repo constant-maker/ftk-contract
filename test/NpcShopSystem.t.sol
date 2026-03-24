@@ -9,7 +9,7 @@ import { CharOtherItem } from "@codegen/tables/CharOtherItem.sol";
 import { NpcShopInventory } from "@codegen/tables/NpcShopInventory.sol";
 import { CharInventory } from "@codegen/tables/CharInventory.sol";
 import { CharacterFundUtils } from "@utils/CharacterFundUtils.sol";
-import { TradeData } from "@systems/app/NpcShopSystem.sol";
+import { TradeData } from "@utils/NpcShopUtils.sol";
 import { InventoryItemUtils } from "@utils/InventoryItemUtils.sol";
 
 contract NpcShopSystem is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture {

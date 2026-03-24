@@ -4,11 +4,10 @@ import { Test } from "forge-std/Test.sol";
 import { Vm } from "forge-std/Vm.sol";
 import { console2 } from "forge-std/console2.sol";
 import {
-  CharPosition,
   CharPositionData,
-  CharNextPosition,
-  CharNextPositionData,
-  TileInfo3,
+  CharPositionFull,
+  CharPositionFullData,
+  Tile,
   CharBuff,
   CharBuffData,
   CharDebuff,
@@ -49,24 +48,21 @@ contract MoveSystemTest is WorldFixture, MoveSystemFixture, SpawnSystemFixture, 
     world.app__move(characterId, position.x, position.y + 1);
     vm.stopPrank();
 
-    CharPositionData memory newPosition = CharacterPositionUtils.getCurrentPosition(characterId);
-    CharPositionData memory prevPosition = CharPosition.get(characterId);
-    CharNextPositionData memory nextPosition = CharNextPosition.get(characterId);
+    CharPositionFullData memory positionFull = CharPositionFull.get(characterId);
+
     // character is moving so position is unchanged
-    assertEq(newPosition.x, position.x);
-    assertEq(newPosition.y, position.y);
-    assertEq(prevPosition.x, position.x);
-    assertEq(prevPosition.y, position.y);
-    assertEq(nextPosition.x, position.x);
-    assertEq(nextPosition.y, position.y + 1);
-    console2.log("newPosition x", newPosition.x);
-    console2.log("newPosition y", newPosition.y);
+    assertEq(positionFull.x, position.x);
+    assertEq(positionFull.y, position.y);
+    assertEq(positionFull.nextX, position.x);
+    assertEq(positionFull.nextY, position.y + 1);
+    console2.log("newPosition x", positionFull.nextX);
+    console2.log("newPosition y", positionFull.nextY);
 
     CharacterStateType state = CharacterStateUtils.getCharacterState(characterId);
     assertTrue(state == CharacterStateType.Moving);
 
     vm.warp(block.timestamp + Config.DEFAULT_MOVEMENT_DURATION);
-    newPosition = CharacterPositionUtils.getCurrentPosition(characterId);
+    CharPositionData memory newPosition = CharacterPositionUtils.getCurrentPosition(characterId);
     assertEq(newPosition.x, position.x);
     assertEq(newPosition.y, position.y + 1);
     console2.log("newPosition x", newPosition.x);
@@ -77,12 +73,12 @@ contract MoveSystemTest is WorldFixture, MoveSystemFixture, SpawnSystemFixture, 
     vm.startPrank(player);
     world.app__move(characterId, newPosition.x, newPosition.y + 1);
     vm.stopPrank();
-    prevPosition = CharPosition.get(characterId);
-    assertEq(prevPosition.x, newPosition.x);
-    assertEq(prevPosition.y, newPosition.y);
-    nextPosition = CharNextPosition.get(characterId);
-    assertEq(nextPosition.x, newPosition.x);
-    assertEq(nextPosition.y, newPosition.y + 1);
+
+    positionFull = CharPositionFull.get(characterId);
+    assertEq(positionFull.x, newPosition.x);
+    assertEq(positionFull.y, newPosition.y);
+    assertEq(positionFull.nextX, newPosition.x);
+    assertEq(positionFull.nextY, newPosition.y + 1);
   }
 
   function test_RevertDoubleMove() external {

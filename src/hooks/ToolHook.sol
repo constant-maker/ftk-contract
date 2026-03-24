@@ -4,10 +4,10 @@ import { StoreHook } from "@latticexyz/store/src/StoreHook.sol";
 import { ResourceId } from "@latticexyz/store/src/ResourceId.sol";
 import { EncodedLengths } from "@latticexyz/store/src/EncodedLengths.sol";
 import { FieldLayout } from "@latticexyz/store/src/FieldLayout.sol";
-import { Tool2, Tool2Data } from "@codegen/index.sol";
+import { Tool, ToolData } from "@codegen/index.sol";
 import { InventoryToolUtils } from "@utils/index.sol";
 
-/// Hook only work when we set the whole fields data like Tool2.set(...)
+/// Hook only work when we set the whole fields data like Tool.set(...)
 
 contract ToolHook is StoreHook {
   function onAfterSetRecord(
@@ -21,7 +21,7 @@ contract ToolHook is StoreHook {
     public
     override
   {
-    Tool2Data memory tool = Tool2.decode(staticData, encodedLengths, dynamicData);
+    ToolData memory tool = Tool.decode(staticData, encodedLengths, dynamicData);
     uint256 toolId = uint256(keyTuple[0]);
     uint256 characterId = tool.characterId;
     if (InventoryToolUtils.hasTool(characterId, toolId)) {
@@ -32,7 +32,7 @@ contract ToolHook is StoreHook {
 
   function onBeforeDeleteRecord(ResourceId tableId, bytes32[] memory keyTuple, FieldLayout fieldLayout) public override {
     uint256 toolId = uint256(keyTuple[0]);
-    Tool2Data memory tool = Tool2.get(toolId);
+    ToolData memory tool = Tool.get(toolId);
     InventoryToolUtils.removeTool(tool.characterId, toolId);
   }
 }

@@ -1,13 +1,12 @@
 pragma solidity >=0.8.24;
 
 import {
-  SkillV2,
-  SkillV2Data,
+  Skill,
+  SkillData,
   Monster,
   CharStats,
   CharCurrentStats,
   CharCurrentStatsData,
-  CharCStats2,
   CharSkill,
   CharEquipment,
   SkillEffect,
@@ -64,7 +63,7 @@ library BattleUtils {
   {
     for (uint256 i = 0; i < originSkillIds.length; i++) {
       uint256 skillId = originSkillIds[i];
-      uint8 skillSp = skillId == Config.NORMAL_ATTACK_SKILL_ID ? 0 : SkillV2.getSp(skillId);
+      uint8 skillSp = skillId == Config.NORMAL_ATTACK_SKILL_ID ? 0 : Skill.getSp(skillId);
 
       if (totalSp >= skillSp) {
         skillIds[i] = skillId;
@@ -107,7 +106,7 @@ library BattleUtils {
 
     characterBattleInfo = BattleInfo({
       id: characterId,
-      barrier: CharCStats2.getBarrier(characterId),
+      barrier: CharCurrentStats.getBarrier(characterId),
       hp: characterHp,
       atk: finalAtk,
       def: finalDef,
@@ -139,7 +138,7 @@ library BattleUtils {
       }
     }
     // main battle loop
-    SkillV2Data memory normalAtk = SkillV2.get(Config.NORMAL_ATTACK_SKILL_ID);
+    SkillData memory normalAtk = Skill.get(Config.NORMAL_ATTACK_SKILL_ID);
     uint8 index = 1;
     SkillEffectData memory attackerDebuff;
     SkillEffectData memory defenderDebuff;
@@ -165,7 +164,7 @@ library BattleUtils {
   function doTurnFight(
     BattleInfo memory attacker,
     BattleInfo memory defender,
-    SkillV2Data memory normalAtk,
+    SkillData memory normalAtk,
     uint32[11] memory dmgResult,
     uint16 attackerDmgMultiplier,
     uint256 dmgIndex,
@@ -182,7 +181,7 @@ library BattleUtils {
     }
     uint16 skillBonus;
     uint256 skillId = dmgIndex == 0 ? 0 : attacker.skillIds[(dmgIndex - 1) / 2];
-    SkillV2Data memory skill = getSkillData(skillId, normalAtk);
+    SkillData memory skill = getSkillData(skillId, normalAtk);
     if (skill.hasEffect) {
       SkillEffectData memory skillEffect = SkillEffect.get(skillId);
       defenderDebuff.damage = skillEffect.damage;
@@ -209,7 +208,7 @@ library BattleUtils {
     view
   {
     SkillEffectData memory debuff;
-    SkillV2Data memory normalAtk = SkillV2.get(Config.NORMAL_ATTACK_SKILL_ID);
+    SkillData memory normalAtk = Skill.get(Config.NORMAL_ATTACK_SKILL_ID);
     uint16 agiDiff = attacker.agi - defender.agi;
     uint16 bonusDmg = uint16(uint32(agiDiff) * 115 / 100); // 1.15 agiDiff
     normalAtk.damage += bonusDmg;
@@ -303,16 +302,9 @@ library BattleUtils {
   }
 
   /// @dev return skill data based on skillId
-  function getSkillData(uint256 skillId, SkillV2Data memory normalAtk) public view returns (SkillV2Data memory skill) {
-    skill = skillId == Config.NORMAL_ATTACK_SKILL_ID ? normalAtk : SkillV2.get(skillId);
+  function getSkillData(uint256 skillId, SkillData memory normalAtk) public view returns (SkillData memory skill) {
+    skill = skillId == Config.NORMAL_ATTACK_SKILL_ID ? normalAtk : Skill.get(skillId);
     return skill;
-  }
-
-  function getCharacterEquipments(uint256 characterId) public view returns (uint256[6] memory equipmentIds) {
-    for (uint8 i = 0; i <= uint8(SlotType.Mount); i++) {
-      equipmentIds[i] = CharEquipment.getEquipmentId(characterId, SlotType(i));
-    }
-    return equipmentIds;
   }
 
   function getFinalStat(uint16 baseStat, int16 buffStat) public pure returns (uint16) {

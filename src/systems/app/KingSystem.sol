@@ -3,20 +3,19 @@ pragma solidity >=0.8.24;
 import { System } from "@latticexyz/world/src/System.sol";
 import { CharacterAccessControl } from "@abstracts/CharacterAccessControl.sol";
 import {
-  CharStats2,
+  CharStats,
   KingElection,
   KingElectionData,
   CandidatePromise,
   CharVote,
   CharInfo,
   MarketFee,
-  AllianceV2,
-  AllianceV2Data,
+  Alliance,
+  AllianceData,
   KingSetting,
-  KingSetting2,
-  TileInfo3,
+  Tile,
   City,
-  RestrictLocV2,
+  RestrictLoc,
   CityCounter,
   Kingdom,
   CharRole,
@@ -37,7 +36,6 @@ struct VaultRestrictionParam {
 
 contract KingSystem is CharacterAccessControl, System {
   uint32 constant KING_MIN_FAME_REQUIRE = 2000;
-  uint32 constant VOTER_MIN_FAME_REQUIRE = 1020;
 
   function registerKing(uint256 characterId, string memory promiseSummary) public onlyAuthorizedWallet(characterId) {
     uint8 kingdomId = CharInfo.getKingdomId(characterId);
@@ -46,7 +44,7 @@ contract KingSystem is CharacterAccessControl, System {
       kingElection.timestamp = block.timestamp + KingSystemUtils.OFFSET_DURATION;
       KingElection.setTimestamp(kingdomId, kingElection.timestamp);
     }
-    uint32 fame = CharStats2.getFame(characterId);
+    uint32 fame = CharStats.getFame(characterId);
     if (fame < KING_MIN_FAME_REQUIRE) {
       revert Errors.KingSystem_InsufficientFameForKingElection(characterId, fame);
     }
@@ -96,8 +94,8 @@ contract KingSystem is CharacterAccessControl, System {
       revert Errors.KingSystem_CannotVoteForSelf(characterId);
     }
 
-    uint32 fame = CharStats2.getFame(characterId);
-    if (fame < VOTER_MIN_FAME_REQUIRE) {
+    uint32 fame = CharStats.getFame(characterId);
+    if (fame < Config.DEFAULT_FAME) {
       revert Errors.KingSystem_InsufficientFameForVoting(characterId, fame);
     }
 
@@ -121,7 +119,7 @@ contract KingSystem is CharacterAccessControl, System {
     if (candidateIndex == type(uint256).max) {
       revert Errors.KingSystem_InvalidCandidate(candidateId);
     }
-    uint32 votePower = fame - Config.DEFAULT_FAME;
+    uint32 votePower = fame - Config.DEFAULT_FAME + 1; // +1 to ensure at least 1 vote power
     KingElection.updateVotesReceived(kingdomId, candidateIndex, kingElection.votesReceived[candidateIndex] + votePower);
     CharVote.set(characterId, candidateId, votePower, block.timestamp);
   }
@@ -195,7 +193,7 @@ contract KingSystem is CharacterAccessControl, System {
   {
     uint8 charKingdomId = CharInfo.getKingdomId(characterId);
     CharacterRoleUtils.mustBeKing(charKingdomId, characterId);
-    if (TileInfo3.getKingdomId(x, y) != charKingdomId) {
+    if (Tile.getKingdomId(x, y) != charKingdomId) {
       revert Errors.KingSystem_NotOwnTile(charKingdomId, x, y);
     }
     if (!MapUtils.isValidCityLocation(x, y)) {
@@ -214,7 +212,7 @@ contract KingSystem is CharacterAccessControl, System {
     CityCounter.set(newCityId);
 
     City.set(newCityId, x, y, false, charKingdomId, 0, name);
-    RestrictLocV2.set(x, y, newCityId, true); // Mark the location as restricted for new cities
+    RestrictLoc.set(x, y, newCityId, true); // Mark the location as restricted for new cities
   }
 
   function moveCity(uint256 characterId, int32 x, int32 y, uint256 cityId) public onlyAuthorizedWallet(characterId) {
@@ -260,7 +258,7 @@ contract KingSystem is CharacterAccessControl, System {
   function setWithdrawWeightLimit(uint256 characterId, uint32 weightLimit) public onlyAuthorizedWallet(characterId) {
     uint8 charKingdomId = CharInfo.getKingdomId(characterId);
     CharacterRoleUtils.mustBeKing(charKingdomId, characterId);
-    KingSetting2.setWithdrawWeightLimit(charKingdomId, weightLimit);
+    KingSetting.setWithdrawWeightLimit(charKingdomId, weightLimit);
   }
 
   function setWithdrawRestriction(

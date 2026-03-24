@@ -112,7 +112,7 @@ func run(c *cli.Context) error {
 
 	// load data to process (from cache)
 	var (
-		cacheTileInfos        []common.TileInfo
+		cacheTileInfos        []common.Tile
 		cacheMonsterLocations []common.MonsterLocation
 	)
 	if !isTest {

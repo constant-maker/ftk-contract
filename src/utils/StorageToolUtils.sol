@@ -1,6 +1,6 @@
 pragma solidity >=0.8.24;
 
-import { CharStorage, StorageToolIndex } from "@codegen/index.sol";
+import { CharStorage, StToolIndex } from "@codegen/index.sol";
 import { StorageWeightUtils } from "./StorageWeightUtils.sol";
 import { Errors } from "@common/Errors.sol";
 
@@ -27,7 +27,7 @@ library StorageToolUtils {
     // The value is stored at length-1, but we add 1 to all indexes
     // and use 0 as a sentinel value
     uint256 index = CharStorage.lengthToolIds(characterId, cityId);
-    StorageToolIndex.set(characterId, cityId, toolId, index);
+    StToolIndex.set(characterId, cityId, toolId, index);
   }
 
   /// @dev Remove tool from storage
@@ -45,7 +45,7 @@ library StorageToolUtils {
   }
 
   function _removeTool(uint256 characterId, uint256 cityId, uint256 toolId) private {
-    uint256 index = StorageToolIndex.get(characterId, cityId, toolId);
+    uint256 index = StToolIndex.get(characterId, cityId, toolId);
     if (index == 0) revert Errors.Tool_NotOwned(characterId, toolId);
     // To delete an element from the _values array in O(1), we swap the element to delete with the last one in
     // the array, and then remove the last element (sometimes called as 'swap and pop').
@@ -55,15 +55,15 @@ library StorageToolUtils {
     if (valueIndex != lastIndex) {
       uint256 lastValue = CharStorage.getItemToolIds(characterId, cityId, lastIndex);
       CharStorage.updateToolIds(characterId, cityId, valueIndex, lastValue);
-      StorageToolIndex.set(characterId, cityId, lastValue, index);
+      StToolIndex.set(characterId, cityId, lastValue, index);
     }
     CharStorage.popToolIds(characterId, cityId);
-    StorageToolIndex.deleteRecord(characterId, cityId, toolId);
+    StToolIndex.deleteRecord(characterId, cityId, toolId);
   }
 
   /// @dev Return whether the character has the tool in storag
   function hasTool(uint256 characterId, uint256 cityId, uint256 toolId) public view returns (bool) {
-    uint256 index = StorageToolIndex.get(characterId, cityId, toolId);
+    uint256 index = StToolIndex.get(characterId, cityId, toolId);
     return index != 0;
   }
 }

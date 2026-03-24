@@ -2,14 +2,7 @@ pragma solidity >=0.8.24;
 
 import { Test } from "forge-std/Test.sol";
 import { console } from "forge-std/console.sol";
-import {
-  CharPosition,
-  CharPositionData,
-  CharNextPosition,
-  CharNextPositionData,
-  CharState,
-  CharStateData
-} from "@codegen/index.sol";
+import { CharPositionFull, CharPositionFullData, CharPositionData, CharState, CharStateData } from "@codegen/index.sol";
 import { CharacterStateType } from "@codegen/common.sol";
 import { WorldFixture } from "./WorldFixture.sol";
 import { MoveSystemUtils } from "@utils/MoveSystemUtils.sol";
@@ -81,9 +74,9 @@ abstract contract MoveSystemFixture is WorldFixture {
     CharStateData memory characterState = CharacterStateUtils.getCharacterStateData(characterId);
     assertTrue(characterState.state == CharacterStateType.Moving, "Character state should be Moving");
 
-    CharNextPositionData memory playerNextPosition = CharNextPosition.get(characterId);
-    assertEq(playerNextPosition.x, nextX);
-    assertEq(playerNextPosition.y, nextY);
+    CharPositionFullData memory positionFull = CharPositionFull.get(characterId);
+    assertEq(positionFull.nextX, nextX);
+    assertEq(positionFull.nextY, nextY);
   }
 
   function _moveToMonsterLocation(uint256 characterId) internal {

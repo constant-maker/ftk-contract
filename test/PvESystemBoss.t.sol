@@ -16,9 +16,9 @@ import {
   BossInfoData,
   PvE,
   PvEData,
-  PvEExtraV2,
-  PvEExtraV2Data,
-  TileInfo3,
+  PvEExtra,
+  PvEExtraData,
+  Tile,
   CharFund
 } from "@codegen/index.sol";
 import { EntityType, SlotType, ItemType } from "@codegen/common.sol";
@@ -49,7 +49,7 @@ contract PvESystemBossTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFix
   }
 
   function test_ShouldHaveData() external {
-    uint256[] memory monsterIds = TileInfo3.getMonsterIds(locationX, locationY);
+    uint256[] memory monsterIds = Tile.getMonsterIds(locationX, locationY);
     assertEq(monsterIds.length, 1);
     assertEq(monsterIds[0], 9);
 

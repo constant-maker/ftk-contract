@@ -3,24 +3,20 @@ pragma solidity >=0.8.24;
 import { System } from "@latticexyz/world/src/System.sol";
 import { CharacterAccessControl } from "@abstracts/CharacterAccessControl.sol";
 import {
-  CharGachaV3,
-  CharGachaV3Data,
-  GachaV5,
-  GachaV5Data,
-  GachaPet,
-  GachaPetData,
+  CharGacha,
+  CharGachaData,
+  Gacha,
+  GachaData,
   GachaReqInfo,
   CharInventory,
   CharGachaReq,
-  ItemV2,
+  Item,
   EPetStats,
   PetCpnInfo,
-  PetCpnV2
+  PetCpn
 } from "@codegen/index.sol";
 import { Errors } from "@common/index.sol";
-import {
-  GachaIndexUtils, CharacterItemUtils, InventoryItemUtils, CharacterFundUtils, GachaUtils
-} from "@utils/index.sol";
+import { CharacterItemUtils, InventoryItemUtils, CharacterFundUtils, GachaUtils } from "@utils/index.sol";
 import { ItemCategoryType, PetComponentType, ItemType } from "@codegen/common.sol";
 
 // Interface for requesting random numbers
@@ -52,7 +48,7 @@ contract GachaSystem is System, CharacterAccessControl, IVRFConsumer {
     if (existingRequestId == 0) {
       revert Errors.GachaSystem_NoPendingRequest(characterId);
     }
-    CharGachaV3Data memory charGacha = CharGachaV3.get(characterId, existingRequestId);
+    CharGachaData memory charGacha = CharGacha.get(characterId, existingRequestId);
     if (!charGacha.isPending) {
       revert Errors.GachaSystem_RequestAlreadyFulfilled(existingRequestId);
     }
@@ -60,7 +56,7 @@ contract GachaSystem is System, CharacterAccessControl, IVRFConsumer {
       revert Errors.GachaSystem_ExistingPendingRequest(characterId);
     }
 
-    CharGachaV3.deleteRecord(characterId, existingRequestId); // remove old request
+    CharGacha.deleteRecord(characterId, existingRequestId); // remove old request
     GachaReqInfo.deleteRecord(existingRequestId); // remove old request mapping
 
     uint256 requestId = IVRFCoordinator(VRF_COORDINATOR).requestRandomNumbers(
@@ -74,7 +70,7 @@ contract GachaSystem is System, CharacterAccessControl, IVRFConsumer {
     GachaUtils.checkPendingRequest(characterId);
 
     // Validate gacha
-    GachaV5Data memory gacha = GachaV5.get(gachaId);
+    GachaData memory gacha = Gacha.get(gachaId);
     if (gacha.itemIds.length == 0) {
       revert Errors.Gacha_NoItemToGacha(gachaId);
     }
@@ -107,8 +103,8 @@ contract GachaSystem is System, CharacterAccessControl, IVRFConsumer {
       revert Errors.GachaSystem_InvalidRequestId(requestId);
     }
 
-    // Get the CharGachaV3 record
-    CharGachaV3Data memory charGacha = CharGachaV3.get(characterId, requestId);
+    // Get the CharGacha record
+    CharGachaData memory charGacha = CharGacha.get(characterId, requestId);
     if (!charGacha.isPending) {
       revert Errors.GachaSystem_RequestAlreadyFulfilled(requestId);
     }
@@ -118,26 +114,26 @@ contract GachaSystem is System, CharacterAccessControl, IVRFConsumer {
     uint256 randomNumber = randomNumbers[0];
 
     uint256 receivedItemId = _handleUnlimitedGacha(characterId, charGacha.gachaId, randomNumber);
-    if (ItemV2.getCategory(receivedItemId) == ItemCategoryType.Equipment) {
+    if (Item.getCategory(receivedItemId) == ItemCategoryType.Equipment) {
       uint256 equipmentId =
         CharInventory.getItemEquipmentIds(characterId, CharInventory.lengthEquipmentIds(characterId) - 1);
       charGacha.gachaEquipmentId = equipmentId;
-      if (ItemV2.getItemType(receivedItemId) == ItemType.Pet) {
+      if (Item.getItemType(receivedItemId) == ItemType.Pet) {
         _handlePetData(receivedItemId, equipmentId, randomNumber);
       }
     }
 
-    // Update the CharGachaV3 table with the received item and remove item from gacha
+    // Update the CharGacha table with the received item and remove item from gacha
     charGacha.randomNumber = randomNumber;
     charGacha.gachaItemId = receivedItemId;
     charGacha.isPending = false;
-    CharGachaV3.set(characterId, requestId, charGacha);
+    CharGacha.set(characterId, requestId, charGacha);
     GachaReqInfo.deleteRecord(requestId);
     CharGachaReq.set(characterId, 0);
   }
 
   function _handleUnlimitedGacha(uint256 characterId, uint256 gachaId, uint256 randomNumber) private returns (uint256) {
-    GachaV5Data memory gachaData = GachaV5.get(gachaId);
+    GachaData memory gachaData = Gacha.get(gachaId);
     uint256 r = randomNumber % TOTAL_PERCENT;
     uint256 cumulativePercent;
     uint256 len = gachaData.itemIds.length;
@@ -190,7 +186,7 @@ contract GachaSystem is System, CharacterAccessControl, IVRFConsumer {
       }
     }
 
-    // Store pet components in PetCpnV2 table
-    PetCpnV2.set(petEquipmentId, componentValues);
+    // Store pet components in PetCpn table
+    PetCpn.set(petEquipmentId, componentValues);
   }
 }

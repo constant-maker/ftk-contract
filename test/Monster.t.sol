@@ -5,8 +5,8 @@ import {
   MonsterData,
   MonsterStats,
   MonsterStatsData,
-  TileInfo3,
-  TileInfo3Data,
+  Tile,
+  TileData,
   MonsterLocation,
   MonsterLocationData
 } from "@codegen/index.sol";
@@ -39,7 +39,7 @@ contract MonsterTest is WorldFixture {
     assertEq(monsterData.itemAmounts[0], 1);
     assertEq(monsterData.itemAmounts[1], 1);
 
-    TileInfo3Data memory tileInfo = TileInfo3.get(30, -35);
+    TileData memory tileInfo = Tile.get(30, -35);
     assertEq(tileInfo.monsterIds.length, 2);
     assertEq(tileInfo.monsterIds[1], 2);
 

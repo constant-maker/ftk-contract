@@ -2,17 +2,18 @@ pragma solidity >=0.8.24;
 
 import { System } from "@latticexyz/world/src/System.sol";
 import { CharacterAccessControl } from "@abstracts/CharacterAccessControl.sol";
-import { ItemV2, ItemRecipeV3, ItemRecipeV3Data, CharPerk, CharStats2 } from "@codegen/index.sol";
+import { Item, ItemRecipe, ItemRecipeData, CharPerk } from "@codegen/index.sol";
 import { InventoryItemUtils } from "@utils/InventoryItemUtils.sol";
 import { CharacterPositionUtils } from "@utils/CharacterPositionUtils.sol";
 import { CharacterFundUtils } from "@utils/CharacterFundUtils.sol";
 import { CharacterItemUtils } from "@utils/CharacterItemUtils.sol";
+import { CharacterPerkUtils } from "@utils/CharacterPerkUtils.sol";
 import { Errors } from "@common/Errors.sol";
 import { ItemCategoryType, ItemType } from "@codegen/common.sol";
 import { Config } from "@common/index.sol";
 
 contract CraftSystem is System, CharacterAccessControl {
-  /// @dev Craft item when character has enough resources
+  /// @dev craft item when character has enough resources
   function craftItem(
     uint256 characterId,
     uint256 cityId,
@@ -22,20 +23,16 @@ contract CraftSystem is System, CharacterAccessControl {
     public
     onlyAuthorizedWallet(characterId)
   {
-    if (!CharacterPositionUtils.isInCity(characterId, cityId)) {
-      revert Errors.CraftSystem_MustInACity(characterId);
-    }
+    CharacterPositionUtils.mustInCapital(characterId, cityId);
     if (craftAmount == 0) {
       revert Errors.CraftSystem_CraftAmountIsZero();
     }
-    ItemRecipeV3Data memory recipe = ItemRecipeV3.get(craftItemId);
-    // Check perk requirement
+    ItemRecipeData memory recipe = ItemRecipe.get(craftItemId);
+    // check perk requirement
     _validateRecipe(characterId, craftItemId, recipe);
-    // Spend gold
+    // spend gold
     CharacterFundUtils.decreaseGold(characterId, recipe.goldCost * craftAmount);
-    // Spend fame
-    _spendFame(characterId, recipe.fameCost * craftAmount);
-    // Spend resources
+    // spend resources
     uint256 resourcesLength = recipe.itemIds.length;
     if (resourcesLength > 0) {
       uint32[] memory sumAmounts = new uint32[](resourcesLength);
@@ -44,23 +41,12 @@ contract CraftSystem is System, CharacterAccessControl {
       }
       InventoryItemUtils.removeItems(characterId, recipe.itemIds, sumAmounts);
     }
-    // Add crafted item
+    // add crafted item
     CharacterItemUtils.addNewItem(characterId, craftItemId, craftAmount);
   }
 
-  function _spendFame(uint256 characterId, uint32 fameCost) private {
-    if (fameCost == 0) {
-      return;
-    }
-    uint32 charFame = CharStats2.getFame(characterId);
-    if (charFame < fameCost + Config.DEFAULT_FAME) {
-      revert Errors.CraftSystem_NotEnoughFame(characterId, charFame, fameCost);
-    }
-    CharStats2.setFame(characterId, charFame - fameCost);
-  }
-
-  function _validateRecipe(uint256 characterId, uint256 craftItemId, ItemRecipeV3Data memory recipe) private view {
-    if (recipe.fameCost == 0 && recipe.itemIds.length == 0) {
+  function _validateRecipe(uint256 characterId, uint256 craftItemId, ItemRecipeData memory recipe) private view {
+    if (recipe.itemIds.length == 0) {
       revert Errors.CraftSystem_NoRecipeForItem(craftItemId);
     }
     uint256 lenPerkTypes = recipe.perkTypes.length;
@@ -69,8 +55,7 @@ contract CraftSystem is System, CharacterAccessControl {
         revert Errors.CraftSystem_InvalidRecipeData(craftItemId);
       }
       for (uint256 i = 0; i < lenPerkTypes; i++) {
-        uint8 currentPerk = CharPerk.getLevel(characterId, ItemType(recipe.perkTypes[i])) + 1; // +1 because perk start
-        // from 0
+        uint8 currentPerk = CharacterPerkUtils.getPerkLevel(characterId, ItemType(recipe.perkTypes[i]));
         if (currentPerk < recipe.requiredPerkLevels[i]) {
           revert Errors.CraftSystem_PerkLevelIsNotEnough(characterId, craftItemId);
         }
