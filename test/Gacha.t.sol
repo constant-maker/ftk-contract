@@ -143,7 +143,7 @@ contract GachaTest is Test, WorldFixture, SpawnSystemFixture, WelcomeSystemFixtu
 
     charGacha = CharGacha.get(characterId, requestId);
     assertFalse(charGacha.isPending);
-    assertEq(charGacha.randomNumber, 123);
+    assertEq(charGacha.randomNumbers[0], 123);
     assertTrue(charGacha.gachaItemId == 361 || charGacha.gachaItemId == 362);
     assertEq(CharOtherItem.getAmount(characterId, 1), 0);
     assertTrue(CharGachaReq.get(characterId) == 0);
@@ -233,7 +233,7 @@ contract GachaTest is Test, WorldFixture, SpawnSystemFixture, WelcomeSystemFixtu
     console2.log("Assert data after gacha fulfillment");
     charGacha = CharGacha.get(characterId, requestId);
     assertFalse(charGacha.isPending);
-    assertEq(charGacha.randomNumber, 123);
+    assertEq(charGacha.randomNumbers[0], 123);
     assertTrue(charGacha.gachaItemId == 436 || charGacha.gachaItemId == 464 || charGacha.gachaItemId == 465);
     assertEq(CharOtherItem.getAmount(characterId, 1), 0);
     assertTrue(CharGachaReq.get(characterId) == 0);
@@ -328,7 +328,7 @@ contract GachaTest is Test, WorldFixture, SpawnSystemFixture, WelcomeSystemFixtu
 
     charGacha = CharGacha.get(characterId, requestId);
     assertFalse(charGacha.isPending);
-    assertEq(charGacha.randomNumber, 123);
+    assertEq(charGacha.randomNumbers[0], 123);
     assertTrue(charGacha.gachaItemId == 361 || charGacha.gachaItemId == 362);
     assertEq(CharOtherItem.getAmount(characterId, 1), 0);
     assertTrue(CharGachaReq.get(characterId) == 0);

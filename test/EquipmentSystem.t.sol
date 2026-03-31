@@ -17,7 +17,7 @@ import {
   EquipmentInfo,
   Item,
   CharFund,
-  CharEqCache
+  CharEquipmentCache
 } from "@codegen/index.sol";
 import { SlotType, ItemType } from "@codegen/common.sol";
 import { EquipData } from "@utils/CharacterEquipmentUtils.sol";
@@ -267,7 +267,7 @@ contract EquipmentSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemF
     world.app__gearUpEquipments(characterId, equipDatas);
     vm.stopPrank();
 
-    uint32 barrier = CharEqCache.getBarrier(characterId, SlotType.Weapon);
+    uint32 barrier = CharEquipmentCache.getBarrier(characterId, SlotType.Weapon);
     console2.log("barrier", barrier);
     assertEq(barrier, 0);
 

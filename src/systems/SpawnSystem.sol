@@ -10,11 +10,11 @@ import {
   ActiveChar,
   Kingdom,
   CrystalFee,
-  CityVault,
-  CityVault2
+  CityVault
 } from "@codegen/index.sol";
 import { CharacterStateType } from "@codegen/common.sol";
-import { CharacterPositionUtils, CharacterUtils } from "@utils/index.sol";
+import { CharacterPositionUtils, CharacterUtils, CityVaultUtils } from "@utils/index.sol";
+import { PlatformUtils } from "@utils/PlatformUtils.sol";
 import { Errors, Events, Config } from "@common/index.sol";
 
 contract SpawnSystem is System {
@@ -91,12 +91,20 @@ contract SpawnSystem is System {
   }
 
   function _shareFeeToCityVault(uint8 kingdomId, uint256 rawEthFee) private {
+    uint256 crystalAmount = rawEthFee / Config.CRYSTAL_UNIT_PRICE;
+    if (crystalAmount == 0) return;
+
     uint8 feePercentage = CrystalFee.getFee(kingdomId);
-    if (feePercentage == 0) return;
-    uint256 ethFeeAmount = (rawEthFee * uint256(feePercentage)) / 100;
-    uint256 crystalAmount = ethFeeAmount / Config.CRYSTAL_UNIT_PRICE;
-    uint256 capitalId = Kingdom.getCapitalId(kingdomId);
-    uint256 currentVaultCrystal = CityVault2.getCrystal(capitalId);
-    CityVault2.setCrystal(capitalId, currentVaultCrystal + crystalAmount);
+    uint256 vaultCrystalAmount = (crystalAmount * uint256(feePercentage)) / 100;
+    CityVaultUtils.updateVaultCrystalByKingdomId(kingdomId, vaultCrystalAmount, true);
+
+    if (vaultCrystalAmount > 0) {
+      PlatformUtils.updateRootVaultCrystal(vaultCrystalAmount, true);
+    }
+
+    uint256 teamCrystalAmount = crystalAmount - vaultCrystalAmount;
+    if (teamCrystalAmount > 0) {
+      PlatformUtils.updateRootTeamCrystal(teamCrystalAmount, true);
+    }
   }
 }

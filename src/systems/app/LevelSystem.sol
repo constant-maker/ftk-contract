@@ -9,24 +9,17 @@ import {
   CharBaseStats,
   CharBaseStatsData,
   CharPerk,
-  CharPerkData,
-  CharReborn
+  CharPerkData
 } from "@codegen/index.sol";
 import { CharacterAccessControl } from "@abstracts/CharacterAccessControl.sol";
 import { CharacterStatsUtils } from "@utils/CharacterStatsUtils.sol";
-import { QuestStatusType, QuestType, StatType, ItemType } from "@codegen/common.sol";
-import { Errors } from "@common/Errors.sol";
-import { Config } from "@common/Config.sol";
-import { IncreaseStatData } from "./LevelSystem.sol";
-
-struct IncreaseStatData {
-  StatType statType;
-  uint16 amount;
-}
+import { StatType, ItemType } from "@codegen/common.sol";
+import { Errors, Config } from "@common/index.sol";
+import { IncreaseStatData } from "@common/Types.sol";
 
 contract LevelSystem is System, CharacterAccessControl {
   /// @dev level up
-  function levelUp(uint256 characterId, uint16 amount) public {
+  function levelUp(uint256 characterId, uint16 amount) public onlyAuthorizedWallet(characterId) {
     if (amount == 0) {
       revert Errors.LevelSystem_InvalidLevelAmount(amount);
     }
@@ -122,9 +115,6 @@ contract LevelSystem is System, CharacterAccessControl {
   {
     uint16 currentBaseStat = CharacterStatsUtils.getBaseStatByStatType(characterId, data.statType);
     uint16 toBaseStat = currentBaseStat + data.amount;
-    // if (toBaseStat > Config.MAX_BASE_STAT) {
-    //   revert Errors.Stats_ExceedMaxBaseStat(data.statType, Config.MAX_BASE_STAT, toBaseStat);
-    // }
     uint16 totalPointToUse;
     uint16 pointPerStat = 1;
     if (currentBaseStat > 0) {

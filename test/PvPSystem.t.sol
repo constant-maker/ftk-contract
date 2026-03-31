@@ -44,7 +44,7 @@ import {
   CharacterItemUtils,
   CharacterEquipmentUtils
 } from "@utils/index.sol";
-import { LootItems } from "@systems/app/TileSystem.sol";
+import { LootItems } from "@utils/TileInventoryUtils.sol";
 import { EquipData } from "@utils/CharacterEquipmentUtils.sol";
 import { ItemsActionData } from "@common/Types.sol";
 import { TargetItemData } from "@systems/app/ConsumeSystem.sol";

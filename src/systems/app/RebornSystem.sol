@@ -7,20 +7,21 @@ import {
   CharCurrentStats,
   CharCurrentStatsData,
   CharBaseStats,
-  CharBaseStatsData,
   CharReborn,
   CharInfo
 } from "@codegen/index.sol";
 import { CharAchievementUtils } from "@utils/CharAchievementUtils.sol";
+import { CharacterBuffUtils } from "@utils/CharacterBuffUtils.sol";
 import { InventoryItemUtils } from "@utils/InventoryItemUtils.sol";
 import { CharacterEquipmentUtils } from "@utils/CharacterEquipmentUtils.sol";
 import { Errors, Config } from "@common/index.sol";
+import { CharacterStateType } from "@codegen/common.sol";
 
 contract RebornSystem is System, CharacterAccessControl {
   uint16 constant MAX_REBORN = 10; // Current reborn limit
 
   /// @dev reborn character to level 1 with extra stat points
-  function reborn(uint256 characterId) public onlyAuthorizedWallet(characterId) {
+  function reborn(uint256 characterId) public mustInState(characterId, CharacterStateType.Standby) onlyAuthorizedWallet(characterId) {
     // require character level 99
     uint16 currentLevel = CharStats.getLevel(characterId);
     if (currentLevel < Config.MAX_LEVEL) {
@@ -32,6 +33,8 @@ contract RebornSystem is System, CharacterAccessControl {
     }
     (uint256[] memory itemIds, uint32[] memory amounts) = _requiredResources(rebornNum);
     InventoryItemUtils.removeItems(characterId, itemIds, amounts);
+    // clear all temporary buffs/debuffs before removing equipment stats
+    CharacterBuffUtils.dispelAllBuff(characterId);
     // unequip all equipment
     CharacterEquipmentUtils.unequipAllEquipment(characterId);
 
@@ -60,16 +63,17 @@ contract RebornSystem is System, CharacterAccessControl {
   }
 
   function _getRebornCurrentStats(uint256 characterId) private view returns (CharCurrentStatsData memory) {
-    CharCurrentStatsData memory charCurrentStats = CharCurrentStats.get(characterId);
     (uint16 oAtk, uint16 oDef, uint16 oAgi) = _getCharacterOriginalStats(characterId);
-    // set new current stats
-    charCurrentStats.hp = Config.DEFAULT_HP;
-    charCurrentStats.atk = oAtk;
-    charCurrentStats.def = oDef;
-    charCurrentStats.agi = oAgi;
-    charCurrentStats.exp = 0;
-
-    return charCurrentStats;
+    return CharCurrentStatsData({
+      exp: 0,
+      weight: CharCurrentStats.getWeight(characterId),
+      hp: Config.DEFAULT_HP,
+      barrier: 0,
+      atk: oAtk,
+      def: oDef,
+      agi: oAgi,
+      ms: uint16(Config.DEFAULT_MOVEMENT_SPEED)
+    });
   }
 
   function _getCharacterOriginalStats(uint256 characterId) private view returns (uint16 atk, uint16 def, uint16 agi) {

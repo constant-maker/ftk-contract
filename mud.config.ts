@@ -11,7 +11,6 @@ import SKILL_TABLES from "./tables/skillTables";
 import BATTLE_TABLES from "./tables/battleTables";
 import MONSTER_TABLES from "./tables/monsterTables";
 import ACHIEVEMENT_TABLES from "./tables/achievementTables";
-import SOCIAL_TABLES from "./tables/socialTables";
 import MARKET_TABLES from "./tables/marketTables";
 import KING_TABLES from "./tables/kingTables";
 import KINGDOM_TABLES from "./tables/kingdomTables";
@@ -21,6 +20,7 @@ import GUILD_TABLES from "./tables/guildTables";
 import GACHA_TABLES from "./tables/gachaTables";
 import SALE_TABLES from "./tables/saleTables";
 import PORTAL_TABLES from "./tables/portalTables";
+import PLATFORM_TABLES from "./tables/platform";
 
 export default defineWorld({
   deploy: {
@@ -59,7 +59,6 @@ export default defineWorld({
     EffectType: ["None", "Burn", "Poison", "Frostbite", "Stun"],
     RoleType: ["None", "VaultKeeper", "KingGuard"],
     // Note: Healing potion represents for ItemType HealingItem
-    // To save gas, limit contract size purpose only
     BuffType: ["None", "StatsModify", "ExpAmplify", "InstantDamage", "InstantHeal", "HealingPotion"],
     CurrencyType: ["Gold", "Crystal"],
     GachaType: ["OpenBox"],
@@ -86,7 +85,6 @@ export default defineWorld({
     ...BATTLE_TABLES,
     ...MONSTER_TABLES,
     ...ACHIEVEMENT_TABLES,
-    ...SOCIAL_TABLES,
     ...MARKET_TABLES,
     ...KING_TABLES,
     ...KINGDOM_TABLES,
@@ -96,6 +94,7 @@ export default defineWorld({
     ...GACHA_TABLES,
     ...SALE_TABLES,
     ...PORTAL_TABLES,
+    ...PLATFORM_TABLES,
   },
   excludeSystems: ["SpawnSystem", "GachaSystem"], // registered as root systems
 });

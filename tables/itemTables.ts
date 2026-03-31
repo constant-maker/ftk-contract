@@ -35,7 +35,6 @@ const ITEM_TABLES: any = {
   EquipmentInfo2: {
     schema: {
       itemId: "uint256",
-      maxLevel: "uint8",
       bonusWeight: "uint32",
       shieldBarrier: "uint32",
     },
@@ -62,17 +61,6 @@ const ITEM_TABLES: any = {
     schema: {
       itemId: "uint256",
       hpRestore: "uint32",
-    },
-    key: ['itemId'],
-  },
-  StatModItemInfo: { // Stat Modification Item Info
-    schema: {
-      itemId: "uint256",
-      duration: "uint16",
-      atkPercent: "int16",
-      defPercent: "int16",
-      agiPercent: "int16",
-      ms: "int16",
     },
     key: ['itemId'],
   },
@@ -142,7 +130,7 @@ const ITEM_TABLES: any = {
     },
     key: [],
   },
-  AshVaultExc: {
+  AshVaultExc: { // AshVaultExchange
     schema: {
       itemId: "uint256",
       inputItemIds: "uint256[]",

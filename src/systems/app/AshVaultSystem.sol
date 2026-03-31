@@ -8,7 +8,7 @@ import { City, CharAshVault, AshVaultExc, AshVaultExcData, Item } from "@codegen
 import { ItemCategoryType } from "@codegen/common.sol";
 
 contract AshVaultSystem is System, CharacterAccessControl {
-  /// @dev delegate to specific session wallet
+  /// @dev Add item to ash vault, character must be in a capital, and the item will be removed from inventory
   function addToAshVault(
     uint256 characterId,
     uint256 capitalId,
@@ -21,7 +21,7 @@ contract AshVaultSystem is System, CharacterAccessControl {
     if (itemIds.length != amounts.length) {
       revert Errors.AshVaultSystem_InvalidParams(itemIds.length, amounts.length);
     }
-    CharacterPositionUtils.mustInCapital(characterId, capitalId);
+    CharacterPositionUtils.mustInExactCapital(characterId, capitalId);
 
     // deduct from inventory
     InventoryItemUtils.removeItems(characterId, itemIds, amounts);
@@ -48,6 +48,9 @@ contract AshVaultSystem is System, CharacterAccessControl {
     AshVaultExcData memory exchangeData = AshVaultExc.get(itemId);
     if (exchangeData.inputItemIds.length == 0) {
       revert Errors.AshVaultSystem_ExchangeNotExist(itemId);
+    }
+    if (exchangeData.inputItemIds.length != exchangeData.inputItemAmounts.length) {
+      revert Errors.AshVaultSystem_InvalidExchangeData(itemId);
     }
     // deduct input items
     uint256 len = exchangeData.inputItemIds.length;

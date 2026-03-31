@@ -13,7 +13,6 @@ library Config {
   uint16 public constant DEFAULT_MOVEMENT_DURATION = 8; // Seconds
   uint16 public constant DEFAULT_PLAYER_ACTION_DURATION = 10; // Seconds
   uint16 public constant MAX_LEVEL = 99;
-  uint16 public constant MAX_BASE_STAT = 130;
   uint16 public constant ONE_HAND_ADVANTAGE_TYPE_DAMAGE_MODIFIER = 8; // 8%
   uint16 public constant TWO_HAND_ADVANTAGE_TYPE_DAMAGE_MODIFIER = 15; // 15%
   uint16 public constant ATTACK_COOLDOWN = 2; // Seconds
@@ -51,5 +50,6 @@ library Config {
   uint256 public constant MIN_PET_CRYSTAL_PRICE = 1000; // Minimum crystal price for pet item
   uint256 public constant SELL_CRYSTAL_PROCESSING_TIME = 3 days; // 3 days
   uint256 public constant PLATFORM_FEE_PERCENTAGE = 3; // platform fee (apply for crystal only)
+  uint256 public constant FEE_PERCENT_SHARE_TO_BACKER = 50; // 50% of team-received amount goes to backer
   address public constant TEAM_ADDRESS = address(0x0);
 }

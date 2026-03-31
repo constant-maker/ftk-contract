@@ -64,8 +64,9 @@ contract CitySystem is System, CharacterAccessControl {
     CharacterPositionUtils.mustInCity(characterId, cityId);
     uint32 currentHp = CharCurrentStats.getHp(characterId);
     uint32 maxHp = CharStats.getHp(characterId);
+    // safe check for overflow, and also if character is already full hp, no need to charge gold
+    if (currentHp >= maxHp) return;
     uint32 missingHp = maxHp - currentHp;
-    if (missingHp == 0) return;
     uint32 goldCost = missingHp / 50;
     if (missingHp % 50 != 0) {
       goldCost++;
@@ -91,6 +92,9 @@ contract CitySystem is System, CharacterAccessControl {
     mustInState(characterId, CharacterStateType.Standby)
     validateCurrentWeight(characterId)
   {
+    if (fromCityId == toCityId) {
+      revert Errors.CitySystem_SameCityTeleportation(fromCityId);
+    }
     // require both cities level 3 or above for teleportation
     _validateCity(characterId, fromCityId, 3);
     _validateCity(characterId, toCityId, 3);

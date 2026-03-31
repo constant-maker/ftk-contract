@@ -28,10 +28,19 @@ import {
   TileUtils
 } from "@utils/index.sol";
 import { CharacterStateType, EntityType } from "@codegen/common.sol";
-import { Config, Errors } from "@common/index.sol";
+import { Errors } from "@common/index.sol";
 import { CharAchievementUtils } from "@utils/CharAchievementUtils.sol";
 
 contract PvESystem is System, CharacterAccessControl {
+  uint256 private constant ACH_DEFEAT_FIRST_BOSS = 3;
+  uint256 private constant ACH_DEFEAT_IGNIS = 4;
+  uint256 private constant ACH_DEFEAT_KALYNDRA = 11;
+  uint256 private constant ACH_DEFEAT_BEOWULF = 20;
+
+  uint256 private constant BOSS_IGNIS_ID = 9;
+  uint256 private constant BOSS_KALYNDRA_ID = 42;
+  uint256 private constant BOSS_BEOWULF_ID = 43;
+
   function pveAFK(
     uint256 characterId,
     uint256 monsterId,
@@ -115,18 +124,27 @@ contract PvESystem is System, CharacterAccessControl {
       // increase slot farm
       TileUtils.increaseFarmSlot(characterPosition.x, characterPosition.y);
       if (isBoss) {
-        CharAchievementUtils.addAchievement(characterId, 3); // defeated the first boss
-        if (monsterId == 9) {
-          CharAchievementUtils.addAchievement(characterId, 4); // defeated the Ignis
-        } else if (monsterId == 42) {
-          CharAchievementUtils.addAchievement(characterId, 11); // defeated Kalyndra the Great Serpent
-        } else if (monsterId == 43) {
-          CharAchievementUtils.addAchievement(characterId, 20); // defeated Beowulf the Frostmaw
-        }
+        _awardBossAchievements(characterId, monsterId);
       }
       if (_tryToLevelUp(characterId)) return; // if level up success character hp will be recover to max hp
     }
     CharacterStatsUtils.setNewHp(characterId, characterHp);
+  }
+
+  function _awardBossAchievements(uint256 characterId, uint256 monsterId) private {
+    CharAchievementUtils.addAchievement(characterId, ACH_DEFEAT_FIRST_BOSS);
+
+    uint256 bossAchievementId = _getBossAchievementId(monsterId);
+    if (bossAchievementId != 0) {
+      CharAchievementUtils.addAchievement(characterId, bossAchievementId);
+    }
+  }
+
+  function _getBossAchievementId(uint256 monsterId) private pure returns (uint256) {
+    if (monsterId == BOSS_IGNIS_ID) return ACH_DEFEAT_IGNIS;
+    if (monsterId == BOSS_KALYNDRA_ID) return ACH_DEFEAT_KALYNDRA;
+    if (monsterId == BOSS_BEOWULF_ID) return ACH_DEFEAT_BEOWULF;
+    return 0;
   }
 
   // try to level up character to next level if exp is enough

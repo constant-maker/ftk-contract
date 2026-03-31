@@ -1,6 +1,6 @@
 pragma solidity >=0.8.24;
 
-import { CharInventory, IvEquipmentIndex } from "@codegen/index.sol";
+import { CharInventory, InvEquipmentIndex } from "@codegen/index.sol";
 import { CharacterWeightUtils } from "./CharacterWeightUtils.sol";
 import { Errors } from "@common/Errors.sol";
 
@@ -31,7 +31,7 @@ library InventoryEquipmentUtils {
     // The value is stored at length-1, but we add 1 to all indexes
     // and use 0 as a sentinel value
     uint256 index = CharInventory.lengthEquipmentIds(characterId);
-    IvEquipmentIndex.set(characterId, equipmentId, index);
+    InvEquipmentIndex.set(characterId, equipmentId, index);
   }
 
   /// @dev Remove equipments from inventory for character
@@ -53,7 +53,7 @@ library InventoryEquipmentUtils {
   }
 
   function _removeEquipment(uint256 characterId, uint256 equipmentId) private {
-    uint256 index = IvEquipmentIndex.get(characterId, equipmentId);
+    uint256 index = InvEquipmentIndex.get(characterId, equipmentId);
     if (index == 0) revert Errors.Equipment_NotOwned(characterId, equipmentId);
     // To delete an element from the _values array in O(1), we swap the element to delete with the last one in
     // the array, and then remove the last element (sometimes called as 'swap and pop').
@@ -63,15 +63,15 @@ library InventoryEquipmentUtils {
     if (valueIndex != lastIndex) {
       uint256 lastValue = CharInventory.getItemEquipmentIds(characterId, lastIndex);
       CharInventory.updateEquipmentIds(characterId, valueIndex, lastValue);
-      IvEquipmentIndex.set(characterId, lastValue, index);
+      InvEquipmentIndex.set(characterId, lastValue, index);
     }
     CharInventory.popEquipmentIds(characterId);
-    IvEquipmentIndex.deleteRecord(characterId, equipmentId);
+    InvEquipmentIndex.deleteRecord(characterId, equipmentId);
   }
 
   /// @dev Return whether the character has the equipment in inventory
   function hasEquipment(uint256 characterId, uint256 equipmentId) public view returns (bool) {
-    uint256 index = IvEquipmentIndex.get(characterId, equipmentId);
+    uint256 index = InvEquipmentIndex.get(characterId, equipmentId);
     return index != 0;
   }
 }

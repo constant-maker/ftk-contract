@@ -37,7 +37,7 @@ const KINGDOM_TABLES: any = {
   CityVault2: {
     schema: {
       cityId: "uint256",
-      gold: "uint256", // normally it should be uint32, but we want to support more gold in vault, so use uint256 here
+      gold: "uint256", // Normally it should be uint32, but we want to support more gold in vault, so use uint256 here
       crystal: "uint256",
     },
     key: ['cityId'],
@@ -64,7 +64,7 @@ const KINGDOM_TABLES: any = {
     },
     key: ['characterId'],
   },
-  VaultRestriction: { // restrict withdraw by kingdom
+  VaultRestriction: { // Restrict withdraw by kingdom
     schema: {
       kingdomId: "uint8",
       itemId: "uint256",
@@ -101,7 +101,7 @@ const KINGDOM_TABLES: any = {
     },
     key: ['kingdomId'],
   },
-  CResourceRequire: {
+  CResourceRequire: { // City Resource Requirement
     schema: {
       level: "uint8",
       resourceIds: "uint256[]",

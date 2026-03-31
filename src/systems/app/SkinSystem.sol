@@ -2,8 +2,8 @@ pragma solidity >=0.8.24;
 
 import { System } from "@latticexyz/world/src/System.sol";
 import { CharacterAccessControl } from "@abstracts/CharacterAccessControl.sol";
-import { CharSkin, SkinInfo } from "@codegen/index.sol";
-import { SkinSlotType } from "@codegen/common.sol";
+import { CharSkin, SkinInfo, Item } from "@codegen/index.sol";
+import { SkinSlotType, ItemType } from "@codegen/common.sol";
 import { Errors } from "@common/index.sol";
 import { InventoryItemUtils } from "@utils/InventoryItemUtils.sol";
 import { EquipSkinData } from "@utils/CharacterEquipmentUtils.sol";
@@ -16,8 +16,13 @@ contract SkinSystem is System, CharacterAccessControl {
   }
 
   function _equipSkin(uint256 characterId, EquipSkinData calldata equipSkinData) private {
-    if (equipSkinData.itemId != 0 && SkinInfo.getSlotType(equipSkinData.itemId) != equipSkinData.slotType) {
-      revert Errors.SkinSystem_SkinSlotTypeMismatch(equipSkinData.itemId, equipSkinData.slotType);
+    if (equipSkinData.itemId != 0) {
+      if (Item.getItemType(equipSkinData.itemId) != ItemType.Skin) {
+        revert Errors.SkinSystem_InvalidSkinItem(equipSkinData.itemId);
+      }
+      if (SkinInfo.getSlotType(equipSkinData.itemId) != equipSkinData.slotType) {
+        revert Errors.SkinSystem_SkinSlotTypeMismatch(equipSkinData.itemId, equipSkinData.slotType);
+      }
     }
     uint256 currentEquippedItemId = CharSkin.get(characterId, equipSkinData.slotType);
     if (equipSkinData.itemId == 0) {

@@ -94,7 +94,7 @@ library BattlePvEUtils2 {
 
     // reset afk data
     PvEAfk.deleteRecord(characterId);
-    PvEAfkExpAmp.set(characterId, 0);
+    PvEAfkExpAmp.deleteRecord(characterId);
     PvEAfkLoc.deleteRecord(characterPosition.x, characterPosition.y);
     CharState.set(characterId, CharacterStateType.Standby, block.timestamp);
   }

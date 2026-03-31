@@ -23,14 +23,8 @@ import {
   InventoryEquipmentUtils,
   KingdomUtils
 } from "@utils/index.sol";
+import { LootItems } from "@utils/TileInventoryUtils.sol";
 import { Errors, Config } from "@common/index.sol";
-import { LootItems } from "./TileSystem.sol";
-
-struct LootItems {
-  uint256[] equipmentIds;
-  uint256[] itemIds;
-  uint32[] itemAmounts;
-}
 
 contract TileSystem is System, CharacterAccessControl {
   uint32 constant TILE_OCCUPATION_COST = 5; // gold
@@ -83,7 +77,7 @@ contract TileSystem is System, CharacterAccessControl {
 
   function lootItems(uint256 characterId, LootItems calldata data) public onlyAuthorizedWallet(characterId) {
     if (data.itemIds.length != data.itemAmounts.length) {
-      revert("Invalid input: itemIds and itemAmounts");
+      revert Errors.TileSystem_InvalidLootParams(data.itemIds.length, data.itemAmounts.length);
     }
     CharPositionData memory position = CharacterPositionUtils.getCurrentPosition(characterId);
     int32 x = position.x;

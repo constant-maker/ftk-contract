@@ -12,12 +12,16 @@ import {
   CharInfo,
   CharPositionData,
   Tile,
+  TileInventory,
   TileData
 } from "@codegen/index.sol";
 import { CharacterAccessControl } from "@abstracts/CharacterAccessControl.sol";
 import { CharacterPositionUtils } from "@utils/CharacterPositionUtils.sol";
 import { CharacterFundUtils } from "@utils/CharacterFundUtils.sol";
 import { InventoryItemUtils } from "@utils/InventoryItemUtils.sol";
+import { TileInventoryUtils, LootItems } from "@utils/TileInventoryUtils.sol";
+import { Config } from "@common/Config.sol";
+import { Errors } from "@common/Errors.sol";
 import { TestHelper } from "./TestHelper.sol";
 import { console2 } from "forge-std/console2.sol";
 import { KingSetting, Alliance } from "@codegen/index.sol";
@@ -190,5 +194,92 @@ contract TileSystemTest is WorldFixture, SpawnSystemFixture, MoveSystemFixture {
 
     newFame = CharStats.getFame(characterId);
     assertEq(newFame, charFame + 10 - 100); // penalty 100 fame for occupying tile in alliance territory
+  }
+
+  function test_LootItems_RevertInvalidParams() external {
+    uint256[] memory equipmentIds = new uint256[](0);
+    uint256[] memory itemIds = new uint256[](1);
+    uint32[] memory itemAmounts = new uint32[](0);
+    itemIds[0] = woodTier1_Id;
+
+    vm.expectRevert(abi.encodeWithSelector(Errors.TileSystem_InvalidLootParams.selector, uint256(1), uint256(0)));
+    vm.startPrank(player);
+    world.app__lootItems(
+      characterId, LootItems({ equipmentIds: equipmentIds, itemIds: itemIds, itemAmounts: itemAmounts })
+    );
+    vm.stopPrank();
+  }
+
+  function test_LootItems_RevertNoItemInThisTile_WhenExpired() external {
+    CharPositionData memory charPosition = CharacterPositionUtils.getCurrentPosition(characterId);
+    int32 x = charPosition.x;
+    int32 y = charPosition.y;
+
+    vm.startPrank(worldDeployer);
+    TileInventory.setLastDropTime(x, y, block.timestamp - Config.TILE_ITEM_AVAILABLE_DURATION - 1);
+    vm.stopPrank();
+
+    uint256[] memory equipmentIds = new uint256[](0);
+    uint256[] memory itemIds = new uint256[](1);
+    uint32[] memory itemAmounts = new uint32[](1);
+    itemIds[0] = woodTier1_Id;
+    itemAmounts[0] = 1;
+
+    vm.expectRevert(abi.encodeWithSelector(Errors.TileSystem_NoItemInThisTile.selector, x, y, TileInventory.getLastDropTime(x, y)));
+    vm.startPrank(player);
+    world.app__lootItems(
+      characterId, LootItems({ equipmentIds: equipmentIds, itemIds: itemIds, itemAmounts: itemAmounts })
+    );
+    vm.stopPrank();
+  }
+
+  function test_LootItems_RevertItemNotFound() external {
+    CharPositionData memory charPosition = CharacterPositionUtils.getCurrentPosition(characterId);
+    int32 x = charPosition.x;
+    int32 y = charPosition.y;
+
+    vm.startPrank(worldDeployer);
+    TileInventory.setLastDropTime(x, y, block.timestamp);
+    vm.stopPrank();
+
+    uint256[] memory equipmentIds = new uint256[](0);
+    uint256[] memory itemIds = new uint256[](1);
+    uint32[] memory itemAmounts = new uint32[](1);
+    itemIds[0] = woodTier1_Id;
+    itemAmounts[0] = 1;
+
+    vm.expectRevert(abi.encodeWithSelector(Errors.TileSystem_ItemNotFound.selector, x, y, woodTier1_Id));
+    vm.startPrank(player);
+    world.app__lootItems(
+      characterId, LootItems({ equipmentIds: equipmentIds, itemIds: itemIds, itemAmounts: itemAmounts })
+    );
+    vm.stopPrank();
+  }
+
+  function test_LootItems_Success() external {
+    CharPositionData memory charPosition = CharacterPositionUtils.getCurrentPosition(characterId);
+    int32 x = charPosition.x;
+    int32 y = charPosition.y;
+
+    vm.startPrank(worldDeployer);
+    TileInventoryUtils.addItem(x, y, woodTier1_Id, 5);
+    vm.stopPrank();
+
+    uint256[] memory equipmentIds = new uint256[](0);
+    uint256[] memory itemIds = new uint256[](1);
+    uint32[] memory itemAmounts = new uint32[](1);
+    itemIds[0] = woodTier1_Id;
+    itemAmounts[0] = 3;
+
+    uint32 balanceBefore = CharOtherItem.getAmount(characterId, woodTier1_Id);
+
+    vm.startPrank(player);
+    world.app__lootItems(
+      characterId, LootItems({ equipmentIds: equipmentIds, itemIds: itemIds, itemAmounts: itemAmounts })
+    );
+    vm.stopPrank();
+
+    assertEq(CharOtherItem.getAmount(characterId, woodTier1_Id), balanceBefore + 3);
+    assertEq(TileInventory.getItemOtherItemAmounts(x, y, 0), 2);
   }
 }

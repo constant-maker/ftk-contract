@@ -3,6 +3,7 @@ pragma solidity >=0.8.24;
 import { System } from "@latticexyz/world/src/System.sol";
 import {
   CharState,
+  CharStateData,
   CharInventory,
   CharInventoryData,
   CharPositionFull,
@@ -11,8 +12,13 @@ import {
   CharStorageData,
   CharFarmingState,
   CharFarmingStateData,
+  CharBuff,
+  CharBuffData,
+  CharDebuff,
+  CharDebuffData,
   PvEAfk,
   PvEAfkData,
+  PvEAfkExpAmp,
   PvEAfkLoc,
   CharStats,
   CharStatsData,
@@ -73,13 +79,37 @@ contract RescueSystem is System, CharacterAccessControl {
   }
 
   function _rescueState(uint256 characterId, CharPositionFullData memory positionData) private {
-    CharState.setState(characterId, CharState.getState(characterId));
+    CharStateData memory stateData = CharState.get(characterId);
+    CharState.set(characterId, stateData);
+
     CharFarmingStateData memory farmingState = CharFarmingState.get(characterId);
     CharFarmingState.set(characterId, farmingState);
+
+    CharBuffData memory buffData = CharBuff.get(characterId);
+    CharBuff.set(characterId, buffData);
+
+    CharDebuffData memory debuffData = CharDebuff.get(characterId);
+    CharDebuff.set(characterId, debuffData);
+
     PvEAfkData memory pveAfk = PvEAfk.get(characterId);
     PvEAfk.set(characterId, pveAfk);
-    uint256 monsterId = PvEAfkLoc.get(positionData.nextX, positionData.nextY);
-    PvEAfkLoc.set(positionData.nextX, positionData.nextY, monsterId);
+    uint32 pveAfkExpAmp = PvEAfkExpAmp.get(characterId);
+    PvEAfkExpAmp.set(characterId, pveAfkExpAmp);
+
+    _rescuePvEAfkLoc(positionData);
+  }
+
+  function _rescuePvEAfkLoc(CharPositionFullData memory positionData) private {
+    uint256 monsterId = PvEAfkLoc.get(positionData.x, positionData.y);
+    if (monsterId > 0) {
+      PvEAfkLoc.set(positionData.x, positionData.y, monsterId);
+      return;
+    }
+
+    monsterId = PvEAfkLoc.get(positionData.nextX, positionData.nextY);
+    if (monsterId > 0) {
+      PvEAfkLoc.set(positionData.nextX, positionData.nextY, monsterId);
+    }
   }
 
   function _rescueStats(uint256 characterId) private {

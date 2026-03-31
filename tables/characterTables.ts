@@ -36,8 +36,8 @@ const CHARACTER_TABLES: any = {
   CharStats: {
     schema: {
       characterId: "uint256",
-      weight: "uint32", // max weight
-      hp: "uint32", // max hp
+      weight: "uint32", // Max weight
+      hp: "uint32", // Max hp
       level: "uint16",
       statPoint: "uint16",
       sp: "uint8",
@@ -93,7 +93,7 @@ const CHARACTER_TABLES: any = {
     },
     key: ['characterId', 'slotType'],
   },
-  CharGrindSlot: { // for equipment only, default is weapon
+  CharGrindSlot: { // For equipment only, default is weapon (0)
     schema: {
       characterId: "uint256",
       slotType: "SlotType",
@@ -124,7 +124,7 @@ const CHARACTER_TABLES: any = {
     },
     key: ['characterId'],
   },
-  CharPosition: { // We don't store data in this table, just use the type
+  CharPosition: { // We don't store data in this table, just use the type CharPositionData
     schema: {
       characterId: "uint256",
       x: "int32",
@@ -146,8 +146,8 @@ const CHARACTER_TABLES: any = {
   CharFarmingState: {
     schema: {
       characterId: "uint256",
-      itemId: "uint256", // item with type resource
-      toolId: "uint256",
+      itemId: "uint256", // The farming resource
+      toolId: "uint256", // The tool used for farming
       itemType: "ItemType",
     },
     key: ['characterId'],
@@ -187,7 +187,7 @@ const CHARACTER_TABLES: any = {
     },
     key: ['characterId', 'cityId', 'itemId'],
   },
-  CharEqCache: { // Cached data for equipment stats - snapshot when equip equipment
+  CharEquipmentCache: { // Cached equipment stats - snapshot when equip equipment
     schema: {
       characterId: "uint256",
       slotType: "SlotType",
@@ -227,9 +227,9 @@ const CHARACTER_TABLES: any = {
   CharExpAmp: {
     schema: {
       characterId: "uint256",
-      farmingPerkAmp: "uint16", // these values are percentages, e.g., 20 means gain 20% more exp
+      farmingPerkAmp: "uint16", // These values are percentages, e.g., 20 means gain 20% more exp
       farmingExpireTime: "uint256",
-      pveExpAmp: "uint16", // use for both exp and perk exp from PvE
+      pveExpAmp: "uint16", // Use for both exp and perk exp from PvE
       pveExpireTime: "uint256",
     },
     key: ['characterId'],

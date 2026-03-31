@@ -1,6 +1,6 @@
 pragma solidity >=0.8.24;
 
-import { CharInventory, IvToolIndex } from "@codegen/index.sol";
+import { CharInventory, InvToolIndex } from "@codegen/index.sol";
 import { CharacterWeightUtils } from "./CharacterWeightUtils.sol";
 import { Errors } from "@common/Errors.sol";
 
@@ -27,7 +27,7 @@ library InventoryToolUtils {
     // The value is stored at length-1, but we add 1 to all indexes
     // and use 0 as a sentinel value
     uint256 index = CharInventory.lengthToolIds(characterId);
-    IvToolIndex.set(characterId, toolId, index);
+    InvToolIndex.set(characterId, toolId, index);
   }
 
   /// @dev Remove tool from inventory for character
@@ -45,7 +45,7 @@ library InventoryToolUtils {
   }
 
   function _removeTool(uint256 characterId, uint256 toolId) private {
-    uint256 index = IvToolIndex.get(characterId, toolId);
+    uint256 index = InvToolIndex.get(characterId, toolId);
     if (index == 0) revert Errors.Tool_NotOwned(characterId, toolId);
     // To delete an element from the _values array in O(1), we swap the element to delete with the last one in
     // the array, and then remove the last element (sometimes called as 'swap and pop').
@@ -55,15 +55,15 @@ library InventoryToolUtils {
     if (valueIndex != lastIndex) {
       uint256 lastValue = CharInventory.getItemToolIds(characterId, lastIndex);
       CharInventory.updateToolIds(characterId, valueIndex, lastValue);
-      IvToolIndex.set(characterId, lastValue, index);
+      InvToolIndex.set(characterId, lastValue, index);
     }
     CharInventory.popToolIds(characterId);
-    IvToolIndex.deleteRecord(characterId, toolId);
+    InvToolIndex.deleteRecord(characterId, toolId);
   }
 
   /// @dev Return whether the character has the tool in inventory
   function hasTool(uint256 characterId, uint256 toolId) public view returns (bool) {
-    uint256 index = IvToolIndex.get(characterId, toolId);
+    uint256 index = InvToolIndex.get(characterId, toolId);
     return index != 0;
   }
 }

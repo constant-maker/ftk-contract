@@ -9,7 +9,8 @@ import {
   CharAchievementUtils,
   StorageEquipmentUtils,
   StorageItemUtils,
-  CharacterFundUtils
+  CharacterFundUtils,
+  PlatformUtils
 } from "@utils/index.sol";
 import { OrderParams, TakeOrderParams, MarketSystemUtils } from "@utils/MarketSystemUtils.sol";
 import { Config } from "@common/index.sol";
@@ -700,7 +701,7 @@ contract MarketSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixt
 
     uint256 char2Crystal = CharFund.getCrystal(characterId2);
     console2.log("character2 crystal after take order", char2Crystal);
-    uint256 platFormFee = (1000 * Config.PLATFORM_FEE_PERCENTAGE + 99) / 100;
+    uint256 platFormFee = PlatformUtils.getPlatformFee(1000);
     uint256 finalOrderValue = 1000 - platFormFee;
     uint256 kingdomFee = (finalOrderValue * CrystalFee.get(2)) / 100; // 29
     assertEq(char2Crystal, finalOrderValue - kingdomFee); // 970 - 29 = 941
@@ -756,7 +757,7 @@ contract MarketSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixt
     console2.log("character2 crystal after take order", char2Crystal);
     assertEq(char2Crystal, 441); // 941 - 5 * 100 (no fee for taker of a sell order)
     uint256 orderValue = 5 * 100;
-    platFormFee = (orderValue * Config.PLATFORM_FEE_PERCENTAGE + 99) / 100;
+    platFormFee = PlatformUtils.getPlatformFee(orderValue);
     finalOrderValue = orderValue - platFormFee;
     kingdomFee = (finalOrderValue * CrystalFee.get(1)) / 100; // character 1 is the seller, so use kingdom 1 fee
     uint256 newChar1Crystal = CharFund.getCrystal(characterId1);

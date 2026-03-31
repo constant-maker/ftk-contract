@@ -12,8 +12,8 @@ import {
   EquipmentInfo2Data,
   CharReborn,
   Item,
-  CharEqCache,
-  CharEqCacheData,
+  CharEquipmentCache,
+  CharEquipmentCacheData,
   EPetStats,
   EPetStatsData
 } from "@codegen/index.sol";
@@ -176,7 +176,7 @@ library CharacterStatsUtils {
     }
 
     CharCurrentStatsData memory characterCurrentStats = CharCurrentStats.get(characterId);
-    CharEqCacheData memory equipmentSnapshot = CharEqCache.get(characterId, slotType);
+    CharEquipmentCacheData memory equipmentSnapshot = CharEquipmentCache.get(characterId, slotType);
 
     if (equipmentSnapshot.hp > 0) {
       uint32 maxHp = CharStats.getHp(characterId);
@@ -230,15 +230,15 @@ library CharacterStatsUtils {
 
   /// @dev Get equipment stats and snapshot them for the character.
   function _snapshotEquipmentStats(uint256 characterId, uint256 equipmentId, SlotType slotType) private {
-    CharEqCacheData memory equipmentSnapshot = _getUpgradedEquipmentStats(equipmentId);
-    CharEqCache.set(characterId, slotType, equipmentSnapshot);
+    CharEquipmentCacheData memory equipmentSnapshot = _getUpgradedEquipmentStats(equipmentId);
+    CharEquipmentCache.set(characterId, slotType, equipmentSnapshot);
   }
 
   /// @dev Get the upgraded equipment stats for a given equipment ID. Higher level equipment provides better stats.
   function _getUpgradedEquipmentStats(uint256 equipmentId)
     private
     view
-    returns (CharEqCacheData memory equipmentSnapshot)
+    returns (CharEquipmentCacheData memory equipmentSnapshot)
   {
     uint256 itemId = Equipment.getItemId(equipmentId);
     if (itemId == 0) {
@@ -257,7 +257,7 @@ library CharacterStatsUtils {
     uint8 level = Equipment.getLevel(equipmentId);
 
     if (level == 1) {
-      equipmentSnapshot = CharEqCacheData({
+      equipmentSnapshot = CharEquipmentCacheData({
         hp: equipmentInfo.hp,
         barrier: equipmentInfo2.shieldBarrier,
         weight: equipmentInfo2.bonusWeight,
@@ -274,7 +274,7 @@ library CharacterStatsUtils {
     uint16 percentGain = _getStatBonusPercent(itemId, level);
     uint16 multiplier = 100 + percentGain;
 
-    equipmentSnapshot = CharEqCacheData({
+    equipmentSnapshot = CharEquipmentCacheData({
       barrier: _calculateNewStat(equipmentInfo2.shieldBarrier, multiplier, level),
       hp: _calculateNewStat(equipmentInfo.hp, multiplier, level),
       atk: uint16(_calculateNewStat(equipmentInfo.atk, multiplier, level)),

@@ -28,7 +28,7 @@ library CharacterQuestUtils {
       revert Errors.QuestSystem_ReceiveFromWrongNpc(npcId, questId);
     }
     if (CharQuestStatus.getQuestStatus(characterId, questId) != QuestStatusType.NotReceived) {
-      revert Errors.QuestSystem_AlreadyReceived(npcId, questId);
+      revert Errors.QuestSystem_AlreadyReceived(characterId, questId);
     }
     for (uint256 i; i < questData.requiredAchievementIds.length; i++) {
       uint256 achievementId = questData.requiredAchievementIds[i];

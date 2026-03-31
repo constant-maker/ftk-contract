@@ -1,12 +1,10 @@
 pragma solidity >=0.8.24;
 
-import { Vm } from "forge-std/Vm.sol";
-import { CharSkill, Skill, SkillData, CharPerk } from "@codegen/index.sol";
+import { CharSkill, CharPerk } from "@codegen/index.sol";
 import { ItemType } from "@codegen/common.sol";
 import { WorldFixture } from "@fixtures/WorldFixture.sol";
 import { SpawnSystemFixture } from "@fixtures/SpawnSystemFixture.sol";
-import { TestHelper } from "./TestHelper.sol";
-import { console2 } from "forge-std/console2.sol";
+import { Errors } from "@common/Errors.sol";
 
 contract SkillTest is WorldFixture, SpawnSystemFixture {
   address player = makeAddr("player");
@@ -14,9 +12,7 @@ contract SkillTest is WorldFixture, SpawnSystemFixture {
 
   function setUp() public virtual override(WorldFixture, SpawnSystemFixture) {
     WorldFixture.setUp();
-    console2.log("set up done");
     characterId = _createDefaultCharacter(player);
-    console2.log("create done");
   }
 
   function test_UpdateSkill() external {
@@ -38,20 +34,20 @@ contract SkillTest is WorldFixture, SpawnSystemFixture {
 
   function test_RevertUpdateSkill() external {
     uint256[5] memory skillIds = [uint256(0), 1, 1000, 3, 0]; // skill id 1000 is not exist
-    vm.expectRevert();
+    vm.expectRevert(abi.encodeWithSelector(Errors.Skill_NotExist.selector, 1000));
     vm.prank(player);
 
     world.app__updateSkillOrder(characterId, skillIds);
 
     skillIds = [uint256(0), 0, 3, 3, 0]; // duplicate skill id 3
-    vm.expectRevert();
+    vm.expectRevert(abi.encodeWithSelector(Errors.Skill_DuplicateSkillId.selector, 3));
     vm.prank(player);
     world.app__updateSkillOrder(characterId, skillIds);
   }
 
   function test_RevertNotEnoughPerkLevelForSkill() external {
     uint256[5] memory skillIds = [uint256(0), 11, 0, 3, 0]; // skill id 11 requires perk level 2
-    vm.expectRevert();
+    vm.expectRevert(abi.encodeWithSelector(Errors.Skill_PerkLevelIsNotEnough.selector, characterId, 0, 2));
     vm.prank(player);
     world.app__updateSkillOrder(characterId, skillIds);
 

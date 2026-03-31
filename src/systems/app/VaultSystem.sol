@@ -134,7 +134,7 @@ contract VaultSystem is System, CharacterAccessControl {
     uint256 currentCounter = HistoryCounter.get(cityId);
     uint256 newCounter = currentCounter + 1;
     HistoryCounter.setCounter(cityId, newCounter);
-    return newCounter % 100; // wrap around after 100 entries
+    return (currentCounter % 100) + 1; // wrap around after 100 entries, keep id in [1..100]
   }
 
   function _checkAndSetWeightQuota(uint256 characterId, uint8 kingdomId, uint32 withdrawWeight) private {

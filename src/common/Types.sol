@@ -1,5 +1,7 @@
 pragma solidity >=0.8.24;
 
+import { StatType } from "@codegen/common.sol";
+
 /// @dev common struct to transfer, drop, ... items
 struct ItemsActionData {
   uint256[] equipmentIds;
@@ -13,4 +15,14 @@ struct VaultActionParams {
   uint256 crystal;
   uint256[] itemIds;
   uint32[] amounts;
+}
+
+struct IncreaseStatData {
+  StatType statType;
+  uint16 amount;
+}
+
+struct NpcTradeData {
+  uint256 itemId;
+  uint32 amount;
 }

@@ -124,7 +124,7 @@ contract GachaSystem is System, CharacterAccessControl, IVRFConsumer {
     }
 
     // Update the CharGacha table with the received item and remove item from gacha
-    charGacha.randomNumber = randomNumber;
+    charGacha.randomNumbers = randomNumbers;
     charGacha.gachaItemId = receivedItemId;
     charGacha.isPending = false;
     CharGacha.set(characterId, requestId, charGacha);

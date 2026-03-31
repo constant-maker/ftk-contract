@@ -5,13 +5,13 @@ const GACHA_TABLES: any = {
     schema: {
       characterId: "uint256",
       requestId: "uint256",
-      randomNumber: "uint256", // The random number received from VRF
       gachaId: "uint256",
       isLimitedGacha: "bool",
       gachaItemId: "uint256", // The itemId received from gacha
       gachaEquipmentId: "uint256", // The equipmentId received from gacha, 0 if not equipment
       isPending: "bool",
       timestamp: "uint256",
+      randomNumbers: "uint256[]", // The random numbers received from VRF
     },
     key: ['characterId', 'requestId'],
   },

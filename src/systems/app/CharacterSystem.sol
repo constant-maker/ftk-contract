@@ -20,6 +20,13 @@ contract CharacterSystem is System, CharacterAccessControl {
   /// @dev link character to a new account and set current owner to session wallet
   function linkMainAccount(uint256 characterId, address newOwner) public onlyCharacterOwner(characterId) {
     address currentOwner = _msgSender();
+    if (currentOwner == newOwner) {
+      revert Errors.CharacterSystem_SameAccount(characterId, newOwner);
+    }
+    if (newOwner == address(0)) {
+      revert Errors.CharacterSystem_InvalidNewOwner(characterId);
+    }
+
     _transferOwnership(currentOwner, newOwner, characterId);
 
     ActiveChar.setWallet(characterId, newOwner);

@@ -31,7 +31,7 @@ const MONSTER_TABLES: any = {
       y: "int32",
       barrier: "uint32",
       hp: "uint32", // current boss hp
-      crystal: "uint32", // reward crystal
+      fame: "uint32", // fame reward for attacking boss with a certain damage threshold
       respawnDuration: "uint16", // unit days
       berserkHpThreshold: "uint8",
       boostPercent: "uint8", // percent

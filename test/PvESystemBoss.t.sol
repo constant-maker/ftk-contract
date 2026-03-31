@@ -63,7 +63,6 @@ contract PvESystemBossTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFix
     BossInfoData memory bossInfo = BossInfo.get(bossId, locationX, locationY);
     assertEq(bossInfo.barrier, 50);
     assertEq(bossInfo.hp, 1500);
-    assertEq(bossInfo.crystal, 300);
     assertEq(bossInfo.respawnDuration, 1); // 1 hour
     assertEq(bossInfo.berserkHpThreshold, 20);
     assertEq(bossInfo.boostPercent, 20);

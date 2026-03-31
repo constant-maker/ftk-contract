@@ -1,6 +1,6 @@
 pragma solidity >=0.8.24;
 
-import { CharStorage, StEquipmentIndex } from "@codegen/index.sol";
+import { CharStorage, StrEquipmentIndex } from "@codegen/index.sol";
 import { StorageWeightUtils } from "./StorageWeightUtils.sol";
 import { Errors } from "@common/Errors.sol";
 
@@ -34,7 +34,7 @@ library StorageEquipmentUtils {
     // The value is stored at length-1, but we add 1 to all indexes
     // and use 0 as a sentinel value
     uint256 index = CharStorage.lengthEquipmentIds(characterId, cityId);
-    StEquipmentIndex.set(characterId, cityId, equipmentId, index);
+    StrEquipmentIndex.set(characterId, cityId, equipmentId, index);
   }
 
   /// @dev Remove equipments from storage
@@ -52,7 +52,7 @@ library StorageEquipmentUtils {
   }
 
   function _removeEquipment(uint256 characterId, uint256 cityId, uint256 equipmentId) private {
-    uint256 index = StEquipmentIndex.get(characterId, cityId, equipmentId);
+    uint256 index = StrEquipmentIndex.get(characterId, cityId, equipmentId);
     if (index == 0) revert Errors.Equipment_NotOwned(characterId, equipmentId);
     // To delete an element from the _values array in O(1), we swap the element to delete with the last one in
     // the array, and then remove the last element (sometimes called as 'swap and pop').
@@ -62,15 +62,15 @@ library StorageEquipmentUtils {
     if (valueIndex != lastIndex) {
       uint256 lastValue = CharStorage.getItemEquipmentIds(characterId, cityId, lastIndex);
       CharStorage.updateEquipmentIds(characterId, cityId, valueIndex, lastValue);
-      StEquipmentIndex.set(characterId, cityId, lastValue, index);
+      StrEquipmentIndex.set(characterId, cityId, lastValue, index);
     }
     CharStorage.popEquipmentIds(characterId, cityId);
-    StEquipmentIndex.deleteRecord(characterId, cityId, equipmentId);
+    StrEquipmentIndex.deleteRecord(characterId, cityId, equipmentId);
   }
 
   /// @dev Return whether the character has the equipment in storage
   function hasEquipment(uint256 characterId, uint256 cityId, uint256 equipmentId) public view returns (bool) {
-    uint256 index = StEquipmentIndex.get(characterId, cityId, equipmentId);
+    uint256 index = StrEquipmentIndex.get(characterId, cityId, equipmentId);
     return index != 0;
   }
 }

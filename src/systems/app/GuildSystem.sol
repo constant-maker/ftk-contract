@@ -55,6 +55,7 @@ contract GuildSystem is CharacterAccessControl, System {
       revert Errors.GuildSystem_CharacterNotInGuild(newOwnerId, guildId);
     }
     GuildOwnerMapping.setOwnerId(guildId, newOwnerId);
+    Guild.setLeaderId(guildId, newOwnerId);
   }
 
   /// @dev Leave guild
@@ -101,6 +102,12 @@ contract GuildSystem is CharacterAccessControl, System {
   function requestToJoinGuild(uint256 characterId, uint256 guildId) public onlyAuthorizedWallet(characterId) {
     if (GuildMemberMapping.getGuildId(characterId) != 0) {
       revert Errors.GuildSystem_CharacterAlreadyInGuild(characterId);
+    }
+    if (Guild.getCreatedAt(guildId) == 0) {
+      revert Errors.GuildSystem_GuildNotExist(guildId);
+    }
+    if (GuildRequest.getRequestedAt(characterId) != 0) {
+      revert Errors.GuildSystem_JoinRequestAlreadyExists(characterId);
     }
     if (Guild.lengthMemberIds(guildId) >= MAX_GUILD_MEMBERS) {
       revert Errors.GuildSystem_GuildMemberLimitReached(guildId);
@@ -180,7 +187,6 @@ contract GuildSystem is CharacterAccessControl, System {
     for (uint256 i = 0; i < b.length; i++) {
       bytes1 char = b[i];
 
-      // Allowed: 0-9, A-Z, a-z only
       if (
         !(char >= 0x30 && char <= 0x39) // digits
           && !(char >= 0x41 && char <= 0x5A) // A-Z

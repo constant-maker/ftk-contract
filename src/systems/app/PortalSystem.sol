@@ -2,22 +2,17 @@ pragma solidity >=0.8.24;
 
 import { System } from "@latticexyz/world/src/System.sol";
 import { CharacterAccessControl } from "@abstracts/CharacterAccessControl.sol";
-import { IWorld } from "@codegen/world/IWorld.sol";
 import {
-  SalePackage,
-  SalePackageData,
-  CharTotalSpend,
   CharFund,
   CrystalFee,
   CharInfo,
-  Kingdom,
-  CityVault2,
   SellCrystalCounter,
   SellCrystalReq,
   SellCrystalReqData
 } from "@codegen/index.sol";
-import { CharAchievementUtils, CharacterFundUtils, InventoryItemUtils } from "@utils/index.sol";
+import { CharacterFundUtils, CityVaultUtils } from "@utils/index.sol";
 import { UWorldUtils } from "@utils/UWorldUtils.sol";
+import { PlatformUtils } from "@utils/PlatformUtils.sol";
 import { Config, Errors } from "@common/index.sol";
 
 contract PortalSystem is CharacterAccessControl, System {
@@ -39,17 +34,28 @@ contract PortalSystem is CharacterAccessControl, System {
     public
     onlyAuthorizedWallet(fromCharacterId)
   {
+    if (fromCharacterId == toCharacterId) {
+      revert Errors.PortalSystem_CannotTransferToSelf(fromCharacterId);
+    }
     _validateCrystalAmount(amount);
     // decreaseCrystal will revert if fromCharacterId has insufficient crystal balance
     CharacterFundUtils.decreaseCrystal(fromCharacterId, amount);
 
     // charge fee and transfer net amount to recipient
-    uint256 platformFeeCrystal = (amount * Config.PLATFORM_FEE_PERCENTAGE + 99) / 100; // TODO: move to lib
+    uint256 platformFeeCrystal = PlatformUtils.getPlatformFee(amount);
     uint256 remainAmount = amount - platformFeeCrystal;
-    uint8 kingdomId = CharInfo.getKingdomId(fromCharacterId); // TODO: move to lib
+    uint8 kingdomId = CharInfo.getKingdomId(fromCharacterId);
     uint8 kingdomFeePercentage = CrystalFee.getFee(kingdomId);
     uint256 kingdomFeeCrystal = (remainAmount * uint256(kingdomFeePercentage)) / 100;
     uint256 netAmount = remainAmount - kingdomFeeCrystal;
+
+    if (platformFeeCrystal > 0) {
+      PlatformUtils.updateAppTeamCrystal(platformFeeCrystal, true);
+    }
+    if (kingdomFeeCrystal > 0) {
+      CityVaultUtils.updateVaultCrystalByKingdomId(kingdomId, kingdomFeeCrystal, true);
+      PlatformUtils.updateAppVaultCrystal(kingdomFeeCrystal, true);
+    }
 
     CharacterFundUtils.increaseCrystal(toCharacterId, netAmount);
   }
@@ -61,7 +67,7 @@ contract PortalSystem is CharacterAccessControl, System {
     }
     uint256 crystalBalance = CharFund.getCrystal(characterId);
     if (crystalBalance < amount) {
-      revert Errors.PortalSystem_InsufficientCrystal(crystalBalance, amount);
+      revert Errors.InsufficientCrystal(crystalBalance, amount);
     }
     CharacterFundUtils.decreaseCrystal(characterId, amount); // lock fund
     uint256 reqId = SellCrystalCounter.getCount() + 1;
@@ -84,26 +90,27 @@ contract PortalSystem is CharacterAccessControl, System {
     }
     uint256 amount = reqData.amount;
     uint8 kingdomId = CharInfo.getKingdomId(characterId);
-    uint256 platformFeeCrystal = (amount * Config.PLATFORM_FEE_PERCENTAGE + 99) / 100;
+    uint256 platformFeeCrystal = PlatformUtils.getPlatformFee(amount);
     uint256 remainAmount = amount - platformFeeCrystal;
     uint8 kingdomFeePercentage = CrystalFee.getFee(kingdomId);
     uint256 kingdomFeeCrystal = (remainAmount * uint256(kingdomFeePercentage)) / 100;
     uint256 netAmount = remainAmount - kingdomFeeCrystal;
 
-    uint256 platformFeeEth = platformFeeCrystal * Config.CRYSTAL_UNIT_PRICE;
+    if (platformFeeCrystal > 0) {
+      PlatformUtils.updateAppTeamCrystal(platformFeeCrystal, true);
+    }
+
+    // set done before external transfer to avoid reentrancy replay on the same request
+    SellCrystalReq.setIsDone(characterId, reqId, true);
+
     uint256 receivedEth = netAmount * Config.CRYSTAL_UNIT_PRICE;
     UWorldUtils.transferTo(_msgSender(), receivedEth);
-    UWorldUtils.transferToTeam(platformFeeEth);
 
     // kingdom fee will be sent to city vault
     if (kingdomFeeCrystal > 0) {
-      uint256 capitalId = Kingdom.getCapitalId(kingdomId);
-      uint256 currentVaultCrystal = CityVault2.getCrystal(capitalId);
-      CityVault2.setCrystal(capitalId, currentVaultCrystal + kingdomFeeCrystal);
+      CityVaultUtils.updateVaultCrystalByKingdomId(kingdomId, kingdomFeeCrystal, true);
+      PlatformUtils.updateAppVaultCrystal(kingdomFeeCrystal, true);
     }
-
-    // update request status
-    SellCrystalReq.setIsDone(characterId, reqId, true);
   }
 
   function _validateSellCrystalRequest(uint256 reqId, SellCrystalReqData memory reqData) private pure {

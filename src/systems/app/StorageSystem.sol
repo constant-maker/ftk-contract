@@ -38,11 +38,14 @@ contract StorageSystem is System, CharacterAccessControl {
     public
     onlyAuthorizedWallet(characterId)
   {
-    CharacterPositionUtils.mustInCapital(characterId, cityId);
+    CharacterPositionUtils.mustInExactCapital(characterId, cityId);
 
     // set default max weight for storage
     uint32 maxWeight = CharStorage.getMaxWeight(characterId, cityId);
     if (maxWeight == 0) CharStorage.setMaxWeight(characterId, cityId, Config.INIT_STORAGE_MAX_WEIGHT);
+
+    _validateItemsActionData(transferIn);
+    _validateItemsActionData(transferOut);
 
     _depositItemsToStorage(characterId, cityId, transferIn);
     _withdrawItemsFromStorage(characterId, cityId, transferOut);
@@ -54,7 +57,7 @@ contract StorageSystem is System, CharacterAccessControl {
   /// @dev deposit items from inventory into storage
   function _depositItemsToStorage(uint256 characterId, uint256 cityId, ItemsActionData calldata data) private {
     // transfer in equipments
-    uint256[] memory equipmentIds = data.equipmentIds;
+    uint256[] calldata equipmentIds = data.equipmentIds;
     if (equipmentIds.length > 0) {
       // transfer equipments to storage, no check storage max weight to prevent revert
       // we will check storage max weight after transfer
@@ -63,19 +66,19 @@ contract StorageSystem is System, CharacterAccessControl {
     }
 
     // transfer in tools
-    uint256[] memory toolIds = data.toolIds;
+    uint256[] calldata toolIds = data.toolIds;
     if (toolIds.length > 0) {
-      // transfer equipments to storage, no check storage max weight to prevent revert
+      // transfer tools to storage, no check storage max weight to prevent revert
       // we will check storage max weight after transfer
       StorageToolUtils.addTools(characterId, cityId, toolIds, false);
       InventoryToolUtils.removeTools(characterId, toolIds);
     }
 
     // transfer in items
-    uint256[] memory itemIds = data.itemIds;
-    uint32[] memory itemAmounts = data.itemAmounts;
-    if (itemIds.length > 0 && itemAmounts.length > 0) {
-      // transfer equipments to storage, no check storage max weight to prevent revert
+    uint256[] calldata itemIds = data.itemIds;
+    uint32[] calldata itemAmounts = data.itemAmounts;
+    if (itemIds.length > 0) {
+      // transfer items to storage, no check storage max weight to prevent revert
       // we will check storage max weight after transfer
       StorageItemUtils.addItems(characterId, cityId, itemIds, itemAmounts, false);
       InventoryItemUtils.removeItems(characterId, itemIds, itemAmounts);
@@ -86,25 +89,31 @@ contract StorageSystem is System, CharacterAccessControl {
   /// no need to check storage max weight after withdraw, because weight only decreases
   function _withdrawItemsFromStorage(uint256 characterId, uint256 cityId, ItemsActionData calldata data) private {
     // transfer out equipments
-    uint256[] memory equipmentIds = data.equipmentIds;
+    uint256[] calldata equipmentIds = data.equipmentIds;
     if (equipmentIds.length > 0) {
       StorageEquipmentUtils.removeEquipments(characterId, cityId, equipmentIds);
       InventoryEquipmentUtils.addEquipments(characterId, equipmentIds, true);
     }
 
     // transfer out tools
-    uint256[] memory toolIds = data.toolIds;
+    uint256[] calldata toolIds = data.toolIds;
     if (toolIds.length > 0) {
       StorageToolUtils.removeTools(characterId, cityId, toolIds);
       InventoryToolUtils.addTools(characterId, toolIds);
     }
 
     // transfer out items
-    uint256[] memory itemIds = data.itemIds;
-    uint32[] memory itemAmounts = data.itemAmounts;
-    if (itemIds.length > 0 && itemAmounts.length > 0) {
+    uint256[] calldata itemIds = data.itemIds;
+    uint32[] calldata itemAmounts = data.itemAmounts;
+    if (itemIds.length > 0) {
       StorageItemUtils.removeItems(characterId, cityId, itemIds, itemAmounts);
       InventoryItemUtils.addItems(characterId, itemIds, itemAmounts);
+    }
+  }
+
+  function _validateItemsActionData(ItemsActionData calldata data) private pure {
+    if (data.itemIds.length != data.itemAmounts.length) {
+      revert Errors.StorageSystem_InvalidItemParams(data.itemIds.length, data.itemAmounts.length);
     }
   }
 

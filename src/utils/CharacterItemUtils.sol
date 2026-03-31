@@ -13,6 +13,8 @@ import {
 } from "@codegen/index.sol";
 import { ItemCategoryType, ItemType } from "@codegen/common.sol";
 import { InventoryItemUtils } from "./InventoryItemUtils.sol";
+import { InventoryToolUtils } from "./InventoryToolUtils.sol";
+import { InventoryEquipmentUtils } from "./InventoryEquipmentUtils.sol";
 import { CharacterPerkUtils } from "./CharacterPerkUtils.sol";
 import { Errors } from "@common/index.sol";
 import { Config } from "@common/Config.sol";
@@ -38,6 +40,7 @@ library CharacterItemUtils {
           durability: uint16(item.tier) * DEFAULT_TOOL_DURABILITY
         });
         Tool.set(newToolId, toolData);
+        InventoryToolUtils.addTool(characterId, newToolId);
         ToolSupply.set(newToolId);
       } else {
         // get new equipment id
@@ -45,6 +48,7 @@ library CharacterItemUtils {
         EquipmentData memory equipmentData =
           EquipmentData({ itemId: itemId, characterId: characterId, authorId: characterId, level: 1 });
         Equipment.set(newEquipmentId, equipmentData);
+        InventoryEquipmentUtils.addEquipment(characterId, newEquipmentId, true);
         EquipmentSupply.set(newEquipmentId);
       }
     }

@@ -36,6 +36,9 @@ import {
 import { Errors, Config } from "@common/index.sol";
 
 contract PvPSystem is System, CharacterAccessControl {
+  uint256 private constant SKILL_SLOTS = 5;
+  uint256 private constant BATTLE_ACTION_SLOTS = 11;
+
   /// @dev character init a battle with other player
   function battlePvP(
     uint256 attackerId,
@@ -55,7 +58,7 @@ contract PvPSystem is System, CharacterAccessControl {
       revert Errors.PvP_NotSamePosition(attackerPosition.x, attackerPosition.y, defenderPosition.x, defenderPosition.y);
     }
     _checkIfInCity(attackerPosition);
-    _checkIsReadyToBattle(attackerId, defenderId);
+    _checkIsReadyToBattle(attackerId);
 
     (uint32 attackerHp, uint32 defenderHp) = _battle(attackerId, defenderId, false);
 
@@ -87,11 +90,16 @@ contract PvPSystem is System, CharacterAccessControl {
 
   /// @dev _battle returns attacker and defender final hp
   function _battle(uint256 attackerId, uint256 defenderId, bool isChallenge) private returns (uint32, uint32) {
-    uint256[5] memory attackerSkills = BattleUtils.getCharacterSkillIds(attackerId);
-    uint256[5] memory defenderSkills = BattleUtils.getCharacterSkillIds(defenderId);
+    uint256[SKILL_SLOTS] memory attackerSkills = BattleUtils.getCharacterSkillIds(attackerId);
+    uint256[SKILL_SLOTS] memory defenderSkills = BattleUtils.getCharacterSkillIds(defenderId);
     // perform the fight and get results
     uint32[2] memory originHps = _getOriginHps(attackerId, defenderId, isChallenge);
-    (uint256 firstAttackerId, uint32[2] memory hps, uint32[11] memory damages, uint256[11] memory skillIds) =
+    (
+      uint256 firstAttackerId,
+      uint32[2] memory hps,
+      uint32[BATTLE_ACTION_SLOTS] memory damages,
+      uint256[BATTLE_ACTION_SLOTS] memory skillIds
+    ) =
       _performFight(attackerId, defenderId, attackerSkills, defenderSkills, originHps);
 
     // store PvPData
@@ -108,8 +116,8 @@ contract PvPSystem is System, CharacterAccessControl {
     uint256 attackerId,
     uint256 defenderId,
     uint256 firstAttackerId,
-    uint256[11] memory skillIds,
-    uint32[11] memory damages,
+    uint256[BATTLE_ACTION_SLOTS] memory skillIds,
+    uint32[BATTLE_ACTION_SLOTS] memory damages,
     uint32[2] memory originHps
   )
     private
@@ -139,8 +147,8 @@ contract PvPSystem is System, CharacterAccessControl {
     uint256 attackerId,
     uint256 defenderId,
     uint256 firstAttackerId,
-    uint256[11] memory skillIds,
-    uint32[11] memory damages,
+    uint256[BATTLE_ACTION_SLOTS] memory skillIds,
+    uint32[BATTLE_ACTION_SLOTS] memory damages,
     uint32[2] memory originHps
   )
     private
@@ -228,13 +236,18 @@ contract PvPSystem is System, CharacterAccessControl {
   function _performFight(
     uint256 attackerId,
     uint256 defenderId,
-    uint256[5] memory attackerSkills,
-    uint256[5] memory defenderSkills,
+    uint256[SKILL_SLOTS] memory attackerSkills,
+    uint256[SKILL_SLOTS] memory defenderSkills,
     uint32[2] memory originHps
   )
     private
     view
-    returns (uint256 firstAttackerId, uint32[2] memory hps, uint32[11] memory damages, uint256[11] memory skills)
+    returns (
+      uint256 firstAttackerId,
+      uint32[2] memory hps,
+      uint32[BATTLE_ACTION_SLOTS] memory damages,
+      uint256[BATTLE_ACTION_SLOTS] memory skills
+    )
   {
     // Build battle information for attacker and defender
     BattleInfo memory attackerBattleInfo =
@@ -259,32 +272,28 @@ contract PvPSystem is System, CharacterAccessControl {
   }
 
   function _usedSkillsOrder(
-    uint256[5] memory firstAttackerSkills,
-    uint256[5] memory secondAttackerSkills
+    uint256[SKILL_SLOTS] memory firstAttackerSkills,
+    uint256[SKILL_SLOTS] memory secondAttackerSkills
   )
     private
     pure
-    returns (uint256[11] memory skills)
+    returns (uint256[BATTLE_ACTION_SLOTS] memory skills)
   {
     uint256 index = 0;
     skills[index++] = Config.NORMAL_ATTACK_SKILL_ID;
 
-    for (uint256 i = 0; i < 5; i++) {
+    for (uint256 i = 0; i < SKILL_SLOTS; i++) {
       skills[index++] = firstAttackerSkills[i];
       skills[index++] = secondAttackerSkills[i];
     }
     return skills;
   }
 
-  function _checkIsReadyToBattle(uint256 attackerId, uint256 defenderId) private view {
+  function _checkIsReadyToBattle(uint256 attackerId) private view {
     uint256 nextAttackTime = CharBattle.getPvpLastAtkTime(attackerId) + Config.ATTACK_COOLDOWN;
     if (block.timestamp < nextAttackTime) {
       revert Errors.PvP_NotReadyToAttack(nextAttackTime);
     }
-    // uint256 nextTimeToBeAttacked = CharBattle.getPvpLastDefTime(defenderId) + Config.PROTECTION_DURATION;
-    // if (block.timestamp < nextTimeToBeAttacked) {
-    //   revert Errors.PvP_NotReadyToBeAttacked(nextTimeToBeAttacked);
-    // }
   }
 
   function _getOriginHps(

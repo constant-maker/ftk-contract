@@ -1,7 +1,6 @@
 pragma solidity >=0.8.24;
 
 import {
-  Kingdom,
   City,
   CityData,
   CharPositionFull,
@@ -9,21 +8,32 @@ import {
   CharPositionData,
   CharInfo,
   CharSavePoint,
-  Tile
+  Tile,
+  RestrictLoc
 } from "@codegen/index.sol";
 import { Errors } from "@common/index.sol";
+import { KingdomUtils } from "./KingdomUtils.sol";
 
 library CharacterPositionUtils {
-  /// @dev character must be in a capital
-  function mustInCapital(uint256 characterId, uint256 capitalId) internal view {
-    if (!isInCapital(characterId, capitalId)) {
+  /// @dev character must be in a specific capital city
+  function mustInExactCapital(uint256 characterId, uint256 capitalId) internal view {
+    if (!isInExactCapital(characterId, capitalId)) {
       CharPositionData memory characterPosition = getCurrentPosition(characterId);
-      revert Errors.MustInACapital(capitalId, characterPosition.x, characterPosition.y);
+      revert Errors.MustInExactCapital(capitalId, characterPosition.x, characterPosition.y);
+    }
+  }
+
+  /// @dev character must be in a capital
+  function mustInCapital(uint256 characterId) internal view {
+    CharPositionData memory characterPosition = getCurrentPosition(characterId);
+    uint256 cityId = RestrictLoc.getCityId(characterPosition.x, characterPosition.y);
+    if (cityId == 0 || !City.getIsCapital(cityId)) {
+      revert Errors.MustInACapital(characterPosition.x, characterPosition.y);
     }
   }
 
   /// @dev check whether character is in a capital or not
-  function isInCapital(uint256 characterId, uint256 capitalId) internal view returns (bool) {
+  function isInExactCapital(uint256 characterId, uint256 capitalId) internal view returns (bool) {
     CityData memory city = City.get(capitalId);
     if (city.kingdomId == 0) {
       revert Errors.CityIsNotExist(capitalId);
@@ -61,16 +71,14 @@ library CharacterPositionUtils {
 
   /// @dev move character to their original capital
   function moveToCapital(uint256 characterId) internal {
-    uint8 kingdomId = CharInfo.getKingdomId(characterId);
-    uint256 capitalId = Kingdom.getCapitalId(kingdomId);
+    uint256 capitalId = KingdomUtils.getCapitalIdByCharacterId(characterId);
     CityData memory city = City.get(capitalId);
     moveToLocation(characterId, city.x, city.y);
   }
 
   /// @dev move character to their original capital
   function moveToCapitalWithArriveTime(uint256 characterId, uint256 arriveTimestamp) internal {
-    uint8 kingdomId = CharInfo.getKingdomId(characterId);
-    uint256 capitalId = Kingdom.getCapitalId(kingdomId);
+    uint256 capitalId = KingdomUtils.getCapitalIdByCharacterId(characterId);
     CityData memory city = City.get(capitalId);
     moveToLocationWithArriveTime(characterId, city.x, city.y, arriveTimestamp);
   }

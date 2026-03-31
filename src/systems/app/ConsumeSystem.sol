@@ -60,7 +60,7 @@ contract ConsumeSystem is System, CharacterAccessControl {
         revert Errors.ConsumeSystem_BuffItemAmountMustBeOne(characterId, itemId, amount);
       }
       if (targetData.targetPlayers.length == 0) {
-        return;
+        revert Errors.ConsumeSystem_EmptyTargets(itemId);
       }
       // ensure targetData is valid, e.g range, numTarget, duplicate target, self-cast only
       ConsumeUtils.validateTargetItemData(characterId, itemId, targetData);
@@ -110,8 +110,7 @@ contract ConsumeSystem is System, CharacterAccessControl {
     }
     for (uint256 i = 0; i < targetData.targetPlayers.length; i++) {
       uint256 targetPlayer = targetData.targetPlayers[i];
-      CharPositionData memory targetPosition = CharacterPositionUtils.getCurrentPosition(targetPlayer);
-      if (targetPosition.x != targetData.x || targetPosition.y != targetData.y) {
+      if (!_isTargetInPosition(targetPlayer, targetData.x, targetData.y)) {
         continue; // skip if target player not in position
       }
       ConsumeUtils.applyStatsBuff(characterId, itemId, targetPlayer);
@@ -150,27 +149,34 @@ contract ConsumeSystem is System, CharacterAccessControl {
   }
 
   function _handleExpBuffItem(uint256 itemId, TargetItemData memory targetData) private {
+    BuffExpData memory expBuffData = BuffExp.get(itemId);
+    uint32 buffDuration = BuffInfo.getDuration(itemId);
+
     for (uint256 i = 0; i < targetData.targetPlayers.length; i++) {
       uint256 targetPlayer = targetData.targetPlayers[i];
       if (CharacterStateUtils.getCharacterState(targetPlayer) == CharacterStateType.Hunting) {
         revert Errors.ConsumeSystem_CannotApplyExpBuffToHunting(targetPlayer);
       }
-      CharPositionData memory targetPosition = CharacterPositionUtils.getCurrentPosition(targetPlayer);
-      if (targetPosition.x != targetData.x || targetPosition.y != targetData.y) {
+      if (!_isTargetInPosition(targetPlayer, targetData.x, targetData.y)) {
         continue; // skip if target player not in position
       }
-      BuffExpData memory expBuffData = BuffExp.get(itemId);
-      uint32 buffDuration = BuffInfo.getDuration(itemId);
       CharExpAmpData memory charExpBuff = CharExpAmp.get(targetPlayer);
-      if (expBuffData.farmingPerkAmp >= 0) {
+
+      if (expBuffData.farmingPerkAmp > 0) {
         charExpBuff.farmingPerkAmp = expBuffData.farmingPerkAmp;
         charExpBuff.farmingExpireTime = block.timestamp + buffDuration;
       }
-      if (expBuffData.pveExpAmp >= 0) {
+      if (expBuffData.pveExpAmp > 0) {
         charExpBuff.pveExpAmp = expBuffData.pveExpAmp;
         charExpBuff.pveExpireTime = block.timestamp + buffDuration;
       }
+
       CharExpAmp.set(targetPlayer, charExpBuff);
     }
+  }
+
+  function _isTargetInPosition(uint256 targetPlayer, int32 x, int32 y) private view returns (bool) {
+    CharPositionData memory targetPosition = CharacterPositionUtils.getCurrentPosition(targetPlayer);
+    return targetPosition.x == x && targetPosition.y == y;
   }
 }

@@ -23,7 +23,7 @@ contract CharacterSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemF
     _claimWelcomePackages(player, characterId);
   }
 
-  function test_TransferCharacterSuccessullfy() external {
+  function test_TransferCharacterSuccessfully() external {
     // console2.log("worldDeployer", worldDeployer);
     // console2.log("creator", creator);
     // console2.log("worldAddress", worldAddress);
@@ -41,7 +41,55 @@ contract CharacterSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemF
     assertEq(ActiveChar.getSessionWallet(characterId), player);
   }
 
-  function test_DelegateSessionWalletSuccessullfy() external {
+  function test_DirectTransferCharacter_ClearsSessionWalletByHook() external {
+    address characterERC721 = Contracts.getErc721Token();
+
+    vm.startPrank(player);
+    world.app__delegateSessionWallet(characterId, sessionWallet);
+    IERC721(characterERC721).transferFrom(player, newOwner, characterId);
+    vm.stopPrank();
+
+    CharacterUtils.checkCharacterOwner(characterId, newOwner);
+    assertEq(ActiveChar.getWallet(characterId), newOwner);
+    assertEq(ActiveChar.getSessionWallet(characterId), address(0));
+
+    EquipData[] memory equipDatas = new EquipData[](1);
+    equipDatas[0] = EquipData({ slotType: SlotType.Weapon, equipmentId: 1 });
+
+    vm.expectRevert();
+    vm.startPrank(sessionWallet);
+    world.app__gearUpEquipments(characterId, equipDatas);
+    vm.stopPrank();
+  }
+
+  function test_SafeTransferCharacter_ClearsSessionWalletByHook() external {
+    address characterERC721 = Contracts.getErc721Token();
+
+    vm.startPrank(player);
+    world.app__delegateSessionWallet(characterId, sessionWallet);
+    IERC721(characterERC721).safeTransferFrom(player, newOwner, characterId);
+    vm.stopPrank();
+
+    CharacterUtils.checkCharacterOwner(characterId, newOwner);
+    assertEq(ActiveChar.getWallet(characterId), newOwner);
+    assertEq(ActiveChar.getSessionWallet(characterId), address(0));
+  }
+
+  function test_SafeTransferCharacterWithData_ClearsSessionWalletByHook() external {
+    address characterERC721 = Contracts.getErc721Token();
+    bytes memory data = abi.encodePacked("some data");
+
+    vm.startPrank(player);
+    world.app__delegateSessionWallet(characterId, sessionWallet);
+    IERC721(characterERC721).safeTransferFrom(player, newOwner, characterId, data);
+    vm.stopPrank();
+
+    CharacterUtils.checkCharacterOwner(characterId, newOwner);
+    assertEq(ActiveChar.getWallet(characterId), newOwner);
+    assertEq(ActiveChar.getSessionWallet(characterId), address(0));
+  }
+
+  function test_DelegateSessionWalletSuccessfully() external {
     vm.startPrank(player);
     world.app__delegateSessionWallet(characterId, sessionWallet);
     vm.stopPrank();

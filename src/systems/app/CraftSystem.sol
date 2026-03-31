@@ -23,7 +23,7 @@ contract CraftSystem is System, CharacterAccessControl {
     public
     onlyAuthorizedWallet(characterId)
   {
-    CharacterPositionUtils.mustInCapital(characterId, cityId);
+    CharacterPositionUtils.mustInExactCapital(characterId, cityId);
     if (craftAmount == 0) {
       revert Errors.CraftSystem_CraftAmountIsZero();
     }
@@ -48,6 +48,9 @@ contract CraftSystem is System, CharacterAccessControl {
   function _validateRecipe(uint256 characterId, uint256 craftItemId, ItemRecipeData memory recipe) private view {
     if (recipe.itemIds.length == 0) {
       revert Errors.CraftSystem_NoRecipeForItem(craftItemId);
+    }
+    if (recipe.itemIds.length != recipe.amounts.length) {
+      revert Errors.CraftSystem_InvalidRecipeData(craftItemId);
     }
     uint256 lenPerkTypes = recipe.perkTypes.length;
     if (lenPerkTypes > 0) {

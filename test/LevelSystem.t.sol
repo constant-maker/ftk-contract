@@ -18,13 +18,12 @@ import {
   CharBaseStatsData,
   CharPerk,
   CharPerkData,
-  CharReborn
+  CharReborn,
+  CharQuestStatus
 } from "@codegen/index.sol";
-import { CharQuestStatus } from "@codegen/index.sol";
 import { QuestType, QuestStatusType, StatType, ItemType } from "@codegen/common.sol";
-import { Errors } from "@common/index.sol";
-import { Config } from "@common/Config.sol";
-import { IncreaseStatData } from "@systems/app/LevelSystem.sol";
+import { Errors, Config } from "@common/index.sol";
+import { IncreaseStatData } from "@common/Types.sol";
 import { CharacterPositionUtils } from "@utils/CharacterPositionUtils.sol";
 import { InventoryItemUtils } from "@utils/InventoryItemUtils.sol";
 
@@ -108,7 +107,7 @@ contract LevelSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixtu
     CharCurrentStatsData memory currentStats = CharCurrentStats.get(characterId);
     // all stats +1 at level 5
     assertEq(currentStats.atk, beforeCurrentStats.atk + 1);
-    assertEq(currentStats.def, beforeCurrentStats.atk + 1);
+    assertEq(currentStats.def, beforeCurrentStats.def + 1);
     assertEq(currentStats.agi, beforeCurrentStats.agi + 1);
 
     console2.log("test increaseStats");
@@ -126,7 +125,7 @@ contract LevelSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixtu
 
     currentStats = CharCurrentStats.get(characterId);
     assertEq(currentStats.atk, beforeCurrentStats.atk + 2);
-    assertEq(currentStats.def, beforeCurrentStats.atk + 1);
+    assertEq(currentStats.def, beforeCurrentStats.def + 1);
     assertEq(currentStats.agi, beforeCurrentStats.agi + 1);
     assertEq(CharStats.getStatPoint(characterId), 1);
   }
@@ -148,9 +147,9 @@ contract LevelSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixtu
     assertEq(CharStats.getStatPoint(characterId), 83);
 
     CharCurrentStatsData memory currentStats = CharCurrentStats.get(characterId);
-    // all stats +1 at level multiple of 5
+
     assertEq(currentStats.atk, beforeCurrentStats.atk + 10);
-    assertEq(currentStats.def, beforeCurrentStats.atk + 10);
+    assertEq(currentStats.def, beforeCurrentStats.def + 10);
     assertEq(currentStats.agi, beforeCurrentStats.agi + 10);
 
     CharBaseStatsData memory baseStats = CharBaseStats.get(characterId);

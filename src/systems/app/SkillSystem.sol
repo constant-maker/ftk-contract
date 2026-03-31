@@ -2,7 +2,7 @@ pragma solidity >=0.8.24;
 
 import { System } from "@latticexyz/world/src/System.sol";
 import { CharacterAccessControl } from "@abstracts/CharacterAccessControl.sol";
-import { CharSkill, Skill, SkillData, CharPerk } from "@codegen/index.sol";
+import { CharSkill, Skill, SkillData } from "@codegen/index.sol";
 import { ItemType } from "@codegen/common.sol";
 import { CharacterPerkUtils } from "@utils/CharacterPerkUtils.sol";
 import { Errors } from "@common/Errors.sol";
@@ -16,7 +16,7 @@ contract SkillSystem is System, CharacterAccessControl {
 
   /// @dev Validates that the skillIds array does not contain duplicates of non-zero values.
   /// @param skillIds Array of skill IDs to validate.
-  function _validateSkillIds(uint256 characterId, uint256[5] memory skillIds) private view {
+  function _validateSkillIds(uint256 characterId, uint256[5] calldata skillIds) private view {
     for (uint256 n = 0; n < skillIds.length; n++) {
       uint256 skillId = skillIds[n];
       SkillData memory skill;

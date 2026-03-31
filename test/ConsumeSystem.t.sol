@@ -224,6 +224,21 @@ contract ConsumeSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFix
     assertEq(CharCurrentStats.getHp(characterId2), 1); // abs dmg - min hp is 1
   }
 
+  function test_Revert_BuffItemEmptyTargets() external {
+    vm.startPrank(worldDeployer);
+    InventoryItemUtils.addItem(characterId, 360, 1);
+    vm.stopPrank();
+
+    TargetItemData memory targetData;
+
+    vm.expectRevert();
+    vm.startPrank(player);
+    world.app__consumeItem(characterId, 360, 1, targetData);
+    vm.stopPrank();
+
+    assertEq(CharOtherItem.getAmount(characterId, 360), 1);
+  }
+
   function test_UseTeleport() external {
     CharPositionData memory charPosition = CharacterPositionUtils.getCurrentPosition(characterId);
     console2.log("char position x", charPosition.x);

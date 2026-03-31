@@ -47,7 +47,6 @@ const MAP_TABLES: any = {
     schema: {
       cityId: "uint256",
       itemId: "uint256",
-      cId: "uint256", // cityId, this value is used to get data
       amount: "uint32",
     },
     key: ['cityId', 'itemId'],
@@ -60,7 +59,7 @@ const MAP_TABLES: any = {
     },
     key: ['x', 'y'],
   },
-  TileOccupation: { // count the number of times a tile has been occupied
+  TileOccupation: { // Count the tile occupied by each kingdom
     schema: {
       kingdomId: "uint8",
       counter: "uint32",

@@ -61,7 +61,11 @@ contract KingSystem is CharacterAccessControl, System {
   }
 
   function assignKing(uint8 kingdomId) public {
+    KingSystemUtils.validateKingdomId(kingdomId);
     KingElectionData memory kingElection = KingElection.get(kingdomId);
+    if (kingElection.timestamp == 0) {
+      revert Errors.KingSystem_ElectionNotInitialized(kingdomId);
+    }
     if (kingElection.timestamp > block.timestamp) {
       revert Errors.KingSystem_ElectionPeriodNotOverYet();
     }
@@ -142,6 +146,9 @@ contract KingSystem is CharacterAccessControl, System {
     public
     onlyAuthorizedWallet(characterId)
   {
+    if (kingdomIds.length != fees.length) {
+      revert Errors.KingSystem_InvalidParamsLen(kingdomIds.length, fees.length);
+    }
     uint8 charKingdomId = CharInfo.getKingdomId(characterId);
     CharacterRoleUtils.mustBeKing(charKingdomId, characterId);
     for (uint256 i = 0; i < kingdomIds.length; i++) {

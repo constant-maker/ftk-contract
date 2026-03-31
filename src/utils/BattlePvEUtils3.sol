@@ -15,7 +15,6 @@ import {
   CharStats,
   Item
 } from "@codegen/index.sol";
-import { CharacterFundUtils } from "./CharacterFundUtils.sol";
 import { InventoryItemUtils } from "./InventoryItemUtils.sol";
 import { AdvantageType } from "@codegen/common.sol";
 import { Errors } from "@common/index.sol";
@@ -38,7 +37,6 @@ library BattlePvEUtils3 {
     int32 x = charPosition.x;
     int32 y = charPosition.y;
     if (monsterHp == 0) {
-      CharacterFundUtils.increaseCrystal(characterId, BossInfo.getCrystal(monsterId, x, y));
       BossInfo.setHp(monsterId, x, y, MonsterStats.getHp(monsterId));
       BossInfo.setLastDefeatedTime(monsterId, x, y, block.timestamp);
       switchBossColor(x, y, monsterId);

@@ -7,58 +7,57 @@ import {
   InventoryItemUtils,
   CharacterFundUtils,
   CharacterPositionUtils,
-  MarketWeightUtils
+  MarketWeightUtils,
+  MapUtils
 } from "@utils/index.sol";
-import {
-  OrderCounter,
-  Order,
-  OrderData,
-  Equipment,
-  CharMarketWeight,
-  CharOtherItem,
-  Order2,
-  RestrictLoc,
-  CharPositionData,
-  City
-} from "@codegen/index.sol";
+import { OrderCounter, Order, OrderData, Equipment, CharMarketWeight, Order2 } from "@codegen/index.sol";
 import { OrderParams, TakeOrderParams, MarketSystemUtils } from "@utils/MarketSystemUtils.sol";
-import { ItemCategoryType, CurrencyType } from "@codegen/common.sol";
+import { CurrencyType } from "@codegen/common.sol";
 import { Errors, Config } from "@common/index.sol";
 
 contract MarketSystem is System, CharacterAccessControl {
-  function placeOrder(uint256 characterId, OrderParams memory order) public onlyAuthorizedWallet(characterId) {
-    MarketWeightUtils.checkAndSetMaxWeight(characterId, order.cityId); // set default max weight if not set
-    CharacterPositionUtils.mustInCapital(characterId, order.cityId);
-    if (!order.isBuy && order.equipmentId != 0) {
+  /// @dev Place a buy or sell order, if orderId is provided,
+  /// it will update the existing order, otherwise it will create a new order
+  function placeOrder(uint256 characterId, OrderParams memory orderParams) public onlyAuthorizedWallet(characterId) {
+    // check and init market storage weight
+    MarketWeightUtils.checkAndSetMaxWeight(characterId, orderParams.cityId);
+    CharacterPositionUtils.mustInExactCapital(characterId, orderParams.cityId);
+    if (!orderParams.isBuy && orderParams.equipmentId != 0) {
       // validate and adjust sell equipment order params
-      _validateAndAdjustSellEquipmentOrderParams(order);
+      _validateAndAdjustSellEquipmentOrderParams(orderParams);
     }
-    if (order.orderId != 0) {
-      _updateOrder(characterId, order);
+    if (orderParams.orderId != 0) {
+      _updateOrder(characterId, orderParams);
       return;
     }
-    MarketSystemUtils.validateOrder(order);
-    MarketSystemUtils.validateCharacter(characterId, order);
-    _lockAsset(characterId, order);
+    MarketSystemUtils.validateOrder(orderParams);
+    MarketSystemUtils.validateCharacter(characterId, orderParams);
+    _lockAsset(characterId, orderParams);
     uint256 orderId = _getNewOrderId();
     Order.set(
       orderId,
-      order.cityId,
+      orderParams.cityId,
       characterId,
-      order.equipmentId,
-      order.itemId,
-      order.amount,
-      order.unitPrice,
-      order.isBuy,
+      orderParams.equipmentId,
+      orderParams.itemId,
+      orderParams.amount,
+      orderParams.unitPrice,
+      orderParams.isBuy,
       false
     );
-    Order2.set(orderId, order.currency, block.timestamp, block.timestamp);
+    Order2.set(orderId, orderParams.currency, block.timestamp, block.timestamp);
   }
 
+  /// @dev Cancel an existing order, only the owner can cancel and must be in the same city for gold order
   function cancelOrder(uint256 characterId, uint256 orderId) public onlyAuthorizedWallet(characterId) {
     _checkOrderOwnership(characterId, orderId);
     OrderData memory order = Order.get(orderId);
-    CharacterPositionUtils.mustInCity(characterId, order.cityId);
+    if (Order2.getCurrency(orderId) == CurrencyType.Crystal) {
+      // crystal order can cancel in any capital
+      CharacterPositionUtils.mustInCapital(characterId);
+    } else {
+      CharacterPositionUtils.mustInCity(characterId, order.cityId);
+    }
     if (order.isDone) {
       revert Errors.MarketSystem_OrderAlreadyDone(orderId);
     }
@@ -76,21 +75,26 @@ contract MarketSystem is System, CharacterAccessControl {
   {
     for (uint256 i = 0; i < takeParams.length; i++) {
       TakeOrderParams memory top = takeParams[i];
-      OrderData memory order = Order.get(top.orderId);
-      CurrencyType orderCurrency = Order2.getCurrency(top.orderId);
-      if (orderCurrency == CurrencyType.Gold) {
-        CharacterPositionUtils.mustInCity(characterId, order.cityId);
-      } else if (orderCurrency == CurrencyType.Crystal) {
-        _mustInACapital(characterId);
+      if (top.amount == 0) {
+        revert Errors.MarketSystem_TakerOrderZeroAmount();
       }
+      OrderData memory order = Order.get(top.orderId);
       if (order.isDone) {
         revert Errors.MarketSystem_OrderAlreadyDone(top.orderId);
       }
       if (order.characterId == 0) {
         revert Errors.MarketSystem_OrderIsNotExist(top.orderId);
       }
-      if (top.amount == 0) {
-        revert Errors.MarketSystem_TakerOrderZeroAmount();
+      if (order.characterId == characterId) {
+        revert Errors.MarketSystem_CannotTakeOwnOrder(top.orderId);
+      }
+      CurrencyType orderCurrency = Order2.getCurrency(top.orderId);
+      if (orderCurrency == CurrencyType.Gold) {
+        // must be in the same city for gold order
+        CharacterPositionUtils.mustInCity(characterId, order.cityId);
+      } else if (orderCurrency == CurrencyType.Crystal) {
+        // can take from any capital
+        CharacterPositionUtils.mustInCapital(characterId);
       }
       if (order.isBuy) {
         MarketSystemUtils.takeBuyOrder(characterId, order, top);
@@ -104,6 +108,7 @@ contract MarketSystem is System, CharacterAccessControl {
   }
 
   function upgradeMarketWeight(uint256 characterId, uint256 cityId) public onlyAuthorizedWallet(characterId) {
+    MapUtils.mustBeCapital(cityId);
     uint32 maxWeight = CharMarketWeight.getMaxWeight(characterId, cityId);
     if (maxWeight == 0) maxWeight = Config.INIT_STORAGE_MAX_WEIGHT;
     uint32 multiplier = (maxWeight - Config.INIT_STORAGE_MAX_WEIGHT) / Config.STORAGE_MAX_WEIGHT_INCREMENT;
@@ -113,11 +118,11 @@ contract MarketSystem is System, CharacterAccessControl {
   }
 
   /// @dev Lock asset for order, also update market weight if it's a sell order
-  function _lockAsset(uint256 characterId, OrderParams memory order) private {
-    if (order.isBuy) {
+  function _lockAsset(uint256 characterId, OrderParams memory orderParams) private {
+    if (orderParams.isBuy) {
       // buy - lock gold or crystal
-      uint32 totalValue = order.unitPrice * order.amount;
-      if (order.currency == CurrencyType.Crystal) {
+      uint32 totalValue = orderParams.unitPrice * orderParams.amount;
+      if (orderParams.currency == CurrencyType.Crystal) {
         CharacterFundUtils.decreaseCrystal(characterId, totalValue);
         return;
       }
@@ -125,15 +130,15 @@ contract MarketSystem is System, CharacterAccessControl {
       return;
     }
     // sell - lock item and update market weight
-    if (order.equipmentId != 0) {
+    if (orderParams.equipmentId != 0) {
       // lock equipment
-      InventoryEquipmentUtils.removeEquipment(characterId, order.equipmentId, true);
+      InventoryEquipmentUtils.removeEquipment(characterId, orderParams.equipmentId, true);
     } else {
       // lock other item
-      InventoryItemUtils.removeItem(characterId, order.itemId, order.amount);
+      InventoryItemUtils.removeItem(characterId, orderParams.itemId, orderParams.amount);
     }
     // update market weight
-    MarketWeightUtils.updateWeight(characterId, order.cityId, order.itemId, order.amount, false);
+    MarketWeightUtils.updateWeight(characterId, orderParams.cityId, orderParams.itemId, orderParams.amount, false);
   }
 
   /// @dev Unlock asset for order
@@ -161,28 +166,29 @@ contract MarketSystem is System, CharacterAccessControl {
   }
 
   /// @dev Update existing order - user only can update unit price
-  function _updateOrder(uint256 characterId, OrderParams memory order) private {
-    MarketSystemUtils.validateOrderPrice(order.itemId, order.unitPrice, Order2.getCurrency(order.orderId));
-    OrderData memory existingOrder = Order.get(order.orderId);
+  function _updateOrder(uint256 characterId, OrderParams memory orderParams) private {
+    OrderData memory existingOrder = Order.get(orderParams.orderId);
     if (existingOrder.isDone) {
-      revert Errors.MarketSystem_OrderAlreadyDone(order.orderId);
+      revert Errors.MarketSystem_OrderAlreadyDone(orderParams.orderId);
     }
     if (existingOrder.characterId != characterId) {
-      revert Errors.MarketSystem_CharacterNotOwner(characterId, order.orderId);
+      revert Errors.MarketSystem_CharacterNotOwner(characterId, orderParams.orderId);
     }
-    if (existingOrder.cityId != order.cityId) {
-      revert Errors.MarketSystem_CityNotMatch(existingOrder.cityId, order.orderId);
+    if (existingOrder.cityId != orderParams.cityId) {
+      revert Errors.MarketSystem_CityNotMatch(existingOrder.cityId, orderParams.orderId);
     }
-    if (existingOrder.unitPrice == order.unitPrice) {
+    if (existingOrder.unitPrice == orderParams.unitPrice) {
       // nothing to update
       return;
     }
-
+    CurrencyType orderCurrency = Order2.getCurrency(orderParams.orderId);
+    MarketSystemUtils.validateMarketCrystalRule(existingOrder.itemId, orderParams.unitPrice, orderCurrency);
+    MarketSystemUtils.validateOrderPrice(orderParams.unitPrice, orderCurrency);
     if (existingOrder.isBuy) {
       // buy order - we need to update gold or crystal
-      MarketSystemUtils.updateBuyOrder(characterId, existingOrder, order);
+      MarketSystemUtils.updateBuyOrder(characterId, existingOrder, orderParams);
     }
-    Order.setUnitPrice(order.orderId, order.unitPrice);
+    Order.setUnitPrice(orderParams.orderId, orderParams.unitPrice);
   }
 
   function _checkOrderOwnership(uint256 characterId, uint256 orderId) private view {
@@ -192,24 +198,16 @@ contract MarketSystem is System, CharacterAccessControl {
   }
 
   /// @dev Validate the sell order params for equipment, currently we only support selling 1 equipment per order
-  function _validateAndAdjustSellEquipmentOrderParams(OrderParams memory order) private view {
-    if (order.amount != 1) {
-      revert Errors.MarketSystem_InvalidSellOrderEquipment(order.amount);
+  function _validateAndAdjustSellEquipmentOrderParams(OrderParams memory orderParams) private view {
+    if (orderParams.amount != 1) {
+      revert Errors.MarketSystem_InvalidSellOrderEquipment(orderParams.amount);
     }
-    order.itemId = Equipment.getItemId(order.equipmentId);
+    orderParams.itemId = Equipment.getItemId(orderParams.equipmentId);
   }
 
   function _getNewOrderId() private returns (uint256) {
     uint256 orderId = OrderCounter.get() + 1;
     OrderCounter.set(orderId);
     return orderId;
-  }
-
-  function _mustInACapital(uint256 characterId) private view {
-    CharPositionData memory position = CharacterPositionUtils.getCurrentPosition(characterId);
-    uint256 cityId = RestrictLoc.getCityId(position.x, position.y);
-    if (cityId == 0 || !City.getIsCapital(cityId)) {
-      revert Errors.MarketSystem_MustInACapital();
-    }
   }
 }

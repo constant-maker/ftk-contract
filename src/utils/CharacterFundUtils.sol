@@ -5,14 +5,16 @@ import { Errors } from "@common/Errors.sol";
 
 library CharacterFundUtils {
   function increaseGold(uint256 characterId, uint32 amount) internal {
-    uint32 newAmount = CharFund.getGold(characterId) + amount;
-    CharFund.setGold(characterId, newAmount);
+    uint256 newAmount = CharFund.getGold(characterId) + amount;
+    if (newAmount > type(uint32).max) {
+      // set to max if exceed
+      newAmount = type(uint32).max;
+    }
+    CharFund.setGold(characterId, uint32(newAmount));
   }
 
   function decreaseGold(uint256 characterId, uint32 amount) internal {
-    if (amount == 0) {
-      return;
-    }
+    if (amount == 0) return;
     uint32 _balance = CharFund.getGold(characterId);
     if (_balance < amount) {
       revert Errors.CharacterFund_NotEnoughGold(_balance, amount);

@@ -45,7 +45,7 @@ const BATTLE_TABLES: any = {
       characterSps: "uint8[2]",
       barriers: "uint32[2]",
       fames: "int32[2]",
-      equipmentIds: "uint256[]", // equipmentIds of both attacker and defender
+      equipmentIds: "uint256[]", // EquipmentIds of both attacker and defender
     },
     key: ['pvpId'],
   },
@@ -54,10 +54,10 @@ const BATTLE_TABLES: any = {
       pvpId: "uint256",
       x: "int32",
       y: "int32",
-      attackerStats: "uint16[3]", // attacker atk, def, agi
-      defenderStats: "uint16[3]", // defender atk, def, agi
-      attackerBuffs: "uint256[4]", // attacker buffs by buff (first 2 ) and debuff ids (last 2)
-      defenderBuffs: "uint256[4]", // defender buffs by buff (first 2 ) and debuff ids (last 2)
+      attackerStats: "uint16[3]", // Attacker atk, def, agi
+      defenderStats: "uint16[3]", // Defender atk, def, agi
+      attackerBuffs: "uint256[4]", // Attacker buffs by buff (first 2 ) and debuff ids (last 2)
+      defenderBuffs: "uint256[4]", // Defender buffs by buff (first 2 ) and debuff ids (last 2)
     },
     key: ['pvpId'],
   },
@@ -92,7 +92,7 @@ const BATTLE_TABLES: any = {
   PvEExtra: {
     schema: {
       characterId: "uint256",
-      itemId: "uint256", // reward
+      itemId: "uint256", // Reward itemId
       itemAmount: "uint32",
       characterBarrier: "uint32",
     },

@@ -12,7 +12,7 @@ import {
 } from "@utils/index.sol";
 import { ItemCategoryType, ItemType, CurrencyType } from "@codegen/common.sol";
 import { Errors } from "@common/Errors.sol";
-import { TradeData } from "@utils/NpcShopUtils.sol";
+import { NpcTradeData } from "@common/Types.sol";
 
 contract NpcShopSystem is CharacterAccessControl, System {
   uint32 constant INIT_SHOP_BALANCE = 100_000; // golds
@@ -24,8 +24,8 @@ contract NpcShopSystem is CharacterAccessControl, System {
   function tradeWithNpc(
     uint256 characterId,
     uint256 cityId,
-    TradeData[] calldata buyData,
-    TradeData[] calldata sellData
+    NpcTradeData[] calldata buyData,
+    NpcTradeData[] calldata sellData
   )
     public
     onlyAuthorizedWallet(characterId)
@@ -43,7 +43,7 @@ contract NpcShopSystem is CharacterAccessControl, System {
   function _buyFromNpc(
     uint256 characterId,
     uint256 cityId,
-    TradeData[] calldata data
+    NpcTradeData[] calldata data
   )
     private
     returns (uint32 goldCost)
@@ -73,7 +73,14 @@ contract NpcShopSystem is CharacterAccessControl, System {
     return goldCost;
   }
 
-  function _sellToNpc(uint256 characterId, uint256 cityId, TradeData[] calldata data) private returns (uint32 goldEarn) {
+  function _sellToNpc(
+    uint256 characterId,
+    uint256 cityId,
+    NpcTradeData[] calldata data
+  )
+    private
+    returns (uint32 goldEarn)
+  {
     if (data.length == 0) return 0;
     uint32 npcBalance = NpcShop.getGold(cityId);
     for (uint256 i = 0; i < data.length; i++) {
@@ -111,12 +118,8 @@ contract NpcShopSystem is CharacterAccessControl, System {
     if (isRemoved && currentAmount < amount) {
       revert Errors.NpcShopSystem_NotEnoughItem(cityId, itemId, currentAmount);
     }
-    if (currentAmount == 0) {
-      NpcShopInventory.set(cityId, itemId, cityId, amount);
-    } else {
-      uint32 newAmount = isRemoved ? currentAmount - amount : currentAmount + amount;
-      NpcShopInventory.setAmount(cityId, itemId, newAmount);
-    }
+    uint32 newAmount = isRemoved ? currentAmount - amount : currentAmount + amount;
+    NpcShopInventory.setAmount(cityId, itemId, newAmount);
   }
 
   function _getNpcSellUnitPrice(uint8 itemTier) private pure returns (uint32) {

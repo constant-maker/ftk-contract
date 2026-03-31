@@ -8,7 +8,9 @@ import { console2 } from "forge-std/console2.sol";
 import { CharStats, CharStatsData } from "@codegen/tables/CharStats.sol";
 import { CharCurrentStats, CharCurrentStatsData } from "@codegen/tables/CharCurrentStats.sol";
 import { CharBaseStats, CharBaseStatsData } from "@codegen/tables/CharBaseStats.sol";
-import { CharReborn, CharInfo, Item, CharInventory, CharEquipment, CharEqCache, Equipment } from "@codegen/index.sol";
+import {
+  CharReborn, CharInfo, Item, CharInventory, CharEquipment, CharEquipmentCache, Equipment
+} from "@codegen/index.sol";
 import { EquipData } from "@utils/CharacterEquipmentUtils.sol";
 import { SlotType } from "@codegen/common.sol";
 import { Config } from "@common/Config.sol";
@@ -182,7 +184,7 @@ contract RebornSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixt
 
     assertEq(CharEquipment.getEquipmentId(characterId, SlotType.Weapon), 1);
     assertEq(CharEquipment.getEquipmentId(characterId, SlotType.Mount), 2);
-    assertEq(CharEqCache.getMs(characterId, SlotType.Mount), 1);
+    assertEq(CharEquipmentCache.getMs(characterId, SlotType.Mount), 1);
 
     vm.startPrank(player);
     world.app__reborn(characterId);

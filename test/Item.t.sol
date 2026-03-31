@@ -17,7 +17,6 @@ contract ItemTest is WorldFixture, SpawnSystemFixture {
     assertEq(item.tier, 1);
 
     EquipmentInfo2Data memory equipmentInfo2 = EquipmentInfo2.get(41);
-    assertEq(equipmentInfo2.maxLevel, 0);
     assertEq(equipmentInfo2.bonusWeight, 0);
     assertEq(equipmentInfo2.shieldBarrier, 0);
   }

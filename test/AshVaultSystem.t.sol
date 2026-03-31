@@ -12,7 +12,7 @@ import { InventoryItemUtils } from "@utils/InventoryItemUtils.sol";
 import { TestHelper } from "./TestHelper.sol";
 import { console2 } from "forge-std/console2.sol";
 
-contract CollectionSystemTest is WorldFixture, SpawnSystemFixture, MoveSystemFixture {
+contract AshVaultSystemTest is WorldFixture, SpawnSystemFixture, MoveSystemFixture {
   address player = makeAddr("player");
   uint256 characterId;
 

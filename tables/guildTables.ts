@@ -24,14 +24,14 @@ const GUILD_TABLES: any = {
     },
     key: ['guildId'],
   },
-  GuildMemberMapping: { // to find guild by member, one member only in one guild
+  GuildMemberMapping: { // To find guild by member, one member only in one guild
     schema: {
       memberId: "uint256",
       guildId: "uint256",
     },
     key: ['memberId'],
   },
-  GuildNameMapping: { // to ensure unique guild name
+  GuildNameMapping: { // To ensure unique guild name
     schema: {
       nameHash: "bytes32",
       guildId: "uint256",

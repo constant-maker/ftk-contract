@@ -9,7 +9,7 @@ import { CharOtherItem } from "@codegen/tables/CharOtherItem.sol";
 import { NpcShopInventory } from "@codegen/tables/NpcShopInventory.sol";
 import { CharInventory } from "@codegen/tables/CharInventory.sol";
 import { CharacterFundUtils } from "@utils/CharacterFundUtils.sol";
-import { TradeData } from "@utils/NpcShopUtils.sol";
+import { NpcTradeData } from "@common/Types.sol";
 import { InventoryItemUtils } from "@utils/InventoryItemUtils.sol";
 
 contract NpcShopSystem is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture {
@@ -36,9 +36,9 @@ contract NpcShopSystem is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
 
     uint256 prevLen = CharInventory.lengthToolIds(characterId);
 
-    TradeData[] memory buyData = new TradeData[](1);
-    buyData[0] = TradeData({ itemId: 21, amount: 1 });
-    TradeData[] memory sellData;
+    NpcTradeData[] memory buyData = new NpcTradeData[](1);
+    buyData[0] = NpcTradeData({ itemId: 21, amount: 1 });
+    NpcTradeData[] memory sellData;
 
     vm.startPrank(player);
     world.app__tradeWithNpc(characterId, cityId, buyData, sellData);
@@ -71,7 +71,7 @@ contract NpcShopSystem is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
     vm.stopPrank();
 
     vm.startPrank(worldDeployer);
-    NpcShopInventory.set(1, 1, 1, 100);
+    NpcShopInventory.set(1, 1, 100);
     vm.stopPrank();
 
     buyData[0].itemId = 1;
@@ -87,18 +87,18 @@ contract NpcShopSystem is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
 
   // test with max 250
   // function test_SellItemToNpc() external {
-  //   TradeData[] memory buyData;
-  //   TradeData[] memory sellData = new TradeData[](2);
-  //   sellData[0] = TradeData({ itemId: 18, amount: 1 });
-  //   sellData[1] = TradeData({ itemId: 1, amount: 100 });
+  //   NpcTradeData[] memory buyData;
+  //   NpcTradeData[] memory sellData = new NpcTradeData[](2);
+  //   sellData[0] = NpcTradeData({ itemId: 18, amount: 1 });
+  //   sellData[1] = NpcTradeData({ itemId: 1, amount: 100 });
 
   //   vm.expectRevert();
   //   vm.startPrank(player);
   //   world.app__tradeWithNpc(characterId, cityId, buyData, sellData);
   //   vm.stopPrank();
 
-  //   sellData = new TradeData[](1);
-  //   sellData[0] = TradeData({ itemId: 1, amount: 100 });
+  //   sellData = new NpcTradeData[](1);
+  //   sellData[0] = NpcTradeData({ itemId: 1, amount: 100 });
 
   //   vm.startPrank(worldDeployer);
   //   InventoryItemUtils.addItem(characterId, 1, 101);
@@ -158,18 +158,18 @@ contract NpcShopSystem is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
 
   // test with max 500
   // function test_SellItemToNpc() external {
-  //   TradeData[] memory buyData;
-  //   TradeData[] memory sellData = new TradeData[](2);
-  //   sellData[0] = TradeData({ itemId: 18, amount: 1 });
-  //   sellData[1] = TradeData({ itemId: 1, amount: 100 });
+  //   NpcTradeData[] memory buyData;
+  //   NpcTradeData[] memory sellData = new NpcTradeData[](2);
+  //   sellData[0] = NpcTradeData({ itemId: 18, amount: 1 });
+  //   sellData[1] = NpcTradeData({ itemId: 1, amount: 100 });
 
   //   vm.expectRevert();
   //   vm.startPrank(player);
   //   world.app__tradeWithNpc(characterId, cityId, buyData, sellData);
   //   vm.stopPrank();
 
-  //   sellData = new TradeData[](1);
-  //   sellData[0] = TradeData({ itemId: 1, amount: 100 });
+  //   sellData = new NpcTradeData[](1);
+  //   sellData[0] = NpcTradeData({ itemId: 1, amount: 100 });
 
   //   vm.startPrank(worldDeployer);
   //   InventoryItemUtils.addItem(characterId, 1, 101);
@@ -228,9 +228,9 @@ contract NpcShopSystem is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
   // }
 
   function test_buyCard() external {
-    TradeData[] memory buyData = new TradeData[](1);
-    buyData[0] = TradeData({ itemId: 268, amount: 1 });
-    TradeData[] memory sellData;
+    NpcTradeData[] memory buyData = new NpcTradeData[](1);
+    buyData[0] = NpcTradeData({ itemId: 268, amount: 1 });
+    NpcTradeData[] memory sellData;
 
     vm.startPrank(worldDeployer);
     CharFund.setGold(characterId, 10_000);

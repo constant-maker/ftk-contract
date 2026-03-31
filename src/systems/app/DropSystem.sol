@@ -26,7 +26,7 @@ contract DropSystem is System, CharacterAccessControl {
       if (!InventoryToolUtils.hasTool(characterId, toolId)) {
         revert Errors.Tool_NotOwned(characterId, toolId);
       }
-      // hook will handle inventory update
+      InventoryToolUtils.removeTool(characterId, toolId);
       Tool.deleteRecord(toolId);
     }
   }

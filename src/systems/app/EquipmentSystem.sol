@@ -85,8 +85,7 @@ contract EquipmentSystem is System, CharacterAccessControl {
   function _checkCharacterLevel(uint256 characterId, uint256 itemId) private view {
     uint16 level = CharStats.getLevel(characterId);
     uint8 itemTier = Item.getTier(itemId);
-    if (level >= 90) return; // if level is above 90, it can equip any tier of equipment
-    if (level < (uint16(itemTier) + 1) * 10) {
+    if (level + 10 < uint16(itemTier) * 10) {
       revert Errors.EquipmentSystem_CharacterLevelTooLow(characterId, level, itemTier);
     }
   }
@@ -95,7 +94,7 @@ contract EquipmentSystem is System, CharacterAccessControl {
   function updateGrindSlot(uint256 characterId, SlotType slotType) public onlyAuthorizedWallet(characterId) {
     bool isValidSlotType = false;
     // only allow weapon, subweapon, armor, headgear, footwear as grind slot
-    for (uint8 i = 0; i < uint8(SlotType.Footwear); i++) {
+    for (uint8 i = 0; i <= uint8(SlotType.Footwear); i++) {
       if (slotType == SlotType(i)) {
         isValidSlotType = true;
         break;
@@ -116,6 +115,9 @@ contract EquipmentSystem is System, CharacterAccessControl {
     public
     onlyAuthorizedWallet(characterId)
   {
+    if (targetEquipmentId == materialEquipmentId) {
+      revert Errors.EquipmentSystem_SameEquipmentId(targetEquipmentId);
+    }
     // ensure ownership of target equipment and it's not equipped
     if (!InventoryEquipmentUtils.hasEquipment(characterId, targetEquipmentId)) {
       revert Errors.Equipment_NotOwned(characterId, targetEquipmentId);

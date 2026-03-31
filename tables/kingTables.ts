@@ -1,8 +1,8 @@
 const KING_TABLES: any = {
   KingElection: {
     schema: {
-      kingdomId: 'uint8', // kingdom id
-      kingId: 'uint256', // character id that is elected as king
+      kingdomId: 'uint8',
+      kingId: 'uint256', // Character id that is elected as king
       timestamp: 'uint256',
       candidateIds: 'uint256[]',
       votesReceived: 'uint32[]'
@@ -12,7 +12,7 @@ const KING_TABLES: any = {
   CandidatePromise: {
     schema: {
       candidateId: 'uint256',
-      timestamp: 'uint256', // timestamp when the promise was made
+      timestamp: 'uint256', // Timestamp when the promise was made
       content: 'string',
     },
     key: ['candidateId'],
@@ -22,16 +22,16 @@ const KING_TABLES: any = {
       characterId: 'uint256',
       candidateId: 'uint256',
       votePower: 'uint32',
-      timestamp: 'uint256', // timestamp when the vote was cast
+      timestamp: 'uint256', // Timestamp when the vote was cast
     },
     key: ['characterId'],
   },
   KingSetting: {
     schema: {
       kingdomId: 'uint8',
-      pvpFamePenalty: 'uint16', // penalty for killing ally
-      captureTilePenalty: 'uint16', // penalty for capturing tile of ally kingdom
-      withdrawWeightLimit: 'uint32', // daily weight limit for withdrawing resources from kingdom treasury
+      pvpFamePenalty: 'uint16', // Penalty for killing ally
+      captureTilePenalty: 'uint16', // Penalty for capturing tile of ally kingdom
+      withdrawWeightLimit: 'uint32', // Daily weight limit for withdrawing resources from kingdom treasury
     },
     key: ['kingdomId'],
   },

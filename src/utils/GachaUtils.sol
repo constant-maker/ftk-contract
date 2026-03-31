@@ -1,10 +1,8 @@
 pragma solidity >=0.8.24;
 
 import {
-  CityVault2,
   CharOtherItem,
   CharInfo,
-  Kingdom,
   CrystalFee,
   CharGachaReq,
   GachaReqInfo,
@@ -15,6 +13,8 @@ import {
 import { Errors } from "@common/Errors.sol";
 import { InventoryItemUtils } from "./InventoryItemUtils.sol";
 import { CharacterFundUtils } from "./CharacterFundUtils.sol";
+import { PlatformUtils } from "./PlatformUtils.sol";
+import { CityVaultUtils } from "./CityVaultUtils.sol";
 
 library GachaUtils {
   function checkAndSpendTicket(uint256 characterId, uint256 ticketValue, uint256 ticketItemId) public {
@@ -32,12 +32,20 @@ library GachaUtils {
       totalSpend += ticketValue;
       CharTotalSpend.set(characterId, totalSpend);
       // share the fee to city vault
-      uint8 kingdomId = CharInfo.getKingdomId(characterId); // TODO: create an utility function to do this
-      uint256 capitalId = Kingdom.getCapitalId(kingdomId);
+      uint8 kingdomId = CharInfo.getKingdomId(characterId);
       uint8 kingdomFeePercentage = CrystalFee.get(kingdomId);
       uint256 shareValue = (ticketValue * uint256(kingdomFeePercentage)) / 100;
-      uint256 currentVaultCrystal = CityVault2.getCrystal(capitalId);
-      CityVault2.setCrystal(capitalId, currentVaultCrystal + shareValue);
+      CityVaultUtils.updateVaultCrystalByKingdomId(kingdomId, shareValue, true);
+
+      // account platform revenue: vault share + remaining team share
+      if (shareValue > 0) {
+        PlatformUtils.updateRootVaultCrystal(shareValue, true);
+      }
+
+      uint256 teamValue = ticketValue - shareValue;
+      if (teamValue > 0) {
+        PlatformUtils.updateRootTeamCrystal(teamValue, true);
+      }
       return;
     }
 
@@ -47,7 +55,7 @@ library GachaUtils {
 
   function storeCharGachaData(uint256 characterId, uint256 gachaId, uint256 requestId, bool isLimitedGacha) public {
     CharGachaData memory charGacha = CharGachaData({
-      randomNumber: 0, // will be set when fulfilled
+      randomNumbers: new uint256[](0), // will be set when fulfilled
       gachaId: gachaId,
       isLimitedGacha: isLimitedGacha,
       gachaItemId: 0, // will be set when fulfilled

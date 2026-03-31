@@ -85,6 +85,13 @@ const MARKET_TABLES: any = {
     },
     key: [],
   },
+  MarketCrystal: { // list item must trade by crystal
+    schema: {
+      itemId: "uint256",
+      minUnitPrice: "uint32",
+    },
+    key: ['itemId'],
+  },
 }
 
 export default MARKET_TABLES;

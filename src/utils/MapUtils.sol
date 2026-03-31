@@ -26,4 +26,12 @@ library MapUtils {
       revert Errors.CityBelongsToOtherKingdom(city.kingdomId, tileKingdomId);
     }
   }
+
+  /// @dev A city must be a capital
+  function mustBeCapital(uint256 cityId) internal view {
+    CityData memory city = City.get(cityId);
+    if (!city.isCapital) {
+      revert Errors.CityIsNotCapital(cityId);
+    }
+  }
 }

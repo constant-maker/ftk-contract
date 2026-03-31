@@ -15,13 +15,17 @@ library Errors {
   // common errors
   error CityIsNotExist(uint256 cityId);
   error MustInACity(uint256 cityId, int32 charX, int32 charY);
-  error MustInACapital(uint256 capitalId, int32 charX, int32 charY);
+  error MustInExactCapital(uint256 capitalId, int32 charX, int32 charY);
+  error MustInACapital(int32 charX, int32 charY);
   error MustBeCapitalCity(uint256 cityId);
   error CityBelongsToOtherKingdom(uint8 originalKingdomId, uint8 currentKingdomId);
   error InsufficientPayment(uint256 msgValue, uint256 requiredValue);
-  error InsufficientCrystalsPayment(uint256 crystals, uint256 requiredCrystals);
+  error InsufficientCrystal(uint256 crystalBalance, uint256 requiredCrystal);
+  error InsufficientGold(uint256 goldBalance, uint256 requiredGold);
   error WorldBalanceInsufficient(uint256 worldBalance, uint256 requiredAmount);
   error InvalidCrystalAmount(uint256 amount, uint256 uintAmount);
+  error CityIsNotCapital(uint256 cityId);
+  error InsufficientCrystalBalance(uint8 bucket, uint256 current, uint256 required);
 
   /* -------------------------------------------------------------------------- */
   /*                                Spawn system                                */
@@ -42,10 +46,15 @@ library Errors {
   error Character_MustInState(
     CharacterStateType characterState, CharacterStateType requiredCharacterState, uint256 blockTime
   );
-  error Character_NotAtCapital(int32 characterX, int32 characterY, int32 capitalX, int32 capitalY);
   error Character_WelcomePackagesClaimed(uint256 characterId);
   error Character_WeightsExceed(uint32 newWeight, uint32 maxWeight);
   error Character_PerkLevelTooLow(uint256 characterId, uint8 perksLevel, ItemType itemType, uint8 itemTier);
+
+  /* -------------------------------------------------------------------------- */
+  /*                                  CharacterSystem                           */
+  /* -------------------------------------------------------------------------- */
+  error CharacterSystem_SameAccount(uint256 characterId, address newOwner);
+  error CharacterSystem_InvalidNewOwner(uint256 characterId);
 
   /* -------------------------------------------------------------------------- */
   /*                                   Tool                                     */
@@ -102,6 +111,7 @@ library Errors {
   error EquipmentSystem_ExceedMaxLevel(uint8 maxLevel);
   error EquipmentSystem_EquipDataIsEmpty();
   error EquipmentSystem_CharacterLevelTooLow(uint256 characterId, uint16 level, uint8 itemTier);
+  error EquipmentSystem_SameEquipmentId(uint256 equipmentId);
 
   /* -------------------------------------------------------------------------- */
   /*                                    Quest                                   */
@@ -213,6 +223,7 @@ library Errors {
   error ConsumeSystem_ItemIsNotSkillItem(uint256 itemId);
   error ConsumeSystem_TargetNotInPosition(uint256 targetPlayer, int32 targetX, int32 targetY);
   error ConsumeSystem_TooManyTargets(uint256 numInput, uint8 allowedNumTarget);
+  error ConsumeSystem_EmptyTargets(uint256 itemId);
   error ConsumeSystem_CannotTargetRestrictLocation();
   error ConsumeSystem_DuplicateTarget();
   error ConsumeSystem_SelfCastOnly(uint256 itemId);
@@ -223,6 +234,7 @@ library Errors {
   /*                               StorageSystem                                */
   /* -------------------------------------------------------------------------- */
   error StorageSystem_ExceedCharacterResourceBalance(uint256 resourceId, uint32 currentAmount, uint32 moveAmount);
+  error StorageSystem_InvalidItemParams(uint256 itemIdsLength, uint256 itemAmountsLength);
 
   /* -------------------------------------------------------------------------- */
   /*                               Storage                                      */
@@ -279,6 +291,7 @@ library Errors {
   error TileSystem_TileIsNotReadyToOccupy(int32 x, int32 y, uint256 arrivalTime);
   error TileSystem_CannotOccupyThisTile(int32 x, int32 y);
   error TileSystem_InvalidTilePosition(int32 x, int32 y);
+  error TileSystem_InvalidLootParams(uint256 itemIdsLength, uint256 itemAmountsLength);
 
   /* -------------------------------------------------------------------------- */
   /*                               RebornSystem                                 */
@@ -289,15 +302,12 @@ library Errors {
   /* -------------------------------------------------------------------------- */
   /*                               MarketSystem                                 */
   /* -------------------------------------------------------------------------- */
-  error MarketSystem_FameTooLow(uint256 characterId, uint32 fame);
   error MarketSystem_ZeroPrice();
   error MarketSystem_ZeroAmount();
   error MarketSystem_TakerOrderZeroAmount();
   error MarketSystem_ZeroItemId();
   error MarketSystem_UntradeableItem(uint256 itemId);
   error MarketSystem_ExceedMaxWeight(uint256 characterId, uint256 cityId, uint32 totalWeight, uint32 maxWeight);
-  error MarketSystem_InsufficientGold(uint256 characterId, uint32 charGold, uint32 requiredGold);
-  error MarketSystem_InsufficientCrystal(uint256 characterId, uint256 charCrystal, uint256 requiredCrystal);
   error MarketSystem_InsufficientItem(uint256 characterId, uint256 itemId, uint32 requiredAmount);
   error MarketSystem_SellEquipmentOrderAmount(uint32 amount);
   error MarketSystem_CharacterNotOwner(uint256 characterId, uint256 orderId);
@@ -309,9 +319,11 @@ library Errors {
   error MarketSystem_InvalidTakerAmount(uint256 orderId, uint32 maxAmount, uint32 takeAmount);
   error MarketSystem_InvalidItemType(uint256 itemId);
   error MarketSystem_OrderIsNotExist(uint256 orderId);
-  error MarketSystem_MustInACapital(); // character must be in a capital either their own or other kingdom's capital
   error MarketSystem_InvalidSellOrderEquipment(uint32 amount);
   error MarketSystem_PetPriceTooLow(uint32 orderPrice);
+  error MarketSystem_CannotTakeOwnOrder(uint256 orderId);
+  error MarketSystem_ItemMustBeTradedWithCrystal(uint256 itemId);
+  error MarketSystem_CrystalPriceTooLow(uint256 itemId, uint32 orderPrice, uint32 minPrice);
 
   /* -------------------------------------------------------------------------- */
   /*                               KingSystem                                   */
@@ -343,6 +355,8 @@ library Errors {
   error KingSystem_CityMoveOnCooldown(uint256 cityId);
   error KingSystem_InsufficientCityGold(uint256 cityId, uint32 requiredGold);
   error KingSystem_InvalidCrystalFee(uint256 fee, uint256 maxFee);
+  error KingSystem_InvalidParamsLen(uint256 firstLen, uint256 secondLen);
+  error KingSystem_ElectionNotInitialized(uint8 kingdomId);
 
   /* -------------------------------------------------------------------------- */
   /*                               VaultSystem                                  */
@@ -375,6 +389,7 @@ library Errors {
   );
   error CitySystem_InsufficientVaultGold(uint256 cityId, uint256 currentGold, uint32 requiredGold);
   error CitySystem_CityLevelTooLow(uint256 cityId, uint8 cityLevel);
+  error CitySystem_SameCityTeleportation(uint256 cityId);
 
   /* -------------------------------------------------------------------------- */
   /*                               GuildSystem                                   */
@@ -382,11 +397,12 @@ library Errors {
   error GuildSystem_InvalidGuildName(string name);
   error GuildSystem_CharacterAlreadyInGuild(uint256 characterId);
   error GuildSystem_GuildNameExisted(string name);
-  error GuildSystem_CharacterNotInGuild(uint256 characterId, uint256 guildId);
+  error GuildSystem_CharacterNotInGuild(uint256 guildId, uint256 characterId);
   error GuildSystem_NotGuildOwner(uint256 characterId, uint256 guildId);
   error GuildSystem_OwnerCannotLeaveGuild(uint256 characterId, uint256 guildId);
   error GuildSystem_JoinRequestDoesNotExist(uint256 characterId);
   error GuildSystem_JoinRequestAlreadyExists(uint256 characterId);
+  error GuildSystem_GuildNotExist(uint256 guildId);
   error GuildSystem_GuildMemberLimitReached(uint256 guildId);
   error GuildSystem_OwnerCannotKickSelf(uint256 characterId, uint256 guildId);
 
@@ -409,6 +425,7 @@ library Errors {
   /* -------------------------------------------------------------------------- */
   error AshVaultSystem_InvalidParams(uint256 lenItemIds, uint256 lenAmounts);
   error AshVaultSystem_ExchangeNotExist(uint256 itemId);
+  error AshVaultSystem_InvalidExchangeData(uint256 itemId);
   error AshVaultSystem_InsufficientItemAmount(
     uint256 characterId, uint256 inputItemId, uint256 outputItemId, uint32 requiredAmount, uint32 currentAmount
   );
@@ -418,17 +435,21 @@ library Errors {
   /*                               SkinSystem                                   */
   /* -------------------------------------------------------------------------- */
   error SkinSystem_SkinSlotTypeMismatch(uint256 itemId, SkinSlotType slotType);
+  error SkinSystem_InvalidSkinItem(uint256 itemId);
 
   /* -------------------------------------------------------------------------- */
   /*                               SaleSystem                                   */
   /* -------------------------------------------------------------------------- */
   error SaleSystem_PackageNotFound(uint256 packageId);
+  error SaleSystem_ZeroAmount();
+  error SaleSystem_InvalidPackagePricing(uint256 packageId, uint32 crystalPrice, uint32 goldPrice);
+  error SaleSystem_InvalidPackageItems(uint256 packageId, uint256 itemIdsLength, uint256 itemAmountsLength);
 
   /* -------------------------------------------------------------------------- */
   /*                               PortalSystem                                   */
   /* -------------------------------------------------------------------------- */
   error PortalSystem_CrystalAmountTooSmall(uint256 amount, uint256 minAmount);
-  error PortalSystem_InsufficientCrystal(uint256 currentBalance, uint256 requiredAmount);
   error PortalSystem_SellRequestNotFound(uint256 reqId);
   error PortalSystem_SellRequestProcessing(uint256 reqId);
+  error PortalSystem_CannotTransferToSelf(uint256 characterId);
 }

@@ -29,7 +29,7 @@ const CONFIG_TABLES: any = {
   // Usually for special occasions
   ExpAmpConfig: {
     schema: {
-      farmingPerkAmp: "uint16", // these values are percentages, e.g., 20 means gain 20% more exp
+      farmingPerkAmp: "uint16", // These values are percentages, e.g., 20 means gain 20% more exp
       pveExpAmp: "uint16",
       expireTime: "uint256",
     },

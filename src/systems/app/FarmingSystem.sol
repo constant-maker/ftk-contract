@@ -40,8 +40,7 @@ contract FarmingSystem is CharacterAccessControl, System {
     _startFarming(characterId, toolId, resourceItemId, claimResource, characterPosition);
   }
 
-  /// @dev Finish the current farming state for character, anyone can call this function so make sure to avoid any
-  /// ownership interaction
+  /// @dev Finish the current farming state for character
   function finishFarming(
     uint256 characterId,
     bool continueFarming,
@@ -134,7 +133,8 @@ contract FarmingSystem is CharacterAccessControl, System {
 
   function _updateTool(uint256 toolId, ToolData memory tool, uint16 requireDurability) private {
     if (tool.durability == requireDurability) {
-      Tool.deleteRecord(toolId); // hook will auto remove the tool from player inventory
+      InventoryToolUtils.removeTool(tool.characterId, toolId);
+      Tool.deleteRecord(toolId);
     } else {
       Tool.setDurability(toolId, tool.durability - requireDurability);
     }
