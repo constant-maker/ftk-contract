@@ -16,7 +16,8 @@ import { SlotType } from "@codegen/common.sol";
 import { Config } from "@common/Config.sol";
 import { CharAchievementUtils } from "@utils/CharAchievementUtils.sol";
 import { InventoryItemUtils } from "@utils/InventoryItemUtils.sol";
-import { CharacterItemUtils, InventoryEquipmentUtils } from "@utils/index.sol";
+import { CharacterItemUtils } from "@utils/index.sol";
+import { TestInventoryEquipmentUtils } from "./utils/TestInventoryEquipmentUtils.sol";
 
 contract RebornSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture {
   address player = makeAddr("player");
@@ -163,7 +164,7 @@ contract RebornSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixt
     CharacterItemUtils.addNewItem(characterId, 267, 1);
     vm.stopPrank();
 
-    assertTrue(InventoryEquipmentUtils.hasEquipment(characterId, 2));
+    assertTrue(TestInventoryEquipmentUtils.hasEquipment(characterId, 2));
     uint256 itemId = Equipment.getItemId(2);
     assertEq(itemId, 267);
 

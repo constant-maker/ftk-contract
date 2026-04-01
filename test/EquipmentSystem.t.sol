@@ -2,7 +2,8 @@ pragma solidity >=0.8.24;
 
 import { console2 } from "forge-std/console2.sol";
 import { WorldFixture, SpawnSystemFixture, WelcomeSystemFixture } from "./fixtures/index.sol";
-import { CharacterItemUtils, InventoryEquipmentUtils } from "@utils/index.sol";
+import { TestEquipmentGrantUtils } from "./utils/TestEquipmentGrantUtils.sol";
+import { TestInventoryEquipmentUtils } from "./utils/TestInventoryEquipmentUtils.sol";
 import {
   CharEquipment,
   CharInventory,
@@ -115,7 +116,7 @@ contract EquipmentSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemF
     console2.log("prevAtk", prevAtk);
 
     vm.startPrank(worldDeployer);
-    CharacterItemUtils.addNewItem(characterId, 35, 1); // add bow tier 1
+    TestEquipmentGrantUtils.addNewEquipment(characterId, 35, 1); // add bow tier 1
     CharPerk.setLevel(characterId, ItemType.Bow, 2); // set perk level for bow to level 2
     vm.stopPrank();
 
@@ -147,13 +148,13 @@ contract EquipmentSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemF
 
   function test_UnequipAndEquipSameTx() external {
     vm.startPrank(worldDeployer);
-    CharacterItemUtils.addNewItem(characterId, 56, 1); // headgear - 2
-    CharacterItemUtils.addNewItem(characterId, 72, 1); // shield - 3
-    CharacterItemUtils.addNewItem(characterId, 262, 1); // sword - 4
-    CharacterItemUtils.addNewItem(characterId, 266, 1); // mount - 1 / - 5
-    CharacterItemUtils.addNewItem(characterId, 219, 1); // axe - weapon - 6
-    CharacterItemUtils.addNewItem(characterId, 245, 1); // headgear - 7
-    CharacterItemUtils.addNewItem(characterId, 267, 1); // mount - 2 - 8
+    TestEquipmentGrantUtils.addNewEquipment(characterId, 56, 1); // headgear - 2
+    TestEquipmentGrantUtils.addNewEquipment(characterId, 72, 1); // shield - 3
+    TestEquipmentGrantUtils.addNewEquipment(characterId, 262, 1); // sword - 4
+    TestEquipmentGrantUtils.addNewEquipment(characterId, 266, 1); // mount - 1 / - 5
+    TestEquipmentGrantUtils.addNewEquipment(characterId, 219, 1); // axe - weapon - 6
+    TestEquipmentGrantUtils.addNewEquipment(characterId, 245, 1); // headgear - 7
+    TestEquipmentGrantUtils.addNewEquipment(characterId, 267, 1); // mount - 2 - 8
     for (uint8 i = 0; i < 25; i++) {
       CharPerk.setLevel(characterId, ItemType(i), 9);
     }
@@ -222,7 +223,7 @@ contract EquipmentSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemF
   function test_ShouldUpgradeEquipment() external {
     vm.startPrank(worldDeployer);
     // id from 2 -> 4
-    CharacterItemUtils.addNewItem(characterId, 33, 3);
+    TestEquipmentGrantUtils.addNewEquipment(characterId, 33, 3);
     vm.stopPrank();
     // uint256 characterId = 1;
 
@@ -246,7 +247,7 @@ contract EquipmentSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemF
     world.app__upgradeEquipment(characterId, 1, 4);
     vm.stopPrank();
 
-    assertFalse(InventoryEquipmentUtils.hasEquipment(characterId, 2));
+    assertFalse(TestInventoryEquipmentUtils.hasEquipment(characterId, 2));
 
     vm.startPrank(player);
     world.app__upgradeEquipment(characterId, 3, 4);

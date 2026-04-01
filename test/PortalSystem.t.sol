@@ -89,17 +89,14 @@ contract PortalSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixt
 
   function test_TransferCrystal_Accounting() external {
     address receiver = makeAddr("receiver");
-    uint256 receiverCharacterId = _createDefaultCharacter(receiver);
+      uint256 receiverCharacterId = _createCharacterWithName(receiver, "ReceiverChar");
     _claimWelcomePackages(receiver, receiverCharacterId);
 
     vm.deal(player, 10 ether);
 
     uint256 buyAmount = 5000;
     uint256 requireEth = Config.CRYSTAL_UNIT_PRICE * buyAmount;
-    uint256 totalRevenueBefore = PlatformRevenue.getTotalRevenue();
-    uint256 appVaultBefore = PlatformRevenue.getAppVaultCrystal();
-    uint256 appTeamBefore = PlatformRevenue.getAppTeamCrystal();
-    uint256 appBackerBefore = PlatformRevenue.getAppBackerCrystal();
+    PlatformRevenueData memory platformRevenueBefore = PlatformRevenue.get();
     uint256 cityVaultBefore = CityVault2.getCrystal(1);
 
     vm.startPrank(worldDeployer);
@@ -120,9 +117,9 @@ contract PortalSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixt
     assertEq(CharFund.getCrystal(receiverCharacterId), netAmount);
     assertEq(CityVault2.getCrystal(1), cityVaultBefore + kingdomFeeCrystal);
 
-    assertEq(PlatformRevenue.getAppVaultCrystal(), appVaultBefore + kingdomFeeCrystal);
-    assertEq(PlatformRevenue.getAppTeamCrystal(), appTeamBefore + (platformFeeCrystal / 2));
-    assertEq(PlatformRevenue.getAppBackerCrystal(), appBackerBefore + (platformFeeCrystal / 2));
-    assertEq(PlatformRevenue.getTotalRevenue(), totalRevenueBefore + platformFeeCrystal + kingdomFeeCrystal);
+    assertEq(PlatformRevenue.getAppVaultCrystal(), platformRevenueBefore.appVaultCrystal + kingdomFeeCrystal);
+    assertEq(PlatformRevenue.getAppTeamCrystal(), platformRevenueBefore.appTeamCrystal + (platformFeeCrystal / 2));
+    assertEq(PlatformRevenue.getAppBackerCrystal(), platformRevenueBefore.appBackerCrystal + (platformFeeCrystal / 2));
+    assertEq(PlatformRevenue.getTotalRevenue(), platformRevenueBefore.totalRevenue + platformFeeCrystal + kingdomFeeCrystal);
   }
 }

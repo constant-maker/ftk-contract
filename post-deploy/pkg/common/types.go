@@ -84,7 +84,7 @@ type EquipmentInfo struct {
 	Hp            int  `json:"hp"`
 	Ms            int  `json:"ms"`
 	BonusWeight   int  `json:"weight"`
-	ShieldBarrier int  `json:"barrier"`
+	Barrier       int  `json:"barrier"`
 }
 
 type HealingInfo struct {
@@ -266,8 +266,8 @@ type Monster struct {
 type BossInfo struct {
 	Barrier            int `json:"barrier"`
 	Hp                 int `json:"hp"`
-	Crystal            int `json:"crystal"`
 	RespawnDuration    int `json:"respawnDuration"`
+	Fame               int `json:"fame"`
 	BerserkHpThreshold int `json:"berserkHpThreshold"`
 	BoostPercent       int `json:"boostPercent"`
 	LastDefeatedTime   int `json:"lastDefeatedTime"`

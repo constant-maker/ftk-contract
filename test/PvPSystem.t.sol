@@ -39,11 +39,11 @@ import { Config } from "@common/Config.sol";
 import {
   CharacterPositionUtils,
   InventoryItemUtils,
-  InventoryEquipmentUtils,
   CharAchievementUtils,
   CharacterItemUtils,
   CharacterEquipmentUtils
 } from "@utils/index.sol";
+import { TestInventoryEquipmentUtils } from "./utils/TestInventoryEquipmentUtils.sol";
 import { LootItems } from "@utils/TileInventoryUtils.sol";
 import { EquipData } from "@utils/CharacterEquipmentUtils.sol";
 import { ItemsActionData } from "@common/Types.sol";
@@ -641,8 +641,8 @@ contract PvPSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
     tileEquipmentIds = TileInventory.getEquipmentIds(21, -32);
     assertEq(tileEquipmentIds.length, 1);
 
-    console2.log("has equipment", InventoryEquipmentUtils.hasEquipment(characterId_1, 4));
-    console2.log("has equipment", InventoryEquipmentUtils.hasEquipment(characterId_2, 4));
+    console2.log("has equipment", TestInventoryEquipmentUtils.hasEquipment(characterId_1, 4));
+    console2.log("has equipment", TestInventoryEquipmentUtils.hasEquipment(characterId_2, 4));
     console2.log("char id", Equipment.getCharacterId(4));
     assertEq(Equipment.getCharacterId(4), characterId_2);
 
@@ -735,8 +735,8 @@ contract PvPSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
     tileEquipmentIds = TileInventory.getEquipmentIds(21, -32);
     assertEq(tileEquipmentIds.length, 0);
 
-    console2.log("has equipment", InventoryEquipmentUtils.hasEquipment(characterId_1, 1));
-    console2.log("has equipment", InventoryEquipmentUtils.hasEquipment(characterId_2, 1));
+    console2.log("has equipment", TestInventoryEquipmentUtils.hasEquipment(characterId_1, 1));
+    console2.log("has equipment", TestInventoryEquipmentUtils.hasEquipment(characterId_2, 1));
     console2.log("char id", Equipment.getCharacterId(1));
     assertEq(Equipment.getCharacterId(1), characterId_2);
 

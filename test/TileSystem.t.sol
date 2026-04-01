@@ -19,10 +19,11 @@ import { CharacterAccessControl } from "@abstracts/CharacterAccessControl.sol";
 import { CharacterPositionUtils } from "@utils/CharacterPositionUtils.sol";
 import { CharacterFundUtils } from "@utils/CharacterFundUtils.sol";
 import { InventoryItemUtils } from "@utils/InventoryItemUtils.sol";
-import { TileInventoryUtils, LootItems } from "@utils/TileInventoryUtils.sol";
+import { LootItems } from "@utils/TileInventoryUtils.sol";
 import { Config } from "@common/Config.sol";
 import { Errors } from "@common/Errors.sol";
 import { TestHelper } from "./TestHelper.sol";
+import { TestTileInventoryUtils } from "./utils/TestTileInventoryUtils.sol";
 import { console2 } from "forge-std/console2.sol";
 import { KingSetting, Alliance } from "@codegen/index.sol";
 
@@ -134,13 +135,11 @@ contract TileSystemTest is WorldFixture, SpawnSystemFixture, MoveSystemFixture {
     vm.startPrank(worldDeployer);
     Tile.setKingdomId(charPosition.x, charPosition.y, 4);
     vm.stopPrank();
-    vm.warp(block.timestamp + 301);
+    vm.warp(block.timestamp + 361);
     vm.startPrank(player);
     world.app__occupyTile(characterId);
     vm.stopPrank();
     assertEq(CharFund.getGold(characterId), 0);
-
-    assertEq(CharStats.getFame(characterId), 1040);
   }
 
   function test_OccupyAllianceType() external {
@@ -172,9 +171,6 @@ contract TileSystemTest is WorldFixture, SpawnSystemFixture, MoveSystemFixture {
     assertEq(CharOtherItem.getAmount(characterId, berriesTier1_Id), 20);
     assertEq(CharFund.getGold(characterId), 15);
 
-    uint32 newFame = CharStats.getFame(characterId);
-    assertEq(newFame, charFame + 10); // got 10 fame for occupying tile
-
     _goUp(player, characterId);
     vm.warp(block.timestamp + 100_000);
     CharPositionData memory charPosition = CharacterPositionUtils.getCurrentPosition(characterId);
@@ -192,8 +188,8 @@ contract TileSystemTest is WorldFixture, SpawnSystemFixture, MoveSystemFixture {
     console2.log("position x", charPosition.x);
     console2.log("position y", charPosition.y);
 
-    newFame = CharStats.getFame(characterId);
-    assertEq(newFame, charFame + 10 - 100); // penalty 100 fame for occupying tile in alliance territory
+    uint32 newFame = CharStats.getFame(characterId);
+    assertEq(newFame, charFame - 100); // penalty 100 fame for occupying tile in alliance territory
   }
 
   function test_LootItems_RevertInvalidParams() external {
@@ -215,8 +211,11 @@ contract TileSystemTest is WorldFixture, SpawnSystemFixture, MoveSystemFixture {
     int32 x = charPosition.x;
     int32 y = charPosition.y;
 
+    vm.warp(Config.TILE_ITEM_AVAILABLE_DURATION + 2);
+    uint256 lastDropTime = block.timestamp - Config.TILE_ITEM_AVAILABLE_DURATION - 1;
+
     vm.startPrank(worldDeployer);
-    TileInventory.setLastDropTime(x, y, block.timestamp - Config.TILE_ITEM_AVAILABLE_DURATION - 1);
+    TileInventory.setLastDropTime(x, y, lastDropTime);
     vm.stopPrank();
 
     uint256[] memory equipmentIds = new uint256[](0);
@@ -225,7 +224,7 @@ contract TileSystemTest is WorldFixture, SpawnSystemFixture, MoveSystemFixture {
     itemIds[0] = woodTier1_Id;
     itemAmounts[0] = 1;
 
-    vm.expectRevert(abi.encodeWithSelector(Errors.TileSystem_NoItemInThisTile.selector, x, y, TileInventory.getLastDropTime(x, y)));
+    vm.expectRevert(abi.encodeWithSelector(Errors.TileSystem_NoItemInThisTile.selector, x, y, lastDropTime));
     vm.startPrank(player);
     world.app__lootItems(
       characterId, LootItems({ equipmentIds: equipmentIds, itemIds: itemIds, itemAmounts: itemAmounts })
@@ -262,7 +261,7 @@ contract TileSystemTest is WorldFixture, SpawnSystemFixture, MoveSystemFixture {
     int32 y = charPosition.y;
 
     vm.startPrank(worldDeployer);
-    TileInventoryUtils.addItem(x, y, woodTier1_Id, 5);
+    TestTileInventoryUtils.addItem(x, y, woodTier1_Id, 5);
     vm.stopPrank();
 
     uint256[] memory equipmentIds = new uint256[](0);

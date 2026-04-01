@@ -4,7 +4,6 @@ import { console2 } from "forge-std/console2.sol";
 import { WorldFixture, SpawnSystemFixture, WelcomeSystemFixture } from "./fixtures/index.sol";
 import {
   CharacterPositionUtils,
-  InventoryEquipmentUtils,
   CharacterItemUtils,
   CharAchievementUtils,
   StorageEquipmentUtils,
@@ -12,6 +11,7 @@ import {
   CharacterFundUtils,
   PlatformUtils
 } from "@utils/index.sol";
+import { TestInventoryEquipmentUtils } from "./utils/TestInventoryEquipmentUtils.sol";
 import { OrderParams, TakeOrderParams, MarketSystemUtils } from "@utils/MarketSystemUtils.sol";
 import { Config } from "@common/index.sol";
 import { CurrencyType } from "@codegen/common.sol";
@@ -171,7 +171,7 @@ contract MarketSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixt
     assertEq(CharFund.getGold(characterId2), 200); // 100 + 100 - 0% fee
     assertEq(CharFund.getGold(characterId1), 5); // already spent to take order
     assertEq(Equipment.getCharacterId(2), characterId1); // transfer equipment to player1
-    assertTrue(InventoryEquipmentUtils.hasEquipment(characterId1, 2));
+    assertTrue(TestInventoryEquipmentUtils.hasEquipment(characterId1, 2));
   }
 
   function test_SellOtherItemOrder() public {
@@ -558,7 +558,7 @@ contract MarketSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixt
     vm.startPrank(worldDeployer);
     CharacterItemUtils.addNewItem(characterId2, 33, 1); // equipment id 3
     vm.stopPrank();
-    assertTrue(InventoryEquipmentUtils.hasEquipment(characterId2, 3));
+    assertTrue(TestInventoryEquipmentUtils.hasEquipment(characterId2, 3));
     takeOrderParams.equipmentIds[0] = 3; // equipment owned by player2
     takeOrderParamsArray[0] = takeOrderParams;
     vm.startPrank(player2);

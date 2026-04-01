@@ -76,7 +76,7 @@ func BossInfosCallData(monsterId int, bossInfo common.BossInfo, x int32, y int32
 	staticData, err := encodePacked(
 		uint32(bossInfo.Barrier),
 		uint32(bossInfo.Hp),
-		uint32(bossInfo.Crystal),
+		uint32(bossInfo.Fame),
 		uint16(respawnTime),
 		uint8(bossInfo.BerserkHpThreshold),
 		uint8(bossInfo.BoostPercent),

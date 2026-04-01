@@ -112,7 +112,7 @@
       "bossInfo": {
         "barrier": 50,
         "hp": 1500,
-        "crystal": 300,
+        "fame": 100,
         "respawnDuration": 4320,
         "berserkHpThreshold": 20,
         "boostPercent": 20,

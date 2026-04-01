@@ -3,6 +3,8 @@ pragma solidity >=0.8.24;
 import { System } from "@latticexyz/world/src/System.sol";
 import { CharacterAccessControl } from "@abstracts/CharacterAccessControl.sol";
 import {
+  MapConfig,
+  MapConfigData,
   Tile,
   TileData,
   TileInventory,
@@ -31,19 +33,16 @@ contract TileSystem is System, CharacterAccessControl {
   uint32 constant TILE_OCCUPATION_RESOURCE_AMOUNT = 10;
   uint32 constant DZ_TILE_LOCKED_DURATION = 28_800; // 8 hours (second)
   uint32 constant TILE_LOCKED_DURATION = 7200; // 2 hours (second)
-  uint32 constant DZ_TILE_OCCUPATION_DURATION_REQUIRE = 300; // 5 minutes (second)
-  uint32 constant TILE_OCCUPATION_DURATION_REQUIRE = 120; // 2 minutes (second)
-  int32 constant X_LEFT = -73;
-  int32 constant X_RIGHT = 73;
-  int32 constant Y_TOP = 59;
-  int32 constant Y_BOTTOM = -59;
+  uint32 constant DZ_TILE_OCCUPATION_DURATION_REQUIRE = 360; // 6 minutes (second)
+  uint32 constant TILE_OCCUPATION_DURATION_REQUIRE = 180; // 3 minutes (second)
 
   /// @dev Occupy a tile to expand your kingdom area
   function occupyTile(uint256 characterId) public onlyAuthorizedWallet(characterId) {
+    MapConfigData memory mapConfig = MapConfig.get();
     CharPositionData memory position = CharacterPositionUtils.getCurrentPosition(characterId);
     int32 x = position.x;
     int32 y = position.y;
-    if (x < X_LEFT || x > X_RIGHT || y < Y_BOTTOM || y > Y_TOP) {
+    if (x < mapConfig.left || x > mapConfig.right || y < mapConfig.bottom || y > mapConfig.top) {
       revert Errors.TileSystem_InvalidTilePosition(x, y);
     }
     uint8 kingdomId = CharInfo.getKingdomId(characterId);

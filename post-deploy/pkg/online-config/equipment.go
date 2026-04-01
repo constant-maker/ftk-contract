@@ -19,7 +19,7 @@ func getListEquipmentUpdate(sheetName string, dataConfig *common.DataConfig) ([]
 	recipes := make([]common.ItemRecipe, 0)
 	var (
 		idIndex, tierIndex, weightIndex, nameIndex, descIndex, typeIndex, slotTypeIndex, advantageTypeIndex, twoHandedIndex,
-		atkIndex, defIndex, agiIndex, hpIndex, msIndex, goldCostIndex, recipeIndex, oldWeightIndex, bonusWeightIndex, shieldBarrierIndex,
+		atkIndex, defIndex, agiIndex, hpIndex, msIndex, goldCostIndex, recipeIndex, oldWeightIndex, bonusWeightIndex, barrierIndex,
 		perkRequireToCraftIndex, fameCostIndex, untradableIndex int
 	)
 	fmt.Println("RUN HERE")
@@ -55,7 +55,7 @@ func getListEquipmentUpdate(sheetName string, dataConfig *common.DataConfig) ([]
 			goldCostIndex = findIndex(record, "gold_cost")
 			recipeIndex = findIndex(record, "recipe")
 			descIndex = findIndex(record, "desc")
-			shieldBarrierIndex = findIndex(record, "shield_barrier")
+			barrierIndex = findIndex(record, "barrier")
 			perkRequireToCraftIndex = findIndex(record, "perk_require")
 			fameCostIndex = findIndex(record, "fame_spent")
 			untradableIndex = findIndex(record, "untradable")
@@ -78,7 +78,7 @@ func getListEquipmentUpdate(sheetName string, dataConfig *common.DataConfig) ([]
 				"goldCostIndex", goldCostIndex,
 				"recipeIndex", recipeIndex,
 				"descIndex", descIndex,
-				"shieldBarrierIndex", shieldBarrierIndex,
+				"barrierIndex", barrierIndex,
 				"perkRequireToCraftIndex", perkRequireToCraftIndex,
 				"fameCostIndex", fameCostIndex,
 				"untradableIndex", untradableIndex,
@@ -101,7 +101,7 @@ func getListEquipmentUpdate(sheetName string, dataConfig *common.DataConfig) ([]
 		if strings.EqualFold(record[untradableIndex], "TRUE") {
 			untradable = true
 		}
-		shieldBarrierIndex := mustStringToInt(record[shieldBarrierIndex], shieldBarrierIndex)
+		barrier := mustStringToInt(record[barrierIndex], barrierIndex)
 		rawPerkRequireToCraft := record[perkRequireToCraftIndex]
 		perkItemTypes := make([]int, 0)
 		requiredPerkLevels := make([]int, 0)
@@ -146,7 +146,7 @@ func getListEquipmentUpdate(sheetName string, dataConfig *common.DataConfig) ([]
 				Hp:            hp,
 				Ms:            ms,
 				BonusWeight:   bonusWeight,
-				ShieldBarrier: shieldBarrierIndex,
+				Barrier:       barrier,
 			},
 		}
 		equipments = append(equipments, item)

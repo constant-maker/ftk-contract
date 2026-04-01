@@ -9,6 +9,9 @@ import (
 )
 
 func SkillCallData(skill common.Skill) ([]byte, error) {
+	// if skill.Id == 11 {
+	// 	zap.S().Panicw("data", "data", skill)
+	// }
 	keyTuple := [][32]byte{
 		[32]byte(encodeUint256(big.NewInt(int64(skill.Id)))),
 	}
@@ -32,8 +35,7 @@ func SkillCallData(skill common.Skill) ([]byte, error) {
 		scPerkItemTypes = append(scPerkItemTypes, uint8(pit))
 	}
 	scRequiredPerkLevels := make([]uint8, 0, len(skill.RequiredPerkLevels))
-	for _, rpl := range skill.RequiredPerkLevels {
-		rpl -= 1
+	for _, rpl := range skill.RequiredPerkLevels { // level is 1-based
 		if rpl < 0 {
 			zap.S().Panicw("invalid required perk level", "data", skill)
 		}

@@ -259,7 +259,7 @@ library CharacterStatsUtils {
     if (level == 1) {
       equipmentSnapshot = CharEquipmentCacheData({
         hp: equipmentInfo.hp,
-        barrier: equipmentInfo2.shieldBarrier,
+        barrier: equipmentInfo2.barrier,
         weight: equipmentInfo2.bonusWeight,
         atk: equipmentInfo.atk,
         def: equipmentInfo.def,
@@ -275,7 +275,7 @@ library CharacterStatsUtils {
     uint16 multiplier = 100 + percentGain;
 
     equipmentSnapshot = CharEquipmentCacheData({
-      barrier: _calculateNewStat(equipmentInfo2.shieldBarrier, multiplier, level),
+      barrier: _calculateNewStat(equipmentInfo2.barrier, multiplier, level),
       hp: _calculateNewStat(equipmentInfo.hp, multiplier, level),
       atk: uint16(_calculateNewStat(equipmentInfo.atk, multiplier, level)),
       def: uint16(_calculateNewStat(equipmentInfo.def, multiplier, level)),

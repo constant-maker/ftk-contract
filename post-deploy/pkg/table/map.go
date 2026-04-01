@@ -10,10 +10,12 @@ import (
 func MapConfigCallData() ([]byte, error) {
 	keyTuple := make([][32]byte, 0)
 	var (
-		width  uint32 = 4294967295
-		height uint32 = 4294967295
+		left   = int32(-73)
+		right  = int32(73)
+		top    = int32(59)
+		bottom = int32(-59)
 	)
-	staticData, err := encodePacked(width, height)
+	staticData, err := encodePacked(top, right, bottom, left)
 	if err != nil {
 		return nil, err
 	}

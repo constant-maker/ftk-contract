@@ -1,7 +1,7 @@
 pragma solidity >=0.8.24;
 
 import { WorldFixture, SpawnSystemFixture, WelcomeSystemFixture } from "./fixtures/index.sol";
-import { InventoryEquipmentUtils, InventoryToolUtils, InventoryItemUtils } from "@utils/index.sol";
+import { InventoryToolUtils, InventoryItemUtils } from "@utils/index.sol";
 import { CharInventory, CharInventoryData, CharCurrentStats, CharOtherItem } from "@codegen/index.sol";
 import { console } from "forge-std/console.sol";
 

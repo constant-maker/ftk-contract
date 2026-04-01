@@ -86,18 +86,9 @@ contract KingSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixtur
     world.app__voteKing(voter2Id, 100);
     vm.stopPrank();
 
-    vm.expectRevert(); // fame too low
-    vm.startPrank(voter);
-    world.app__voteKing(voterId, candidateId);
-    vm.stopPrank();
-
     vm.expectRevert(); // vote for self
     vm.startPrank(voter);
     world.app__voteKing(voterId, voterId);
-    vm.stopPrank();
-
-    vm.startPrank(worldDeployer);
-    CharStats.setFame(voterId, 1050);
     vm.stopPrank();
 
     vm.expectRevert(); // invalid candidate id
@@ -109,9 +100,9 @@ contract KingSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixtur
     world.app__voteKing(voterId, candidateId);
     vm.stopPrank();
     k1Election = KingElection.get(candidateKingdomId);
-    assertEq(k1Election.votesReceived[0], 550);
+    assertEq(k1Election.votesReceived[0], 501); // default fame give 1 vote power
     CharVoteData memory charVote = CharVote.get(voterId);
-    assertEq(charVote.votePower, 50);
+    assertEq(charVote.votePower, 1);
     assertEq(charVote.candidateId, candidateId);
     uint256 currentElectionTimestamp = k1Election.timestamp;
 

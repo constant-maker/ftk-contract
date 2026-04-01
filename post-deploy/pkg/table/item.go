@@ -58,11 +58,8 @@ func EquipmentItemInfoCallData(equipmentInfo common.EquipmentInfo, itemId int) (
 
 func EquipmentItemInfo2V2CallData(equipmentInfo common.EquipmentInfo, itemId int) ([]byte, error) {
 	staticData, err := encodePacked(
-		uint8(0),  // max level
-		uint8(0),  // counter
-		uint16(0), // dmg percentage
+		uint32(equipmentInfo.Barrier),
 		uint32(equipmentInfo.BonusWeight),
-		uint32(equipmentInfo.ShieldBarrier),
 	)
 	if err != nil {
 		return nil, err

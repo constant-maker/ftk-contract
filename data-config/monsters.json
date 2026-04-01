@@ -317,7 +317,7 @@
       "bossInfo": {
         "barrier": 500,
         "hp": 20000,
-        "crystal": 1000,
+        "fame": 50,
         "respawnDuration": 43200,
         "berserkHpThreshold": 33,
         "boostPercent": 25,
@@ -1209,7 +1209,7 @@
       "bossInfo": {
         "barrier": 100,
         "hp": 15000,
-        "crystal": 500,
+        "fame": 20,
         "respawnDuration": 21600,
         "berserkHpThreshold": 30,
         "boostPercent": 20,
@@ -1253,7 +1253,7 @@
       "bossInfo": {
         "barrier": 100,
         "hp": 15000,
-        "crystal": 500,
+        "fame": 20,
         "respawnDuration": 21600,
         "berserkHpThreshold": 30,
         "boostPercent": 20,
@@ -1297,7 +1297,7 @@
       "bossInfo": {
         "barrier": 100,
         "hp": 15000,
-        "crystal": 500,
+        "fame": 20,
         "respawnDuration": 21600,
         "berserkHpThreshold": 30,
         "boostPercent": 20,
@@ -1341,7 +1341,7 @@
       "bossInfo": {
         "barrier": 100,
         "hp": 15000,
-        "crystal": 500,
+        "fame": 20,
         "respawnDuration": 21600,
         "berserkHpThreshold": 30,
         "boostPercent": 20,
@@ -1525,7 +1525,7 @@
       "bossInfo": {
         "barrier": 1000,
         "hp": 35000,
-        "crystal": 1000,
+        "fame": 100,
         "respawnDuration": 64800,
         "berserkHpThreshold": 33,
         "boostPercent": 40,
@@ -1569,7 +1569,7 @@
       "bossInfo": {
         "barrier": 1500,
         "hp": 100000,
-        "crystal": 2000,
+        "fame": 200,
         "respawnDuration": 540000,
         "berserkHpThreshold": 30,
         "boostPercent": 50,
@@ -1613,7 +1613,7 @@
       "bossInfo": {
         "barrier": 100,
         "hp": 5000,
-        "crystal": 200,
+        "fame": 10,
         "respawnDuration": 3600,
         "berserkHpThreshold": 25,
         "boostPercent": 25,
@@ -1657,7 +1657,7 @@
       "bossInfo": {
         "barrier": 100,
         "hp": 5000,
-        "crystal": 200,
+        "fame": 10,
         "respawnDuration": 3600,
         "berserkHpThreshold": 25,
         "boostPercent": 25,
@@ -1701,7 +1701,7 @@
       "bossInfo": {
         "barrier": 100,
         "hp": 5000,
-        "crystal": 200,
+        "fame": 10,
         "respawnDuration": 3600,
         "berserkHpThreshold": 25,
         "boostPercent": 25,
@@ -1745,7 +1745,7 @@
       "bossInfo": {
         "barrier": 100,
         "hp": 5000,
-        "crystal": 200,
+        "fame": 10,
         "respawnDuration": 3600,
         "berserkHpThreshold": 25,
         "boostPercent": 25,

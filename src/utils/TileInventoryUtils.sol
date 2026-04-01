@@ -2,7 +2,7 @@
 pragma solidity >=0.8.24;
 
 import {
-  TileInventory, TileInventoryData, TileOtherItemIndex, TileEquipmentIndex, Item, Equipment
+  TileInventory, TileOtherItemIndex, TileEquipmentIndex, Item, Equipment
 } from "@codegen/index.sol";
 import { Errors, Config } from "@common/index.sol";
 
@@ -22,30 +22,16 @@ library TileInventoryUtils {
     }
   }
 
-  /// @dev Add one item to tile inventory, this func WILL NOT RESET DATA
+  /// @dev Add one item to tile inventory
   function addItem(int32 x, int32 y, uint256 itemId, uint32 amount) public {
-    // _checkToResetData(x, y);
+    _checkToResetData(x, y);
     _addItem(x, y, itemId, amount);
   }
 
   function _addItem(int32 x, int32 y, uint256 itemId, uint32 amount) private {
+    if (amount == 0) return;
+
     uint256 index = TileOtherItemIndex.get(x, y, itemId); // 1-based index
-    if (index > 0) {
-      uint256 lenItemIds = TileInventory.lengthOtherItemIds(x, y);
-      bool shouldResetIndexValue = index > lenItemIds; // out of bounds
-      if (!shouldResetIndexValue) {
-        // check if the itemId at the index matches the itemId we are adding
-        shouldResetIndexValue = TileInventory.getItemOtherItemIds(x, y, index - 1) != itemId;
-      }
-      if (shouldResetIndexValue) {
-        // If index is out of bounds or the itemId at that index does not match,
-        // we need to reset the index for this itemId.
-        // This can happen if items were removed or the inventory was modified.
-        // We delete the record and re-add it.
-        TileOtherItemIndex.deleteRecord(x, y, itemId);
-        index = 0;
-      }
-    }
     if (index == 0) {
       TileInventory.pushOtherItemIds(x, y, itemId);
       TileInventory.pushOtherItemAmounts(x, y, amount);
@@ -88,26 +74,31 @@ library TileInventoryUtils {
     TileInventory.updateOtherItemAmounts(x, y, valueIndex, newAmount);
   }
 
-  /// @dev Add equipment to tile inventory, this func WILL NOT RESET DATA
+  /// @dev Add multiple equipments to tile inventory
+  function addEquipments(int32 x, int32 y, uint256[] memory equipmentIds) public {
+    _checkToResetData(x, y);
+    for (uint256 i = 0; i < equipmentIds.length; i++) {
+      _addEquipment(x, y, equipmentIds[i]);
+    }
+  }
+
+  /// @dev Add equipment to tile inventory
   function addEquipment(int32 x, int32 y, uint256 equipmentId) public {
-    // _checkToResetData(x, y);
+    _checkToResetData(x, y);
+    _addEquipment(x, y, equipmentId);
+  }
+
+  function _addEquipment(int32 x, int32 y, uint256 equipmentId) private {
+    if (Item.getIsUntradeable(Equipment.getItemId(equipmentId))) {
+      // skip non-tradable equipment, this will be lost forever
+      return;
+    }
+
     if (hasEquipment(x, y, equipmentId)) return;
     TileInventory.pushEquipmentIds(x, y, equipmentId);
     uint256 newIndex = TileInventory.lengthEquipmentIds(x, y);
     TileEquipmentIndex.set(x, y, equipmentId, newIndex);
     TileInventory.setLastDropTime(x, y, block.timestamp);
-  }
-
-  /// @dev Add multiple equipments to tile inventory
-  function addEquipments(int32 x, int32 y, uint256[] memory equipmentIds) public {
-    _checkToResetData(x, y);
-    for (uint256 i = 0; i < equipmentIds.length; i++) {
-      if (Item.getIsUntradeable(Equipment.getItemId(equipmentIds[i]))) {
-        // skip non-tradable equipment, this will be lost forever
-        continue;
-      }
-      addEquipment(x, y, equipmentIds[i]);
-    }
   }
 
   /// @dev Remove equipment from tile inventory by ID using smart index
@@ -135,33 +126,43 @@ library TileInventoryUtils {
 
   /// @dev Check if tile has a specific item
   function hasItem(int32 x, int32 y, uint256 itemId) public view returns (bool) {
+    if (_isExpired(x, y)) return false;
     uint256 index = TileOtherItemIndex.get(x, y, itemId);
     return index != 0;
   }
 
   /// @dev Check if tile has a specific equipment
   function hasEquipment(int32 x, int32 y, uint256 equipmentId) public view returns (bool) {
+    if (_isExpired(x, y)) return false;
     return TileEquipmentIndex.get(x, y, equipmentId) != 0;
   }
 
-  /// @dev Get the amount of a specific item in the tile inventory
+  function _isExpired(int32 x, int32 y) private view returns (bool) {
+    uint256 lastDropTime = TileInventory.getLastDropTime(x, y);
+    return lastDropTime > 0 && lastDropTime + Config.TILE_ITEM_AVAILABLE_DURATION < block.timestamp;
+  }
+
+  /// @dev Reset tile inventory data after item availability expires
   function _checkToResetData(int32 x, int32 y) private {
-    if (TileInventory.getLastDropTime(x, y) + Config.TILE_ITEM_AVAILABLE_DURATION < block.timestamp) {
-      // reset equipment index
-      // no need to reset equipment because id is unique but this help reduce size of indexer
-      uint256[] memory equipmentIds = TileInventory.getEquipmentIds(x, y);
-      for (uint256 i = 0; i < equipmentIds.length; i++) {
-        uint256 equipmentId = equipmentIds[i];
-        Equipment.deleteRecord(equipmentId);
-        TileEquipmentIndex.deleteRecord(x, y, equipmentId);
-      }
-      // reset other items index
-      uint256[] memory itemIds = TileInventory.getOtherItemIds(x, y);
-      for (uint256 i = 0; i < itemIds.length; i++) {
-        uint256 itemId = itemIds[i];
-        TileOtherItemIndex.deleteRecord(x, y, itemId);
-      }
-      TileInventory.deleteRecord(x, y);
+    uint256 lastDropTime = TileInventory.getLastDropTime(x, y);
+    if (lastDropTime == 0 || lastDropTime + Config.TILE_ITEM_AVAILABLE_DURATION >= block.timestamp) {
+      return;
     }
+
+    // reset equipment index
+    uint256[] memory equipmentIds = TileInventory.getEquipmentIds(x, y);
+    for (uint256 i = 0; i < equipmentIds.length; i++) {
+      uint256 equipmentId = equipmentIds[i];
+      Equipment.deleteRecord(equipmentId);
+      TileEquipmentIndex.deleteRecord(x, y, equipmentId);
+    }
+    // reset other items index
+    uint256[] memory itemIds = TileInventory.getOtherItemIds(x, y);
+    for (uint256 i = 0; i < itemIds.length; i++) {
+      uint256 itemId = itemIds[i];
+      TileOtherItemIndex.deleteRecord(x, y, itemId);
+    }
+    // delete inventory record
+    TileInventory.deleteRecord(x, y);
   }
 }

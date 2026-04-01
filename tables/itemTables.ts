@@ -35,8 +35,8 @@ const ITEM_TABLES: any = {
   EquipmentInfo2: {
     schema: {
       itemId: "uint256",
+      barrier: "uint32",
       bonusWeight: "uint32",
-      shieldBarrier: "uint32",
     },
     key: ['itemId'],
   },

@@ -9,7 +9,7 @@ import (
 )
 
 var (
-	tileInfoFL = "0x0043050301010120200000000000000000000000000000000000000000000000"
+	tileFieldLayout = "0x0043050301010120200000000000000000000000000000000000000000000000"
 )
 
 func TileInfoCallData(ti common.Tile, dataConfig common.DataConfig) ([]byte, error) {
@@ -45,7 +45,7 @@ func TileInfoCallData(ti common.Tile, dataConfig common.DataConfig) ([]byte, err
 	}
 	resourceIdsData := encodeUint256Array(resourceIds)
 	dynamicData := simpleEncodePacked(resourceIdsData, encodeUint256Array(nil), encodeUint256Array(nil))
-	mt := mud.NewMudTable("Tile", "app", tileInfoFL)
+	mt := mud.NewMudTable("Tile", "app", tileFieldLayout)
 	return mt.SetRecordRawCalldata(keyTuple, staticData, encodedLength, dynamicData)
 }
 
@@ -58,7 +58,7 @@ func TileInfoSetZoneCallData(ti common.Tile, zone uint8) ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	mt := mud.NewMudTable("Tile", "app", tileInfoFL)
+	mt := mud.NewMudTable("Tile", "app", tileFieldLayout)
 	return mt.SetStaticFieldRawCalldata(keyTuple, 2, staticData)
 }
 
@@ -72,6 +72,6 @@ func TileInfoSetResourceCallData(ti common.Tile, resources []int64) ([]byte, err
 		bigResources = append(bigResources, big.NewInt(r))
 	}
 	dynamicData := encodeUint256Array(bigResources)
-	mt := mud.NewMudTable("Tile", "app", tileInfoFL)
+	mt := mud.NewMudTable("Tile", "app", tileFieldLayout)
 	return mt.SetDynamicFieldRawCalldata(keyTuple, 0, dynamicData)
 }

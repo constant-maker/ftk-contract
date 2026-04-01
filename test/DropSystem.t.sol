@@ -3,7 +3,8 @@ pragma solidity >=0.8.24;
 import { console2 } from "forge-std/console2.sol";
 import { WorldFixture, SpawnSystemFixture, WelcomeSystemFixture, FarmingSystemFixture } from "./fixtures/index.sol";
 import { CharOtherItem, CharCurrentStats } from "@codegen/index.sol";
-import { InventoryToolUtils, InventoryEquipmentUtils } from "@utils/index.sol";
+import { InventoryToolUtils } from "@utils/index.sol";
+import { TestInventoryEquipmentUtils } from "./utils/TestInventoryEquipmentUtils.sol";
 import { ItemsActionData } from "@common/Types.sol";
 
 contract DropSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture, FarmingSystemFixture {
@@ -66,7 +67,7 @@ contract DropSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixtur
     console2.log("current weight", currentWeight);
     assertEq(currentWeight + 5, beforeWeight);
 
-    assertFalse(InventoryEquipmentUtils.hasEquipment(characterId, equipmentRustySword));
+    assertFalse(TestInventoryEquipmentUtils.hasEquipment(characterId, equipmentRustySword));
   }
 
   function test_ShouldDropResource() external {
