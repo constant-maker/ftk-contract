@@ -5560,14 +5560,14 @@
       "name": "Destruction Meteorite",
       "desc": "A fragment of a fallen star, said to enhance destructive powers.",
       "buffInfo": {
-        "type": 3,
+        "type": 1,
         "range": 10,
         "numTarget": 10,
         "selfCastOnly": false,
         "duration": 0,
         "isBuff": false
       },
-      "instantDmg": {
+      "statsModify": {
         "dmg": 200,
         "isAbsDmg": false
       }
@@ -5581,13 +5581,14 @@
       "name": "Destruction Meteorite",
       "desc": "A fragment of a fallen star, said to enhance destructive powers.",
       "buffInfo": {
-        "type": 3,
+        "type": 1,
         "range": 10,
         "numTarget": 10,
         "selfCastOnly": false,
-        "duration": 0
+        "duration": 0,
+        "isBuff": false
       },
-      "instantDmg": {
+      "statsModify": {
         "dmg": 200,
         "isAbsDmg": true
       }

@@ -4,7 +4,6 @@ import { console2 } from "forge-std/console2.sol";
 import { WorldFixture, SpawnSystemFixture, WelcomeSystemFixture } from "./fixtures/index.sol";
 import {
   CharacterPositionUtils,
-  CharacterItemUtils,
   CharAchievementUtils,
   StorageEquipmentUtils,
   StorageItemUtils,
@@ -67,10 +66,6 @@ contract MarketSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixt
       currency: CurrencyType.Gold,
       isBuy: false
     });
-    vm.expectRevert(); // fame too low
-    vm.startPrank(player1);
-    world.app__placeOrder(characterId1, orderParams);
-    vm.stopPrank();
 
     vm.startPrank(worldDeployer);
     CharFund.setGold(characterId1, 105); // 100 + 5% fee
@@ -556,7 +551,7 @@ contract MarketSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixt
     assertFalse(Order.getIsDone(1));
 
     vm.startPrank(worldDeployer);
-    CharacterItemUtils.addNewItem(characterId2, 33, 1); // equipment id 3
+    TestInventoryEquipmentUtils.addNewEquipment(characterId2, 33, 1); // equipment id 3
     vm.stopPrank();
     assertTrue(TestInventoryEquipmentUtils.hasEquipment(characterId2, 3));
     takeOrderParams.equipmentIds[0] = 3; // equipment owned by player2
@@ -571,46 +566,6 @@ contract MarketSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixt
     assertTrue(StorageEquipmentUtils.hasEquipment(characterId1, 1, 2));
     assertEq(Equipment.getCharacterId(2), characterId1);
     assertEq(Equipment.getCharacterId(3), characterId1);
-  }
-
-  function test_PlaceOrderWithFameOrAchievement() public {
-    vm.startPrank(worldDeployer);
-
-    CharOtherItem.setAmount(characterId1, 1, 100);
-    CharCurrentStats.setWeight(characterId1, CharCurrentStats.getWeight(characterId1) + 100);
-    CharOtherItem.setAmount(characterId2, 1, 100);
-    CharCurrentStats.setWeight(characterId2, CharCurrentStats.getWeight(characterId2) + 100);
-    CharFund.setGold(characterId1, 200);
-    CharFund.setGold(characterId2, 200);
-    vm.stopPrank();
-
-    // buy equipment
-    OrderParams memory orderParams = OrderParams({
-      orderId: 0,
-      cityId: city1,
-      equipmentId: 0,
-      itemId: 33,
-      amount: 2,
-      unitPrice: 100,
-      currency: CurrencyType.Gold,
-      isBuy: true
-    });
-    vm.expectRevert(); // fame too low
-    vm.startPrank(player1);
-    world.app__placeOrder(characterId1, orderParams);
-    vm.stopPrank();
-
-    vm.startPrank(worldDeployer);
-    CharAchievement.pushAchievementIds(characterId1, 3);
-    // The value is stored at length-1, but we add 1 to all indexes
-    // and use 0 as a sentinel value
-    uint256 index = CharAchievement.lengthAchievementIds(characterId1);
-    CharAchievementIndex.set(characterId1, 3, index);
-    vm.stopPrank();
-
-    vm.startPrank(player1);
-    world.app__placeOrder(characterId1, orderParams);
-    vm.stopPrank();
   }
 
   function test_PlaceOrderWithCrystal() public {

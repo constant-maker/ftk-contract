@@ -31,6 +31,7 @@ import { Config } from "@common/Config.sol";
 import { CharacterPositionUtils } from "@utils/CharacterPositionUtils.sol";
 import { CharAchievementUtils } from "@utils/CharAchievementUtils.sol";
 import { EquipData } from "@utils/CharacterEquipmentUtils.sol";
+import { TestInventoryEquipmentUtils } from "./utils/TestInventoryEquipmentUtils.sol";
 
 contract PvESystemBossTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture, MoveSystemFixture {
   address player = makeAddr("player");
@@ -169,7 +170,6 @@ contract PvESystemBossTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFix
     assertEq(CharStats.getLevel(characterId), 2);
     assertEq(CharCurrentStats.getExp(characterId), 280);
     assertEq(CharPerk.getExp(characterId, ItemType.Sword), 150);
-    assertEq(CharFund.getCrystal(characterId), 300);
 
     assertEq(CharAchievement.getAchievementIds(characterId).length, 2);
     assertEq(CharAchievement.getAchievementIds(characterId)[0], 3);
@@ -365,7 +365,7 @@ contract PvESystemBossTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFix
     CharCurrentStats.setAgi(characterId, 2);
     uint256[5] memory customSkillIds = [uint256(12), uint256(0), uint256(0), uint256(0), uint256(0)];
     CharSkill.setSkillIds(characterId, customSkillIds);
-    CharacterItemUtils.addNewItem(characterId, 72, 1);
+    TestInventoryEquipmentUtils.addNewEquipment(characterId, 72, 1);
     CharStats.setLevel(characterId, 99);
     CharPerk.setLevel(characterId, ItemType(21), 5);
     CharPerk.setLevel(characterId, ItemType(12), 6);

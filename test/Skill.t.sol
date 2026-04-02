@@ -38,7 +38,7 @@ contract SkillTest is WorldFixture, SpawnSystemFixture {
     assertEq(skill.perkItemTypes.length, 1);
     assertEq(skill.perkItemTypes[0], uint8(ItemType.StoneHammer));
     assertEq(skill.requiredPerkLevels.length, 1);
-    assertEq(skill.requiredPerkLevels[0], 1);
+    assertEq(skill.requiredPerkLevels[0], 2);
     SkillEffectData memory skillEffect = SkillEffect.get(11);
     assertEq(skillEffect.damage, 25);
     assertEq(skillEffect.turns, 2);
@@ -47,7 +47,7 @@ contract SkillTest is WorldFixture, SpawnSystemFixture {
     skill = Skill.get(12);
     assertTrue(skill.hasEffect);
     assertEq(skill.damage, 150);
-    assertEq(skill.requiredPerkLevels[0], 1);
+    assertEq(skill.requiredPerkLevels[0], 2);
     skillEffect = SkillEffect.get(12);
     assertEq(skillEffect.damage, 0);
     assertEq(skillEffect.turns, 1);

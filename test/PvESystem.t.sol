@@ -26,6 +26,7 @@ import { CharacterItemUtils } from "@utils/CharacterItemUtils.sol";
 import { Errors } from "@common/Errors.sol";
 import { Config } from "@common/Config.sol";
 import { CharacterPositionUtils } from "@utils/CharacterPositionUtils.sol";
+import { TestInventoryEquipmentUtils } from "./utils/TestInventoryEquipmentUtils.sol";
 
 contract PvESystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture, MoveSystemFixture {
   address player = makeAddr("player");
@@ -410,7 +411,7 @@ contract PvESystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
     _gearUpEquipment();
 
     vm.startPrank(worldDeployer);
-    CharacterItemUtils.addNewItem(characterId, 46, 1); // add shield
+    TestInventoryEquipmentUtils.addNewEquipment(characterId, 46, 1); // add shield
     CharEquipment.set(characterId, SlotType.SubWeapon, 2);
     CharGrindSlot.set(characterId, SlotType.SubWeapon);
     vm.stopPrank();

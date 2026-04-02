@@ -30,10 +30,9 @@ type Item struct {
 	// specific buff info based on buff type
 	// only one of the following can be set
 	// if none is set, it means it's a general buff with no specific effect
-	InstantDamage *InstantDamage `json:"instantDmg,omitempty"`
-	ExpAmplify    *ExpAmplify    `json:"expAmplify,omitempty"`
-	StatsModify   *StatsModify   `json:"statsModify,omitempty"`
-	SkinInfo      *SkinInfo      `json:"skinInfo,omitempty"`
+	ExpAmplify  *ExpAmplify  `json:"expAmplify,omitempty"`
+	StatsModify *StatsModify `json:"statsModify,omitempty"`
+	SkinInfo    *SkinInfo    `json:"skinInfo,omitempty"`
 }
 
 type BuffItemInfo struct {
@@ -60,11 +59,6 @@ type StatsModify struct {
 	Sp          int8   `json:"sp"`  // flat value
 	Dmg         int    `json:"dmg"` // percent or flat
 	IsAbsDmg    bool   `json:"isAbsDmg"`
-}
-
-type InstantDamage struct {
-	Dmg      int  `json:"dmg"`      // percent or flat
-	IsAbsDmg bool `json:"isAbsDmg"` // true means absolute damage, false means percentage damage
 }
 
 type CardInfo struct {

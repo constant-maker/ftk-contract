@@ -7100,14 +7100,20 @@
       "desc": "Hurls a fiery projectile that deals moderate damage to a single distant enemy.",
       "untradable": false,
       "buffInfo": {
-        "type": 3,
+        "type": 1,
         "range": 3,
         "duration": 0,
         "selfCastOnly": false,
         "numTarget": 1,
         "isBuff": false
       },
-      "instantDmg": {
+      "statsModify": {
+        "atkPercent": 0,
+        "defPercent": 0,
+        "agiPercent": 0,
+        "ms": 0,
+        "slowPercent": 0,
+        "sp": 0,
         "dmg": 300,
         "isAbsDmg": true
       }
@@ -7122,14 +7128,20 @@
       "desc": "Unleashes an intense flame burst on a single enemy.",
       "untradable": false,
       "buffInfo": {
-        "type": 3,
+        "type": 1,
         "range": 3,
         "duration": 0,
         "selfCastOnly": false,
         "numTarget": 1,
         "isBuff": false
       },
-      "instantDmg": {
+      "statsModify": {
+        "atkPercent": 0,
+        "defPercent": 0,
+        "agiPercent": 0,
+        "ms": 0,
+        "slowPercent": 0,
+        "sp": 0,
         "dmg": 500,
         "isAbsDmg": true
       }
@@ -7144,14 +7156,20 @@
       "desc": "A fiery barrage rains down on multiple enemies, scorching all caught in its path.",
       "untradable": false,
       "buffInfo": {
-        "type": 3,
+        "type": 1,
         "range": 4,
         "duration": 0,
         "selfCastOnly": false,
         "numTarget": 10,
         "isBuff": false
       },
-      "instantDmg": {
+      "statsModify": {
+        "atkPercent": 0,
+        "defPercent": 0,
+        "agiPercent": 0,
+        "ms": 0,
+        "slowPercent": 0,
+        "sp": 0,
         "dmg": 200,
         "isAbsDmg": true
       }
@@ -7166,14 +7184,20 @@
       "desc": "Calls down a blazing inferno to crush nearby enemies, dealing heavy area damage.",
       "untradable": false,
       "buffInfo": {
-        "type": 3,
+        "type": 1,
         "range": 2,
         "duration": 0,
         "selfCastOnly": false,
         "numTarget": 10,
         "isBuff": false
       },
-      "instantDmg": {
+      "statsModify": {
+        "atkPercent": 0,
+        "defPercent": 0,
+        "agiPercent": 0,
+        "ms": 0,
+        "slowPercent": 0,
+        "sp": 0,
         "dmg": 400,
         "isAbsDmg": true
       }
@@ -7826,8 +7850,8 @@
         "ms": -10,
         "slowPercent": 0,
         "sp": 0,
-        "dmg": 0,
-        "isAbsDmg": false
+        "dmg": 1000,
+        "isAbsDmg": true
       }
     },
     "458": {
@@ -8008,7 +8032,7 @@
       "weight": 0,
       "name": "Valtherium",
       "desc": "A rare metal discovered in the ruins of the ancients, known for its ability to absorb magical energy.",
-      "untradable": true
+      "untradable": false
     },
     "467": {
       "id": 467,
@@ -8018,7 +8042,7 @@
       "weight": 0,
       "name": "Enriched Valtherium",
       "desc": "A refined form of Valtherium, enriched to hold far greater magical energy.",
-      "untradable": true
+      "untradable": false
     },
     "468": {
       "id": 468,
@@ -8028,7 +8052,7 @@
       "weight": 0,
       "name": "Pochi Fusion Cookie",
       "desc": "Magical cookie made from crystal fragments, used to upgrade your Pochi pets.",
-      "untradable": true
+      "untradable": false
     }
   }
 }

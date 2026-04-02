@@ -23,14 +23,12 @@ struct TargetItemData {
 library ConsumeUtils {
   uint16 constant DEBUFF_COOLDOWN = 10; // seconds
 
-  function applyStatsBuff(uint256 characterId, uint256 itemId, uint256 targetPlayer) public {
+  function applyStatsBuff(uint256 itemId, uint256 targetPlayer) public {
     bool isGoodBuff = BuffInfo.getIsBuff(itemId);
     if (isGoodBuff) {
       applyStatsGoodBuff(targetPlayer, itemId);
     } else {
-      checkIsReadyToCast(characterId);
       applyStatsBadBuff(targetPlayer, itemId);
-      CharDebuff.setLastCastTime(characterId, block.timestamp);
     }
   }
 
@@ -167,7 +165,7 @@ library ConsumeUtils {
     uint256 lastCastTime = CharDebuff.getLastCastTime(characterId);
     uint256 nextCastTime = lastCastTime + DEBUFF_COOLDOWN;
     if (block.timestamp < nextCastTime) {
-      revert Errors.ConsumeSystem_DebuffOnCooldown(characterId, nextCastTime);
+      revert Errors.ConsumeSystem_DebuffOnCooldown(characterId, block.timestamp, nextCastTime);
     }
   }
 

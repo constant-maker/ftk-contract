@@ -21,7 +21,8 @@ import {
   CharSavePoint,
   Tile,
   CharFund,
-  CharFundData
+  CharFundData,
+  CharDebuff
 } from "@codegen/index.sol";
 import { BuffType } from "@codegen/common.sol";
 import { WorldFixture, SpawnSystemFixture } from "@fixtures/index.sol";
@@ -139,9 +140,9 @@ contract ConsumeSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFix
   // test buff and skill item
 
   function test_ShouldHaveData() external {
-    BuffInfoData memory buffItemInfo = BuffInfo.get(360); // instant dmg buff
+    BuffInfoData memory buffItemInfo = BuffInfo.get(360); // stats modify buff
 
-    assertEq(uint8(buffItemInfo.buffType), uint8(BuffType.InstantDamage));
+    assertEq(uint8(buffItemInfo.buffType), uint8(BuffType.StatsModify));
     assertEq(buffItemInfo.range, 10);
     assertEq(buffItemInfo.numTarget, 10);
     assertFalse(buffItemInfo.selfCastOnly);
@@ -195,11 +196,6 @@ contract ConsumeSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFix
     world.app__consumeItem(characterId, 360, 2, targetData);
     vm.stopPrank();
 
-    // vm.expectRevert(); // restrict location
-    // vm.startPrank(player);
-    // world.app__consumeItem(characterId, 360, 1, targetData);
-    // vm.stopPrank();
-
     uint32 char2Hp = CharCurrentStats.getHp(characterId2);
     targetData.y = charPosition.y - 1;
     vm.startPrank(player);
@@ -215,6 +211,8 @@ contract ConsumeSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFix
     vm.stopPrank();
 
     vm.warp(block.timestamp + 10); // wait for cooldown
+    console2.log("current time", block.timestamp);
+    console2.log("next cast time", CharDebuff.getLastCastTime(characterId) + 10);
 
     vm.startPrank(player);
     world.app__consumeItem(characterId, 360, 1, targetData);

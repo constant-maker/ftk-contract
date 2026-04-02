@@ -22,9 +22,9 @@ import { CharacterInfoMock } from "@mocks/CharacterInfoMock.sol";
 import { console2 } from "forge-std/console2.sol";
 import { CharacterPositionUtils } from "@utils/CharacterPositionUtils.sol";
 import { CharacterStateUtils } from "@utils/CharacterStateUtils.sol";
-import { CharacterItemUtils } from "@utils/CharacterItemUtils.sol";
 import { CharacterPerkUtils } from "@utils/CharacterPerkUtils.sol";
 import { Tile, TileData } from "@codegen/tables/Tile.sol";
+import { TestInventoryToolUtils } from "./utils/TestInventoryToolUtils.sol";
 
 contract FarmingSystemTest is FarmingSystemFixture, SpawnSystemFixture, MoveSystemFixture, WelcomeSystemFixture {
   address player = makeAddr("player");
@@ -140,7 +140,7 @@ contract FarmingSystemTest is FarmingSystemFixture, SpawnSystemFixture, MoveSyst
 
   function test_FarmTier3() external {
     vm.startPrank(worldDeployer);
-    CharacterItemUtils.addNewItem(characterId, 163, 1);
+    TestInventoryToolUtils.addNewTool(characterId, 163, 1);
     CharPerk.setLevel(characterId, ItemType.WoodAxe, 5);
     vm.stopPrank();
     uint256 toolId = 7;
@@ -169,7 +169,7 @@ contract FarmingSystemTest is FarmingSystemFixture, SpawnSystemFixture, MoveSyst
   function test_CheckTileQuota() external {
     vm.startPrank(worldDeployer);
     CharStats.setWeight(characterId, 1000);
-    CharacterItemUtils.addNewItem(characterId, 163, 1);
+    TestInventoryToolUtils.addNewTool(characterId, 163, 1);
     CharPerk.setLevel(characterId, ItemType.WoodAxe, 5);
     vm.stopPrank();
     uint8 perkLevel = CharacterPerkUtils.getPerkLevel(characterId, ItemType.WoodAxe);

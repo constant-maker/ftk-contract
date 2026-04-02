@@ -58,8 +58,9 @@ export default defineWorld({
     EntityType: ["Character", "Monster"],
     EffectType: ["None", "Burn", "Poison", "Frostbite", "Stun"],
     RoleType: ["None", "VaultKeeper", "KingGuard"],
-    // Note: Healing potion represents for ItemType HealingItem
-    BuffType: ["None", "StatsModify", "ExpAmplify", "InstantDamage", "InstantHeal", "HealingPotion"],
+    // Note: Healing potion represents for ItemType HealingItem, 
+    // use to limit number of healing items in the inventory
+    BuffType: ["None", "StatsModify", "ExpAmplify", "InstantHeal", "HealingPotion"],
     CurrencyType: ["Gold", "Crystal"],
     GachaType: ["OpenBox"],
     PetComponentType: ["Bag", "Eye", "Horn", "Mouth", "Tail", "Wing", "Body", "Head", "Weapon"],

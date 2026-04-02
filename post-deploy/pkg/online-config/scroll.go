@@ -155,19 +155,14 @@ func getListScrollUpdate(sheetName string, dataConfig *common.DataConfig) ([]com
 				Ms:          ms,
 				SlowPercent: uint16(slowPercent),
 				Sp:          sp,
-				Dmg:         0, // now no data
-				IsAbsDmg:    false,
+				Dmg:         dmg,
+				IsAbsDmg:    isAbsDmg,
 			}
 		case 2: // ExpAmplify
 			item.ExpAmplify = &common.ExpAmplify{
 				FarmingPerkAmp: farmingPerkAmp,
 				PveExpAmp:      pveExpAmp,
 				PvePerkAmp:     pvePerkAmp,
-			}
-		case 3: // InstantDamage
-			item.InstantDamage = &common.InstantDamage{
-				Dmg:      dmg,
-				IsAbsDmg: isAbsDmg,
 			}
 		}
 		scrolls = append(scrolls, item)

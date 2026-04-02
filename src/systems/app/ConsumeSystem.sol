@@ -28,6 +28,9 @@ import { ItemType, ResourceType, BuffType, CharacterStateType } from "@codegen/c
 contract ConsumeSystem is System, CharacterAccessControl {
   /// @dev eat berries to heal
   function eatBerries(uint256 characterId, uint256 itemId, uint32 amount) public onlyAuthorizedWallet(characterId) {
+    if (amount == 0) {
+      revert Errors.ConsumeSystem_ItemAmountIsZero(characterId, itemId);
+    }
     if (ResourceInfo.getResourceType(itemId) != ResourceType.Berry) {
       revert Errors.ConsumeSystem_MustBeBerry(characterId, itemId);
     }
@@ -103,8 +106,9 @@ contract ConsumeSystem is System, CharacterAccessControl {
   }
 
   function _handleStatsBuffItem(uint256 characterId, uint256 itemId, TargetItemData memory targetData) private {
+    bool needsCastCooldown = !BuffInfo.getIsBuff(itemId);
     uint32 itemDmg = _calculateBuffDmg(characterId, BuffStat.getDmg(itemId), BuffStat.getIsAbsDmg(itemId));
-    if (itemDmg > 0) {
+    if (itemDmg > 0 || needsCastCooldown) {
       ConsumeUtils.checkIsReadyToCast(characterId);
       CharDebuff.setLastCastTime(characterId, block.timestamp);
     }
@@ -113,7 +117,7 @@ contract ConsumeSystem is System, CharacterAccessControl {
       if (!_isTargetInPosition(targetPlayer, targetData.x, targetData.y)) {
         continue; // skip if target player not in position
       }
-      ConsumeUtils.applyStatsBuff(characterId, itemId, targetPlayer);
+      ConsumeUtils.applyStatsBuff(itemId, targetPlayer);
       if (itemDmg > 0) {
         _applyDmgBuff(targetPlayer, itemDmg);
       }

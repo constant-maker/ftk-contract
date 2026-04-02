@@ -256,7 +256,8 @@ func BuildExtraItemInfoData(l *zap.SugaredLogger, dataConfig common.DataConfig, 
 				callData = append(callData, expAmplifyCallData)
 			}
 			if item.StatsModify != nil {
-				if item.BuffInfo.Duration == 0 {
+				// now we merge instant dmg to stats modify, so if stats modify is not nil, we will build stats modify call data, which also includes instant dmg info
+				if item.BuffInfo.Duration == 0 && item.StatsModify.Dmg == 0 {
 					l.Panicw("buff info duration is 0", "itemId", item.Id)
 				}
 				l.Infow("stats modify info", "value", item.StatsModify)
@@ -266,15 +267,6 @@ func BuildExtraItemInfoData(l *zap.SugaredLogger, dataConfig common.DataConfig, 
 					return nil, err
 				}
 				callData = append(callData, statsModifyCallData)
-			}
-			if item.InstantDamage != nil {
-				l.Infow("instant damage info", "value", item.InstantDamage)
-				dmgBuffInfoCallData, err := table.BuffDmgInfoCallData(*item.InstantDamage, item.Id)
-				if err != nil {
-					l.Errorw("cannot build Instant Damage call data", "err", err)
-					return nil, err
-				}
-				callData = append(callData, dmgBuffInfoCallData)
 			}
 		default:
 			continue

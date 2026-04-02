@@ -585,8 +585,8 @@ contract PvPSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
     vm.warp(block.timestamp + 300);
     vm.startPrank(worldDeployer);
     Tile.setZoneType(21, -32, ZoneType.Black);
-    CharacterItemUtils.addNewItem(characterId_1, 329, 1); // tier 7 // weight 11
-    CharacterItemUtils.addNewItem(characterId_1, 70, 1); // tier 6 // weight 10
+    TestInventoryEquipmentUtils.addNewEquipment(characterId_1, 329, 1); // tier 7 // weight 11
+    TestInventoryEquipmentUtils.addNewEquipment(characterId_1, 70, 1); // tier 6 // weight 10
     vm.stopPrank();
 
     weightChar1 = CharCurrentStats.getWeight(characterId_1);
@@ -916,8 +916,8 @@ contract PvPSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture
     console2.log("item 362 2handed", EquipmentInfo.getTwoHanded(362));
 
     vm.startPrank(worldDeployer);
-    CharacterItemUtils.addNewItem(characterId_1, 361, 1); // 2 hand axe - blue
-    CharacterItemUtils.addNewItem(characterId_2, 362, 1); // 2 hand spear - green
+    TestInventoryEquipmentUtils.addNewEquipment(characterId_1, 361, 1); // 2 hand axe - blue
+    TestInventoryEquipmentUtils.addNewEquipment(characterId_2, 362, 1); // 2 hand spear - green
     CharCurrentStats.setAgi(characterId_2, 5); // attack first
     vm.stopPrank();
 
