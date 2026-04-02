@@ -44,7 +44,7 @@ abstract contract SpawnSystemFixture is WorldFixture {
     returns (uint256 _characterId)
   {
     vm.deal(_player, 1 ether);
-    vm.startPrank(_player);
+    vm.startPrank(_player, _player);
 
     ResourceId spawnSystemResourceId = SystemUtils.getRootSystemId("SpawnSystem");
     bytes memory data = abi.encodeCall(SpawnSystem.createCharacter, characterInfoData);
@@ -99,7 +99,7 @@ abstract contract SpawnSystemFixture is WorldFixture {
   }
 
   function _expectCreateCharacterReverted(address _player, CharInfoData memory characterInfoData) internal {
-    vm.startPrank(_player);
+    vm.startPrank(_player, _player);
 
     ResourceId spawnSystemResourceId = SystemUtils.getRootSystemId("SpawnSystem");
     bytes memory data = abi.encodeCall(SpawnSystem.createCharacter, characterInfoData);

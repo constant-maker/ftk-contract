@@ -106,6 +106,7 @@ contract GachaTest is Test, WorldFixture, SpawnSystemFixture, WelcomeSystemFixtu
       startTime: block.timestamp,
       ticketValue: 0,
       ticketItemId: 1,
+      accumulatedItemId: 0,
       itemIds: itemIds,
       amounts: amounts,
       percents: percents
@@ -194,6 +195,7 @@ contract GachaTest is Test, WorldFixture, SpawnSystemFixture, WelcomeSystemFixtu
       startTime: block.timestamp,
       ticketValue: 0,
       ticketItemId: 437,
+      accumulatedItemId: 0,
       itemIds: itemIds,
       amounts: amounts,
       percents: percents
@@ -273,6 +275,7 @@ contract GachaTest is Test, WorldFixture, SpawnSystemFixture, WelcomeSystemFixtu
       startTime: block.timestamp,
       ticketValue: 0,
       ticketItemId: 1,
+      accumulatedItemId: 0,
       itemIds: itemIds,
       amounts: amounts,
       percents: percents

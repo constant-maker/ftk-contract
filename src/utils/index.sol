@@ -26,6 +26,7 @@ import { CommonUtils } from "./CommonUtils.sol";
 import { TileInventoryUtils } from "./TileInventoryUtils.sol";
 import { FarmingUtils } from "./FarmingUtils.sol";
 import { MarketSystemUtils } from "./MarketSystemUtils.sol";
+import { MarketSystemUtils2 } from "./MarketSystemUtils2.sol";
 import { MarketWeightUtils } from "./MarketWeightUtils.sol";
 import { CharAchievementUtils } from "./CharAchievementUtils.sol";
 import { StorageItemUtils } from "./StorageItemUtils.sol";

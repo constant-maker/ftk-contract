@@ -8,6 +8,7 @@ import { Errors } from "@common/Errors.sol";
 library InventoryItemUtils {
   function addItems(uint256 characterId, uint256[] memory itemIds, uint32[] memory amounts) internal {
     require(itemIds.length == amounts.length, "Mismatched array lengths: itemIds and amounts");
+    _validateUniqueItemIds(itemIds);
     for (uint256 i = 0; i < itemIds.length; i++) {
       _updateItem(characterId, itemIds[i], amounts[i], false);
     }
@@ -22,6 +23,7 @@ library InventoryItemUtils {
   /// @dev Remove items from inventory, also check if the item balance is enough
   function removeItems(uint256 characterId, uint256[] memory itemIds, uint32[] memory amounts) internal {
     require(itemIds.length == amounts.length, "Mismatched array lengths: itemIds and amounts");
+    _validateUniqueItemIds(itemIds);
     for (uint256 i = 0; i < itemIds.length; i++) {
       _updateItem(characterId, itemIds[i], amounts[i], true);
     }
@@ -109,5 +111,15 @@ library InventoryItemUtils {
     }
 
     CharBuffCounter.setCount(characterId, buffType, newCount);
+  }
+
+  function _validateUniqueItemIds(uint256[] memory itemIds) private pure {
+    for (uint256 i = 0; i < itemIds.length; i++) {
+      for (uint256 j = i + 1; j < itemIds.length; j++) {
+        if (itemIds[i] == itemIds[j]) {
+          revert Errors.Inventory_DuplicateItemId(itemIds[i]);
+        }
+      }
+    }
   }
 }

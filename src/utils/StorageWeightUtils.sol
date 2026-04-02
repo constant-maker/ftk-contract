@@ -1,10 +1,9 @@
 pragma solidity >=0.8.24;
 
-import { Equipment, Tool, Item, CharStorage } from "@codegen/index.sol";
+import { Equipment, Tool, Item, CharStorage, CharOtherItemStorage, CharStrItemCache } from "@codegen/index.sol";
 import { CommonUtils } from "./CommonUtils.sol";
 import { EquipmentUtils } from "./EquipmentUtils.sol";
 import { Errors } from "@common/Errors.sol";
-import { Config } from "@common/Config.sol";
 
 library StorageWeightUtils {
   /*    Update equipment weight    */
@@ -96,14 +95,18 @@ library StorageWeightUtils {
     // Ensure that the lengths of itemIds and amounts are equal
     require(length == amounts.length, "Mismatched array lengths: itemIds and amounts");
 
-    uint32 weightChange = 0;
+    int64 weightChange = 0;
     for (uint256 i = 0; i < length; i++) {
-      uint32 itemWeight = Item.getWeight(itemIds[i]) * amounts[i];
-      weightChange += itemWeight;
+      weightChange += _updateItemCacheAndGetWeightChange(characterId, cityId, itemIds[i], amounts[i], isRemoved);
     }
 
     uint32 storageWeight = CharStorage.getWeight(characterId, cityId);
-    uint32 newWeight = CommonUtils.getNewWeight(storageWeight, weightChange, isRemoved);
+    uint32 newWeight;
+    if (weightChange >= 0) {
+      newWeight = storageWeight + uint32(uint64(weightChange));
+    } else {
+      newWeight = CommonUtils.getNewWeight(storageWeight, uint32(uint64(-weightChange)), true);
+    }
     _validateAndSetWeight(characterId, cityId, newWeight, checkMaxWeight);
   }
 
@@ -170,5 +173,55 @@ library StorageWeightUtils {
       }
     }
     CharStorage.setWeight(characterId, cityId, newWeight);
+  }
+
+  function _updateItemCacheAndGetWeightChange(
+    uint256 characterId,
+    uint256 cityId,
+    uint256 itemId,
+    uint32 amount,
+    bool isRemoved
+  )
+    private
+    returns (int64 weightChange)
+  {
+    if (amount == 0) return 0;
+
+    uint32 currentItemWeight = Item.getWeight(itemId);
+    uint32 cachedUnitWeight = CharStrItemCache.getWeight(characterId, cityId, itemId);
+
+    if (!isRemoved) {
+      uint32 currentAmount = CharOtherItemStorage.getAmount(characterId, cityId, itemId);
+      uint32 previousAmount = currentAmount - amount;
+      uint64 addedWeight = uint64(currentItemWeight) * uint64(amount);
+
+      if (cachedUnitWeight == 0) {
+        CharStrItemCache.setWeight(characterId, cityId, itemId, currentItemWeight);
+        return int64(addedWeight);
+      }
+
+      weightChange = int64(addedWeight);
+      if (currentItemWeight >= cachedUnitWeight) {
+        weightChange += int64(uint64(currentItemWeight - cachedUnitWeight) * uint64(previousAmount));
+      } else {
+        weightChange -= int64(uint64(cachedUnitWeight - currentItemWeight) * uint64(previousAmount));
+      }
+      CharStrItemCache.setWeight(characterId, cityId, itemId, currentItemWeight);
+      return weightChange;
+    }
+
+    uint32 currentAmount = CharOtherItemStorage.getAmount(characterId, cityId, itemId);
+    uint32 unitWeight = cachedUnitWeight;
+    if (unitWeight == 0) {
+      unitWeight = currentItemWeight;
+    }
+
+    if (currentAmount == 0) {
+      CharStrItemCache.deleteRecord(characterId, cityId, itemId);
+    } else if (cachedUnitWeight == 0) {
+      CharStrItemCache.setWeight(characterId, cityId, itemId, unitWeight);
+    }
+
+    return -int64(uint64(unitWeight) * uint64(amount));
   }
 }

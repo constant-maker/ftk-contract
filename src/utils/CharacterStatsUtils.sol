@@ -247,7 +247,7 @@ library CharacterStatsUtils {
     EquipmentInfoData memory equipmentInfo = EquipmentInfo.get(itemId);
     if (Item.getItemType(itemId) == ItemType.Pet) {
       // pet stats will take from this table
-      EPetStatsData memory petStats = EPetStats.get(itemId);
+      EPetStatsData memory petStats = EPetStats.get(equipmentId);
       // replace equipment info with pet stats for pet equipment, only atk, def, agi
       equipmentInfo.atk = petStats.atk;
       equipmentInfo.def = petStats.def;

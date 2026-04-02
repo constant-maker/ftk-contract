@@ -5,27 +5,9 @@ import { WorldResourceIdLib } from "@latticexyz/world/src/WorldResourceId.sol";
 import { RESOURCE_SYSTEM } from "@latticexyz/world/src/worldResourceTypes.sol";
 import { CharState, CharStateData, CharPositionFull, Item, CharFarmingState } from "@codegen/index.sol";
 import { CharacterStateType } from "@codegen/common.sol";
-import { MoveSystemUtils } from "./MoveSystemUtils.sol";
 import { Errors, Config } from "@common/index.sol";
 
 library CharacterStateUtils {
-  /// @dev Return character action duration base on current character state
-  /// Each action has it's own base duration
-  /// For simplicity, the default base duration is 15 mins
-  function getCharacterActionDuration(uint256 characterId, CharacterStateType state) internal view returns (uint16) {
-    if (state == CharacterStateType.Moving) {
-      return MoveSystemUtils.getMovementDuration(characterId);
-    }
-    if (state == CharacterStateType.Farming) {
-      uint256 itemId = CharFarmingState.getItemId(characterId);
-      uint8 tier = Item.getTier(itemId);
-      if (tier > 0) {
-        return Config.DEFAULT_PLAYER_ACTION_DURATION * uint16(tier);
-      }
-    }
-    return Config.DEFAULT_PLAYER_ACTION_DURATION;
-  }
-
   /// @dev Revert when the character last action is not finished and character state is not equal to the required
   /// state
   function checkLastActionFinished(uint256 characterId, CharacterStateType requiredCharacterState) internal view {
@@ -41,9 +23,14 @@ library CharacterStateUtils {
       return;
     }
 
-    uint256 lastUpdated = characterState.lastUpdated;
-    uint16 characterLastActionDuration = getCharacterActionDuration(characterId, characterState.state);
-    uint256 nextActionTimestamp = lastUpdated + characterLastActionDuration;
+    uint256 nextActionTimestamp;
+    if (characterState.state == CharacterStateType.Moving) {
+      nextActionTimestamp = CharPositionFull.getArriveTimestamp(characterId);
+    } else {
+      uint256 lastUpdated = characterState.lastUpdated;
+      uint16 characterLastActionDuration = _getCharacterActionDuration(characterId, characterState.state);
+      nextActionTimestamp = lastUpdated + characterLastActionDuration;
+    }
 
     if (block.timestamp < nextActionTimestamp) {
       revert Errors.Character_LastActionNotFinished(characterState.state, nextActionTimestamp);
@@ -84,7 +71,20 @@ library CharacterStateUtils {
   function mustInStateStandByOrMoving(uint256 characterId) internal view {
     CharacterStateType characterState = getCharacterState(characterId);
     if (characterState != CharacterStateType.Standby && characterState != CharacterStateType.Moving) {
-      revert Errors.Character_MustInState(characterState, CharacterStateType.Standby, block.timestamp);
+      revert Errors.Character_MustInStateStandByOrMoving(characterState, block.timestamp);
     }
+  }
+
+  /// @dev Return character action duration base on current character state.
+  /// Each action has its own base duration.
+  function _getCharacterActionDuration(uint256 characterId, CharacterStateType state) private view returns (uint16) {
+    if (state == CharacterStateType.Farming) {
+      uint256 itemId = CharFarmingState.getItemId(characterId);
+      uint8 tier = Item.getTier(itemId);
+      if (tier > 0) {
+        return Config.DEFAULT_PLAYER_ACTION_DURATION * uint16(tier);
+      }
+    }
+    return Config.DEFAULT_PLAYER_ACTION_DURATION;
   }
 }

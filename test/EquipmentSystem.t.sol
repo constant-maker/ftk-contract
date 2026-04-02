@@ -17,7 +17,8 @@ import {
   EquipmentInfo,
   Item,
   CharFund,
-  CharEquipmentCache
+  CharEquipmentCache,
+  EPetStats
 } from "@codegen/index.sol";
 import { SlotType, ItemType } from "@codegen/common.sol";
 import { EquipData } from "@utils/CharacterEquipmentUtils.sol";
@@ -133,6 +134,35 @@ contract EquipmentSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemF
     uint16 currentAtk = CharCurrentStats.getAtk(characterId);
     console2.log("currentAtk", currentAtk);
     assertEq(currentAtk, prevAtk + 3);
+  }
+
+  function test_ShouldGearUpPetEquipmentWithPetStats() external {
+    vm.startPrank(worldDeployer);
+    TestInventoryEquipmentUtils.addNewEquipment(characterId, 436, 1);
+    EPetStats.set(2, 5, 4, 3);
+    CharStats.setLevel(characterId, 50);
+    vm.stopPrank();
+
+    assertEq(uint8(EquipmentInfo.getSlotType(436)), uint8(SlotType.Pet));
+
+    uint16 prevAtk = CharCurrentStats.getAtk(characterId);
+    uint16 prevDef = CharCurrentStats.getDef(characterId);
+    uint16 prevAgi = CharCurrentStats.getAgi(characterId);
+
+    EquipData[] memory equipDatas = new EquipData[](1);
+    equipDatas[0] = EquipData({ slotType: SlotType.Pet, equipmentId: 2 });
+
+    vm.startPrank(player);
+    world.app__gearUpEquipments(characterId, equipDatas);
+    vm.stopPrank();
+
+    assertEq(CharEquipment.get(characterId, SlotType.Pet), 2);
+    assertEq(CharEquipmentCache.getAtk(characterId, SlotType.Pet), 5);
+    assertEq(CharEquipmentCache.getDef(characterId, SlotType.Pet), 4);
+    assertEq(CharEquipmentCache.getAgi(characterId, SlotType.Pet), 3);
+    assertEq(CharCurrentStats.getAtk(characterId), prevAtk + 5);
+    assertEq(CharCurrentStats.getDef(characterId), prevDef + 4);
+    assertEq(CharCurrentStats.getAgi(characterId), prevAgi + 3);
   }
 
   function test_ShouldUpdateGrindSlot() external {

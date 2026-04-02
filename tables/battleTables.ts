@@ -120,8 +120,9 @@ const BATTLE_TABLES: any = {
       x: "int32",
       y: "int32",
       monsterId: "uint256",
+      isAFK: "bool",
     },
-    key: ['x', 'y'],
+    key: ['x', 'y', 'monsterId'],
   },
   PvEAfkExpAmp: {
     schema: {

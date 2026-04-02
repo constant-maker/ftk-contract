@@ -96,19 +96,21 @@ contract RescueSystem is System, CharacterAccessControl {
     uint32 pveAfkExpAmp = PvEAfkExpAmp.get(characterId);
     PvEAfkExpAmp.set(characterId, pveAfkExpAmp);
 
-    _rescuePvEAfkLoc(positionData);
+    _rescuePvEAfkLoc(positionData, pveAfk.monsterId);
   }
 
-  function _rescuePvEAfkLoc(CharPositionFullData memory positionData) private {
-    uint256 monsterId = PvEAfkLoc.get(positionData.x, positionData.y);
-    if (monsterId > 0) {
-      PvEAfkLoc.set(positionData.x, positionData.y, monsterId);
+  function _rescuePvEAfkLoc(CharPositionFullData memory positionData, uint256 monsterId) private {
+    if (monsterId == 0) {
       return;
     }
 
-    monsterId = PvEAfkLoc.get(positionData.nextX, positionData.nextY);
-    if (monsterId > 0) {
-      PvEAfkLoc.set(positionData.nextX, positionData.nextY, monsterId);
+    if (PvEAfkLoc.get(positionData.x, positionData.y, monsterId)) {
+      PvEAfkLoc.set(positionData.x, positionData.y, monsterId, true);
+      return;
+    }
+
+    if (PvEAfkLoc.get(positionData.nextX, positionData.nextY, monsterId)) {
+      PvEAfkLoc.set(positionData.nextX, positionData.nextY, monsterId, true);
     }
   }
 

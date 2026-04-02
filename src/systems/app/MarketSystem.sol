@@ -12,6 +12,7 @@ import {
 } from "@utils/index.sol";
 import { OrderCounter, Order, OrderData, Equipment, CharMarketWeight, Order2 } from "@codegen/index.sol";
 import { OrderParams, TakeOrderParams, MarketSystemUtils } from "@utils/MarketSystemUtils.sol";
+import { MarketSystemUtils2 } from "@utils/MarketSystemUtils2.sol";
 import { CurrencyType } from "@codegen/common.sol";
 import { Errors, Config } from "@common/index.sol";
 
@@ -182,11 +183,11 @@ contract MarketSystem is System, CharacterAccessControl {
       return;
     }
     CurrencyType orderCurrency = Order2.getCurrency(orderParams.orderId);
-    MarketSystemUtils.validateMarketCrystalRule(existingOrder.itemId, orderParams.unitPrice, orderCurrency);
-    MarketSystemUtils.validateOrderPrice(orderParams.unitPrice, orderCurrency);
+    MarketSystemUtils2.validateMarketCrystalRule(existingOrder.itemId, orderParams.unitPrice, orderCurrency);
+    MarketSystemUtils2.validateOrderPrice(orderParams.unitPrice, orderCurrency);
     if (existingOrder.isBuy) {
       // buy order - we need to update gold or crystal
-      MarketSystemUtils.updateBuyOrder(characterId, existingOrder, orderParams);
+      MarketSystemUtils2.updateBuyOrder(characterId, orderParams.orderId, existingOrder, orderParams.unitPrice);
     }
     Order.setUnitPrice(orderParams.orderId, orderParams.unitPrice);
   }

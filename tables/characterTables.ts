@@ -209,6 +209,15 @@ const CHARACTER_TABLES: any = {
     },
     key: ['characterId', 'itemId'],
   },
+  CharStrItemCache: { // Storage cached item weight
+    schema: {
+      characterId: "uint256",
+      cityId: "uint256",
+      itemId: "uint256",
+      weight: "uint32",
+    },
+    key: ['characterId', 'cityId', 'itemId'],
+  },
   CharReborn: {
     schema: {
       characterId: "uint256",

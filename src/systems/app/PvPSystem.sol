@@ -258,11 +258,11 @@ contract PvPSystem is System, CharacterAccessControl {
     // Determine the first attacker based on agility
     if (attackerBattleInfo.agi >= defenderBattleInfo.agi) {
       firstAttackerId = attackerId;
-      (hps, damages) = BattleUtils.fight(attackerBattleInfo, defenderBattleInfo);
+      (hps, damages) = BattleUtils.fight(attackerBattleInfo, defenderBattleInfo, false, false);
       skills = _usedSkillsOrder(attackerSkills, defenderSkills);
     } else {
       firstAttackerId = defenderId;
-      (hps, damages) = BattleUtils.fight(defenderBattleInfo, attackerBattleInfo);
+      (hps, damages) = BattleUtils.fight(defenderBattleInfo, attackerBattleInfo, false, false);
       // hps now is [defenderHP, attackerHP], we need to revert it to [attackerHP, defenderHP]
       (hps[0], hps[1]) = (hps[1], hps[0]);
       skills = _usedSkillsOrder(defenderSkills, attackerSkills);

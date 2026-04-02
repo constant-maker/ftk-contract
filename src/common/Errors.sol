@@ -35,6 +35,7 @@ library Errors {
   error SpawnSystem_InvalidKingdomId(uint8 kingdomId);
   error SpawnSystem_InvalidTraitStats(uint16 traitStats);
   error SpawnSystem_InvalidCharacterCreationFee(uint256 msgValue);
+  error SpawnSystem_MustBeEOA(address wallet);
 
   /* -------------------------------------------------------------------------- */
   /*                                  Character                                 */
@@ -46,6 +47,10 @@ library Errors {
   error Character_MustInState(
     CharacterStateType characterState, CharacterStateType requiredCharacterState, uint256 blockTime
   );
+  error Character_MustInStateStandByOrMoving(
+    CharacterStateType characterState, uint256 blockTime
+  );
+  error Character_MustBeEOA(address wallet);
   error Character_WelcomePackagesClaimed(uint256 characterId);
   error Character_WeightsExceed(uint32 newWeight, uint32 maxWeight);
   error Character_PerkLevelTooLow(uint256 characterId, uint8 perksLevel, ItemType itemType, uint8 itemTier);
@@ -55,6 +60,7 @@ library Errors {
   /* -------------------------------------------------------------------------- */
   error CharacterSystem_SameAccount(uint256 characterId, address newOwner);
   error CharacterSystem_InvalidNewOwner(uint256 characterId);
+  error CharacterSystem_InvalidSessionWallet(uint256 characterId);
 
   /* -------------------------------------------------------------------------- */
   /*                                   Tool                                     */
@@ -169,7 +175,7 @@ library Errors {
   error PvE_BossIsNotRespawnedYet(uint256 monsterId, uint256 respawnTime);
   error PvE_AfkNotStarted(uint256 characterId);
   error PvE_AfkAlreadyStarted(uint256 characterId, uint256 monsterId);
-  error PvE_SomeoneIsFightingThisMonster(int32 x, int32 y, uint256 monsterId);
+  error PvE_SomeoneIsAFKInThisTile(int32 x, int32 y, uint256 currentMonsterId);
   error PvE_CannotAFKWithBoss(uint256 monsterId);
   error PvE_NotCapableToAFK(
     uint256 characterId, uint256 monsterId, int32 characterX, int32 characterY, uint16 monsterLevel
@@ -239,6 +245,7 @@ library Errors {
   /* -------------------------------------------------------------------------- */
   /*                               Storage                                      */
   /* -------------------------------------------------------------------------- */
+  error Storage_DuplicateItemId(uint256 itemId);
   error Storage_ExceedMaxWeight(uint32 maxWeight, uint32 currentWeight);
   error Storage_ExceedResourceBalance(
     uint256 characterId, uint256 cityId, uint256 resourceId, uint32 currentAmount, uint32 requireAmount
@@ -250,6 +257,7 @@ library Errors {
   /* -------------------------------------------------------------------------- */
   /*                               Inventory                                    */
   /* -------------------------------------------------------------------------- */
+  error Inventory_DuplicateItemId(uint256 itemId);
   error Inventory_ExceedItemBalance(uint256 characterId, uint256 itemId, uint32 currentAmount, uint32 requireAmount);
   error Inventory_ExceedMaxBuffItem(uint256 characterId, uint256 itemId, uint32 currentAmount);
   error Inventory_ExceedMaxHealingItem(uint256 characterId, uint32 currentAmount);

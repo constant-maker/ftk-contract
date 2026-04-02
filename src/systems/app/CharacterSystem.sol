@@ -9,6 +9,12 @@ import { IERC721Mintable } from "@latticexyz/world-modules/src/modules/erc721-pu
 contract CharacterSystem is System, CharacterAccessControl {
   /// @dev delegate to specific session wallet
   function delegateSessionWallet(uint256 characterId, address sessionWallet) public onlyCharacterOwner(characterId) {
+    if (sessionWallet == address(0)) {
+      revert Errors.CharacterSystem_InvalidSessionWallet(characterId);
+    }
+    if (sessionWallet.code.length > 0) {
+      revert Errors.Character_MustBeEOA(sessionWallet);
+    }
     ActiveChar.setSessionWallet(characterId, sessionWallet);
   }
 
@@ -25,6 +31,9 @@ contract CharacterSystem is System, CharacterAccessControl {
     }
     if (newOwner == address(0)) {
       revert Errors.CharacterSystem_InvalidNewOwner(characterId);
+    }
+    if (newOwner.code.length > 0) {
+      revert Errors.Character_MustBeEOA(newOwner);
     }
 
     _transferOwnership(currentOwner, newOwner, characterId);

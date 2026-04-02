@@ -31,6 +31,9 @@ library BattleUtils2 {
   /// and move character back to capital. It will also drop all resources and equipments in inventory
   /// to the tile where character lost.
   function applyLoss(uint256 characterId, CharPositionData memory position) public {
+    // Clear temporary buffs/debuffs before removing equipment stats.
+    CharacterBuffUtils.dispelAllBuff(characterId);
+
     // check if inventory should be dropped
     int32 x = position.x;
     int32 y = position.y;
@@ -62,8 +65,6 @@ library BattleUtils2 {
     // move character back to saved point (if saved point is empty, move to capital)
     CharacterPositionUtils.moveToSavedPoint(characterId);
     CharState.set(characterId, CharacterStateType.Standby, block.timestamp);
-    // character is dead, remove all buffs
-    CharacterBuffUtils.dispelAllBuff(characterId);
   }
 
   /// @dev check if character is in a state that can be forced to stop AFK

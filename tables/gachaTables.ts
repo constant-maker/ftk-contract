@@ -37,6 +37,11 @@ const GACHA_TABLES: any = {
       startTime: "uint256",
       ticketValue: "uint256", // Use ETH for gacha
       ticketItemId: "uint256", // Use item as ticket for gacha
+      // The itemId that will be accumulated for each gacha, 0 if not used,
+      // Every time a gacha is performed, and player didn't get the rarest item, 
+      // the itemId will be accumulated, and once the accumulated itemId amount is reached a certain threshold, 
+      // the player will get the rarest item for sure and reset the accumulated itemId.
+      accumulatedItemId: "uint256",
       itemIds: "uint256[]",
       amounts: "uint32[]",
       percents: "uint16[]", // The percent chance of getting each item, total is 10000 - min is 1 (0.01%)

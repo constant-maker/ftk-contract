@@ -33,8 +33,8 @@ library BattlePvEUtils2 {
   uint32 private constant MAX_AFK_GAINED_EXP = 2_000_000;
 
   function startPvEAFK(uint256 characterId, uint256 monsterId, CharPositionData memory characterPosition) public {
-    if (PvEAfkLoc.getMonsterId(characterPosition.x, characterPosition.y) == monsterId) {
-      revert Errors.PvE_SomeoneIsFightingThisMonster(characterPosition.x, characterPosition.y, monsterId);
+    if (PvEAfkLoc.get(characterPosition.x, characterPosition.y, monsterId)) {
+      revert Errors.PvE_SomeoneIsAFKInThisTile(characterPosition.x, characterPosition.y, monsterId);
     }
     MonsterLocationData memory monsterLocation =
       MonsterLocation.get(characterPosition.x, characterPosition.y, monsterId);
@@ -62,7 +62,7 @@ library BattlePvEUtils2 {
       }
     }
     PvEAfk.set(characterId, monsterId, block.timestamp, gainedExp, gainedPerkExp, maxTick);
-    PvEAfkLoc.set(characterPosition.x, characterPosition.y, monsterId);
+    PvEAfkLoc.set(characterPosition.x, characterPosition.y, monsterId, true);
     CharState.set(characterId, CharacterStateType.Hunting, block.timestamp);
   }
 
@@ -95,7 +95,7 @@ library BattlePvEUtils2 {
     // reset afk data
     PvEAfk.deleteRecord(characterId);
     PvEAfkExpAmp.deleteRecord(characterId);
-    PvEAfkLoc.deleteRecord(characterPosition.x, characterPosition.y);
+    PvEAfkLoc.deleteRecord(characterPosition.x, characterPosition.y, afkData.monsterId);
     CharState.set(characterId, CharacterStateType.Standby, block.timestamp);
   }
 

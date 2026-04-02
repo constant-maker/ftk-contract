@@ -24,6 +24,9 @@ contract SpawnSystem is System {
       revert Errors.SpawnSystem_InvalidCharacterCreationFee(_msgValue());
     }
     address wallet = _msgSender();
+    if (wallet != tx.origin) {
+      revert Errors.SpawnSystem_MustBeEOA(wallet);
+    }
     // Validate inputs
     _validateCreateCharacterData(data);
 

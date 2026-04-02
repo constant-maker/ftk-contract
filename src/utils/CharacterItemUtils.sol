@@ -25,6 +25,9 @@ library CharacterItemUtils {
   /// @dev add new item to character inventory, with tool and equipment, hook will add them to inventory
   function addNewItem(uint256 characterId, uint256 itemId, uint32 amount) internal {
     ItemData memory item = Item.get(itemId);
+    if (item.tier == 0) {
+      revert Errors.Item_NotExisted(itemId);
+    }
     if (item.category == ItemCategoryType.Other) {
       InventoryItemUtils.addItem(characterId, itemId, amount);
       return;

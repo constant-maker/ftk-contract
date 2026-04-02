@@ -159,7 +159,7 @@ contract PvESystem2Test is WorldFixture, SpawnSystemFixture, WelcomeSystemFixtur
     assertEq(afk.monsterId, 0); // reset monster id
     assertEq(afk.expPerTick, 0); // reset exp per tick
     assertEq(afk.perkExpPerTick, 0); // reset perk exp per tick
-    assertEq(PvEAfkLoc.get(locationX, locationY), 0); // reset afk loc
+    assertEq(PvEAfkLoc.get(locationX, locationY, monsterId), false); // reset afk loc for this monster
 
     vm.expectRevert(); // not ready to battle pve
     vm.startPrank(player);
@@ -303,7 +303,7 @@ contract PvESystem2Test is WorldFixture, SpawnSystemFixture, WelcomeSystemFixtur
     assertEq(afk.monsterId, 0); // reset monster id
     assertEq(afk.expPerTick, 0); // reset exp per tick
     assertEq(afk.perkExpPerTick, 0); // reset perk exp per tick
-    assertEq(PvEAfkLoc.get(locationX, locationY), 0); // reset afk loc
+    assertEq(PvEAfkLoc.get(locationX, locationY, monsterId), false); // reset afk loc for this monster
 
     vm.expectRevert(); // not ready to battle pve
     vm.startPrank(player);

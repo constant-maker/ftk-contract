@@ -3,7 +3,6 @@ pragma solidity >=0.8.24;
 import {
   Skill,
   SkillData,
-  Monster,
   CharStats,
   CharCurrentStats,
   CharCurrentStatsData,
@@ -35,6 +34,16 @@ struct BattleInfo {
   uint16 level;
   uint256[5] skillIds;
   WeaponInfo weaponInfo;
+}
+
+struct TurnFightContext {
+  SkillData normalAtk;
+  uint32[11] dmgResult;
+  uint16 dmgMultiplier;
+  uint256 dmgIndex;
+  SkillEffectData attackerDebuff;
+  SkillEffectData defenderDebuff;
+  bool attackerStunImmune;
 }
 
 library BattleUtils {
@@ -90,9 +99,9 @@ library BattleUtils {
     CharCurrentStatsData memory characterCurrentStats = CharCurrentStats.get(characterId);
     // debuff always < 100%
     // so it will not decrease atk def agi below 0, so we can safely cast to uint16
-    uint16 finalAtk = getFinalStat(characterCurrentStats.atk, buffAtk);
-    uint16 finalDef = getFinalStat(characterCurrentStats.def, buffDef);
-    uint16 finalAgi = getFinalStat(characterCurrentStats.agi, buffAgi);
+    uint16 finalAtk = _getFinalStat(characterCurrentStats.atk, buffAtk);
+    uint16 finalDef = _getFinalStat(characterCurrentStats.def, buffDef);
+    uint16 finalAgi = _getFinalStat(characterCurrentStats.agi, buffAgi);
 
     WeaponInfo memory weaponInfo = WeaponInfo({ advantageType: AdvantageType.Grey, isTwoHanded: false });
 
@@ -120,17 +129,19 @@ library BattleUtils {
   /// @dev return dmg and hp result after a battle
   function fight(
     BattleInfo memory attacker,
-    BattleInfo memory defender
+    BattleInfo memory defender,
+    bool attackerStunImmune,
+    bool defenderStunImmune
   )
     public
     view
     returns (uint32[2] memory hps, uint32[11] memory dmgResult)
   {
     (uint16 attackerDmgMultiplier, uint16 defenderDmgMultiplier) =
-      getDamageMultiplier(attacker.weaponInfo, defender.weaponInfo);
+      _getDamageMultiplier(attacker.weaponInfo, defender.weaponInfo);
     // bonus attack based on agility
     if (attacker.agi >= defender.agi + Config.BONUS_ATTACK_AGI_DIFF) {
-      handleFirstAttack(attacker, defender, dmgResult, attackerDmgMultiplier);
+      _handleFirstAttack(attacker, defender, dmgResult, attackerDmgMultiplier);
       if (defender.hp == 0) {
         hps[0] = attacker.hp;
         hps[1] = 0;
@@ -142,72 +153,87 @@ library BattleUtils {
     uint8 index = 1;
     SkillEffectData memory attackerDebuff;
     SkillEffectData memory defenderDebuff;
+    TurnFightContext memory turnContext;
 
     while (index < 11) {
       // first attacker's turn to attack
       if (attacker.hp == 0) break;
-      doTurnFight(
-        attacker, defender, normalAtk, dmgResult, attackerDmgMultiplier, index++, attackerDebuff, defenderDebuff
-      );
+      turnContext.normalAtk = normalAtk;
+      turnContext.dmgResult = dmgResult;
+      turnContext.dmgMultiplier = attackerDmgMultiplier;
+      turnContext.dmgIndex = index++;
+      turnContext.attackerDebuff = attackerDebuff;
+      turnContext.defenderDebuff = defenderDebuff;
+      turnContext.attackerStunImmune = attackerStunImmune;
+      _doTurnFight(attacker, defender, turnContext);
+      dmgResult = turnContext.dmgResult;
+      attackerDebuff = turnContext.attackerDebuff;
+      defenderDebuff = turnContext.defenderDebuff;
 
       // second attacker's turn to attack
       if (defender.hp == 0) break;
-      doTurnFight(
-        defender, attacker, normalAtk, dmgResult, defenderDmgMultiplier, index++, defenderDebuff, attackerDebuff
-      );
+      turnContext.normalAtk = normalAtk;
+      turnContext.dmgResult = dmgResult;
+      turnContext.dmgMultiplier = defenderDmgMultiplier;
+      turnContext.dmgIndex = index++;
+      turnContext.attackerDebuff = defenderDebuff;
+      turnContext.defenderDebuff = attackerDebuff;
+      turnContext.attackerStunImmune = defenderStunImmune;
+      _doTurnFight(defender, attacker, turnContext);
+      dmgResult = turnContext.dmgResult;
+      defenderDebuff = turnContext.attackerDebuff;
+      attackerDebuff = turnContext.defenderDebuff;
     }
     hps[0] = attacker.hp;
     hps[1] = defender.hp;
     return (hps, dmgResult);
   }
 
-  function doTurnFight(
+  function _doTurnFight(
     BattleInfo memory attacker,
     BattleInfo memory defender,
-    SkillData memory normalAtk,
-    uint32[11] memory dmgResult,
-    uint16 attackerDmgMultiplier,
-    uint256 dmgIndex,
-    SkillEffectData memory attackerDebuff,
-    SkillEffectData memory defenderDebuff
+    TurnFightContext memory turnContext
   )
-    public
+    private
     view
   {
-    if (attackerDebuff.turns > 0 && attackerDebuff.effect == EffectType.Stun && !Monster.getIsBoss(attacker.id)) {
-      dmgResult[dmgIndex] = 0;
-      attackerDebuff.turns--;
+    if (
+      turnContext.attackerDebuff.turns > 0 && turnContext.attackerDebuff.effect == EffectType.Stun
+        && !turnContext.attackerStunImmune
+    ) {
+      turnContext.dmgResult[turnContext.dmgIndex] = 0;
+      turnContext.attackerDebuff.turns--;
       return;
     }
     uint16 skillBonus;
-    uint256 skillId = dmgIndex == 0 ? 0 : attacker.skillIds[(dmgIndex - 1) / 2];
-    SkillData memory skill = getSkillData(skillId, normalAtk);
+    uint256 skillId = turnContext.dmgIndex == 0 ? 0 : attacker.skillIds[(turnContext.dmgIndex - 1) / 2];
+    SkillData memory skill = _getSkillData(skillId, turnContext.normalAtk);
     if (skill.hasEffect) {
       SkillEffectData memory skillEffect = SkillEffect.get(skillId);
-      defenderDebuff.damage = skillEffect.damage;
-      defenderDebuff.effect = skillEffect.effect;
-      defenderDebuff.turns = skillEffect.turns;
+      turnContext.defenderDebuff.damage = skillEffect.damage;
+      turnContext.defenderDebuff.effect = skillEffect.effect;
+      turnContext.defenderDebuff.turns = skillEffect.turns;
     }
-    if (defenderDebuff.turns > 0 && defenderDebuff.damage > 0) {
-      skillBonus = defenderDebuff.damage;
-      defenderDebuff.turns--;
+    if (turnContext.defenderDebuff.turns > 0 && turnContext.defenderDebuff.damage > 0) {
+      skillBonus = turnContext.defenderDebuff.damage;
+      turnContext.defenderDebuff.turns--;
     }
-    uint32 damage =
-      calculateDamage(attacker.level, attacker.atk, defender.def, skill.damage + skillBonus, attackerDmgMultiplier);
-    applyDamageToDefender(defender, damage);
-    dmgResult[dmgIndex] = damage;
+    uint32 damage = _calculateDamage(
+      attacker.level, attacker.atk, defender.def, skill.damage + skillBonus, turnContext.dmgMultiplier
+    );
+    _applyDamageToDefender(defender, damage);
+    turnContext.dmgResult[turnContext.dmgIndex] = damage;
   }
 
-  function handleFirstAttack(
+  function _handleFirstAttack(
     BattleInfo memory attacker,
     BattleInfo memory defender,
     uint32[11] memory dmgResult,
     uint16 attackerDmgMultiplier
   )
-    public
+    private
     view
   {
-    SkillEffectData memory debuff;
     SkillData memory normalAtk = Skill.get(Config.NORMAL_ATTACK_SKILL_ID);
     uint16 agiDiff = attacker.agi - defender.agi;
     uint16 bonusDmg = uint16(uint32(agiDiff) * 115 / 100); // 1.15 agiDiff
@@ -216,16 +242,19 @@ library BattleUtils {
     // agi difference will reduce defender's defense for this turn only
     uint16 reducedDef = uint16(uint32(agiDiff) * 25 / 100); // 25% of agiDiff
     defender.def = defender.def > reducedDef ? defender.def - reducedDef : 0;
-    doTurnFight(attacker, defender, normalAtk, dmgResult, attackerDmgMultiplier, 0, debuff, debuff);
+    uint32 damage =
+      _calculateDamage(attacker.level, attacker.atk, defender.def, normalAtk.damage, attackerDmgMultiplier);
+    _applyDamageToDefender(defender, damage);
+    dmgResult[0] = damage;
     defender.def = currentDef;
   }
 
   /// @dev calculate damage multiplier (%) based on advantage type
-  function getDamageMultiplier(
+  function _getDamageMultiplier(
     WeaponInfo memory weaponInfo1,
     WeaponInfo memory weaponInfo2
   )
-    public
+    private
     pure
     returns (uint16, uint16)
   {
@@ -267,14 +296,14 @@ library BattleUtils {
   }
 
   /// @dev calculate damage with skill multiplier, skillDmg is percent of atk dmg
-  function calculateDamage(
+  function _calculateDamage(
     uint16 level,
     uint16 atk,
     uint16 def,
     uint16 skillDmg,
     uint16 dmgMultiplier
   )
-    public
+    private
     pure
     returns (uint32 rawDmg)
   {
@@ -291,7 +320,7 @@ library BattleUtils {
   }
 
   /// @dev apply damage and update hp
-  function applyDamageToDefender(BattleInfo memory defender, uint32 damage) public pure {
+  function _applyDamageToDefender(BattleInfo memory defender, uint32 damage) private pure {
     if (defender.barrier >= damage) {
       defender.barrier -= damage;
     } else {
@@ -302,12 +331,12 @@ library BattleUtils {
   }
 
   /// @dev return skill data based on skillId
-  function getSkillData(uint256 skillId, SkillData memory normalAtk) public view returns (SkillData memory skill) {
+  function _getSkillData(uint256 skillId, SkillData memory normalAtk) private view returns (SkillData memory skill) {
     skill = skillId == Config.NORMAL_ATTACK_SKILL_ID ? normalAtk : Skill.get(skillId);
     return skill;
   }
 
-  function getFinalStat(uint16 baseStat, int16 buffStat) public pure returns (uint16) {
+  function _getFinalStat(uint16 baseStat, int16 buffStat) private pure returns (uint16) {
     if (buffStat < 0) {
       uint16 absBuff = uint16(-buffStat);
       return baseStat > absBuff ? baseStat - absBuff : 0;

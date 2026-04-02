@@ -3,30 +3,21 @@ pragma solidity >=0.8.24;
 import {
   CharPositionData,
   CharBattle,
-  MonsterLocation,
   MonsterLocationData,
   Monster,
   PvE,
   PvEData,
-  PvEExtra,
-  PvEExtraData,
   BossInfo,
   BossInfoData,
   MonsterStats,
-  MonsterStatsData,
-  CharCurrentStats,
-  CharStats,
-  Item
+  MonsterStatsData
 } from "@codegen/index.sol";
 import { BattleInfo, WeaponInfo, BattleUtils } from "./BattleUtils.sol";
-import { InventoryItemUtils } from "./InventoryItemUtils.sol";
-import { EntityType, AdvantageType } from "@codegen/common.sol";
+import { EntityType } from "@codegen/common.sol";
 import { Config, Errors } from "@common/index.sol";
 
 library BattlePvEUtils {
   uint8 public constant BERSERK_SP_BONUS = 5;
-  uint256 constant KALYNDRA_ID = 42;
-  uint256 constant BEOWULF_ID = 43;
 
   /// @dev perform and return the result of the fight
   /// hps is final hp of character and monster
@@ -47,14 +38,15 @@ library BattlePvEUtils {
       BattleUtils.buildCharacterBattleInfo(characterId, characterSkills, characterOriginHp);
     BattleInfo memory monsterBattleInfo =
       buildMonsterBattleInfo(monsterId, characterPosition.x, characterPosition.y, monsterLocation);
+    bool monsterStunImmune = Monster.getIsBoss(monsterId);
 
     // Determine the first attacker based on agility
     if (characterBattleInfo.agi >= monsterBattleInfo.agi) {
       firstAttackerType = EntityType.Character;
-      (hps, damages) = BattleUtils.fight(characterBattleInfo, monsterBattleInfo);
+      (hps, damages) = BattleUtils.fight(characterBattleInfo, monsterBattleInfo, false, monsterStunImmune);
     } else {
       firstAttackerType = EntityType.Monster;
-      (hps, damages) = BattleUtils.fight(monsterBattleInfo, characterBattleInfo);
+      (hps, damages) = BattleUtils.fight(monsterBattleInfo, characterBattleInfo, monsterStunImmune, false);
       // hps now is [monsterHP, characterHP], we need to swap it to [characterHP, monsterHP]
       (hps[0], hps[1]) = (hps[1], hps[0]);
     }
@@ -131,9 +123,9 @@ library BattlePvEUtils {
     if (!Monster.getIsBoss(monsterId)) {
       return;
     }
-    // respawnDuration is in hour
+    // respawnDuration is stored in hours.
     uint256 respawnTime = BossInfo.getLastDefeatedTime(monsterId, characterPosition.x, characterPosition.y)
-      + uint32(BossInfo.getRespawnDuration(monsterId, characterPosition.x, characterPosition.y)) * 60 * 60;
+      + uint32(BossInfo.getRespawnDuration(monsterId, characterPosition.x, characterPosition.y)) * 1 hours;
     if (block.timestamp < respawnTime) {
       revert Errors.PvE_BossIsNotRespawnedYet(monsterId, respawnTime);
     }
@@ -156,7 +148,7 @@ library BattlePvEUtils {
     MonsterStatsData memory monsterStats = MonsterStats.get(monsterId);
     uint8 monsterSp = monsterStats.sp;
     if (!Monster.getIsBoss(monsterId)) {
-      grewMonsterStats(monsterId, monsterStats, monsterLocation.level);
+      monsterStats = _growMonsterStats(monsterId, monsterStats, monsterLocation.level);
     } else {
       BossInfoData memory bossInfo = BossInfo.get(monsterId, x, y);
       monsterBattleInfo.barrier = bossInfo.barrier; // set barrier
@@ -186,12 +178,21 @@ library BattlePvEUtils {
     return BattleUtils.reBuildSkills(monsterSkillIds, monsterSp);
   }
 
-  function grewMonsterStats(uint256 monsterId, MonsterStatsData memory monsterStats, uint16 level) public view {
+  function _growMonsterStats(
+    uint256 monsterId,
+    MonsterStatsData memory monsterStats,
+    uint16 level
+  )
+    private
+    view
+    returns (MonsterStatsData memory)
+  {
     uint8 grow = Monster.getGrow(monsterId);
     uint16 multiplier = (100 + (level - 1) * grow);
     monsterStats.hp = monsterStats.hp * multiplier / 100;
     monsterStats.atk = monsterStats.atk * multiplier / 100;
     monsterStats.def = monsterStats.def * multiplier / 100;
     monsterStats.agi = monsterStats.agi * multiplier / 100;
+    return monsterStats;
   }
 }

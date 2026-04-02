@@ -5,6 +5,7 @@ import {
   CharStorage,
   CharStorageData,
   CharOtherItemStorage,
+  CharStrItemCache,
   CharInventory,
   CharInventoryData,
   CharCurrentStats,
@@ -16,7 +17,9 @@ import { CharOtherItem } from "@codegen/tables/CharOtherItem.sol";
 import { WorldFixture } from "@fixtures/WorldFixture.sol";
 import { SpawnSystemFixture } from "@fixtures/SpawnSystemFixture.sol";
 import { WelcomeSystemFixture } from "@fixtures/WelcomeSystemFixture.sol";
-import { CharacterFundUtils, CharacterItemUtils } from "@utils/index.sol";
+import { CharacterFundUtils } from "@utils/index.sol";
+import { StorageItemUtils } from "@utils/StorageItemUtils.sol";
+import { Errors } from "@common/Errors.sol";
 import { console2 } from "forge-std/console2.sol";
 import { Config } from "@common/Config.sol";
 import { ItemsActionData } from "@common/Types.sol";
@@ -191,5 +194,56 @@ contract StorageSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFix
     console2.log("storagePotionAmount", storagePotionAmount);
     assertEq(storagePotionAmount, 1);
     assertEq(charStorage.weight, 11);
+  }
+
+  function test_ShouldUseCachedStorageItemWeightAfterConfigChange() external {
+    vm.startPrank(worldDeployer);
+    StorageItemUtils.addItem(characterId, cityId, healingPotion, 10, false);
+    vm.stopPrank();
+
+    assertEq(CharOtherItemStorage.getAmount(characterId, cityId, healingPotion), 10);
+    assertEq(CharStorage.getWeight(characterId, cityId), 20);
+    assertEq(CharStrItemCache.getWeight(characterId, cityId, healingPotion), 2);
+
+    vm.startPrank(worldDeployer);
+    Item.setWeight(healingPotion, 3);
+    StorageItemUtils.addItem(characterId, cityId, healingPotion, 5, false);
+    vm.stopPrank();
+
+    assertEq(CharOtherItemStorage.getAmount(characterId, cityId, healingPotion), 15);
+    assertEq(CharStorage.getWeight(characterId, cityId), 45);
+    assertEq(CharStrItemCache.getWeight(characterId, cityId, healingPotion), 3);
+
+    vm.startPrank(worldDeployer);
+    Item.setWeight(healingPotion, 8);
+    StorageItemUtils.removeItem(characterId, cityId, healingPotion, 10);
+    vm.stopPrank();
+
+    assertEq(CharOtherItemStorage.getAmount(characterId, cityId, healingPotion), 5);
+    assertEq(CharStorage.getWeight(characterId, cityId), 15);
+    assertEq(CharStrItemCache.getWeight(characterId, cityId, healingPotion), 3);
+
+    vm.startPrank(worldDeployer);
+    StorageItemUtils.removeItem(characterId, cityId, healingPotion, 5);
+    vm.stopPrank();
+
+    assertEq(CharOtherItemStorage.getAmount(characterId, cityId, healingPotion), 0);
+    assertEq(CharStorage.getWeight(characterId, cityId), 0);
+    assertEq(CharStrItemCache.getWeight(characterId, cityId, healingPotion), 0);
+  }
+
+  function test_RevertWhenStorageBatchContainsDuplicateItemIds() external {
+    uint256[] memory itemIds = new uint256[](2);
+    itemIds[0] = healingPotion;
+    itemIds[1] = healingPotion;
+
+    uint32[] memory amounts = new uint32[](2);
+    amounts[0] = 1;
+    amounts[1] = 2;
+
+    vm.startPrank(worldDeployer);
+    vm.expectRevert(abi.encodeWithSelector(Errors.Storage_DuplicateItemId.selector, healingPotion));
+    StorageItemUtils.addItems(characterId, cityId, itemIds, amounts, false);
+    vm.stopPrank();
   }
 }

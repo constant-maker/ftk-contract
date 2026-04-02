@@ -4,7 +4,7 @@ import { System } from "@latticexyz/world/src/System.sol";
 import { CharacterAccessControl } from "@abstracts/CharacterAccessControl.sol";
 import { NpcShop, Item, ItemData, NpcShopInventory } from "@codegen/index.sol";
 import {
-  MarketSystemUtils,
+  MarketSystemUtils2,
   InventoryItemUtils,
   CharacterFundUtils,
   CharacterItemUtils,
@@ -63,7 +63,7 @@ contract NpcShopSystem is CharacterAccessControl, System {
           unitPrice = CARD_PRICE_MULTIPLIER * itemData.tier;
         }
         // apply tax
-        unitPrice += MarketSystemUtils.calculateOrderFee(characterId, cityId, unitPrice, CurrencyType.Gold);
+        unitPrice += MarketSystemUtils2.calculateOrderFee(characterId, cityId, unitPrice, CurrencyType.Gold);
         goldCost += unitPrice * amount;
         InventoryItemUtils.addItem(characterId, itemId, amount);
         _updateNpcInventory(cityId, itemId, amount, true);
@@ -95,7 +95,7 @@ contract NpcShopSystem is CharacterAccessControl, System {
       }
       InventoryItemUtils.removeItem(characterId, itemId, amount);
       uint32 unitPrice = uint32(Item.getTier(itemId));
-      unitPrice -= MarketSystemUtils.calculateOrderFee(characterId, cityId, unitPrice, CurrencyType.Gold);
+      unitPrice -= MarketSystemUtils2.calculateOrderFee(characterId, cityId, unitPrice, CurrencyType.Gold);
       uint32 earn = unitPrice * amount;
       if (earn > npcBalance) {
         revert Errors.NpcShopSystem_NotEnoughGold(cityId, npcBalance, earn);

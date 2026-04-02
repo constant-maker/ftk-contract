@@ -19,6 +19,7 @@ import {
   Contracts
 } from "@codegen/index.sol";
 import { CharacterStateType, CharacterType } from "@codegen/common.sol";
+import { IWorld } from "@codegen/world/IWorld.sol";
 import { ResourceId } from "@latticexyz/store/src/ResourceId.sol";
 import { TestHelper } from "./index.sol";
 import { WorldFixture } from "@fixtures/WorldFixture.sol";
@@ -26,7 +27,22 @@ import { SpawnSystem } from "@systems/index.sol";
 import { CharacterInfoMock } from "@mocks/CharacterInfoMock.sol";
 import { SystemUtils } from "@utils/SystemUtils.sol";
 import { CharacterStateUtils } from "@utils/CharacterStateUtils.sol";
+import { Errors } from "@common/Errors.sol";
 import { Config } from "@common/index.sol";
+
+contract SpawnSystemCaller {
+  function createCharacter(
+    IWorld world,
+    ResourceId spawnSystemResourceId,
+    CharInfoData memory characterInfoData
+  )
+    external
+    payable
+  {
+    bytes memory data = abi.encodeCall(SpawnSystem.createCharacter, characterInfoData);
+    world.call{ value: msg.value }(spawnSystemResourceId, data);
+  }
+}
 
 abstract contract SpawnSystemFixture is WorldFixture {
   address player = makeAddr("player1");
@@ -52,7 +68,8 @@ abstract contract SpawnSystemFixture is WorldFixture {
   {
     vm.deal(_player, 1 ether);
 
-    vm.startPrank(_player);
+    // 2 params is for msg.sender and tx.origin
+    vm.startPrank(_player, _player);
 
     ResourceId spawnSystemResourceId = SystemUtils.getRootSystemId("SpawnSystem");
     bytes memory data = abi.encodeCall(SpawnSystem.createCharacter, characterInfoData);
@@ -93,7 +110,8 @@ abstract contract SpawnSystemFixture is WorldFixture {
   }
 
   function _expectCreateCharacterReverted(address _player, CharInfoData memory characterInfoData) internal {
-    vm.startPrank(_player);
+    // 2 params is for msg.sender and tx.origin
+    vm.startPrank(_player, _player);
 
     ResourceId spawnSystemResourceId = SystemUtils.getRootSystemId("SpawnSystem");
     bytes memory data = abi.encodeCall(SpawnSystem.createCharacter, characterInfoData);
@@ -248,12 +266,25 @@ contract CreateCharacter is SpawnSystemFixture {
     address player = makeAddr("player");
     vm.deal(player, 1 ether);
 
-    vm.startPrank(player);
+    vm.startPrank(player, player);
 
     // (bool success, bytes memory result) = address(mockTest).call(data);
     (bool success, bytes memory result) = address(world).call{ value: Config.CREATE_CHARACTER_FEE }(data);
     assertTrue(success);
 
     vm.stopPrank();
+  }
+
+  function test_ShouldBeReverted_WhenCallerIsContract() external {
+    SpawnSystemCaller caller = new SpawnSystemCaller();
+    ResourceId spawnSystemResourceId = SystemUtils.getRootSystemId("SpawnSystem");
+
+    vm.deal(player, 1 ether);
+    vm.expectRevert(abi.encodeWithSelector(Errors.SpawnSystem_MustBeEOA.selector, address(caller)));
+
+    vm.prank(player);
+    caller.createCharacter{ value: Config.CREATE_CHARACTER_FEE }(
+      world, spawnSystemResourceId, CharacterInfoMock.getCharacterInfoData()
+    );
   }
 }

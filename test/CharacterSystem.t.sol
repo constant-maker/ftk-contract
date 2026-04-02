@@ -5,9 +5,12 @@ import { WorldFixture, SpawnSystemFixture, WelcomeSystemFixture } from "./fixtur
 import { IERC721 } from "@latticexyz/world-modules/src/modules/erc721-puppet/IERC721.sol";
 import { ActiveChar, Contracts } from "@codegen/index.sol";
 import { SlotType } from "@codegen/common.sol";
+import { Errors } from "@common/Errors.sol";
 import { CharacterUtils } from "@utils/CharacterUtils.sol";
 import { SystemUtils } from "@utils/SystemUtils.sol";
 import { EquipData } from "@utils/CharacterEquipmentUtils.sol";
+
+contract CharacterSystemWalletMock { }
 
 contract CharacterSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemFixture {
   address player = makeAddr("player");
@@ -62,6 +65,16 @@ contract CharacterSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemF
     vm.stopPrank();
   }
 
+  function test_Revert_DirectTransferCharacterToContractWallet() external {
+    address characterERC721 = Contracts.getErc721Token();
+    CharacterSystemWalletMock walletMock = new CharacterSystemWalletMock();
+
+    vm.expectRevert(abi.encodeWithSelector(Errors.Character_MustBeEOA.selector, address(walletMock)));
+    vm.startPrank(player);
+    IERC721(characterERC721).transferFrom(player, address(walletMock), characterId);
+    vm.stopPrank();
+  }
+
   function test_SafeTransferCharacter_ClearsSessionWalletByHook() external {
     address characterERC721 = Contracts.getErc721Token();
 
@@ -108,6 +121,26 @@ contract CharacterSystemTest is WorldFixture, SpawnSystemFixture, WelcomeSystemF
     equipDatas[0].equipmentId = 0;
     vm.startPrank(player);
     world.app__gearUpEquipments(characterId, equipDatas);
+    vm.stopPrank();
+  }
+
+  function test_Revert_DelegateSessionWalletToContractWallet() external {
+    CharacterSystemWalletMock walletMock = new CharacterSystemWalletMock();
+
+    vm.expectRevert(abi.encodeWithSelector(Errors.Character_MustBeEOA.selector, address(walletMock)));
+    vm.startPrank(player);
+    world.app__delegateSessionWallet(characterId, address(walletMock));
+    vm.stopPrank();
+  }
+
+  function test_Revert_LinkMainAccountToContractWallet() external {
+    CharacterSystemWalletMock walletMock = new CharacterSystemWalletMock();
+    address characterERC721 = Contracts.getErc721Token();
+
+    vm.startPrank(player);
+    IERC721(characterERC721).approve(SystemUtils.getSystemAddress("CharacterSystem"), characterId);
+    vm.expectRevert(abi.encodeWithSelector(Errors.Character_MustBeEOA.selector, address(walletMock)));
+    world.app__linkMainAccount(characterId, address(walletMock));
     vm.stopPrank();
   }
 

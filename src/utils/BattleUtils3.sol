@@ -1,7 +1,7 @@
 pragma solidity >=0.8.24;
 
 import { CharInventory, Item, Equipment } from "@codegen/index.sol";
-import { ZoneType, CharacterStateType, ItemType } from "@codegen/common.sol";
+import { ItemType } from "@codegen/common.sol";
 
 library BattleUtils3 {
   /// @dev get up to 2 equipments that can be dropped when character lost
@@ -29,44 +29,45 @@ library BattleUtils3 {
 
     if (petExcludedEquipmentIds.length <= 2) return petExcludedEquipmentIds;
 
-    (uint8[] memory tiers, uint8 highest, uint8 second) = scanTiers(petExcludedEquipmentIds);
+    (uint16[] memory dropRanks, uint16 highestRank, uint16 secondRank) = _scanDropRanks(petExcludedEquipmentIds);
 
-    (uint256[] memory high, uint256[] memory sec) = collectCandidates(petExcludedEquipmentIds, tiers, highest, second);
+    (uint256[] memory high, uint256[] memory sec) =
+      _collectCandidates(petExcludedEquipmentIds, dropRanks, highestRank, secondRank);
 
-    return pickResult(characterId, high, sec);
+    return _pickResult(characterId, high, sec);
   }
 
-  /// @dev compute tiers array, highest and second highest tier
-  function scanTiers(uint256[] memory equipmentIds)
-    public
+  /// @dev compute drop ranks where tier is primary and equipment level is the tie-breaker.
+  function _scanDropRanks(uint256[] memory equipmentIds)
+    private
     view
-    returns (uint8[] memory tiers, uint8 highest, uint8 second)
+    returns (uint16[] memory dropRanks, uint16 highestRank, uint16 secondRank)
   {
     uint256 len = equipmentIds.length;
-    tiers = new uint8[](len);
-    highest = 0;
-    second = 0;
+    dropRanks = new uint16[](len);
 
     for (uint256 i = 0; i < len; i++) {
-      uint8 tier = Item.getTier(Equipment.getItemId(equipmentIds[i]));
-      tiers[i] = tier;
-      if (tier > highest) {
-        second = highest;
-        highest = tier;
-      } else if (tier > second && tier < highest) {
-        second = tier;
+      uint256 equipmentId = equipmentIds[i];
+      uint256 itemId = Equipment.getItemId(equipmentId);
+      uint16 dropRank = (uint16(Item.getTier(itemId)) << 8) | uint16(Equipment.getLevel(equipmentId));
+      dropRanks[i] = dropRank;
+      if (dropRank > highestRank) {
+        secondRank = highestRank;
+        highestRank = dropRank;
+      } else if (dropRank > secondRank && dropRank < highestRank) {
+        secondRank = dropRank;
       }
     }
   }
 
-  /// @dev partition items into highest tier and second tier candidates
-  function collectCandidates(
+  /// @dev partition items into highest-rank and second-rank candidates.
+  function _collectCandidates(
     uint256[] memory equipmentIds,
-    uint8[] memory tiers,
-    uint8 highest,
-    uint8 second
+    uint16[] memory dropRanks,
+    uint16 highestRank,
+    uint16 secondRank
   )
-    public
+    private
     pure
     returns (uint256[] memory high, uint256[] memory sec)
   {
@@ -77,9 +78,9 @@ library BattleUtils3 {
     uint256 secCount = 0;
 
     for (uint256 i = 0; i < len; i++) {
-      if (tiers[i] == highest) {
+      if (dropRanks[i] == highestRank) {
         tmpHigh[highCount++] = equipmentIds[i];
-      } else if (tiers[i] == second) {
+      } else if (dropRanks[i] == secondRank) {
         tmpSec[secCount++] = equipmentIds[i];
       }
     }
@@ -97,12 +98,12 @@ library BattleUtils3 {
   }
 
   /// @dev choose result based on counts; pseudo-random shuffle and slice
-  function pickResult(
+  function _pickResult(
     uint256 characterId,
     uint256[] memory high,
     uint256[] memory sec
   )
-    public
+    private
     view
     returns (uint256[] memory)
   {
@@ -111,7 +112,7 @@ library BattleUtils3 {
     uint256 highCount = high.length;
     uint256 secCount = sec.length;
     if (highCount >= 2) {
-      shuffle(high, seed);
+      _shuffle(high, seed);
       uint256[] memory res = new uint256[](2);
       res[0] = high[0];
       res[1] = high[1];
@@ -119,7 +120,7 @@ library BattleUtils3 {
     }
 
     if (highCount == 1 && secCount > 0) {
-      shuffle(sec, seed);
+      _shuffle(sec, seed);
       uint256[] memory res = new uint256[](2);
       res[0] = high[0];
       res[1] = sec[0];
@@ -136,7 +137,7 @@ library BattleUtils3 {
   }
 
   /// @dev Fisher–Yates shuffle for the whole array
-  function shuffle(uint256[] memory arr, uint256 seed) public pure {
+  function _shuffle(uint256[] memory arr, uint256 seed) private pure {
     uint256 n = arr.length;
 
     for (uint256 i; i < n - 1; i++) {
